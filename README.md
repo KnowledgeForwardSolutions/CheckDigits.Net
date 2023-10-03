@@ -90,6 +90,10 @@ Peter Luhn. It can detect all single digit transcription errors and most two dig
 transposition errors except 09 -> 90 and vice versa. It can also detect
 most twin errors (i.e. 11 <-> 44) except 22 <-> 55,  33 <-> 66 and 44 <-> 77.
 
+Valid characters for the Luhn algorithm are decimal digits ('0' - '9').
+
+Validate method assumes that the check digit is the trailing (right-most) character.
+
 #### Common Applications
 
 * Credit card numbers
@@ -108,7 +112,11 @@ The Modulus10_13 algorithm is a widely used modulus 10 algorithm that uses weigh
 1 and 3 (odd positions have weight 3, even positions have weight 1). It can detect
 all single digit transcription errors and ~80% of two digit transposition errors
 (except where the transposed digits have a difference of 5, i.e. *1 <-> 6*, *2 <-> 7*,
-etc.). Nor can it detect two digit two digit jump transpositions.
+etc.). The algorithm cannot detect two digit jump transpositions.
+
+Valid characters for the Modulus10_13 algorithm are decimal digits ('0' - '9').
+
+Validate method assumes that the check digit is the trailing (right-most) character.
 
 #### Common Applications
 
@@ -128,8 +136,8 @@ Wikipedia:
 
 ## Benchmarks
 
-* [Luhn Algorithm](#Luhn-Algorithm-Benchmarks)
-* [Modulus10_13 Algorithm](#Modulus10-13-Algorithm-Benchmarks)
+* [Luhn Algorithm](#luhn-algorithm-benchmarks)
+* [Modulus10_13 Algorithm](#modulus10_13-algorithm-benchmarks)
 
 ### Luhn Algorithm Benchmarks
 
@@ -146,3 +154,16 @@ Wikipedia:
 
 
 ### Modulus10_13 Algorithm Benchmarks
+
+| Method                 | Value              | Mean      | Error     | StdDev    | Allocated |
+|----------------------- |------------------- |----------:|----------:|----------:|----------:|
+| TryCalculateCheckDigit | 42526              |  9.252 ns | 0.1673 ns | 0.1565 ns |         - |
+| TryCalculateCheckDigit | 7351353            | 11.178 ns | 0.1086 ns | 0.1016 ns |         - |
+| TryCalculateCheckDigit | 03600029145        | 16.945 ns | 0.2497 ns | 0.2336 ns |         - |
+| TryCalculateCheckDigit | 400638133393       | 17.807 ns | 0.2595 ns | 0.2427 ns |         - |
+| TryCalculateCheckDigit | 01234567800004567  | 25.594 ns | 0.3092 ns | 0.2892 ns |         - |
+| Validate               | 425261             | 10.750 ns | 0.0710 ns | 0.0630 ns |         - |
+| Validate               | 73513537           | 13.770 ns | 0.2600 ns | 0.2310 ns |         - |
+| Validate               | 036000291452       | 17.660 ns | 0.1380 ns | 0.1230 ns |         - |
+| Validate               | 4006381333931      | 18.990 ns | 0.1660 ns | 0.1390 ns |         - |
+| Validate               | 012345678000045678 | 28.090 ns | 0.2570 ns | 0.2400 ns |         - |
