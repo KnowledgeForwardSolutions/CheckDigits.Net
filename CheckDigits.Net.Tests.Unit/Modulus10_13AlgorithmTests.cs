@@ -101,6 +101,7 @@ public class Modulus10_13AlgorithmTests
    [Theory]
    [InlineData("42I26")]      // Value 42526 would have check digit = 1. I is 20 positions later in ASCII table than 5 so test will fail unless code explicitly checks for non-digit
    [InlineData("42+26")]      // + is 10 positions earlier in ASCII table than 5 so test will fail unless code explicitly checks for non-digit
+   [InlineData("0 36000 29145")]
    public void Modulus10_13Algorithm_TryCalculateCheckDigit_ShouldReturnFalse_WhenInputContainsNonDigitCharacter(String value)
    {
       _sut.TryCalculateCheckDigit(value, out var checkDigit).Should().BeFalse();
