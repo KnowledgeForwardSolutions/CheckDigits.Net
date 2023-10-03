@@ -77,5 +77,23 @@ namespace CheckDigits.Net {
                 return ResourceManager.GetString("LuhnAlgorithmName", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Modulus10_13 - modulus 10 algorithm with weights 1 and 3.
+        /// </summary>
+        internal static string Modulus10_13AlgorithmDescription {
+            get {
+                return ResourceManager.GetString("Modulus10_13AlgorithmDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Modulus10_13.
+        /// </summary>
+        internal static string Modulus10_13AlgorithmName {
+            get {
+                return ResourceManager.GetString("Modulus10_13AlgorithmName", resourceCulture);
+            }
+        }
     }
 }

@@ -123,4 +123,10 @@
   <data name="LuhnAlgorithmName" xml:space="preserve">
     <value>Luhn</value>
   </data>
+  <data name="Modulus10_13AlgorithmDescription" xml:space="preserve">
+    <value>Modulus10_13 - modulus 10 algorithm with weights 1 and 3</value>
+  </data>
+  <data name="Modulus10_13AlgorithmName" xml:space="preserve">
+    <value>Modulus10_13</value>
+  </data>
 </root>
