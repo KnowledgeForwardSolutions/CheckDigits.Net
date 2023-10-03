@@ -23,15 +23,13 @@ public interface IDoubleCheckDigitAlgorithm : ICheckDigitAlgorithm
    ///   <see langword="false"/>.
    /// </returns>
    /// <remarks>
-   ///   If the algorithm specifies a trailing (or leading) check digit 
-   ///   positions then <paramref name="value"/> should not contain any check 
-   ///   digit characters and the entire string will be used to calculate the 
-   ///   check digit characters.
-   ///   </para>
-   ///   If the algorithm specifies an embedded check digit position then
-   ///   <paramref name="value"/> should include space for the check digit
-   ///   characters but those positions will be ignored when calculating the 
-   ///   check digit.
+   ///   This method assumes that the supplied <paramref name="value"/> does not
+   ///   include check digit characters and uses the entire value to calculate 
+   ///   the check digits. If the algorithm specifies that the check digit
+   ///   positions are embedded in the value (example: International Bank 
+   ///   Account Number) then this method assumes that the value includes check 
+   ///   digit positions but those positions are ignored while calculating the 
+   ///   check digits.
    /// </remarks>
    Boolean TryCalculateCheckDigit(String value, out String checkDigit);
 }

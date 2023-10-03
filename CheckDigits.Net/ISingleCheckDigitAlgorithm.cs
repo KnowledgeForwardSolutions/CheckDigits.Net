@@ -22,14 +22,12 @@ public interface ISingleCheckDigitAlgorithm : ICheckDigitAlgorithm
    ///   <see langword="false"/>.
    /// </returns>
    /// <remarks>
-   ///   If the algorithm specifies a trailing (or leading) check digit position
-   ///   then <paramref name="value"/> should not contain a check digit and the
-   ///   entire string will be used to calculate the check digit.
-   ///   <para>
-   ///   If the algorithm specifies an embedded check digit position then
-   ///   <paramref name="value"/> should include space for the check digit but
-   ///   that position will be ignored when calculating the check digit.
-   ///   </para>
+   ///   This method assumes that the supplied <paramref name="value"/> does not
+   ///   include a check digit character and uses the entire value to calculate 
+   ///   the check digit. If the algorithm specifies that the check digit
+   ///   position is embedded in the value (example: Vehicle Identification 
+   ///   Number) then this method assumes that the value includes a check digit
+   ///   position but that position is ignored while calculating the check digit.
    /// </remarks>
    Boolean TryCalculateCheckDigit(String value, out Char checkDigit);
 }

@@ -28,25 +28,29 @@ public sealed class LuhnAlgorithm : ISingleCheckDigitAlgorithm
 
    /// <inheritdoc/>
    public Boolean TryCalculateCheckDigit(String value, out Char checkDigit)
-      => CalculateCheckDigit(value.AsSpan(), out checkDigit);
+      => CalculateCheckDigit(value, false, out checkDigit);
+
 
    /// <inheritdoc/>
    public Boolean Validate(String value)
-      => !String.IsNullOrEmpty(value)
-         && CalculateCheckDigit(value[..^1].AsSpan(), out var checkDigit) 
+      => CalculateCheckDigit(value, true, out var checkDigit)
          && value[^1] == checkDigit;
 
-   private static Boolean CalculateCheckDigit(ReadOnlySpan<Char> value, out Char checkDigit)
+   private static Boolean CalculateCheckDigit(
+      String value,
+      Boolean containsCheckDigit,
+      out Char checkDigit)
    {
       checkDigit = CharConstants.NUL;
-      if (value.Length == 0)
+      if (String.IsNullOrEmpty(value) || (containsCheckDigit && value.Length < 2))
       {
          return false;
       }
 
       var sum = 0;
       var oddPosition = true;
-      for (var index = value.Length - 1; index >= 0; index--)
+      var startPosition = value.Length - (containsCheckDigit ? 2 : 1);
+      for (var index = startPosition; index >= 0; index--)
       {
          var digit = value[index].ToIntegerDigit();
          if (digit < 0 || digit > 9)
