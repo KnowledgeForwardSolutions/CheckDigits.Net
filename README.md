@@ -77,6 +77,7 @@ method, but the output parameter is a string instead of a character.
 ## Supported Algorithms
 
 * [Luhn Algorithm](#luhn-algorithm)
+* [Modulus10_13 Algorithm (UPC/EAN/ISBN-13/etc.)](#Modulus10-13-Algorithm)
 
 [Benchmarks](#Benchmarks)
 
@@ -92,16 +93,43 @@ most twin errors (i.e. 11 <-> 44) except 22 <-> 55,  33 <-> 66 and 44 <-> 77.
 #### Common Applications
 
 * Credit card numbers
-* IMEI (International Mobile Equipment Identity) numbers
+* International Mobile Equipment Identity (IMEI) numbers
 * A wide variety of government identifiers. See Wikipedia link for more info.
 
 #### Links
 
 Wikipedia: https://en.wikipedia.org/wiki/Luhn_algorithm
 
+### Modulus10_13 Algorithm
+
+#### Description
+
+The Modulus10_13 algorithm is a widely used modulus 10 algorithm that uses weights
+1 and 3 (odd positions have weight 3, even positions have weight 1). It can detect
+all single digit transcription errors and ~80% of two digit transposition errors
+(except where the transposed digits have a difference of 5, i.e. *1 <-> 6*, *2 <-> 7*,
+etc.). Nor can it detect two digit two digit jump transpositions.
+
+#### Common Applications
+
+* Global Trade Item Number (GTIN-8, GTIN-12, GTIN-13, GTIN-14)
+* International Article Number/European Article Number (EAN-8, EAN-13)
+* International Standard Book Number (ISBN-13)
+* International Standard Music Number (ISMN)
+* International Standard Serial Number (ISSN)
+* Serial Shipping Container Code (SSCC)
+* Universal Product Code (UPC-A, UPC-E)
+
+#### Links
+
+Wikipedia: 
+  https://en.wikipedia.org/wiki/Universal_Product_Code#Check_digit_calculation
+  https://en.wikipedia.org/wiki/International_Article_Number#Calculation_of_checksum_digit
+
 ## Benchmarks
 
 * [Luhn Algorithm](#Luhn-Algorithm-Benchmarks)
+* [Modulus10_13 Algorithm](#Modulus10-13-Algorithm-Benchmarks)
 
 ### Luhn Algorithm Benchmarks
 
@@ -115,3 +143,6 @@ Wikipedia: https://en.wikipedia.org/wiki/Luhn_algorithm
 | Validate               | 12345674         | 13.440 ns | 0.2080 ns | 0.1850 ns |         - |
 | Validate               | 123456789015     | 18.130 ns | 0.2040 ns | 0.1810 ns |         - |
 | Validate               | 1234567890123452 | 22.540 ns | 0.1200 ns | 0.0940 ns |         - |
+
+
+### Modulus10_13 Algorithm Benchmarks
