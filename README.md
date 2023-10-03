@@ -77,7 +77,7 @@ method, but the output parameter is a string instead of a character.
 ## Supported Algorithms
 
 * [Luhn Algorithm](#luhn-algorithm)
-* [Modulus10_13 Algorithm (UPC/EAN/ISBN-13/etc.)](#Modulus10_13-Algorithm)
+* [Modulus10_13 Algorithm (UPC/EAN/ISBN-13/etc.)](#modulus10_13-algorithm)
 
 [Benchmarks](#Benchmarks)
 
