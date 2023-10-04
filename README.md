@@ -77,6 +77,7 @@ method, but the output parameter is a string instead of a character.
 ## Supported Algorithms
 
 * [Luhn Algorithm](#luhn-algorithm)
+* [Modulus10_13 Algorithm (UPC/EAN/ISBN-13/etc.)](#modulus10_13-algorithm)
 
 [Benchmarks](#Benchmarks)
 
@@ -89,19 +90,54 @@ Peter Luhn. It can detect all single digit transcription errors and most two dig
 transposition errors except 09 -> 90 and vice versa. It can also detect
 most twin errors (i.e. 11 <-> 44) except 22 <-> 55,  33 <-> 66 and 44 <-> 77.
 
+Valid characters for the Luhn algorithm are decimal digits ('0' - '9').
+
+Validate method assumes that the check digit is the trailing (right-most) character.
+
 #### Common Applications
 
 * Credit card numbers
-* IMEI (International Mobile Equipment Identity) numbers
+* International Mobile Equipment Identity (IMEI) numbers
 * A wide variety of government identifiers. See Wikipedia link for more info.
 
 #### Links
 
 Wikipedia: https://en.wikipedia.org/wiki/Luhn_algorithm
 
+### Modulus10_13 Algorithm
+
+#### Description
+
+The Modulus10_13 algorithm is a widely used modulus 10 algorithm that uses weights
+1 and 3 (odd positions have weight 3, even positions have weight 1). It can detect
+all single digit transcription errors and ~80% of two digit transposition errors
+(except where the transposed digits have a difference of 5, i.e. *1 <-> 6*, *2 <-> 7*,
+etc.). The algorithm cannot detect two digit jump transpositions.
+
+Valid characters for the Modulus10_13 algorithm are decimal digits ('0' - '9').
+
+Validate method assumes that the check digit is the trailing (right-most) character.
+
+#### Common Applications
+
+* Global Trade Item Number (GTIN-8, GTIN-12, GTIN-13, GTIN-14)
+* International Article Number/European Article Number (EAN-8, EAN-13)
+* International Standard Book Number (ISBN-13)
+* International Standard Music Number (ISMN)
+* International Standard Serial Number (ISSN)
+* Serial Shipping Container Code (SSCC)
+* Universal Product Code (UPC-A, UPC-E)
+
+#### Links
+
+Wikipedia: 
+  https://en.wikipedia.org/wiki/Universal_Product_Code#Check_digit_calculation
+  https://en.wikipedia.org/wiki/International_Article_Number#Calculation_of_checksum_digit
+
 ## Benchmarks
 
-* [Luhn Algorithm](#Luhn-Algorithm-Benchmarks)
+* [Luhn Algorithm](#luhn-algorithm-benchmarks)
+* [Modulus10_13 Algorithm](#modulus10_13-algorithm-benchmarks)
 
 ### Luhn Algorithm Benchmarks
 
@@ -115,3 +151,19 @@ Wikipedia: https://en.wikipedia.org/wiki/Luhn_algorithm
 | Validate               | 12345674         | 13.440 ns | 0.2080 ns | 0.1850 ns |         - |
 | Validate               | 123456789015     | 18.130 ns | 0.2040 ns | 0.1810 ns |         - |
 | Validate               | 1234567890123452 | 22.540 ns | 0.1200 ns | 0.0940 ns |         - |
+
+
+### Modulus10_13 Algorithm Benchmarks
+
+| Method                 | Value              | Mean      | Error     | StdDev    | Allocated |
+|----------------------- |------------------- |----------:|----------:|----------:|----------:|
+| TryCalculateCheckDigit | 42526              |  9.252 ns | 0.1673 ns | 0.1565 ns |         - |
+| TryCalculateCheckDigit | 7351353            | 11.178 ns | 0.1086 ns | 0.1016 ns |         - |
+| TryCalculateCheckDigit | 03600029145        | 16.945 ns | 0.2497 ns | 0.2336 ns |         - |
+| TryCalculateCheckDigit | 400638133393       | 17.807 ns | 0.2595 ns | 0.2427 ns |         - |
+| TryCalculateCheckDigit | 01234567800004567  | 25.594 ns | 0.3092 ns | 0.2892 ns |         - |
+| Validate               | 425261             | 10.750 ns | 0.0710 ns | 0.0630 ns |         - |
+| Validate               | 73513537           | 13.770 ns | 0.2600 ns | 0.2310 ns |         - |
+| Validate               | 036000291452       | 17.660 ns | 0.1380 ns | 0.1230 ns |         - |
+| Validate               | 4006381333931      | 18.990 ns | 0.1660 ns | 0.1390 ns |         - |
+| Validate               | 012345678000045678 | 28.090 ns | 0.2570 ns | 0.2400 ns |         - |
