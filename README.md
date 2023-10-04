@@ -200,3 +200,13 @@ Wikipedia: https://en.wikipedia.org/wiki/Verhoeff_algorithm
 
 ### Verhoeff Algorithm Benchmarks
 
+| Method                 | Value            | Mean     | Error    | StdDev   | Allocated |
+|----------------------- |----------------- |---------:|---------:|---------:|----------:|
+| TryCalculateCheckDigit | 123              | 11.19 ns | 0.140 ns | 0.131 ns |         - |
+| TryCalculateCheckDigit | 1234567          | 19.94 ns | 0.196 ns | 0.174 ns |         - |
+| TryCalculateCheckDigit | 12345678901      | 30.21 ns | 0.313 ns | 0.293 ns |         - |
+| TryCalculateCheckDigit | 123456789012345  | 40.84 ns | 0.575 ns | 0.538 ns |         - |
+| Validate               | 1233             | 12.70 ns | 0.169 ns | 0.150 ns |         - |
+| Validate               | 12345679         | 25.02 ns | 0.163 ns | 0.136 ns |         - |
+| Validate               | 123456789010     | 36.81 ns | 0.304 ns | 0.270 ns |         - |
+| Validate               | 1234567890123455 | 48.69 ns | 0.255 ns | 0.199 ns |         - |

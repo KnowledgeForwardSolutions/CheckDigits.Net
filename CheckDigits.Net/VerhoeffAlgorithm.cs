@@ -47,77 +47,8 @@ public class VerhoeffAlgorithm : ISingleCheckDigitAlgorithm
          return false;
       }
 
-      if (ApplyPermutations(value, false, out var c))
-      {
-         checkDigit = _inverseTable[c].ToDigitChar();
-         return true;
-      }
-
-      return false;
-   }
-   //{
-   //   checkDigit = CharConstants.NUL;
-   //   if (String.IsNullOrEmpty(value))
-   //   {
-   //      return false;
-   //   }
-
-   //   var c = 0;
-   //   var i = 1;
-   //   for (var index = value.Length - 1; index >= 0; index--)
-   //   {
-   //      var n = value![index].ToIntegerDigit();
-   //      if (n < 0 || n > 9)
-   //      {
-   //         return false;
-   //      }
-
-   //      var p = _permutationTable[i % 8, n];
-   //      c = _multiplicationTable[c, p];
-
-   //      i++;
-   //   }
-   //   checkDigit = _inverseTable[c].ToDigitChar();
-
-   //   return true;
-   //}
-
-   /// <inheritdoc/>
-   public Boolean Validate(String value)
-      => !(String.IsNullOrEmpty(value) || value.Length < 2)
-         && ApplyPermutations(value, true, out var c)
-         && c == 0;
-   //{
-   //   if (String.IsNullOrEmpty(value) || value.Length < 2)
-   //   {
-   //      return false;
-   //   }
-
-   //   var c = 0;
-   //   var i = 0;
-   //   for (var index = value.Length - 1; index >= 0; index--)
-   //   {
-   //      var n = value![index].ToIntegerDigit();
-   //      if (n < 0 || n > 9)
-   //      {
-   //         return false;
-   //      }
-
-   //      var p = _permutationTable[i % 8, n];
-   //      c = _multiplicationTable[c, p];
-
-   //      i++;
-   //   }
-   //   return c == 0;
-   //}
-
-   private static Boolean ApplyPermutations(
-      String value, 
-      Boolean containsCheckDigit,
-      out Int32 c)
-   {
-      c = 0;
-      var i = containsCheckDigit ? 0 : 1;
+      var c = 0;
+      var i = 1;
       for (var index = value.Length - 1; index >= 0; index--)
       {
          var n = value![index].ToIntegerDigit();
@@ -131,7 +62,34 @@ public class VerhoeffAlgorithm : ISingleCheckDigitAlgorithm
 
          i++;
       }
+      checkDigit = _inverseTable[c].ToDigitChar();
 
       return true;
+   }
+
+   /// <inheritdoc/>
+   public Boolean Validate(String value)
+   {
+      if (String.IsNullOrEmpty(value) || value.Length < 2)
+      {
+         return false;
+      }
+
+      var c = 0;
+      var i = 0;
+      for (var index = value.Length - 1; index >= 0; index--)
+      {
+         var n = value![index].ToIntegerDigit();
+         if (n < 0 || n > 9)
+         {
+            return false;
+         }
+
+         var p = _permutationTable[i % 8, n];
+         c = _multiplicationTable[c, p];
+
+         i++;
+      }
+      return c == 0;
    }
 }
