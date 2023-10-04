@@ -7,14 +7,21 @@ namespace CheckDigits.Net;
 ///   is applied to every odd position digit.
 /// </summary>
 /// <remarks>
+///   <para>
 ///   Valid characters are decimal digits (0-9).
 ///   </para>
+///   <para>
+///   Check digit calculated by the algorithm is a decimal digit (0-9).
+///   </para>
+///   <para>
 ///   Assumes that the check digit (if present) is the right-most digit in the
 ///   input value.
 ///   </para>
+///   <para>
 ///   Will detect all single-digit transcription errors and most two digit 
 ///   transpositions of adjacent digits (except 09 <-> 90). Will detect most
 ///   twin errors (i.e. 11 <-> 44) except 22 <-> 55,  33 <-> 66 and 44 <-> 77.
+///   </para>
 /// </remarks>
 public sealed class LuhnAlgorithm : ISingleCheckDigitAlgorithm
 {
@@ -29,7 +36,6 @@ public sealed class LuhnAlgorithm : ISingleCheckDigitAlgorithm
    /// <inheritdoc/>
    public Boolean TryCalculateCheckDigit(String value, out Char checkDigit)
       => CalculateCheckDigit(value, false, out checkDigit);
-
 
    /// <inheritdoc/>
    public Boolean Validate(String value)
