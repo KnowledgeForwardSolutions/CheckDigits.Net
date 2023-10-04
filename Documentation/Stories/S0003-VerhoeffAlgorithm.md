@@ -1,10 +1,11 @@
-# S0002-Modulus10_13Algorithm
+# S0003-VerhoeffAlgorithm
 
-As a developer of CheckDigits.Net, I want CheckDigits.Net to include the UPC/EAN algorithm (modulus 10 with weights 1, 3) in the list of supported algorithms.
+As a developer of CheckDigits.Net, I want CheckDigits.Net to include the Verhoeff
+algorithm in the list of supported algorithms.
 
 ## Requirements
 
-* Modulus10_13Algorithm class that implements the following interfaces:
+* VerhoeffAlgorithm class that implements the following interfaces:
 	- ICheckDigitAlgorithm
 	- ISingleCheckDigitAlgorithm
 * Resiliency. Invalid input should not throw an exception and instead should simply return Boolean false to indicate failure. Invalid input will include:
@@ -15,7 +16,7 @@ As a developer of CheckDigits.Net, I want CheckDigits.Net to include the UPC/EAN
 
 ## Definition of DONE
 
-1. Modulus10_13Algorithm class
+1. VerhoeffAlgorithm class
 1. Full unit tests
 1. README updates
 1. Performance benchmarks
