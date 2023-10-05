@@ -1,11 +1,11 @@
-﻿// Ignore Spelling: Verhoeff
+﻿// Ignore Spelling: Damm
 
 namespace CheckDigits.Net.Tests.Benchmarks;
 
 [MemoryDiagnoser]
-public class VerhoeffAlgorithmTryCalculateBenchmarks
+public class DammAlgorithmTryCalculateBenchmarks
 {
-   private static readonly VerhoeffAlgorithm _algorithm = new();
+   private static readonly DammAlgorithm _algorithm = new();
 
    [Params("123", "1234567", "12345678901", "123456789012345")]
    public String Value { get; set; } = String.Empty;
