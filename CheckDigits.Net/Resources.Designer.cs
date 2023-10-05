@@ -61,6 +61,24 @@ namespace CheckDigits.Net {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Damm&apos;s quasigroup algorithm.
+        /// </summary>
+        internal static string DammAlgorithmDescription {
+            get {
+                return ResourceManager.GetString("DammAlgorithmDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Damm.
+        /// </summary>
+        internal static string DammAlgorithmName {
+            get {
+                return ResourceManager.GetString("DammAlgorithmName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Luhn algorithm - modulus 10 algorithm with weight 2 applied to every odd position character.
         /// </summary>
         internal static string LuhnAlgorithmDescription {

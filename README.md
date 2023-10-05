@@ -90,7 +90,9 @@ to the Verhoeff algorithm in that it can detect all single digit transcription
 errors and all two digit transposition errors and that it uses a precomputed table
 instead of modulus operations to calculate the check digit. Unlike the Verhoeff 
 algorithm, the Damm algorithm uses a single quasigroup table of order 10 instead 
-of the multiple tables used by Verhoeff.
+of the multiple tables used by Verhoeff. The implementation of the Damm algorithm
+provided by CheckDigits.Net uses the table generated from the quasigroup specified
+on page 111 of Damm's doctoral dissertation.
 
 Valid characters for the Damm algorithm are decimal digits ('0' - '9').
 

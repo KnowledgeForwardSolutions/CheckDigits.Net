@@ -117,6 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="DammAlgorithmDescription" xml:space="preserve">
+    <value>Damm's quasigroup algorithm</value>
+  </data>
+  <data name="DammAlgorithmName" xml:space="preserve">
+    <value>Damm</value>
+  </data>
   <data name="LuhnAlgorithmDescription" xml:space="preserve">
     <value>Luhn algorithm - modulus 10 algorithm with weight 2 applied to every odd position character</value>
   </data>

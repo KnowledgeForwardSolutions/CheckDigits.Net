@@ -19,8 +19,7 @@ namespace CheckDigits.Net;
 ///   </para>
 ///   <para>
 ///   Will detect all single-digit transcription errors and all two digit 
-///   transpositions of adjacent digits (except 09 <-> 90). Will detect most
-///   twin errors, two digit jump transpositions and jump twin errors.
+///   transpositions of adjacent digits
 ///   </para>
 /// </remarks>
 public class VerhoeffAlgorithm : ISingleCheckDigitAlgorithm
