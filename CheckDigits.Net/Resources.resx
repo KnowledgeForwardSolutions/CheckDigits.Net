@@ -129,4 +129,10 @@
   <data name="Modulus10_13AlgorithmName" xml:space="preserve">
     <value>Modulus10_13</value>
   </data>
+  <data name="VerhoeffAlgorithmDescription" xml:space="preserve">
+    <value>Verhoeff's dihedral algorithm</value>
+  </data>
+  <data name="VerhoeffAlgorithmName" xml:space="preserve">
+    <value>Verhoeff</value>
+  </data>
 </root>

@@ -95,5 +95,23 @@ namespace CheckDigits.Net {
                 return ResourceManager.GetString("Modulus10_13AlgorithmName", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Verhoeff&apos;s dihedral algorithm.
+        /// </summary>
+        internal static string VerhoeffAlgorithmDescription {
+            get {
+                return ResourceManager.GetString("VerhoeffAlgorithmDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Verhoeff.
+        /// </summary>
+        internal static string VerhoeffAlgorithmName {
+            get {
+                return ResourceManager.GetString("VerhoeffAlgorithmName", resourceCulture);
+            }
+        }
     }
 }
