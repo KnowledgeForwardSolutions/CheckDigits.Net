@@ -41,44 +41,8 @@ public class DammAlgorithm : ISingleCheckDigitAlgorithm
       {
          return false;
       }
-      if (!CalculateCheckDigit(value, out var digit))
-      {
-         return false;
-      }
 
-      checkDigit = digit.ToDigitChar();
-      return true;
-   }
-
-   /// <inheritdoc/>
-   public Boolean Validate(String value)
-      => !String.IsNullOrEmpty(value)
-         && value.Length > 1
-         && CalculateCheckDigit(value, out var checkDigit)
-         && checkDigit == 0;
-   //{
-   //   if (String.IsNullOrEmpty(value) || value.Length < 2)
-   //   {
-   //      return false;
-   //   }
-
-   //   var interim = 0;
-   //   for (var index = 0; index < value.Length; index++)
-   //   {
-   //      var current = value![index].ToIntegerDigit();
-   //      if (current < 0 || current > 9)
-   //      {
-   //         return false;
-   //      }
-   //      interim = _quasigroupTable[interim, current];
-   //   }
-
-   //   return interim == 0;
-   //}
-
-   public Boolean CalculateCheckDigit(String value, out Int32 checkDigit)
-   {
-      checkDigit = 0;
+      var interim = 0;
       for (var index = 0; index < value.Length; index++)
       {
          var current = value![index].ToIntegerDigit();
@@ -86,9 +50,32 @@ public class DammAlgorithm : ISingleCheckDigitAlgorithm
          {
             return false;
          }
-         checkDigit = _quasigroupTable[checkDigit, current];
+         interim = _quasigroupTable[interim, current];
       }
 
+      checkDigit = interim.ToDigitChar();
       return true;
+   }
+
+   /// <inheritdoc/>
+   public Boolean Validate(String value)
+   {
+      if (String.IsNullOrEmpty(value) || value.Length < 2)
+      {
+         return false;
+      }
+
+      var interim = 0;
+      for (var index = 0; index < value.Length; index++)
+      {
+         var current = value![index].ToIntegerDigit();
+         if (current < 0 || current > 9)
+         {
+            return false;
+         }
+         interim = _quasigroupTable[interim, current];
+      }
+
+      return interim == 0;
    }
 }

@@ -5,7 +5,7 @@ namespace CheckDigits.Net.Tests.Benchmarks;
 [MemoryDiagnoser]
 public class VerhoeffAlgorithmValidateBenchmarks
 {
-   private static readonly VerhoeffAlgorithm _verhoeffAlgorithm = new();
+   private static readonly VerhoeffAlgorithm _algorithm = new();
 
    [Params("1233", "12345679", "123456789010", "1234567890123455")]
    public String Value { get; set; } = String.Empty;
@@ -13,6 +13,6 @@ public class VerhoeffAlgorithmValidateBenchmarks
    [Benchmark]
    public void Validate()
    {
-      _ = _verhoeffAlgorithm.Validate(Value);
+      _ = _algorithm.Validate(Value);
    }
 }

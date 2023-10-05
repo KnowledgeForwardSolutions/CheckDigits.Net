@@ -5,7 +5,7 @@ namespace CheckDigits.Net.Tests.Benchmarks;
 [MemoryDiagnoser]
 public class LuhnAlgorithmValidateBenchmarks
 {
-   private static readonly LuhnAlgorithm _luhnAlgorithm = new();
+   private static readonly LuhnAlgorithm _algorithm = new();
 
    [Params("1230", "12345674", "123456789015", "1234567890123452")]
    public String Value { get; set; } = String.Empty;
@@ -13,6 +13,6 @@ public class LuhnAlgorithmValidateBenchmarks
    [Benchmark]
    public void Validate()
    {
-      _ = _luhnAlgorithm.Validate(Value);
+      _ = _algorithm.Validate(Value);
    }
 }

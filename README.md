@@ -194,6 +194,17 @@ Wikipedia: https://en.wikipedia.org/wiki/Verhoeff_algorithm
 
 ### Damm Algorithm Benchmarks
 
+| Method                 | Value            | Mean      | Error     | StdDev    | Allocated |
+|----------------------- |----------------- |----------:|----------:|----------:|----------:|
+| TryCalculateCheckDigit | 123              |  6.777 ns | 0.1300 ns | 0.1391 ns |         - |
+| TryCalculateCheckDigit | 1234567          | 10.331 ns | 0.0842 ns | 0.0747 ns |         - |
+| TryCalculateCheckDigit | 12345678901      | 17.846 ns | 0.1478 ns | 0.1383 ns |         - |
+| TryCalculateCheckDigit | 123456789012345  | 24.807 ns | 0.1143 ns | 0.1013 ns |         - |
+| Validate               | 1234             |  7.076 ns | 0.0772 ns | 0.0722 ns |         - |
+| Validate               | 12345671         | 14.179 ns | 0.1678 ns | 0.1569 ns |         - |
+| Validate               | 123456789018     | 20.616 ns | 0.1890 ns | 0.1676 ns |         - |
+| Validate               | 1234567890123450 | 27.317 ns | 0.3768 ns | 0.3340 ns |         - |
+
 ### Luhn Algorithm Benchmarks
 
 | Method                 | Value            | Mean      | Error     | StdDev    | Allocated |
