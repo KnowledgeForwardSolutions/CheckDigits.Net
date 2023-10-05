@@ -7,12 +7,11 @@ algorithm in the list of supported algorithms.
 
 * DammAlgorithm class that implements the following interfaces:
 	- ICheckDigitAlgorithm
-	- IGenerateSingleCheckDigit
-	- IValidateCheckDigit
+	- ISingleCheckDigitAlgorithm
 * Resiliency. Invalid input should not throw an exception and instead should simply return Boolean false to indicate failure. Invalid input will include:
 	- null
 	- String.Empty
-	- Strings of length < 2 (IValidateCheckDigit.Validate only)
+	- Strings of length < 2 (Validate method only)
 	- Strings containing non-digit characters (i.e. not 0-9).
 
 ## Definition of DONE
