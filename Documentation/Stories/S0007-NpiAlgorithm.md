@@ -9,12 +9,11 @@ value with a constant "80840" before calculating the check digit.
 
 * NpiAlgorithm class that implements the following interfaces:
 	- ICheckDigitAlgorithm
-	- IGenerateSingleCheckDigit
-	- IValidateCheckDigit
+	- ISingleCheckDigitAlgorithm
 * Resiliency. Invalid input should not throw an exception and instead should simply return Boolean false to indicate failure. Invalid input will include:
 	- null
 	- String.Empty
-	- Strings of invalid length (9 for IGenerateSingleCheckDigit.TryGenerateCheckDigit and 10 for IValidateCheckDigit.Validate)
+	- Strings of invalid length (9 for TryGenerateCheckDigit and 10 for Validate)
 	- Strings containing non-digit characters (i.e. not 0-9).
 * Should not allocate additional memory (i.e. should not create a new copy of the value) while calculating the check digit
 
