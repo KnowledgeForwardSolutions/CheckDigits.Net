@@ -25,7 +25,7 @@ execution time and/or the complexity to implement.
 
 ## Supported Algorithms
 
-* [ABA RTN Algorithm](#aba-rtn-algorithm)
+* [ABA RTN (Routing Transit Number) Algorithm](#aba-rtn-algorithm)
 * [Damm Algorithm](#damm-algorithm)
 * [Luhn Algorithm](#luhn-algorithm)
 * [Modulus10_13 Algorithm (UPC/EAN/ISBN-13/etc.)](#modulus10_13-algorithm)
@@ -279,6 +279,13 @@ Wikipedia: https://en.wikipedia.org/wiki/Verhoeff_algorithm
 * [Verhoeff Algorithm](#verhoeff-algorithm-benchmarks)
 
 ### ABA RTN Algorithm Benchmarks
+
+| Method                 | Value     | Mean     | Error     | StdDev    | Allocated |
+|----------------------- |---------- |---------:|----------:|----------:|----------:|
+| TryCalculateCheckDigit | 11100002  | 11.76 ns | 0.1060 ns | 0.0940 ns |         - |
+| TryCalculateCheckDigit | 12223582  | 10.41 ns | 0.1230 ns | 0.1150 ns |         - |
+| Validate               | 111000025 | 9.766 ns | 0.1837 ns | 0.1719 ns |         - |
+| Validate               | 122235821 | 7.654 ns | 0.0508 ns | 0.0424 ns |         - |
 
 ### Damm Algorithm Benchmarks
 

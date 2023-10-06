@@ -1,4 +1,4 @@
-﻿// Ignore Spelling: Damm Luhn Verhoeff
+﻿// Ignore Spelling: Aba Damm Luhn Rtn Verhoeff
 
 namespace CheckDigits.Net;
 
@@ -8,6 +8,9 @@ namespace CheckDigits.Net;
 /// </summary>
 public class Algorithms
 {
+   private static readonly Lazy<ISingleCheckDigitAlgorithm> _abaRtn =
+     new(() => new AbaRtnAlgorithm());
+
    private static readonly Lazy<ISingleCheckDigitAlgorithm> _damm =
      new(() => new DammAlgorithm());
 
@@ -19,6 +22,12 @@ public class Algorithms
 
    private static readonly Lazy<ISingleCheckDigitAlgorithm> _verhoeff =
      new(() => new VerhoeffAlgorithm());
+
+   /// <summary>
+   ///   American Bankers Association (ABA) Routing Transit Number (RTN) 
+   ///   algorithm.
+   /// </summary>
+   public static ISingleCheckDigitAlgorithm AbaRtnAlgorithm => _abaRtn.Value;
 
    /// <summary>
    ///   Damm algorithm.
