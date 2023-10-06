@@ -135,6 +135,12 @@
   <data name="Modulus10_13AlgorithmName" xml:space="preserve">
     <value>Modulus10_13</value>
   </data>
+  <data name="Modulus11AlgorithmDescription" xml:space="preserve">
+    <value>Modulus 11 algorithm where every character is weighted by its position, starting from the right-most character. Generated check digit will be 0-9 or X</value>
+  </data>
+  <data name="Modulus11AlgorithmName" xml:space="preserve">
+    <value>Modulus11</value>
+  </data>
   <data name="VerhoeffAlgorithmDescription" xml:space="preserve">
     <value>Verhoeff's dihedral algorithm</value>
   </data>

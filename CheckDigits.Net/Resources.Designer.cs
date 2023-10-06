@@ -115,6 +115,24 @@ namespace CheckDigits.Net {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Modulus 11 algorithm where every character is weighted by its position, starting from the right-most character. Generated check digit will be 0-9 or X.
+        /// </summary>
+        internal static string Modulus11AlgorithmDescription {
+            get {
+                return ResourceManager.GetString("Modulus11AlgorithmDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Modulus11.
+        /// </summary>
+        internal static string Modulus11AlgorithmName {
+            get {
+                return ResourceManager.GetString("Modulus11AlgorithmName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Verhoeff&apos;s dihedral algorithm.
         /// </summary>
         internal static string VerhoeffAlgorithmDescription {
