@@ -7,12 +7,11 @@ routing number check digit algorithm in the list of supported algorithms.
 
 * AbaAlgorithm class that implements the following interfaces:
 	- ICheckDigitAlgorithm
-	- IGenerateSingleCheckDigit
-	- IValidateCheckDigit
+	- ISingleCheckDigitAlgorithm
 * Resiliency. Invalid input should not throw an exception and instead should simply return Boolean false to indicate failure. Invalid input will include:
 	- null
 	- String.Empty
-	- Strings of invalid length (8 for IGenerateSingleCheckDigit.TryGenerateCheckDigit and 9 for IValidateCheckDigit.Validate)
+	- Strings of invalid length (8 for TryGenerateCheckDigit and 9 for Validate)
 	- Strings containing non-digit characters (i.e. not 0-9).
 
 ## Definition of DONE
