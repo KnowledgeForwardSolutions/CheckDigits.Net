@@ -31,6 +31,26 @@ execution time and/or the complexity to implement.
 * [Modulus11 Algorithm (ISBN-10/ISSN/etc.)](#modulus11-algorithm)
 * [Verhoeff Algorithm](#verhoeff-algorithm)
 
+## Value/Identifier Type and Associated Algorithm
+
+| Value/Identifier Type | Algorithm |
+| --------------------- | ----------|
+| Credit card number    | [Luhn Algorithm](#luhn-algorithm) |
+| EAN-8					| [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
+| EAN-13				| [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
+| GTIN-8				| [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
+| GTIN-12				| [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
+| GTIN-13				| [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
+| GTIN-14				| [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
+| IMEI				    | [Luhn Algorithm](#luhn-algorithm) |
+| ISBN-10				| [Modulus11 Algorithm](#modulus11-algorithm) |
+| ISBN-13				| [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
+| ISMN					| [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
+| ISSN   				| [Modulus11 Algorithm](#modulus11-algorithm) |
+| SSCC					| [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
+| UPC-A					| [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
+| UPC-E					| [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
+
 ## Using CheckDigits.Net
 
 Add a reference to CheckDigits.Net to your project.
@@ -275,6 +295,15 @@ Wikipedia: https://en.wikipedia.org/wiki/Verhoeff_algorithm
 | Validate               | 012345678000045678 | 28.090 ns | 0.2570 ns | 0.2400 ns |         - |
 
 ### Modulus11 Algorithm Benchmarks
+
+| Method                 | Value      | Mean      | Error     | StdDev    | Allocated |
+|----------------------- |----------- |----------:|----------:|----------:|----------:|
+| TryCalculateCheckDigit | 123        |  4.294 ns | 0.0272 ns | 0.0242 ns |         - |
+| TryCalculateCheckDigit | 0317847    |  8.360 ns | 0.1112 ns | 0.1040 ns |         - |
+| TryCalculateCheckDigit | 050027293  |  7.497 ns | 0.1352 ns | 0.1265 ns |         - |
+| Validate               | 1235       |  5.634 ns | 0.0657 ns | 0.0549 ns |         - |
+| Validate               | 03178471   |  9.295 ns | 0.1752 ns | 0.1874 ns |         - |
+| Validate               | 050027293X | 10.052 ns | 0.1027 ns | 0.0911 ns |         - |
 
 ### Verhoeff Algorithm Benchmarks
 
