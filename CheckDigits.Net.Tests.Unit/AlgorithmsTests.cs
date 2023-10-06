@@ -1,9 +1,23 @@
-﻿// Ignore Spelling: Damm Luhn Verhoeff
+﻿// Ignore Spelling: Aba Damm Luhn Rtn Verhoeff
 
 namespace CheckDigits.Net.Tests.Unit;
 
 public class AlgorithmsTests
 {
+   #region AbaRtn Algorithm Property Tests
+   // ==========================================================================
+   // ==========================================================================
+
+   [Fact]
+   public void Algorithms_AbaRtnAlgorithm_ShouldNotBeNull()
+      => Algorithms.AbaRtnAlgorithm.Should().NotBeNull();
+
+   [Fact]
+   public void Algorithms_AbaRtnAlgorithm_ShouldBeExpectedType()
+      => Algorithms.AbaRtnAlgorithm.Should().BeOfType<AbaRtnAlgorithm>();
+
+   #endregion
+
    #region Damm Algorithm Property Tests
    // ==========================================================================
    // ==========================================================================

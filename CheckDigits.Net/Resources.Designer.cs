@@ -61,6 +61,24 @@ namespace CheckDigits.Net {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to American Bankers Association Routing Transit Number algorithm with weights 3, 7 and 1.
+        /// </summary>
+        internal static string AbaRtnAlgorithmDescription {
+            get {
+                return ResourceManager.GetString("AbaRtnAlgorithmDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ABA RTN.
+        /// </summary>
+        internal static string AbaRtnAlgorithmName {
+            get {
+                return ResourceManager.GetString("AbaRtnAlgorithmName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Damm&apos;s quasigroup algorithm.
         /// </summary>
         internal static string DammAlgorithmDescription {
