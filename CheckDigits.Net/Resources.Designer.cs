@@ -151,6 +151,24 @@ namespace CheckDigits.Net {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to NPI - Luhn algorithm with constant &quot;80840&quot; prefix.
+        /// </summary>
+        internal static string NpiAlgorithmDescription {
+            get {
+                return ResourceManager.GetString("NpiAlgorithmDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to NPI (National Provider Identifier).
+        /// </summary>
+        internal static string NpiAlgorithmName {
+            get {
+                return ResourceManager.GetString("NpiAlgorithmName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Verhoeff&apos;s dihedral algorithm.
         /// </summary>
         internal static string VerhoeffAlgorithmDescription {

@@ -30,6 +30,7 @@ execution time and/or the complexity to implement.
 * [Luhn Algorithm](#luhn-algorithm)
 * [Modulus10_13 Algorithm (UPC/EAN/ISBN-13/etc.)](#modulus10_13-algorithm)
 * [Modulus11 Algorithm (ISBN-10/ISSN/etc.)](#modulus11-algorithm)
+* [NPI (US National Provider Identifier) Algorithm](#npi-algorithm)
 * [Verhoeff Algorithm](#verhoeff-algorithm)
 
 ## Value/Identifier Type and Associated Algorithm
@@ -49,6 +50,7 @@ execution time and/or the complexity to implement.
 | ISBN-13				| [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
 | ISMN					| [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
 | ISSN   				| [Modulus11 Algorithm](#modulus11-algorithm) |
+| NPI   				| [NPI Algorithm](#npi-algorithm) |
 | SSCC					| [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
 | UPC-A					| [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
 | UPC-E					| [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
@@ -119,11 +121,11 @@ those where the transposed digits differ by 5 (i.e. *1 <-> 6*, *2 <-> 7*, etc.).
 
 #### Details
 
-* Value size - nine digits
 * Valid characters - decimal digits ('0' - '9')
 * Check digit size - one character
 * Check digit value - decimal digit ('0' - '9')
 * Check digit location - ninth digit
+* Max length - 8 characters when generating a check digit; 9 characters when validating
 
 #### Links
 
@@ -159,8 +161,8 @@ Wikipedia: https://en.wikipedia.org/wiki/Damm_algorithm
 
 The Luhn algorithm is a modulus 10 algorithm that was developed in 1960 by Hans
 Peter Luhn. It can detect all single digit transcription errors and most two digit
-transposition errors except 09 -> 90 and vice versa. It can also detect
-most twin errors (i.e. 11 <-> 44) except 22 <-> 55,  33 <-> 66 and 44 <-> 77.
+transposition errors except *09 -> 90* and vice versa. It can also detect most
+twin errors (i.e. *11 <-> 44*) except *22 <-> 55*,  *33 <-> 66* and *44 <-> 77*.
 
 #### Details
 
@@ -243,6 +245,36 @@ Wikipedia:
   https://en.wikipedia.org/wiki/ISBN#ISBN-10_check_digits
   https://en.wikipedia.org/wiki/ISSN
 
+### NPI Algorithm
+
+#### Description
+
+US National Provider Identifiers (NPI) use the Luhn algorithm to calculate the
+check digit located in the trailing (right-most) position. However, before 
+calculating, the value is prefixed with a constant "80840" and the check digit
+is calculated using the entire 15 digit string. The resulting check digit has all
+the capabilities of the base Luhn algorithm (detecting all single digit transcription 
+errors and most two digit transposition errors except *09 -> 90* and vice versa
+as well as most twin errors (i.e. *11 <-> 44*) except *22 <-> 55*,  *33 <-> 66* 
+and *44 <-> 77*.
+
+(You can create and validate NPI check digits using the standard Luhn algorithm 
+by first prefixing your value with "80840". However, CheckDigits.Net's 
+implementation of the NPI algorithm handles the prefix internally and without 
+allocating an extra string.)
+
+#### Details
+
+* Valid characters - decimal digits ('0' - '9')
+* Check digit size - one character
+* Check digit value - decimal digit ('0' - '9')
+* Check digit location - assumed to be the trailing (right-most) character when validating
+* Max length - 9 characters when generating a check digit; 10 characters when validating
+
+#### Links
+
+Wikipedia: https://en.wikipedia.org/wiki/National_Provider_Identifier
+
 ### Verhoeff Algorithm
 
 #### Description
@@ -276,6 +308,7 @@ Wikipedia: https://en.wikipedia.org/wiki/Verhoeff_algorithm
 * [Luhn Algorithm](#luhn-algorithm-benchmarks)
 * [Modulus10_13 Algorithm](#modulus10_13-algorithm-benchmarks)
 * [Modulus11 Algorithm](#modulus11-algorithm-benchmarks)
+* [NPI Algorithm](#npi-algorithm-benchmarks)
 * [Verhoeff Algorithm](#verhoeff-algorithm-benchmarks)
 
 ### ABA RTN Algorithm Benchmarks
@@ -338,6 +371,15 @@ Wikipedia: https://en.wikipedia.org/wiki/Verhoeff_algorithm
 | Validate               | 1235       |  5.634 ns | 0.0657 ns | 0.0549 ns |         - |
 | Validate               | 03178471   |  9.295 ns | 0.1752 ns | 0.1874 ns |         - |
 | Validate               | 050027293X | 10.052 ns | 0.1027 ns | 0.0911 ns |         - |
+
+### NPI Algorithm Benchmarks
+
+| Method                 | Value      | Mean     | Error    | StdDev   | Allocated |
+|----------------------- |----------- |---------:|---------:|---------:|----------:|
+| TryCalculateCheckDigit | 123456789  | 14.87 ns | 0.231 ns | 0.216 ns |         - |
+| TryCalculateCheckDigit | 124531959  | 13.33 ns | 0.186 ns | 0.174 ns |         - |
+| Validate               | 1234567893 | 15.59 ns | 0.296 ns | 0.277 ns |         - |
+| Validate               | 1245319599 | 14.51 ns | 0.256 ns | 0.239 ns |         - |
 
 ### Verhoeff Algorithm Benchmarks
 

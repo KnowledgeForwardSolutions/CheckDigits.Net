@@ -9,6 +9,9 @@ namespace CheckDigits.Net;
 /// </summary>
 /// <remarks>
 ///   <para>
+///   Value length = 9.
+///   </para>
+///   <para>
 ///   Valid characters are decimal digits (0-9).
 ///   </para>
 ///   <para>
@@ -27,7 +30,6 @@ public class AbaRtnAlgorithm : ISingleCheckDigitAlgorithm
 {
    private const Int32 _calculateLength = 8;
    private const Int32 _validateLength = 9;
-
    private static readonly Int32[] _weights = new Int32[9] { 3, 7, 1, 3, 7, 1, 3, 7, 1 };
 
    /// <inheritdoc/>
