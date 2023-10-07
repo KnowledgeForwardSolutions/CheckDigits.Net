@@ -311,9 +311,7 @@ The VIN (Vehicle Identification Number) algorithm is used on the VIN of vehicles
 sold in North America (US and Canada). The check digit is the 9th character of
 the 17 character value. Upper-case alphabetic characters (except 'I', 'O' and 'Q')
 are allowed in the value and must be transliterated to integer values before 
-weighting, summing and calculating sum modulus 11. Because the number of characters
-in the value in the is greater than the modulus, there is a 1/11 chance that a
-single character transcription error will not be detected.
+weighting, summing and calculating sum modulus 11.
 
 #### Details
 

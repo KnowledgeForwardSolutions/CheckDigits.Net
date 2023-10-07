@@ -185,5 +185,23 @@ namespace CheckDigits.Net {
                 return ResourceManager.GetString("VerhoeffAlgorithmName", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to VIN Algorithm - weighted modulus 11 algorithm with transliteration of alphabetic characters.
+        /// </summary>
+        internal static string VinAlgorithmDescription {
+            get {
+                return ResourceManager.GetString("VinAlgorithmDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to VIN (Vehicle Identification Number).
+        /// </summary>
+        internal static string VinAlgorithmName {
+            get {
+                return ResourceManager.GetString("VinAlgorithmName", resourceCulture);
+            }
+        }
     }
 }
