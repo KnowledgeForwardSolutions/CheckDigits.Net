@@ -8,8 +8,7 @@ the list of supported algorithms.
 
 * VinAlgorithm class that implements the following interfaces:
 	- ICheckDigitAlgorithm
-	- IGenerateSingleCheckDigit
-	- IValidateCheckDigit
+	- ISingleCheckDigitAlgorithm
 * Resiliency. Invalid input should not throw an exception and instead should simply return Boolean false to indicate failure. Invalid input will include:
 	- null
 	- String.Empty
