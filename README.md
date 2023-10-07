@@ -121,11 +121,11 @@ those where the transposed digits differ by 5 (i.e. *1 <-> 6*, *2 <-> 7*, etc.).
 
 #### Details
 
-* Value size - nine digits
 * Valid characters - decimal digits ('0' - '9')
 * Check digit size - one character
 * Check digit value - decimal digit ('0' - '9')
 * Check digit location - ninth digit
+* Max length - 8 characters when generating a check digit; 9 characters when validating
 
 #### Links
 
@@ -265,11 +265,11 @@ allocating an extra string.)
 
 #### Details
 
-* Value size - ten digits
 * Valid characters - decimal digits ('0' - '9')
 * Check digit size - one character
 * Check digit value - decimal digit ('0' - '9')
 * Check digit location - assumed to be the trailing (right-most) character when validating
+* Max length - 9 characters when generating a check digit; 10 characters when validating
 
 #### Links
 
@@ -373,6 +373,13 @@ Wikipedia: https://en.wikipedia.org/wiki/Verhoeff_algorithm
 | Validate               | 050027293X | 10.052 ns | 0.1027 ns | 0.0911 ns |         - |
 
 ### NPI Algorithm Benchmarks
+
+| Method                 | Value      | Mean     | Error    | StdDev   | Allocated |
+|----------------------- |----------- |---------:|---------:|---------:|----------:|
+| TryCalculateCheckDigit | 123456789  | 14.87 ns | 0.231 ns | 0.216 ns |         - |
+| TryCalculateCheckDigit | 124531959  | 13.33 ns | 0.186 ns | 0.174 ns |         - |
+| Validate               | 1234567893 | 15.59 ns | 0.296 ns | 0.277 ns |         - |
+| Validate               | 1245319599 | 14.51 ns | 0.256 ns | 0.239 ns |         - |
 
 ### Verhoeff Algorithm Benchmarks
 

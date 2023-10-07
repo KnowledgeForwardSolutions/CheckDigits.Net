@@ -1,5 +1,5 @@
-﻿BenchmarkRunner.Run<AbaRtnAlgorithmTryCalculateBenchmarks>();
-BenchmarkRunner.Run<AbaRtnAlgorithmValidateBenchmarks>();
+﻿//BenchmarkRunner.Run<AbaRtnAlgorithmTryCalculateBenchmarks>();
+//BenchmarkRunner.Run<AbaRtnAlgorithmValidateBenchmarks>();
 //BenchmarkRunner.Run<DammAlgorithmTryCalculateBenchmarks>();
 //BenchmarkRunner.Run<DammAlgorithmValidateBenchmarks>();
 //BenchmarkRunner.Run<LuhnAlgorithmTryCalculateBenchmarks>();
@@ -8,5 +8,7 @@ BenchmarkRunner.Run<AbaRtnAlgorithmValidateBenchmarks>();
 //BenchmarkRunner.Run<Modulus10_13AlgorithmValidateBenchmarks>();
 //BenchmarkRunner.Run<Modulus11AlgorithmTryCalculateBenchmarks>();
 //BenchmarkRunner.Run<Modulus11AlgorithmValidateBenchmarks>();
+BenchmarkRunner.Run<NpiAlgorithmTryCalculateBenchmarks>();
+BenchmarkRunner.Run<NpiAlgorithmValidateBenchmarks>();
 //BenchmarkRunner.Run<VerhoeffAlgorithmTryCalculateBenchmarks>();
 //BenchmarkRunner.Run<VerhoeffAlgorithmValidateBenchmarks>();

@@ -147,6 +147,12 @@
   <data name="Modulus11AlgorithmName" xml:space="preserve">
     <value>Modulus11</value>
   </data>
+  <data name="NpiAlgorithmDescription" xml:space="preserve">
+    <value>NPI - Luhn algorithm with constant "80840" prefix</value>
+  </data>
+  <data name="NpiAlgorithmName" xml:space="preserve">
+    <value>NPI (National Provider Identifier)</value>
+  </data>
   <data name="VerhoeffAlgorithmDescription" xml:space="preserve">
     <value>Verhoeff's dihedral algorithm</value>
   </data>
