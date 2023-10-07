@@ -54,7 +54,34 @@ public class VinAlgorithm : ISingleCheckDigitAlgorithm
       };
 
    /// <inheritdoc/>
-   public Boolean TryCalculateCheckDigit(String value, out Char checkDigit) => throw new NotImplementedException();
+   public Boolean TryCalculateCheckDigit(String value, out Char checkDigit)
+   {
+      checkDigit = CharConstants.NUL;
+      if (String.IsNullOrEmpty(value) || value.Length != _expectedLength)
+      {
+         return false;
+      }
+
+      var sum = 0;
+      for (var index = 0; index < _weights.Length; index++)
+      {
+         if (index == _checkDigitPosition)
+         {
+            continue;
+         }
+
+         var currentValue = TransliterateCharacter(value[index]);
+         if (currentValue == -1)
+         {
+            return false;
+         }
+         sum += currentValue * _weights[index];
+      }
+      var mod = sum % 11;
+      checkDigit = mod == 10 ? CharConstants.UpperCaseX : mod.ToDigitChar();
+
+      return true;
+   }
 
    /// <inheritdoc/>
    public Boolean Validate(String value)
@@ -63,6 +90,7 @@ public class VinAlgorithm : ISingleCheckDigitAlgorithm
       {
          return false;
       }
+
       var sum = 0;
       for (var index = 0; index < _weights.Length; index++)
       {

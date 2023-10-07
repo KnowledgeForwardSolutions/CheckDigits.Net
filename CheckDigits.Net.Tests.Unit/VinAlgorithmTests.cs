@@ -83,6 +83,111 @@ public class VinAlgorithmTests
    // ==========================================================================
    // ==========================================================================
 
+   [Fact]
+   public void VinAlgorithm_TryCalculateCheckDigit_ShouldReturnFalse_WhenInputIsNull()
+   {
+      // Act/assert.
+      _sut.TryCalculateCheckDigit(null!, out var checkDigit).Should().BeFalse();
+      checkDigit.Should().Be('\0');
+   }
+
+   [Fact]
+   public void VinAlgorithm_TryCalculateCheckDigit_ShouldReturnFalse_WhenInputIsEmpty()
+   {
+      // Act/assert.
+      _sut.TryCalculateCheckDigit(String.Empty, out var checkDigit).Should().BeFalse();
+      checkDigit.Should().Be('\0');
+   }
+
+   [Fact]
+   public void VinAlgorithm_TryCalculateCheckDigit_ShouldReturnFalse_WhenInputHasLengthLessThan17()
+   {
+      // Act/assert.
+      _sut.TryCalculateCheckDigit("12345678_0123456", out var checkDigit).Should().BeFalse();
+      checkDigit.Should().Be('\0');
+   }
+
+   [Fact]
+   public void VinAlgorithm_TryCalculateCheckDigit_ShouldReturnFalse_WhenInputHasLengthGreaterThan17()
+   {
+      _sut.TryCalculateCheckDigit("12345678_012345678", out var checkDigit).Should().BeFalse();
+      checkDigit.Should().Be('\0');
+   }
+
+   [Theory]
+   [InlineData("10000000_00000000", '8')]
+   [InlineData("01000000_00000000", '7')]
+   [InlineData("00100000_00000000", '6')]
+   [InlineData("00010000_00000000", '5')]
+   [InlineData("00001000_00000000", '4')]
+   [InlineData("00000100_00000000", '3')]
+   [InlineData("00000010_00000000", '2')]
+   [InlineData("00000001_00000000", 'X')]
+   [InlineData("00000000_10000000", '9')]
+   [InlineData("00000000_01000000", '8')]
+   [InlineData("00000000_00100000", '7')]
+   [InlineData("00000000_00010000", '6')]
+   [InlineData("00000000_00001000", '5')]
+   [InlineData("00000000_00000100", '4')]
+   [InlineData("00000000_00000010", '3')]
+   [InlineData("00000000_00000001", '2')]
+   public void VinAlgorithm_TryCalculateCheckDigit_ShouldCorrectlyWeightCharactersByPosition(
+      String value,
+      Char expectedCheckDigit)
+   {
+      // Act/assert.
+      _sut.TryCalculateCheckDigit(value, out var checkDigit).Should().BeTrue();
+      checkDigit.Should().Be(expectedCheckDigit);
+   }
+
+   [Fact]
+   public void VinAlgorithm_TryCalculateCheckDigit_ShouldIgnoreCheckDigitPosition()
+   {
+      // Arrange.
+      var value = "10000000?00000000";
+      var expectedCheckDigit = '8';
+
+      // Act/assert.
+      _sut.TryCalculateCheckDigit(value, out var checkDigit).Should().BeTrue();
+      checkDigit.Should().Be(expectedCheckDigit);
+   }
+
+   [Theory]
+   [InlineData("1M8GDM9AXKP042788", 'X')]   // Worked example from Wikipedia (https://en.wikipedia.org/wiki/Vehicle_identification_number#Check-digit_calculation)
+   [InlineData("11111111111111111", '1')]   // Test value as per Wikipedia 
+   [InlineData("1G8ZG127XWZ157259", 'X')]   // Random VIN from https://vingenerator.org/
+   [InlineData("1HGEM21292L047875", '9')]   // "
+   public void VinAlgorithm_TryCalculateCheckDigit_ShouldCalculateExpectedCheckDigit(
+      String value,
+      Char expectedCheckDigit)
+   {
+      // Act/assert.
+      _sut.TryCalculateCheckDigit(value, out var checkDigit).Should().BeTrue();
+      checkDigit.Should().Be(expectedCheckDigit);
+   }
+
+   [Fact]
+   public void VinAlgorithm_TryCalculateCheckDigit_ShouldCalculateExpectedCheckDigit_WhenInputIsAllZeros()
+   {
+      // Arrange.
+      var value = "00000000?00000000";
+      var expectedCheckDigit = CharConstants.DigitZero;
+
+      // Act/assert.
+      _sut.TryCalculateCheckDigit(value, out var checkDigit).Should().BeTrue();
+      checkDigit.Should().Be(expectedCheckDigit);
+   }
+
+   [Fact]
+   public void VinAlgorithm_TryCalculateCheckDigit_ShouldReturnFalse_WhenInputContainsNonDigitCharacter()
+   {
+      // Arrange.
+      var value = "1M8GDM9AXKPO42788";       // Zero (0) -> 'O'
+
+      _sut.TryCalculateCheckDigit(value, out var checkDigit).Should().BeFalse();
+      checkDigit.Should().Be('\0');
+   }
+
    #endregion
 
    #region Validate Tests
@@ -122,7 +227,7 @@ public class VinAlgorithmTests
    [InlineData("00000000400000100")]
    [InlineData("00000000300000010")]
    [InlineData("00000000200000001")]
-   public void Modulus11Algorithm_Validate_ShouldCorrectlyWeightCharactersByPosition(String value)
+   public void VinAlgorithm_Validate_ShouldCorrectlyWeightCharactersByPosition(String value)
       => _sut.Validate(value).Should().BeTrue();
 
    [Theory]
