@@ -32,6 +32,7 @@ execution time and/or the complexity to implement.
 * [Modulus11 Algorithm (ISBN-10/ISSN/etc.)](#modulus11-algorithm)
 * [NPI (US National Provider Identifier) Algorithm](#npi-algorithm)
 * [Verhoeff Algorithm](#verhoeff-algorithm)
+* [VIN (Vehicle Identification Number) Algorithm](#vin-algorithm)
 
 ## Value/Identifier Type and Associated Algorithm
 
@@ -52,6 +53,7 @@ execution time and/or the complexity to implement.
 | ISSN   				| [Modulus11 Algorithm](#modulus11-algorithm) |
 | NPI   				| [NPI Algorithm](#npi-algorithm) |
 | SSCC					| [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
+| VIN                   | [VIN Algorithm](#vin-algorithm) |
 | UPC-A					| [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
 | UPC-E					| [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
 
@@ -301,6 +303,30 @@ twin errors.
 
 Wikipedia: https://en.wikipedia.org/wiki/Verhoeff_algorithm
 
+### VIN Algorithm
+
+#### Description
+
+The VIN (Vehicle Identification Number) algorithm is used on the VIN of vehicles
+sold in North America (US and Canada). The check digit is the 9th character of
+the 17 character value. Upper-case alphabetic characters (except 'I', 'O' and 'Q')
+are allowed in the value and must be transliterated to integer values before 
+weighting, summing and calculating sum modulus 11. Because the number of characters
+in the value in the is greater than the modulus, there is a 1/11 chance that a
+single character transcription error will not be detected.
+
+#### Details
+
+* Valid characters - decimal digits ('0' - '9') and upper case letters ('A' - 'Z'), excluding 'I', 'O' and 'Q'
+* Check digit size - one character
+* Check digit value - either decimal digit ('0' - '9') or an uppercase 'X'
+* Check digit location - 9th character of 17
+* Length - 17 characters
+
+#### Links
+
+Wikipedia: https://en.wikipedia.org/wiki/Vehicle_identification_number#Check-digit_calculation
+
 ## Benchmarks
 
 * [ABA RTN Algorithm](#aba-rtn-algorithm-benchmarks)
@@ -310,6 +336,7 @@ Wikipedia: https://en.wikipedia.org/wiki/Verhoeff_algorithm
 * [Modulus11 Algorithm](#modulus11-algorithm-benchmarks)
 * [NPI Algorithm](#npi-algorithm-benchmarks)
 * [Verhoeff Algorithm](#verhoeff-algorithm-benchmarks)
+* [VIN Algorithm](#vin-algorithm-benchmarks)
 
 ### ABA RTN Algorithm Benchmarks
 
@@ -393,3 +420,6 @@ Wikipedia: https://en.wikipedia.org/wiki/Verhoeff_algorithm
 | Validate               | 12345679         | 25.02 ns | 0.163 ns | 0.136 ns |         - |
 | Validate               | 123456789010     | 36.81 ns | 0.304 ns | 0.270 ns |         - |
 | Validate               | 1234567890123455 | 48.69 ns | 0.255 ns | 0.199 ns |         - |
+
+### VIN Algorithm Benchmarks
+
