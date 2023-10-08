@@ -421,3 +421,11 @@ Wikipedia: https://en.wikipedia.org/wiki/Vehicle_identification_number#Check-dig
 
 ### VIN Algorithm Benchmarks
 
+| Method                 | Value             | Mean     | Error    | StdDev   | Allocated |
+|----------------------- |------------------ |---------:|---------:|---------:|----------:|
+| TryCalculateCheckDigit | 1G8ZG127XWZ157259 | 41.90 ns | 0.793 ns | 0.848 ns |         - |
+| TryCalculateCheckDigit | 1HGEM21292L047875 | 40.66 ns | 0.560 ns | 0.496 ns |         - |
+| TryCalculateCheckDigit | 1M8GDM9AXKP042788 | 40.17 ns | 0.811 ns | 0.719 ns |         - |
+| Validate               | 1G8ZG127XWZ157259 | 42.01 ns | 0.670 ns | 0.627 ns |         - |
+| Validate               | 1HGEM21292L047875 | 40.54 ns | 0.561 ns | 0.525 ns |         - |
+| Validate               | 1M8GDM9AXKP042788 | 40.39 ns | 0.687 ns | 0.642 ns |         - |
