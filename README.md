@@ -30,6 +30,7 @@ execution time and/or the complexity to implement.
 * [Luhn Algorithm](#luhn-algorithm)
 * [Modulus10_13 Algorithm (UPC/EAN/ISBN-13/etc.)](#modulus10_13-algorithm)
 * [Modulus11 Algorithm (ISBN-10/ISSN/etc.)](#modulus11-algorithm)
+* [NHS (UK National Health Service) Algorithm](#nhs-algorithm)
 * [NPI (US National Provider Identifier) Algorithm](#npi-algorithm)
 * [Verhoeff Algorithm](#verhoeff-algorithm)
 * [VIN (Vehicle Identification Number) Algorithm](#vin-algorithm)
@@ -51,6 +52,7 @@ execution time and/or the complexity to implement.
 | ISBN-13				| [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
 | ISMN					| [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
 | ISSN   				| [Modulus11 Algorithm](#modulus11-algorithm) |
+| NHS                   | [NHS Algorithm](#nhs-algorithm) |
 | NPI   				| [NPI Algorithm](#npi-algorithm) |
 | SSCC					| [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
 | VIN                   | [VIN Algorithm](#vin-algorithm) |
@@ -247,6 +249,33 @@ Wikipedia:
   https://en.wikipedia.org/wiki/ISBN#ISBN-10_check_digits
   https://en.wikipedia.org/wiki/ISSN
 
+### NHS Algorithm
+
+#### Description
+
+UK National Health Service (NHS) identifiers use a variation of the Modulus 11 
+algorithm. However, instead of generating 11 possible values for the check digit,
+the NHS algorithm does not allow a remainder of 10 (the 'X' character used by the
+Modulus 11 algorithm). Any possible NHS number that would generate a remainder of 
+10 is not allowed and those numbers are not issued. This means that the check 
+digit for a NHS number remains '0' - '9'. The NHS algorithm retains all error 
+detecting capabilities of the Modulus 11 algorithm (detecting all single digit 
+transcription errors and all two digit transposition errors).
+
+#### Details
+
+* Valid characters - decimal digits ('0' - '9')
+* Check digit size - one character
+* Check digit value - decimal digit ('0' - '9')
+* Check digit location - assumed to be the trailing (right-most) character when validating
+* Max length - 9 characters when generating a check digit; 10 characters when validating
+
+#### Links
+
+Wikipedia: 
+	https://en.wikipedia.org/wiki/NHS_number#Format,_number_ranges,_and_check_characters
+	https://www.datadictionary.nhs.uk/attributes/nhs_number.html
+
 ### NPI Algorithm
 
 #### Description
@@ -332,6 +361,7 @@ Wikipedia: https://en.wikipedia.org/wiki/Vehicle_identification_number#Check-dig
 * [Luhn Algorithm](#luhn-algorithm-benchmarks)
 * [Modulus10_13 Algorithm](#modulus10_13-algorithm-benchmarks)
 * [Modulus11 Algorithm](#modulus11-algorithm-benchmarks)
+* [NHS Algorithm](#nhs-algorithm-benchmarks)
 * [NPI Algorithm](#npi-algorithm-benchmarks)
 * [Verhoeff Algorithm](#verhoeff-algorithm-benchmarks)
 * [VIN Algorithm](#vin-algorithm-benchmarks)
@@ -396,6 +426,8 @@ Wikipedia: https://en.wikipedia.org/wiki/Vehicle_identification_number#Check-dig
 | Validate               | 1235       |  5.634 ns | 0.0657 ns | 0.0549 ns |         - |
 | Validate               | 03178471   |  9.295 ns | 0.1752 ns | 0.1874 ns |         - |
 | Validate               | 050027293X | 10.052 ns | 0.1027 ns | 0.0911 ns |         - |
+
+### NHS Algorithm Benchmarks
 
 ### NPI Algorithm Benchmarks
 
