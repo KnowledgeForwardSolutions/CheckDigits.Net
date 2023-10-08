@@ -26,7 +26,7 @@ namespace CheckDigits.Net;
 ///   twin errors (i.e. 11 <-> 44) except 22 <-> 55,  33 <-> 66 and 44 <-> 77.
 ///   </para>
 /// </remarks>
-public class NpiAlgorithm : ISingleCheckDigitAlgorithm
+public class NpiAlgorithm : ICheckDigitAlgorithm
 {
    private const Int32 _calculateLength = 9;
    private const Int32 _validateLength = 10;
@@ -38,33 +38,6 @@ public class NpiAlgorithm : ISingleCheckDigitAlgorithm
 
    /// <inheritdoc/>
    public String AlgorithmName => Resources.NpiAlgorithmName;
-
-   /// <inheritdoc/>
-   public Boolean TryCalculateCheckDigit(String value, out Char checkDigit)
-   {
-      checkDigit = CharConstants.NUL;
-      if (String.IsNullOrEmpty(value) || value.Length != _calculateLength)
-      {
-         return false;
-      }
-
-      var sum = _prefix;         // Initializing to prefix (24) has the same effect as prefixing the value with "80840"
-      var oddPosition = true;
-      for (var index = value.Length - 1; index >= 0; index--)
-      {
-         var digit = value[index].ToIntegerDigit();
-         if (digit < 0 || digit > 9)
-         {
-            return false;
-         }
-         sum += oddPosition ? _doubledValues[digit] : digit;
-         oddPosition = !oddPosition;
-      }
-      var mod = (10 - (sum % 10)) % 10;
-      checkDigit = mod.ToDigitChar();
-
-      return true;
-   }
 
    /// <inheritdoc/>
    public Boolean Validate(String value)

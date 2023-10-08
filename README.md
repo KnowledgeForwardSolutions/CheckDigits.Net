@@ -23,6 +23,11 @@ Typical errors that can be detected by check digit algorithms include:
 Check digit algorithms attempt to balance detection capabilities with the cost in 
 execution time and/or the complexity to implement.
 
+Note also that if a value has a valid check digit, it does not imply that the 
+value is valid, only that the value was transcribed correctly. There may be other
+requirements that are specific to the type of value that could cause a value with
+a valid check digit to be considered incorrect/invalid.
+
 ## Supported Algorithms
 
 * [ABA RTN (Routing Transit Number) Algorithm](#aba-rtn-algorithm)
@@ -112,6 +117,11 @@ Check digit algorithms that use two character check digits also implement
 ```IDoubleCheckDigitAlgorithm```. This interface also has a TryCalculateCheckDigit
 method, but the output parameter is a string instead of a character.
 
+Note that ```ISingleCheckDigitAlgorithm``` and ```IDoubleCheckDigitAlgorithm```
+are not implemented for algorithms for government issued identifiers (for example,
+UK NHS numbers and US NPI numbers) or values issued by a single authority (such
+as ABA Routing Transit Numbers).
+
 ## Algorithm Descriptions
 
 ### ABA RTN Algorithm
@@ -123,13 +133,17 @@ a modulus 10 algorithm that uses weights 3, 7 and 1. The algorithm can detect al
 single digit transcription errors and most two digit transposition errors except
 those where the transposed digits differ by 5 (i.e. *1 <-> 6*, *2 <-> 7*, etc.).
 
+The ABA RTN algorithm only supports validation of check digits and does support 
+calculation of check digits.
+
 #### Details
 
 * Valid characters - decimal digits ('0' - '9')
 * Check digit size - one character
 * Check digit value - decimal digit ('0' - '9')
 * Check digit location - ninth digit
-* Max length - 8 characters when generating a check digit; 9 characters when validating
+* Value length - 9 characters
+* Class name - AbaRtnAlgorithm
 
 #### Links
 
@@ -275,7 +289,7 @@ calculation of check digits.
 * Check digit size - one character
 * Check digit value - decimal digit ('0' - '9')
 * Check digit location - assumed to be the trailing (right-most) character when validating
-* Max length - 9 characters when generating a check digit; 10 characters when validating
+* Value length - 10 characters
 * Class name - NhsAlgorithm
 
 #### Links
@@ -302,13 +316,16 @@ by first prefixing your value with "80840". However, CheckDigits.Net's
 implementation of the NPI algorithm handles the prefix internally and without 
 allocating an extra string.)
 
+The NPI algorithm only supports validation of check digits and does support 
+calculation of check digits.
+
 #### Details
 
 * Valid characters - decimal digits ('0' - '9')
 * Check digit size - one character
 * Check digit value - decimal digit ('0' - '9')
 * Check digit location - assumed to be the trailing (right-most) character when validating
-* Max length - 9 characters when generating a check digit; 10 characters when validating
+* Value length - 10 characters
 * Class name - NpiAlgorithm
 
 #### Links
@@ -381,8 +398,6 @@ Wikipedia: https://en.wikipedia.org/wiki/Vehicle_identification_number#Check-dig
 
 | Method                 | Value     | Mean     | Error     | StdDev    | Allocated |
 |----------------------- |---------- |---------:|----------:|----------:|----------:|
-| TryCalculateCheckDigit | 11100002  | 11.76 ns | 0.1060 ns | 0.0940 ns |         - |
-| TryCalculateCheckDigit | 12223582  | 10.41 ns | 0.1230 ns | 0.1150 ns |         - |
 | Validate               | 111000025 | 9.766 ns | 0.1837 ns | 0.1719 ns |         - |
 | Validate               | 122235821 | 7.654 ns | 0.0508 ns | 0.0424 ns |         - |
 
@@ -444,8 +459,6 @@ Wikipedia: https://en.wikipedia.org/wiki/Vehicle_identification_number#Check-dig
 
 | Method                 | Value      | Mean     | Error    | StdDev   | Allocated |
 |----------------------- |----------- |---------:|---------:|---------:|----------:|
-| TryCalculateCheckDigit | 123456789  | 14.87 ns | 0.231 ns | 0.216 ns |         - |
-| TryCalculateCheckDigit | 124531959  | 13.33 ns | 0.186 ns | 0.174 ns |         - |
 | Validate               | 1234567893 | 15.59 ns | 0.296 ns | 0.277 ns |         - |
 | Validate               | 1245319599 | 14.51 ns | 0.256 ns | 0.239 ns |         - |
 

@@ -8,7 +8,7 @@ namespace CheckDigits.Net;
 /// </summary>
 public class Algorithms
 {
-   private static readonly Lazy<ISingleCheckDigitAlgorithm> _abaRtn =
+   private static readonly Lazy<ICheckDigitAlgorithm> _abaRtn =
      new(() => new AbaRtnAlgorithm());
 
    private static readonly Lazy<ISingleCheckDigitAlgorithm> _damm =
@@ -23,7 +23,7 @@ public class Algorithms
    private static readonly Lazy<ISingleCheckDigitAlgorithm> _modulus11 =
      new(() => new Modulus11Algorithm());
 
-   private static readonly Lazy<ISingleCheckDigitAlgorithm> _npi =
+   private static readonly Lazy<ICheckDigitAlgorithm> _npi =
      new(() => new NpiAlgorithm());
 
    private static readonly Lazy<ISingleCheckDigitAlgorithm> _verhoeff =
@@ -36,7 +36,7 @@ public class Algorithms
    ///   American Bankers Association (ABA) Routing Transit Number (RTN) 
    ///   algorithm.
    /// </summary>
-   public static ISingleCheckDigitAlgorithm AbaRtn => _abaRtn.Value;
+   public static ICheckDigitAlgorithm AbaRtn => _abaRtn.Value;
 
    /// <summary>
    ///   Damm algorithm.
@@ -61,7 +61,7 @@ public class Algorithms
    /// <summary>
    ///   US National Provider Identifier (NPI) algorithm.
    /// </summary>
-   public static ISingleCheckDigitAlgorithm Npi => _npi.Value;
+   public static ICheckDigitAlgorithm Npi => _npi.Value;
 
    /// <summary>
    ///   Verhoeff algorithm.

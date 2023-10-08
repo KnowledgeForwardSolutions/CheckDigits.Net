@@ -180,8 +180,8 @@ public class Modulus11AlgorithmTests
       => _sut.Validate("010000010X").Should().BeTrue();
 
    [Theory]
-   [InlineData("100G000001")]
-   [InlineData("100+000001")]
+   [InlineData("1000G00005")]    // Value 1000300005 would have check digit = 5. G is 20 positions later in ASCII table than 3 and would also calculate check digit 5 unless code explicitly checks for non-digit
+   [InlineData("1000)00005")]    // ) is 10 positions earlier in ASCII table than 3 and would also calculate check digit 5 unless code explicitly checks for non-digit
    public void Modulus11Algorithm_Validate_ShouldReturnFalse_WhenInputContainsNonDigitCharacter(String value)
       => _sut.Validate(value).Should().BeFalse();
 
