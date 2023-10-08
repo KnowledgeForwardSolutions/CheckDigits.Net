@@ -159,4 +159,10 @@
   <data name="VerhoeffAlgorithmName" xml:space="preserve">
     <value>Verhoeff</value>
   </data>
+  <data name="VinAlgorithmDescription" xml:space="preserve">
+    <value>VIN Algorithm - weighted modulus 11 algorithm with transliteration of alphabetic characters</value>
+  </data>
+  <data name="VinAlgorithmName" xml:space="preserve">
+    <value>VIN (Vehicle Identification Number)</value>
+  </data>
 </root>

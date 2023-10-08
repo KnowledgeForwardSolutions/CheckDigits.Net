@@ -8,7 +8,9 @@
 //BenchmarkRunner.Run<Modulus10_13AlgorithmValidateBenchmarks>();
 //BenchmarkRunner.Run<Modulus11AlgorithmTryCalculateBenchmarks>();
 //BenchmarkRunner.Run<Modulus11AlgorithmValidateBenchmarks>();
-BenchmarkRunner.Run<NpiAlgorithmTryCalculateBenchmarks>();
-BenchmarkRunner.Run<NpiAlgorithmValidateBenchmarks>();
+//BenchmarkRunner.Run<NpiAlgorithmTryCalculateBenchmarks>();
+//BenchmarkRunner.Run<NpiAlgorithmValidateBenchmarks>();
 //BenchmarkRunner.Run<VerhoeffAlgorithmTryCalculateBenchmarks>();
 //BenchmarkRunner.Run<VerhoeffAlgorithmValidateBenchmarks>();
+BenchmarkRunner.Run<VinAlgorithmTryCalculateBenchmarks>();
+BenchmarkRunner.Run<VinAlgorithmValidateBenchmarks>();
