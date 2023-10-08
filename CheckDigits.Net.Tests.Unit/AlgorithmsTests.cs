@@ -10,11 +10,11 @@ public class AlgorithmsTests
 
    [Fact]
    public void Algorithms_AbaRtnAlgorithm_ShouldNotBeNull()
-      => Algorithms.AbaRtnAlgorithm.Should().NotBeNull();
+      => Algorithms.AbaRtn.Should().NotBeNull();
 
    [Fact]
    public void Algorithms_AbaRtnAlgorithm_ShouldBeExpectedType()
-      => Algorithms.AbaRtnAlgorithm.Should().BeOfType<AbaRtnAlgorithm>();
+      => Algorithms.AbaRtn.Should().BeOfType<AbaRtnAlgorithm>();
 
    #endregion
 
@@ -24,11 +24,11 @@ public class AlgorithmsTests
 
    [Fact]
    public void Algorithms_DammAlgorithm_ShouldNotBeNull()
-      => Algorithms.DammAlgorithm.Should().NotBeNull();
+      => Algorithms.Damm.Should().NotBeNull();
 
    [Fact]
    public void Algorithms_DammAlgorithm_ShouldBeExpectedType()
-      => Algorithms.DammAlgorithm.Should().BeOfType<DammAlgorithm>();
+      => Algorithms.Damm.Should().BeOfType<DammAlgorithm>();
 
    #endregion
 
@@ -38,11 +38,11 @@ public class AlgorithmsTests
 
    [Fact]
    public void Algorithms_LuhnAlgorithm_ShouldNotBeNull()
-      => Algorithms.LuhnAlgorithm.Should().NotBeNull();
+      => Algorithms.Luhn.Should().NotBeNull();
 
    [Fact]
    public void Algorithms_LuhnAlgorithm_ShouldBeExpectedType()
-      => Algorithms.LuhnAlgorithm.Should().BeOfType<LuhnAlgorithm>();
+      => Algorithms.Luhn.Should().BeOfType<LuhnAlgorithm>();
 
    #endregion
 
@@ -52,11 +52,25 @@ public class AlgorithmsTests
 
    [Fact]
    public void Algorithms_Modulus10_13Algorithm_ShouldNotBeNull()
-      => Algorithms.Modulus10_13Algorithm.Should().NotBeNull();
+      => Algorithms.Modulus10_13.Should().NotBeNull();
 
    [Fact]
    public void Algorithms_Modulus10_13Algorithm_ShouldBeExpectedType()
-      => Algorithms.Modulus10_13Algorithm.Should().BeOfType<Modulus10_13Algorithm>();
+      => Algorithms.Modulus10_13.Should().BeOfType<Modulus10_13Algorithm>();
+
+   #endregion
+
+   #region Modulus11 Algorithm Property Tests
+   // ==========================================================================
+   // ==========================================================================
+
+   [Fact]
+   public void Algorithms_Modulus11Algorithm_ShouldNotBeNull()
+      => Algorithms.Modulus11.Should().NotBeNull();
+
+   [Fact]
+   public void Algorithms_Modulus11Algorithm_ShouldBeExpectedType()
+      => Algorithms.Modulus11.Should().BeOfType<Modulus11Algorithm>();
 
    #endregion
 
@@ -66,11 +80,11 @@ public class AlgorithmsTests
 
    [Fact]
    public void Algorithms_NpiAlgorithm_ShouldNotBeNull()
-      => Algorithms.NpiAlgorithm.Should().NotBeNull();
+      => Algorithms.Npi.Should().NotBeNull();
 
    [Fact]
    public void Algorithms_NpiAlgorithm_ShouldBeExpectedType()
-      => Algorithms.NpiAlgorithm.Should().BeOfType<NpiAlgorithm>();
+      => Algorithms.Npi.Should().BeOfType<NpiAlgorithm>();
 
    #endregion
 
@@ -80,11 +94,25 @@ public class AlgorithmsTests
 
    [Fact]
    public void Algorithms_VerhoeffAlgorithm_ShouldNotBeNull()
-      => Algorithms.VerhoeffAlgorithm.Should().NotBeNull();
+      => Algorithms.Verhoeff.Should().NotBeNull();
 
    [Fact]
    public void Algorithms_VerhoeffAlgorithm_ShouldBeExpectedType()
-      => Algorithms.VerhoeffAlgorithm.Should().BeOfType<VerhoeffAlgorithm>();
+      => Algorithms.Verhoeff.Should().BeOfType<VerhoeffAlgorithm>();
+
+   #endregion
+
+   #region Vin Algorithm Property Tests
+   // ==========================================================================
+   // ==========================================================================
+
+   [Fact]
+   public void Algorithms_VinAlgorithm_ShouldNotBeNull()
+      => Algorithms.Vin.Should().NotBeNull();
+
+   [Fact]
+   public void Algorithms_VinAlgorithm_ShouldBeExpectedType()
+      => Algorithms.Vin.Should().BeOfType<VinAlgorithm>();
 
    #endregion
 }

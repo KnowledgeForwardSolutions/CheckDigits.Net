@@ -79,7 +79,7 @@ using CheckDigits.Net;
 var algorithm = new LuhnAlgorithm();
 
 // Get a lazily instantiated singleton instance of the Luhn algorithm.
-var lazy = Algorithms.LuhnAlgorithm;
+var lazy = Algorithms.Luhn;
 
 
 // Calculate the check digit for a value that does not already contain a check digit.
@@ -154,6 +154,7 @@ on page 111 of Damm's doctoral dissertation.
 * Check digit size - one character
 * Check digit value - decimal digit ('0' - '9')
 * Check digit location - assumed to be the trailing (right-most) character when validating
+* Class name - DammAlgorithm
 
 #### Links
 
@@ -174,6 +175,7 @@ twin errors (i.e. *11 <-> 44*) except *22 <-> 55*,  *33 <-> 66* and *44 <-> 77*.
 * Check digit size - one character
 * Check digit value - decimal digit ('0' - '9')
 * Check digit location - assumed to be the trailing (right-most) character when validating
+* Class name - LuhnAlgorithm
 
 #### Common Applications
 
@@ -201,6 +203,7 @@ etc.). The algorithm cannot detect two digit jump transpositions.
 * Check digit size - one character
 * Check digit value - decimal digit ('0' - '9')
 * Check digit location - assumed to be the trailing (right-most) character when validating
+* Class name - Modulus10_13Algorithm
 
 #### Common Applications
 
@@ -237,6 +240,7 @@ stored as numbers and instead must be strings.
 * Check digit value - either decimal digit ('0' - '9') or an uppercase 'X'
 * Check digit location - assumed to be the trailing (right-most) character when validating
 * Max length - 9 characters when generating a check digit; 10 characters when validating
+* Class name - Modulus11Algorithm
 
 #### Common Applications
 
@@ -262,6 +266,9 @@ digit for a NHS number remains '0' - '9'. The NHS algorithm retains all error
 detecting capabilities of the Modulus 11 algorithm (detecting all single digit 
 transcription errors and all two digit transposition errors).
 
+The NHS algorithm only supports validation of check digits and does support 
+calculation of check digits.
+
 #### Details
 
 * Valid characters - decimal digits ('0' - '9')
@@ -269,6 +276,7 @@ transcription errors and all two digit transposition errors).
 * Check digit value - decimal digit ('0' - '9')
 * Check digit location - assumed to be the trailing (right-most) character when validating
 * Max length - 9 characters when generating a check digit; 10 characters when validating
+* Class name - NhsAlgorithm
 
 #### Links
 
@@ -301,6 +309,7 @@ allocating an extra string.)
 * Check digit value - decimal digit ('0' - '9')
 * Check digit location - assumed to be the trailing (right-most) character when validating
 * Max length - 9 characters when generating a check digit; 10 characters when validating
+* Class name - NpiAlgorithm
 
 #### Links
 
@@ -327,6 +336,7 @@ twin errors.
 * Check digit size - one character
 * Check digit value - decimal digit ('0' - '9')
 * Check digit location - assumed to be the trailing (right-most) character when validating
+* Class name - VerhoeffAlgorithm
 
 #### Links
 
@@ -349,6 +359,7 @@ weighting, summing and calculating sum modulus 11.
 * Check digit value - either decimal digit ('0' - '9') or an uppercase 'X'
 * Check digit location - 9th character of 17
 * Length - 17 characters
+* Class name - VinAlgorithm
 
 #### Links
 
