@@ -1,4 +1,4 @@
-﻿// Ignore Spelling: Aba Damm Luhn Npi Rtn Verhoeff
+﻿// Ignore Spelling: Aba Damm Luhn Nhs Npi Rtn Verhoeff
 
 namespace CheckDigits.Net.Tests.Unit;
 
@@ -71,6 +71,20 @@ public class AlgorithmsTests
    [Fact]
    public void Algorithms_Modulus11Algorithm_ShouldBeExpectedType()
       => Algorithms.Modulus11.Should().BeOfType<Modulus11Algorithm>();
+
+   #endregion
+
+   #region Nhs Algorithm Property Tests
+   // ==========================================================================
+   // ==========================================================================
+
+   [Fact]
+   public void Algorithms_NhsAlgorithm_ShouldNotBeNull()
+      => Algorithms.Nhs.Should().NotBeNull();
+
+   [Fact]
+   public void Algorithms_NhsAlgorithm_ShouldBeExpectedType()
+      => Algorithms.Nhs.Should().BeOfType<NhsAlgorithm>();
 
    #endregion
 

@@ -1,4 +1,4 @@
-﻿// Ignore Spelling: Aba Damm Luhn Npi Rtn Verhoeff
+﻿// Ignore Spelling: Aba Damm Luhn Nhs Npi Rtn Verhoeff
 
 namespace CheckDigits.Net;
 
@@ -22,6 +22,9 @@ public class Algorithms
 
    private static readonly Lazy<ISingleCheckDigitAlgorithm> _modulus11 =
      new(() => new Modulus11Algorithm());
+
+   private static readonly Lazy<ICheckDigitAlgorithm> _nhs =
+     new(() => new NhsAlgorithm());
 
    private static readonly Lazy<ICheckDigitAlgorithm> _npi =
      new(() => new NpiAlgorithm());
@@ -57,6 +60,11 @@ public class Algorithms
    ///   Modulus11 algorithm.
    /// </summary>
    public static ISingleCheckDigitAlgorithm Modulus11 => _modulus11.Value;
+
+   /// <summary>
+   ///   UK National Health Service (NHS) algorithm.
+   /// </summary>
+   public static ICheckDigitAlgorithm Nhs => _nhs.Value;
 
    /// <summary>
    ///   US National Provider Identifier (NPI) algorithm.

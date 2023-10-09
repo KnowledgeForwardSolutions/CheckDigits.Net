@@ -455,6 +455,12 @@ Wikipedia: https://en.wikipedia.org/wiki/Vehicle_identification_number#Check-dig
 
 ### NHS Algorithm Benchmarks
 
+| Method                 | Value      | Mean     | Error    | StdDev   | Allocated |
+|----------------------- |----------- |---------:|---------:|---------:|----------:|
+| Validate               | 3967487881 | 12.38 ns | 0.076 ns | 0.059 ns |         - |
+| Validate               | 8514468243 | 10.86 ns | 0.063 ns | 0.059 ns |         - |
+| Validate               | 9434765919 | 10.90 ns | 0.121 ns | 0.113 ns |         - |
+
 ### NPI Algorithm Benchmarks
 
 | Method                 | Value      | Mean     | Error    | StdDev   | Allocated |
