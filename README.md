@@ -33,6 +33,7 @@ a valid check digit to be considered incorrect/invalid.
 * [ABA RTN (Routing Transit Number) Algorithm](#aba-rtn-algorithm)
 * [Damm Algorithm](#damm-algorithm)
 * [Luhn Algorithm](#luhn-algorithm)
+* [Modulus10 Algorithm](#modulus10-algorithm)
 * [Modulus10_13 Algorithm (UPC/EAN/ISBN-13/etc.)](#modulus10_13-algorithm)
 * [Modulus11 Algorithm (ISBN-10/ISSN/etc.)](#modulus11-algorithm)
 * [NHS (UK National Health Service) Algorithm](#nhs-algorithm)
@@ -46,6 +47,7 @@ a valid check digit to be considered incorrect/invalid.
 | --------------------- | ----------|
 | ABA Routing Transit Number | [ABA RTN Algorithm](#aba-rtn-algorithm) |
 | CA Social Insurance Number | [Luhn Algorithm](#luhn-algorithm) |
+| CAS Registry Number   | [Modulus10 Algorithm](#modulus10-algorithm) |
 | Credit card number    | [Luhn Algorithm](#luhn-algorithm) |
 | EAN-8					| [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
 | EAN-13				| [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
@@ -54,6 +56,7 @@ a valid check digit to be considered incorrect/invalid.
 | GTIN-13				| [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
 | GTIN-14				| [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
 | IMEI				    | [Luhn Algorithm](#luhn-algorithm) |
+| IMO Number            | [Modulus10 Algorithm](#modulus10-algorithm) |
 | ISBN-10				| [Modulus11 Algorithm](#modulus11-algorithm) |
 | ISBN-13				| [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
 | ISMN					| [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
@@ -201,6 +204,31 @@ twin errors (i.e. *11 <-> 44*) except *22 <-> 55*,  *33 <-> 66* and *44 <-> 77*.
 #### Links
 
 Wikipedia: https://en.wikipedia.org/wiki/Luhn_algorithm
+
+### Modulus10 Algorithm
+
+The Modulus10 algorithm uses modulus 10 and each digit is weighted by its position
+in the value, starting from the right-most digit.
+
+#### Details
+
+* Valid characters - decimal digits ('0' - '9')
+* Check digit size - one character
+* Check digit value - either decimal digit ('0' - '9')
+* Check digit location - assumed to be the trailing (right-most) character when validating
+* Max length - 9 characters when generating a check digit; 10 characters when validating
+* Class name - Modulus10Algorithm
+
+#### Common Applications
+
+* International Maritime Organization (IMO) Number
+* International Standard Serial Number (ISSN)
+
+#### Links
+
+Wikipedia: 
+  https://en.wikipedia.org/wiki/IMO_number
+  https://en.wikipedia.org/wiki/CAS_Registry_Number
 
 ### Modulus10_13 Algorithm
 
@@ -427,6 +455,8 @@ Wikipedia: https://en.wikipedia.org/wiki/Vehicle_identification_number#Check-dig
 | Validate               | 12345674         | 13.440 ns | 0.2080 ns | 0.1850 ns |         - |
 | Validate               | 123456789015     | 18.130 ns | 0.2040 ns | 0.1810 ns |         - |
 | Validate               | 1234567890123452 | 22.540 ns | 0.1200 ns | 0.0940 ns |         - |
+
+### Modulus10 Algorithm Benchmarks
 
 ### Modulus10_13 Algorithm Benchmarks
 
