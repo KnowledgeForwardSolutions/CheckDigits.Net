@@ -104,6 +104,8 @@ public class LuhnAlgorithmTests
    [InlineData("356611111111111", '3')]    // JCB test credit card number
    [InlineData("80840123456789", '3')]     // NPI (National Provider Identifier), including 80840 prefix
    [InlineData("49015420323751", '8')]     // IMEI (International Mobile Equipment Identity)
+   [InlineData("29344343", '8')]           // Canadian Social Insurance Number from https://www.ibm.com/docs/en/sga?topic=patterns-canada-social-insurance-number
+   [InlineData("51170095", '7')]           // "
    public void LuhnAlgorithm_TryCalculateCheckDigit_ShouldCalculateExpectedCheckDigit(
       String value,
       Char expectedCheckDigit)
@@ -194,6 +196,8 @@ public class LuhnAlgorithmTests
    [InlineData("3566111111111113")]    // JCB test credit card number
    [InlineData("808401234567893")]     // NPI (National Provider Identifier), including 80840 prefix
    [InlineData("490154203237518")]     // IMEI (International Mobile Equipment Identity)
+   [InlineData("293443438")]           // Canadian Social Insurance Number from https://www.ibm.com/docs/en/sga?topic=patterns-canada-social-insurance-number
+   [InlineData("511700957")]           // "
    public void LuhnAlgorithm_Validate_ShouldReturnTrue_WhenValueContainsValidCheckDigit(String value)
       => _sut.Validate(value).Should().BeTrue();
 
