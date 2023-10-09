@@ -26,7 +26,7 @@ namespace CheckDigits.Net;
 ///   transpositions of adjacent digits.
 ///   </para>
 /// </remarks>
-public class AbaRtnAlgorithm : ISingleCheckDigitAlgorithm
+public class AbaRtnAlgorithm : ICheckDigitAlgorithm
 {
    private const Int32 _calculateLength = 8;
    private const Int32 _validateLength = 9;
@@ -37,32 +37,6 @@ public class AbaRtnAlgorithm : ISingleCheckDigitAlgorithm
 
    /// <inheritdoc/>
    public String AlgorithmName => Resources.AbaRtnAlgorithmName;
-
-   /// <inheritdoc/>
-   public Boolean TryCalculateCheckDigit(String value, out Char checkDigit)
-   {
-      checkDigit = CharConstants.NUL;
-      if (String.IsNullOrEmpty(value) || value.Length != _calculateLength)
-      {
-         return false;
-      }
-
-      var sum = 0;
-      for (var index = 0; index < value.Length; index++)
-      {
-         var currentDigit = value[index].ToIntegerDigit();
-         if (currentDigit < 0 || currentDigit > 9)
-         {
-            return false;
-         }
-
-         sum += currentDigit * _weights[index];
-      }
-      var mod = (10 - (sum % 10)) % 10;
-      checkDigit = mod.ToDigitChar();
-
-      return true;
-   }
 
    /// <inheritdoc/>
    public Boolean Validate(String value)

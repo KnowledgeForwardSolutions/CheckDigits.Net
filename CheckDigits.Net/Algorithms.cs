@@ -1,4 +1,4 @@
-﻿// Ignore Spelling: Aba Damm Luhn Npi Rtn Verhoeff
+﻿// Ignore Spelling: Aba Damm Luhn Nhs Npi Rtn Verhoeff
 
 namespace CheckDigits.Net;
 
@@ -8,7 +8,7 @@ namespace CheckDigits.Net;
 /// </summary>
 public class Algorithms
 {
-   private static readonly Lazy<ISingleCheckDigitAlgorithm> _abaRtn =
+   private static readonly Lazy<ICheckDigitAlgorithm> _abaRtn =
      new(() => new AbaRtnAlgorithm());
 
    private static readonly Lazy<ISingleCheckDigitAlgorithm> _damm =
@@ -20,40 +20,64 @@ public class Algorithms
    private static readonly Lazy<ISingleCheckDigitAlgorithm> _modulus10_13 =
      new(() => new Modulus10_13Algorithm());
 
-   private static readonly Lazy<ISingleCheckDigitAlgorithm> _npi =
+   private static readonly Lazy<ISingleCheckDigitAlgorithm> _modulus11 =
+     new(() => new Modulus11Algorithm());
+
+   private static readonly Lazy<ICheckDigitAlgorithm> _nhs =
+     new(() => new NhsAlgorithm());
+
+   private static readonly Lazy<ICheckDigitAlgorithm> _npi =
      new(() => new NpiAlgorithm());
 
    private static readonly Lazy<ISingleCheckDigitAlgorithm> _verhoeff =
      new(() => new VerhoeffAlgorithm());
 
+   private static readonly Lazy<ISingleCheckDigitAlgorithm> _vin =
+     new(() => new VinAlgorithm());
+
    /// <summary>
    ///   American Bankers Association (ABA) Routing Transit Number (RTN) 
    ///   algorithm.
    /// </summary>
-   public static ISingleCheckDigitAlgorithm AbaRtnAlgorithm => _abaRtn.Value;
+   public static ICheckDigitAlgorithm AbaRtn => _abaRtn.Value;
 
    /// <summary>
    ///   Damm algorithm.
    /// </summary>
-   public static ISingleCheckDigitAlgorithm DammAlgorithm => _damm.Value;
+   public static ISingleCheckDigitAlgorithm Damm => _damm.Value;
 
    /// <summary>
    ///   Luhn algorithm.
    /// </summary>
-   public static ISingleCheckDigitAlgorithm LuhnAlgorithm => _luhn.Value;
+   public static ISingleCheckDigitAlgorithm Luhn => _luhn.Value;
 
    /// <summary>
    ///   Modulus10_13 algorithm.
    /// </summary>
-   public static ISingleCheckDigitAlgorithm Modulus10_13Algorithm => _modulus10_13.Value;
+   public static ISingleCheckDigitAlgorithm Modulus10_13 => _modulus10_13.Value;
+
+   /// <summary>
+   ///   Modulus11 algorithm.
+   /// </summary>
+   public static ISingleCheckDigitAlgorithm Modulus11 => _modulus11.Value;
+
+   /// <summary>
+   ///   UK National Health Service (NHS) algorithm.
+   /// </summary>
+   public static ICheckDigitAlgorithm Nhs => _nhs.Value;
 
    /// <summary>
    ///   US National Provider Identifier (NPI) algorithm.
    /// </summary>
-   public static ISingleCheckDigitAlgorithm NpiAlgorithm => _npi.Value;
+   public static ICheckDigitAlgorithm Npi => _npi.Value;
 
    /// <summary>
    ///   Verhoeff algorithm.
    /// </summary>
-   public static ISingleCheckDigitAlgorithm VerhoeffAlgorithm => _verhoeff.Value;
+   public static ISingleCheckDigitAlgorithm Verhoeff => _verhoeff.Value;
+
+   /// <summary>
+   ///   Vehicle Identification Number (VIN) algorithm.
+   /// </summary>
+   public static ISingleCheckDigitAlgorithm Vin => _vin.Value;
 }

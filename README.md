@@ -23,6 +23,11 @@ Typical errors that can be detected by check digit algorithms include:
 Check digit algorithms attempt to balance detection capabilities with the cost in 
 execution time and/or the complexity to implement.
 
+Note also that if a value has a valid check digit, it does not imply that the 
+value is valid, only that the value was transcribed correctly. There may be other
+requirements that are specific to the type of value that could cause a value with
+a valid check digit to be considered incorrect/invalid.
+
 ## Supported Algorithms
 
 * [ABA RTN (Routing Transit Number) Algorithm](#aba-rtn-algorithm)
@@ -30,6 +35,7 @@ execution time and/or the complexity to implement.
 * [Luhn Algorithm](#luhn-algorithm)
 * [Modulus10_13 Algorithm (UPC/EAN/ISBN-13/etc.)](#modulus10_13-algorithm)
 * [Modulus11 Algorithm (ISBN-10/ISSN/etc.)](#modulus11-algorithm)
+* [NHS (UK National Health Service) Algorithm](#nhs-algorithm)
 * [NPI (US National Provider Identifier) Algorithm](#npi-algorithm)
 * [Verhoeff Algorithm](#verhoeff-algorithm)
 * [VIN (Vehicle Identification Number) Algorithm](#vin-algorithm)
@@ -51,6 +57,7 @@ execution time and/or the complexity to implement.
 | ISBN-13				| [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
 | ISMN					| [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
 | ISSN   				| [Modulus11 Algorithm](#modulus11-algorithm) |
+| NHS                   | [NHS Algorithm](#nhs-algorithm) |
 | NPI   				| [NPI Algorithm](#npi-algorithm) |
 | SSCC					| [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
 | VIN                   | [VIN Algorithm](#vin-algorithm) |
@@ -77,7 +84,7 @@ using CheckDigits.Net;
 var algorithm = new LuhnAlgorithm();
 
 // Get a lazily instantiated singleton instance of the Luhn algorithm.
-var lazy = Algorithms.LuhnAlgorithm;
+var lazy = Algorithms.Luhn;
 
 
 // Calculate the check digit for a value that does not already contain a check digit.
@@ -110,6 +117,11 @@ Check digit algorithms that use two character check digits also implement
 ```IDoubleCheckDigitAlgorithm```. This interface also has a TryCalculateCheckDigit
 method, but the output parameter is a string instead of a character.
 
+Note that ```ISingleCheckDigitAlgorithm``` and ```IDoubleCheckDigitAlgorithm```
+are not implemented for algorithms for government issued identifiers (for example,
+UK NHS numbers and US NPI numbers) or values issued by a single authority (such
+as ABA Routing Transit Numbers).
+
 ## Algorithm Descriptions
 
 ### ABA RTN Algorithm
@@ -121,13 +133,17 @@ a modulus 10 algorithm that uses weights 3, 7 and 1. The algorithm can detect al
 single digit transcription errors and most two digit transposition errors except
 those where the transposed digits differ by 5 (i.e. *1 <-> 6*, *2 <-> 7*, etc.).
 
+The ABA RTN algorithm only supports validation of check digits and does support 
+calculation of check digits.
+
 #### Details
 
 * Valid characters - decimal digits ('0' - '9')
 * Check digit size - one character
 * Check digit value - decimal digit ('0' - '9')
 * Check digit location - ninth digit
-* Max length - 8 characters when generating a check digit; 9 characters when validating
+* Value length - 9 characters
+* Class name - AbaRtnAlgorithm
 
 #### Links
 
@@ -152,6 +168,7 @@ on page 111 of Damm's doctoral dissertation.
 * Check digit size - one character
 * Check digit value - decimal digit ('0' - '9')
 * Check digit location - assumed to be the trailing (right-most) character when validating
+* Class name - DammAlgorithm
 
 #### Links
 
@@ -172,6 +189,7 @@ twin errors (i.e. *11 <-> 44*) except *22 <-> 55*,  *33 <-> 66* and *44 <-> 77*.
 * Check digit size - one character
 * Check digit value - decimal digit ('0' - '9')
 * Check digit location - assumed to be the trailing (right-most) character when validating
+* Class name - LuhnAlgorithm
 
 #### Common Applications
 
@@ -199,6 +217,7 @@ etc.). The algorithm cannot detect two digit jump transpositions.
 * Check digit size - one character
 * Check digit value - decimal digit ('0' - '9')
 * Check digit location - assumed to be the trailing (right-most) character when validating
+* Class name - Modulus10_13Algorithm
 
 #### Common Applications
 
@@ -235,6 +254,7 @@ stored as numbers and instead must be strings.
 * Check digit value - either decimal digit ('0' - '9') or an uppercase 'X'
 * Check digit location - assumed to be the trailing (right-most) character when validating
 * Max length - 9 characters when generating a check digit; 10 characters when validating
+* Class name - Modulus11Algorithm
 
 #### Common Applications
 
@@ -246,6 +266,37 @@ stored as numbers and instead must be strings.
 Wikipedia: 
   https://en.wikipedia.org/wiki/ISBN#ISBN-10_check_digits
   https://en.wikipedia.org/wiki/ISSN
+
+### NHS Algorithm
+
+#### Description
+
+UK National Health Service (NHS) identifiers use a variation of the Modulus 11 
+algorithm. However, instead of generating 11 possible values for the check digit,
+the NHS algorithm does not allow a remainder of 10 (the 'X' character used by the
+Modulus 11 algorithm). Any possible NHS number that would generate a remainder of 
+10 is not allowed and those numbers are not issued. This means that the check 
+digit for a NHS number remains '0' - '9'. The NHS algorithm retains all error 
+detecting capabilities of the Modulus 11 algorithm (detecting all single digit 
+transcription errors and all two digit transposition errors).
+
+The NHS algorithm only supports validation of check digits and does support 
+calculation of check digits.
+
+#### Details
+
+* Valid characters - decimal digits ('0' - '9')
+* Check digit size - one character
+* Check digit value - decimal digit ('0' - '9')
+* Check digit location - assumed to be the trailing (right-most) character when validating
+* Value length - 10 characters
+* Class name - NhsAlgorithm
+
+#### Links
+
+Wikipedia: 
+	https://en.wikipedia.org/wiki/NHS_number#Format,_number_ranges,_and_check_characters
+	https://www.datadictionary.nhs.uk/attributes/nhs_number.html
 
 ### NPI Algorithm
 
@@ -265,13 +316,17 @@ by first prefixing your value with "80840". However, CheckDigits.Net's
 implementation of the NPI algorithm handles the prefix internally and without 
 allocating an extra string.)
 
+The NPI algorithm only supports validation of check digits and does support 
+calculation of check digits.
+
 #### Details
 
 * Valid characters - decimal digits ('0' - '9')
 * Check digit size - one character
 * Check digit value - decimal digit ('0' - '9')
 * Check digit location - assumed to be the trailing (right-most) character when validating
-* Max length - 9 characters when generating a check digit; 10 characters when validating
+* Value length - 10 characters
+* Class name - NpiAlgorithm
 
 #### Links
 
@@ -298,6 +353,7 @@ twin errors.
 * Check digit size - one character
 * Check digit value - decimal digit ('0' - '9')
 * Check digit location - assumed to be the trailing (right-most) character when validating
+* Class name - VerhoeffAlgorithm
 
 #### Links
 
@@ -320,6 +376,7 @@ weighting, summing and calculating sum modulus 11.
 * Check digit value - either decimal digit ('0' - '9') or an uppercase 'X'
 * Check digit location - 9th character of 17
 * Length - 17 characters
+* Class name - VinAlgorithm
 
 #### Links
 
@@ -332,6 +389,7 @@ Wikipedia: https://en.wikipedia.org/wiki/Vehicle_identification_number#Check-dig
 * [Luhn Algorithm](#luhn-algorithm-benchmarks)
 * [Modulus10_13 Algorithm](#modulus10_13-algorithm-benchmarks)
 * [Modulus11 Algorithm](#modulus11-algorithm-benchmarks)
+* [NHS Algorithm](#nhs-algorithm-benchmarks)
 * [NPI Algorithm](#npi-algorithm-benchmarks)
 * [Verhoeff Algorithm](#verhoeff-algorithm-benchmarks)
 * [VIN Algorithm](#vin-algorithm-benchmarks)
@@ -340,8 +398,6 @@ Wikipedia: https://en.wikipedia.org/wiki/Vehicle_identification_number#Check-dig
 
 | Method                 | Value     | Mean     | Error     | StdDev    | Allocated |
 |----------------------- |---------- |---------:|----------:|----------:|----------:|
-| TryCalculateCheckDigit | 11100002  | 11.76 ns | 0.1060 ns | 0.0940 ns |         - |
-| TryCalculateCheckDigit | 12223582  | 10.41 ns | 0.1230 ns | 0.1150 ns |         - |
 | Validate               | 111000025 | 9.766 ns | 0.1837 ns | 0.1719 ns |         - |
 | Validate               | 122235821 | 7.654 ns | 0.0508 ns | 0.0424 ns |         - |
 
@@ -397,12 +453,18 @@ Wikipedia: https://en.wikipedia.org/wiki/Vehicle_identification_number#Check-dig
 | Validate               | 03178471   |  9.295 ns | 0.1752 ns | 0.1874 ns |         - |
 | Validate               | 050027293X | 10.052 ns | 0.1027 ns | 0.0911 ns |         - |
 
+### NHS Algorithm Benchmarks
+
+| Method                 | Value      | Mean     | Error    | StdDev   | Allocated |
+|----------------------- |----------- |---------:|---------:|---------:|----------:|
+| Validate               | 3967487881 | 12.38 ns | 0.076 ns | 0.059 ns |         - |
+| Validate               | 8514468243 | 10.86 ns | 0.063 ns | 0.059 ns |         - |
+| Validate               | 9434765919 | 10.90 ns | 0.121 ns | 0.113 ns |         - |
+
 ### NPI Algorithm Benchmarks
 
 | Method                 | Value      | Mean     | Error    | StdDev   | Allocated |
 |----------------------- |----------- |---------:|---------:|---------:|----------:|
-| TryCalculateCheckDigit | 123456789  | 14.87 ns | 0.231 ns | 0.216 ns |         - |
-| TryCalculateCheckDigit | 124531959  | 13.33 ns | 0.186 ns | 0.174 ns |         - |
 | Validate               | 1234567893 | 15.59 ns | 0.296 ns | 0.277 ns |         - |
 | Validate               | 1245319599 | 14.51 ns | 0.256 ns | 0.239 ns |         - |
 

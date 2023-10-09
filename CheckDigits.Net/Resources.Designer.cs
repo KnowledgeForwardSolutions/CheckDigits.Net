@@ -151,6 +151,24 @@ namespace CheckDigits.Net {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to NHS - Modulus 11, but only with check digits of 0-9.
+        /// </summary>
+        internal static string NhsAlgorithmDescription {
+            get {
+                return ResourceManager.GetString("NhsAlgorithmDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to NHS (UK National Health Service).
+        /// </summary>
+        internal static string NhsAlgorithmName {
+            get {
+                return ResourceManager.GetString("NhsAlgorithmName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to NPI - Luhn algorithm with constant &quot;80840&quot; prefix.
         /// </summary>
         internal static string NpiAlgorithmDescription {
@@ -160,7 +178,7 @@ namespace CheckDigits.Net {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to NPI (National Provider Identifier).
+        ///   Looks up a localized string similar to NPI (US National Provider Identifier).
         /// </summary>
         internal static string NpiAlgorithmName {
             get {
