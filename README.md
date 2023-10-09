@@ -44,7 +44,8 @@ a valid check digit to be considered incorrect/invalid.
 
 | Value/Identifier Type | Algorithm |
 | --------------------- | ----------|
-| ABA RTN				| [ABA RTN Algorithm](#aba-rtn-algorithm) |
+| ABA Routing Transit Number | [ABA RTN Algorithm](#aba-rtn-algorithm) |
+| CA Social Insurance Number | [Luhn Algorithm](#luhn-algorithm) |
 | Credit card number    | [Luhn Algorithm](#luhn-algorithm) |
 | EAN-8					| [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
 | EAN-13				| [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
@@ -57,10 +58,10 @@ a valid check digit to be considered incorrect/invalid.
 | ISBN-13				| [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
 | ISMN					| [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
 | ISSN   				| [Modulus11 Algorithm](#modulus11-algorithm) |
-| NHS                   | [NHS Algorithm](#nhs-algorithm) |
-| NPI   				| [NPI Algorithm](#npi-algorithm) |
+| UK National Health Service Number | [NHS Algorithm](#nhs-algorithm) |
+| US National Provider Identifier | [NPI Algorithm](#npi-algorithm) |
 | SSCC					| [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
-| VIN                   | [VIN Algorithm](#vin-algorithm) |
+| Vehicle Identification Number | [VIN Algorithm](#vin-algorithm) |
 | UPC-A					| [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
 | UPC-E					| [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
 
@@ -195,7 +196,7 @@ twin errors (i.e. *11 <-> 44*) except *22 <-> 55*,  *33 <-> 66* and *44 <-> 77*.
 
 * Credit card numbers
 * International Mobile Equipment Identity (IMEI) numbers
-* A wide variety of government identifiers. See Wikipedia link for more info.
+* Canadian Social Insurance Number (SIN)
 
 #### Links
 
