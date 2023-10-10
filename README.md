@@ -480,7 +480,25 @@ Wikipedia: https://en.wikipedia.org/wiki/Vehicle_identification_number#Check-dig
 
 ### Modulus10_1 Algorithm Benchmarks
 
+| Method                 | Value    | Mean     | Error     | StdDev    | Allocated |
+|----------------------- |--------- |---------:|----------:|----------:|----------:|
+| TryCalculateCheckDigit | 5808     | 3.690 ns | 0.0185 ns | 0.0173 ns |         - |
+| TryCalculateCheckDigit | 773218   | 5.000 ns | 0.0224 ns | 0.0187 ns |         - |
+| TryCalculateCheckDigit | 2872855  | 6.844 ns | 0.0618 ns | 0.0548 ns |         - |
+| Validate               | 58082    | 5.023 ns | 0.0352 ns | 0.0312 ns |         - |
+| Validate               | 7732185  | 6.437 ns | 0.0241 ns | 0.0188 ns |         - |
+| Validate               | 28728554 | 8.371 ns | 0.0582 ns | 0.0454 ns |         - |
+
 ### Modulus10_2 Algorithm Benchmarks
+
+| Method                 | Value   | Mean     | Error     | StdDev    | Allocated |
+|----------------------- |-------- |---------:|----------:|----------:|----------:|
+| TryCalculateCheckDigit | 101056  | 6.495 ns | 0.0518 ns | 0.0485 ns |         - |
+| TryCalculateCheckDigit | 907472  | 4.998 ns | 0.0625 ns | 0.0585 ns |         - |
+| TryCalculateCheckDigit | 970779  | 4.983 ns | 0.0221 ns | 0.0196 ns |         - |
+| Validate               | 1010569 | 7.811 ns | 0.0259 ns | 0.0217 ns |         - |
+| Validate               | 9074729 | 6.455 ns | 0.0572 ns | 0.0535 ns |         - |
+| Validate               | 9707792 | 6.434 ns | 0.0270 ns | 0.0211 ns |         - |
 
 ### Modulus10_13 Algorithm Benchmarks
 
