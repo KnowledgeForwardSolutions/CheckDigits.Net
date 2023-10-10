@@ -33,6 +33,8 @@ a valid check digit to be considered incorrect/invalid.
 * [ABA RTN (Routing Transit Number) Algorithm](#aba-rtn-algorithm)
 * [Damm Algorithm](#damm-algorithm)
 * [Luhn Algorithm](#luhn-algorithm)
+* [Modulus10_1 Algorithm](#modulus10_1-algorithm)
+* [Modulus10_2 Algorithm](#modulus10_2-algorithm)
 * [Modulus10_13 Algorithm (UPC/EAN/ISBN-13/etc.)](#modulus10_13-algorithm)
 * [Modulus11 Algorithm (ISBN-10/ISSN/etc.)](#modulus11-algorithm)
 * [NHS (UK National Health Service) Algorithm](#nhs-algorithm)
@@ -46,6 +48,7 @@ a valid check digit to be considered incorrect/invalid.
 | --------------------- | ----------|
 | ABA Routing Transit Number | [ABA RTN Algorithm](#aba-rtn-algorithm) |
 | CA Social Insurance Number | [Luhn Algorithm](#luhn-algorithm) |
+| CAS Registry Number   | [Modulus10 Algorithm](#modulus10_1-algorithm) |
 | Credit card number    | [Luhn Algorithm](#luhn-algorithm) |
 | EAN-8					| [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
 | EAN-13				| [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
@@ -54,6 +57,7 @@ a valid check digit to be considered incorrect/invalid.
 | GTIN-13				| [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
 | GTIN-14				| [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
 | IMEI				    | [Luhn Algorithm](#luhn-algorithm) |
+| IMO Number            | [Modulus10 Algorithm](#modulus10_2-algorithm) |
 | ISBN-10				| [Modulus11 Algorithm](#modulus11-algorithm) |
 | ISBN-13				| [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
 | ISMN					| [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
@@ -201,6 +205,50 @@ twin errors (i.e. *11 <-> 44*) except *22 <-> 55*,  *33 <-> 66* and *44 <-> 77*.
 #### Links
 
 Wikipedia: https://en.wikipedia.org/wiki/Luhn_algorithm
+
+### Modulus10_1 Algorithm
+
+The Modulus10 algorithm uses modulus 10 and each digit is weighted by its position
+in the value, starting with weight 1 for the right-most non-check digit character.
+
+#### Details
+
+* Valid characters - decimal digits ('0' - '9')
+* Check digit size - one character
+* Check digit value - either decimal digit ('0' - '9')
+* Check digit location - assumed to be the trailing (right-most) character when validating
+* Max length - 9 characters when generating a check digit; 10 characters when validating
+* Class name - Modulus10_1Algorithm
+
+#### Common Applications
+
+* Chemical Abstracts Service (CAS) Registry Number
+
+#### Links
+
+Wikipedia: https://en.wikipedia.org/wiki/CAS_Registry_Number
+
+### Modulus10_2 Algorithm
+
+The Modulus10 algorithm uses modulus 10 and each digit is weighted by its position
+in the value, starting with weight 2 for the right-most non-check digit character.
+
+#### Details
+
+* Valid characters - decimal digits ('0' - '9')
+* Check digit size - one character
+* Check digit value - either decimal digit ('0' - '9')
+* Check digit location - assumed to be the trailing (right-most) character when validating
+* Max length - 9 characters when generating a check digit; 10 characters when validating
+* Class name - Modulus10_2Algorithm
+
+#### Common Applications
+
+* International Maritime Organization (IMO) Number
+
+#### Links
+
+Wikipedia: https://en.wikipedia.org/wiki/IMO_number
 
 ### Modulus10_13 Algorithm
 
@@ -388,6 +436,8 @@ Wikipedia: https://en.wikipedia.org/wiki/Vehicle_identification_number#Check-dig
 * [ABA RTN Algorithm](#aba-rtn-algorithm-benchmarks)
 * [Damm Algorithm](#damm-algorithm-benchmarks)
 * [Luhn Algorithm](#luhn-algorithm-benchmarks)
+* [Modulus10_1 Algorithm](#modulus10_1-algorithm-benchmarks)
+* [Modulus10_2 Algorithm](#modulus10_2-algorithm-benchmarks)
 * [Modulus10_13 Algorithm](#modulus10_13-algorithm-benchmarks)
 * [Modulus11 Algorithm](#modulus11-algorithm-benchmarks)
 * [NHS Algorithm](#nhs-algorithm-benchmarks)
@@ -427,6 +477,28 @@ Wikipedia: https://en.wikipedia.org/wiki/Vehicle_identification_number#Check-dig
 | Validate               | 12345674         | 13.440 ns | 0.2080 ns | 0.1850 ns |         - |
 | Validate               | 123456789015     | 18.130 ns | 0.2040 ns | 0.1810 ns |         - |
 | Validate               | 1234567890123452 | 22.540 ns | 0.1200 ns | 0.0940 ns |         - |
+
+### Modulus10_1 Algorithm Benchmarks
+
+| Method                 | Value    | Mean     | Error     | StdDev    | Allocated |
+|----------------------- |--------- |---------:|----------:|----------:|----------:|
+| TryCalculateCheckDigit | 5808     | 3.690 ns | 0.0185 ns | 0.0173 ns |         - |
+| TryCalculateCheckDigit | 773218   | 5.000 ns | 0.0224 ns | 0.0187 ns |         - |
+| TryCalculateCheckDigit | 2872855  | 6.844 ns | 0.0618 ns | 0.0548 ns |         - |
+| Validate               | 58082    | 5.023 ns | 0.0352 ns | 0.0312 ns |         - |
+| Validate               | 7732185  | 6.437 ns | 0.0241 ns | 0.0188 ns |         - |
+| Validate               | 28728554 | 8.371 ns | 0.0582 ns | 0.0454 ns |         - |
+
+### Modulus10_2 Algorithm Benchmarks
+
+| Method                 | Value   | Mean     | Error     | StdDev    | Allocated |
+|----------------------- |-------- |---------:|----------:|----------:|----------:|
+| TryCalculateCheckDigit | 101056  | 6.495 ns | 0.0518 ns | 0.0485 ns |         - |
+| TryCalculateCheckDigit | 907472  | 4.998 ns | 0.0625 ns | 0.0585 ns |         - |
+| TryCalculateCheckDigit | 970779  | 4.983 ns | 0.0221 ns | 0.0196 ns |         - |
+| Validate               | 1010569 | 7.811 ns | 0.0259 ns | 0.0217 ns |         - |
+| Validate               | 9074729 | 6.455 ns | 0.0572 ns | 0.0535 ns |         - |
+| Validate               | 9707792 | 6.434 ns | 0.0270 ns | 0.0211 ns |         - |
 
 ### Modulus10_13 Algorithm Benchmarks
 

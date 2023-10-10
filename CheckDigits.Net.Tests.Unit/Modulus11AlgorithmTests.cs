@@ -45,7 +45,7 @@ public class Modulus11AlgorithmTests
    }
 
    [Fact]
-   public void Modulus11Algorithm_TryCalculateCheckDigit_ShouldReturnFalse_WhenInputHasLengthGreaterThanEleven()
+   public void Modulus11Algorithm_TryCalculateCheckDigit_ShouldReturnFalse_WhenInputHasLengthGreaterThanNine()
    {
       // Act/assert.
       _sut.TryCalculateCheckDigit("1234567890", out var checkDigit).Should().BeFalse();

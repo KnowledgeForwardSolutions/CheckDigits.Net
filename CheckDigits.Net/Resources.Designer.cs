@@ -133,6 +133,42 @@ namespace CheckDigits.Net {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Modulus 10 algorithm where every character is weighted by its position, starting with weight 1 for the right-most non-check digit character.
+        /// </summary>
+        internal static string Modulus10_1AlgorithmDescription {
+            get {
+                return ResourceManager.GetString("Modulus10_1AlgorithmDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Modulus10_1.
+        /// </summary>
+        internal static string Modulus10_1AlgorithmName {
+            get {
+                return ResourceManager.GetString("Modulus10_1AlgorithmName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Modulus 10 algorithm where every character is weighted by its position, starting with weight 2 for the right-most non-check digit character.
+        /// </summary>
+        internal static string Modulus10_2AlgorithmDescription {
+            get {
+                return ResourceManager.GetString("Modulus10_2AlgorithmDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Modulus10_2.
+        /// </summary>
+        internal static string Modulus10_2AlgorithmName {
+            get {
+                return ResourceManager.GetString("Modulus10_2AlgorithmName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Modulus 11 algorithm where every character is weighted by its position, starting from the right-most character. Generated check digit will be 0-9 or X.
         /// </summary>
         internal static string Modulus11AlgorithmDescription {
