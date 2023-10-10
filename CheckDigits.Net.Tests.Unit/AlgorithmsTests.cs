@@ -46,6 +46,34 @@ public class AlgorithmsTests
 
    #endregion
 
+   #region Modulus10_1 Algorithm Property Tests
+   // ==========================================================================
+   // ==========================================================================
+
+   [Fact]
+   public void Algorithms_Modulus10_1Algorithm_ShouldNotBeNull()
+      => Algorithms.Modulus10_1.Should().NotBeNull();
+
+   [Fact]
+   public void Algorithms_Modulus10_1Algorithm_ShouldBeExpectedType()
+      => Algorithms.Modulus10_1.Should().BeOfType<Modulus10_1Algorithm>();
+
+   #endregion
+
+   #region Modulus10_2 Algorithm Property Tests
+   // ==========================================================================
+   // ==========================================================================
+
+   [Fact]
+   public void Algorithms_Modulus10_2Algorithm_ShouldNotBeNull()
+      => Algorithms.Modulus10_2.Should().NotBeNull();
+
+   [Fact]
+   public void Algorithms_Modulus10_2Algorithm_ShouldBeExpectedType()
+      => Algorithms.Modulus10_2.Should().BeOfType<Modulus10_2Algorithm>();
+
+   #endregion
+
    #region Modulus10_13 Algorithm Property Tests
    // ==========================================================================
    // ==========================================================================

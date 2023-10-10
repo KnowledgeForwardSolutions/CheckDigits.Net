@@ -17,6 +17,12 @@ public class Algorithms
    private static readonly Lazy<ISingleCheckDigitAlgorithm> _luhn =
      new(() => new LuhnAlgorithm());
 
+   private static readonly Lazy<ISingleCheckDigitAlgorithm> _modulus10_1 =
+     new(() => new Modulus10_1Algorithm());
+
+   private static readonly Lazy<ISingleCheckDigitAlgorithm> _modulus10_2 =
+     new(() => new Modulus10_2Algorithm());
+
    private static readonly Lazy<ISingleCheckDigitAlgorithm> _modulus10_13 =
      new(() => new Modulus10_13Algorithm());
 
@@ -50,6 +56,16 @@ public class Algorithms
    ///   Luhn algorithm.
    /// </summary>
    public static ISingleCheckDigitAlgorithm Luhn => _luhn.Value;
+
+   /// <summary>
+   ///   Modulus10_1 algorithm.
+   /// </summary>
+   public static ISingleCheckDigitAlgorithm Modulus10_1 => _modulus10_1.Value;
+
+   /// <summary>
+   ///   Modulus10_2 algorithm.
+   /// </summary>
+   public static ISingleCheckDigitAlgorithm Modulus10_2 => _modulus10_2.Value;
 
    /// <summary>
    ///   Modulus10_13 algorithm.
