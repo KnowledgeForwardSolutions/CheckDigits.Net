@@ -141,6 +141,18 @@
   <data name="Modulus10_13AlgorithmName" xml:space="preserve">
     <value>Modulus10_13</value>
   </data>
+  <data name="Modulus10_1AlgorithmDescription" xml:space="preserve">
+    <value>Modulus 10 algorithm where every character is weighted by its position, starting with weight 1 for the right-most non-check digit character</value>
+  </data>
+  <data name="Modulus10_1AlgorithmName" xml:space="preserve">
+    <value>Modulus10_1</value>
+  </data>
+  <data name="Modulus10_2AlgorithmDescription" xml:space="preserve">
+    <value>Modulus 10 algorithm where every character is weighted by its position, starting with weight 2 for the right-most non-check digit character</value>
+  </data>
+  <data name="Modulus10_2AlgorithmName" xml:space="preserve">
+    <value>Modulus10_2</value>
+  </data>
   <data name="Modulus11AlgorithmDescription" xml:space="preserve">
     <value>Modulus 11 algorithm where every character is weighted by its position, starting from the right-most character. Generated check digit will be 0-9 or X</value>
   </data>
