@@ -190,9 +190,8 @@ variation of the Luhn algorithm and has all of the capabilities of the Luhn
 algorithm, including the ability to detect all single digit (or character) 
 transcription errors and most two digit (or character) transposition errors.
 Like the Luhn algorithm it cannot detect the transposition error *09 -> 90* and 
-vice versa. In addition, because the range of valid characters includes letters,
-there are character transpositions that the algorithm cannot detect. Wikipedia
-identifies the transposition *XV -> VX* as an undetectable transposition.
+vice versa. The algorithm has a known weakness that it cannot detect transposed
+letters.
 
 #### Details
 

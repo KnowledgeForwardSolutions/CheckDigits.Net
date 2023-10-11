@@ -129,6 +129,12 @@
   <data name="DammAlgorithmName" xml:space="preserve">
     <value>Damm</value>
   </data>
+  <data name="IsinAlgorithmDescription" xml:space="preserve">
+    <value>Variation of the Luhn algorithm that supports alphanumeric characters</value>
+  </data>
+  <data name="IsinAlgorithmName" xml:space="preserve">
+    <value>ISIN (International Securities Identity Number)</value>
+  </data>
   <data name="LuhnAlgorithmDescription" xml:space="preserve">
     <value>Luhn algorithm - modulus 10 algorithm with weight 2 applied to every odd position character</value>
   </data>
