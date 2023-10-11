@@ -32,6 +32,7 @@ a valid check digit to be considered incorrect/invalid.
 
 * [ABA RTN (Routing Transit Number) Algorithm](#aba-rtn-algorithm)
 * [Damm Algorithm](#damm-algorithm)
+* [ISIN (International Securities Identification Number) Algorithm](#isin-algorithm)
 * [Luhn Algorithm](#luhn-algorithm)
 * [Modulus10_1 Algorithm](#modulus10_1-algorithm)
 * [Modulus10_2 Algorithm](#modulus10_2-algorithm)
@@ -60,6 +61,7 @@ a valid check digit to be considered incorrect/invalid.
 | IMO Number            | [Modulus10 Algorithm](#modulus10_2-algorithm) |
 | ISBN-10				| [Modulus11 Algorithm](#modulus11-algorithm) |
 | ISBN-13				| [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
+| ISIN                  | [ISIN Algorithm](#isin-algorithm) |
 | ISMN					| [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
 | ISSN   				| [Modulus11 Algorithm](#modulus11-algorithm) |
 | UK National Health Service Number | [NHS Algorithm](#nhs-algorithm) |
@@ -178,6 +180,36 @@ on page 111 of Damm's doctoral dissertation.
 #### Links
 
 Wikipedia: https://en.wikipedia.org/wiki/Damm_algorithm
+
+### ISIN Algorithm
+
+#### Description
+
+The ISIN (International Securities Identification Number) algorithm uses a 
+variation of the Luhn algorithm and has all of the capabilities of the Luhn 
+algorithm, including the ability to detect all single digit (or character) 
+transcription errors and most two digit (or character) transposition errors.
+Like the Luhn algorithm it cannot detect the transposition error *09 -> 90* and 
+vice versa. In addition, because the range of valid characters includes letters,
+there are character transpositions that the algorithm cannot detect. Wikipedia
+identifies the transposition *XV -> VX* as an undetectable transposition.
+
+#### Details
+
+* Valid characters - alphanumeric characters ('0' - '9', 'A' - 'Z')
+* Check digit size - one character
+* Check digit value - decimal digit ('0' - '9')
+* Check digit location - assumed to be the trailing (right-most) character when validating
+* Value length - 12
+* Class name - IsinAlgorithm
+
+#### Common Applications
+
+* International Securities Identification Number (ISIN)
+
+#### Links
+
+Wikipedia: https://en.wikipedia.org/wiki/International_Securities_Identification_Number
 
 ### Luhn Algorithm
 
@@ -435,6 +467,7 @@ Wikipedia: https://en.wikipedia.org/wiki/Vehicle_identification_number#Check-dig
 
 * [ABA RTN Algorithm](#aba-rtn-algorithm-benchmarks)
 * [Damm Algorithm](#damm-algorithm-benchmarks)
+* [ISIN Algorithm](#isin-algorithm-benchmarks)
 * [Luhn Algorithm](#luhn-algorithm-benchmarks)
 * [Modulus10_1 Algorithm](#modulus10_1-algorithm-benchmarks)
 * [Modulus10_2 Algorithm](#modulus10_2-algorithm-benchmarks)
@@ -464,6 +497,8 @@ Wikipedia: https://en.wikipedia.org/wiki/Vehicle_identification_number#Check-dig
 | Validate               | 12345671         | 14.179 ns | 0.1678 ns | 0.1569 ns |         - |
 | Validate               | 123456789018     | 20.616 ns | 0.1890 ns | 0.1676 ns |         - |
 | Validate               | 1234567890123450 | 27.317 ns | 0.3768 ns | 0.3340 ns |         - |
+
+### ISIN Algorithm Benchmarks
 
 ### Luhn Algorithm Benchmarks
 
