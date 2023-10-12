@@ -503,6 +503,15 @@ Wikipedia: https://en.wikipedia.org/wiki/Vehicle_identification_number#Check-dig
 
 ### ISIN Algorithm Benchmarks
 
+| Method                 | Value        | Mean     | Error    | StdDev   | Allocated |
+|----------------------- |------------- |---------:|---------:|---------:|----------:|
+| TryCalculateCheckDigit | AU0000XVGZA  | 28.73 ns | 0.192 ns | 0.170 ns |         - |
+| TryCalculateCheckDigit | US037833100  | 22.47 ns | 0.102 ns | 0.090 ns |         - |
+| TryCalculateCheckDigit | US88160R101  | 23.49 ns | 0.113 ns | 0.100 ns |         - |
+| Validate               | AU0000XVGZA3 | 25.01 ns | 0.141 ns | 0.125 ns |         - |
+| Validate               | US0378331005 | 21.64 ns | 0.096 ns | 0.075 ns |         - |
+| Validate               | US88160R1014 | 21.78 ns | 0.110 ns | 0.103 ns |         - |
+
 ### Luhn Algorithm Benchmarks
 
 | Method                 | Value            | Mean      | Error     | StdDev    | Allocated |
