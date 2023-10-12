@@ -30,6 +30,230 @@ public class IsinAlgorithmTests
    // ==========================================================================
    // ==========================================================================
 
+   [Fact]
+   public void IsinAlgorithm_TryCalculateCheckDigit_ShouldReturnFalse_WhenInputIsNull()
+   {
+      // Act/assert.
+      _sut.TryCalculateCheckDigit(null!, out var checkDigit).Should().BeFalse();
+      checkDigit.Should().Be('\0');
+   }
+
+   [Fact]
+   public void IsinAlgorithm_TryCalculateCheckDigit_ShouldReturnFalse_WhenInputIsEmpty()
+   {
+      // Act/assert.
+      _sut.TryCalculateCheckDigit(String.Empty, out var checkDigit).Should().BeFalse();
+      checkDigit.Should().Be('\0');
+   }
+
+   [Fact]
+   public void IsinAlgorithm_TryCalculateCheckDigit_ShouldReturnFalse_WhenInputHasLengthLessThanElevenCharacters()
+   {
+      // Act/assert.
+      _sut.TryCalculateCheckDigit("1234567890", out var checkDigit).Should().BeFalse();
+      checkDigit.Should().Be('\0');
+   }
+
+   [Fact]
+   public void IsinAlgorithm_TryCalculateCheckDigit_ShouldReturnFalse_WhenInputHasLengthGreaterThanElevenCharacters()
+   {
+      // Act/assert.
+      _sut.TryCalculateCheckDigit("123456789012", out var checkDigit).Should().BeFalse();
+      checkDigit.Should().Be('\0');
+   }
+
+   [Theory]
+   [InlineData("00000000001", '8')]
+   [InlineData("00000000100", '8')]
+   [InlineData("00000010000", '8')]
+   [InlineData("00001000000", '8')]
+   [InlineData("00100000000", '8')]
+   [InlineData("10000000000", '8')]
+   public void IsinAlgorithm_TryCalculateCheckDigit_ShouldCorrectlyWeightOddPositionDigits(
+      String value,
+      Char expectedCheckDigit)
+   {
+      // Act/assert.
+      _sut.TryCalculateCheckDigit(value, out var checkDigit).Should().BeTrue();
+      checkDigit.Should().Be(expectedCheckDigit);
+   }
+
+   [Theory]
+   [InlineData("00000000010", '9')]
+   [InlineData("00000001000", '9')]
+   [InlineData("00000100000", '9')]
+   [InlineData("00010000000", '9')]
+   [InlineData("01000000000", '9')]
+   public void IsinAlgorithm_TryCalculateCheckDigit_ShouldCorrectlyWeightEvenPositionDigits(
+      String value,
+      Char expectedCheckDigit)
+   {
+      // Act/assert.
+      _sut.TryCalculateCheckDigit(value, out var checkDigit).Should().BeTrue();
+      checkDigit.Should().Be(expectedCheckDigit);
+   }
+
+   [Theory]
+   [InlineData("0000000000A", '9')]
+   [InlineData("00000000A00", '9')]
+   [InlineData("000000A0000", '9')]
+   [InlineData("0000A000000", '9')]
+   [InlineData("00A00000000", '9')]
+   [InlineData("A0000000000", '9')]
+   public void IsinAlgorithm_TryCalculateCheckDigit_ShouldCorrectlyWeightOddPositionLetters(
+      String value,
+      Char expectedCheckDigit)
+   {
+      // Act/assert.
+      _sut.TryCalculateCheckDigit(value, out var checkDigit).Should().BeTrue();
+      checkDigit.Should().Be(expectedCheckDigit);
+   }
+
+   [Theory]
+   [InlineData("000000000A0", '8')]
+   [InlineData("0000000A000", '8')]
+   [InlineData("00000A00000", '8')]
+   [InlineData("000A0000000", '8')]
+   [InlineData("0A000000000", '8')]
+   public void IsinAlgorithm_TryCalculateCheckDigit_ShouldCorrectlyWeightEvenPositionLetters(
+      String value,
+      Char expectedCheckDigit)
+   {
+      // Act/assert.
+      _sut.TryCalculateCheckDigit(value, out var checkDigit).Should().BeTrue();
+      checkDigit.Should().Be(expectedCheckDigit);
+   }
+
+   [Theory]
+   [InlineData("00000000000", '0')]
+   [InlineData("00000000001", '8')]
+   [InlineData("00000000002", '6')]
+   [InlineData("00000000003", '4')]
+   [InlineData("00000000004", '2')]
+   [InlineData("00000000005", '9')]
+   [InlineData("00000000006", '7')]
+   [InlineData("00000000007", '5')]
+   [InlineData("00000000008", '3')]
+   [InlineData("00000000009", '1')]
+
+   public void IsinAlgorithm_TryCalculateCheckDigit_ShouldCalculateCorrectDoubleForOddPositionCharacters(
+      String value,
+      Char expectedCheckDigit)
+   {
+      // Act/assert.
+      _sut.TryCalculateCheckDigit(value, out var checkDigit).Should().BeTrue();
+      checkDigit.Should().Be(expectedCheckDigit);
+   }
+
+   [Theory]
+   [InlineData("0000000000A", '9')]  //10 = 1 + (2 * 0) => 9
+   [InlineData("0000000000B", '7')]  //11 = 1 + (2 * 1) => 7
+   [InlineData("0000000000C", '5')]  //12 = 1 + (2 * 2) => 5
+   [InlineData("0000000000D", '3')]  //13 = 1 + (2 * 3) => 3
+   [InlineData("0000000000E", '1')]  //14 = 1 + (2 * 4) => 1
+   [InlineData("0000000000F", '8')]  //15 = 1 + (2 * 5) => 8
+   [InlineData("0000000000G", '6')]  //16 = 1 + (2 * 6) => 6
+   [InlineData("0000000000H", '4')]  //17 = 1 + (2 * 7) => 4
+   [InlineData("0000000000I", '2')]  //18 = 1 + (2 * 8) => 2
+   [InlineData("0000000000J", '0')]  //19 = 1 + (2 * 9) => 0
+   [InlineData("0000000000K", '8')]  //20 = 2 + (2 * 0) => 8
+   [InlineData("0000000000L", '6')]  //21 = 2 + (2 * 1) => 6
+   [InlineData("0000000000M", '4')]  //22 = 2 + (2 * 2) => 4
+   [InlineData("0000000000N", '2')]  //23 = 2 + (2 * 3) => 2
+   [InlineData("0000000000O", '0')]  //24 = 2 + (2 * 4) => 0
+   [InlineData("0000000000P", '7')]  //25 = 2 + (2 * 5) => 7
+   [InlineData("0000000000Q", '5')]  //26 = 2 + (2 * 6) => 5
+   [InlineData("0000000000R", '3')]  //27 = 2 + (2 * 7) => 3
+   [InlineData("0000000000S", '1')]  //28 = 2 + (2 * 8) => 1
+   [InlineData("0000000000T", '9')]  //29 = 2 + (2 * 9) => 9
+   [InlineData("0000000000U", '7')]  //30 = 3 + (2 * 0) => 7
+   [InlineData("0000000000V", '5')]  //31 = 3 + (2 * 1) => 5
+   [InlineData("0000000000W", '3')]  //32 = 3 + (2 * 2) => 3
+   [InlineData("0000000000X", '1')]  //33 = 3 + (2 * 3) => 1
+   [InlineData("0000000000Y", '9')]  //34 = 3 + (2 * 4) => 9
+   [InlineData("0000000000Z", '6')]  //35 = 3 + (2 * 5) => 6
+   public void IsinAlgorithm_TryCalculateCheckDigit_ShouldCorrectlyCalculateOddPositionLetterValues(
+      String value,
+      Char expectedCheckDigit)
+   {
+      // Act/assert.
+      _sut.TryCalculateCheckDigit(value, out var checkDigit).Should().BeTrue();
+      checkDigit.Should().Be(expectedCheckDigit);
+   }
+
+   [Theory]
+   [InlineData("000000000A0", '8')]  //10 = (2 * 1) + 0 => 8
+   [InlineData("000000000B0", '7')]  //11 = (2 * 1) + 1 => 7
+   [InlineData("000000000C0", '6')]  //12 = (2 * 1) + 2 => 6
+   [InlineData("000000000D0", '5')]  //13 = (2 * 1) + 3 => 5
+   [InlineData("000000000E0", '4')]  //14 = (2 * 1) + 4 => 4
+   [InlineData("000000000F0", '3')]  //15 = (2 * 1) + 5 => 3
+   [InlineData("000000000G0", '2')]  //16 = (2 * 1) + 6 => 2
+   [InlineData("000000000H0", '1')]  //17 = (2 * 1) + 7 => 1
+   [InlineData("000000000I0", '0')]  //18 = (2 * 1) + 8 => 0
+   [InlineData("000000000J0", '9')]  //19 = (2 * 1) + 9 => 9
+   [InlineData("000000000K0", '6')]  //20 = (2 * 2) + 0 => 6
+   [InlineData("000000000L0", '5')]  //21 = (2 * 2) + 1 => 5
+   [InlineData("000000000M0", '4')]  //22 = (2 * 2) + 2 => 4
+   [InlineData("000000000N0", '3')]  //23 = (2 * 2) + 3 => 3
+   [InlineData("000000000O0", '2')]  //24 = (2 * 2) + 4 => 2
+   [InlineData("000000000P0", '1')]  //25 = (2 * 2) + 5 => 1
+   [InlineData("000000000Q0", '0')]  //26 = (2 * 2) + 6 => 0
+   [InlineData("000000000R0", '9')]  //27 = (2 * 2) + 7 => 9
+   [InlineData("000000000S0", '8')]  //28 = (2 * 2) + 8 => 8
+   [InlineData("000000000T0", '7')]  //29 = (2 * 2) + 9 => 7
+   [InlineData("000000000U0", '4')]  //30 = (2 * 3) + 0 => 4
+   [InlineData("000000000V0", '3')]  //31 = (2 * 3) + 1 => 3
+   [InlineData("000000000W0", '2')]  //32 = (2 * 3) + 2 => 2
+   [InlineData("000000000X0", '1')]  //33 = (2 * 3) + 3 => 1
+   [InlineData("000000000Y0", '0')]  //34 = (2 * 3) + 4 => 0
+   [InlineData("000000000Z0", '9')]  //35 = (2 * 3) + 5 => 9
+   public void IsinAlgorithm_TryCalculateCheckDigit_ShouldCorrectlyCalculateEvenPositionLetterValues(
+      String value,
+      Char expectedCheckDigit)
+   {
+      // Act/assert.
+      _sut.TryCalculateCheckDigit(value, out var checkDigit).Should().BeTrue();
+      checkDigit.Should().Be(expectedCheckDigit);
+   }
+
+   [Theory]
+   [InlineData("US037833100", '5')]     // Apple
+   [InlineData("AU0000XVGZA", '3')]     // Treasury Corporation of Victoria
+   [InlineData("GB000263494", '6')]     // BAE Systems
+   [InlineData("US30303M102", '7')]     // Meta (Facebook)
+   [InlineData("US02079K107", '9')]     // Google Class C
+   [InlineData("GB003134865", '8')]     // Barclays
+   [InlineData("US88160R101", '4')]     // Tesla
+   public void IsinAlgorithm_TryCalculateCheckDigit_ShouldCalculateExpectedCheckDigit(
+      String value,
+      Char expectedCheckDigit)
+   {
+      // Act/assert.
+      _sut.TryCalculateCheckDigit(value, out var checkDigit).Should().BeTrue();
+      checkDigit.Should().Be(expectedCheckDigit);
+   }
+
+   [Fact]
+   public void IsinAlgorithm_TryCalculateCheckDigit_ShouldCalculateExpectedCheckDigit_WhenInputIsAllZeros()
+   {
+      // Arrange.
+      var value = "00000000000";
+      var expectedCheckDigit = CharConstants.DigitZero;
+
+      // Act/assert.
+      _sut.TryCalculateCheckDigit(value, out var checkDigit).Should().BeTrue();
+      checkDigit.Should().Be(expectedCheckDigit);
+   }
+
+   [Theory]
+   [InlineData("US1122)3445")]
+   public void IsinAlgorithm_TryCalculateCheckDigit_ShouldReturnFalse_WhenInputContainsNonDigitCharacter(String value)
+   {
+      _sut.TryCalculateCheckDigit(value, out var checkDigit).Should().BeFalse();
+      checkDigit.Should().Be('\0');
+   }
+
    #endregion
 
    #region Validate Tests
@@ -178,11 +402,16 @@ public class IsinAlgorithmTests
 
    [Theory]                         // Dummy ISIN values from https://www.isindb.com/fix-isin-calculate-isin-check-digit/
    [InlineData("AU0000VXGZA3")]     // AU0000XVGZA3 with two character transposition XV -> VX
+   [InlineData("US0000000QB4")]     // US0000000BQ4 with two character transposition BQ -> QB
    [InlineData("GB123909ABC8")]     // GB123099ABC8 with two digit transposition 09 -> 90
    [InlineData("GB8091XYZ349")]     // GB8901XYZ349 with two digit transposition 90 -> 09
    [InlineData("US1155334451")]     // US1122334451 with two digit twin error 22 -> 55
    [InlineData("US1122337751")]     // US1122334451 with two digit twin error 44 -> 77
    [InlineData("US9988773340")]     // US9988776640 with two digit twin error 66 -> 33
+   [InlineData("US3030M31027")]     // US30303M1027 with two character transposition 3M -> M3
+   [InlineData("US303031M027")]     // US30303M1027 with two character transposition M1 -> 1M
+   [InlineData("AU000X0VGZA3")]     // AU0000XVGZA3 with two character transposition 0X -> X0
+   [InlineData("G0B002634946")]     // GB0002634946 with two character transposition B0 -> 0B
    public void IsinAlgorithm_Validate_ShouldReturnTrue_WhenValueContainsUndetectableError(String value)
       => _sut.Validate(value).Should().BeTrue();
 
@@ -192,7 +421,6 @@ public class IsinAlgorithmTests
    [InlineData("GB0031338658")]     // GB0031348658 with single digit transcription error 4 -> 3
    [InlineData("US0387331005")]     // US0378331005 with two digit transposition error 78 -> 87 
    [InlineData("US020791K079")]     // US02079K1079 with two character transposition error K1 -> 1K
-   //[InlineData("US3030M31027")]     // US30303M1027 with two character transposition error 3M -> M3
    [InlineData("US99160R1014")]     // US88160R1014 with two digit twin error 88 -> 99
    [InlineData("GB0112634946")]     // GB0002634946 with two digit twin error 00 -> 11
    [InlineData("US12BB3DD566")]     // US12AA3DD566 with two letter twin error AA -> BB
@@ -208,8 +436,7 @@ public class IsinAlgorithmTests
       => _sut.Validate("CA120QWERTY0").Should().BeTrue();
 
    [Theory]
-   [InlineData("US1122G34451")]     // Value US1122334451 would have check digit = 1. G is 20 positions later in ASCII table than 3 and would also calculate check digit 5 unless code explicitly checks for non-digit
-   [InlineData("US1122)34451")]     // ) is 10 positions earlier in ASCII table than 3 and would also calculate check digit 5 unless code explicitly checks for non-digit
+   [InlineData("US1122)34451")]
    public void IsinAlgorithm_Validate_ShouldReturnFalse_WhenInputContainsNonDigitCharacter(String value)
       => _sut.Validate(value).Should().BeFalse();
 

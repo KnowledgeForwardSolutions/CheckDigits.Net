@@ -28,6 +28,7 @@ public class IsinAlgorithm : ISingleCheckDigitAlgorithm
 {
    private const Int32 _calculateLength = 11;
    private const Int32 _validateLength = 12;
+   private const Int32 _letterOffset = 55;      // Value needed to subtract from an ASCII uppercase letter to transform A-Z to 10-35
    private static readonly Int32[] _doubledValues = new Int32[] { 0, 2, 4, 6, 8, 1, 3, 5, 7, 9 };
 
    /// <inheritdoc/>
@@ -37,7 +38,44 @@ public class IsinAlgorithm : ISingleCheckDigitAlgorithm
    public String AlgorithmName => Resources.IsinAlgorithmName;
 
    /// <inheritdoc/>
-   public Boolean TryCalculateCheckDigit(String value, out Char checkDigit) => throw new NotImplementedException();
+   public Boolean TryCalculateCheckDigit(String value, out Char checkDigit)
+   {
+      checkDigit = CharConstants.NUL;
+      if (String.IsNullOrEmpty(value) || value.Length != _calculateLength)
+      {
+         return false;
+      }
+
+      var sum = 0;
+      var oddPosition = true;
+      for (var index = value.Length - 1; index >= 0; index--)
+      {
+         var ch = value[index];
+         if (ch >= CharConstants.DigitZero && ch <= CharConstants.DigitNine)
+         {
+            var digit = ch.ToIntegerDigit();
+            sum += oddPosition ? _doubledValues[digit] : digit;
+            oddPosition = !oddPosition;
+         }
+         else if (ch >= CharConstants.UpperCaseA && ch <= CharConstants.UpperCaseZ)
+         {
+            var number = ch - _letterOffset;
+            var firstDigit = number / 10;
+            var secondDigit = number % 10;
+            sum += oddPosition
+               ? firstDigit + _doubledValues[secondDigit]
+               : _doubledValues[firstDigit] + secondDigit;
+         }
+         else
+         {
+            return false;
+         }
+      }
+      var mod = 10 - (sum % 10);
+      checkDigit = mod == 10 ? CharConstants.DigitZero : mod.ToDigitChar();
+
+      return true;
+   }
 
    public Boolean Validate(String value)
    {
@@ -51,15 +89,15 @@ public class IsinAlgorithm : ISingleCheckDigitAlgorithm
       for (var index = value.Length - 2; index >= 0; index--)
       {
          var ch = value[index];
-         if (ch >= '0' && ch <= '9')
+         if (ch >= CharConstants.DigitZero && ch <= CharConstants.DigitNine)
          {
-            var digit = ch - '0';
+            var digit = ch.ToIntegerDigit();
             sum += oddPosition ? _doubledValues[digit] : digit;
             oddPosition = !oddPosition;
          }
-         else if (ch >= 'A' && ch <= 'Z')
+         else if (ch >= CharConstants.UpperCaseA && ch <= CharConstants.UpperCaseZ)
          {
-            var number = ch - 55;
+            var number = ch - _letterOffset;
             var firstDigit = number / 10;
             var secondDigit = number % 10;
             sum += oddPosition
@@ -73,6 +111,6 @@ public class IsinAlgorithm : ISingleCheckDigitAlgorithm
       }
       var checkDigit = (10 - (sum % 10)) % 10;
 
-      return value[^1] - '0' == checkDigit;
+      return value[^1].ToIntegerDigit() == checkDigit;
    }
 }
