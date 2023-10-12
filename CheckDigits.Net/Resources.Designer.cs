@@ -97,6 +97,24 @@ namespace CheckDigits.Net {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Variation of the Luhn algorithm that supports alphanumeric characters.
+        /// </summary>
+        internal static string IsinAlgorithmDescription {
+            get {
+                return ResourceManager.GetString("IsinAlgorithmDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ISIN (International Securities Identity Number).
+        /// </summary>
+        internal static string IsinAlgorithmName {
+            get {
+                return ResourceManager.GetString("IsinAlgorithmName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Luhn algorithm - modulus 10 algorithm with weight 2 applied to every odd position character.
         /// </summary>
         internal static string LuhnAlgorithmDescription {
