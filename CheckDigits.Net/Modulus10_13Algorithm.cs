@@ -36,8 +36,28 @@ public class Modulus10_13Algorithm : ISingleCheckDigitAlgorithm
 
    /// <inheritdoc/>
    public Boolean Validate(String value)
-      => CalculateCheckDigit(value, true, out var checkDigit)
-         && value[^1] == checkDigit;
+   {
+      if (String.IsNullOrEmpty(value) || value.Length < 2)
+      {
+         return false;
+      }
+
+      var sum = 0;
+      var oddPosition = true;
+      for (var index = value.Length - 2; index >= 0; index--)
+      {
+         var digit = value[index].ToIntegerDigit();
+         if (digit < 0 || digit > 9)
+         {
+            return false;
+         }
+         sum += oddPosition ? digit * 3 : digit;
+         oddPosition = !oddPosition;
+      }
+      var checkDigit = (10 - (sum % 10)) % 10;
+
+      return value[^1].ToIntegerDigit() == checkDigit;
+   }
 
    private static Boolean CalculateCheckDigit(
       String value,
