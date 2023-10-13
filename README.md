@@ -516,14 +516,14 @@ Wikipedia: https://en.wikipedia.org/wiki/Vehicle_identification_number#Check-dig
 
 | Method                 | Value            | Mean      | Error     | StdDev    | Allocated |
 |----------------------- |----------------- |----------:|----------:|----------:|----------:|
-| TryCalculateCheckDigit | 123              |  8.425 ns | 0.1046 ns | 0.0978 ns |         - |
-| TryCalculateCheckDigit | 1234567          | 11.525 ns | 0.1462 ns | 0.1367 ns |         - |
-| TryCalculateCheckDigit | 12345678901      | 15.825 ns | 0.1335 ns | 0.1115 ns |         - |
-| TryCalculateCheckDigit | 123456789012345  | 20.783 ns | 0.3826 ns | 0.3195 ns |         - |
-| Validate               | 1230             | 11.150 ns | 0.1040 ns | 0.0970 ns |         - |
-| Validate               | 12345674         | 13.440 ns | 0.2080 ns | 0.1850 ns |         - |
-| Validate               | 123456789015     | 18.130 ns | 0.2040 ns | 0.1810 ns |         - |
-| Validate               | 1234567890123452 | 22.540 ns | 0.1200 ns | 0.0940 ns |         - |
+| TryCalculateCheckDigit | 123              |  6.515 ns | 0.0929 ns | 0.0823 ns |         - |
+| TryCalculateCheckDigit | 1234567          | 11.231 ns | 0.0436 ns | 0.0386 ns |         - |
+| TryCalculateCheckDigit | 12345678901      | 15.473 ns | 0.1082 ns | 0.0959 ns |         - |
+| TryCalculateCheckDigit | 123456789012345  | 20.098 ns | 0.1274 ns | 0.1192 ns |         - |
+| Validate               | 1230             |  6.013 ns | 0.0836 ns | 0.0741 ns |         - |
+| Validate               | 12345674         | 11.205 ns | 0.1065 ns | 0.0944 ns |         - |
+| Validate               | 123456789015     | 16.183 ns | 0.0963 ns | 0.0854 ns |         - |
+| Validate               | 1234567890123452 | 21.322 ns | 0.1223 ns | 0.1144 ns |         - |
 
 ### Modulus10_1 Algorithm Benchmarks
 
