@@ -1,4 +1,4 @@
-﻿// Ignore Spelling: Aba Damm Luhn Nhs Npi Rtn Verhoeff
+﻿// Ignore Spelling: Aba Damm Isin Luhn Nhs Npi Rtn Verhoeff
 
 namespace CheckDigits.Net.Tests.Unit;
 
@@ -29,6 +29,20 @@ public class AlgorithmsTests
    [Fact]
    public void Algorithms_DammAlgorithm_ShouldBeExpectedType()
       => Algorithms.Damm.Should().BeOfType<DammAlgorithm>();
+
+   #endregion
+
+   #region Isin Algorithm Property Tests
+   // ==========================================================================
+   // ==========================================================================
+
+   [Fact]
+   public void Algorithms_IsinAlgorithm_ShouldNotBeNull()
+      => Algorithms.Isin.Should().NotBeNull();
+
+   [Fact]
+   public void Algorithms_IsinAlgorithm_ShouldBeExpectedType()
+      => Algorithms.Isin.Should().BeOfType<IsinAlgorithm>();
 
    #endregion
 

@@ -1,4 +1,4 @@
-﻿// Ignore Spelling: Aba Damm Luhn Nhs Npi Rtn Verhoeff
+﻿// Ignore Spelling: Aba Damm Isin Luhn Nhs Npi Rtn Verhoeff
 
 namespace CheckDigits.Net;
 
@@ -13,6 +13,9 @@ public class Algorithms
 
    private static readonly Lazy<ISingleCheckDigitAlgorithm> _damm =
      new(() => new DammAlgorithm());
+
+   private static readonly Lazy<ISingleCheckDigitAlgorithm> _isin =
+     new(() => new IsinAlgorithm());
 
    private static readonly Lazy<ISingleCheckDigitAlgorithm> _luhn =
      new(() => new LuhnAlgorithm());
@@ -51,6 +54,11 @@ public class Algorithms
    ///   Damm algorithm.
    /// </summary>
    public static ISingleCheckDigitAlgorithm Damm => _damm.Value;
+
+   /// <summary>
+   ///   International Securities Identification Number algorithm.
+   /// </summary>
+   public static ISingleCheckDigitAlgorithm Isin => _isin.Value;
 
    /// <summary>
    ///   Luhn algorithm.
