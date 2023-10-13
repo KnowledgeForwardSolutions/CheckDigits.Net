@@ -32,7 +32,30 @@ public class Modulus10_13Algorithm : ISingleCheckDigitAlgorithm
 
    /// <inheritdoc/>
    public Boolean TryCalculateCheckDigit(String value, out Char checkDigit)
-      => CalculateCheckDigit(value, false, out checkDigit);
+   {
+      checkDigit = CharConstants.NUL;
+      if (String.IsNullOrEmpty(value))
+      {
+         return false;
+      }
+
+      var sum = 0;
+      var oddPosition = true;
+      for (var index = value.Length - 1; index >= 0; index--)
+      {
+         var digit = value[index].ToIntegerDigit();
+         if (digit < 0 || digit > 9)
+         {
+            return false;
+         }
+         sum += oddPosition ? digit * 3 : digit;
+         oddPosition = !oddPosition;
+      }
+      var mod = 10 - (sum % 10);
+      checkDigit = mod == 10 ? CharConstants.DigitZero : mod.ToDigitChar();
+
+      return true;
+   }
 
    /// <inheritdoc/>
    public Boolean Validate(String value)
