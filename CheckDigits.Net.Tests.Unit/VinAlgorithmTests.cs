@@ -204,11 +204,11 @@ public class VinAlgorithmTests
 
    [Fact]
    public void VinAlgorithm_Validate_ShouldReturnFalse_WhenInputHasLengthLessThan17()
-      => _sut.Validate("1234567890123456").Should().BeFalse();
+      => _sut.Validate("0000000000000000").Should().BeFalse();
 
    [Fact]
    public void VinAlgorithm_Validate_ShouldReturnFalse_WhenInputHasLengthGreaterThan17()
-      => _sut.Validate("123456789012345678").Should().BeFalse();
+      => _sut.Validate("000000000000000000").Should().BeFalse();
 
    [Theory]
    [InlineData("10000000800000000")]

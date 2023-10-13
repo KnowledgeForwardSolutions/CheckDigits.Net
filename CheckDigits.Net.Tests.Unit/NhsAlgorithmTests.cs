@@ -40,11 +40,11 @@ public class NhsAlgorithmTests
 
    [Fact]
    public void NhsAlgorithm_Validate_ShouldReturnFalse_WhenInputHasLengthLessThanTen()
-      => _sut.Validate("123456789").Should().BeFalse();
+      => _sut.Validate("000000000").Should().BeFalse();
 
    [Fact]
    public void NhsAlgorithm_Validate_ShouldReturnFalse_WhenInputHasLengthGreaterThanTen()
-      => _sut.Validate("12345678901").Should().BeFalse();
+      => _sut.Validate("00000000000").Should().BeFalse();
 
    [Theory]
    [InlineData("0000000019")]

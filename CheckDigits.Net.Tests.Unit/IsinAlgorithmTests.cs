@@ -270,11 +270,11 @@ public class IsinAlgorithmTests
 
    [Fact]
    public void IsinAlgorithm_Validate_ShouldReturnFalse_WhenInputHasLengthLessThanTwelveCharacters()
-      => _sut.Validate("12345678901").Should().BeFalse();
+      => _sut.Validate("00000000018").Should().BeFalse();
 
    [Fact]
    public void IsinAlgorithm_Validate_ShouldReturnFalse_WhenInputHasLengthGreaterThanTwelveCharacters()
-      => _sut.Validate("1234567890123").Should().BeFalse();
+      => _sut.Validate("0000000000018").Should().BeFalse();
 
    [Theory]
    [InlineData("000000000018")]

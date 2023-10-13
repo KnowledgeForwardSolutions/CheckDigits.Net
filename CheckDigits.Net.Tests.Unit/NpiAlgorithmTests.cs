@@ -40,11 +40,11 @@ public class NpiAlgorithmTests
 
    [Fact]
    public void NpiAlgorithm_Validate_ShouldReturnFalse_WhenInputHasLengthLessThanTen()
-      => _sut.Validate("123456789").Should().BeFalse();
+      => _sut.Validate("000000006").Should().BeFalse();
 
    [Fact]
    public void NpiAlgorithm_Validate_ShouldReturnFalse_WhenInputHasLengthGreaterThanTen()
-      => _sut.Validate("12345678901").Should().BeFalse();
+      => _sut.Validate("00000000006").Should().BeFalse();
 
    [Fact]
    public void NpiAlgorithm_Validate_ShouldCorrectlyPrefixValueWithConstant80840()

@@ -133,8 +133,8 @@ public class Modulus11AlgorithmTests
       => _sut.Validate(value).Should().BeFalse();
 
    [Fact]
-   public void Modulus11Algorithm_Validate_ShouldReturnFalse_WhenInputHasLengthGreaterThanEleven()
-      => _sut.Validate("12345678901").Should().BeFalse();
+   public void Modulus11Algorithm_Validate_ShouldReturnFalse_WhenInputHasLengthGreaterThan10()
+      => _sut.Validate("00000000000").Should().BeFalse();
 
    [Theory]
    [InlineData("0000000019")]
