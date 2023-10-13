@@ -516,14 +516,14 @@ Wikipedia: https://en.wikipedia.org/wiki/Vehicle_identification_number#Check-dig
 
 | Method                 | Value            | Mean      | Error     | StdDev    | Allocated |
 |----------------------- |----------------- |----------:|----------:|----------:|----------:|
-| TryCalculateCheckDigit | 123              |  8.425 ns | 0.1046 ns | 0.0978 ns |         - |
-| TryCalculateCheckDigit | 1234567          | 11.525 ns | 0.1462 ns | 0.1367 ns |         - |
-| TryCalculateCheckDigit | 12345678901      | 15.825 ns | 0.1335 ns | 0.1115 ns |         - |
-| TryCalculateCheckDigit | 123456789012345  | 20.783 ns | 0.3826 ns | 0.3195 ns |         - |
-| Validate               | 1230             | 11.150 ns | 0.1040 ns | 0.0970 ns |         - |
-| Validate               | 12345674         | 13.440 ns | 0.2080 ns | 0.1850 ns |         - |
-| Validate               | 123456789015     | 18.130 ns | 0.2040 ns | 0.1810 ns |         - |
-| Validate               | 1234567890123452 | 22.540 ns | 0.1200 ns | 0.0940 ns |         - |
+| TryCalculateCheckDigit | 123              |  6.515 ns | 0.0929 ns | 0.0823 ns |         - |
+| TryCalculateCheckDigit | 1234567          | 11.231 ns | 0.0436 ns | 0.0386 ns |         - |
+| TryCalculateCheckDigit | 12345678901      | 15.473 ns | 0.1082 ns | 0.0959 ns |         - |
+| TryCalculateCheckDigit | 123456789012345  | 20.098 ns | 0.1274 ns | 0.1192 ns |         - |
+| Validate               | 1230             |  6.013 ns | 0.0836 ns | 0.0741 ns |         - |
+| Validate               | 12345674         | 11.205 ns | 0.1065 ns | 0.0944 ns |         - |
+| Validate               | 123456789015     | 16.183 ns | 0.0963 ns | 0.0854 ns |         - |
+| Validate               | 1234567890123452 | 21.322 ns | 0.1223 ns | 0.1144 ns |         - |
 
 ### Modulus10_1 Algorithm Benchmarks
 
@@ -551,16 +551,16 @@ Wikipedia: https://en.wikipedia.org/wiki/Vehicle_identification_number#Check-dig
 
 | Method                 | Value              | Mean      | Error     | StdDev    | Allocated |
 |----------------------- |------------------- |----------:|----------:|----------:|----------:|
-| TryCalculateCheckDigit | 42526              |  9.252 ns | 0.1673 ns | 0.1565 ns |         - |
-| TryCalculateCheckDigit | 7351353            | 11.178 ns | 0.1086 ns | 0.1016 ns |         - |
-| TryCalculateCheckDigit | 03600029145        | 16.945 ns | 0.2497 ns | 0.2336 ns |         - |
-| TryCalculateCheckDigit | 400638133393       | 17.807 ns | 0.2595 ns | 0.2427 ns |         - |
-| TryCalculateCheckDigit | 01234567800004567  | 25.594 ns | 0.3092 ns | 0.2892 ns |         - |
-| Validate               | 425261             | 10.750 ns | 0.0710 ns | 0.0630 ns |         - |
-| Validate               | 73513537           | 13.770 ns | 0.2600 ns | 0.2310 ns |         - |
-| Validate               | 036000291452       | 17.660 ns | 0.1380 ns | 0.1230 ns |         - |
-| Validate               | 4006381333931      | 18.990 ns | 0.1660 ns | 0.1390 ns |         - |
-| Validate               | 012345678000045678 | 28.090 ns | 0.2570 ns | 0.2400 ns |         - |
+| TryCalculateCheckDigit | 42526              |  7.930 ns | 0.0835 ns | 0.0781 ns |         - |
+| TryCalculateCheckDigit | 7351353            |  9.555 ns | 0.0784 ns | 0.0695 ns |         - |
+| TryCalculateCheckDigit | 03600029145        | 13.919 ns | 0.0969 ns | 0.0859 ns |         - |
+| TryCalculateCheckDigit | 400638133393       | 15.269 ns | 0.1063 ns | 0.0942 ns |         - |
+| TryCalculateCheckDigit | 01234567800004567  | 20.179 ns | 0.1361 ns | 0.1137 ns |         - |
+| Validate               | 425261             |  9.988 ns | 0.0857 ns | 0.0760 ns |         - |
+| Validate               | 73513537           | 11.595 ns | 0.1365 ns | 0.1140 ns |         - |
+| Validate               | 036000291452       | 17.259 ns | 0.1901 ns | 0.1778 ns |         - |
+| Validate               | 4006381333931      | 18.816 ns | 0.1374 ns | 0.1285 ns |         - |
+| Validate               | 012345678000045678 | 24.910 ns | 0.1319 ns | 0.1101 ns |         - |
 
 ### Modulus11 Algorithm Benchmarks
 
