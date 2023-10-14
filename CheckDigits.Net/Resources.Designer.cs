@@ -97,6 +97,15 @@ namespace CheckDigits.Net {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Check digit value is out of range for the character domain.
+        /// </summary>
+        internal static string GetCheckCharacterValueOutOfRangeMessage {
+            get {
+                return ResourceManager.GetString("GetCheckCharacterValueOutOfRangeMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Variation of the Luhn algorithm that supports alphanumeric characters.
         /// </summary>
         internal static string IsinAlgorithmDescription {

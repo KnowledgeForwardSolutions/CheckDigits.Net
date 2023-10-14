@@ -129,6 +129,9 @@
   <data name="DammAlgorithmName" xml:space="preserve">
     <value>Damm</value>
   </data>
+  <data name="GetCheckCharacterValueOutOfRangeMessage" xml:space="preserve">
+    <value>Check digit value is out of range for the character domain</value>
+  </data>
   <data name="IsinAlgorithmDescription" xml:space="preserve">
     <value>Variation of the Luhn algorithm that supports alphanumeric characters</value>
   </data>
