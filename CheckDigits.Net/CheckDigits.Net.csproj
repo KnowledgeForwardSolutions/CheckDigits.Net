@@ -4,6 +4,33 @@
     <TargetFramework>net7.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <Title>CheckDigits.Net</Title>
+    <Version>1.0.0-alpha</Version>
+    <Authors>Knowledge Forward Solutions</Authors>
+    <Company>Knowledge Forward Solutions</Company>
+    <Description>An extensive collection of optimized check digit algorithms suitable for a wide range of applications</Description>
+    <Copyright>Copyright 2023, Knowledge Forward Solutions</Copyright>
+    <PackageProjectUrl></PackageProjectUrl>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <RepositoryUrl>https://github.com/KnowledgeForwardSolutions/CheckDigits.Net</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>Check digit;Luhn;Verhoeff;Damm;UPC-A;EAN-13;ISBN-10;ISBN-13;NPI;HSN;VIN</PackageTags>
+    <PackageReleaseNotes>1.0.0-alpha
+
+Initial limited release. Included algorithms:
+* ABA RTN (Routing Transit Number) Algorithm
+* Damm Algorithm
+* ISIN (International Securities Identification Number) Algorithm
+* Luhn Algorithm
+* Modulus10_1 Algorithm
+* Modulus10_2 Algorithm
+* Modulus10_13 Algorithm (UPC/EAN/ISBN-13/etc.)
+* Modulus11 Algorithm (ISBN-10/ISSN/etc.)
+* NHS (UK National Health Service) Algorithm
+* NPI (US National Provider Identifier) Algorithm
+* Verhoeff Algorithm
+* VIN (Vehicle Identification Number) Algorithm</PackageReleaseNotes>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
   <ItemGroup>
@@ -12,7 +39,14 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-	  <InternalsVisibleTo Include="CheckDigits.Net.Tests.Unit"/>
+	  <InternalsVisibleTo Include="CheckDigits.Net.Tests.Unit" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
   <ItemGroup>

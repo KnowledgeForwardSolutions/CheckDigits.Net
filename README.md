@@ -6,6 +6,29 @@ be optimized, be resilient to malformed input and that memory allocations be
 minimized or eliminated completely. Benchmarks for each algorithm are provided to
 demonstrate performance over a range of values and the memory allocation (if any).
 
+## Table of Contents
+
+- **[Check Digit Overview](#check-digit-overview)**
+- **[Supported Algorithms](#supported-algorithms)**
+- **[Value/Identifier Types and Associated Algorithms](#valueidentifier-types-and-associated-algorithms)**
+- **[Using CheckDigits.Net](#using-checkdigits.net)**
+- **[Algorithm Descriptions](#algorithm-descriptions)**
+    * [ABA RTN (Routing Transit Number) Algorithm](#aba-rtn-algorithm)
+    * [Damm Algorithm](#damm-algorithm)
+    * [ISIN (International Securities Identification Number) Algorithm](#isin-algorithm)
+    * [Luhn Algorithm](#luhn-algorithm)
+    * [Modulus10_1 Algorithm](#modulus10_1-algorithm)
+    * [Modulus10_2 Algorithm](#modulus10_2-algorithm)
+    * [Modulus10_13 Algorithm (UPC/EAN/ISBN-13/etc.)](#modulus10_13-algorithm)
+    * [Modulus11 Algorithm (ISBN-10/ISSN/etc.)](#modulus11-algorithm)
+    * [NHS (UK National Health Service) Algorithm](#nhs-algorithm)
+    * [NPI (US National Provider Identifier) Algorithm](#npi-algorithm)
+    * [Verhoeff Algorithm](#verhoeff-algorithm)
+    * [VIN (Vehicle Identification Number) Algorithm](#vin-algorithm)
+- **[Benchmarks](#benchmarks)**
+- **[Release History/Release Notes](#release-historyrelease-notes)**
+    - [v1.0.0-alpha](#v100alpha)
+
 ## Check Digit Overview
 
 Check digits are a useful tool for detecting human transcription errors. By embedding
@@ -43,7 +66,7 @@ a valid check digit to be considered incorrect/invalid.
 * [Verhoeff Algorithm](#verhoeff-algorithm)
 * [VIN (Vehicle Identification Number) Algorithm](#vin-algorithm)
 
-## Value/Identifier Type and Associated Algorithm
+## Value/Identifier Types and Associated Algorithms
 
 | Value/Identifier Type | Algorithm |
 | --------------------- | ----------|
@@ -611,3 +634,22 @@ Wikipedia: https://en.wikipedia.org/wiki/Vehicle_identification_number#Check-dig
 | Validate               | 1G8ZG127XWZ157259 | 42.01 ns | 0.670 ns | 0.627 ns |         - |
 | Validate               | 1HGEM21292L047875 | 40.54 ns | 0.561 ns | 0.525 ns |         - |
 | Validate               | 1M8GDM9AXKP042788 | 40.39 ns | 0.687 ns | 0.642 ns |         - |
+
+# Release History/Release Notes
+
+## v1.0.0-alpha
+
+Initial limited release. Included algorithms:
+* ABA RTN (Routing Transit Number) Algorithm
+* Damm Algorithm
+* ISIN (International Securities Identification Number) Algorithm
+* Luhn Algorithm
+* Modulus10_1 Algorithm
+* Modulus10_2 Algorithm
+* Modulus10_13 Algorithm (UPC/EAN/ISBN-13/etc.)
+* Modulus11 Algorithm (ISBN-10/ISSN/etc.)
+* NHS (UK National Health Service) Algorithm
+* NPI (US National Provider Identifier) Algorithm
+* Verhoeff Algorithm
+* VIN (Vehicle Identification Number) Algorithm
+
