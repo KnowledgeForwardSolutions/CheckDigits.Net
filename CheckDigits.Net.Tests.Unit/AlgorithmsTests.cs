@@ -46,6 +46,20 @@ public class AlgorithmsTests
 
    #endregion
 
+   #region Iso7064Mod11_2 Algorithm Property Tests
+   // ==========================================================================
+   // ==========================================================================
+
+   [Fact]
+   public void Algorithms_Iso7064Mod11_2_ShouldNotBeNull()
+      => Algorithms.Iso7064Mod11_2.Should().NotBeNull();
+
+   [Fact]
+   public void Algorithms_Iso7064Mod11_2_ShouldBeExpectedType()
+      => Algorithms.Iso7064Mod11_2.Should().BeOfType<Iso7064Mod11_2Algorithm>();
+
+   #endregion
+
    #region Luhn Algorithm Property Tests
    // ==========================================================================
    // ==========================================================================

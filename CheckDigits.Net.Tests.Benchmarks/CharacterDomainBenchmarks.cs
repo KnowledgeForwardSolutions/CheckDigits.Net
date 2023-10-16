@@ -12,7 +12,7 @@ public class CharacterDomainBenchmarks
    //public Char Ch { get; set; }
 
    [Params("07940", "000000012095650X", "0000000109302468")]
-   public String Value { get; set; }
+   public String Value { get; set; } = String.Empty;
 
    //[Benchmark(Baseline = true)]
    //public void TryGetValue()

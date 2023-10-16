@@ -116,7 +116,7 @@ public class Iso7064Mod11_2AlgorithmTests
    public void Iso7064Mod11_2Algorithm_TryCalculateCheckDigit_ShouldReturnFalse_WhenInputContainsInvalidCharacter(String value)
    {
       // Act/assert.
-      _sut.TryCalculateCheckDigit(String.Empty, out var checkDigit).Should().BeFalse();
+      _sut.TryCalculateCheckDigit(value, out var checkDigit).Should().BeFalse();
       checkDigit.Should().Be('\0');
    }
 

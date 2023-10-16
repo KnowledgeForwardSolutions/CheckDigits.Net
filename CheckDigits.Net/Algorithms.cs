@@ -1,5 +1,7 @@
 ﻿// Ignore Spelling: Aba Damm Isin Luhn Nhs Npi Rtn Verhoeff
 
+using CheckDigits.Net.Iso7064;
+
 namespace CheckDigits.Net;
 
 /// <summary>
@@ -16,6 +18,9 @@ public static class Algorithms
 
    private static readonly Lazy<ISingleCheckDigitAlgorithm> _isin =
      new(() => new IsinAlgorithm());
+
+   private static readonly Lazy<ISingleCheckDigitAlgorithm> _iso7064Mod11_2 =
+     new(() => new Iso7064Mod11_2Algorithm());
 
    private static readonly Lazy<ISingleCheckDigitAlgorithm> _luhn =
      new(() => new LuhnAlgorithm());
@@ -59,6 +64,11 @@ public static class Algorithms
    ///   International Securities Identification Number algorithm.
    /// </summary>
    public static ISingleCheckDigitAlgorithm Isin => _isin.Value;
+
+   /// <summary>
+   ///   ISO/IEC 7064 MOD 11-2 algorithm.
+   /// </summary>
+   public static ISingleCheckDigitAlgorithm Iso7064Mod11_2 => _iso7064Mod11_2.Value;
 
    /// <summary>
    ///   Luhn algorithm.
