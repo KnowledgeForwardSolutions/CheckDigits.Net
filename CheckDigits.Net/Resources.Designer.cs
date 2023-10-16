@@ -79,6 +79,15 @@ namespace CheckDigits.Net {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to CharacterDomain may not be null.
+        /// </summary>
+        internal static string CharacterDomainIsNull {
+            get {
+                return ResourceManager.GetString("CharacterDomainIsNull", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Damm&apos;s quasigroup algorithm.
         /// </summary>
         internal static string DammAlgorithmDescription {
@@ -120,6 +129,42 @@ namespace CheckDigits.Net {
         internal static string IsinAlgorithmName {
             get {
                 return ResourceManager.GetString("IsinAlgorithmName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ISO/IEC 7064 check digit algorithm with modulus 11 and radix 2.
+        /// </summary>
+        internal static string Iso7064Mod11_2AlgorithmDescription {
+            get {
+                return ResourceManager.GetString("Iso7064Mod11_2AlgorithmDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ISO/IEC 7064 MOD 11-2.
+        /// </summary>
+        internal static string Iso7064Mod11_2AlgorithmName {
+            get {
+                return ResourceManager.GetString("Iso7064Mod11_2AlgorithmName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Modulus must be greater than one.
+        /// </summary>
+        internal static string Iso7064ModulusOutOfRange {
+            get {
+                return ResourceManager.GetString("Iso7064ModulusOutOfRange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Radix must be greater than one.
+        /// </summary>
+        internal static string Iso7064RadixOutOfRange {
+            get {
+                return ResourceManager.GetString("Iso7064RadixOutOfRange", resourceCulture);
             }
         }
         

@@ -11,6 +11,9 @@ public class DigitsSupplementaryDomain : ICharacterDomain
    private const String _checkCharacters = "0123456789X";
    private const String _validCharacters = "0123456789";
 
+   //private static readonly Int32[] _lookupTable =
+   //   Enumerable.Range(0, 41).Select(x => ((x >= 0 && x <= 9) ? x : (x == 40 ? 10 : -1))).ToArray();
+
    /// <inheritdoc/>
    public String CheckCharacters => _checkCharacters;
 
@@ -24,15 +27,25 @@ public class DigitsSupplementaryDomain : ICharacterDomain
          : throw new ArgumentOutOfRangeException(nameof(checkDigit), checkDigit, Resources.GetCheckCharacterValueOutOfRangeMessage);
 
    /// <inheritdoc/>
-   public Boolean TryGetValue(Char ch, out Int32 value)
+   public Int32 MapCharacterToNumber(Char ch)
    {
-      value = ch.ToIntegerDigit();
+      var value = ch.ToIntegerDigit();
+      return value < 0 || value > 9 ? -1 : value;
+   }
+
+   /// <inheritdoc/>
+   public Int32 MapCheckCharacterToNumber(Char ch)
+   {
+      var value = ch.ToIntegerDigit();
       if (value >= 0 && value <= 9)
       {
-         return true;
+         return value;
+      }
+      else if (ch == CharConstants.UpperCaseX)
+      {
+         return 10;
       }
 
-      value = -1;
-      return false;
+      return -1;
    }
 }

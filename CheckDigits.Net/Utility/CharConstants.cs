@@ -41,4 +41,6 @@ public static class CharConstants
    public const Char UpperCaseX = 'X';
    public const Char UpperCaseY = 'Y';
    public const Char UpperCaseZ = 'Z';
+
+   public const Int32 AsciiX = 88;
 }

@@ -42,19 +42,32 @@ public interface ICharacterDomain
    Char GetCheckCharacter(Int32 checkDigit);
 
    /// <summary>
-   ///   Get the value assigned to the <paramref name="ch"/> by the check digit
-   ///   algorithm.
+   ///   Map a non-check character to its integer equivalent.
    /// </summary>
    /// <param name="ch">
    ///   The character to convert.
    /// </param>
-   /// <param name="value">
-   ///   Output. The value assigned to the <paramref name="ch"/> by the check 
-   ///   digit algorithm.
+   /// <returns>
+   ///   An integer > -1 if <paramref name="ch"/> is a valid character; 
+   ///   otherwise -1.
+   /// </returns>
+   Int32 MapCharacterToNumber(Char ch);
+
+   /// <summary>
+   ///   Map a check character to its integer equivalent.
+   /// </summary>
+   /// <param name="ch">
+   ///   The character to convert.
    /// </param>
    /// <returns>
-   ///   <see langword="true"/> if <paramref name="ch"/> is a valid character 
-   ///   for the check digit algorithm; otherwise <see langword="false"/>.
+   ///   An integer > -1 if <paramref name="ch"/> is a valid check character; 
+   ///   otherwise -1.
    /// </returns>
-   Boolean TryGetValue(Char ch, out Int32 value);
+   /// <remarks>
+   ///   Some algorithms support a supplemental check character (for example, 
+   ///   ISBN-10 or ISO/IEC 7064 MOD 37-2 algorithms). For algorithms that do 
+   ///   not have a supplemental check character this method is equivalent to
+   ///   <see cref="MapCharacterToNumber(Char)"/>.
+   /// </remarks>
+   Int32 MapCheckCharacterToNumber(Char ch);
 }

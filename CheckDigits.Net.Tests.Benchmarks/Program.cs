@@ -3,6 +3,8 @@
 //BenchmarkRunner.Run<DammAlgorithmValidateBenchmarks>();
 //BenchmarkRunner.Run<IsinAlgorithmTryCalculateBenchmarks>();
 //BenchmarkRunner.Run<IsinAlgorithmValidateBenchmarks>();
+//BenchmarkRunner.Run<Iso7064Mod11_2AlgorithmTryCalculateBenchmarks>();
+BenchmarkRunner.Run<Iso7064Mod11_2AlgorithmValidateBenchmarks>();
 //BenchmarkRunner.Run<LuhnAlgorithmTryCalculateBenchmarks>();
 //BenchmarkRunner.Run<LuhnAlgorithmValidateBenchmarks>();
 //BenchmarkRunner.Run<Modulus10_1AlgorithmTryCalculateBenchmarks>();
@@ -20,4 +22,4 @@
 //BenchmarkRunner.Run<VinAlgorithmTryCalculateBenchmarks>();
 //BenchmarkRunner.Run<VinAlgorithmValidateBenchmarks>();
 
-BenchmarkRunner.Run<CharacterDomainBenchmarks>();
+//BenchmarkRunner.Run<CharacterDomainBenchmarks>();

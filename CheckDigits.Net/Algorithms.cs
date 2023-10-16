@@ -6,7 +6,7 @@ namespace CheckDigits.Net;
 ///   Lazy instantiated singleton instances of the algorithms supported by
 ///   CheckDigits.Net.
 /// </summary>
-public class Algorithms
+public static class Algorithms
 {
    private static readonly Lazy<ICheckDigitAlgorithm> _abaRtn =
      new(() => new AbaRtnAlgorithm());

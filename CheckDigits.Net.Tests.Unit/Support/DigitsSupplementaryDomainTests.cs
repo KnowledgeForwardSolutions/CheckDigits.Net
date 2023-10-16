@@ -62,7 +62,7 @@ public class DigitsSupplementaryDomainTests
 
    #endregion
 
-   #region TryGetValue Tests
+   #region MapCharacterToNumber Tests
    // ==========================================================================
    // ==========================================================================
 
@@ -77,26 +77,52 @@ public class DigitsSupplementaryDomainTests
    [InlineData('7', 7)]
    [InlineData('8', 8)]
    [InlineData('9', 9)]
-   public void DigitsSupplementaryDomain_TryGetValue_ShouldReturnTrue_WhenCharacterIsValid(
-      Char ch, 
+   public void DigitsSupplementaryDomain_MapCharacterToNumber_ShouldReturnExpectedValue_WhenCharacterIsValid(
+      Char ch,
       Int32 expected)
-   {
-      // Act/assert.
-      _sut.TryGetValue(ch, out var value).Should().BeTrue();
-      value.Should().Be(expected);
-   }
+      => _sut.MapCharacterToNumber(ch).Should().Be(expected);
 
    [Theory]
    [InlineData('\0')]
    [InlineData('/')]
    [InlineData(':')]
-   public void DigitsSupplementaryDomain_TryGetValue_ShouldReturnFalse_WhenCharacterIsNotValid(
-      Char ch)
-   {
-      // Act/assert.
-      _sut.TryGetValue(ch, out var value).Should().BeFalse();
-      value.Should().Be(-1);
-   }
+   [InlineData('X')]
+   [InlineData('W')]
+   [InlineData('Y')]
+   public void DigitsSupplementaryDomain_TryGetCheckCharacterValue_ShouldReturnMinusOne_WhenCharacterIsNotValid(Char ch)
+      => _sut.MapCharacterToNumber(ch).Should().Be(-1);
+
+   #endregion
+
+   #region MapCheckCharacterToNumber Tests
+   // ==========================================================================
+   // ==========================================================================
+
+   [Theory]
+   [InlineData('0', 0)]
+   [InlineData('1', 1)]
+   [InlineData('2', 2)]
+   [InlineData('3', 3)]
+   [InlineData('4', 4)]
+   [InlineData('5', 5)]
+   [InlineData('6', 6)]
+   [InlineData('7', 7)]
+   [InlineData('8', 8)]
+   [InlineData('9', 9)]
+   [InlineData('X', 10)]
+   public void DigitsSupplementaryDomain_MapCheckCharacterToNumber_ShouldReturnExpectedValue_WhenCharacterIsValid(
+      Char ch,
+      Int32 expected)
+      => _sut.MapCheckCharacterToNumber(ch).Should().Be(expected);
+
+   [Theory]
+   [InlineData('\0')]
+   [InlineData('/')]
+   [InlineData(':')]
+   [InlineData('W')]
+   [InlineData('Y')]
+   public void DigitsSupplementaryDomain_MapCheckCharacterToNumber_ShouldReturnMinusOne_WhenCharacterIsNotValid(Char ch)
+      => _sut.MapCheckCharacterToNumber(ch).Should().Be(-1);
 
    #endregion
 }
