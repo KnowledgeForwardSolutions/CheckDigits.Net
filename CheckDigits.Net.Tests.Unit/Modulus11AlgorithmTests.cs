@@ -104,8 +104,8 @@ public class Modulus11AlgorithmTests
    }
 
    [Theory]
-   [InlineData("100G000001")]
-   [InlineData("100+000001")]
+   [InlineData("100G00001")]
+   [InlineData("100+00001")]
    public void Modulus11Algorithm_TryCalculateCheckDigit_ShouldReturnFalse_WhenInputContainsNonDigitCharacter(String value)
    {
       _sut.TryCalculateCheckDigit(value, out var checkDigit).Should().BeFalse();

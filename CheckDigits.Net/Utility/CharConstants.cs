@@ -4,6 +4,8 @@ public static class CharConstants
 {
    public const Char NUL = '\0';
 
+   public const Char Asterisk = '*';
+
    public const Char DigitZero = '0';
    public const Char DigitOne = '1';
    public const Char DigitTwo = '2';
