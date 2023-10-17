@@ -5,9 +5,9 @@
 ///   algorithm that uses a single modulus) and that generates a single check
 ///   character.
 /// </summary>
-public abstract class Iso7064PureSystemSingleCharacterAlgorithm : IIso7064Algorithm, ISingleCheckDigitAlgorithm
+public abstract class Iso7064PureSystemSingleCharacterAlgorithm : IIso7064Algorithm
 {
-   private Int32 _reduceThreshold;
+   private readonly Int32 _reduceThreshold;
 
    /// <summary>
    ///   Initialize a new <see cref="Iso7064PureSystemSingleCharacterAlgorithm"/>.
@@ -57,17 +57,10 @@ public abstract class Iso7064PureSystemSingleCharacterAlgorithm : IIso7064Algori
    public ICharacterDomain CharacterDomain { get; }
 
    /// <inheritdoc/>
-   public Int32 CheckCharacterCount => 1;
-
-   /// <inheritdoc/>
    public Int32 Modulus { get; }
 
    /// <inheritdoc/>
    public Int32 Radix { get; }
-
-   public virtual String AlgorithmDescription => throw new NotImplementedException();
-
-   public virtual String AlgorithmName => throw new NotImplementedException();
 
    /// <inheritdoc/>
    public Boolean TryCalculateCheckDigit(String value, out Char checkDigit)

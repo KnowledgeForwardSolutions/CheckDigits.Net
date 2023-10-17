@@ -14,11 +14,6 @@ public interface IIso7064Algorithm
    ICharacterDomain CharacterDomain { get; }
 
    /// <summary>
-   ///   The number of check characters used by the algorithm.
-   /// </summary>
-   Int32 CheckCharacterCount { get; }
-
-   /// <summary>
    ///   The value used by the algorithm modulus operation.
    /// </summary>
    Int32 Modulus { get; }

@@ -34,16 +34,6 @@ public class Iso7064Mod11_2AlgorithmTests
 
    #endregion
 
-   #region CheckCharacterCount Property Tests
-   // ==========================================================================
-   // ==========================================================================
-
-   [Fact]
-   public void Iso7064Mod11_2Algorithm_CheckCharacterCount_ShouldReturnExpectedValue()
-      => _sut.CheckCharacterCount.Should().Be(1);
-
-   #endregion
-
    #region Modulus Property Tests
    // ==========================================================================
    // ==========================================================================
@@ -165,7 +155,7 @@ public class Iso7064Mod11_2AlgorithmTests
    [InlineData("0000000109320468")]    // 0000000109302468 with two digit transposition error 02 -> 20
    [InlineData("0000000059970317")]    // 0000000058870317 with two digit twin error 88 -> 99
    [InlineData("0000000444767411")]    // 0000000114767411 two digit twin error 11 -> 44
-   [InlineData("0000000901302468")]    // 0000000109302468 with jump transposition error 109- 901
+   [InlineData("0000000901302468")]    // 0000000109302468 with jump transposition error 109 -> 901
    [InlineData("0000000736691440")]    // 0000000073669144 with circular shift error
    [InlineData("4000000007366914")]    // 0000000073669144 with circular shift error
    public void Iso7064Mod11_2Algorithm_Validate_ShouldReturnFalse_WhenInputContainsDetectableError(String value)
@@ -185,6 +175,10 @@ public class Iso7064Mod11_2AlgorithmTests
    [InlineData("123^56X")]
    public void Iso7064Mod11_2Algorithm_Validate_ShouldReturnFalse_WhenValueContainsInvalidCharacter(String value)
       => _sut.Validate(value).Should().BeFalse();
+
+   [Fact]
+   public void Iso7064Mod11_2Algorithm_Validate_ShouldReturnFalse_WhenValueContainsInvalidCheckDigitCharacter()
+      => _sut.Validate("12345Q").Should().BeFalse();
 
    #endregion
 

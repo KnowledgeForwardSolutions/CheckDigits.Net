@@ -151,6 +151,24 @@ namespace CheckDigits.Net {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ISO/IEC 7064 check digit algorithm with modulus 37 and radix 2.
+        /// </summary>
+        internal static string Iso7064Mod37_2AlgorithmDescription {
+            get {
+                return ResourceManager.GetString("Iso7064Mod37_2AlgorithmDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ISO/IEC 7064 MOD 37-2.
+        /// </summary>
+        internal static string Iso7064Mod37_2AlgorithmName {
+            get {
+                return ResourceManager.GetString("Iso7064Mod37_2AlgorithmName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Modulus must be greater than one.
         /// </summary>
         internal static string Iso7064ModulusOutOfRange {

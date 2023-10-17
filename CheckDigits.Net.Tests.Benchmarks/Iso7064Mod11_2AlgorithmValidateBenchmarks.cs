@@ -14,11 +14,11 @@ public class Iso7064Mod11_2AlgorithmValidateBenchmarks
       _ = _algorithm.Validate(Value);
    }
 
-   [Benchmark]
-   public void Validate2()
-   {
-      _ = _algorithm.Validate2(Value);
-   }
+   //[Benchmark]
+   //public void Validate2()
+   //{
+   //   _ = _algorithm.Validate2(Value);
+   //}
 
    //[Benchmark]
    //public void Validate3()
@@ -26,11 +26,11 @@ public class Iso7064Mod11_2AlgorithmValidateBenchmarks
    //   _ = _algorithm.Validate3(Value);
    //}
 
-   [Benchmark]
-   public void Validate4()
-   {
-      _ = _algorithm.Validate4(Value);
-   }
+   //[Benchmark]
+   //public void Validate4()
+   //{
+   //   _ = _algorithm.Validate4(Value);
+   //}
 
    //[Benchmark]
    //public void Validate5()

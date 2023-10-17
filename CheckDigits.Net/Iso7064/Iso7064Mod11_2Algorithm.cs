@@ -24,7 +24,7 @@
 ///   in the same value).
 ///   </para>
 /// </remarks>
-public class Iso7064Mod11_2Algorithm : Iso7064PureSystemSingleCharacterAlgorithm
+public class Iso7064Mod11_2Algorithm : Iso7064PureSystemSingleCharacterAlgorithm, ISingleCheckDigitAlgorithm
 {
    /// <summary>
    ///   Initialize a new <see cref="Iso7064Mod11_2Algorithm"/>
@@ -32,8 +32,8 @@ public class Iso7064Mod11_2Algorithm : Iso7064PureSystemSingleCharacterAlgorithm
    public Iso7064Mod11_2Algorithm() : base(11, 2, CharacterDomains.DigitsSupplementary) { }
 
    /// <inheritdoc/>
-   public override String AlgorithmDescription => Resources.Iso7064Mod11_2AlgorithmDescription;
+   public String AlgorithmDescription => Resources.Iso7064Mod11_2AlgorithmDescription;
 
    /// <inheritdoc/>
-   public override String AlgorithmName => Resources.Iso7064Mod11_2AlgorithmName;
+   public String AlgorithmName => Resources.Iso7064Mod11_2AlgorithmName;
 }
