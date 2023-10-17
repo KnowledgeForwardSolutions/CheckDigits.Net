@@ -9,6 +9,7 @@ demonstrate performance over a range of values and the memory allocation (if any
 ## Table of Contents
 
 - **[Check Digit Overview](#check-digit-overview)**
+- **[ISO/IEC 7064 Algorithms](#isoiec-7064-algorithms)**
 - **[Supported Algorithms](#supported-algorithms)**
 - **[Value/Identifier Types and Associated Algorithms](#valueidentifier-types-and-associated-algorithms)**
 - **[Using CheckDigits.Net](#using-checkdigits.net)**
@@ -16,7 +17,8 @@ demonstrate performance over a range of values and the memory allocation (if any
     * [ABA RTN (Routing Transit Number) Algorithm](#aba-rtn-algorithm)
     * [Damm Algorithm](#damm-algorithm)
     * [ISIN (International Securities Identification Number) Algorithm](#isin-algorithm)
-    * [ISO/IEC 7064 Algorithms](#isoiec-7064-algorithms)
+    * [ISO/IEC 7064 MOD 11-2 Algorithm](#isoiec-7064-mod-11-2-algorithm)
+    * [ISO/IEC 7064 MOD 37-2 Algorithm](#isoiec-7064-mod-37-2-algorithm)
     * [Luhn Algorithm](#luhn-algorithm)
     * [Modulus10_1 Algorithm](#modulus10_1-algorithm)
     * [Modulus10_2 Algorithm](#modulus10_2-algorithm)
@@ -52,12 +54,28 @@ value is valid, only that the value was transcribed correctly. There may be othe
 requirements that are specific to the type of value that could cause a value with
 a valid check digit to be considered incorrect/invalid.
 
+## ISO/IEC 7064 Algorithms
+
+The ISO/IEC 7064 standard defines a family of algorithms capable of detecting a
+broad range of errors including all single character transcription errors as well
+as all or nearly all two character transposition errors, two character jump 
+transposition errors, circular shift errors and double transcription errors (two
+separate single transcription errors in a single value). The algorithms are 
+suitable for numeric strings, alphabetic strings, alphanumeric strings and can
+be extended to handle custom character domains beyond ASCII alphanumeric 
+characters.
+
+CheckDigits.Net provides optimized implementations of all of the algorithms
+defined in the ISO/IEC 7064 standard as well as abstract base classes suitable 
+for creating custom implementations.
+
 ## Supported Algorithms
 
 * [ABA RTN (Routing Transit Number) Algorithm](#aba-rtn-algorithm)
 * [Damm Algorithm](#damm-algorithm)
 * [ISIN (International Securities Identification Number) Algorithm](#isin-algorithm)
-* [ISO/IEC 7064 Algorithms](#isoiec-7064-algorithms)
+* [ISO/IEC 7064 MOD 11-2 Algorithm](#isoiec-7064-mod-11-2-algorithm)
+* [ISO/IEC 7064 MOD 37-2 Algorithm](#isoiec-7064-mod-37-2-algorithm)
 * [Luhn Algorithm](#luhn-algorithm)
 * [Modulus10_1 Algorithm](#modulus10_1-algorithm)
 * [Modulus10_2 Algorithm](#modulus10_2-algorithm)
@@ -86,9 +104,10 @@ a valid check digit to be considered incorrect/invalid.
 | IMO Number            | [Modulus10 Algorithm](#modulus10_2-algorithm) |
 | ISBN-10				| [Modulus11 Algorithm](#modulus11-algorithm) |
 | ISBN-13				| [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
+| ISBT Donation Identification Number |  [ISO/IEC 7064 MOD 37-2 Algorithm](#isoiec-7064-mod-37-2-algorithm) |
 | ISIN                  | [ISIN Algorithm](#isin-algorithm) |
 | ISMN					| [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
-| ISNI                  | ISO/IEC 7064 MOD 11-2 Algorithm |
+| ISNI                  | [ISO/IEC 7064 MOD 11-2 Algorithm](#isoiec-7064-mod-11-2-algorithm) |
 | ISSN   				| [Modulus11 Algorithm](#modulus11-algorithm) |
 | UK National Health Service Number | [NHS Algorithm](#nhs-algorithm) |
 | US National Provider Identifier | [NPI Algorithm](#npi-algorithm) |
@@ -240,30 +259,41 @@ algorithm cannot detect).
 
 Wikipedia: https://en.wikipedia.org/wiki/International_Securities_Identification_Number
 
-### ISO/IEC 7064 Algorithms
+### ISO/IEC 7064 MOD 11-2 Algorithm
 
-The ISO/IEC 7064 standard defines a family of algorithms capable of detecting a
-broad range of errors including all single character transcription errors as well
-as all or nearly all two character transposition errors, two character jump 
-transposition errors, circular shift errors and double transcription errors (two
-separate single transcription errors in a single value). The algorithms are 
-suitable for numeric strings, alphabetic strings, alphanumeric strings and can
-be extended to handle custom character domains beyond ASCII alphanumeric 
-characters.
+The ISO/IEC 7064 MOD 11-2 algorithm is suitable for use with numeric strings. It
+generates a single check character that is either a decimal digit or an 
+supplementary 'X' character.
 
 #### Details
 
-* ISO/IEC 7064 MOD 11-2 algorithm
-    - Valid characters - decimal digits ('0' - '9')
-    - Check digit size - one character
-    - Check digit value - either decimal digit ('0' - '9') or an uppercase 'X'
-    - Check digit location - the trailing (right-most) character when validating
-    - Class name - Iso7064Mod11_2Algorithm
+* Valid characters - decimal digits ('0' - '9')
+* Check digit size - one character
+* Check digit value - either decimal digit ('0' - '9') or an uppercase 'X'
+* Check digit location - assumed to be the trailing (right-most) character when validating
+* Class name - Iso7064Mod11_2Algorithm
 
 #### Common Applications
 
-* ISO/IEC 7064 MOD 11-2 algorithm
-    - International Standard Name Identifier (ISNI)
+* International Standard Name Identifier (ISNI)
+
+### ISO/IEC 7064 MOD 37-2 Algorithm
+
+The ISO/IEC 7064 MOD 37-2 algorithm is suitable for use with alphanumeric strings. 
+It generates a single check character that is either an alphanumeric character 
+or a supplementary '*' character.
+
+#### Details
+
+* Valid characters - decimal digits ('0' - '9', 'A' - 'Z')
+* Check digit size - one character
+* Check digit value - either decimal digit ('0' - '9', 'A' - 'Z') or an asterisk '*'
+* Check digit location - assumed to be the trailing (right-most) character when validating
+* Class name - Iso7064Mod37_2Algorithm
+
+#### Common Applications
+
+* International Society of Blood Transfusion (ISBT) Donation Identification Numbers
 
 ### Luhn Algorithm
 
