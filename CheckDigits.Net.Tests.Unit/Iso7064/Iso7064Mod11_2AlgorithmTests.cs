@@ -45,6 +45,26 @@ public class Iso7064Mod11_2AlgorithmTests
    }
 
    [Theory]
+   [InlineData("0", '1')]
+   [InlineData("1", 'X')]
+   [InlineData("2", '8')]
+   [InlineData("3", '6')]
+   [InlineData("4", '4')]
+   [InlineData("5", '2')]
+   [InlineData("6", '0')]
+   [InlineData("7", '9')]
+   [InlineData("8", '7')]
+   [InlineData("9", '5')]
+   public void Iso7064Mod11_2Algorithm_TryCalculateCheckDigit_ShouldCorrectlyMapCharacterValues(
+      String value,
+      Char expectedCheckDigit)
+   {
+      // Act/assert.
+      _sut.TryCalculateCheckDigit(value, out var checkDigit).Should().BeTrue();
+      checkDigit.Should().Be(expectedCheckDigit);
+   }
+
+   [Theory]
    [InlineData("079", 'X')]                // Example from ISO/IEC 7064 specification
    [InlineData("0794", '0')]               // Example from ISO/IEC 7064 specification
    [InlineData("000000012146438", 'X')]    // Example ISNI from Wikipedia https://en.wikipedia.org/wiki/International_Standard_Name_Identifier
@@ -99,6 +119,20 @@ public class Iso7064Mod11_2AlgorithmTests
    [InlineData("1")]          // "1" will fail if length check is not performed
    public void Iso7064Mod11_2Algorithm_Validate_ShouldReturnFalse_WhenInputIsOneCharacterInLength(String value)
       => _sut.Validate(value).Should().BeFalse();
+
+   [Theory]
+   [InlineData("01")]
+   [InlineData("1X")]
+   [InlineData("28")]
+   [InlineData("36")]
+   [InlineData("44")]
+   [InlineData("52")]
+   [InlineData("60")]
+   [InlineData("79")]
+   [InlineData("87")]
+   [InlineData("95")]
+   public void Iso7064Mod11_2Algorithm_Validate_ShouldCorrectlyMapCharacterValues(String value)
+      => _sut.Validate(value).Should().BeTrue();
 
    [Theory]
    [InlineData("079X")]                // Example from ISO/IEC 7064 specification

@@ -45,6 +45,52 @@ public class Iso7064Mod37_2AlgorithmTests
    }
 
    [Theory]
+   [InlineData("0", '1')]
+   [InlineData("1", '*')]
+   [InlineData("2", 'Y')]
+   [InlineData("3", 'W')]
+   [InlineData("4", 'U')]
+   [InlineData("5", 'S')]
+   [InlineData("6", 'Q')]
+   [InlineData("7", 'O')]
+   [InlineData("8", 'M')]
+   [InlineData("9", 'K')]
+   [InlineData("A", 'I')]
+   [InlineData("B", 'G')]
+   [InlineData("C", 'E')]
+   [InlineData("D", 'C')]
+   [InlineData("E", 'A')]
+   [InlineData("F", '8')]
+   [InlineData("G", '6')]
+   [InlineData("H", '4')]
+   [InlineData("I", '2')]
+   [InlineData("J", '0')]
+   [InlineData("K", 'Z')]
+   [InlineData("L", 'X')]
+   [InlineData("M", 'V')]
+   [InlineData("N", 'T')]
+   [InlineData("O", 'R')]
+   [InlineData("P", 'P')]
+   [InlineData("Q", 'N')]
+   [InlineData("R", 'L')]
+   [InlineData("S", 'J')]
+   [InlineData("T", 'H')]
+   [InlineData("U", 'F')]
+   [InlineData("V", 'D')]
+   [InlineData("W", 'B')]
+   [InlineData("X", '9')]
+   [InlineData("Y", '7')]
+   [InlineData("Z", '5')]
+   public void Iso7064Mod37_2Algorithm_TryCalculateCheckDigit_ShouldCorrectlyMapCharacterValues(
+      String value,
+      Char expectedCheckDigit)
+   {
+      // Act/assert.
+      _sut.TryCalculateCheckDigit(value, out var checkDigit).Should().BeTrue();
+      checkDigit.Should().Be(expectedCheckDigit);
+   }
+
+   [Theory]
    [InlineData("A999914123456", 'N')]      // Example ISBT from https://www.isbt128.org/_files/ugd/83d6e1_9c7ba55fbdd44a80947bc310cdd92382.pdf
    [InlineData("C000307001466", '6')]      // Example ISBT from https://www.isbt128.org/_files/ugd/83d6e1_10edb0e64b234943abd9c100b925575c.pdf
    [InlineData("A999922123459", 'H')]      // Example ISBT from https://www.isbt128.org/_files/ugd/79eb0b_1a92d4e286af404183d03bf5bab9120f.pdf
@@ -94,6 +140,46 @@ public class Iso7064Mod37_2AlgorithmTests
    [InlineData("1")]          // "1" will fail if length check is not performed
    public void Iso7064Mod37_2Algorithm_Validate_ShouldReturnFalse_WhenInputIsOneCharacterInLength(String value)
       => _sut.Validate(value).Should().BeFalse();
+
+   [Theory]
+   [InlineData("01")]
+   [InlineData("1*")]
+   [InlineData("2Y")]
+   [InlineData("3W")]
+   [InlineData("4U")]
+   [InlineData("5S")]
+   [InlineData("6Q")]
+   [InlineData("7O")]
+   [InlineData("8M")]
+   [InlineData("9K")]
+   [InlineData("AI")]
+   [InlineData("BG")]
+   [InlineData("CE")]
+   [InlineData("DC")]
+   [InlineData("EA")]
+   [InlineData("F8")]
+   [InlineData("G6")]
+   [InlineData("H4")]
+   [InlineData("I2")]
+   [InlineData("J0")]
+   [InlineData("KZ")]
+   [InlineData("LX")]
+   [InlineData("MV")]
+   [InlineData("NT")]
+   [InlineData("OR")]
+   [InlineData("PP")]
+   [InlineData("QN")]
+   [InlineData("RL")]
+   [InlineData("SJ")]
+   [InlineData("TH")]
+   [InlineData("UF")]
+   [InlineData("VD")]
+   [InlineData("WB")]
+   [InlineData("X9")]
+   [InlineData("Y7")]
+   [InlineData("Z5")]
+   public void Iso7064Mod37_2Algorithm_Validate_ShouldCorrectlyMapCharacterValues(String value)
+      => _sut.Validate(value).Should().BeTrue();
 
    [Theory]                            // Example ISBT Donation Identification Numbers
    [InlineData("A999914123456N")]      // Example ISBT from https://www.isbt128.org/_files/ugd/83d6e1_9c7ba55fbdd44a80947bc310cdd92382.pdf
