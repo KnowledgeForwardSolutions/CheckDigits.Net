@@ -7,7 +7,7 @@
 /// </summary>
 public abstract class Iso7064PureSystemSingleCharacterAlgorithm : IIso7064Algorithm
 {
-   private readonly Int32 _reduceThreshold;
+   protected readonly Int32 _reduceThreshold;
 
    /// <summary>
    ///   Initialize a new <see cref="Iso7064PureSystemSingleCharacterAlgorithm"/>.
@@ -63,7 +63,7 @@ public abstract class Iso7064PureSystemSingleCharacterAlgorithm : IIso7064Algori
    public Int32 Radix { get; }
 
    /// <inheritdoc/>
-   public Boolean TryCalculateCheckDigit(String value, out Char checkDigit)
+   public virtual Boolean TryCalculateCheckDigit(String value, out Char checkDigit)
    {
       checkDigit = CharConstants.NUL;
       if (String.IsNullOrEmpty(value))
@@ -94,7 +94,7 @@ public abstract class Iso7064PureSystemSingleCharacterAlgorithm : IIso7064Algori
    }
 
    /// <inheritdoc/>
-   public Boolean Validate(String value)
+   public virtual Boolean Validate(String value)
    {
       if (String.IsNullOrEmpty(value) || value.Length < 2)
       {

@@ -24,16 +24,86 @@
 ///   in the same value).
 ///   </para>
 /// </remarks>
-public class Iso7064Mod11_2Algorithm : Iso7064PureSystemSingleCharacterAlgorithm, ISingleCheckDigitAlgorithm
+public class Iso7064Mod11_2Algorithm : ISingleCheckDigitAlgorithm
 {
-   /// <summary>
-   ///   Initialize a new <see cref="Iso7064Mod11_2Algorithm"/>
-   /// </summary>
-   public Iso7064Mod11_2Algorithm() : base(11, 2, CharacterDomains.DigitsSupplementary) { }
+   private const Int32 _modulus = 11;
+   private const Int32 _radix = 2;
+   private const Int32 _reduceThreshold = Int32.MaxValue / _radix;
 
    /// <inheritdoc/>
    public String AlgorithmDescription => Resources.Iso7064Mod11_2AlgorithmDescription;
 
    /// <inheritdoc/>
    public String AlgorithmName => Resources.Iso7064Mod11_2AlgorithmName;
+
+   /// <inheritdoc/>
+   public virtual Boolean TryCalculateCheckDigit(String value, out Char checkDigit)
+   {
+      checkDigit = CharConstants.NUL;
+      if (String.IsNullOrEmpty(value))
+      {
+         return false;
+      }
+
+      var sum = 0;
+      Int32 num;
+      for (var index = 0; index < value.Length; index++)
+      {
+         num = value[index].ToIntegerDigit();
+         if (num < 0 || num > 9)
+         {
+            return false;
+         }
+         sum = (sum + num) * _radix;
+         if (sum >= _reduceThreshold)
+         {
+            sum %= _modulus;
+         }
+      }
+
+      var remainder = sum % _modulus;
+      var x = (_modulus - remainder + 1) % _modulus;
+      checkDigit = x == 10 ? CharConstants.UpperCaseX : x.ToDigitChar();
+
+      return true;
+   }
+
+   /// <inheritdoc/>
+   public Boolean Validate(String value)
+   {
+      if (String.IsNullOrEmpty(value) || value.Length < 2)
+      {
+         return false;
+      }
+
+      var sum = 0;
+      Int32 num;
+      for (var index = 0; index < value.Length - 1; index++)
+      {
+         num = value[index].ToIntegerDigit();
+         if (num < 0 || num > 9)
+         {
+            return false;
+         }
+         sum = (sum + num) * _radix;
+         if (sum >= _reduceThreshold)
+         {
+            sum %= _modulus;
+         }
+      }
+
+      num = value[^1].ToIntegerDigit();
+      if (num == 40)
+      {
+         num = 10;
+      }
+      else if (num < 0 || num > 9)
+      {
+         return false;
+      }
+
+      sum += num;
+
+      return sum % _modulus == 1;
+   }
 }

@@ -24,36 +24,6 @@ public class Iso7064Mod11_2AlgorithmTests
 
    #endregion
 
-   #region CharacterDomain Property Tests
-   // ==========================================================================
-   // ==========================================================================
-
-   [Fact]
-   public void Iso7064Mod11_2Algorithm_CharacterDomain_ShouldReturnExpectedValue()
-      => _sut.CharacterDomain.Should().BeOfType<DigitsSupplementaryDomain>();
-
-   #endregion
-
-   #region Modulus Property Tests
-   // ==========================================================================
-   // ==========================================================================
-
-   [Fact]
-   public void Iso7064Mod11_2Algorithm_Modulus_ShouldReturnExpectedValue()
-      => _sut.Modulus.Should().Be(11);
-
-   #endregion
-
-   #region Radix Property Tests
-   // ==========================================================================
-   // ==========================================================================
-
-   [Fact]
-   public void Iso7064Mod11_2Algorithm_Radix_ShouldReturnExpectedValue()
-      => _sut.Radix.Should().Be(2);
-
-   #endregion
-
    #region TryCalculateCheckDigit Tests
    // ==========================================================================
    // ==========================================================================
@@ -181,64 +151,4 @@ public class Iso7064Mod11_2AlgorithmTests
       => _sut.Validate("12345Q").Should().BeFalse();
 
    #endregion
-
-   //[Theory]
-   //[InlineData("079X")]                // Example from ISO/IEC 7064 specification
-   //[InlineData("07940")]               // Example from ISO/IEC 7064 specification
-   //[InlineData("000000012146438X")]    // Example ISNI from Wikipedia https://en.wikipedia.org/wiki/International_Standard_Name_Identifier
-   //[InlineData("0000000073669144")]    // ISNI for Richard, Zachary from https://isni.org/page/search-database/
-   //[InlineData("000000012095650X")]    // ISNI for Lucas, George from https://isni.org/page/search-database/
-   //[InlineData("0000000109302468")]    // ISNI for Roddenberry, Gene from https://isni.org/page/search-database/
-   //[InlineData("0000000058870317")]    // ISNI for Barrett, Majel from https://isni.org/page/search-database/
-   //[InlineData("0000000114767411")]    // ISNI for Wheaton, Wil from https://isni.org/page/search-database/
-   //public void Iso7064Mod11_2Algorithm_Validate2_ShouldReturnTrue_WhenValueContainsValidCheckDigit(String value)
-   //   => _sut.Validate2(value).Should().BeTrue();
-
-   //[Theory]
-   //[InlineData("079X")]                // Example from ISO/IEC 7064 specification
-   //[InlineData("07940")]               // Example from ISO/IEC 7064 specification
-   //[InlineData("000000012146438X")]    // Example ISNI from Wikipedia https://en.wikipedia.org/wiki/International_Standard_Name_Identifier
-   //[InlineData("0000000073669144")]    // ISNI for Richard, Zachary from https://isni.org/page/search-database/
-   //[InlineData("000000012095650X")]    // ISNI for Lucas, George from https://isni.org/page/search-database/
-   //[InlineData("0000000109302468")]    // ISNI for Roddenberry, Gene from https://isni.org/page/search-database/
-   //[InlineData("0000000058870317")]    // ISNI for Barrett, Majel from https://isni.org/page/search-database/
-   //[InlineData("0000000114767411")]    // ISNI for Wheaton, Wil from https://isni.org/page/search-database/
-   //public void Iso7064Mod11_2Algorithm_Validate3_ShouldReturnTrue_WhenValueContainsValidCheckDigit(String value)
-   //   => _sut.Validate3(value).Should().BeTrue();
-
-   //[Theory]
-   //[InlineData("079X")]                // Example from ISO/IEC 7064 specification
-   //[InlineData("07940")]               // Example from ISO/IEC 7064 specification
-   //[InlineData("000000012146438X")]    // Example ISNI from Wikipedia https://en.wikipedia.org/wiki/International_Standard_Name_Identifier
-   //[InlineData("0000000073669144")]    // ISNI for Richard, Zachary from https://isni.org/page/search-database/
-   //[InlineData("000000012095650X")]    // ISNI for Lucas, George from https://isni.org/page/search-database/
-   //[InlineData("0000000109302468")]    // ISNI for Roddenberry, Gene from https://isni.org/page/search-database/
-   //[InlineData("0000000058870317")]    // ISNI for Barrett, Majel from https://isni.org/page/search-database/
-   //[InlineData("0000000114767411")]    // ISNI for Wheaton, Wil from https://isni.org/page/search-database/
-   //public void Iso7064Mod11_2Algorithm_Validate4_ShouldReturnTrue_WhenValueContainsValidCheckDigit(String value)
-   //   => _sut.Validate4(value).Should().BeTrue();
-
-   //[Theory]
-   //[InlineData("079X")]                // Example from ISO/IEC 7064 specification
-   //[InlineData("07940")]               // Example from ISO/IEC 7064 specification
-   //[InlineData("000000012146438X")]    // Example ISNI from Wikipedia https://en.wikipedia.org/wiki/International_Standard_Name_Identifier
-   //[InlineData("0000000073669144")]    // ISNI for Richard, Zachary from https://isni.org/page/search-database/
-   //[InlineData("000000012095650X")]    // ISNI for Lucas, George from https://isni.org/page/search-database/
-   //[InlineData("0000000109302468")]    // ISNI for Roddenberry, Gene from https://isni.org/page/search-database/
-   //[InlineData("0000000058870317")]    // ISNI for Barrett, Majel from https://isni.org/page/search-database/
-   //[InlineData("0000000114767411")]    // ISNI for Wheaton, Wil from https://isni.org/page/search-database/
-   //public void Iso7064Mod11_2Algorithm_Validate5_ShouldReturnTrue_WhenValueContainsValidCheckDigit(String value)
-   //   => _sut.Validate5(value).Should().BeTrue();
-
-   //[Theory]
-   //[InlineData("079X")]                // Example from ISO/IEC 7064 specification
-   //[InlineData("07940")]               // Example from ISO/IEC 7064 specification
-   //[InlineData("000000012146438X")]    // Example ISNI from Wikipedia https://en.wikipedia.org/wiki/International_Standard_Name_Identifier
-   //[InlineData("0000000073669144")]    // ISNI for Richard, Zachary from https://isni.org/page/search-database/
-   //[InlineData("000000012095650X")]    // ISNI for Lucas, George from https://isni.org/page/search-database/
-   //[InlineData("0000000109302468")]    // ISNI for Roddenberry, Gene from https://isni.org/page/search-database/
-   //[InlineData("0000000058870317")]    // ISNI for Barrett, Majel from https://isni.org/page/search-database/
-   //[InlineData("0000000114767411")]    // ISNI for Wheaton, Wil from https://isni.org/page/search-database/
-   //public void Iso7064Mod11_2Algorithm_Validate6_ShouldReturnTrue_WhenValueContainsValidCheckDigit(String value)
-   //   => _sut.Validate6(value).Should().BeTrue();
 }

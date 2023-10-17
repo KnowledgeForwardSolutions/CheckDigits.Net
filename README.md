@@ -552,6 +552,8 @@ Wikipedia: https://en.wikipedia.org/wiki/Vehicle_identification_number#Check-dig
 * [ABA RTN Algorithm](#aba-rtn-algorithm-benchmarks)
 * [Damm Algorithm](#damm-algorithm-benchmarks)
 * [ISIN Algorithm](#isin-algorithm-benchmarks)
+* [ISO/IEC 7064 MOD 11-2 Algorithm](#isoiec-7064-mod-11-2-algorithm-benchmarks)
+* [ISO/IEC 7064 MOD 37-2 Algorithm](#isoiec-7064-mod-37-2-algorithm-benchmarks)
 * [Luhn Algorithm](#luhn-algorithm-benchmarks)
 * [Modulus10_1 Algorithm](#modulus10_1-algorithm-benchmarks)
 * [Modulus10_2 Algorithm](#modulus10_2-algorithm-benchmarks)
@@ -592,6 +594,21 @@ Wikipedia: https://en.wikipedia.org/wiki/Vehicle_identification_number#Check-dig
 | Validate               | AU0000XVGZA3 | 25.01 ns | 0.141 ns | 0.125 ns |         - |
 | Validate               | US0378331005 | 21.64 ns | 0.096 ns | 0.075 ns |         - |
 | Validate               | US88160R1014 | 21.78 ns | 0.110 ns | 0.103 ns |         - |
+
+### ISO/IEC 7064 MOD 11-2 Algorithm Benchmarks
+
+| Method                 | Value                | Mean      | Error     | StdDev    | Allocated |
+|----------------------- |--------------------- |----------:|----------:|----------:|----------:|
+| TryCalculateCheckDigit | 000000010930246      | 20.033 ns | 0.3360 ns | 0.2979 ns |         - |
+| TryCalculateCheckDigit | 000000012095650      | 19.635 ns | 0.1051 ns | 0.0931 ns |         - |
+| TryCalculateCheckDigit | 0794                 |  6.861 ns | 0.0485 ns | 0.0405 ns |         - |
+| TryCalculateCheckDigit | 99999(...)99999 [35] | 43.663 ns | 0.2269 ns | 0.2123 ns |         - |
+| Validate               | 0000000109302468     | 19.398 ns | 0.0965 ns | 0.0806 ns |         - |
+| Validate               | 000000012095650X     | 19.108 ns | 0.1898 ns | 0.1776 ns |         - |
+| Validate               | 07940                |  6.630 ns | 0.0601 ns | 0.0532 ns |         - |
+| Validate               | 99999(...)99994 [36] | 43.462 ns | 0.4024 ns | 0.3764 ns |         - |
+
+### ISO/IEC 7064 MOD 37-2 Algorithm Benchmarks
 
 ### Luhn Algorithm Benchmarks
 
