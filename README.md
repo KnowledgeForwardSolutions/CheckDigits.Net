@@ -9,6 +9,7 @@ demonstrate performance over a range of values and the memory allocation (if any
 ## Table of Contents
 
 - **[Check Digit Overview](#check-digit-overview)**
+- **[ISO/IEC 7064 Algorithms](#isoiec-7064-algorithms)**
 - **[Supported Algorithms](#supported-algorithms)**
 - **[Value/Identifier Types and Associated Algorithms](#valueidentifier-types-and-associated-algorithms)**
 - **[Using CheckDigits.Net](#using-checkdigits.net)**
@@ -16,6 +17,8 @@ demonstrate performance over a range of values and the memory allocation (if any
     * [ABA RTN (Routing Transit Number) Algorithm](#aba-rtn-algorithm)
     * [Damm Algorithm](#damm-algorithm)
     * [ISIN (International Securities Identification Number) Algorithm](#isin-algorithm)
+    * [ISO/IEC 7064 MOD 11-2 Algorithm](#isoiec-7064-mod-11-2-algorithm)
+    * [ISO/IEC 7064 MOD 37-2 Algorithm](#isoiec-7064-mod-37-2-algorithm)
     * [Luhn Algorithm](#luhn-algorithm)
     * [Modulus10_1 Algorithm](#modulus10_1-algorithm)
     * [Modulus10_2 Algorithm](#modulus10_2-algorithm)
@@ -51,11 +54,28 @@ value is valid, only that the value was transcribed correctly. There may be othe
 requirements that are specific to the type of value that could cause a value with
 a valid check digit to be considered incorrect/invalid.
 
+## ISO/IEC 7064 Algorithms
+
+The ISO/IEC 7064 standard defines a family of algorithms capable of detecting a
+broad range of errors including all single character transcription errors as well
+as all or nearly all two character transposition errors, two character jump 
+transposition errors, circular shift errors and double transcription errors (two
+separate single transcription errors in a single value). The algorithms are 
+suitable for numeric strings, alphabetic strings, alphanumeric strings and can
+be extended to handle custom character domains beyond ASCII alphanumeric 
+characters.
+
+CheckDigits.Net provides optimized implementations of all of the algorithms
+defined in the ISO/IEC 7064 standard as well as abstract base classes suitable 
+for creating custom implementations.
+
 ## Supported Algorithms
 
 * [ABA RTN (Routing Transit Number) Algorithm](#aba-rtn-algorithm)
 * [Damm Algorithm](#damm-algorithm)
 * [ISIN (International Securities Identification Number) Algorithm](#isin-algorithm)
+* [ISO/IEC 7064 MOD 11-2 Algorithm](#isoiec-7064-mod-11-2-algorithm)
+* [ISO/IEC 7064 MOD 37-2 Algorithm](#isoiec-7064-mod-37-2-algorithm)
 * [Luhn Algorithm](#luhn-algorithm)
 * [Modulus10_1 Algorithm](#modulus10_1-algorithm)
 * [Modulus10_2 Algorithm](#modulus10_2-algorithm)
@@ -84,8 +104,10 @@ a valid check digit to be considered incorrect/invalid.
 | IMO Number            | [Modulus10 Algorithm](#modulus10_2-algorithm) |
 | ISBN-10				| [Modulus11 Algorithm](#modulus11-algorithm) |
 | ISBN-13				| [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
+| ISBT Donation Identification Number |  [ISO/IEC 7064 MOD 37-2 Algorithm](#isoiec-7064-mod-37-2-algorithm) |
 | ISIN                  | [ISIN Algorithm](#isin-algorithm) |
 | ISMN					| [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
+| ISNI                  | [ISO/IEC 7064 MOD 11-2 Algorithm](#isoiec-7064-mod-11-2-algorithm) |
 | ISSN   				| [Modulus11 Algorithm](#modulus11-algorithm) |
 | UK National Health Service Number | [NHS Algorithm](#nhs-algorithm) |
 | US National Provider Identifier | [NPI Algorithm](#npi-algorithm) |
@@ -236,6 +258,42 @@ algorithm cannot detect).
 #### Links
 
 Wikipedia: https://en.wikipedia.org/wiki/International_Securities_Identification_Number
+
+### ISO/IEC 7064 MOD 11-2 Algorithm
+
+The ISO/IEC 7064 MOD 11-2 algorithm is suitable for use with numeric strings. It
+generates a single check character that is either a decimal digit or an 
+supplementary 'X' character.
+
+#### Details
+
+* Valid characters - decimal digits ('0' - '9')
+* Check digit size - one character
+* Check digit value - either decimal digit ('0' - '9') or an uppercase 'X'
+* Check digit location - assumed to be the trailing (right-most) character when validating
+* Class name - Iso7064Mod11_2Algorithm
+
+#### Common Applications
+
+* International Standard Name Identifier (ISNI)
+
+### ISO/IEC 7064 MOD 37-2 Algorithm
+
+The ISO/IEC 7064 MOD 37-2 algorithm is suitable for use with alphanumeric strings. 
+It generates a single check character that is either an alphanumeric character 
+or a supplementary '*' character.
+
+#### Details
+
+* Valid characters - decimal digits ('0' - '9', 'A' - 'Z')
+* Check digit size - one character
+* Check digit value - either decimal digit ('0' - '9', 'A' - 'Z') or an asterisk '*'
+* Check digit location - assumed to be the trailing (right-most) character when validating
+* Class name - Iso7064Mod37_2Algorithm
+
+#### Common Applications
+
+* International Society of Blood Transfusion (ISBT) Donation Identification Numbers
 
 ### Luhn Algorithm
 
@@ -494,6 +552,8 @@ Wikipedia: https://en.wikipedia.org/wiki/Vehicle_identification_number#Check-dig
 * [ABA RTN Algorithm](#aba-rtn-algorithm-benchmarks)
 * [Damm Algorithm](#damm-algorithm-benchmarks)
 * [ISIN Algorithm](#isin-algorithm-benchmarks)
+* [ISO/IEC 7064 MOD 11-2 Algorithm](#isoiec-7064-mod-11-2-algorithm-benchmarks)
+* [ISO/IEC 7064 MOD 37-2 Algorithm](#isoiec-7064-mod-37-2-algorithm-benchmarks)
 * [Luhn Algorithm](#luhn-algorithm-benchmarks)
 * [Modulus10_1 Algorithm](#modulus10_1-algorithm-benchmarks)
 * [Modulus10_2 Algorithm](#modulus10_2-algorithm-benchmarks)
@@ -534,6 +594,32 @@ Wikipedia: https://en.wikipedia.org/wiki/Vehicle_identification_number#Check-dig
 | Validate               | AU0000XVGZA3 | 25.01 ns | 0.141 ns | 0.125 ns |         - |
 | Validate               | US0378331005 | 21.64 ns | 0.096 ns | 0.075 ns |         - |
 | Validate               | US88160R1014 | 21.78 ns | 0.110 ns | 0.103 ns |         - |
+
+### ISO/IEC 7064 MOD 11-2 Algorithm Benchmarks
+
+| Method                 | Value                | Mean      | Error     | StdDev    | Allocated |
+|----------------------- |--------------------- |----------:|----------:|----------:|----------:|
+| TryCalculateCheckDigit | 0794                 |  6.861 ns | 0.0485 ns | 0.0405 ns |         - |
+| TryCalculateCheckDigit | 000000010930246      | 20.033 ns | 0.3360 ns | 0.2979 ns |         - |
+| TryCalculateCheckDigit | 000000012095650      | 19.635 ns | 0.1051 ns | 0.0931 ns |         - |
+| TryCalculateCheckDigit | 99999(...)99999 [35] | 43.663 ns | 0.2269 ns | 0.2123 ns |         - |
+| Validate               | 07940                |  6.630 ns | 0.0601 ns | 0.0532 ns |         - |
+| Validate               | 0000000109302468     | 19.398 ns | 0.0965 ns | 0.0806 ns |         - |
+| Validate               | 000000012095650X     | 19.108 ns | 0.1898 ns | 0.1776 ns |         - |
+| Validate               | 99999(...)99994 [36] | 43.462 ns | 0.4024 ns | 0.3764 ns |         - |
+
+### ISO/IEC 7064 MOD 37-2 Algorithm Benchmarks
+
+| Method                 | Value                | Mean      | Error     | StdDev    | Allocated |
+|----------------------- |--------------------- |----------:|----------:|----------:|----------:|
+| TryCalculateCheckDigit | ZZZZ                 |  8.753 ns | 0.1538 ns | 0.1363 ns |         - |
+| TryCalculateCheckDigit | A999522123456        | 23.986 ns | 0.5079 ns | 0.4751 ns |         - |
+| TryCalculateCheckDigit | A999914123456        | 23.798 ns | 0.3693 ns | 0.3084 ns |         - |
+| TryCalculateCheckDigit | ABCDE(...)TUVWX [24] | 42.252 ns | 0.4247 ns | 0.3973 ns |         - |
+| Validate               | ZZZZO                |  7.047 ns | 0.1607 ns | 0.1504 ns |         - |
+| Validate               | A999522123456*       | 24.010 ns | 0.2448 ns | 0.2290 ns |         - |
+| Validate               | A999914123456N       | 17.706 ns | 0.2651 ns | 0.2479 ns |         - |
+| Validate               | ABCDE(...)UVWX* [25] | 31.682 ns | 0.2959 ns | 0.2623 ns |         - |
 
 ### Luhn Algorithm Benchmarks
 

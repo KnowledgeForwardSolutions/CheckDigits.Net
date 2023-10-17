@@ -1,12 +1,14 @@
 ﻿// Ignore Spelling: Aba Damm Isin Luhn Nhs Npi Rtn Verhoeff
 
+using CheckDigits.Net.Iso7064;
+
 namespace CheckDigits.Net;
 
 /// <summary>
 ///   Lazy instantiated singleton instances of the algorithms supported by
 ///   CheckDigits.Net.
 /// </summary>
-public class Algorithms
+public static class Algorithms
 {
    private static readonly Lazy<ICheckDigitAlgorithm> _abaRtn =
      new(() => new AbaRtnAlgorithm());
@@ -16,6 +18,12 @@ public class Algorithms
 
    private static readonly Lazy<ISingleCheckDigitAlgorithm> _isin =
      new(() => new IsinAlgorithm());
+
+   private static readonly Lazy<ISingleCheckDigitAlgorithm> _iso7064Mod11_2 =
+     new(() => new Iso7064Mod11_2Algorithm());
+
+   private static readonly Lazy<ISingleCheckDigitAlgorithm> _iso7064Mod37_2 =
+     new(() => new Iso7064Mod37_2Algorithm());
 
    private static readonly Lazy<ISingleCheckDigitAlgorithm> _luhn =
      new(() => new LuhnAlgorithm());
@@ -59,6 +67,16 @@ public class Algorithms
    ///   International Securities Identification Number algorithm.
    /// </summary>
    public static ISingleCheckDigitAlgorithm Isin => _isin.Value;
+
+   /// <summary>
+   ///   ISO/IEC 7064 MOD 11-2 algorithm.
+   /// </summary>
+   public static ISingleCheckDigitAlgorithm Iso7064Mod11_2 => _iso7064Mod11_2.Value;
+
+   /// <summary>
+   ///   ISO/IEC 7064 MOD 37-2 algorithm.
+   /// </summary>
+   public static ISingleCheckDigitAlgorithm Iso7064Mod37_2 => _iso7064Mod37_2.Value;
 
    /// <summary>
    ///   Luhn algorithm.

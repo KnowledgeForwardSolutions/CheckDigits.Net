@@ -81,34 +81,4 @@ public class Modulus10_13Algorithm : ISingleCheckDigitAlgorithm
 
       return value[^1].ToIntegerDigit() == checkDigit;
    }
-
-   private static Boolean CalculateCheckDigit(
-      String value,
-      Boolean containsCheckDigit,
-      out Char checkDigit)
-   {
-      checkDigit = CharConstants.NUL;
-      if (String.IsNullOrEmpty(value) || (containsCheckDigit && value.Length < 2))
-      {
-         return false;
-      }
-
-      var sum = 0;
-      var oddPosition = true;
-      var startPosition = value.Length - (containsCheckDigit ? 2 : 1);
-      for (var index = startPosition; index >= 0; index--)
-      {
-         var digit = value[index].ToIntegerDigit();
-         if (digit < 0 || digit > 9)
-         {
-            return false;
-         }
-         sum += oddPosition ? digit * 3 : digit;
-         oddPosition = !oddPosition;
-      }
-      var mod = 10 - (sum % 10);
-      checkDigit = mod == 10 ? CharConstants.DigitZero : mod.ToDigitChar();
-
-      return true;
-   }
 }
