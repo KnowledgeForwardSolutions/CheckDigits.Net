@@ -599,16 +599,27 @@ Wikipedia: https://en.wikipedia.org/wiki/Vehicle_identification_number#Check-dig
 
 | Method                 | Value                | Mean      | Error     | StdDev    | Allocated |
 |----------------------- |--------------------- |----------:|----------:|----------:|----------:|
+| TryCalculateCheckDigit | 0794                 |  6.861 ns | 0.0485 ns | 0.0405 ns |         - |
 | TryCalculateCheckDigit | 000000010930246      | 20.033 ns | 0.3360 ns | 0.2979 ns |         - |
 | TryCalculateCheckDigit | 000000012095650      | 19.635 ns | 0.1051 ns | 0.0931 ns |         - |
-| TryCalculateCheckDigit | 0794                 |  6.861 ns | 0.0485 ns | 0.0405 ns |         - |
 | TryCalculateCheckDigit | 99999(...)99999 [35] | 43.663 ns | 0.2269 ns | 0.2123 ns |         - |
+| Validate               | 07940                |  6.630 ns | 0.0601 ns | 0.0532 ns |         - |
 | Validate               | 0000000109302468     | 19.398 ns | 0.0965 ns | 0.0806 ns |         - |
 | Validate               | 000000012095650X     | 19.108 ns | 0.1898 ns | 0.1776 ns |         - |
-| Validate               | 07940                |  6.630 ns | 0.0601 ns | 0.0532 ns |         - |
 | Validate               | 99999(...)99994 [36] | 43.462 ns | 0.4024 ns | 0.3764 ns |         - |
 
 ### ISO/IEC 7064 MOD 37-2 Algorithm Benchmarks
+
+| Method                 | Value                | Mean      | Error     | StdDev    | Allocated |
+|----------------------- |--------------------- |----------:|----------:|----------:|----------:|
+| TryCalculateCheckDigit | ZZZZ                 |  8.753 ns | 0.1538 ns | 0.1363 ns |         - |
+| TryCalculateCheckDigit | A999522123456        | 23.986 ns | 0.5079 ns | 0.4751 ns |         - |
+| TryCalculateCheckDigit | A999914123456        | 23.798 ns | 0.3693 ns | 0.3084 ns |         - |
+| TryCalculateCheckDigit | ABCDE(...)TUVWX [24] | 42.252 ns | 0.4247 ns | 0.3973 ns |         - |
+| Validate               | ZZZZO                |  7.047 ns | 0.1607 ns | 0.1504 ns |         - |
+| Validate               | A999522123456*       | 24.010 ns | 0.2448 ns | 0.2290 ns |         - |
+| Validate               | A999914123456N       | 17.706 ns | 0.2651 ns | 0.2479 ns |         - |
+| Validate               | ABCDE(...)UVWX* [25] | 31.682 ns | 0.2959 ns | 0.2623 ns |         - |
 
 ### Luhn Algorithm Benchmarks
 

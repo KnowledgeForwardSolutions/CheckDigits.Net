@@ -24,36 +24,6 @@ public class Iso7064Mod37_2AlgorithmTests
 
    #endregion
 
-   #region CharacterDomain Property Tests
-   // ==========================================================================
-   // ==========================================================================
-
-   [Fact]
-   public void Iso7064Mod37_2Algorithm_CharacterDomain_ShouldReturnExpectedValue()
-      => _sut.CharacterDomain.Should().BeOfType<AlphanumericSupplementaryDomain>();
-
-   #endregion
-
-   #region Modulus Property Tests
-   // ==========================================================================
-   // ==========================================================================
-
-   [Fact]
-   public void Iso7064Mod37_2Algorithm_Modulus_ShouldReturnExpectedValue()
-      => _sut.Modulus.Should().Be(37);
-
-   #endregion
-
-   #region Radix Property Tests
-   // ==========================================================================
-   // ==========================================================================
-
-   [Fact]
-   public void Iso7064Mod37_2Algorithm_Radix_ShouldReturnExpectedValue()
-      => _sut.Radix.Should().Be(2);
-
-   #endregion
-
    #region TryCalculateCheckDigit Tests
    // ==========================================================================
    // ==========================================================================
@@ -133,6 +103,7 @@ public class Iso7064Mod37_2AlgorithmTests
    [InlineData("A999922012346*")]      // "
    [InlineData("A999522123456*")]      // "
    [InlineData("G123498654321H")]      // Example from https://www.transfusionguidelines.org/red-book/annex-2-isbt-128-check-character-calculation
+   [InlineData("ZZZZZZZZZZZZZZZZZZZZZZZZZZ9")]
    [InlineData("ABCDEFGHIJKLMNOPQRSTUVWX*")]
    [InlineData("ZZZZO")]
    public void Iso7064Mod37_2Algorithm_Validate_ShouldReturnTrue_WhenValueContainsValidCheckDigit(String value)
