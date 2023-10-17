@@ -53,8 +53,9 @@ public class Iso7064Mod37_2AlgorithmTests
    [InlineData("A999922012346", '*')]      // "
    [InlineData("A999522123456", '*')]      // "
    [InlineData("G123498654321", 'H')]      // Example from https://www.transfusionguidelines.org/red-book/annex-2-isbt-128-check-character-calculation
-   [InlineData("ABCDEFGHIJKLMNOPQRSTUVWX", '*')]
    [InlineData("ZZZZ", 'O')]
+   [InlineData("ABCDEFGHIJKLMNOPQRSTUVWX", '*')]
+   [InlineData("ZZZZZZZZZZZZZZZZZZZZZZZZZZ", '9')]
    public void Iso7064Mod37_2AlgorithmAlgorithm_TryCalculateCheckDigit_ShouldCalculateExpectedCheckDigit(
       String value,
       Char expectedCheckDigit)
@@ -103,9 +104,9 @@ public class Iso7064Mod37_2AlgorithmTests
    [InlineData("A999922012346*")]      // "
    [InlineData("A999522123456*")]      // "
    [InlineData("G123498654321H")]      // Example from https://www.transfusionguidelines.org/red-book/annex-2-isbt-128-check-character-calculation
-   [InlineData("ZZZZZZZZZZZZZZZZZZZZZZZZZZ9")]
-   [InlineData("ABCDEFGHIJKLMNOPQRSTUVWX*")]
    [InlineData("ZZZZO")]
+   [InlineData("ABCDEFGHIJKLMNOPQRSTUVWX*")]
+   [InlineData("ZZZZZZZZZZZZZZZZZZZZZZZZZZ9")]
    public void Iso7064Mod37_2Algorithm_Validate_ShouldReturnTrue_WhenValueContainsValidCheckDigit(String value)
       => _sut.Validate(value).Should().BeTrue();
 
