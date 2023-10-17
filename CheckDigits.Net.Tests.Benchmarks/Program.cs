@@ -23,5 +23,3 @@ BenchmarkRunner.Run<Iso7064Mod37_2AlgorithmValidateBenchmarks>();
 //BenchmarkRunner.Run<VerhoeffAlgorithmValidateBenchmarks>();
 //BenchmarkRunner.Run<VinAlgorithmTryCalculateBenchmarks>();
 //BenchmarkRunner.Run<VinAlgorithmValidateBenchmarks>();
-
-//BenchmarkRunner.Run<CharacterDomainBenchmarks>();
