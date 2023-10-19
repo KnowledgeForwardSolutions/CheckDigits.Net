@@ -187,6 +187,24 @@ namespace CheckDigits.Net {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ISO/IEC 7064 check digit algorithm with modulus 661 and radix 26.
+        /// </summary>
+        internal static string Iso7064Mod661_26AlgorithmDescription {
+            get {
+                return ResourceManager.GetString("Iso7064Mod661_26AlgorithmDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ISO/IEC 7064 MOD 661-26.
+        /// </summary>
+        internal static string Iso7064Mod661_26AlgorithmName {
+            get {
+                return ResourceManager.GetString("Iso7064Mod661_26AlgorithmName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Modulus must be greater than one.
         /// </summary>
         internal static string Iso7064ModulusOutOfRange {

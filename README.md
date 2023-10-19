@@ -20,6 +20,7 @@ demonstrate performance over a range of values and the memory allocation (if any
     * [ISO/IEC 7064 MOD 11-2 Algorithm](#isoiec-7064-mod-11-2-algorithm)
     * [ISO/IEC 7064 MOD 1271-36 Algorithm](#isoiec-7064-mod-1271-36-algorithm)
     * [ISO/IEC 7064 MOD 37-2 Algorithm](#isoiec-7064-mod-37-2-algorithm)
+    * [ISO/IEC 7064 MOD 661-26 Algorithm](#isoiec-7064-mod-661-26-algorithm)
     * [Luhn Algorithm](#luhn-algorithm)
     * [Modulus10_1 Algorithm](#modulus10_1-algorithm)
     * [Modulus10_2 Algorithm](#modulus10_2-algorithm)
@@ -78,6 +79,7 @@ for creating custom implementations.
 * [ISO/IEC 7064 MOD 11-2 Algorithm](#isoiec-7064-mod-11-2-algorithm)
 * [ISO/IEC 7064 MOD 1271-36 Algorithm](#isoiec-7064-mod-1271-36-algorithm)
 * [ISO/IEC 7064 MOD 37-2 Algorithm](#isoiec-7064-mod-37-2-algorithm)
+* [ISO/IEC 7064 MOD 661-26 Algorithm](#isoiec-7064-mod-661-26-algorithm)
 * [Luhn Algorithm](#luhn-algorithm)
 * [Modulus10_1 Algorithm](#modulus10_1-algorithm)
 * [Modulus10_2 Algorithm](#modulus10_2-algorithm)
@@ -314,6 +316,19 @@ or a supplementary '*' character.
 #### Common Applications
 
 * International Society of Blood Transfusion (ISBT) Donation Identification Numbers
+
+### ISO/IEC 7064 MOD 661-26 Algorithm
+
+The ISO/IEC 7064 MOD 661-26 algorithm is suitable for use with alphabetic 
+strings. It generates a two check alphabetic characters.
+
+#### Details
+
+* Valid characters - alphabetic characters ('A' - 'Z')
+* Check digit size - two characters
+* Check digit value - alphabetic characters ('A' - 'Z')
+* Check digit location - assumed to be the trailing (right-most) characters when validating
+* Class name - Iso7064Mod661_26Algorithm
 
 ### Luhn Algorithm
 
@@ -654,6 +669,8 @@ Wikipedia: https://en.wikipedia.org/wiki/Vehicle_identification_number#Check-dig
 | Validate               | A999522123456*       | 24.010 ns | 0.2448 ns | 0.2290 ns |         - |
 | Validate               | A999914123456N       | 17.706 ns | 0.2651 ns | 0.2479 ns |         - |
 | Validate               | ABCDE(...)UVWX* [25] | 31.682 ns | 0.2959 ns | 0.2623 ns |         - |
+
+### ISO/IEC 7064 MOD 661-26 Algorithm Benchmarks
 
 ### Luhn Algorithm Benchmarks
 
