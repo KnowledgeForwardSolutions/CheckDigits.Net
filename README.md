@@ -18,6 +18,7 @@ demonstrate performance over a range of values and the memory allocation (if any
     * [Damm Algorithm](#damm-algorithm)
     * [ISIN (International Securities Identification Number) Algorithm](#isin-algorithm)
     * [ISO/IEC 7064 MOD 11-2 Algorithm](#isoiec-7064-mod-11-2-algorithm)
+    * [ISO/IEC 7064 MOD 1271-36 Algorithm](#isoiec-7064-mod-1271-36-algorithm)
     * [ISO/IEC 7064 MOD 37-2 Algorithm](#isoiec-7064-mod-37-2-algorithm)
     * [Luhn Algorithm](#luhn-algorithm)
     * [Modulus10_1 Algorithm](#modulus10_1-algorithm)
@@ -75,6 +76,7 @@ for creating custom implementations.
 * [Damm Algorithm](#damm-algorithm)
 * [ISIN (International Securities Identification Number) Algorithm](#isin-algorithm)
 * [ISO/IEC 7064 MOD 11-2 Algorithm](#isoiec-7064-mod-11-2-algorithm)
+* [ISO/IEC 7064 MOD 1271-36 Algorithm](#isoiec-7064-mod-1271-36-algorithm)
 * [ISO/IEC 7064 MOD 37-2 Algorithm](#isoiec-7064-mod-37-2-algorithm)
 * [Luhn Algorithm](#luhn-algorithm)
 * [Modulus10_1 Algorithm](#modulus10_1-algorithm)
@@ -109,6 +111,7 @@ for creating custom implementations.
 | ISMN					| [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
 | ISNI                  | [ISO/IEC 7064 MOD 11-2 Algorithm](#isoiec-7064-mod-11-2-algorithm) |
 | ISSN   				| [Modulus11 Algorithm](#modulus11-algorithm) |
+| Nigerian VNIN         | [ISO/IEC 7064 MOD 1271-36 Algorithm](#isoiec-7064-mod-1271-36-algorithm) |
 | UK National Health Service Number | [NHS Algorithm](#nhs-algorithm) |
 | US National Provider Identifier | [NPI Algorithm](#npi-algorithm) |
 | SSCC					| [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
@@ -276,6 +279,23 @@ supplementary 'X' character.
 #### Common Applications
 
 * International Standard Name Identifier (ISNI)
+
+### ISO/IEC 7064 MOD 1271-36 Algorithm
+
+The ISO/IEC 7064 MOD 1271-36 algorithm is suitable for use with alphanumeric 
+strings. It generates a two check alphanumeric characters.
+
+#### Details
+
+* Valid characters - alphanumeric characters ('0' - '9', 'A' - 'Z')
+* Check digit size - two characters
+* Check digit value - alphanumeric characters ('0' - '9', 'A' - 'Z')
+* Check digit location - assumed to be the trailing (right-most) characters when validating
+* Class name - Iso7064Mod1271_36Algorithm
+
+#### Common Applications
+
+* Nigerian VNIN (Virtual National Identification Number)
 
 ### ISO/IEC 7064 MOD 37-2 Algorithm
 
@@ -553,6 +573,7 @@ Wikipedia: https://en.wikipedia.org/wiki/Vehicle_identification_number#Check-dig
 * [Damm Algorithm](#damm-algorithm-benchmarks)
 * [ISIN Algorithm](#isin-algorithm-benchmarks)
 * [ISO/IEC 7064 MOD 11-2 Algorithm](#isoiec-7064-mod-11-2-algorithm-benchmarks)
+* [ISO/IEC 7064 MOD 1271-36 Algorithm](#isoiec-7064-mod-1271-36-algorithm-benchmarks)
 * [ISO/IEC 7064 MOD 37-2 Algorithm](#isoiec-7064-mod-37-2-algorithm-benchmarks)
 * [Luhn Algorithm](#luhn-algorithm-benchmarks)
 * [Modulus10_1 Algorithm](#modulus10_1-algorithm-benchmarks)
@@ -607,6 +628,8 @@ Wikipedia: https://en.wikipedia.org/wiki/Vehicle_identification_number#Check-dig
 | Validate               | 0000000109302468     | 19.398 ns | 0.0965 ns | 0.0806 ns |         - |
 | Validate               | 000000012095650X     | 19.108 ns | 0.1898 ns | 0.1776 ns |         - |
 | Validate               | 99999(...)99994 [36] | 43.462 ns | 0.4024 ns | 0.3764 ns |         - |
+
+### ISO/IEC 7064 MOD 1271-36 Algorithm Benchmarks
 
 ### ISO/IEC 7064 MOD 37-2 Algorithm Benchmarks
 
