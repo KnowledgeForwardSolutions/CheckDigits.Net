@@ -88,7 +88,6 @@ public class Iso7064Mod37_2Algorithm : ISingleCheckDigitAlgorithm
       }
 
       var sum = 0;
-      Int32 num;
       Int32 offset;
       for (var index = 0; index < value.Length - 1; index++)
       {
@@ -97,7 +96,7 @@ public class Iso7064Mod37_2Algorithm : ISingleCheckDigitAlgorithm
          {
             return false;
          }
-         num = _lookupTable[offset];
+         var num = _lookupTable[offset];
          sum = (sum + num) * _radix;
          if (sum >= _reduceThreshold)
          {
@@ -110,9 +109,7 @@ public class Iso7064Mod37_2Algorithm : ISingleCheckDigitAlgorithm
       {
          return false;
       }
-      num = _lookupTable[offset];
-
-      sum += num;
+      sum += _lookupTable[offset];
 
       return sum % _modulus == 1;
    }

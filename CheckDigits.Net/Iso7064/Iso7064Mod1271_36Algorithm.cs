@@ -24,9 +24,20 @@
 ///   transcription errors in the same value).
 ///   </para>
 /// </remarks>
-public class Iso7064Mod1271_36Algorithm : Iso7064PureSystemDoubleCharacterAlgorithm, IDoubleCheckDigitAlgorithm
+public class Iso7064Mod1271_36Algorithm : IDoubleCheckDigitAlgorithm
 {
-   public Iso7064Mod1271_36Algorithm() : base (1271, 36, "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ") { }
+   private const Int32 _modulus = 1271;
+   private const Int32 _radix = 36;
+   private const Int32 _reduceThreshold = Int32.MaxValue / _radix;
+   private static readonly Int32[] _lookupTable =
+      Enumerable.Range(CharConstants.DigitZero, CharConstants.UpperCaseZ - CharConstants.DigitZero + 1)
+         .Select(x => x switch
+         {
+            Int32 d when d >= CharConstants.DigitZero && d <= CharConstants.DigitNine => d - CharConstants.DigitZero,
+            Int32 c when c >= CharConstants.UpperCaseA && c <= CharConstants.UpperCaseZ => c - CharConstants.UpperCaseA + 10,
+            _ => -1
+         }).ToArray();
+   private const String _validCharacters = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
    /// <inheritdoc/>
    public String AlgorithmDescription => Resources.Iso7064Mod1271_36AlgorithmDescription;
@@ -34,5 +45,83 @@ public class Iso7064Mod1271_36Algorithm : Iso7064PureSystemDoubleCharacterAlgori
    /// <inheritdoc/>
    public String AlgorithmName => Resources.Iso7064Mod1271_36AlgorithmName;
 
-   public override Int32 MapCharacterToNumber(Char ch) => "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ".IndexOf(ch);
+   /// <inheritdoc/>
+   public Boolean TryCalculateCheckDigit(
+      String value,
+      out Char first,
+      out Char second)
+   {
+      first = CharConstants.NUL;
+      second = CharConstants.NUL;
+      if (String.IsNullOrEmpty(value))
+      {
+         return false;
+      }
+
+      var sum = 0;
+      for (var index = 0; index < value.Length; index++)
+      {
+         var offset = value[index] - CharConstants.DigitZero;
+         if (offset < 0 || offset > 42)
+         {
+            return false;
+         }
+         var num = _lookupTable[offset];
+         sum = (sum + num) * _radix;
+         if (sum >= _reduceThreshold)
+         {
+            sum %= _modulus;
+         }
+      }
+
+      // Per ISO/IEC 7064, two character algorithms perform one final pass with
+      // effective character value of zero.
+      sum = (sum * _radix) % _modulus;
+
+      var checkSum = _modulus - sum + 1;
+      var quotient = checkSum / _radix;
+      var remainder = checkSum % _radix;
+
+      first = _validCharacters[quotient];
+      second = _validCharacters[remainder];
+
+      return true;
+   }
+
+   /// <inheritdoc/>
+   public Boolean Validate(String value)
+   {
+      if (String.IsNullOrEmpty(value) || value.Length < 3)
+      {
+         return false;
+      }
+
+      // Sum non-check digit characters and first check character.
+      var sum = 0;
+      Int32 offset;
+      for (var index = 0; index < value.Length - 1; index++)
+      {
+         offset = value[index] - CharConstants.DigitZero;
+         if (offset < 0 || offset > 42)
+         {
+            return false;
+         }
+         var num = _lookupTable[offset];
+         sum = (sum + num) * _radix;
+         if (sum >= _reduceThreshold)
+         {
+            sum %= _modulus;
+         }
+      }
+
+      // Add value for second check character.
+      offset = value[^1] - CharConstants.DigitZero;
+      if (offset < 0 || offset > 42)
+      {
+         return false;
+      }
+      sum += _lookupTable[offset];
+
+      return sum % _modulus == 1;
+   }
 }
