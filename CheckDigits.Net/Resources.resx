@@ -165,6 +165,12 @@
   <data name="Iso7064Mod661_26AlgorithmName" xml:space="preserve">
     <value>ISO/IEC 7064 MOD 661-26</value>
   </data>
+  <data name="Iso7064Mod97_10AlgorithmDescription" xml:space="preserve">
+    <value>ISO/IEC 7064 check digit algorithm with modulus 97 and radix 10</value>
+  </data>
+  <data name="Iso7064Mod97_10AlgorithmName" xml:space="preserve">
+    <value>ISO/IEC 7064 MOD 97-10</value>
+  </data>
   <data name="Iso7064ModulusOutOfRange" xml:space="preserve">
     <value>Modulus must be greater than one</value>
   </data>

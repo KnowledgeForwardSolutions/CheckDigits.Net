@@ -104,7 +104,7 @@ public class Iso7064Mod661_26AlgorithmTests
    [Theory]
    [InlineData("123!56")]
    [InlineData("123^56")]
-   public void Iso7064Mod37_2Algorithm_TryCalculateCheckDigit_ShouldReturnFalse_WhenInputContainsInvalidCharacter(String value)
+   public void Iso7064Mod661_26Algorithm_TryCalculateCheckDigit_ShouldReturnFalse_WhenInputContainsInvalidCharacter(String value)
    {
       // Act/assert.
       _sut.TryCalculateCheckDigit(value, out var first, out var second).Should().BeFalse();
