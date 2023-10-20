@@ -21,6 +21,7 @@ demonstrate performance over a range of values and the memory allocation (if any
     * [ISO/IEC 7064 MOD 1271-36 Algorithm](#isoiec-7064-mod-1271-36-algorithm)
     * [ISO/IEC 7064 MOD 37-2 Algorithm](#isoiec-7064-mod-37-2-algorithm)
     * [ISO/IEC 7064 MOD 661-26 Algorithm](#isoiec-7064-mod-661-26-algorithm)
+    * [ISO/IEC 7064 MOD 97-10 Algorithm](#isoiec-7064-mod-97-10-algorithm)
     * [Luhn Algorithm](#luhn-algorithm)
     * [Modulus10_1 Algorithm](#modulus10_1-algorithm)
     * [Modulus10_2 Algorithm](#modulus10_2-algorithm)
@@ -80,6 +81,7 @@ for creating custom implementations.
 * [ISO/IEC 7064 MOD 1271-36 Algorithm](#isoiec-7064-mod-1271-36-algorithm)
 * [ISO/IEC 7064 MOD 37-2 Algorithm](#isoiec-7064-mod-37-2-algorithm)
 * [ISO/IEC 7064 MOD 661-26 Algorithm](#isoiec-7064-mod-661-26-algorithm)
+* [ISO/IEC 7064 MOD 97-10 Algorithm](#isoiec-7064-mod-97-10-algorithm)
 * [Luhn Algorithm](#luhn-algorithm)
 * [Modulus10_1 Algorithm](#modulus10_1-algorithm)
 * [Modulus10_2 Algorithm](#modulus10_2-algorithm)
@@ -113,7 +115,6 @@ for creating custom implementations.
 | ISMN					| [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
 | ISNI                  | [ISO/IEC 7064 MOD 11-2 Algorithm](#isoiec-7064-mod-11-2-algorithm) |
 | ISSN   				| [Modulus11 Algorithm](#modulus11-algorithm) |
-| Nigerian VNIN         | [ISO/IEC 7064 MOD 1271-36 Algorithm](#isoiec-7064-mod-1271-36-algorithm) |
 | UK National Health Service Number | [NHS Algorithm](#nhs-algorithm) |
 | US National Provider Identifier | [NPI Algorithm](#npi-algorithm) |
 | SSCC					| [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
@@ -285,7 +286,7 @@ supplementary 'X' character.
 ### ISO/IEC 7064 MOD 1271-36 Algorithm
 
 The ISO/IEC 7064 MOD 1271-36 algorithm is suitable for use with alphanumeric 
-strings. It generates a two check alphanumeric characters.
+strings. It generates two check alphanumeric characters.
 
 #### Details
 
@@ -307,7 +308,7 @@ or a supplementary '*' character.
 
 #### Details
 
-* Valid characters - decimal digits ('0' - '9', 'A' - 'Z')
+* Valid characters - alphanumeric characters ('0' - '9', 'A' - 'Z')
 * Check digit size - one character
 * Check digit value - either decimal digit ('0' - '9', 'A' - 'Z') or an asterisk '*'
 * Check digit location - assumed to be the trailing (right-most) character when validating
@@ -320,7 +321,7 @@ or a supplementary '*' character.
 ### ISO/IEC 7064 MOD 661-26 Algorithm
 
 The ISO/IEC 7064 MOD 661-26 algorithm is suitable for use with alphabetic 
-strings. It generates a two check alphabetic characters.
+strings. It generates two check alphabetic characters.
 
 #### Details
 
@@ -329,6 +330,26 @@ strings. It generates a two check alphabetic characters.
 * Check digit value - alphabetic characters ('A' - 'Z')
 * Check digit location - assumed to be the trailing (right-most) characters when validating
 * Class name - Iso7064Mod661_26Algorithm
+
+### ISO/IEC 7064 MOD 97-10 Algorithm
+
+The ISO/IEC 7064 MOD 97-10 algorithm is suitable for use with numeric strings. 
+It generates a two numeric check digits.
+
+Note: the ISO/IEC 7064 MOD 97-10 algorithm is the basis of a number of check digit 
+algorithms that first map alphabetic characters to numbers between 10 and 35. 
+Examples include International Bank Account Numbers (IBAN) and Universal Loan
+Identifiers (ULI). However this implementation is limited to values containing
+only decimal digits. Other algorithms will handle values like IBAN and ULI and 
+perform the mapping of alphabetic characters internally.
+
+#### Details
+
+* Valid characters - decimal digits ('0' - '9')
+* Check digit size - two characters
+* Check digit value - decimal digits ('0' - '9')
+* Check digit location - assumed to be the trailing (right-most) characters when validating
+* Class name - Iso7064Mod997_10Algorithm
 
 ### Luhn Algorithm
 
@@ -590,6 +611,8 @@ Wikipedia: https://en.wikipedia.org/wiki/Vehicle_identification_number#Check-dig
 * [ISO/IEC 7064 MOD 11-2 Algorithm](#isoiec-7064-mod-11-2-algorithm-benchmarks)
 * [ISO/IEC 7064 MOD 1271-36 Algorithm](#isoiec-7064-mod-1271-36-algorithm-benchmarks)
 * [ISO/IEC 7064 MOD 37-2 Algorithm](#isoiec-7064-mod-37-2-algorithm-benchmarks)
+* [ISO/IEC 7064 MOD 661-26 Algorithm](#isoiec-7064-mod-661-26-algorithm-benchmarks)
+* [ISO/IEC 7064 MOD 97-10 Algorithm](#isoiec-7064-mod-97-10-algorithm-benchmarks)
 * [Luhn Algorithm](#luhn-algorithm-benchmarks)
 * [Modulus10_1 Algorithm](#modulus10_1-algorithm-benchmarks)
 * [Modulus10_2 Algorithm](#modulus10_2-algorithm-benchmarks)
@@ -682,6 +705,8 @@ Wikipedia: https://en.wikipedia.org/wiki/Vehicle_identification_number#Check-dig
 | Validate               | ABCDEFGHIJKLMNJF     | 20.514 ns | 0.1609 ns | 0.1256 ns |         - |
 | Validate               | AAAEE(...)DEFJY [22] | 28.952 ns | 0.2955 ns | 0.2764 ns |         - |
 | Validate               | ZZZZZ(...)ZZZNS [32] | 39.750 ns | 0.5990 ns | 0.5603 ns |         - |
+
+### ISO/IEC 7064 MOD 97-10 Algorithm Benchmarks
 
 ### Luhn Algorithm Benchmarks
 
