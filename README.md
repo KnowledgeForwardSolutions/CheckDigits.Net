@@ -708,6 +708,15 @@ Wikipedia: https://en.wikipedia.org/wiki/Vehicle_identification_number#Check-dig
 
 ### ISO/IEC 7064 MOD 97-10 Algorithm Benchmarks
 
+| Method                 | Value                | Mean      | Error     | StdDev    | Allocated |
+|----------------------- |--------------------- |----------:|----------:|----------:|----------:|
+| TryCalculateCheckDigit | 123456               |  9.183 ns | 0.0686 ns | 0.0573 ns |         - |
+| TryCalculateCheckDigit | 1632175818351910     | 22.752 ns | 0.2096 ns | 0.1858 ns |         - |
+| TryCalculateCheckDigit | 10113(...)14333 [35] | 46.233 ns | 0.2936 ns | 0.2292 ns |         - |
+| Validate               | 12345676             | 10.050 ns | 0.2170 ns | 0.1920 ns |         - |
+| Validate               | 163217581835191038   | 23.080 ns | 0.3330 ns | 0.2950 ns |         - |
+| Validate               | 10113(...)33338 [37] | 47.190 ns | 0.5270 ns | 0.4930 ns |         - |
+
 ### Luhn Algorithm Benchmarks
 
 | Method                 | Value            | Mean      | Error     | StdDev    | Allocated |

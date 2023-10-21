@@ -193,11 +193,11 @@ public class Iso7064Mod661_26AlgorithmTests
 
    [Fact]
    public void Iso7064Mod661_26Algorithm_Validate_ShouldReturnFalse_WhenValueContainsInvalidFirstCheckCharacter()
-      => _sut.Validate("1234#0").Should().BeFalse();
+      => _sut.Validate("ABCD#F").Should().BeFalse();
 
    [Fact]
    public void Iso7064Mod661_26Algorithm_Validate_ShouldReturnFalse_WhenValueContainsInvalidSecondCheckCharacter()
-      => _sut.Validate("1234A#").Should().BeFalse();
+      => _sut.Validate("ABCDE#").Should().BeFalse();
 
    #endregion
 }
