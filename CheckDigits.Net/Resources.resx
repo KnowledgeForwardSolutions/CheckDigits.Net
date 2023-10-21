@@ -147,11 +147,29 @@
   <data name="Iso7064Mod11_2AlgorithmName" xml:space="preserve">
     <value>ISO/IEC 7064 MOD 11-2</value>
   </data>
+  <data name="Iso7064Mod1271_36AlgorithmDescription" xml:space="preserve">
+    <value>ISO/IEC 7064 check digit algorithm with modulus 1271 and radix 36</value>
+  </data>
+  <data name="Iso7064Mod1271_36AlgorithmName" xml:space="preserve">
+    <value>ISO/IEC 7064 MOD 1271-36</value>
+  </data>
   <data name="Iso7064Mod37_2AlgorithmDescription" xml:space="preserve">
     <value>ISO/IEC 7064 check digit algorithm with modulus 37 and radix 2</value>
   </data>
   <data name="Iso7064Mod37_2AlgorithmName" xml:space="preserve">
     <value>ISO/IEC 7064 MOD 37-2</value>
+  </data>
+  <data name="Iso7064Mod661_26AlgorithmDescription" xml:space="preserve">
+    <value>ISO/IEC 7064 check digit algorithm with modulus 661 and radix 26</value>
+  </data>
+  <data name="Iso7064Mod661_26AlgorithmName" xml:space="preserve">
+    <value>ISO/IEC 7064 MOD 661-26</value>
+  </data>
+  <data name="Iso7064Mod97_10AlgorithmDescription" xml:space="preserve">
+    <value>ISO/IEC 7064 check digit algorithm with modulus 97 and radix 10</value>
+  </data>
+  <data name="Iso7064Mod97_10AlgorithmName" xml:space="preserve">
+    <value>ISO/IEC 7064 MOD 97-10</value>
   </data>
   <data name="Iso7064ModulusOutOfRange" xml:space="preserve">
     <value>Modulus must be greater than one</value>
