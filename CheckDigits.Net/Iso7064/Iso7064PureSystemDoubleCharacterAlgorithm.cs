@@ -2,10 +2,10 @@
 
 /// <summary>
 ///   Abstract base class for an ISO/IEC 7064 pure system algorithm (i.e. an 
-///   algorithm that uses a single modulus) and that generates a single check
-///   character.
+///   algorithm that uses a single modulus) and that generates two check
+///   characters.
 /// </summary>
-public abstract class Iso7064PureSystemSingleCharacterAlgorithm
+public abstract class Iso7064PureSystemDoubleCharacterAlgorithm
 {
    private readonly Int32 _modulus;
    private readonly Int32 _radix;
@@ -43,7 +43,7 @@ public abstract class Iso7064PureSystemSingleCharacterAlgorithm
    /// <exception cref="ArgumentException">
    ///   <paramref name="validCharacters"/> is <see cref="String.Empty"/>.
    /// </exception>
-   public Iso7064PureSystemSingleCharacterAlgorithm(
+   public Iso7064PureSystemDoubleCharacterAlgorithm(
       Int32 modulus,
       Int32 radix,
       String validCharacters)
@@ -66,19 +66,6 @@ public abstract class Iso7064PureSystemSingleCharacterAlgorithm
    }
 
    /// <summary>
-   ///   Map the check character of the value being validated to its integer 
-   ///   equivalent.
-   /// </summary>
-   /// <param name="ch">
-   ///   The character to map.
-   /// </param>
-   /// <returns>
-   ///   The integer equivalent of <paramref name="ch"/> or -1 if the character
-   ///   is not valid.
-   /// </returns>
-   public virtual Int32 MapCheckCharacterToNumber(Char ch) => throw new NotImplementedException();
-
-   /// <summary>
    ///   Map a character of the value being validated to its integer equivalent.
    /// </summary>
    /// <param name="ch">
@@ -90,9 +77,13 @@ public abstract class Iso7064PureSystemSingleCharacterAlgorithm
    /// </returns>
    public virtual Int32 MapCharacterToNumber(Char ch) => throw new NotImplementedException();
 
-   public Boolean TryCalculateCheckDigit(String value, out Char checkDigit)
+   public Boolean TryCalculateCheckDigit(
+      String value, 
+      out Char first, 
+      out Char second)
    {
-      checkDigit = CharConstants.NUL;
+      first = CharConstants.NUL;
+      second = CharConstants.NUL;
       if (String.IsNullOrEmpty(value))
       {
          return false;
@@ -113,29 +104,38 @@ public abstract class Iso7064PureSystemSingleCharacterAlgorithm
          }
       }
 
-      var remainder = sum % _modulus;
-      var x = (_modulus - remainder + 1) % _modulus;
-      if (x < 0 || x > _validCharacters.Length - 1)
+      // Per ISO/IEC 7064, two character algorithms perform one final pass with
+      // effective character value of zero.
+      sum = (sum * _radix) % _modulus;
+
+      var checkSum = _modulus - sum + 1;
+      var quotient = checkSum / _radix;
+      var remainder = checkSum % _radix;
+
+      first = GetCheckCharacter(quotient);
+      second = GetCheckCharacter(remainder);
+      if (first == CharConstants.NUL || second == CharConstants.NUL)
       {
+         first = CharConstants.NUL;
+         second = CharConstants.NUL;
          return false;
       }
-      checkDigit = _validCharacters[x];
 
       return true;
    }
 
    public Boolean Validate(String value)
    {
-      if (String.IsNullOrEmpty(value) || value.Length < 2)
+      if (String.IsNullOrEmpty(value) || value.Length < 3)
       {
          return false;
       }
 
+      // Sum non-check digit characters and first check character.
       var sum = 0;
-      Int32 num;
       for (var index = 0; index < value.Length - 1; index++)
       {
-         num = MapCharacterToNumber(value[index]);
+         var num = MapCharacterToNumber(value[index]);
          if (num == -1)
          {
             return false;
@@ -147,14 +147,17 @@ public abstract class Iso7064PureSystemSingleCharacterAlgorithm
          }
       }
 
-      num = MapCheckCharacterToNumber(value[^1]);
-      if (num == -1)
+      // Add value for second check character.
+      var second = MapCharacterToNumber(value[^1]);
+      if (second == -1)
       {
          return false;
       }
-
-      sum += num;
+      sum += second;
 
       return sum % _modulus == 1;
    }
+
+   private Char GetCheckCharacter(Int32 value)
+      => value < 0 || value >= _validCharacters.Length ? CharConstants.NUL : _validCharacters[value];
 }

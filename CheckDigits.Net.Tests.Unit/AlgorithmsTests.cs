@@ -60,6 +60,20 @@ public class AlgorithmsTests
 
    #endregion
 
+   #region Iso7064Mod1271_36 Algorithm Property Tests
+   // ==========================================================================
+   // ==========================================================================
+
+   [Fact]
+   public void Algorithms_Iso7064Mod1271_36_ShouldNotBeNull()
+      => Algorithms.Iso7064Mod1271_36.Should().NotBeNull();
+
+   [Fact]
+   public void Algorithms_Iso7064Mod1271_36_ShouldBeExpectedType()
+      => Algorithms.Iso7064Mod1271_36.Should().BeOfType<Iso7064Mod1271_36Algorithm>();
+
+   #endregion
+
    #region Iso7064Mod37_2 Algorithm Property Tests
    // ==========================================================================
    // ==========================================================================

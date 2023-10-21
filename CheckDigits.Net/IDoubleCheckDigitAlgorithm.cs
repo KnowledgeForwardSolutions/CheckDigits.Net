@@ -12,13 +12,18 @@ public interface IDoubleCheckDigitAlgorithm : ICheckDigitAlgorithm
    /// <param name="value">
    ///   The value to calculate a check digit for.
    /// </param>
-   /// <param name="checkDigit">
-   ///   Output. The calculated check digit or <see langword="null"/> if it was 
-   ///   not possible to calculate a check digit for the input 
+   /// <param name="first">
+   ///   Output. The first of two calculated check digits or <see langword="null"/> 
+   ///   if it was not possible to calculate check digits for the input 
+   ///   <paramref name="value"/>.
+   /// </param>
+   /// <param name="second">
+   ///   Output. The second of two calculated check digits or <see langword="null"/> 
+   ///   if it was not possible to calculate check digits for the input 
    ///   <paramref name="value"/>.
    /// </param>
    /// <returns>
-   ///   <see langword="true"/> if a check digit was successfully calculated
+   ///   <see langword="true"/> if check digits were successfully calculated
    ///   from the input <paramref name="value"/>; otherwise 
    ///   <see langword="false"/>.
    /// </returns>
@@ -31,5 +36,5 @@ public interface IDoubleCheckDigitAlgorithm : ICheckDigitAlgorithm
    ///   digit positions but those positions are ignored while calculating the 
    ///   check digits.
    /// </remarks>
-   Boolean TryCalculateCheckDigit(String value, out String checkDigit);
+   Boolean TryCalculateCheckDigit(String value, out Char first, out Char second);
 }
