@@ -88,6 +88,34 @@ public class AlgorithmsTests
 
    #endregion
 
+   #region Iso7064Mod661_26 Algorithm Property Tests
+   // ==========================================================================
+   // ==========================================================================
+
+   [Fact]
+   public void Algorithms_Iso7064Mod661_26_ShouldNotBeNull()
+      => Algorithms.Iso7064Mod661_26.Should().NotBeNull();
+
+   [Fact]
+   public void Algorithms_Iso7064Mod661_26_ShouldBeExpectedType()
+      => Algorithms.Iso7064Mod661_26.Should().BeOfType<Iso7064Mod661_26Algorithm>();
+
+   #endregion
+
+   #region Iso7064Mod97_10 Algorithm Property Tests
+   // ==========================================================================
+   // ==========================================================================
+
+   [Fact]
+   public void Algorithms_Iso7064Mod97_10_ShouldNotBeNull()
+      => Algorithms.Iso7064Mod97_10.Should().NotBeNull();
+
+   [Fact]
+   public void Algorithms_Iso7064Mod97_10_ShouldBeExpectedType()
+      => Algorithms.Iso7064Mod97_10.Should().BeOfType<Iso7064Mod97_10Algorithm>();
+
+   #endregion
+
    #region Luhn Algorithm Property Tests
    // ==========================================================================
    // ==========================================================================
