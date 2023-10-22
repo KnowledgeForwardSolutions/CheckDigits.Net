@@ -28,6 +28,9 @@ public static class Algorithms
    private static readonly Lazy<IDoubleCheckDigitAlgorithm> _iso7064Mod1271_36 =
      new(() => new Iso7064Mod1271_36Algorithm());
 
+   private static readonly Lazy<ISingleCheckDigitAlgorithm> _iso7064Mod27_26 =
+     new(() => new Iso7064Mod27_26Algorithm());
+
    private static readonly Lazy<ISingleCheckDigitAlgorithm> _iso7064Mod37_2 =
      new(() => new Iso7064Mod37_2Algorithm());
 
@@ -94,6 +97,11 @@ public static class Algorithms
    ///   ISO/IEC 7064 MOD 1271-36 algorithm.
    /// </summary>
    public static IDoubleCheckDigitAlgorithm Iso7064Mod1271_36 => _iso7064Mod1271_36.Value;
+
+   /// <summary>
+   ///   ISO/IEC 7064 MOD 27-26 algorithm.
+   /// </summary>
+   public static ISingleCheckDigitAlgorithm Iso7064Mod27_26 => _iso7064Mod27_26.Value;
 
    /// <summary>
    ///   ISO/IEC 7064 MOD 37-2 algorithm.

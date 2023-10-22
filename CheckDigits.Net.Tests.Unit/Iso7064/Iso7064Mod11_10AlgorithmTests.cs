@@ -147,7 +147,7 @@ public class Iso7064Mod11_10AlgorithmTests
       => _sut.Validate(value).Should().BeFalse();
 
    [Fact]
-   public void Iso7064Mod11_10Algorithm_Validate_ShouldReturnTrue_WhenCheckDigitIsCalculatesAsX()
+   public void Iso7064Mod11_10Algorithm_Validate_ShouldReturnTrue_WhenCheckDigitIsCalculatesAsZero()
       => _sut.Validate("60").Should().BeTrue();
 
    [Theory]

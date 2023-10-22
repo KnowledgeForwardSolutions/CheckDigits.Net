@@ -186,8 +186,9 @@ public class Iso7064Mod661_26AlgorithmTests
       => _sut.Validate(value).Should().BeFalse();
 
    [Theory]
-   [InlineData("123!56X")]
-   [InlineData("123^56X")]
+   [InlineData("ABC!EFX")]
+   [InlineData("ABC^EFX")]
+   [InlineData("ABC5EFX")]
    public void Iso7064Mod661_26Algorithm_Validate_ShouldReturnFalse_WhenValueContainsInvalidCharacter(String value)
       => _sut.Validate(value).Should().BeFalse();
 
