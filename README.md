@@ -20,6 +20,7 @@ demonstrate performance over a range of values and the memory allocation (if any
     * [ISO/IEC 7064 MOD 11,10 Algorithm](#isoiec-7064-mod-1110-algorithm)
     * [ISO/IEC 7064 MOD 11-2 Algorithm](#isoiec-7064-mod-11-2-algorithm)
     * [ISO/IEC 7064 MOD 1271-36 Algorithm](#isoiec-7064-mod-1271-36-algorithm)
+    * [ISO/IEC 7064 MOD 27,26 Algorithm](#isoiec-7064-mod-2726-algorithm)
     * [ISO/IEC 7064 MOD 37-2 Algorithm](#isoiec-7064-mod-37-2-algorithm)
     * [ISO/IEC 7064 MOD 661-26 Algorithm](#isoiec-7064-mod-661-26-algorithm)
     * [ISO/IEC 7064 MOD 97-10 Algorithm](#isoiec-7064-mod-97-10-algorithm)
@@ -89,6 +90,7 @@ for creating custom implementations.
 * [ISO/IEC 7064 MOD 11,10 Algorithm](#isoiec-7064-mod-1110-algorithm)
 * [ISO/IEC 7064 MOD 11-2 Algorithm](#isoiec-7064-mod-11-2-algorithm)
 * [ISO/IEC 7064 MOD 1271-36 Algorithm](#isoiec-7064-mod-1271-36-algorithm)
+* [ISO/IEC 7064 MOD 27,26 Algorithm](#isoiec-7064-mod-2726-algorithm)
 * [ISO/IEC 7064 MOD 37-2 Algorithm](#isoiec-7064-mod-37-2-algorithm)
 * [ISO/IEC 7064 MOD 661-26 Algorithm](#isoiec-7064-mod-661-26-algorithm)
 * [ISO/IEC 7064 MOD 97-10 Algorithm](#isoiec-7064-mod-97-10-algorithm)
@@ -278,14 +280,14 @@ Wikipedia: https://en.wikipedia.org/wiki/International_Securities_Identification
 ### ISO/IEC 7064 MOD 11,10 Algorithm
 
 The ISO/IEC 7064 MOD 11,10 algorithm is a hybrid system algorithm (with M = 10
-and M+1 = 11) that is suitable for use with numeric strings. 
-It generates a single check character that is either a decimal digit.
+and M+1 = 11) that is suitable for use with numeric strings. It generates a 
+single check character that is a decimal digit.
 
 #### Details
 
 * Valid characters - decimal digits ('0' - '9')
 * Check digit size - one character
-* Check digit value - either decimal digit ('0' - '9')
+* Check digit value - decimal digit ('0' - '9')
 * Check digit location - assumed to be the trailing (right-most) character when validating
 * Class name - Iso7064Mod11_10Algorithm
 
@@ -322,9 +324,19 @@ generates two check alphanumeric characters.
 * Check digit location - assumed to be the trailing (right-most) characters when validating
 * Class name - Iso7064Mod1271_36Algorithm
 
-#### Common Applications
+### ISO/IEC 7064 MOD 27,26 Algorithm
 
-* Nigerian VNIN (Virtual National Identification Number)
+The ISO/IEC 7064 MOD 27,26 algorithm is a hybrid system algorithm (with M = 26
+and M+1 = 27) that is suitable for use with alphabetic strings. It generates a 
+single check character that is an alphabetic character.
+
+#### Details
+
+* Valid characters - alphabetic characters ('A' - 'Z')
+* Check digit size - one character
+* Check digit value - alphabetic characters ('A' - 'Z')
+* Check digit location - assumed to be the trailing (right-most) character when validating
+* Class name - Iso7064Mod27_26Algorithm
 
 ### ISO/IEC 7064 MOD 37-2 Algorithm
 
@@ -640,6 +652,7 @@ Wikipedia: https://en.wikipedia.org/wiki/Vehicle_identification_number#Check-dig
 * [ISO/IEC 7064 MOD 11,10 Algorithm](#isoiec-7064-mod-1110-algorithm-benchmarks)
 * [ISO/IEC 7064 MOD 11-2 Algorithm](#isoiec-7064-mod-11-2-algorithm-benchmarks)
 * [ISO/IEC 7064 MOD 1271-36 Algorithm](#isoiec-7064-mod-1271-36-algorithm-benchmarks)
+* [ISO/IEC 7064 MOD 27,26 Algorithm](#isoiec-7064-mod-2726-algorithm-benchmarks)
 * [ISO/IEC 7064 MOD 37-2 Algorithm](#isoiec-7064-mod-37-2-algorithm-benchmarks)
 * [ISO/IEC 7064 MOD 661-26 Algorithm](#isoiec-7064-mod-661-26-algorithm-benchmarks)
 * [ISO/IEC 7064 MOD 97-10 Algorithm](#isoiec-7064-mod-97-10-algorithm-benchmarks)
@@ -722,6 +735,8 @@ Wikipedia: https://en.wikipedia.org/wiki/Vehicle_identification_number#Check-dig
 | Validate               | XS868977863229AU     | 25.22 ns | 0.246 ns | 0.230 ns |         - |
 | Validate               | AEIOU1592430QWERTY0Z | 31.38 ns | 0.232 ns | 0.193 ns |         - |
 | Validate               | ZZZZZ(...)ZZZ6X [38] | 59.93 ns | 0.471 ns | 0.418 ns |         - |
+
+### ISO/IEC 7064 MOD 27,26 Algorithm Benchmarks
 
 ### ISO/IEC 7064 MOD 37-2 Algorithm Benchmarks
 
