@@ -17,6 +17,7 @@ demonstrate performance over a range of values and the memory allocation (if any
     * [ABA RTN (Routing Transit Number) Algorithm](#aba-rtn-algorithm)
     * [Damm Algorithm](#damm-algorithm)
     * [ISIN (International Securities Identification Number) Algorithm](#isin-algorithm)
+    * [ISO/IEC 7064 MOD 11,10 Algorithm](#isoiec-7064-mod-1110-algorithm)
     * [ISO/IEC 7064 MOD 11-2 Algorithm](#isoiec-7064-mod-11-2-algorithm)
     * [ISO/IEC 7064 MOD 1271-36 Algorithm](#isoiec-7064-mod-1271-36-algorithm)
     * [ISO/IEC 7064 MOD 37-2 Algorithm](#isoiec-7064-mod-37-2-algorithm)
@@ -77,6 +78,7 @@ for creating custom implementations.
 * [ABA RTN (Routing Transit Number) Algorithm](#aba-rtn-algorithm)
 * [Damm Algorithm](#damm-algorithm)
 * [ISIN (International Securities Identification Number) Algorithm](#isin-algorithm)
+* [ISO/IEC 7064 MOD 11,10 Algorithm](#isoiec-7064-mod-1110-algorithm)
 * [ISO/IEC 7064 MOD 11-2 Algorithm](#isoiec-7064-mod-11-2-algorithm)
 * [ISO/IEC 7064 MOD 1271-36 Algorithm](#isoiec-7064-mod-1271-36-algorithm)
 * [ISO/IEC 7064 MOD 37-2 Algorithm](#isoiec-7064-mod-37-2-algorithm)
@@ -264,6 +266,20 @@ algorithm cannot detect).
 #### Links
 
 Wikipedia: https://en.wikipedia.org/wiki/International_Securities_Identification_Number
+
+### ISO/IEC 7064 MOD 11,10 Algorithm
+
+The ISO/IEC 7064 MOD 11,10 algorithm is a hybrid system algorithm (i.e. it uses 
+two modulus values, M and M + 1) that is suitable for use with numeric strings. 
+It generates a single check character that is either a decimal digit.
+
+#### Details
+
+* Valid characters - decimal digits ('0' - '9')
+* Check digit size - one character
+* Check digit value - either decimal digit ('0' - '9')
+* Check digit location - assumed to be the trailing (right-most) character when validating
+* Class name - Iso7064Mod11_10Algorithm
 
 ### ISO/IEC 7064 MOD 11-2 Algorithm
 
@@ -608,6 +624,7 @@ Wikipedia: https://en.wikipedia.org/wiki/Vehicle_identification_number#Check-dig
 * [ABA RTN Algorithm](#aba-rtn-algorithm-benchmarks)
 * [Damm Algorithm](#damm-algorithm-benchmarks)
 * [ISIN Algorithm](#isin-algorithm-benchmarks)
+* [ISO/IEC 7064 MOD 11,10 Algorithm](#isoiec-7064-mod-1110-algorithm-benchmarks)
 * [ISO/IEC 7064 MOD 11-2 Algorithm](#isoiec-7064-mod-11-2-algorithm-benchmarks)
 * [ISO/IEC 7064 MOD 1271-36 Algorithm](#isoiec-7064-mod-1271-36-algorithm-benchmarks)
 * [ISO/IEC 7064 MOD 37-2 Algorithm](#isoiec-7064-mod-37-2-algorithm-benchmarks)
@@ -653,6 +670,8 @@ Wikipedia: https://en.wikipedia.org/wiki/Vehicle_identification_number#Check-dig
 | Validate               | AU0000XVGZA3 | 25.01 ns | 0.141 ns | 0.125 ns |         - |
 | Validate               | US0378331005 | 21.64 ns | 0.096 ns | 0.075 ns |         - |
 | Validate               | US88160R1014 | 21.78 ns | 0.110 ns | 0.103 ns |         - |
+
+### ISO/IEC 7064 MOD 11,10 Algorithm Benchmarks
 
 ### ISO/IEC 7064 MOD 11-2 Algorithm Benchmarks
 
