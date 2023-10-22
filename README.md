@@ -69,6 +69,14 @@ suitable for numeric strings, alphabetic strings, alphanumeric strings and can
 be extended to handle custom character domains beyond ASCII alphanumeric 
 characters.
 
+ISO/IEC 7064 algorithms fall into different categories. Pure system algorithms
+use a single modulus value and a radix value and can generate one or two check 
+characters, depending on the algorithm. If a pure system algorithm generates a 
+single check character, the check character produced will either be one of the 
+valid input characters or a single supplementary character that is only valid as
+a check digit. Hybrid system algorithms use two modulus values, M and M+1 and
+generate a single check character that will be one of the valid input characters.
+
 CheckDigits.Net provides optimized implementations of all of the algorithms
 defined in the ISO/IEC 7064 standard as well as abstract base classes suitable 
 for creating custom implementations.
@@ -269,8 +277,8 @@ Wikipedia: https://en.wikipedia.org/wiki/International_Securities_Identification
 
 ### ISO/IEC 7064 MOD 11,10 Algorithm
 
-The ISO/IEC 7064 MOD 11,10 algorithm is a hybrid system algorithm (i.e. it uses 
-two modulus values, M and M + 1) that is suitable for use with numeric strings. 
+The ISO/IEC 7064 MOD 11,10 algorithm is a hybrid system algorithm (with M = 10
+and M+1 = 11) that is suitable for use with numeric strings. 
 It generates a single check character that is either a decimal digit.
 
 #### Details
@@ -283,9 +291,10 @@ It generates a single check character that is either a decimal digit.
 
 ### ISO/IEC 7064 MOD 11-2 Algorithm
 
-The ISO/IEC 7064 MOD 11-2 algorithm is suitable for use with numeric strings. It
-generates a single check character that is either a decimal digit or an 
-supplementary 'X' character.
+The ISO/IEC 7064 MOD 11-2 algorithm is a pure system algorithm (with modulus 11
+and radix 2) that is suitable for use with numeric strings. It generates a 
+single check character that is either a decimal digit or a supplementary 'X' 
+character.
 
 #### Details
 
@@ -301,8 +310,9 @@ supplementary 'X' character.
 
 ### ISO/IEC 7064 MOD 1271-36 Algorithm
 
-The ISO/IEC 7064 MOD 1271-36 algorithm is suitable for use with alphanumeric 
-strings. It generates two check alphanumeric characters.
+The ISO/IEC 7064 MOD 1271-36 algorithm is a pure system algorithm (with modulus 
+1271 and radix 36) that is suitable for use with alphanumeric strings. It 
+generates two check alphanumeric characters.
 
 #### Details
 
@@ -318,9 +328,10 @@ strings. It generates two check alphanumeric characters.
 
 ### ISO/IEC 7064 MOD 37-2 Algorithm
 
-The ISO/IEC 7064 MOD 37-2 algorithm is suitable for use with alphanumeric strings. 
-It generates a single check character that is either an alphanumeric character 
-or a supplementary '*' character.
+The ISO/IEC 7064 MOD 37-2 algorithm is a pure system algorithm (with modulus 37
+and radix 2) that suitable for use with alphanumeric strings. It generates a 
+single check character that is either an alphanumeric character or a 
+supplementary '*' character.
 
 #### Details
 
@@ -336,8 +347,9 @@ or a supplementary '*' character.
 
 ### ISO/IEC 7064 MOD 661-26 Algorithm
 
-The ISO/IEC 7064 MOD 661-26 algorithm is suitable for use with alphabetic 
-strings. It generates two check alphabetic characters.
+The ISO/IEC 7064 MOD 661-26 algorithm is a pure system algorithm (with modulus 
+661 and radix 26) that is suitable for use with alphabetic strings. It generates 
+two check alphabetic characters.
 
 #### Details
 
@@ -349,8 +361,9 @@ strings. It generates two check alphabetic characters.
 
 ### ISO/IEC 7064 MOD 97-10 Algorithm
 
-The ISO/IEC 7064 MOD 97-10 algorithm is suitable for use with numeric strings. 
-It generates a two numeric check digits.
+The ISO/IEC 7064 MOD 97-10 algorithm is a pure system algorithm (with modulus 97
+and radix 210) that is suitable for use with numeric strings. It generates a two 
+numeric check digits.
 
 Note: the ISO/IEC 7064 MOD 97-10 algorithm is the basis of a number of check digit 
 algorithms that first map alphabetic characters to numbers between 10 and 35. 
