@@ -83,7 +83,9 @@ public class Iso7064Mod27_26AlgorithmTests
    [Theory]
    [InlineData("AEIOU", 'I')]
    [InlineData("QWERTYDVORAK", 'Y')]
+   [InlineData("ABCDEFGHIJKLMNOPQR", 'O')]
    [InlineData("THISISATESTTHISISONLYATEST", 'T')]
+   [InlineData("ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ", 'B')]
    public void Iso7064Mod27_26AlgorithmAlgorithm_TryCalculateCheckDigit_ShouldCalculateExpectedCheckDigit(
       String value,
       Char expectedCheckDigit)
@@ -157,13 +159,15 @@ public class Iso7064Mod27_26AlgorithmTests
    [Theory]
    [InlineData("AEIOUI")]
    [InlineData("QWERTYDVORAKY")]
+   [InlineData("ABCDEFGHIJKLMNOPQRO")]
    [InlineData("THISISATESTTHISISONLYATESTT")]
+   [InlineData("ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZB")]
    public void Iso7064Mod27_26Algorithm_Validate_ShouldReturnTrue_WhenValueContainsValidCheckDigit(String value)
       => _sut.Validate(value).Should().BeTrue();
 
    [Fact]
    public void Iso7064Mod27_26Algorithm_Validate_ShouldReturnTrue_WhenCheckDigitIsCalculatesAsA()
-      => _sut.Validate("OA").Should().BeTrue();
+      => _sut.Validate("ABCDEA").Should().BeTrue();
 
    [Theory]
    [InlineData("ABC!EFX")]
