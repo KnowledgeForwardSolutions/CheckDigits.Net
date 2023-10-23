@@ -716,16 +716,16 @@ Wikipedia: https://en.wikipedia.org/wiki/Vehicle_identification_number#Check-dig
 
 ### ISO/IEC 7064 MOD 11,10 Algorithm Benchmarks
 
-| Method                 | Value                | Mean      | Error    | StdDev   | Allocated |
-|----------------------- |--------------------- |----------:|---------:|---------:|----------:|
-| TryCalculateCheckDigit | 0794                 |  24.01 ns | 0.292 ns | 0.244 ns |         - |
-| TryCalculateCheckDigit | 12345678             |  72.88 ns | 0.418 ns | 0.391 ns |         - |
-| TryCalculateCheckDigit | 1632175818351910     | 159.17 ns | 0.753 ns | 0.668 ns |         - |
-| TryCalculateCheckDigit | 12345(...)23456 [26] | 260.63 ns | 1.672 ns | 1.564 ns |         - |
-| Validate               | 07945                |  23.63 ns | 0.113 ns | 0.094 ns |         - |
-| Validate               | 123456788            |  72.10 ns | 0.291 ns | 0.258 ns |         - |
-| Validate               | 16321758183519103    | 159.23 ns | 0.739 ns | 0.691 ns |         - |
-| Validate               | 12345(...)34565 [27] | 258.38 ns | 0.804 ns | 0.627 ns |         - |
+| Method                 | Value                | Mean      | Error     | StdDev    | Allocated |
+|----------------------- |--------------------- |----------:|----------:|----------:|----------:|
+| TryCalculateCheckDigit | 0794                 |  8.176 ns | 0.1922 ns | 0.1888 ns |         - |
+| TryCalculateCheckDigit | 12345678             | 14.380 ns | 0.1990 ns | 0.1861 ns |         - |
+| TryCalculateCheckDigit | 1632175818351910     | 24.094 ns | 0.3048 ns | 0.2851 ns |         - |
+| TryCalculateCheckDigit | 12345(...)23456 [26] | 37.537 ns | 0.3959 ns | 0.3510 ns |         - |
+| Validate               | 07945                |  8.031 ns | 0.1904 ns | 0.1781 ns |         - |
+| Validate               | 123456788            | 14.197 ns | 0.2033 ns | 0.1901 ns |         - |
+| Validate               | 16321758183519103    | 25.696 ns | 0.2557 ns | 0.2267 ns |         - |
+| Validate               | 12345(...)34565 [27] | 39.212 ns | 0.4141 ns | 0.3671 ns |         - |
 
 ### ISO/IEC 7064 MOD 11-2 Algorithm Benchmarks
 

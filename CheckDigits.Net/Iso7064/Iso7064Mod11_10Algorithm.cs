@@ -51,12 +51,16 @@ public class Iso7064Mod11_10Algorithm : ISingleCheckDigitAlgorithm
          {
             return false;
          }
-         product = (product + num) % _modulus;
-         if (product == 0)
+         product += num;
+         if (product > _modulus)
          {
-            product = _modulus;
+            product -= _modulus;
          }
-         product = (product * 2) % _modulusPlus1;
+         product *= 2;
+         if (product >= _modulusPlus1)
+         {
+            product -= _modulusPlus1;
+         }
       }
 
       var x = (_modulus - product + 1) % _modulus;
@@ -82,12 +86,16 @@ public class Iso7064Mod11_10Algorithm : ISingleCheckDigitAlgorithm
          {
             return false;
          }
-         product = (product + num) % _modulus;
-         if (product == 0)
+         product += num;
+         if (product > _modulus)
          {
-            product = _modulus;
+            product -= _modulus;
          }
-         product = (product * 2) % _modulusPlus1;
+         product *= 2;
+         if (product >= _modulusPlus1)
+         {
+            product -= _modulusPlus1;
+         }
       }
 
       num = value[^1].ToIntegerDigit();
