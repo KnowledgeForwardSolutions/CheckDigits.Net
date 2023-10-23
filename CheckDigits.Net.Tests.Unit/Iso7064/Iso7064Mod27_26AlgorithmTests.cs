@@ -165,6 +165,18 @@ public class Iso7064Mod27_26AlgorithmTests
    public void Iso7064Mod27_26Algorithm_Validate_ShouldReturnTrue_WhenValueContainsValidCheckDigit(String value)
       => _sut.Validate(value).Should().BeTrue();
 
+   [Theory]
+   [InlineData("ACIOUI")]                       // AEIOUI with single char transcription error E -> C
+   [InlineData("QWERTUDVORAKY")]                // QWERTYDVORAKY with single char transcription error Y -> U
+   [InlineData("ABCDEFHGIJKLMNOPQRO")]          // ABCDEFGHIJKLMNOPQRO with two char transposition error GH -> HG 
+   [InlineData("THISISATESUUHISISONLYATESTT")]  // THISISATESTTHISISONLYATESTT with two char twin error TT -> UU
+   [InlineData("ABCFEDGHIJKLMNOPQRO")]          // ABCDEFGHIJKLMNOPQRO with jump transposition error DEF -> FED
+   [InlineData("QWERDYTVORAKY")]                // QWERTYDVORAKY with jump transposition error TYD -> DYT
+   [InlineData("IAEIOU")]                       // AEIOUI with circular shift error
+   [InlineData("EIOUIA")]                       // AEIOUI with circular shift error
+   public void Iso7064Mod27_26Algorithm_Validate_ShouldReturnFalse_WhenInputContainsDetectableError(String value)
+      => _sut.Validate(value).Should().BeFalse();
+
    [Fact]
    public void Iso7064Mod27_26Algorithm_Validate_ShouldReturnTrue_WhenCheckDigitIsCalculatesAsA()
       => _sut.Validate("ABCDEA").Should().BeTrue();
@@ -181,4 +193,5 @@ public class Iso7064Mod27_26AlgorithmTests
       => _sut.Validate("ABCDE8").Should().BeFalse();
 
    #endregion
+
 }
