@@ -9,10 +9,12 @@
 //BenchmarkRunner.Run<Iso7064Mod11_2AlgorithmValidateBenchmarks>();
 //BenchmarkRunner.Run<Iso7064Mod1271_36AlgorithmTryCalculateBenchmarks>();
 //BenchmarkRunner.Run<Iso7064Mod1271_36AlgorithmValidateBenchmarks>();
-BenchmarkRunner.Run<Iso7064Mod27_26AlgorithmTryCalculateBenchmarks>();
-BenchmarkRunner.Run<Iso7064Mod27_26AlgorithmValidateBenchmarks>();
+//BenchmarkRunner.Run<Iso7064Mod27_26AlgorithmTryCalculateBenchmarks>();
+//BenchmarkRunner.Run<Iso7064Mod27_26AlgorithmValidateBenchmarks>();
 //BenchmarkRunner.Run<Iso7064Mod37_2AlgorithmTryCalculateBenchmarks>();
 //BenchmarkRunner.Run<Iso7064Mod37_2AlgorithmValidateBenchmarks>();
+BenchmarkRunner.Run<Iso7064Mod37_36AlgorithmTryCalculateBenchmarks>();
+BenchmarkRunner.Run<Iso7064Mod37_36AlgorithmValidateBenchmarks>();
 //BenchmarkRunner.Run<Iso7064Mod661_26AlgorithmTryCalculateBenchmarks>();
 //BenchmarkRunner.Run<Iso7064Mod661_26AlgorithmValidateBenchmarks>();
 //BenchmarkRunner.Run<Iso7064Mod97_10AlgorithmTryCalculateBenchmarks>();

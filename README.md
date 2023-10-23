@@ -781,6 +781,17 @@ Wikipedia: https://en.wikipedia.org/wiki/Vehicle_identification_number#Check-dig
 
 ### ISO/IEC 7064 MOD 37,36 Algorithm Benchmarks
 
+| Method                 | Value                | Mean     | Error    | StdDev   | Allocated |
+|----------------------- |--------------------- |---------:|---------:|---------:|----------:|
+| TryCalculateCheckDigit | AEIOU                | 13.25 ns | 0.152 ns | 0.135 ns |         - |
+| TryCalculateCheckDigit | QWERTYDVORAK         | 26.44 ns | 0.245 ns | 0.217 ns |         - |
+| TryCalculateCheckDigit | A1B2C(...)I9J0K [21] | 42.13 ns | 0.274 ns | 0.243 ns |         - |
+| TryCalculateCheckDigit | 12345(...)VWXYZ [36] | 72.37 ns | 1.139 ns | 1.065 ns |         - |
+| Validate               | AEIOUU               | 13.81 ns | 0.143 ns | 0.119 ns |         - |
+| Validate               | QWERTYDVORAK1        | 27.93 ns | 0.268 ns | 0.251 ns |         - |
+| Validate               | A1B2C(...)9J0KI [22] | 40.00 ns | 0.677 ns | 0.600 ns |         - |
+| Validate               | 12345(...)WXYZT [37] | 70.86 ns | 1.116 ns | 1.044 ns |         - |
+
 ### ISO/IEC 7064 MOD 661-26 Algorithm Benchmarks
 
 | Method                 | Value                | Mean      | Error     | StdDev    | Allocated |
