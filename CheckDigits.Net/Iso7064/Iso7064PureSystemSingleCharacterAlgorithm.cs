@@ -2,7 +2,7 @@
 
 /// <summary>
 ///   Generic ISO/IEC 7064 pure system algorithm (i.e. an algorithm that uses a 
-///   single modulus) and that generates a single check character.
+///   single modulus) that generates a single check character.
 /// </summary>
 public class Iso7064PureSystemSingleCharacterAlgorithm : ISingleCheckDigitAlgorithm
 {

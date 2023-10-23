@@ -1,0 +1,14 @@
+﻿namespace CheckDigits.Net.Tests.Unit.Iso7064;
+
+public class LettersAlphabet : IAlphabet
+{
+   public Int32 CharacterToInteger(Char ch)
+   {
+      var num = ch - CharConstants.UpperCaseA;
+      return num >= 0 && num <= 25 ? num : -1;
+   }
+
+   public Int32 CheckCharacterToInteger(Char ch) => throw new NotImplementedException();
+
+   public Char IntegerToCheckCharacter(Int32 checkDigit) => (Char)(checkDigit + CharConstants.UpperCaseA);
+}
