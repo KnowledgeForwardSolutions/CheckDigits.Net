@@ -22,6 +22,7 @@ demonstrate performance over a range of values and the memory allocation (if any
     * [ISO/IEC 7064 MOD 1271-36 Algorithm](#isoiec-7064-mod-1271-36-algorithm)
     * [ISO/IEC 7064 MOD 27,26 Algorithm](#isoiec-7064-mod-2726-algorithm)
     * [ISO/IEC 7064 MOD 37-2 Algorithm](#isoiec-7064-mod-37-2-algorithm)
+    * [ISO/IEC 7064 MOD 37-36 Algorithm](#isoiec-7064-mod-3736-algorithm)
     * [ISO/IEC 7064 MOD 661-26 Algorithm](#isoiec-7064-mod-661-26-algorithm)
     * [ISO/IEC 7064 MOD 97-10 Algorithm](#isoiec-7064-mod-97-10-algorithm)
     * [Luhn Algorithm](#luhn-algorithm)
@@ -92,6 +93,7 @@ for creating custom implementations.
 * [ISO/IEC 7064 MOD 1271-36 Algorithm](#isoiec-7064-mod-1271-36-algorithm)
 * [ISO/IEC 7064 MOD 27,26 Algorithm](#isoiec-7064-mod-2726-algorithm)
 * [ISO/IEC 7064 MOD 37-2 Algorithm](#isoiec-7064-mod-37-2-algorithm)
+* [ISO/IEC 7064 MOD 37-36 Algorithm](#isoiec-7064-mod-3736-algorithm)
 * [ISO/IEC 7064 MOD 661-26 Algorithm](#isoiec-7064-mod-661-26-algorithm)
 * [ISO/IEC 7064 MOD 97-10 Algorithm](#isoiec-7064-mod-97-10-algorithm)
 * [Luhn Algorithm](#luhn-algorithm)
@@ -352,6 +354,20 @@ supplementary '*' character.
 * Check digit value - either decimal digit ('0' - '9', 'A' - 'Z') or an asterisk '*'
 * Check digit location - assumed to be the trailing (right-most) character when validating
 * Class name - Iso7064Mod37_2Algorithm
+
+### ISO/IEC 7064 MOD 37,36 Algorithm
+
+The ISO/IEC 7064 MOD 37,36 algorithm is a hybrid system algorithm (with M = 36
+and M+1 = 37) that is suitable for use with alphanumeric strings. It generates a 
+single check character that is an alphanumeric character.
+
+#### Details
+
+* Valid characters - alphanumeric characters ('0' - '9', 'A' - 'Z')
+* Check digit size - one character
+* Check digit value - alphanumeric characters ('0' - '9', 'A' - 'Z')
+* Check digit location - assumed to be the trailing (right-most) character when validating
+* Class name - Iso7064Mod37_36Algorithm
 
 #### Common Applications
 
@@ -654,6 +670,7 @@ Wikipedia: https://en.wikipedia.org/wiki/Vehicle_identification_number#Check-dig
 * [ISO/IEC 7064 MOD 1271-36 Algorithm](#isoiec-7064-mod-1271-36-algorithm-benchmarks)
 * [ISO/IEC 7064 MOD 27,26 Algorithm](#isoiec-7064-mod-2726-algorithm-benchmarks)
 * [ISO/IEC 7064 MOD 37-2 Algorithm](#isoiec-7064-mod-37-2-algorithm-benchmarks)
+* [ISO/IEC 7064 MOD 37-36 Algorithm](#isoiec-7064-mod-3736-algorithm-benchmarks)
 * [ISO/IEC 7064 MOD 661-26 Algorithm](#isoiec-7064-mod-661-26-algorithm-benchmarks)
 * [ISO/IEC 7064 MOD 97-10 Algorithm](#isoiec-7064-mod-97-10-algorithm-benchmarks)
 * [Luhn Algorithm](#luhn-algorithm-benchmarks)
@@ -738,7 +755,6 @@ Wikipedia: https://en.wikipedia.org/wiki/Vehicle_identification_number#Check-dig
 
 ### ISO/IEC 7064 MOD 27,26 Algorithm Benchmarks
 
-
 | Method                 | Value                | Mean      | Error     | StdDev    | Allocated |
 |----------------------- |--------------------- |----------:|----------:|----------:|----------:|
 | TryCalculateCheckDigit | AEIOU                |  8.837 ns | 0.0849 ns | 0.0794 ns |         - |
@@ -762,6 +778,8 @@ Wikipedia: https://en.wikipedia.org/wiki/Vehicle_identification_number#Check-dig
 | Validate               | A999522123456*       | 24.010 ns | 0.2448 ns | 0.2290 ns |         - |
 | Validate               | A999914123456N       | 17.706 ns | 0.2651 ns | 0.2479 ns |         - |
 | Validate               | ABCDE(...)UVWX* [25] | 31.682 ns | 0.2959 ns | 0.2623 ns |         - |
+
+### ISO/IEC 7064 MOD 37,36 Algorithm Benchmarks
 
 ### ISO/IEC 7064 MOD 661-26 Algorithm Benchmarks
 
