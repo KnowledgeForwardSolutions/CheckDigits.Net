@@ -123,8 +123,11 @@
   <data name="AbaRtnAlgorithmName" xml:space="preserve">
     <value>ABA RTN</value>
   </data>
-  <data name="CharacterDomainIsNull" xml:space="preserve">
-    <value>CharacterDomain may not be null</value>
+  <data name="AlgorithmDescriptionIsEmptyMessage" xml:space="preserve">
+    <value>Algorithm description may not be null, String.Empty or all whitespace characters</value>
+  </data>
+  <data name="AlgorithmNameIsEmptyMessage" xml:space="preserve">
+    <value>Algorithm name may not be null, String.Empty or all whitespace characters</value>
   </data>
   <data name="DammAlgorithmDescription" xml:space="preserve">
     <value>Damm's quasigroup algorithm</value>
@@ -140,6 +143,9 @@
   </data>
   <data name="IsinAlgorithmName" xml:space="preserve">
     <value>ISIN (International Securities Identity Number)</value>
+  </data>
+  <data name="Iso7046AlphabetIsNull" xml:space="preserve">
+    <value>Alphabet may not be null</value>
   </data>
   <data name="Iso7064Mod11_10AlgorithmDescription" xml:space="preserve">
     <value>ISO/IEC 7064 hybrid system check digit algorithm with modulus 10</value>
