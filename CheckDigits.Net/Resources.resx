@@ -171,6 +171,12 @@
   <data name="Iso7064Mod37_2AlgorithmName" xml:space="preserve">
     <value>ISO/IEC 7064 MOD 37-2</value>
   </data>
+  <data name="Iso7064Mod37_36AlgorithmDescription" xml:space="preserve">
+    <value>ISO/IEC 7064 hybrid system check digit algorithm with modulus 36</value>
+  </data>
+  <data name="Iso7064Mod37_36AlgorithmName" xml:space="preserve">
+    <value>ISO/IEC 7064 MOD 37,36</value>
+  </data>
   <data name="Iso7064Mod661_26AlgorithmDescription" xml:space="preserve">
     <value>ISO/IEC 7064 check digit algorithm with modulus 661 and radix 26</value>
   </data>

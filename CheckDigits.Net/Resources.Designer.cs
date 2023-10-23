@@ -223,6 +223,24 @@ namespace CheckDigits.Net {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ISO/IEC 7064 hybrid system check digit algorithm with modulus 36.
+        /// </summary>
+        internal static string Iso7064Mod37_36AlgorithmDescription {
+            get {
+                return ResourceManager.GetString("Iso7064Mod37_36AlgorithmDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ISO/IEC 7064 MOD 37,36.
+        /// </summary>
+        internal static string Iso7064Mod37_36AlgorithmName {
+            get {
+                return ResourceManager.GetString("Iso7064Mod37_36AlgorithmName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ISO/IEC 7064 check digit algorithm with modulus 661 and radix 26.
         /// </summary>
         internal static string Iso7064Mod661_26AlgorithmDescription {

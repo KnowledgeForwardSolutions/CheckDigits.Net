@@ -68,6 +68,7 @@ public class Iso7064Mod27_26Algorithm : ISingleCheckDigitAlgorithm
 
       return true;
    }
+
    /// <inheritdoc/>
    public Boolean Validate(String value)
    {
