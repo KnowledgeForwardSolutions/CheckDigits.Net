@@ -17,9 +17,12 @@ demonstrate performance over a range of values and the memory allocation (if any
     * [ABA RTN (Routing Transit Number) Algorithm](#aba-rtn-algorithm)
     * [Damm Algorithm](#damm-algorithm)
     * [ISIN (International Securities Identification Number) Algorithm](#isin-algorithm)
+    * [ISO/IEC 7064 MOD 11,10 Algorithm](#isoiec-7064-mod-1110-algorithm)
     * [ISO/IEC 7064 MOD 11-2 Algorithm](#isoiec-7064-mod-11-2-algorithm)
     * [ISO/IEC 7064 MOD 1271-36 Algorithm](#isoiec-7064-mod-1271-36-algorithm)
+    * [ISO/IEC 7064 MOD 27,26 Algorithm](#isoiec-7064-mod-2726-algorithm)
     * [ISO/IEC 7064 MOD 37-2 Algorithm](#isoiec-7064-mod-37-2-algorithm)
+    * [ISO/IEC 7064 MOD 37-36 Algorithm](#isoiec-7064-mod-3736-algorithm)
     * [ISO/IEC 7064 MOD 661-26 Algorithm](#isoiec-7064-mod-661-26-algorithm)
     * [ISO/IEC 7064 MOD 97-10 Algorithm](#isoiec-7064-mod-97-10-algorithm)
     * [Luhn Algorithm](#luhn-algorithm)
@@ -68,6 +71,14 @@ suitable for numeric strings, alphabetic strings, alphanumeric strings and can
 be extended to handle custom character domains beyond ASCII alphanumeric 
 characters.
 
+ISO/IEC 7064 algorithms fall into different categories. Pure system algorithms
+use a single modulus value and a radix value and can generate one or two check 
+characters, depending on the algorithm. If a pure system algorithm generates a 
+single check character, the check character produced will either be one of the 
+valid input characters or a single supplementary character that is only valid as
+a check digit. Hybrid system algorithms use two modulus values, M and M+1 and
+generate a single check character that will be one of the valid input characters.
+
 CheckDigits.Net provides optimized implementations of all of the algorithms
 defined in the ISO/IEC 7064 standard as well as abstract base classes suitable 
 for creating custom implementations.
@@ -77,9 +88,12 @@ for creating custom implementations.
 * [ABA RTN (Routing Transit Number) Algorithm](#aba-rtn-algorithm)
 * [Damm Algorithm](#damm-algorithm)
 * [ISIN (International Securities Identification Number) Algorithm](#isin-algorithm)
+* [ISO/IEC 7064 MOD 11,10 Algorithm](#isoiec-7064-mod-1110-algorithm)
 * [ISO/IEC 7064 MOD 11-2 Algorithm](#isoiec-7064-mod-11-2-algorithm)
 * [ISO/IEC 7064 MOD 1271-36 Algorithm](#isoiec-7064-mod-1271-36-algorithm)
+* [ISO/IEC 7064 MOD 27,26 Algorithm](#isoiec-7064-mod-2726-algorithm)
 * [ISO/IEC 7064 MOD 37-2 Algorithm](#isoiec-7064-mod-37-2-algorithm)
+* [ISO/IEC 7064 MOD 37-36 Algorithm](#isoiec-7064-mod-3736-algorithm)
 * [ISO/IEC 7064 MOD 661-26 Algorithm](#isoiec-7064-mod-661-26-algorithm)
 * [ISO/IEC 7064 MOD 97-10 Algorithm](#isoiec-7064-mod-97-10-algorithm)
 * [Luhn Algorithm](#luhn-algorithm)
@@ -265,11 +279,26 @@ algorithm cannot detect).
 
 Wikipedia: https://en.wikipedia.org/wiki/International_Securities_Identification_Number
 
+### ISO/IEC 7064 MOD 11,10 Algorithm
+
+The ISO/IEC 7064 MOD 11,10 algorithm is a hybrid system algorithm (with M = 10
+and M+1 = 11) that is suitable for use with numeric strings. It generates a 
+single check character that is a decimal digit.
+
+#### Details
+
+* Valid characters - decimal digits ('0' - '9')
+* Check digit size - one character
+* Check digit value - decimal digit ('0' - '9')
+* Check digit location - assumed to be the trailing (right-most) character when validating
+* Class name - Iso7064Mod11_10Algorithm
+
 ### ISO/IEC 7064 MOD 11-2 Algorithm
 
-The ISO/IEC 7064 MOD 11-2 algorithm is suitable for use with numeric strings. It
-generates a single check character that is either a decimal digit or an 
-supplementary 'X' character.
+The ISO/IEC 7064 MOD 11-2 algorithm is a pure system algorithm (with modulus 11
+and radix 2) that is suitable for use with numeric strings. It generates a 
+single check character that is either a decimal digit or a supplementary 'X' 
+character.
 
 #### Details
 
@@ -285,8 +314,9 @@ supplementary 'X' character.
 
 ### ISO/IEC 7064 MOD 1271-36 Algorithm
 
-The ISO/IEC 7064 MOD 1271-36 algorithm is suitable for use with alphanumeric 
-strings. It generates two check alphanumeric characters.
+The ISO/IEC 7064 MOD 1271-36 algorithm is a pure system algorithm (with modulus 
+1271 and radix 36) that is suitable for use with alphanumeric strings. It 
+generates two check alphanumeric characters.
 
 #### Details
 
@@ -296,15 +326,26 @@ strings. It generates two check alphanumeric characters.
 * Check digit location - assumed to be the trailing (right-most) characters when validating
 * Class name - Iso7064Mod1271_36Algorithm
 
-#### Common Applications
+### ISO/IEC 7064 MOD 27,26 Algorithm
 
-* Nigerian VNIN (Virtual National Identification Number)
+The ISO/IEC 7064 MOD 27,26 algorithm is a hybrid system algorithm (with M = 26
+and M+1 = 27) that is suitable for use with alphabetic strings. It generates a 
+single check character that is an alphabetic character.
+
+#### Details
+
+* Valid characters - alphabetic characters ('A' - 'Z')
+* Check digit size - one character
+* Check digit value - alphabetic characters ('A' - 'Z')
+* Check digit location - assumed to be the trailing (right-most) character when validating
+* Class name - Iso7064Mod27_26Algorithm
 
 ### ISO/IEC 7064 MOD 37-2 Algorithm
 
-The ISO/IEC 7064 MOD 37-2 algorithm is suitable for use with alphanumeric strings. 
-It generates a single check character that is either an alphanumeric character 
-or a supplementary '*' character.
+The ISO/IEC 7064 MOD 37-2 algorithm is a pure system algorithm (with modulus 37
+and radix 2) that suitable for use with alphanumeric strings. It generates a 
+single check character that is either an alphanumeric character or a 
+supplementary '*' character.
 
 #### Details
 
@@ -314,14 +355,29 @@ or a supplementary '*' character.
 * Check digit location - assumed to be the trailing (right-most) character when validating
 * Class name - Iso7064Mod37_2Algorithm
 
+### ISO/IEC 7064 MOD 37,36 Algorithm
+
+The ISO/IEC 7064 MOD 37,36 algorithm is a hybrid system algorithm (with M = 36
+and M+1 = 37) that is suitable for use with alphanumeric strings. It generates a 
+single check character that is an alphanumeric character.
+
+#### Details
+
+* Valid characters - alphanumeric characters ('0' - '9', 'A' - 'Z')
+* Check digit size - one character
+* Check digit value - alphanumeric characters ('0' - '9', 'A' - 'Z')
+* Check digit location - assumed to be the trailing (right-most) character when validating
+* Class name - Iso7064Mod37_36Algorithm
+
 #### Common Applications
 
 * International Society of Blood Transfusion (ISBT) Donation Identification Numbers
 
 ### ISO/IEC 7064 MOD 661-26 Algorithm
 
-The ISO/IEC 7064 MOD 661-26 algorithm is suitable for use with alphabetic 
-strings. It generates two check alphabetic characters.
+The ISO/IEC 7064 MOD 661-26 algorithm is a pure system algorithm (with modulus 
+661 and radix 26) that is suitable for use with alphabetic strings. It generates 
+two check alphabetic characters.
 
 #### Details
 
@@ -333,8 +389,9 @@ strings. It generates two check alphabetic characters.
 
 ### ISO/IEC 7064 MOD 97-10 Algorithm
 
-The ISO/IEC 7064 MOD 97-10 algorithm is suitable for use with numeric strings. 
-It generates a two numeric check digits.
+The ISO/IEC 7064 MOD 97-10 algorithm is a pure system algorithm (with modulus 97
+and radix 210) that is suitable for use with numeric strings. It generates a two 
+numeric check digits.
 
 Note: the ISO/IEC 7064 MOD 97-10 algorithm is the basis of a number of check digit 
 algorithms that first map alphabetic characters to numbers between 10 and 35. 
@@ -608,9 +665,12 @@ Wikipedia: https://en.wikipedia.org/wiki/Vehicle_identification_number#Check-dig
 * [ABA RTN Algorithm](#aba-rtn-algorithm-benchmarks)
 * [Damm Algorithm](#damm-algorithm-benchmarks)
 * [ISIN Algorithm](#isin-algorithm-benchmarks)
+* [ISO/IEC 7064 MOD 11,10 Algorithm](#isoiec-7064-mod-1110-algorithm-benchmarks)
 * [ISO/IEC 7064 MOD 11-2 Algorithm](#isoiec-7064-mod-11-2-algorithm-benchmarks)
 * [ISO/IEC 7064 MOD 1271-36 Algorithm](#isoiec-7064-mod-1271-36-algorithm-benchmarks)
+* [ISO/IEC 7064 MOD 27,26 Algorithm](#isoiec-7064-mod-2726-algorithm-benchmarks)
 * [ISO/IEC 7064 MOD 37-2 Algorithm](#isoiec-7064-mod-37-2-algorithm-benchmarks)
+* [ISO/IEC 7064 MOD 37-36 Algorithm](#isoiec-7064-mod-3736-algorithm-benchmarks)
 * [ISO/IEC 7064 MOD 661-26 Algorithm](#isoiec-7064-mod-661-26-algorithm-benchmarks)
 * [ISO/IEC 7064 MOD 97-10 Algorithm](#isoiec-7064-mod-97-10-algorithm-benchmarks)
 * [Luhn Algorithm](#luhn-algorithm-benchmarks)
@@ -654,6 +714,19 @@ Wikipedia: https://en.wikipedia.org/wiki/Vehicle_identification_number#Check-dig
 | Validate               | US0378331005 | 21.64 ns | 0.096 ns | 0.075 ns |         - |
 | Validate               | US88160R1014 | 21.78 ns | 0.110 ns | 0.103 ns |         - |
 
+### ISO/IEC 7064 MOD 11,10 Algorithm Benchmarks
+
+| Method                 | Value                | Mean      | Error     | StdDev    | Allocated |
+|----------------------- |--------------------- |----------:|----------:|----------:|----------:|
+| TryCalculateCheckDigit | 0794                 |  8.176 ns | 0.1922 ns | 0.1888 ns |         - |
+| TryCalculateCheckDigit | 12345678             | 14.380 ns | 0.1990 ns | 0.1861 ns |         - |
+| TryCalculateCheckDigit | 1632175818351910     | 24.094 ns | 0.3048 ns | 0.2851 ns |         - |
+| TryCalculateCheckDigit | 12345(...)23456 [26] | 37.537 ns | 0.3959 ns | 0.3510 ns |         - |
+| Validate               | 07945                |  8.031 ns | 0.1904 ns | 0.1781 ns |         - |
+| Validate               | 123456788            | 14.197 ns | 0.2033 ns | 0.1901 ns |         - |
+| Validate               | 16321758183519103    | 25.696 ns | 0.2557 ns | 0.2267 ns |         - |
+| Validate               | 12345(...)34565 [27] | 39.212 ns | 0.4141 ns | 0.3671 ns |         - |
+
 ### ISO/IEC 7064 MOD 11-2 Algorithm Benchmarks
 
 | Method                 | Value                | Mean      | Error     | StdDev    | Allocated |
@@ -671,27 +744,53 @@ Wikipedia: https://en.wikipedia.org/wiki/Vehicle_identification_number#Check-dig
 
 | Method                 | Value                | Mean     | Error    | StdDev   | Allocated |
 |----------------------- |--------------------- |---------:|---------:|---------:|----------:|
-| TryCalculateCheckDigit | ISO79                | 12.73 ns | 0.092 ns | 0.081 ns |         - |
-| TryCalculateCheckDigit | XS868977863229       | 28.17 ns | 0.396 ns | 0.351 ns |         - |
-| TryCalculateCheckDigit | AEIOU1592430QWERTY   | 35.58 ns | 0.325 ns | 0.288 ns |         - |
-| TryCalculateCheckDigit | ZZZZZ(...)ZZZZZ [36] | 68.57 ns | 0.738 ns | 0.690 ns |         - |
-| Validate               | ISO793W              | 11.41 ns | 0.121 ns | 0.101 ns |         - |
-| Validate               | XS868977863229AU     | 25.22 ns | 0.246 ns | 0.230 ns |         - |
-| Validate               | AEIOU1592430QWERTY0Z | 31.38 ns | 0.232 ns | 0.193 ns |         - |
-| Validate               | ZZZZZ(...)ZZZ6X [38] | 59.93 ns | 0.471 ns | 0.418 ns |         - |
+| TryCalculateCheckDigit | ISO79                | 10.60 ns | 0.081 ns | 0.076 ns |         - |
+| TryCalculateCheckDigit | XS868977863229       | 22.35 ns | 0.255 ns | 0.239 ns |         - |
+| TryCalculateCheckDigit | AEIOU1592430QWERTY   | 29.94 ns | 0.284 ns | 0.237 ns |         - |
+| TryCalculateCheckDigit | ZZZZZ(...)ZZZZZ [36] | 54.21 ns | 0.855 ns | 0.799 ns |         - |
+| Validate               | ISO793W              | 13.01 ns | 0.209 ns | 0.195 ns |         - |
+| Validate               | XS868977863229AU     | 28.99 ns | 0.390 ns | 0.365 ns |         - |
+| Validate               | AEIOU1592430QWERTY0Z | 37.68 ns | 0.402 ns | 0.356 ns |         - |
+| Validate               | ZZZZZ(...)ZZZ6X [38] | 67.90 ns | 0.956 ns | 0.894 ns |         - |
+
+### ISO/IEC 7064 MOD 27,26 Algorithm Benchmarks
+
+| Method                 | Value                | Mean      | Error     | StdDev    | Allocated |
+|----------------------- |--------------------- |----------:|----------:|----------:|----------:|
+| TryCalculateCheckDigit | AEIOU                |  8.837 ns | 0.0849 ns | 0.0794 ns |         - |
+| TryCalculateCheckDigit | QWERTYDVORAK         | 16.683 ns | 0.2982 ns | 0.2644 ns |         - |
+| TryCalculateCheckDigit | ABCDEFGHIJKLMNOPQR   | 21.334 ns | 0.3732 ns | 0.3309 ns |         - |
+| TryCalculateCheckDigit | ZZZZZ(...)ZZZZZ [30] | 31.656 ns | 0.3157 ns | 0.2953 ns |         - |
+| Validate               | AEIOUI               |  9.361 ns | 0.1222 ns | 0.1143 ns |         - |
+| Validate               | QWERTYDVORAKY        | 19.887 ns | 0.2450 ns | 0.2172 ns |         - |
+| Validate               | ABCDEFGHIJKLMNOPQRO  | 28.070 ns | 0.2972 ns | 0.2780 ns |         - |
+| Validate               | ZZZZZ(...)ZZZZB [31] | 45.164 ns | 0.5205 ns | 0.4869 ns |         - |
 
 ### ISO/IEC 7064 MOD 37-2 Algorithm Benchmarks
 
 | Method                 | Value                | Mean      | Error     | StdDev    | Allocated |
 |----------------------- |--------------------- |----------:|----------:|----------:|----------:|
-| TryCalculateCheckDigit | ZZZZ                 |  8.753 ns | 0.1538 ns | 0.1363 ns |         - |
-| TryCalculateCheckDigit | A999522123456        | 23.986 ns | 0.5079 ns | 0.4751 ns |         - |
-| TryCalculateCheckDigit | A999914123456        | 23.798 ns | 0.3693 ns | 0.3084 ns |         - |
-| TryCalculateCheckDigit | ABCDE(...)TUVWX [24] | 42.252 ns | 0.4247 ns | 0.3973 ns |         - |
-| Validate               | ZZZZO                |  7.047 ns | 0.1607 ns | 0.1504 ns |         - |
-| Validate               | A999522123456*       | 24.010 ns | 0.2448 ns | 0.2290 ns |         - |
-| Validate               | A999914123456N       | 17.706 ns | 0.2651 ns | 0.2479 ns |         - |
-| Validate               | ABCDE(...)UVWX* [25] | 31.682 ns | 0.2959 ns | 0.2623 ns |         - |
+| TryCalculateCheckDigit | ZZZZ                 |  9.191 ns | 0.1218 ns | 0.1139 ns |         - |
+| TryCalculateCheckDigit | A999522123456        | 30.899 ns | 0.2086 ns | 0.1628 ns |         - |
+| TryCalculateCheckDigit | A999914123456        | 23.629 ns | 0.3153 ns | 0.2633 ns |         - |
+| TryCalculateCheckDigit | ABCDE(...)TUVWX [24] | 46.814 ns | 0.6711 ns | 0.5949 ns |         - |
+| Validate               | ZZZZO                |  9.807 ns | 0.0611 ns | 0.0542 ns |         - |
+| Validate               | A999522123456*       | 23.951 ns | 0.3130 ns | 0.2614 ns |         - |
+| Validate               | A999914123456N       | 24.439 ns | 0.1928 ns | 0.1610 ns |         - |
+| Validate               | ABCDE(...)UVWX* [25] | 46.902 ns | 0.3809 ns | 0.3377 ns |         - |
+
+### ISO/IEC 7064 MOD 37,36 Algorithm Benchmarks
+
+| Method                 | Value                | Mean     | Error    | StdDev   | Allocated |
+|----------------------- |--------------------- |---------:|---------:|---------:|----------:|
+| TryCalculateCheckDigit | AEIOU                | 13.25 ns | 0.152 ns | 0.135 ns |         - |
+| TryCalculateCheckDigit | QWERTYDVORAK         | 26.44 ns | 0.245 ns | 0.217 ns |         - |
+| TryCalculateCheckDigit | A1B2C(...)I9J0K [21] | 42.13 ns | 0.274 ns | 0.243 ns |         - |
+| TryCalculateCheckDigit | 12345(...)VWXYZ [36] | 72.37 ns | 1.139 ns | 1.065 ns |         - |
+| Validate               | AEIOUU               | 13.81 ns | 0.143 ns | 0.119 ns |         - |
+| Validate               | QWERTYDVORAK1        | 27.93 ns | 0.268 ns | 0.251 ns |         - |
+| Validate               | A1B2C(...)9J0KI [22] | 40.00 ns | 0.677 ns | 0.600 ns |         - |
+| Validate               | 12345(...)WXYZT [37] | 70.86 ns | 1.116 ns | 1.044 ns |         - |
 
 ### ISO/IEC 7064 MOD 661-26 Algorithm Benchmarks
 

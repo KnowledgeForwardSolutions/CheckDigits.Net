@@ -66,6 +66,18 @@ public abstract class Iso7064PureSystemSingleCharacterAlgorithm
    }
 
    /// <summary>
+   ///   Map a character of the value being validated to its integer equivalent.
+   /// </summary>
+   /// <param name="ch">
+   ///   The character to map.
+   /// </param>
+   /// <returns>
+   ///   The integer equivalent of <paramref name="ch"/> or -1 if the character
+   ///   is not valid.
+   /// </returns>
+   public virtual Int32 MapCharacterToNumber(Char ch) => throw new NotImplementedException();
+
+   /// <summary>
    ///   Map the check character of the value being validated to its integer 
    ///   equivalent.
    /// </summary>
@@ -77,18 +89,6 @@ public abstract class Iso7064PureSystemSingleCharacterAlgorithm
    ///   is not valid.
    /// </returns>
    public virtual Int32 MapCheckCharacterToNumber(Char ch) => throw new NotImplementedException();
-
-   /// <summary>
-   ///   Map a character of the value being validated to its integer equivalent.
-   /// </summary>
-   /// <param name="ch">
-   ///   The character to map.
-   /// </param>
-   /// <returns>
-   ///   The integer equivalent of <paramref name="ch"/> or -1 if the character
-   ///   is not valid.
-   /// </returns>
-   public virtual Int32 MapCharacterToNumber(Char ch) => throw new NotImplementedException();
 
    public Boolean TryCalculateCheckDigit(String value, out Char checkDigit)
    {

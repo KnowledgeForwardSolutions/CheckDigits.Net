@@ -46,6 +46,20 @@ public class AlgorithmsTests
 
    #endregion
 
+   #region Iso7064Mod11_10 Algorithm Property Tests
+   // ==========================================================================
+   // ==========================================================================
+
+   [Fact]
+   public void Algorithms_Iso7064Mod11_10_ShouldNotBeNull()
+      => Algorithms.Iso7064Mod11_10.Should().NotBeNull();
+
+   [Fact]
+   public void Algorithms_Iso7064Mod11_10_ShouldBeExpectedType()
+      => Algorithms.Iso7064Mod11_10.Should().BeOfType<Iso7064Mod11_10Algorithm>();
+
+   #endregion
+
    #region Iso7064Mod11_2 Algorithm Property Tests
    // ==========================================================================
    // ==========================================================================
@@ -74,6 +88,20 @@ public class AlgorithmsTests
 
    #endregion
 
+   #region Iso7064Mod27_26 Algorithm Property Tests
+   // ==========================================================================
+   // ==========================================================================
+
+   [Fact]
+   public void Algorithms_Iso7064Mod27_26_ShouldNotBeNull()
+      => Algorithms.Iso7064Mod27_26.Should().NotBeNull();
+
+   [Fact]
+   public void Algorithms_Iso7064Mod27_26_ShouldBeExpectedType()
+      => Algorithms.Iso7064Mod27_26.Should().BeOfType<Iso7064Mod27_26Algorithm>();
+
+   #endregion
+
    #region Iso7064Mod37_2 Algorithm Property Tests
    // ==========================================================================
    // ==========================================================================
@@ -85,6 +113,20 @@ public class AlgorithmsTests
    [Fact]
    public void Algorithms_Iso7064Mod37_2_ShouldBeExpectedType()
       => Algorithms.Iso7064Mod37_2.Should().BeOfType<Iso7064Mod37_2Algorithm>();
+
+   #endregion
+
+   #region Iso7064Mod37_36 Algorithm Property Tests
+   // ==========================================================================
+   // ==========================================================================
+
+   [Fact]
+   public void Algorithms_Iso7064Mod37_36_ShouldNotBeNull()
+      => Algorithms.Iso7064Mod37_36.Should().NotBeNull();
+
+   [Fact]
+   public void Algorithms_Iso7064Mod37_36_ShouldBeExpectedType()
+      => Algorithms.Iso7064Mod37_36.Should().BeOfType<Iso7064Mod37_36Algorithm>();
 
    #endregion
 
