@@ -108,6 +108,7 @@ public class Iso7064Mod37_36AlgorithmTests
    [Theory]
    [InlineData("ABC!EFX")]
    [InlineData("ABC^EFX")]
+   [InlineData("ABC=EFX")]
    public void Iso7064Mod37_36Algorithm_TryCalculateCheckDigit_ShouldReturnFalse_WhenInputContainsInvalidCharacter(String value)
    {
       // Act/assert.
@@ -204,12 +205,16 @@ public class Iso7064Mod37_36AlgorithmTests
    [Theory]
    [InlineData("ABC!EFX")]
    [InlineData("ABC^EFX")]
+   [InlineData("ABC=EFX")]
    public void Iso7064Mod37_36Algorithm_Validate_ShouldReturnFalse_WhenValueContainsInvalidCharacter(String value)
       => _sut.Validate(value).Should().BeFalse();
 
-   [Fact]
-   public void Iso7064Mod37_36Algorithm_Validate_ShouldReturnFalse_WhenValueContainsInvalidCheckDigitCharacter()
-      => _sut.Validate("ABCDE!").Should().BeFalse();
+   [Theory]
+   [InlineData("ABCDE!")]
+   [InlineData("ABCDE^")]
+   [InlineData("ABCDE=")]
+   public void Iso7064Mod37_36Algorithm_Validate_ShouldReturnFalse_WhenValueContainsInvalidCheckDigitCharacter(String value)
+      => _sut.Validate(value).Should().BeFalse();
 
    #endregion
 }

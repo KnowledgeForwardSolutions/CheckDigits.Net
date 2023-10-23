@@ -116,6 +116,7 @@ public class Iso7064Mod1271_36AlgorithmTests
    [Theory]
    [InlineData("123!56")]
    [InlineData("123^56")]
+   [InlineData("123=56X")]
    public void Iso7064Mod37_2Algorithm_TryCalculateCheckDigit_ShouldReturnFalse_WhenInputContainsInvalidCharacter(String value)
    {
       // Act/assert.
@@ -215,6 +216,7 @@ public class Iso7064Mod1271_36AlgorithmTests
    [Theory]
    [InlineData("123!56X")]
    [InlineData("123^56X")]
+   [InlineData("123=56X")]
    public void Iso7064Mod1271_36Algorithm_Validate_ShouldReturnFalse_WhenValueContainsInvalidCharacter(String value)
       => _sut.Validate(value).Should().BeFalse();
 
@@ -222,9 +224,12 @@ public class Iso7064Mod1271_36AlgorithmTests
    public void Iso7064Mod1271_36Algorithm_Validate_ShouldReturnFalse_WhenValueContainsInvalidFirstCheckCharacter()
       => _sut.Validate("1234#0").Should().BeFalse();
 
-   [Fact]
-   public void Iso7064Mod1271_36Algorithm_Validate_ShouldReturnFalse_WhenValueContainsInvalidSecondCheckCharacter()
-      => _sut.Validate("1234A#").Should().BeFalse();
+   [Theory]
+   [InlineData("12356X!")]
+   [InlineData("12356X^")]
+   [InlineData("12356X=")]
+   public void Iso7064Mod1271_36Algorithm_Validate_ShouldReturnFalse_WhenValueContainsInvalidSecondCheckCharacter(String value)
+      => _sut.Validate(value).Should().BeFalse();
 
    #endregion
 }

@@ -38,6 +38,11 @@ public class Iso7064Mod37_2Algorithm : ISingleCheckDigitAlgorithm
             Int32 c when c >= CharConstants.UpperCaseA && c <= CharConstants.UpperCaseZ => c - CharConstants.UpperCaseA + 10,
             _ => -1
          }).ToArray();
+   private const Int32 _asteriskOffset = 0;
+   private const Int32 _digitLowerBound = CharConstants.DigitZero - CharConstants.Asterisk;
+   private const Int32 _digitUpperBound = CharConstants.DigitNine - CharConstants.Asterisk;
+   private const Int32 _alphaLowerBound = CharConstants.UpperCaseA - CharConstants.Asterisk;
+   private const Int32 _alphaUpperBound = CharConstants.UpperCaseZ - CharConstants.Asterisk;
    private const String _checkCharacters = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ*";
 
    /// <inheritdoc/>
@@ -56,16 +61,18 @@ public class Iso7064Mod37_2Algorithm : ISingleCheckDigitAlgorithm
       }
 
       var sum = 0;
-      Int32 num;
       for (var index = 0; index < value.Length; index++)
       {
          var offset = value[index] - CharConstants.Asterisk;
-         if (offset < 1 || offset > 48)
+         if ((offset >= _digitLowerBound && offset <= _digitUpperBound)
+            || (offset >= _alphaLowerBound && offset <= _alphaUpperBound))
+         {
+            sum = (sum + _lookupTable[offset]) * _radix;
+         }
+         else
          {
             return false;
          }
-         num = _lookupTable[offset];
-         sum = (sum + num) * _radix;
          if (sum >= _reduceThreshold)
          {
             sum %= _modulus;
@@ -92,12 +99,15 @@ public class Iso7064Mod37_2Algorithm : ISingleCheckDigitAlgorithm
       for (var index = 0; index < value.Length - 1; index++)
       {
          offset = value[index] - CharConstants.Asterisk;
-         if (offset < 1 || offset > 48)
+         if ((offset >= _digitLowerBound && offset <= _digitUpperBound)
+            || (offset >= _alphaLowerBound && offset <= _alphaUpperBound))
+         {
+            sum = (sum + _lookupTable[offset]) * _radix;
+         }
+         else
          {
             return false;
          }
-         var num = _lookupTable[offset];
-         sum = (sum + num) * _radix;
          if (sum >= _reduceThreshold)
          {
             sum %= _modulus;
@@ -105,11 +115,16 @@ public class Iso7064Mod37_2Algorithm : ISingleCheckDigitAlgorithm
       }
 
       offset = value[^1] - CharConstants.Asterisk;
-      if (offset < 0 || offset > 48)
+      if (offset == _asteriskOffset
+         || (offset >= _digitLowerBound && offset <= _digitUpperBound)
+         || (offset >= _alphaLowerBound && offset <= _alphaUpperBound))
+      {
+         sum += _lookupTable[offset];
+      }
+      else
       {
          return false;
       }
-      sum += _lookupTable[offset];
 
       return sum % _modulus == 1;
    }

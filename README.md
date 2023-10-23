@@ -744,14 +744,14 @@ Wikipedia: https://en.wikipedia.org/wiki/Vehicle_identification_number#Check-dig
 
 | Method                 | Value                | Mean     | Error    | StdDev   | Allocated |
 |----------------------- |--------------------- |---------:|---------:|---------:|----------:|
-| TryCalculateCheckDigit | ISO79                | 12.73 ns | 0.092 ns | 0.081 ns |         - |
-| TryCalculateCheckDigit | XS868977863229       | 28.17 ns | 0.396 ns | 0.351 ns |         - |
-| TryCalculateCheckDigit | AEIOU1592430QWERTY   | 35.58 ns | 0.325 ns | 0.288 ns |         - |
-| TryCalculateCheckDigit | ZZZZZ(...)ZZZZZ [36] | 68.57 ns | 0.738 ns | 0.690 ns |         - |
-| Validate               | ISO793W              | 11.41 ns | 0.121 ns | 0.101 ns |         - |
-| Validate               | XS868977863229AU     | 25.22 ns | 0.246 ns | 0.230 ns |         - |
-| Validate               | AEIOU1592430QWERTY0Z | 31.38 ns | 0.232 ns | 0.193 ns |         - |
-| Validate               | ZZZZZ(...)ZZZ6X [38] | 59.93 ns | 0.471 ns | 0.418 ns |         - |
+| TryCalculateCheckDigit | ISO79                | 10.60 ns | 0.081 ns | 0.076 ns |         - |
+| TryCalculateCheckDigit | XS868977863229       | 22.35 ns | 0.255 ns | 0.239 ns |         - |
+| TryCalculateCheckDigit | AEIOU1592430QWERTY   | 29.94 ns | 0.284 ns | 0.237 ns |         - |
+| TryCalculateCheckDigit | ZZZZZ(...)ZZZZZ [36] | 54.21 ns | 0.855 ns | 0.799 ns |         - |
+| Validate               | ISO793W              | 13.01 ns | 0.209 ns | 0.195 ns |         - |
+| Validate               | XS868977863229AU     | 28.99 ns | 0.390 ns | 0.365 ns |         - |
+| Validate               | AEIOU1592430QWERTY0Z | 37.68 ns | 0.402 ns | 0.356 ns |         - |
+| Validate               | ZZZZZ(...)ZZZ6X [38] | 67.90 ns | 0.956 ns | 0.894 ns |         - |
 
 ### ISO/IEC 7064 MOD 27,26 Algorithm Benchmarks
 
@@ -770,14 +770,14 @@ Wikipedia: https://en.wikipedia.org/wiki/Vehicle_identification_number#Check-dig
 
 | Method                 | Value                | Mean      | Error     | StdDev    | Allocated |
 |----------------------- |--------------------- |----------:|----------:|----------:|----------:|
-| TryCalculateCheckDigit | ZZZZ                 |  8.753 ns | 0.1538 ns | 0.1363 ns |         - |
-| TryCalculateCheckDigit | A999522123456        | 23.986 ns | 0.5079 ns | 0.4751 ns |         - |
-| TryCalculateCheckDigit | A999914123456        | 23.798 ns | 0.3693 ns | 0.3084 ns |         - |
-| TryCalculateCheckDigit | ABCDE(...)TUVWX [24] | 42.252 ns | 0.4247 ns | 0.3973 ns |         - |
-| Validate               | ZZZZO                |  7.047 ns | 0.1607 ns | 0.1504 ns |         - |
-| Validate               | A999522123456*       | 24.010 ns | 0.2448 ns | 0.2290 ns |         - |
-| Validate               | A999914123456N       | 17.706 ns | 0.2651 ns | 0.2479 ns |         - |
-| Validate               | ABCDE(...)UVWX* [25] | 31.682 ns | 0.2959 ns | 0.2623 ns |         - |
+| TryCalculateCheckDigit | ZZZZ                 |  9.191 ns | 0.1218 ns | 0.1139 ns |         - |
+| TryCalculateCheckDigit | A999522123456        | 30.899 ns | 0.2086 ns | 0.1628 ns |         - |
+| TryCalculateCheckDigit | A999914123456        | 23.629 ns | 0.3153 ns | 0.2633 ns |         - |
+| TryCalculateCheckDigit | ABCDE(...)TUVWX [24] | 46.814 ns | 0.6711 ns | 0.5949 ns |         - |
+| Validate               | ZZZZO                |  9.807 ns | 0.0611 ns | 0.0542 ns |         - |
+| Validate               | A999522123456*       | 23.951 ns | 0.3130 ns | 0.2614 ns |         - |
+| Validate               | A999914123456N       | 24.439 ns | 0.1928 ns | 0.1610 ns |         - |
+| Validate               | ABCDE(...)UVWX* [25] | 46.902 ns | 0.3809 ns | 0.3377 ns |         - |
 
 ### ISO/IEC 7064 MOD 37,36 Algorithm Benchmarks
 

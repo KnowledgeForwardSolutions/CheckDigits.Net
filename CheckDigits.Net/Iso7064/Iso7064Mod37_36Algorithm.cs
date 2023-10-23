@@ -58,20 +58,18 @@ public class Iso7064Mod37_36Algorithm : ISingleCheckDigitAlgorithm
 
       var product = _modulus;
       Int32 offset;
-      Int32 num;
       for (var index = 0; index < value.Length; index++)
       {
          offset = value[index] - CharConstants.DigitZero;
          if ((offset >= _digitLowerBound && offset <= _digitUpperBound)
             || (offset >= _alphaLowerBound && offset <= _alphaUpperBound))
          {
-            num = _lookupTable[offset];
+            product += _lookupTable[offset];
          }
          else
          {
             return false;
          }
-         product += num;
          if (product > _modulus)
          {
             product -= _modulus;
@@ -99,20 +97,18 @@ public class Iso7064Mod37_36Algorithm : ISingleCheckDigitAlgorithm
 
       var product = _modulus;
       Int32 offset;
-      Int32 num;
       for (var index = 0; index < value.Length - 1; index++)
       {
          offset = value[index] - CharConstants.DigitZero;
          if ((offset >= _digitLowerBound && offset <= _digitUpperBound)
             || (offset >= _alphaLowerBound && offset <= _alphaUpperBound))
          {
-            num = _lookupTable[offset];
+            product += _lookupTable[offset];
          }
          else
          {
             return false;
          }
-         product += num;
          if (product > _modulus)
          {
             product -= _modulus;
@@ -128,14 +124,12 @@ public class Iso7064Mod37_36Algorithm : ISingleCheckDigitAlgorithm
       if ((offset >= _digitLowerBound && offset <= _digitUpperBound)
          || (offset >= _alphaLowerBound && offset <= _alphaUpperBound))
       {
-         num = _lookupTable[offset];
+         product += _lookupTable[offset];
       }
       else
       {
          return false;
       }
-
-      product += num;
 
       return product % _modulus == 1;
    }

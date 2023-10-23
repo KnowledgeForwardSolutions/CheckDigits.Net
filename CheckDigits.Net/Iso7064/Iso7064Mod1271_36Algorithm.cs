@@ -37,6 +37,10 @@ public class Iso7064Mod1271_36Algorithm : IDoubleCheckDigitAlgorithm
             Int32 c when c >= CharConstants.UpperCaseA && c <= CharConstants.UpperCaseZ => c - CharConstants.UpperCaseA + 10,
             _ => -1
          }).ToArray();
+   private const Int32 _digitLowerBound = 0;
+   private const Int32 _digitUpperBound = 9;
+   private const Int32 _alphaLowerBound = CharConstants.UpperCaseA - CharConstants.DigitZero;
+   private const Int32 _alphaUpperBound = CharConstants.UpperCaseZ - CharConstants.DigitZero;
    private const String _validCharacters = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
    /// <inheritdoc/>
@@ -62,12 +66,15 @@ public class Iso7064Mod1271_36Algorithm : IDoubleCheckDigitAlgorithm
       for (var index = 0; index < value.Length; index++)
       {
          var offset = value[index] - CharConstants.DigitZero;
-         if (offset < 0 || offset > 42)
+         if ((offset >= _digitLowerBound && offset <= _digitUpperBound)
+            || (offset >= _alphaLowerBound && offset <= _alphaUpperBound))
+         {
+            sum = (sum + _lookupTable[offset]) * _radix;
+         }
+         else
          {
             return false;
          }
-         var num = _lookupTable[offset];
-         sum = (sum + num) * _radix;
          if (sum >= _reduceThreshold)
          {
             sum %= _modulus;
@@ -102,12 +109,15 @@ public class Iso7064Mod1271_36Algorithm : IDoubleCheckDigitAlgorithm
       for (var index = 0; index < value.Length - 1; index++)
       {
          offset = value[index] - CharConstants.DigitZero;
-         if (offset < 0 || offset > 42)
+         if ((offset >= _digitLowerBound && offset <= _digitUpperBound)
+            || (offset >= _alphaLowerBound && offset <= _alphaUpperBound))
+         {
+            sum = (sum + _lookupTable[offset]) * _radix;
+         }
+         else
          {
             return false;
          }
-         var num = _lookupTable[offset];
-         sum = (sum + num) * _radix;
          if (sum >= _reduceThreshold)
          {
             sum %= _modulus;
@@ -116,11 +126,15 @@ public class Iso7064Mod1271_36Algorithm : IDoubleCheckDigitAlgorithm
 
       // Add value for second check character.
       offset = value[^1] - CharConstants.DigitZero;
-      if (offset < 0 || offset > 42)
+      if ((offset >= _digitLowerBound && offset <= _digitUpperBound)
+         || (offset >= _alphaLowerBound && offset <= _alphaUpperBound))
+      {
+         sum += _lookupTable[offset];
+      }
+      else
       {
          return false;
       }
-      sum += _lookupTable[offset];
 
       return sum % _modulus == 1;
    }
