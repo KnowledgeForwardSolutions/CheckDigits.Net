@@ -8,12 +8,12 @@ public class Iso7064PureSystemSingleCharacterAlgorithmTests
    private const String _algorithmDescription = "description";
    private const Int32 _modulus = 11;
    private const Int32 _radix = 2;
-   private static readonly IAlphabet _alphabet = new DigitsSupplementaryAlphabet();
+   private static readonly ISupplementalCharacterAlphabet _alphabet = new DigitsSupplementalAlphabet();
 
    private static readonly Iso7064PureSystemSingleCharacterAlgorithm _alphanumericAlgorithm =
-      new("Alphanumeric", "Alphanumeric, modulus = 37, radix = 2", 37, 2, new AlphanumericSupplementaryAlphabet());
+      new("Alphanumeric", "Alphanumeric, modulus = 37, radix = 2", 37, 2, new AlphanumericSupplementalAlphabet());
    private static readonly Iso7064PureSystemSingleCharacterAlgorithm _numericAlgorithm =
-      new("Numeric", "Numeric, modulus = 11, radix = 2", 11, 2, new DigitsSupplementaryAlphabet());
+      new("Numeric", "Numeric, modulus = 11, radix = 2", 11, 2, new DigitsSupplementalAlphabet());
 
    #region Constructor Tests
    // ==========================================================================
@@ -154,7 +154,7 @@ public class Iso7064PureSystemSingleCharacterAlgorithmTests
    public void Iso7064PureSystemSingleCharacterAlgorithm_Constructor_ShouldThrowArgumentNullException_WhenAlphabetIsNull()
    {
       // Arrange.
-      IAlphabet alphabet = null!;
+      ISupplementalCharacterAlphabet alphabet = null!;
       var act = () => _ = new Iso7064PureSystemSingleCharacterAlgorithm(
          _algorithmName,
          _algorithmDescription,

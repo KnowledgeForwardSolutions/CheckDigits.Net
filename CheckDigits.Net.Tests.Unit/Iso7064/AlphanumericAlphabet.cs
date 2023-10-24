@@ -25,7 +25,5 @@ public class AlphanumericAlphabet : IAlphabet
             : -1;
    }
 
-   public Int32 CheckCharacterToInteger(Char ch) => throw new NotImplementedException();
-
    public Char IntegerToCheckCharacter(Int32 checkDigit) => _checkCharacters[checkDigit];
 }

@@ -76,12 +76,23 @@ use a single modulus value and a radix value and can generate one or two check
 characters, depending on the algorithm. If a pure system algorithm generates a 
 single check character, the check character produced will either be one of the 
 valid input characters or a single supplementary character that is only valid as
-a check digit. Hybrid system algorithms use two modulus values, M and M+1 and
+a check digit. Hybrid system algorithms use two modulus values, M and M+1, and
 generate a single check character that will be one of the valid input characters.
 
-CheckDigits.Net provides optimized implementations of all of the algorithms
-defined in the ISO/IEC 7064 standard as well as abstract base classes suitable 
-for creating custom implementations.
+While CheckDigits.Net provides optimized implementations of all of the algorithms
+defined in the ISO/IEC 7064 standard, the standard is flexible enough to support
+the creation of algorithms for custom alphabets. For example, Annex B of the 
+ISO/IEC 7064 standard demonstrates the creation of a system for the Danish 
+alphabet which includes three additional characters. 
+
+CheckDigits.Net includes three classes to support custom alphabets:
+
+* ```Iso7064PureSystemSingleCharacterAlgorithm``` (generates a single check character, including a supplementary character)
+* ```Iso7064PureSystemDoubleCharacterAlgorithm``` (generates two check characters)
+* ```Iso7064HybridSystemAlgorithm``` (generates a single check character)
+
+Refer to [Using CheckDigits.Net](#using-checkdigits.net) for more information
+about using these classes.
 
 ## Supported Algorithms
 
@@ -116,6 +127,7 @@ for creating custom implementations.
 | Credit card number    | [Luhn Algorithm](#luhn-algorithm) |
 | EAN-8					| [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
 | EAN-13				| [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
+| Global Release Identifier | [ISO/IEC 7064 MOD 37-36 Algorithm](#isoiec-7064-mod-3736-algorithm) |
 | GTIN-8				| [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
 | GTIN-12				| [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
 | GTIN-13				| [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
@@ -168,6 +180,63 @@ var toValidate = "1234567890123452";
 var isValid = lazy.Validate(toValidate);    // Returns true
 ```
 
+**Custom Alphabets for ISO 7064**
+
+The three classes that allow the use of custom alphabets are:
+
+* ```Iso7064PureSystemSingleCharacterAlgorithm``` (generates a single check character, including a supplementary character)
+* ```Iso7064PureSystemDoubleCharacterAlgorithm``` (generates two check characters)
+* ```Iso7064HybridSystemAlgorithm``` (generates a single check character)
+
+To use one of these classes you must first create an instance of a class that 
+implements ```IAlphabet``` or ```ISupplementalCharacterAlphabet```. Then you 
+create an instance of the desired generic ISO 7064 class, supplying the algorithm 
+details (including the alphabet) to the class constructor.
+
+The custom Danish alphabet check algorithm covered in Annex B of the ISO/IEC 7064 
+standard, uses a pure system algorithm that generates two check characters and 
+has a modulus = 29 and radix = 2.
+
+** Danish Alphabet Example**
+
+```
+public class DanishAlphabet : IAlphabet
+{
+   // Additional characters:
+   // diphthong AE (\u00C6) has value 26
+   // slashed O (\u00D8) has value 27
+   // A with diaeresis (\u00C4) has value 28
+   private const String _validCharacters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ\u00C6\u00D8\u00C4";
+
+   public Int32 CharacterToInteger(Char ch)
+      => ch switch
+      {
+         var x when x >= 'A' && x <= 'Z' => x - 'A',
+         '\u00C6' => 26,
+         '\u00D8' => 27,
+         '\u00C4' => 28,
+         _ => -1
+      };
+
+   public Char IntegerToCheckCharacter(Int32 checkDigit) => _validCharacters[checkDigit];
+}
+
+var checkAlgorithm = new Iso7064PureSystemDoubleCharacterAlgorithm(
+    "Danish", 
+    "Danish, modulus = 29, radix = 2", 
+    29, 
+    2, 
+    new DanishAlphabet());
+
+// Calculate the check digit for Danish word for sister (uses slashed O instead of i)
+var str = "S\u00D8STER";
+var successful = checkAlgorithm.TryCalculateCheckDigits(str, out var firstChar, out var secondChar);    // Returns true, firstChar = 'D', secondChar = 'A'
+
+
+// Validate a value containing check digit(s).
+var isValid = checkAlgorithm.Validate("S\u00D8STERDA");     // Returns true
+```
+
 ## Interfaces
 
 A check digit algorithm is a class that implements two different interfaces. Every
@@ -186,13 +255,22 @@ a string of incorrect length or a string that contains characters that are not
 valid for the algorithm will return false instead of throwing an exception.
 
 Check digit algorithms that use two character check digits also implement
-```IDoubleCheckDigitAlgorithm```. This interface also has a TryCalculateCheckDigit
-method, but the output parameter is a string instead of a character.
+```IDoubleCheckDigitAlgorithm```. This interface has a TryCalculateCheckDigits
+method that has two output parameters, one for each check digit.
 
 Note that ```ISingleCheckDigitAlgorithm``` and ```IDoubleCheckDigitAlgorithm```
 are not implemented for algorithms for government issued identifiers (for example,
 UK NHS numbers and US NPI numbers) or values issued by a single authority (such
 as ABA Routing Transit Numbers).
+
+The ```IAlphabet``` and ```ISupplementalCharacterAlphabet``` interfaces are used 
+for ISO/IEC 7064 algorithms with custom alphabets. ```IAlphabet``` has two 
+methods: CharacterToInteger, which maps a character in the value being processed 
+to its integer equivalent and IntegerToCheckCharacter which maps a calculated 
+check digit to its character equivalent. ```ISupplementalCharacterAlphabet``` 
+extends ```IAlphabet``` by adding the CheckCharacterToInteger method which maps 
+a check character to its integer equivalent. ```ISupplementalCharacterAlphabet```
+is only used by ```Iso7064PureSystemSingleCharacterAlgorithm```.
 
 ## Algorithm Descriptions
 
@@ -368,6 +446,10 @@ single check character that is an alphanumeric character.
 * Check digit value - alphanumeric characters ('0' - '9', 'A' - 'Z')
 * Check digit location - assumed to be the trailing (right-most) character when validating
 * Class name - Iso7064Mod37_36Algorithm
+
+#### Common Applications
+
+* Global Release Identifier (GRid)
 
 #### Common Applications
 

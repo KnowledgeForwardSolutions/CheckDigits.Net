@@ -8,7 +8,5 @@ public class LettersAlphabet : IAlphabet
       return num >= 0 && num <= 25 ? num : -1;
    }
 
-   public Int32 CheckCharacterToInteger(Char ch) => throw new NotImplementedException();
-
    public Char IntegerToCheckCharacter(Int32 checkDigit) => (Char)(checkDigit + CharConstants.UpperCaseA);
 }

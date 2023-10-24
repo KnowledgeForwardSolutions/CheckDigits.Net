@@ -1,6 +1,6 @@
 ﻿namespace CheckDigits.Net.Tests.Unit.Iso7064;
 
-public class DigitsSupplementaryAlphabet : IAlphabet
+public class DigitsSupplementalAlphabet : ISupplementalCharacterAlphabet
 {
    private const String _checkCharacters = "0123456789X";
 

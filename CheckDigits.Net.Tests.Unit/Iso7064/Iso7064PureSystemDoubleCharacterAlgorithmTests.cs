@@ -17,6 +17,9 @@ public class Iso7064PureSystemDoubleCharacterAlgorithmTests
    private static readonly Iso7064PureSystemDoubleCharacterAlgorithm _numericAlgorithm =
       new("Numeric", "Numeric, modulus = 97, radix = 10", 97, 10, new DigitsAlphabet());
 
+   private static readonly Iso7064PureSystemDoubleCharacterAlgorithm _danishAlgorithm =
+      new("Danish", "Danish, modulus = 29, radix = 2", 29, 2, new DanishAlphabet());
+
    #region Constructor Tests
    // ==========================================================================
    // ==========================================================================
@@ -249,7 +252,8 @@ public class Iso7064PureSystemDoubleCharacterAlgorithmTests
       { _numericAlgorithm, "123456", '7', '6' },
       { _numericAlgorithm, "10113393912554329261011442299914333", '3', '8' },
       { _alphabeticAlgorithm, "ISOHJ", 'T', 'C' },
-      { _alphanumericAlgorithm, "XS868977863229", 'A', 'U' }
+      { _alphanumericAlgorithm, "XS868977863229", 'A', 'U' },
+      { _danishAlgorithm, "S\u00D8STER", 'D', 'A' }
    };
 
    [Theory]
@@ -326,7 +330,8 @@ public class Iso7064PureSystemDoubleCharacterAlgorithmTests
       { _numericAlgorithm, "12345676" },
       { _numericAlgorithm, "1011339391255432926101144229991433338" },
       { _alphabeticAlgorithm, "ISOHJTC" },
-      { _alphanumericAlgorithm, "XS868977863229AU" }
+      { _alphanumericAlgorithm, "XS868977863229AU" },
+      { _danishAlgorithm, "S\u00D8STERDA" }
    };
 
    [Theory]

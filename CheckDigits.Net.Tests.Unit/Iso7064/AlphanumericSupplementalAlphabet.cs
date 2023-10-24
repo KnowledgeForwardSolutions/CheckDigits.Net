@@ -1,6 +1,6 @@
 ﻿namespace CheckDigits.Net.Tests.Unit.Iso7064;
 
-public class AlphanumericSupplementaryAlphabet : IAlphabet
+public class AlphanumericSupplementalAlphabet : ISupplementalCharacterAlphabet
 {
    private static readonly Int32[] _lookupTable =
       Enumerable.Range(CharConstants.Asterisk, CharConstants.UpperCaseZ - CharConstants.Asterisk + 1)

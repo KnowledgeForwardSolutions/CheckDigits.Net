@@ -6,7 +6,7 @@
 /// </summary>
 public class Iso7064PureSystemSingleCharacterAlgorithm : ISingleCheckDigitAlgorithm
 {
-   private readonly IAlphabet _alphabet;
+   private readonly ISupplementalCharacterAlphabet _alphabet;
    private readonly Int32 _modulus;
    private readonly Int32 _radix;
    private readonly Int32 _reduceThreshold;
@@ -27,8 +27,8 @@ public class Iso7064PureSystemSingleCharacterAlgorithm : ISingleCheckDigitAlgori
    ///   The base of the geometric progression used by the algorithm.
    /// </param>
    /// <param name="alphabet">
-   ///   <see cref="IAlphabet"/> used to map characters to their integer 
-   ///   equivalents and vice versa.
+   ///   <see cref="ISupplementalCharacterAlphabet"/> used to map characters to 
+   ///   their integer equivalents and vice versa.
    /// </param>
    /// <exception cref="ArgumentNullException">
    ///   <paramref name="algorithmName"/> is <see langword="null"/>.
@@ -54,7 +54,7 @@ public class Iso7064PureSystemSingleCharacterAlgorithm : ISingleCheckDigitAlgori
       String algorithmDescription,
       Int32 modulus,
       Int32 radix,
-      IAlphabet alphabet)
+      ISupplementalCharacterAlphabet alphabet)
    {
       _ = algorithmName ?? throw new ArgumentNullException(nameof(algorithmName), Resources.AlgorithmNameIsEmptyMessage);
       if (String.IsNullOrWhiteSpace(algorithmName))
