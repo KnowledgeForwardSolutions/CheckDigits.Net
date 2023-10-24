@@ -7,7 +7,7 @@
 public interface IDoubleCheckDigitAlgorithm : ICheckDigitAlgorithm
 {
    /// <summary>
-   ///   Try to calculate a check digit for the input <paramref name="value"/>.
+   ///   Try to calculate the check digits for the input <paramref name="value"/>.
    /// </summary>
    /// <param name="value">
    ///   The value to calculate a check digit for.
@@ -36,5 +36,5 @@ public interface IDoubleCheckDigitAlgorithm : ICheckDigitAlgorithm
    ///   digit positions but those positions are ignored while calculating the 
    ///   check digits.
    /// </remarks>
-   Boolean TryCalculateCheckDigit(String value, out Char first, out Char second);
+   Boolean TryCalculateCheckDigits(String value, out Char first, out Char second);
 }

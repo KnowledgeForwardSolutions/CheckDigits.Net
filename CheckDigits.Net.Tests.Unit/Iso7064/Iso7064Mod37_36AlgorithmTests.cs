@@ -178,6 +178,10 @@ public class Iso7064Mod37_36AlgorithmTests
       => _sut.Validate(value).Should().BeTrue();
 
    [Theory]
+   [InlineData("A12425GABC1234002M")]           // Example Global Release Identifier https://en.wikipedia.org/wiki/Global_Release_Identifier
+   [InlineData("000000018947000000000000D")]
+   [InlineData("00000000C36D002B00000000E")]    // Full ISAN for Star Trek episode "Amok Time"
+   [InlineData("00000000C36D002BK")]            // ISAN root for Star Trek episode "Amok Time"
    [InlineData("AEIOUU")]
    [InlineData("QWERTYDVORAK1")]
    [InlineData("A1B2C3D4E5F6G7H8I9J0KI")]

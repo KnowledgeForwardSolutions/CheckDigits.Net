@@ -79,11 +79,20 @@ namespace CheckDigits.Net {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to CharacterDomain may not be null.
+        ///   Looks up a localized string similar to Algorithm description may not be null, String.Empty or all whitespace characters.
         /// </summary>
-        internal static string CharacterDomainIsNull {
+        internal static string AlgorithmDescriptionIsEmptyMessage {
             get {
-                return ResourceManager.GetString("CharacterDomainIsNull", resourceCulture);
+                return ResourceManager.GetString("AlgorithmDescriptionIsEmptyMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Algorithm name may not be null, String.Empty or all whitespace characters.
+        /// </summary>
+        internal static string AlgorithmNameIsEmptyMessage {
+            get {
+                return ResourceManager.GetString("AlgorithmNameIsEmptyMessage", resourceCulture);
             }
         }
         
@@ -129,6 +138,15 @@ namespace CheckDigits.Net {
         internal static string IsinAlgorithmName {
             get {
                 return ResourceManager.GetString("IsinAlgorithmName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Alphabet may not be null.
+        /// </summary>
+        internal static string Iso7046AlphabetIsNull {
+            get {
+                return ResourceManager.GetString("Iso7046AlphabetIsNull", resourceCulture);
             }
         }
         

@@ -50,7 +50,7 @@ public class Iso7064Mod1271_36Algorithm : IDoubleCheckDigitAlgorithm
    public String AlgorithmName => Resources.Iso7064Mod1271_36AlgorithmName;
 
    /// <inheritdoc/>
-   public Boolean TryCalculateCheckDigit(
+   public Boolean TryCalculateCheckDigits(
       String value,
       out Char first,
       out Char second)

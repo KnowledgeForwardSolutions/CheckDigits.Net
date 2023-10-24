@@ -24,24 +24,24 @@ public class Iso7064Mod97_10AlgorithmTests
 
    #endregion
 
-   #region TryCalculateCheckDigit Tests
+   #region TryCalculateCheckDigits Tests
    // ==========================================================================
    // ==========================================================================
 
    [Fact]
-   public void Iso7064Mod97_10Algorithm_TryCalculateCheckDigit_ShouldReturnFalse_WhenInputIsNull()
+   public void Iso7064Mod97_10Algorithm_TryCalculateCheckDigits_ShouldReturnFalse_WhenInputIsNull()
    {
       // Act/assert.
-      _sut.TryCalculateCheckDigit(null!, out var first, out var second).Should().BeFalse();
+      _sut.TryCalculateCheckDigits(null!, out var first, out var second).Should().BeFalse();
       first.Should().Be('\0');
       second.Should().Be('\0');
    }
 
    [Fact]
-   public void Iso7064Mod97_10Algorithm_TryCalculateCheckDigit_ShouldReturnFalse_WhenInputIsEmpty()
+   public void Iso7064Mod97_10Algorithm_TryCalculateCheckDigits_ShouldReturnFalse_WhenInputIsEmpty()
    {
       // Act/assert.
-      _sut.TryCalculateCheckDigit(null!, out var first, out var second).Should().BeFalse();
+      _sut.TryCalculateCheckDigits(null!, out var first, out var second).Should().BeFalse();
       first.Should().Be('\0');
       second.Should().Be('\0');
    }
@@ -57,13 +57,13 @@ public class Iso7064Mod97_10AlgorithmTests
    [InlineData("7", '7', '7')]
    [InlineData("8", '7', '4')]
    [InlineData("9", '7', '1')]
-   public void Iso7064Mod97_10Algorithm_TryCalculateCheckDigit_ShouldCorrectlyMapCharacterValues(
+   public void Iso7064Mod97_10Algorithm_TryCalculateCheckDigits_ShouldCorrectlyMapCharacterValues(
       String value,
       Char expectedFirst,
       Char expectedSecond)
    {
       // Act/assert.
-      _sut.TryCalculateCheckDigit(value, out var first, out var second).Should().BeTrue();
+      _sut.TryCalculateCheckDigits(value, out var first, out var second).Should().BeTrue();
       first.Should().Be(expectedFirst);
       second.Should().Be(expectedSecond);
    }
@@ -72,13 +72,13 @@ public class Iso7064Mod97_10AlgorithmTests
    [InlineData("123456", '7', '6')]
    [InlineData("1632175818351910", '3', '8')]
    [InlineData("10113393912554329261011442299914333", '3', '8')]    // Example from https://www.consumerfinance.gov/rules-policy/regulations/1003/c/#e7e616a4bd15acce7589cbedc4fd01fcc9623f60e4263be834c9e438
-   public void Iso7064Mod97_10AlgorithmAlgorithm_TryCalculateCheckDigit_ShouldCalculateExpectedCheckDigit(
+   public void Iso7064Mod97_10AlgorithmAlgorithm_TryCalculateCheckDigits_ShouldCalculateExpectedCheckDigit(
       String value,
       Char expectedFirst,
       Char expectedSecond)
    {
       // Act/assert.
-      _sut.TryCalculateCheckDigit(value, out var first, out var second).Should().BeTrue();
+      _sut.TryCalculateCheckDigits(value, out var first, out var second).Should().BeTrue();
       first.Should().Be(expectedFirst);
       second.Should().Be(expectedSecond);
    }
@@ -87,10 +87,10 @@ public class Iso7064Mod97_10AlgorithmTests
    [InlineData("123!56")]
    [InlineData("123^56")]
    [InlineData("123X56")]
-   public void Iso7064Mod97_10Algorithm_TryCalculateCheckDigit_ShouldReturnFalse_WhenInputContainsInvalidCharacter(String value)
+   public void Iso7064Mod97_10Algorithm_TryCalculateCheckDigits_ShouldReturnFalse_WhenInputContainsInvalidCharacter(String value)
    {
       // Act/assert.
-      _sut.TryCalculateCheckDigit(value, out var first, out var second).Should().BeFalse();
+      _sut.TryCalculateCheckDigits(value, out var first, out var second).Should().BeFalse();
       first.Should().Be('\0');
       second.Should().Be('\0');
    }
