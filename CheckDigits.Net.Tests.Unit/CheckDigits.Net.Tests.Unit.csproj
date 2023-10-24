@@ -26,7 +26,6 @@
 
   <ItemGroup>
     <Folder Include="GeneralAlgorithms\" />
-    <Folder Include="ValueSpecificAlgorithms\" />
   </ItemGroup>
 
 </Project>

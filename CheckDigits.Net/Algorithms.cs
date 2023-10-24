@@ -1,7 +1,5 @@
 ﻿// Ignore Spelling: Aba Damm Isin Luhn Nhs Npi Rtn Verhoeff
 
-using CheckDigits.Net.Iso7064;
-
 namespace CheckDigits.Net;
 
 /// <summary>

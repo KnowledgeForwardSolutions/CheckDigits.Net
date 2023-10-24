@@ -1,4 +1,6 @@
-﻿namespace CheckDigits.Net.Tests.Benchmarks;
+﻿using CheckDigits.Net.ValueSpecificAlgorithms;
+
+namespace CheckDigits.Net.Tests.Benchmarks;
 
 [MemoryDiagnoser]
 public class VinAlgorithmValidateBenchmarks

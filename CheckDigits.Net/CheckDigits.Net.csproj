@@ -58,7 +58,6 @@ Initial limited release. Included algorithms:
 
   <ItemGroup>
     <Folder Include="GeneralAlgorithms\" />
-    <Folder Include="ValueSpecificAlgorithms\" />
   </ItemGroup>
 
 </Project>
