@@ -4,7 +4,7 @@
 ///   Generic ISO/IEC 7064 pure system algorithm (i.e. an algorithm that uses a 
 ///   single modulus) that generates two check characters.
 /// </summary>
-public class Iso7064PureSystemDoubleCharacterAlgorithm
+public class Iso7064PureSystemDoubleCharacterAlgorithm : IDoubleCheckDigitAlgorithm
 {
    private readonly IAlphabet _alphabet;
    private readonly Int32 _modulus;
@@ -92,7 +92,7 @@ public class Iso7064PureSystemDoubleCharacterAlgorithm
    public String AlgorithmName { get; }
 
    /// <inheritdoc/>
-   public Boolean TryCalculateCheckDigit(
+   public Boolean TryCalculateCheckDigits(
       String value, 
       out Char first, 
       out Char second)

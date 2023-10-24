@@ -36,7 +36,7 @@ public class Iso7064Mod97_10Algorithm : IDoubleCheckDigitAlgorithm
    public String AlgorithmName => Resources.Iso7064Mod97_10AlgorithmName;
 
    /// <inheritdoc/>
-   public Boolean TryCalculateCheckDigit(
+   public Boolean TryCalculateCheckDigits(
       String value,
       out Char first,
       out Char second)

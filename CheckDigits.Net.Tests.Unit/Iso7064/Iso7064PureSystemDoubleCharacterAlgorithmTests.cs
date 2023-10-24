@@ -217,37 +217,37 @@ public class Iso7064PureSystemDoubleCharacterAlgorithmTests
 
    #endregion
 
-   #region TryCalculateCheckDigit Tests
+   #region TryCalculateCheckDigits Tests
    // ==========================================================================
    // ==========================================================================
 
    [Fact]
-   public void Iso7064PureSystemDoubleCharacterAlgorithm_TryCalculateCheckDigit_ShouldReturnFalse_WhenInputIsNull()
+   public void Iso7064PureSystemDoubleCharacterAlgorithm_TryCalculateCheckDigits_ShouldReturnFalse_WhenInputIsNull()
    {
       // Arrange.
       var sut = _alphanumericAlgorithm;
       String value = null!;
 
       // Act/assert.
-      sut.TryCalculateCheckDigit(value, out var first, out var second).Should().BeFalse();
+      sut.TryCalculateCheckDigits(value, out var first, out var second).Should().BeFalse();
       first.Should().Be('\0');
       second.Should().Be('\0');
    }
 
    [Fact]
-   public void Iso7064PureSystemDoubleCharacterAlgorithm_TryCalculateCheckDigit_ShouldReturnFalse_WhenInputIsEmpty()
+   public void Iso7064PureSystemDoubleCharacterAlgorithm_TryCalculateCheckDigits_ShouldReturnFalse_WhenInputIsEmpty()
    {
       // Arrange.
       var sut = _alphanumericAlgorithm;
       var value = String.Empty;
 
       // Act/assert.
-      sut.TryCalculateCheckDigit(value, out var first, out var second).Should().BeFalse();
+      sut.TryCalculateCheckDigits(value, out var first, out var second).Should().BeFalse();
       first.Should().Be('\0');
       second.Should().Be('\0');
    }
 
-   public static TheoryData<Iso7064PureSystemDoubleCharacterAlgorithm, String, Char, Char> TryCalculateCheckDigitSuccessData => new()
+   public static TheoryData<Iso7064PureSystemDoubleCharacterAlgorithm, String, Char, Char> TryCalculateCheckDigitsSuccessData => new()
    {
       { _numericAlgorithm, "123456", '7', '6' },
       { _numericAlgorithm, "10113393912554329261011442299914333", '3', '8' },
@@ -257,15 +257,15 @@ public class Iso7064PureSystemDoubleCharacterAlgorithmTests
    };
 
    [Theory]
-   [MemberData(nameof(TryCalculateCheckDigitSuccessData))]
-   public void Iso7064PureSystemDoubleCharacterAlgorithm_TryCalculateCheckDigit_ShouldCalculateExpectedCheckDigit(
+   [MemberData(nameof(TryCalculateCheckDigitsSuccessData))]
+   public void Iso7064PureSystemDoubleCharacterAlgorithm_TryCalculateCheckDigits_ShouldCalculateExpectedCheckDigit(
       Iso7064PureSystemDoubleCharacterAlgorithm sut,
       String value,
       Char expectedFirst,
       Char expectedSecond)
    {
       // Act/assert.
-      sut.TryCalculateCheckDigit(value, out var first, out var second).Should().BeTrue();
+      sut.TryCalculateCheckDigits(value, out var first, out var second).Should().BeTrue();
       first.Should().Be(expectedFirst);
       second.Should().Be(expectedSecond);
    }
@@ -274,13 +274,13 @@ public class Iso7064PureSystemDoubleCharacterAlgorithmTests
    [InlineData("123!56")]
    [InlineData("123^56")]
    [InlineData("123=56")]
-   public void Iso7064PureSystemDoubleCharacterAlgorithm_TryCalculateCheckDigit_ShouldReturnFalse_WhenInputContainsInvalidCharacter(String value)
+   public void Iso7064PureSystemDoubleCharacterAlgorithm_TryCalculateCheckDigits_ShouldReturnFalse_WhenInputContainsInvalidCharacter(String value)
    {
       // Arrange.
       var sut = _alphanumericAlgorithm;
 
       // Act/assert.
-      sut.TryCalculateCheckDigit(value, out var first, out var second).Should().BeFalse();
+      sut.TryCalculateCheckDigits(value, out var first, out var second).Should().BeFalse();
       first.Should().Be('\0');
       second.Should().Be('\0');
    }
