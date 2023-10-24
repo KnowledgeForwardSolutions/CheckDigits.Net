@@ -56,8 +56,4 @@ Initial limited release. Included algorithms:
     </EmbeddedResource>
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="GeneralAlgorithms\" />
-  </ItemGroup>
-
 </Project>

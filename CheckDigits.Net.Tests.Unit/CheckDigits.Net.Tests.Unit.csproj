@@ -24,8 +24,4 @@
     <ProjectReference Include="..\CheckDigits.Net\CheckDigits.Net.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="GeneralAlgorithms\" />
-  </ItemGroup>
-
 </Project>
