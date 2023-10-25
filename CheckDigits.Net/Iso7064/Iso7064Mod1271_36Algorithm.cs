@@ -13,7 +13,7 @@
 ///   (0-9, A-Z).
 ///   </para>
 ///   <para>
-///   Assumes that the check characters (if present) is the two right-most 
+///   Assumes that the check characters (if present) are the two right-most 
 ///   characters in the input value.
 ///   </para>
 ///   <para>

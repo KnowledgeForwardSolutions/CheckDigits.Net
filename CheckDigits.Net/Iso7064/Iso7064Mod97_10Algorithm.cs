@@ -12,7 +12,7 @@
 ///   Check characters calculated by the algorithm are decimal digits (0-9).
 ///   </para>
 ///   <para>
-///   Assumes that the check characters (if present) is the two right-most 
+///   Assumes that the check characters (if present) are the two right-most 
 ///   characters in the input value.
 ///   </para>
 ///   <para>

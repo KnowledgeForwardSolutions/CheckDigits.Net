@@ -1,6 +1,7 @@
 ﻿global using FluentAssertions;
 
 global using Xunit;
+global using Xunit.Abstractions;
 
 global using CheckDigits.Net.GeneralAlgorithms;
 global using CheckDigits.Net.Iso7064;
