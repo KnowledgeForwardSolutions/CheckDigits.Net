@@ -23,7 +23,7 @@
 ///   transcription errors in the same value).
 ///   </para>
 /// </remarks>
-public class Iso7064Mod37_36Algorithm : ISingleCheckDigitAlgorithm
+public sealed class Iso7064Mod37_36Algorithm : ISingleCheckDigitAlgorithm
 {
    private readonly Int32 _modulus = 36;
    private readonly Int32 _modulusPlus1 = 37;

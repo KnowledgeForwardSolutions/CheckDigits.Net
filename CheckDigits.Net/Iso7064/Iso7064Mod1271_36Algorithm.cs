@@ -13,7 +13,7 @@
 ///   (0-9, A-Z).
 ///   </para>
 ///   <para>
-///   Assumes that the check characters (if present) is the two right-most 
+///   Assumes that the check characters (if present) are the two right-most 
 ///   characters in the input value.
 ///   </para>
 ///   <para>
@@ -24,7 +24,7 @@
 ///   transcription errors in the same value).
 ///   </para>
 /// </remarks>
-public class Iso7064Mod1271_36Algorithm : IDoubleCheckDigitAlgorithm
+public sealed class Iso7064Mod1271_36Algorithm : IDoubleCheckDigitAlgorithm
 {
    private const Int32 _modulus = 1271;
    private const Int32 _radix = 36;

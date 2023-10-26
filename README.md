@@ -6,6 +6,9 @@ be optimized, be resilient to malformed input and that memory allocations be
 minimized or eliminated completely. Benchmarks for each algorithm are provided to
 demonstrate performance over a range of values and the memory allocation (if any).
 
+Benchmarks have shown that the optimized versions of the algorithms in CheckDigits.Net 
+are up to 10X-50X faster than popular Nuget packages.
+
 ## Table of Contents
 
 - **[Check Digit Overview](#check-digit-overview)**
@@ -37,6 +40,7 @@ demonstrate performance over a range of values and the memory allocation (if any
 - **[Benchmarks](#benchmarks)**
 - **[Release History/Release Notes](#release-historyrelease-notes)**
     - [v1.0.0-alpha](#v100alpha)
+    - [v1.0.0](#v100)
 
 ## Check Digit Overview
 
@@ -744,259 +748,315 @@ Wikipedia: https://en.wikipedia.org/wiki/Vehicle_identification_number#Check-dig
 
 ## Benchmarks
 
-* [ABA RTN Algorithm](#aba-rtn-algorithm-benchmarks)
-* [Damm Algorithm](#damm-algorithm-benchmarks)
-* [ISIN Algorithm](#isin-algorithm-benchmarks)
-* [ISO/IEC 7064 MOD 11,10 Algorithm](#isoiec-7064-mod-1110-algorithm-benchmarks)
-* [ISO/IEC 7064 MOD 11-2 Algorithm](#isoiec-7064-mod-11-2-algorithm-benchmarks)
-* [ISO/IEC 7064 MOD 1271-36 Algorithm](#isoiec-7064-mod-1271-36-algorithm-benchmarks)
-* [ISO/IEC 7064 MOD 27,26 Algorithm](#isoiec-7064-mod-2726-algorithm-benchmarks)
-* [ISO/IEC 7064 MOD 37-2 Algorithm](#isoiec-7064-mod-37-2-algorithm-benchmarks)
-* [ISO/IEC 7064 MOD 37-36 Algorithm](#isoiec-7064-mod-3736-algorithm-benchmarks)
-* [ISO/IEC 7064 MOD 661-26 Algorithm](#isoiec-7064-mod-661-26-algorithm-benchmarks)
-* [ISO/IEC 7064 MOD 97-10 Algorithm](#isoiec-7064-mod-97-10-algorithm-benchmarks)
-* [Luhn Algorithm](#luhn-algorithm-benchmarks)
-* [Modulus10_1 Algorithm](#modulus10_1-algorithm-benchmarks)
-* [Modulus10_2 Algorithm](#modulus10_2-algorithm-benchmarks)
-* [Modulus10_13 Algorithm](#modulus10_13-algorithm-benchmarks)
-* [Modulus11 Algorithm](#modulus11-algorithm-benchmarks)
-* [NHS Algorithm](#nhs-algorithm-benchmarks)
-* [NPI Algorithm](#npi-algorithm-benchmarks)
-* [Verhoeff Algorithm](#verhoeff-algorithm-benchmarks)
-* [VIN Algorithm](#vin-algorithm-benchmarks)
+The methodology for the general algorithms is to generate values for the benchmarks
+by taking substrings of lengths 3, 6, 9, etc. from the same randomly generated 
+source string. For the TryCalculateCheckDigit or TryCalculateCheckDigits methods 
+the substring is used as is. For the Validate method benchmarks the substring is 
+appended with the check character or characters that make the test value valid 
+for the algorithm being benchmarked.
 
-### ABA RTN Algorithm Benchmarks
+For value specific algorithms, three separate values that are valid for the 
+algorithm being benchmarked are used.
 
-| Method                 | Value     | Mean     | Error     | StdDev    | Allocated |
-|----------------------- |---------- |---------:|----------:|----------:|----------:|
-| Validate               | 111000025 | 9.766 ns | 0.1837 ns | 0.1719 ns |         - |
-| Validate               | 122235821 | 7.654 ns | 0.0508 ns | 0.0424 ns |         - |
+### TryCalculateCheckDigit/TryCalculateCheckDigits Methods
 
-### Damm Algorithm Benchmarks
+#### General Numeric Algorithms
 
-| Method                 | Value            | Mean      | Error     | StdDev    | Allocated |
-|----------------------- |----------------- |----------:|----------:|----------:|----------:|
-| TryCalculateCheckDigit | 123              |  6.777 ns | 0.1300 ns | 0.1391 ns |         - |
-| TryCalculateCheckDigit | 1234567          | 10.331 ns | 0.0842 ns | 0.0747 ns |         - |
-| TryCalculateCheckDigit | 12345678901      | 17.846 ns | 0.1478 ns | 0.1383 ns |         - |
-| TryCalculateCheckDigit | 123456789012345  | 24.807 ns | 0.1143 ns | 0.1013 ns |         - |
-| Validate               | 1234             |  7.076 ns | 0.0772 ns | 0.0722 ns |         - |
-| Validate               | 12345671         | 14.179 ns | 0.1678 ns | 0.1569 ns |         - |
-| Validate               | 123456789018     | 20.616 ns | 0.1890 ns | 0.1676 ns |         - |
-| Validate               | 1234567890123450 | 27.317 ns | 0.3768 ns | 0.3340 ns |         - |
+Note that the Modulus10_1, Modulus10_2 and Modulus11 algorithms have a maximum 
+length of 10 (including the check digit) for values being validated so their
+benchmarks do not cover lengths greater than 10.
 
-### ISIN Algorithm Benchmarks
+| Algorithm Name    | Value                 | Mean      | Error     | StdDev    | Allocated |
+|------------------ |---------------------- |----------:|----------:|----------:|----------:|
+| Damm              | 140                   |  4.949 ns | 0.1024 ns | 0.0908 ns |         - |
+| Damm              | 140662                |  8.825 ns | 0.0712 ns | 0.0666 ns |         - |
+| Damm              | 140662538             | 14.690 ns | 0.2001 ns | 0.1774 ns |         - |
+| Damm              | 140662538042          | 19.815 ns | 0.1659 ns | 0.1471 ns |         - |
+| Damm              | 140662538042551       | 24.766 ns | 0.1932 ns | 0.1713 ns |         - |
+| Damm              | 140662538042551028    | 29.666 ns | 0.1946 ns | 0.1725 ns |         - |
+| Damm              | 140662538042551028265 | 35.442 ns | 0.5445 ns | 0.5093 ns |         - |
+|
+| ISO/IEC 706 11,10 | 140                   |  7.461 ns | 0.0557 ns | 0.0465 ns |         - |
+| ISO/IEC 706 11,10 | 140662                | 10.676 ns | 0.0782 ns | 0.0731 ns |         - |
+| ISO/IEC 706 11,10 | 140662538             | 14.477 ns | 0.1290 ns | 0.1144 ns |         - |
+| ISO/IEC 706 11,10 | 140662538042          | 18.263 ns | 0.2106 ns | 0.1970 ns |         - |
+| ISO/IEC 706 11,10 | 140662538042551       | 21.087 ns | 0.1063 ns | 0.0942 ns |         - |
+| ISO/IEC 706 11,10 | 140662538042551028    | 23.131 ns | 0.2303 ns | 0.2042 ns |         - |
+| ISO/IEC 706 11,10 | 140662538042551028265 | 24.776 ns | 0.1663 ns | 0.1474 ns |         - |
+|
+| ISO/IEC 706 11-2  | 140                   |  6.268 ns | 0.1064 ns | 0.0995 ns |         - |
+| ISO/IEC 706 11-2  | 140662                | 10.061 ns | 0.1256 ns | 0.1175 ns |         - |
+| ISO/IEC 706 11-2  | 140662538             | 13.671 ns | 0.2918 ns | 0.2730 ns |         - |
+| ISO/IEC 706 11-2  | 140662538042          | 17.033 ns | 0.1795 ns | 0.1679 ns |         - |
+| ISO/IEC 706 11-2  | 140662538042551       | 20.707 ns | 0.2469 ns | 0.2189 ns |         - |
+| ISO/IEC 706 11-2  | 140662538042551028    | 24.420 ns | 0.1823 ns | 0.1616 ns |         - |
+| ISO/IEC 706 11-2  | 140662538042551028265 | 27.453 ns | 0.1923 ns | 0.1799 ns |         - |
+|
+| ISO/IEC 706 97-10 | 140                   |  6.853 ns | 0.1224 ns | 0.1085 ns |         - |
+| ISO/IEC 706 97-10 | 140662                | 10.487 ns | 0.1345 ns | 0.1258 ns |         - |
+| ISO/IEC 706 97-10 | 140662538             | 15.189 ns | 0.1493 ns | 0.1247 ns |         - |
+| ISO/IEC 706 97-10 | 140662538042          | 18.234 ns | 0.1331 ns | 0.1180 ns |         - |
+| ISO/IEC 706 97-10 | 140662538042551       | 21.893 ns | 0.3501 ns | 0.3275 ns |         - |
+| ISO/IEC 706 97-10 | 140662538042551028    | 25.735 ns | 0.2219 ns | 0.2076 ns |         - |
+| ISO/IEC 706 97-10 | 140662538042551028265 | 28.758 ns | 0.1250 ns | 0.0976 ns |         - |
+|
+| Luhn              | 140                   |  7.013 ns | 0.1099 ns | 0.1028 ns |         - |
+| Luhn              | 140662                | 10.537 ns | 0.1623 ns | 0.1518 ns |         - |
+| Luhn              | 140662538             | 13.909 ns | 0.1060 ns | 0.0991 ns |         - |
+| Luhn              | 140662538042          | 17.530 ns | 0.1428 ns | 0.1266 ns |         - |
+| Luhn              | 140662538042551       | 21.001 ns | 0.2169 ns | 0.2029 ns |         - |
+| Luhn              | 140662538042551028    | 24.310 ns | 0.2837 ns | 0.2654 ns |         - |
+| Luhn              | 140662538042551028265 | 27.940 ns | 0.2464 ns | 0.2184 ns |         - |
+|
+| Modulus10_13      | 140                   |  6.798 ns | 0.1453 ns | 0.1359 ns |         - |
+| Modulus10_13      | 140662                | 10.110 ns | 0.2074 ns | 0.1940 ns |         - |
+| Modulus10_13      | 140662538             | 12.569 ns | 0.1022 ns | 0.0853 ns |         - |
+| Modulus10_13      | 140662538042          | 16.103 ns | 0.1472 ns | 0.1229 ns |         - |
+| Modulus10_13      | 140662538042551       | 18.845 ns | 0.2321 ns | 0.2171 ns |         - |
+| Modulus10_13      | 140662538042551028    | 22.300 ns | 0.1369 ns | 0.1214 ns |         - |
+| Modulus10_13      | 140662538042551028265 | 25.200 ns | 0.2025 ns | 0.1795 ns |         - |
+|
+| Modulus10_1       | 140                   |  4.139 ns | 0.0645 ns | 0.0603 ns |         - |
+| Modulus10_1       | 140662                |  5.800 ns | 0.0984 ns | 0.0920 ns |         - |
+| Modulus10_1       | 140662538             |  7.435 ns | 0.0742 ns | 0.0620 ns |         - |
+|
+| Modulus10_2       | 140                   |  3.952 ns | 0.0486 ns | 0.0431 ns |         - |
+| Modulus10_2       | 140662                |  5.621 ns | 0.1259 ns | 0.1178 ns |         - |
+| Modulus10_2       | 140662538             |  7.305 ns | 0.0875 ns | 0.0776 ns |         - |
+|
+| Modulus11         | 140                   |  4.415 ns | 0.0479 ns | 0.0400 ns |         - |
+| Modulus11         | 140662                |  6.528 ns | 0.1075 ns | 0.1005 ns |         - |
+| Modulus11         | 140662538             |  7.811 ns | 0.1584 ns | 0.1945 ns |         - |
+|
+| Verhoeff          | 140                   | 10.665 ns | 0.1498 ns | 0.1402 ns |         - |
+| Verhoeff          | 140662                | 18.160 ns | 0.0953 ns | 0.0796 ns |         - |
+| Verhoeff          | 140662538             | 25.813 ns | 0.1021 ns | 0.0853 ns |         - |
+| Verhoeff          | 140662538042          | 33.391 ns | 0.3761 ns | 0.2936 ns |         - |
+| Verhoeff          | 140662538042551       | 40.823 ns | 0.2580 ns | 0.2413 ns |         - |
+| Verhoeff          | 140662538042551028    | 48.616 ns | 0.4191 ns | 0.3921 ns |         - |
+| Verhoeff          | 140662538042551028265 | 56.447 ns | 0.5107 ns | 0.4777 ns |         - |
 
-| Method                 | Value        | Mean     | Error    | StdDev   | Allocated |
-|----------------------- |------------- |---------:|---------:|---------:|----------:|
-| TryCalculateCheckDigit | AU0000XVGZA  | 28.73 ns | 0.192 ns | 0.170 ns |         - |
-| TryCalculateCheckDigit | US037833100  | 22.47 ns | 0.102 ns | 0.090 ns |         - |
-| TryCalculateCheckDigit | US88160R101  | 23.49 ns | 0.113 ns | 0.100 ns |         - |
-| Validate               | AU0000XVGZA3 | 25.01 ns | 0.141 ns | 0.125 ns |         - |
-| Validate               | US0378331005 | 21.64 ns | 0.096 ns | 0.075 ns |         - |
-| Validate               | US88160R1014 | 21.78 ns | 0.110 ns | 0.103 ns |         - |
+#### General Alphabetic Algorithms
 
-### ISO/IEC 7064 MOD 11,10 Algorithm Benchmarks
+| Algorithm Name          | Value                 | Mean      | Error     | StdDev    | Allocated |
+|------------------------ |---------------------- |----------:|----------:|----------:|----------:|
+| ISO/IEC 7064 MOD 27,26  | EGR                   |  7.323 ns | 0.0744 ns | 0.0660 ns |         - |
+| ISO/IEC 7064 MOD 27,26  | EGRNML                | 10.075 ns | 0.0852 ns | 0.0711 ns |         - |
+| ISO/IEC 7064 MOD 27,26  | EGRNMLJOC             | 13.165 ns | 0.1768 ns | 0.1567 ns |         - |
+| ISO/IEC 7064 MOD 27,26  | EGRNMLJOCECU          | 16.666 ns | 0.1215 ns | 0.1137 ns |         - |
+| ISO/IEC 7064 MOD 27,26  | EGRNMLJOCECUJIK       | 20.371 ns | 0.1702 ns | 0.1508 ns |         - |
+| ISO/IEC 7064 MOD 27,26  | EGRNMLJOCECUJIKNWW    | 22.317 ns | 0.1799 ns | 0.1682 ns |         - |
+| ISO/IEC 7064 MOD 27,26  | EGRNMLJOCECUJIKNWWVVO | 25.042 ns | 0.1730 ns | 0.1533 ns |         - |
+|
+| ISO/IEC 7064 MOD 661-26 | EGR                   |  6.285 ns | 0.1391 ns | 0.1161 ns |         - |
+| ISO/IEC 7064 MOD 661-26 | EGRNML                |  9.172 ns | 0.1611 ns | 0.1507 ns |         - |
+| ISO/IEC 7064 MOD 661-26 | EGRNMLJOC             | 11.706 ns | 0.0904 ns | 0.0755 ns |         - |
+| ISO/IEC 7064 MOD 661-26 | EGRNMLJOCECU          | 16.000 ns | 0.1052 ns | 0.0932 ns |         - |
+| ISO/IEC 7064 MOD 661-26 | EGRNMLJOCECUJIK       | 20.669 ns | 0.2951 ns | 0.2616 ns |         - |
+| ISO/IEC 7064 MOD 661-26 | EGRNMLJOCECUJIKNWW    | 23.121 ns | 0.2003 ns | 0.1874 ns |         - |
+| ISO/IEC 7064 MOD 661-26 | EGRNMLJOCECUJIKNWWVVO | 27.655 ns | 0.0923 ns | 0.0771 ns |         - |
 
-| Method                 | Value                | Mean      | Error     | StdDev    | Allocated |
-|----------------------- |--------------------- |----------:|----------:|----------:|----------:|
-| TryCalculateCheckDigit | 0794                 |  8.176 ns | 0.1922 ns | 0.1888 ns |         - |
-| TryCalculateCheckDigit | 12345678             | 14.380 ns | 0.1990 ns | 0.1861 ns |         - |
-| TryCalculateCheckDigit | 1632175818351910     | 24.094 ns | 0.3048 ns | 0.2851 ns |         - |
-| TryCalculateCheckDigit | 12345(...)23456 [26] | 37.537 ns | 0.3959 ns | 0.3510 ns |         - |
-| Validate               | 07945                |  8.031 ns | 0.1904 ns | 0.1781 ns |         - |
-| Validate               | 123456788            | 14.197 ns | 0.2033 ns | 0.1901 ns |         - |
-| Validate               | 16321758183519103    | 25.696 ns | 0.2557 ns | 0.2267 ns |         - |
-| Validate               | 12345(...)34565 [27] | 39.212 ns | 0.4141 ns | 0.3671 ns |         - |
+#### General Alphanumeric Algorithms
 
-### ISO/IEC 7064 MOD 11-2 Algorithm Benchmarks
+| Algorithm Name           | Value                 | Mean      | Error     | StdDev    | Allocated |
+|------------------------- |---------------------- |----------:|----------:|----------:|----------:|
+| ISO/IEC 7064 MOD 1271-36 | EGR                   |  8.867 ns | 0.1781 ns | 0.1749 ns |         - |
+| ISO/IEC 7064 MOD 1271-36 | EGRNML                | 11.770 ns | 0.1983 ns | 0.1855 ns |         - |
+| ISO/IEC 7064 MOD 1271-36 | EGRNMLJOC             | 16.671 ns | 0.2324 ns | 0.2174 ns |         - |
+| ISO/IEC 7064 MOD 1271-36 | EGRNMLJOCECU          | 19.449 ns | 0.3425 ns | 0.3204 ns |         - |
+| ISO/IEC 7064 MOD 1271-36 | EGRNMLJOCECUJIK       | 23.887 ns | 0.2204 ns | 0.2062 ns |         - |
+| ISO/IEC 7064 MOD 1271-36 | EGRNMLJOCECUJIKNWW    | 28.436 ns | 0.2568 ns | 0.2402 ns |         - |
+| ISO/IEC 7064 MOD 1271-36 | EGRNMLJOCECUJIKNWWVVO | 33.467 ns | 0.3934 ns | 0.3680 ns |         - |
+|
+| ISO/IEC 7064 MOD 37-2    | EGR                   |  8.180 ns | 0.1230 ns | 0.1151 ns |         - |
+| ISO/IEC 7064 MOD 37-2    | EGRNML                | 13.844 ns | 0.1334 ns | 0.1183 ns |         - |
+| ISO/IEC 7064 MOD 37-2    | EGRNMLJOC             | 19.486 ns | 0.1783 ns | 0.1581 ns |         - |
+| ISO/IEC 7064 MOD 37-2    | EGRNMLJOCECU          | 25.476 ns | 0.2589 ns | 0.2295 ns |         - |
+| ISO/IEC 7064 MOD 37-2    | EGRNMLJOCECUJIK       | 30.520 ns | 0.4837 ns | 0.4525 ns |         - |
+| ISO/IEC 7064 MOD 37-2    | EGRNMLJOCECUJIKNWW    | 36.504 ns | 0.5114 ns | 0.4534 ns |         - |
+| ISO/IEC 7064 MOD 37-2    | EGRNMLJOCECUJIKNWWVVO | 42.054 ns | 0.3855 ns | 0.3606 ns |         - |
+|
+| ISO/IEC 7064 MOD 37,36   | EGR                   |  9.491 ns | 0.1360 ns | 0.1272 ns |         - |
+| ISO/IEC 7064 MOD 37,36   | EGRNML                | 15.785 ns | 0.3182 ns | 0.2821 ns |         - |
+| ISO/IEC 7064 MOD 37,36   | EGRNMLJOC             | 21.443 ns | 0.1340 ns | 0.1253 ns |         - |
+| ISO/IEC 7064 MOD 37,36   | EGRNMLJOCECU          | 27.679 ns | 0.2750 ns | 0.2573 ns |         - |
+| ISO/IEC 7064 MOD 37,36   | EGRNMLJOCECUJIK       | 33.439 ns | 0.5081 ns | 0.4752 ns |         - |
+| ISO/IEC 7064 MOD 37,36   | EGRNMLJOCECUJIKNWW    | 38.998 ns | 0.4762 ns | 0.4454 ns |         - |
+| ISO/IEC 7064 MOD 37,36   | EGRNMLJOCECUJIKNWWVVO | 44.326 ns | 0.4464 ns | 0.4176 ns |         - |
 
-| Method                 | Value                | Mean      | Error     | StdDev    | Allocated |
-|----------------------- |--------------------- |----------:|----------:|----------:|----------:|
-| TryCalculateCheckDigit | 0794                 |  6.861 ns | 0.0485 ns | 0.0405 ns |         - |
-| TryCalculateCheckDigit | 000000010930246      | 20.033 ns | 0.3360 ns | 0.2979 ns |         - |
-| TryCalculateCheckDigit | 000000012095650      | 19.635 ns | 0.1051 ns | 0.0931 ns |         - |
-| TryCalculateCheckDigit | 99999(...)99999 [35] | 43.663 ns | 0.2269 ns | 0.2123 ns |         - |
-| Validate               | 07940                |  6.630 ns | 0.0601 ns | 0.0532 ns |         - |
-| Validate               | 0000000109302468     | 19.398 ns | 0.0965 ns | 0.0806 ns |         - |
-| Validate               | 000000012095650X     | 19.108 ns | 0.1898 ns | 0.1776 ns |         - |
-| Validate               | 99999(...)99994 [36] | 43.462 ns | 0.4024 ns | 0.3764 ns |         - |
+#### Value Specific Algorithms
 
-### ISO/IEC 7064 MOD 1271-36 Algorithm Benchmarks
+Note: ABA RTN, NHS and NPI algorithms do not support calculation of check digits, 
+only validation of values containing check digits.
 
-| Method                 | Value                | Mean     | Error    | StdDev   | Allocated |
-|----------------------- |--------------------- |---------:|---------:|---------:|----------:|
-| TryCalculateCheckDigit | ISO79                | 10.60 ns | 0.081 ns | 0.076 ns |         - |
-| TryCalculateCheckDigit | XS868977863229       | 22.35 ns | 0.255 ns | 0.239 ns |         - |
-| TryCalculateCheckDigit | AEIOU1592430QWERTY   | 29.94 ns | 0.284 ns | 0.237 ns |         - |
-| TryCalculateCheckDigit | ZZZZZ(...)ZZZZZ [36] | 54.21 ns | 0.855 ns | 0.799 ns |         - |
-| Validate               | ISO793W              | 13.01 ns | 0.209 ns | 0.195 ns |         - |
-| Validate               | XS868977863229AU     | 28.99 ns | 0.390 ns | 0.365 ns |         - |
-| Validate               | AEIOU1592430QWERTY0Z | 37.68 ns | 0.402 ns | 0.356 ns |         - |
-| Validate               | ZZZZZ(...)ZZZ6X [38] | 67.90 ns | 0.956 ns | 0.894 ns |         - |
+| Algorithm Name | Value             | Mean     | Error    | StdDev   | Allocated |
+|--------------- |------------------ |---------:|---------:|---------:|----------:|
+| ISIN           | AU0000XVGZA       | 29.73 ns | 0.588 ns | 0.550 ns |         - |
+| ISIN           | GB000263494       | 23.10 ns | 0.253 ns | 0.237 ns |         - |
+| ISIN           | US037833100       | 23.02 ns | 0.264 ns | 0.247 ns |         - |
+|
+| VIN            | 1G8ZG127_WZ157259 | 41.17 ns | 0.607 ns | 0.568 ns |         - |
+| VIN            | 1HGEM212_2L047875 | 40.46 ns | 0.332 ns | 0.277 ns |         - |
+| VIN            | 1M8GDM9A_KP042788 | 41.28 ns | 0.769 ns | 0.719 ns |         - |
 
-### ISO/IEC 7064 MOD 27,26 Algorithm Benchmarks
+### Validate Method
 
-| Method                 | Value                | Mean      | Error     | StdDev    | Allocated |
-|----------------------- |--------------------- |----------:|----------:|----------:|----------:|
-| TryCalculateCheckDigit | AEIOU                |  8.837 ns | 0.0849 ns | 0.0794 ns |         - |
-| TryCalculateCheckDigit | QWERTYDVORAK         | 16.683 ns | 0.2982 ns | 0.2644 ns |         - |
-| TryCalculateCheckDigit | ABCDEFGHIJKLMNOPQR   | 21.334 ns | 0.3732 ns | 0.3309 ns |         - |
-| TryCalculateCheckDigit | ZZZZZ(...)ZZZZZ [30] | 31.656 ns | 0.3157 ns | 0.2953 ns |         - |
-| Validate               | AEIOUI               |  9.361 ns | 0.1222 ns | 0.1143 ns |         - |
-| Validate               | QWERTYDVORAKY        | 19.887 ns | 0.2450 ns | 0.2172 ns |         - |
-| Validate               | ABCDEFGHIJKLMNOPQRO  | 28.070 ns | 0.2972 ns | 0.2780 ns |         - |
-| Validate               | ZZZZZ(...)ZZZZB [31] | 45.164 ns | 0.5205 ns | 0.4869 ns |         - |
+#### General Numeric Algorithms
 
-### ISO/IEC 7064 MOD 37-2 Algorithm Benchmarks
+All algorithms use a single check digit except ISO/IEC 7064 MOD 97-10 which uses
+two check digits.
 
-| Method                 | Value                | Mean      | Error     | StdDev    | Allocated |
-|----------------------- |--------------------- |----------:|----------:|----------:|----------:|
-| TryCalculateCheckDigit | ZZZZ                 |  9.191 ns | 0.1218 ns | 0.1139 ns |         - |
-| TryCalculateCheckDigit | A999522123456        | 30.899 ns | 0.2086 ns | 0.1628 ns |         - |
-| TryCalculateCheckDigit | A999914123456        | 23.629 ns | 0.3153 ns | 0.2633 ns |         - |
-| TryCalculateCheckDigit | ABCDE(...)TUVWX [24] | 46.814 ns | 0.6711 ns | 0.5949 ns |         - |
-| Validate               | ZZZZO                |  9.807 ns | 0.0611 ns | 0.0542 ns |         - |
-| Validate               | A999522123456*       | 23.951 ns | 0.3130 ns | 0.2614 ns |         - |
-| Validate               | A999914123456N       | 24.439 ns | 0.1928 ns | 0.1610 ns |         - |
-| Validate               | ABCDE(...)UVWX* [25] | 46.902 ns | 0.3809 ns | 0.3377 ns |         - |
+Note that the Modulus10_1, Modulus10_2 and Modulus11 algorithms have a maximum 
+length of 10 (including the check digit) for values being validated so their
+benchmarks do not cover lengths greater than 10.
 
-### ISO/IEC 7064 MOD 37,36 Algorithm Benchmarks
+| Algorithm Name         | Value                   | Mean      | Error     | StdDev    | Allocated |
+|----------------------- | ----------------------- |----------:|----------:|----------:|----------:|
+| Damm                   | 1402                    |  6.130 ns | 0.1318 ns | 0.1233 ns |         - |
+| Damm                   | 1406622                 | 10.398 ns | 0.1068 ns | 0.0999 ns |         - |
+| Damm                   | 1406625388              | 15.985 ns | 0.2725 ns | 0.2549 ns |         - |
+| Damm                   | 1406625380422           | 21.212 ns | 0.2268 ns | 0.2122 ns |         - |
+| Damm                   | 1406625380425518        | 26.353 ns | 0.1993 ns | 0.1864 ns |         - |
+| Damm                   | 1406625380425510280     | 31.554 ns | 0.3449 ns | 0.3226 ns |         - |
+| Damm                   | 1406625380425510282654  | 37.529 ns | 0.2162 ns | 0.1917 ns |         - |
+|
+| ISO/IEC 7064 MOD 11,10 | 1409                    |  7.648 ns | 0.1277 ns | 0.1195 ns |         - |
+| ISO/IEC 7064 MOD 11,10 | 1406623                 | 11.939 ns | 0.1648 ns | 0.1541 ns |         - |
+| ISO/IEC 7064 MOD 11,10 | 1406625381              | 16.038 ns | 0.1963 ns | 0.1836 ns |         - |
+| ISO/IEC 7064 MOD 11,10 | 1406625380426           | 20.212 ns | 0.2354 ns | 0.2202 ns |         - |
+| ISO/IEC 7064 MOD 11,10 | 1406625380425514        | 24.405 ns | 0.2345 ns | 0.2194 ns |         - |
+| ISO/IEC 7064 MOD 11,10 | 1406625380425510286     | 28.210 ns | 0.2072 ns | 0.1730 ns |         - |
+| ISO/IEC 7064 MOD 11,10 | 1406625380425510282657  | 32.046 ns | 0.1599 ns | 0.1248 ns |         - |
+|
+| ISO/IEC 7064 MOD 11-2  | 140X                    |  5.999 ns | 0.0537 ns | 0.0476 ns |         - |
+| ISO/IEC 7064 MOD 11-2  | 1406628                 |  9.602 ns | 0.1235 ns | 0.1156 ns |         - |
+| ISO/IEC 7064 MOD 11-2  | 1406625380              | 13.766 ns | 0.2956 ns | 0.3163 ns |         - |
+| ISO/IEC 7064 MOD 11-2  | 1406625380426           | 16.767 ns | 0.3326 ns | 0.2949 ns |         - |
+| ISO/IEC 7064 MOD 11-2  | 1406625380425511        | 20.032 ns | 0.2177 ns | 0.2037 ns |         - |
+| ISO/IEC 7064 MOD 11-2  | 140662538042551028X     | 24.437 ns | 0.1978 ns | 0.1850 ns |         - |
+| ISO/IEC 7064 MOD 11-2  | 1406625380425510282651  | 27.452 ns | 0.2728 ns | 0.2552 ns |         - |
+|
+| ISO/IEC 7064 MOD 97-10 | 14066                   |  7.052 ns | 0.0363 ns | 0.0303 ns |         - |
+| ISO/IEC 7064 MOD 97-10 | 14066262                | 10.809 ns | 0.1203 ns | 0.1125 ns |         - |
+| ISO/IEC 7064 MOD 97-10 | 14066253823             | 15.062 ns | 0.2334 ns | 0.2184 ns |         - |
+| ISO/IEC 7064 MOD 97-10 | 14066253804250          | 18.767 ns | 0.1066 ns | 0.0945 ns |         - |
+| ISO/IEC 7064 MOD 97-10 | 14066253804255112       | 22.839 ns | 0.2047 ns | 0.1815 ns |         - |
+| ISO/IEC 7064 MOD 97-10 | 14066253804255102853    | 25.885 ns | 0.1921 ns | 0.1703 ns |         - |
+| ISO/IEC 7064 MOD 97-10 | 14066253804255102826587 | 29.362 ns | 0.3131 ns | 0.2928 ns |         - |
+| 
+| Luhn                   | 1404                    |  7.285 ns | 0.1008 ns | 0.0943 ns |         - |
+| Luhn                   | 1406628                 | 11.476 ns | 0.2376 ns | 0.2106 ns |         - |
+| Luhn                   | 1406625382              | 14.897 ns | 0.1170 ns | 0.1037 ns |         - |
+| Luhn                   | 1406625380421           | 19.188 ns | 0.2519 ns | 0.2356 ns |         - |
+| Luhn                   | 1406625380425514        | 22.925 ns | 0.2653 ns | 0.2482 ns |         - |
+| Luhn                   | 1406625380425510285     | 27.039 ns | 0.3149 ns | 0.2945 ns |         - |
+| Luhn                   | 1406625380425510282651  | 30.417 ns | 0.3339 ns | 0.3123 ns |         - |
+|
+| Modulus10_13           | 1403                    |  7.743 ns | 0.0618 ns | 0.0548 ns |         - |
+| Modulus10_13           | 1406627                 | 11.071 ns | 0.1356 ns | 0.1269 ns |         - |
+| Modulus10_13           | 1406625385              | 14.656 ns | 0.1905 ns | 0.1689 ns |         - |
+| Modulus10_13           | 1406625380425           | 19.068 ns | 0.2373 ns | 0.2103 ns |         - |
+| Modulus10_13           | 1406625380425518        | 22.867 ns | 0.4330 ns | 0.3839 ns |         - |
+| Modulus10_13           | 1406625380425510288     | 26.763 ns | 0.3102 ns | 0.2901 ns |         - |
+| Modulus10_13           | 1406625380425510282657  | 29.478 ns | 0.2864 ns | 0.2391 ns |         - |
+|
+| Modulus10_1            | 1401                    |  4.642 ns | 0.1087 ns | 0.1017 ns |         - |
+| Modulus10_1            | 1406628                 |  6.595 ns | 0.1182 ns | 0.1048 ns |         - |
+| Modulus10_1            | 1406625384              |  8.193 ns | 0.0861 ns | 0.0763 ns |         - |
+|
+| Modulus10_2            | 1406                    |  5.222 ns | 0.0586 ns | 0.0489 ns |         - |
+| Modulus10_2            | 1406627                 |  7.420 ns | 0.1605 ns | 0.1340 ns |         - |
+| Modulus10_2            | 1406625389              |  9.537 ns | 0.1169 ns | 0.1093 ns |         - |
+|
+| Modulus11              | 1406                    |  6.240 ns | 0.0799 ns | 0.0709 ns |         - |
+| Modulus11              | 1406625                 |  8.356 ns | 0.0805 ns | 0.0753 ns |         - |
+| Modulus11              | 1406625388              |  9.767 ns | 0.1164 ns | 0.1089 ns |         - |
+|
+| Verhoeff               | 1401                    | 13.822 ns | 0.0920 ns | 0.0815 ns |         - |
+| Verhoeff               | 1406625                 | 22.863 ns | 0.1531 ns | 0.1432 ns |         - |
+| Verhoeff               | 1406625388              | 32.046 ns | 0.3094 ns | 0.2584 ns |         - |
+| Verhoeff               | 1406625380426           | 41.280 ns | 0.4174 ns | 0.3700 ns |         - |
+| Verhoeff               | 1406625380425512        | 50.391 ns | 0.5977 ns | 0.5591 ns |         - |
+| Verhoeff               | 1406625380425510285     | 58.905 ns | 0.8780 ns | 0.7332 ns |         - |
+| Verhoeff               | 1406625380425510282655  | 67.668 ns | 0.7107 ns | 0.6648 ns |         - |
 
-| Method                 | Value                | Mean     | Error    | StdDev   | Allocated |
-|----------------------- |--------------------- |---------:|---------:|---------:|----------:|
-| TryCalculateCheckDigit | AEIOU                | 13.25 ns | 0.152 ns | 0.135 ns |         - |
-| TryCalculateCheckDigit | QWERTYDVORAK         | 26.44 ns | 0.245 ns | 0.217 ns |         - |
-| TryCalculateCheckDigit | A1B2C(...)I9J0K [21] | 42.13 ns | 0.274 ns | 0.243 ns |         - |
-| TryCalculateCheckDigit | 12345(...)VWXYZ [36] | 72.37 ns | 1.139 ns | 1.065 ns |         - |
-| Validate               | AEIOUU               | 13.81 ns | 0.143 ns | 0.119 ns |         - |
-| Validate               | QWERTYDVORAK1        | 27.93 ns | 0.268 ns | 0.251 ns |         - |
-| Validate               | A1B2C(...)9J0KI [22] | 40.00 ns | 0.677 ns | 0.600 ns |         - |
-| Validate               | 12345(...)WXYZT [37] | 70.86 ns | 1.116 ns | 1.044 ns |         - |
+#### General Alphabetic Algorithms
 
-### ISO/IEC 7064 MOD 661-26 Algorithm Benchmarks
+ISO/IEC 7064 MOD 27,26 uses a single check character. ISO/IEC 7064 MOD 661-26
+uses two check characters.
 
-| Method                 | Value                | Mean      | Error     | StdDev    | Allocated |
-|----------------------- |--------------------- |----------:|----------:|----------:|----------:|
-| TryCalculateCheckDigit | ISOHJ                |  8.822 ns | 0.0911 ns | 0.0808 ns |         - |
-| TryCalculateCheckDigit | ABCDEFGHIJKLMN       | 18.197 ns | 0.1212 ns | 0.1075 ns |         - |
-| TryCalculateCheckDigit | AAAEEEIIIOOOUUUBCDEF | 24.906 ns | 0.1589 ns | 0.1241 ns |         - |
-| TryCalculateCheckDigit | ZZZZZ(...)ZZZZZ [30] | 40.580 ns | 0.3965 ns | 0.3515 ns |         - |
-| Validate               | ISOHJTC              |  9.179 ns | 0.0655 ns | 0.0612 ns |         - |
-| Validate               | ABCDEFGHIJKLMNJF     | 20.514 ns | 0.1609 ns | 0.1256 ns |         - |
-| Validate               | AAAEE(...)DEFJY [22] | 28.952 ns | 0.2955 ns | 0.2764 ns |         - |
-| Validate               | ZZZZZ(...)ZZZNS [32] | 39.750 ns | 0.5990 ns | 0.5603 ns |         - |
+| Algorithm Name          | Value                   | Mean      | Error     | StdDev    | Allocated |
+|------------------------ |------------------------ |----------:|----------:|----------:|----------:|
+| ISO/IEC 7064 MOD 27,26  | EGRS                    |  7.528 ns | 0.1329 ns | 0.1243 ns |         - |
+| ISO/IEC 7064 MOD 27,26  | EGRNMLU                 | 11.776 ns | 0.1623 ns | 0.1439 ns |         - |
+| ISO/IEC 7064 MOD 27,26  | EGRNMLJOCB              | 16.419 ns | 0.2130 ns | 0.1779 ns |         - |
+| ISO/IEC 7064 MOD 27,26  | EGRNMLJOCECUA           | 20.097 ns | 0.1830 ns | 0.1712 ns |         - |
+| ISO/IEC 7064 MOD 27,26  | EGRNMLJOCECUJIKA        | 24.309 ns | 0.2585 ns | 0.2291 ns |         - |
+| ISO/IEC 7064 MOD 27,26  | EGRNMLJOCECUJIKNWWY     | 28.131 ns | 0.2375 ns | 0.2106 ns |         - |
+| ISO/IEC 7064 MOD 27,26  | EGRNMLJOCECUJIKNWWVVOQ  | 32.378 ns | 0.2915 ns | 0.2727 ns |         - |
+|
+| ISO/IEC 7064 MOD 661-26 | EGRSE                   |  7.655 ns | 0.0919 ns | 0.0860 ns |         - |
+| ISO/IEC 7064 MOD 661-26 | EGRNMLDR                | 11.261 ns | 0.1051 ns | 0.0983 ns |         - |
+| ISO/IEC 7064 MOD 661-26 | EGRNMLJOCCK             | 15.377 ns | 0.2277 ns | 0.2018 ns |         - |
+| ISO/IEC 7064 MOD 661-26 | EGRNMLJOCECUZJ          | 18.679 ns | 0.2463 ns | 0.2304 ns |         - |
+| ISO/IEC 7064 MOD 661-26 | EGRNMLJOCECUJIKFQ       | 22.296 ns | 0.1711 ns | 0.1429 ns |         - |
+| ISO/IEC 7064 MOD 661-26 | EGRNMLJOCECUJIKNWWQN    | 26.118 ns | 0.2422 ns | 0.2147 ns |         - |
+| ISO/IEC 7064 MOD 661-26 | EGRNMLJOCECUJIKNWWVVORC | 29.567 ns | 0.6012 ns | 0.6433 ns |         - |
 
-### ISO/IEC 7064 MOD 97-10 Algorithm Benchmarks
+#### General Alphanumeric Algorithms
 
-| Method                 | Value                | Mean      | Error     | StdDev    | Allocated |
-|----------------------- |--------------------- |----------:|----------:|----------:|----------:|
-| TryCalculateCheckDigit | 123456               |  9.183 ns | 0.0686 ns | 0.0573 ns |         - |
-| TryCalculateCheckDigit | 1632175818351910     | 22.752 ns | 0.2096 ns | 0.1858 ns |         - |
-| TryCalculateCheckDigit | 10113(...)14333 [35] | 46.233 ns | 0.2936 ns | 0.2292 ns |         - |
-| Validate               | 12345676             | 10.050 ns | 0.2170 ns | 0.1920 ns |         - |
-| Validate               | 163217581835191038   | 23.080 ns | 0.3330 ns | 0.2950 ns |         - |
-| Validate               | 10113(...)33338 [37] | 47.190 ns | 0.5270 ns | 0.4930 ns |         - |
+ISO/IEC 7064 MOD 1271-36 uses two check characters. ISO/IEC 7064 MOD 37-2 and 
+ISO/IEC 7064 MOD 37,36 use a single check character.
 
-### Luhn Algorithm Benchmarks
+| Algorithm Name           | Value                   | Mean      | Error     | StdDev    | Allocated |
+|------------------------- |-------------------------|----------:|----------:|----------:|----------:|
+| ISO/IEC 7064 MOD 1271-36 | K1M0W                   |  9.633 ns | 0.1503 ns | 0.1406 ns |         - |
+| ISO/IEC 7064 MOD 1271-36 | K1MEL34W                | 16.132 ns | 0.3067 ns | 0.2869 ns |         - |
+| ISO/IEC 7064 MOD 1271-36 | K1MEL37654L             | 21.944 ns | 0.2327 ns | 0.2177 ns |         - |
+| ISO/IEC 7064 MOD 1271-36 | K1MEL37655H2KZ          | 27.011 ns | 0.2712 ns | 0.2537 ns |         - |
+| ISO/IEC 7064 MOD 1271-36 | K1MEL37655H24EDRD       | 31.998 ns | 0.4911 ns | 0.4594 ns |         - |
+| ISO/IEC 7064 MOD 1271-36 | K1MEL37655H24EDKCA8P    | 37.718 ns | 0.6574 ns | 0.6149 ns |         - |
+| ISO/IEC 7064 MOD 1271-36 | K1MEL37655H24EDKCA69I8W | 43.569 ns | 0.4744 ns | 0.4206 ns |         - |
+|
+| ISO/IEC 7064 MOD 37-2    | K1MF                    |  9.646 ns | 0.1126 ns | 0.0998 ns |         - |
+| ISO/IEC 7064 MOD 37-2    | K1MEL3M                 | 15.996 ns | 0.1632 ns | 0.1527 ns |         - |
+| ISO/IEC 7064 MOD 37-2    | K1MEL37655              | 21.621 ns | 0.2532 ns | 0.2368 ns |         - |
+| ISO/IEC 7064 MOD 37-2    | K1MEL37655H2W           | 28.700 ns | 0.3014 ns | 0.2819 ns |         - |
+| ISO/IEC 7064 MOD 37-2    | K1MEL37655H24EDO        | 34.990 ns | 0.5927 ns | 0.5544 ns |         - |
+| ISO/IEC 7064 MOD 37-2    | K1MEL37655H24EDKCAV     | 40.657 ns | 0.3095 ns | 0.2743 ns |         - |
+| ISO/IEC 7064 MOD 37-2    | K1MEL37655H24EDKCA69IA  | 46.734 ns | 0.2999 ns | 0.2805 ns |         - |
+|
+| ISO/IEC 7064 MOD 37,36   | K1ME                    |  9.896 ns | 0.1768 ns | 0.1654 ns |         - |
+| ISO/IEC 7064 MOD 37,36   | K1MEL3D                 | 15.242 ns | 0.2675 ns | 0.2502 ns |         - |
+| ISO/IEC 7064 MOD 37,36   | K1MEL3765E              | 19.472 ns | 0.2607 ns | 0.2311 ns |         - |
+| ISO/IEC 7064 MOD 37,36   | K1MEL37655H2Z           | 24.243 ns | 0.3200 ns | 0.2837 ns |         - |
+| ISO/IEC 7064 MOD 37,36   | K1MEL37655H24EDI        | 29.204 ns | 0.1305 ns | 0.1157 ns |         - |
+| ISO/IEC 7064 MOD 37,36   | K1MEL37655H24EDKCAH     | 34.959 ns | 0.2997 ns | 0.2503 ns |         - |
+| ISO/IEC 7064 MOD 37,36   | K1MEL37655H24EDKCA69IG  | 39.720 ns | 0.3956 ns | 0.3507 ns |         - |
 
-| Method                 | Value            | Mean      | Error     | StdDev    | Allocated |
-|----------------------- |----------------- |----------:|----------:|----------:|----------:|
-| TryCalculateCheckDigit | 123              |  6.515 ns | 0.0929 ns | 0.0823 ns |         - |
-| TryCalculateCheckDigit | 1234567          | 11.231 ns | 0.0436 ns | 0.0386 ns |         - |
-| TryCalculateCheckDigit | 12345678901      | 15.473 ns | 0.1082 ns | 0.0959 ns |         - |
-| TryCalculateCheckDigit | 123456789012345  | 20.098 ns | 0.1274 ns | 0.1192 ns |         - |
-| Validate               | 1230             |  6.013 ns | 0.0836 ns | 0.0741 ns |         - |
-| Validate               | 12345674         | 11.205 ns | 0.1065 ns | 0.0944 ns |         - |
-| Validate               | 123456789015     | 16.183 ns | 0.0963 ns | 0.0854 ns |         - |
-| Validate               | 1234567890123452 | 21.322 ns | 0.1223 ns | 0.1144 ns |         - |
+#### Value Specific Algorithms
 
-### Modulus10_1 Algorithm Benchmarks
-
-| Method                 | Value    | Mean     | Error     | StdDev    | Allocated |
-|----------------------- |--------- |---------:|----------:|----------:|----------:|
-| TryCalculateCheckDigit | 5808     | 3.690 ns | 0.0185 ns | 0.0173 ns |         - |
-| TryCalculateCheckDigit | 773218   | 5.000 ns | 0.0224 ns | 0.0187 ns |         - |
-| TryCalculateCheckDigit | 2872855  | 6.844 ns | 0.0618 ns | 0.0548 ns |         - |
-| Validate               | 58082    | 5.023 ns | 0.0352 ns | 0.0312 ns |         - |
-| Validate               | 7732185  | 6.437 ns | 0.0241 ns | 0.0188 ns |         - |
-| Validate               | 28728554 | 8.371 ns | 0.0582 ns | 0.0454 ns |         - |
-
-### Modulus10_2 Algorithm Benchmarks
-
-| Method                 | Value   | Mean     | Error     | StdDev    | Allocated |
-|----------------------- |-------- |---------:|----------:|----------:|----------:|
-| TryCalculateCheckDigit | 101056  | 6.495 ns | 0.0518 ns | 0.0485 ns |         - |
-| TryCalculateCheckDigit | 907472  | 4.998 ns | 0.0625 ns | 0.0585 ns |         - |
-| TryCalculateCheckDigit | 970779  | 4.983 ns | 0.0221 ns | 0.0196 ns |         - |
-| Validate               | 1010569 | 7.811 ns | 0.0259 ns | 0.0217 ns |         - |
-| Validate               | 9074729 | 6.455 ns | 0.0572 ns | 0.0535 ns |         - |
-| Validate               | 9707792 | 6.434 ns | 0.0270 ns | 0.0211 ns |         - |
-
-### Modulus10_13 Algorithm Benchmarks
-
-| Method                 | Value              | Mean      | Error     | StdDev    | Allocated |
-|----------------------- |------------------- |----------:|----------:|----------:|----------:|
-| TryCalculateCheckDigit | 42526              |  7.930 ns | 0.0835 ns | 0.0781 ns |         - |
-| TryCalculateCheckDigit | 7351353            |  9.555 ns | 0.0784 ns | 0.0695 ns |         - |
-| TryCalculateCheckDigit | 03600029145        | 13.919 ns | 0.0969 ns | 0.0859 ns |         - |
-| TryCalculateCheckDigit | 400638133393       | 15.269 ns | 0.1063 ns | 0.0942 ns |         - |
-| TryCalculateCheckDigit | 01234567800004567  | 20.179 ns | 0.1361 ns | 0.1137 ns |         - |
-| Validate               | 425261             |  9.988 ns | 0.0857 ns | 0.0760 ns |         - |
-| Validate               | 73513537           | 11.595 ns | 0.1365 ns | 0.1140 ns |         - |
-| Validate               | 036000291452       | 17.259 ns | 0.1901 ns | 0.1778 ns |         - |
-| Validate               | 4006381333931      | 18.816 ns | 0.1374 ns | 0.1285 ns |         - |
-| Validate               | 012345678000045678 | 24.910 ns | 0.1319 ns | 0.1101 ns |         - |
-
-### Modulus11 Algorithm Benchmarks
-
-| Method                 | Value      | Mean      | Error     | StdDev    | Allocated |
-|----------------------- |----------- |----------:|----------:|----------:|----------:|
-| TryCalculateCheckDigit | 123        |  4.294 ns | 0.0272 ns | 0.0242 ns |         - |
-| TryCalculateCheckDigit | 0317847    |  8.360 ns | 0.1112 ns | 0.1040 ns |         - |
-| TryCalculateCheckDigit | 050027293  |  7.497 ns | 0.1352 ns | 0.1265 ns |         - |
-| Validate               | 1235       |  5.634 ns | 0.0657 ns | 0.0549 ns |         - |
-| Validate               | 03178471   |  9.295 ns | 0.1752 ns | 0.1874 ns |         - |
-| Validate               | 050027293X | 10.052 ns | 0.1027 ns | 0.0911 ns |         - |
-
-### NHS Algorithm Benchmarks
-
-| Method                 | Value      | Mean     | Error    | StdDev   | Allocated |
-|----------------------- |----------- |---------:|---------:|---------:|----------:|
-| Validate               | 3967487881 | 12.38 ns | 0.076 ns | 0.059 ns |         - |
-| Validate               | 8514468243 | 10.86 ns | 0.063 ns | 0.059 ns |         - |
-| Validate               | 9434765919 | 10.90 ns | 0.121 ns | 0.113 ns |         - |
-
-### NPI Algorithm Benchmarks
-
-| Method                 | Value      | Mean     | Error    | StdDev   | Allocated |
-|----------------------- |----------- |---------:|---------:|---------:|----------:|
-| Validate               | 1234567893 | 15.59 ns | 0.296 ns | 0.277 ns |         - |
-| Validate               | 1245319599 | 14.51 ns | 0.256 ns | 0.239 ns |         - |
-
-### Verhoeff Algorithm Benchmarks
-
-| Method                 | Value            | Mean     | Error    | StdDev   | Allocated |
-|----------------------- |----------------- |---------:|---------:|---------:|----------:|
-| TryCalculateCheckDigit | 123              | 11.19 ns | 0.140 ns | 0.131 ns |         - |
-| TryCalculateCheckDigit | 1234567          | 19.94 ns | 0.196 ns | 0.174 ns |         - |
-| TryCalculateCheckDigit | 12345678901      | 30.21 ns | 0.313 ns | 0.293 ns |         - |
-| TryCalculateCheckDigit | 123456789012345  | 40.84 ns | 0.575 ns | 0.538 ns |         - |
-| Validate               | 1233             | 12.70 ns | 0.169 ns | 0.150 ns |         - |
-| Validate               | 12345679         | 25.02 ns | 0.163 ns | 0.136 ns |         - |
-| Validate               | 123456789010     | 36.81 ns | 0.304 ns | 0.270 ns |         - |
-| Validate               | 1234567890123455 | 48.69 ns | 0.255 ns | 0.199 ns |         - |
-
-### VIN Algorithm Benchmarks
-
-| Method                 | Value             | Mean     | Error    | StdDev   | Allocated |
-|----------------------- |------------------ |---------:|---------:|---------:|----------:|
-| TryCalculateCheckDigit | 1G8ZG127XWZ157259 | 41.90 ns | 0.793 ns | 0.848 ns |         - |
-| TryCalculateCheckDigit | 1HGEM21292L047875 | 40.66 ns | 0.560 ns | 0.496 ns |         - |
-| TryCalculateCheckDigit | 1M8GDM9AXKP042788 | 40.17 ns | 0.811 ns | 0.719 ns |         - |
-| Validate               | 1G8ZG127XWZ157259 | 42.01 ns | 0.670 ns | 0.627 ns |         - |
-| Validate               | 1HGEM21292L047875 | 40.54 ns | 0.561 ns | 0.525 ns |         - |
-| Validate               | 1M8GDM9AXKP042788 | 40.39 ns | 0.687 ns | 0.642 ns |         - |
+| Algorithm Name | Value             | Mean      | Error     | StdDev    | Allocated |
+|--------------- |------------------ |----------:|----------:|----------:|----------:|
+| ABA RTN        | 111000025         |  8.862 ns | 0.1623 ns | 0.1518 ns |         - |
+| ABA RTN        | 122235821         |  8.692 ns | 0.1737 ns | 0.1624 ns |         - |
+| ABA RTN        | 325081403         |  8.684 ns | 0.1237 ns | 0.1157 ns |         - |
+|
+| ISIN           | AU0000XVGZA3      | 25.624 ns | 0.2618 ns | 0.2449 ns |         - |
+| ISIN           | GB0002634946      | 21.148 ns | 0.2497 ns | 0.2335 ns |         - |
+| ISIN           | US0378331005      | 21.139 ns | 0.3062 ns | 0.2865 ns |         - |
+|
+| NHS            | 4505577104        | 11.933 ns | 0.1477 ns | 0.1309 ns |         - |
+| NHS            | 5301194917        | 11.898 ns | 0.1416 ns | 0.1324 ns |         - |
+| NHS            | 9434765919        | 11.917 ns | 0.1627 ns | 0.1522 ns |         - |
+|
+| NPI            | 1122337797        | 15.106 ns | 0.2468 ns | 0.2309 ns |         - |
+| NPI            | 1234567893        | 14.986 ns | 0.0968 ns | 0.0808 ns |         - |
+| NPI            | 1245319599        | 15.067 ns | 0.2008 ns | 0.1878 ns |         - |
+|
+| VIN            | 1G8ZG127XWZ157259 | 40.107 ns | 0.3094 ns | 0.2743 ns |         - |
+| VIN            | 1HGEM21292L047875 | 40.206 ns | 0.2919 ns | 0.2438 ns |         - |
+| VIN            | 1M8GDM9AXKP042788 | 40.266 ns | 0.5329 ns | 0.4985 ns |         - |
 
 # Release History/Release Notes
 
@@ -1015,4 +1075,16 @@ Initial limited release. Included algorithms:
 * NPI (US National Provider Identifier) Algorithm
 * Verhoeff Algorithm
 * VIN (Vehicle Identification Number) Algorithm
+
+## v1.0.0
+
+Initial release. Additional included algorithms
+* ISO/IEC 7064 MOD 11,10
+* ISO/IEC 7064 MOD 11-2
+* ISO/IEC 7064 MOD 1271-36
+* ISO/IEC 7064 MOD 27,26
+* ISO/IEC 7064 MOD 37-2
+* ISO/IEC 7064 MOD 37,36
+* ISO/IEC 7064 MOD 661-26
+* ISO/IEC 7064 MOD 97-10
 
