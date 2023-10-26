@@ -148,24 +148,24 @@ public class NumericAlgorithmBenchmarks
       yield return new Object[] { Algorithms.Verhoeff, Algorithms.Verhoeff.AlgorithmName, "1406625380425510282655" };
    }
 
-   [Benchmark]
-   [ArgumentsSource(nameof(TryCalculateCheckDigitArguments))]
-   public void TryCalculateCheckDigit(ISingleCheckDigitAlgorithm algorithm, String name, String value)
-   {
-      algorithm.TryCalculateCheckDigit(value, out var checkDigit);
-   }
-
-   [Benchmark]
-   [ArgumentsSource(nameof(TryCalculateCheckDigitsArguments))]
-   public void TryCalculateCheckDigits(IDoubleCheckDigitAlgorithm algorithm, String name, String value)
-   {
-      algorithm.TryCalculateCheckDigits(value, out var first, out var second);
-   }
+   //[Benchmark]
+   //[ArgumentsSource(nameof(TryCalculateCheckDigitArguments))]
+   //public void TryCalculateCheckDigit(ISingleCheckDigitAlgorithm algorithm, String name, String value)
+   //{
+   //   algorithm.TryCalculateCheckDigit(value, out var checkDigit);
+   //}
 
    //[Benchmark]
-   //[ArgumentsSource(nameof(ValidateArguments))]
-   //public void Validate(ICheckDigitAlgorithm algorithm, String name, String value)
+   //[ArgumentsSource(nameof(TryCalculateCheckDigitsArguments))]
+   //public void TryCalculateCheckDigits(IDoubleCheckDigitAlgorithm algorithm, String name, String value)
    //{
-   //   algorithm.Validate(value);
+   //   algorithm.TryCalculateCheckDigits(value, out var first, out var second);
    //}
+
+   [Benchmark]
+   [ArgumentsSource(nameof(ValidateArguments))]
+   public void Validate(ICheckDigitAlgorithm algorithm, String name, String value)
+   {
+      algorithm.Validate(value);
+   }
 }

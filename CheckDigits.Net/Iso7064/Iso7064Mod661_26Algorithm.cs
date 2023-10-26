@@ -24,7 +24,7 @@
 ///   transcription errors in the same value).
 ///   </para>
 /// </remarks>
-public class Iso7064Mod661_26Algorithm : IDoubleCheckDigitAlgorithm
+public sealed class Iso7064Mod661_26Algorithm : IDoubleCheckDigitAlgorithm
 {
    private const Int32 _modulus = 661;
    private const Int32 _radix = 26;

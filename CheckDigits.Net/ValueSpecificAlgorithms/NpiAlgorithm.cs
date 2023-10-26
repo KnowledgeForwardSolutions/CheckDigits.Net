@@ -26,7 +26,7 @@ namespace CheckDigits.Net.ValueSpecificAlgorithms;
 ///   twin errors (i.e. 11 <-> 44) except 22 <-> 55,  33 <-> 66 and 44 <-> 77.
 ///   </para>
 /// </remarks>
-public class NpiAlgorithm : ICheckDigitAlgorithm
+public sealed class NpiAlgorithm : ICheckDigitAlgorithm
 {
     private const int _expectedLength = 10;
     private const int _prefix = 24;

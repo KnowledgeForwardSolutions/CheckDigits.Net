@@ -24,7 +24,7 @@
 ///   transcription errors in the same value).
 ///   </para>
 /// </remarks>
-public class Iso7064Mod37_2Algorithm : ISingleCheckDigitAlgorithm
+public sealed class Iso7064Mod37_2Algorithm : ISingleCheckDigitAlgorithm
 {
    private const Int32 _modulus = 37;
    private const Int32 _radix = 2;
@@ -52,7 +52,7 @@ public class Iso7064Mod37_2Algorithm : ISingleCheckDigitAlgorithm
    public String AlgorithmName => Resources.Iso7064Mod37_2AlgorithmName;
 
    /// <inheritdoc/>
-   public virtual Boolean TryCalculateCheckDigit(String value, out Char checkDigit)
+   public Boolean TryCalculateCheckDigit(String value, out Char checkDigit)
    {
       checkDigit = CharConstants.NUL;
       if (String.IsNullOrEmpty(value))

@@ -26,7 +26,7 @@ namespace CheckDigits.Net.ValueSpecificAlgorithms;
 ///   transpositions of adjacent digits.
 ///   </para>
 /// </remarks>
-public class AbaRtnAlgorithm : ICheckDigitAlgorithm
+public sealed class AbaRtnAlgorithm : ICheckDigitAlgorithm
 {
     private const int _expectedLength = 9;
     private static readonly int[] _weights = new int[9] { 3, 7, 1, 3, 7, 1, 3, 7, 1 };

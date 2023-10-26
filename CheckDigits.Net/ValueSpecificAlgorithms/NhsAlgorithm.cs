@@ -25,7 +25,7 @@ namespace CheckDigits.Net.ValueSpecificAlgorithms;
 ///   Value length is 10 characters.
 ///   </para>
 /// </remarks>
-public class NhsAlgorithm : ICheckDigitAlgorithm
+public sealed class NhsAlgorithm : ICheckDigitAlgorithm
 {
     private const int _expectedLength = 10;
 

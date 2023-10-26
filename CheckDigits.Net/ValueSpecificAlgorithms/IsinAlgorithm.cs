@@ -24,7 +24,7 @@ namespace CheckDigits.Net.ValueSpecificAlgorithms;
 ///   (i.e. 11 <-> 44) except 22 <-> 55,  33 <-> 66 and 44 <-> 77.
 ///   </para>
 /// </remarks>
-public class IsinAlgorithm : ISingleCheckDigitAlgorithm
+public sealed class IsinAlgorithm : ISingleCheckDigitAlgorithm
 {
     private const int _calculateLength = 11;
     private const int _validateLength = 12;

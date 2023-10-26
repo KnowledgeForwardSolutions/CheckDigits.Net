@@ -19,7 +19,7 @@
 ///   position is present and is ignored when calculating the check digit.
 ///   </para>
 /// </remarks>
-public class VinAlgorithm : ISingleCheckDigitAlgorithm
+public sealed class VinAlgorithm : ISingleCheckDigitAlgorithm
 {
     private static readonly int[] _weights = new[] { 8, 7, 6, 5, 4, 3, 2, 10, 0, 9, 8, 7, 6, 5, 4, 3, 2 };
     private const int _expectedLength = 17;

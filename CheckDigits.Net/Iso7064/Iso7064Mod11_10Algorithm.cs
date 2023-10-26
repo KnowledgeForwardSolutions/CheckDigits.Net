@@ -23,7 +23,7 @@
 ///   in the same value).
 ///   </para>
 /// </remarks>
-public class Iso7064Mod11_10Algorithm : ISingleCheckDigitAlgorithm
+public sealed class Iso7064Mod11_10Algorithm : ISingleCheckDigitAlgorithm
 {
    private readonly Int32 _modulus = 10;
    private readonly Int32 _modulusPlus1 = 11;

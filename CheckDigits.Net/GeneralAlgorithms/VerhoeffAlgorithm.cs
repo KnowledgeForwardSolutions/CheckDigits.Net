@@ -22,7 +22,7 @@ namespace CheckDigits.Net.GeneralAlgorithms;
 ///   transpositions of adjacent digits
 ///   </para>
 /// </remarks>
-public class VerhoeffAlgorithm : ISingleCheckDigitAlgorithm
+public sealed class VerhoeffAlgorithm : ISingleCheckDigitAlgorithm
 {
     private static readonly VerhoeffInverseTable _inverseTable =
        VerhoeffInverseTable.Instance;

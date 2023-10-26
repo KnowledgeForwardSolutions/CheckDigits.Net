@@ -20,7 +20,7 @@
 ///   and 10 characters for validating a value that contains a check digit.
 ///   </para>
 /// </remarks>
-public class Modulus10_2Algorithm : ISingleCheckDigitAlgorithm
+public sealed class Modulus10_2Algorithm : ISingleCheckDigitAlgorithm
 {
     /// <inheritdoc/>
     public string AlgorithmDescription => Resources.Modulus10_2AlgorithmDescription;

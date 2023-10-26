@@ -22,7 +22,7 @@ namespace CheckDigits.Net.GeneralAlgorithms;
 ///   transpositions of adjacent digits
 ///   </para>
 /// </remarks>
-public class DammAlgorithm : ISingleCheckDigitAlgorithm
+public sealed class DammAlgorithm : ISingleCheckDigitAlgorithm
 {
     private static readonly DammQuasigroupTable _quasigroupTable =
        DammQuasigroupTable.Instance;

@@ -22,7 +22,7 @@
 ///   detect two digit jump transpositions (i.e. 123 -> 424).
 ///   </para>
 /// </remarks>
-public class Modulus10_13Algorithm : ISingleCheckDigitAlgorithm
+public sealed class Modulus10_13Algorithm : ISingleCheckDigitAlgorithm
 {
     /// <inheritdoc/>
     public string AlgorithmDescription => Resources.Modulus10_13AlgorithmDescription;

@@ -23,7 +23,7 @@
 ///   transcription errors in the same value).
 ///   </para>
 /// </remarks>
-public class Iso7064Mod97_10Algorithm : IDoubleCheckDigitAlgorithm
+public sealed class Iso7064Mod97_10Algorithm : IDoubleCheckDigitAlgorithm
 {
    private const Int32 _modulus = 97;
    private const Int32 _radix = 10;

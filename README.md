@@ -6,6 +6,9 @@ be optimized, be resilient to malformed input and that memory allocations be
 minimized or eliminated completely. Benchmarks for each algorithm are provided to
 demonstrate performance over a range of values and the memory allocation (if any).
 
+Benchmarks have shown that the optimized versions of the algorithms in CheckDigits.Net 
+are up to 10X-50X faster than popular Nuget packages.
+
 ## Table of Contents
 
 - **[Check Digit Overview](#check-digit-overview)**
