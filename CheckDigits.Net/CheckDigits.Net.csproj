@@ -5,7 +5,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <Title>CheckDigits.Net</Title>
-    <Version>1.0.0-alpha</Version>
+    <Version>1.0.0</Version>
     <Authors>Knowledge Forward Solutions</Authors>
     <Company>Knowledge Forward Solutions</Company>
     <Description>An extensive collection of optimized check digit algorithms suitable for a wide range of applications</Description>
@@ -14,7 +14,7 @@
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <RepositoryUrl>https://github.com/KnowledgeForwardSolutions/CheckDigits.Net</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <PackageTags>Check digit;Luhn;Verhoeff;Damm;UPC-A;EAN-13;ISBN-10;ISBN-13;NPI;HSN;VIN</PackageTags>
+    <PackageTags>Check digit;Luhn;Verhoeff;Damm;UPC-A;EAN-13;ISBN-10;ISBN-13;ISO7064;NPI;NHS Number;VIN</PackageTags>
     <PackageReleaseNotes>1.0.0-alpha
 
 Initial limited release. Included algorithms:
@@ -29,7 +29,19 @@ Initial limited release. Included algorithms:
 * NHS (UK National Health Service) Algorithm
 * NPI (US National Provider Identifier) Algorithm
 * Verhoeff Algorithm
-* VIN (Vehicle Identification Number) Algorithm</PackageReleaseNotes>
+* VIN (Vehicle Identification Number) Algorithm
+
+1.0.0
+
+Initial release. Additional included algorithms
+* ISO/IEC 7064 MOD 11,10
+* ISO/IEC 7064 MOD 11-2
+* ISO/IEC 7064 MOD 1271-36
+* ISO/IEC 7064 MOD 27,26
+* ISO/IEC 7064 MOD 37-2
+* ISO/IEC 7064 MOD 37,36
+* ISO/IEC 7064 MOD 661-26
+* ISO/IEC 7064 MOD 97-10</PackageReleaseNotes>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 

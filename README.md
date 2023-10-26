@@ -7,7 +7,7 @@ minimized or eliminated completely. Benchmarks for each algorithm are provided t
 demonstrate performance over a range of values and the memory allocation (if any).
 
 Benchmarks have shown that the optimized versions of the algorithms in CheckDigits.Net 
-are up to 10X-50X faster than popular Nuget packages.
+are up to 10X-50X faster than those in popular Nuget packages.
 
 ## Table of Contents
 
@@ -97,6 +97,8 @@ CheckDigits.Net includes three classes to support custom alphabets:
 
 Refer to [Using CheckDigits.Net](#using-checkdigits.net) for more information
 about using these classes.
+
+The ISO/IEC 7064:2003 standard is available at https://www.iso.org/standard/31531.html
 
 ## Supported Algorithms
 
