@@ -203,7 +203,7 @@ The custom Danish alphabet check algorithm covered in Annex B of the ISO/IEC 706
 standard, uses a pure system algorithm that generates two check characters and 
 has a modulus = 29 and radix = 2.
 
-** Danish Alphabet Example**
+**Danish Alphabet Example**
 
 ```
 public class DanishAlphabet : IAlphabet
