@@ -928,15 +928,19 @@ benchmarks do not cover lengths greater than 10.
 Note: ABA RTN, NHS and NPI algorithms do not support calculation of check digits, 
 only validation of values containing check digits.
 
-| Algorithm Name | Value             | Mean     | Error    | StdDev   | Allocated |
-|--------------- |------------------ |---------:|---------:|---------:|----------:|
-| ISIN           | AU0000XVGZA       | 29.73 ns | 0.588 ns | 0.550 ns |         - |
-| ISIN           | GB000263494       | 23.10 ns | 0.253 ns | 0.237 ns |         - |
-| ISIN           | US037833100       | 23.02 ns | 0.264 ns | 0.247 ns |         - |
+| Algorithm Name | Value                           | Mean     | Error    | StdDev   | Allocated |
+|--------------- |-------------------------------- |---------:|---------:|---------:|----------:|
+| IBAN           | BE00096123456769                | 35.28 ns | 0.211 ns | 0.197 ns |         - |
+| IBAN           | GB00WEST12345698765432          | 52.85 ns | 0.645 ns | 0.571 ns |         - |
+| IBAN           | SC00MCBL01031234567890123456USD | 74.39 ns | 0.522 ns | 0.463 ns |         - |
 |
-| VIN            | 1G8ZG127_WZ157259 | 41.17 ns | 0.607 ns | 0.568 ns |         - |
-| VIN            | 1HGEM212_2L047875 | 40.46 ns | 0.332 ns | 0.277 ns |         - |
-| VIN            | 1M8GDM9A_KP042788 | 41.28 ns | 0.769 ns | 0.719 ns |         - |
+| ISIN           | AU0000XVGZA                     | 29.73 ns | 0.588 ns | 0.550 ns |         - |
+| ISIN           | GB000263494                     | 23.10 ns | 0.253 ns | 0.237 ns |         - |
+| ISIN           | US037833100                     | 23.02 ns | 0.264 ns | 0.247 ns |         - |
+|                                                  
+| VIN            | 1G8ZG127_WZ157259               | 41.17 ns | 0.607 ns | 0.568 ns |         - |
+| VIN            | 1HGEM212_2L047875               | 40.46 ns | 0.332 ns | 0.277 ns |         - |
+| VIN            | 1M8GDM9A_KP042788               | 41.28 ns | 0.769 ns | 0.719 ns |         - |
 
 ### Validate Method
 
@@ -1075,27 +1079,31 @@ ISO/IEC 7064 MOD 37,36 use a single check character.
 
 #### Value Specific Algorithms
 
-| Algorithm Name | Value             | Mean      | Error     | StdDev    | Allocated |
-|--------------- |------------------ |----------:|----------:|----------:|----------:|
-| ABA RTN        | 111000025         |  8.862 ns | 0.1623 ns | 0.1518 ns |         - |
-| ABA RTN        | 122235821         |  8.692 ns | 0.1737 ns | 0.1624 ns |         - |
-| ABA RTN        | 325081403         |  8.684 ns | 0.1237 ns | 0.1157 ns |         - |
+| Algorithm Name | Value                           | Mean      | Error     | StdDev    | Allocated |
+|--------------- |-------------------------------- |----------:|----------:|----------:|----------:|
+| ABA RTN        | 111000025                       |  8.862 ns | 0.1623 ns | 0.1518 ns |         - |
+| ABA RTN        | 122235821                       |  8.692 ns | 0.1737 ns | 0.1624 ns |         - |
+| ABA RTN        | 325081403                       |  8.684 ns | 0.1237 ns | 0.1157 ns |         - |
 |
-| ISIN           | AU0000XVGZA3      | 25.624 ns | 0.2618 ns | 0.2449 ns |         - |
-| ISIN           | GB0002634946      | 21.148 ns | 0.2497 ns | 0.2335 ns |         - |
-| ISIN           | US0378331005      | 21.139 ns | 0.3062 ns | 0.2865 ns |         - |
+| IBAN           | BE71096123456769                | 22.310 ns | 0.2240 ns | 0.1980 ns |         - |
+| IBAN           | GB82WEST12345698765432          | 34.930 ns | 0.3060 ns | 0.2870 ns |         - |
+| IBAN           | SC74MCBL01031234567890123456USD | 51.930 ns | 0.8720 ns | 0.7730 ns |         - |
 |
-| NHS            | 4505577104        | 11.933 ns | 0.1477 ns | 0.1309 ns |         - |
-| NHS            | 5301194917        | 11.898 ns | 0.1416 ns | 0.1324 ns |         - |
-| NHS            | 9434765919        | 11.917 ns | 0.1627 ns | 0.1522 ns |         - |
-|
-| NPI            | 1122337797        | 15.106 ns | 0.2468 ns | 0.2309 ns |         - |
-| NPI            | 1234567893        | 14.986 ns | 0.0968 ns | 0.0808 ns |         - |
-| NPI            | 1245319599        | 15.067 ns | 0.2008 ns | 0.1878 ns |         - |
-|
-| VIN            | 1G8ZG127XWZ157259 | 40.107 ns | 0.3094 ns | 0.2743 ns |         - |
-| VIN            | 1HGEM21292L047875 | 40.206 ns | 0.2919 ns | 0.2438 ns |         - |
-| VIN            | 1M8GDM9AXKP042788 | 40.266 ns | 0.5329 ns | 0.4985 ns |         - |
+| ISIN           | AU0000XVGZA3                    | 25.624 ns | 0.2618 ns | 0.2449 ns |         - |
+| ISIN           | GB0002634946                    | 21.148 ns | 0.2497 ns | 0.2335 ns |         - |
+| ISIN           | US0378331005                    | 21.139 ns | 0.3062 ns | 0.2865 ns |         - |
+|                                                  
+| NHS            | 4505577104                      | 11.933 ns | 0.1477 ns | 0.1309 ns |         - |
+| NHS            | 5301194917                      | 11.898 ns | 0.1416 ns | 0.1324 ns |         - |
+| NHS            | 9434765919                      | 11.917 ns | 0.1627 ns | 0.1522 ns |         - |
+|                                                  
+| NPI            | 1122337797                      | 15.106 ns | 0.2468 ns | 0.2309 ns |         - |
+| NPI            | 1234567893                      | 14.986 ns | 0.0968 ns | 0.0808 ns |         - |
+| NPI            | 1245319599                      | 15.067 ns | 0.2008 ns | 0.1878 ns |         - |
+|                                                  
+| VIN            | 1G8ZG127XWZ157259               | 40.107 ns | 0.3094 ns | 0.2743 ns |         - |
+| VIN            | 1HGEM21292L047875               | 40.206 ns | 0.2919 ns | 0.2438 ns |         - |
+| VIN            | 1M8GDM9AXKP042788               | 40.266 ns | 0.5329 ns | 0.4985 ns |         - |
 
 # Release History/Release Notes
 
