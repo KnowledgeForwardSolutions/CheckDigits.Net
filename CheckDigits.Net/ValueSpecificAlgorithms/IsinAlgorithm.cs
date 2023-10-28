@@ -3,8 +3,8 @@
 namespace CheckDigits.Net.ValueSpecificAlgorithms;
 
 /// <summary>
-///   Variation of the Luhn algorithm that supports alphanumeric characters in 
-///   the input.
+///   International Securities Identification Number (ISIN) algorithm. Variation 
+///   of the Luhn algorithm that supports alphanumeric characters in the input.
 /// </summary>
 /// <remarks>
 ///   <para>

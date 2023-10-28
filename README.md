@@ -19,6 +19,7 @@ are up to 10X-50X faster than those in popular Nuget packages.
 - **[Algorithm Descriptions](#algorithm-descriptions)**
     * [ABA RTN (Routing Transit Number) Algorithm](#aba-rtn-algorithm)
     * [Damm Algorithm](#damm-algorithm)
+    * [IBAN (International Bank Account Number) Algorithm](#iban-algorithm)
     * [ISIN (International Securities Identification Number) Algorithm](#isin-algorithm)
     * [ISO/IEC 7064 MOD 11,10 Algorithm](#isoiec-7064-mod-1110-algorithm)
     * [ISO/IEC 7064 MOD 11-2 Algorithm](#isoiec-7064-mod-11-2-algorithm)
@@ -104,6 +105,7 @@ The ISO/IEC 7064:2003 standard is available at https://www.iso.org/standard/3153
 
 * [ABA RTN (Routing Transit Number) Algorithm](#aba-rtn-algorithm)
 * [Damm Algorithm](#damm-algorithm)
+* [IBAN (International Bank Account Number) Algorithm](#iban-algorithm)
 * [ISIN (International Securities Identification Number) Algorithm](#isin-algorithm)
 * [ISO/IEC 7064 MOD 11,10 Algorithm](#isoiec-7064-mod-1110-algorithm)
 * [ISO/IEC 7064 MOD 11-2 Algorithm](#isoiec-7064-mod-11-2-algorithm)
@@ -138,6 +140,7 @@ The ISO/IEC 7064:2003 standard is available at https://www.iso.org/standard/3153
 | GTIN-12				| [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
 | GTIN-13				| [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
 | GTIN-14				| [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
+| IBAN                  | [IBAN Algorithm](#iban-algorithm) |
 | IMEI				    | [Luhn Algorithm](#luhn-algorithm) |
 | IMO Number            | [Modulus10 Algorithm](#modulus10_2-algorithm) |
 | ISBN-10				| [Modulus11 Algorithm](#modulus11-algorithm) |
@@ -329,6 +332,40 @@ on page 111 of Damm's doctoral dissertation.
 #### Links
 
 Wikipedia: https://en.wikipedia.org/wiki/Damm_algorithm
+
+### IBAN Algorithm
+
+#### Description
+
+The IBAN (International Bank Account Number) algorithm uses a variation of the
+ISO/IEC 7064 MOD 97-10 algorithm where alphabetic characters (A-Z) are converted
+to integers (10-35) before calculating the check digit. Additionally, the first
+four characters (2 character country code and 2 decimal check digits) are moved
+to the end of the string before calculating the check digit.
+
+Note that this implementation only confirms that the length of the value is
+sufficient to calculate the check digits (min length = 5) and that check digit 
+characters in positions 3 & 4 are valid for the string. All other IBAN checks
+(the leading two characters indicating a valid country code, the check digit 
+positions only contain digits, maximum length, country specific check digits 
+contained in account number, etc.) are left to the application developer.
+
+#### Details
+
+* Valid characters - alphanumeric characters ('0' - '9', 'A' - 'Z')
+* Check digit size - two characters
+* Check digit value - decimal digits ('0' - '9')
+* Check digit location - character positions 3 & 4 (1-based) when validating
+* Value minimum length - 5
+* Class name - IbanAlgorithm
+
+#### Common Applications
+
+* International Securities Identification Number (ISIN)
+
+#### Links
+
+Wikipedia: https://en.wikipedia.org/wiki/International_Bank_Account_Number
 
 ### ISIN Algorithm
 
@@ -891,15 +928,19 @@ benchmarks do not cover lengths greater than 10.
 Note: ABA RTN, NHS and NPI algorithms do not support calculation of check digits, 
 only validation of values containing check digits.
 
-| Algorithm Name | Value             | Mean     | Error    | StdDev   | Allocated |
-|--------------- |------------------ |---------:|---------:|---------:|----------:|
-| ISIN           | AU0000XVGZA       | 29.73 ns | 0.588 ns | 0.550 ns |         - |
-| ISIN           | GB000263494       | 23.10 ns | 0.253 ns | 0.237 ns |         - |
-| ISIN           | US037833100       | 23.02 ns | 0.264 ns | 0.247 ns |         - |
+| Algorithm Name | Value                           | Mean     | Error    | StdDev   | Allocated |
+|--------------- |-------------------------------- |---------:|---------:|---------:|----------:|
+| IBAN           | BE00096123456769                | 35.28 ns | 0.211 ns | 0.197 ns |         - |
+| IBAN           | GB00WEST12345698765432          | 52.85 ns | 0.645 ns | 0.571 ns |         - |
+| IBAN           | SC00MCBL01031234567890123456USD | 74.39 ns | 0.522 ns | 0.463 ns |         - |
 |
-| VIN            | 1G8ZG127_WZ157259 | 41.17 ns | 0.607 ns | 0.568 ns |         - |
-| VIN            | 1HGEM212_2L047875 | 40.46 ns | 0.332 ns | 0.277 ns |         - |
-| VIN            | 1M8GDM9A_KP042788 | 41.28 ns | 0.769 ns | 0.719 ns |         - |
+| ISIN           | AU0000XVGZA                     | 29.73 ns | 0.588 ns | 0.550 ns |         - |
+| ISIN           | GB000263494                     | 23.10 ns | 0.253 ns | 0.237 ns |         - |
+| ISIN           | US037833100                     | 23.02 ns | 0.264 ns | 0.247 ns |         - |
+|                                                  
+| VIN            | 1G8ZG127_WZ157259               | 41.17 ns | 0.607 ns | 0.568 ns |         - |
+| VIN            | 1HGEM212_2L047875               | 40.46 ns | 0.332 ns | 0.277 ns |         - |
+| VIN            | 1M8GDM9A_KP042788               | 41.28 ns | 0.769 ns | 0.719 ns |         - |
 
 ### Validate Method
 
@@ -1038,27 +1079,31 @@ ISO/IEC 7064 MOD 37,36 use a single check character.
 
 #### Value Specific Algorithms
 
-| Algorithm Name | Value             | Mean      | Error     | StdDev    | Allocated |
-|--------------- |------------------ |----------:|----------:|----------:|----------:|
-| ABA RTN        | 111000025         |  8.862 ns | 0.1623 ns | 0.1518 ns |         - |
-| ABA RTN        | 122235821         |  8.692 ns | 0.1737 ns | 0.1624 ns |         - |
-| ABA RTN        | 325081403         |  8.684 ns | 0.1237 ns | 0.1157 ns |         - |
+| Algorithm Name | Value                           | Mean      | Error     | StdDev    | Allocated |
+|--------------- |-------------------------------- |----------:|----------:|----------:|----------:|
+| ABA RTN        | 111000025                       |  8.862 ns | 0.1623 ns | 0.1518 ns |         - |
+| ABA RTN        | 122235821                       |  8.692 ns | 0.1737 ns | 0.1624 ns |         - |
+| ABA RTN        | 325081403                       |  8.684 ns | 0.1237 ns | 0.1157 ns |         - |
 |
-| ISIN           | AU0000XVGZA3      | 25.624 ns | 0.2618 ns | 0.2449 ns |         - |
-| ISIN           | GB0002634946      | 21.148 ns | 0.2497 ns | 0.2335 ns |         - |
-| ISIN           | US0378331005      | 21.139 ns | 0.3062 ns | 0.2865 ns |         - |
+| IBAN           | BE71096123456769                | 22.310 ns | 0.2240 ns | 0.1980 ns |         - |
+| IBAN           | GB82WEST12345698765432          | 34.930 ns | 0.3060 ns | 0.2870 ns |         - |
+| IBAN           | SC74MCBL01031234567890123456USD | 51.930 ns | 0.8720 ns | 0.7730 ns |         - |
 |
-| NHS            | 4505577104        | 11.933 ns | 0.1477 ns | 0.1309 ns |         - |
-| NHS            | 5301194917        | 11.898 ns | 0.1416 ns | 0.1324 ns |         - |
-| NHS            | 9434765919        | 11.917 ns | 0.1627 ns | 0.1522 ns |         - |
-|
-| NPI            | 1122337797        | 15.106 ns | 0.2468 ns | 0.2309 ns |         - |
-| NPI            | 1234567893        | 14.986 ns | 0.0968 ns | 0.0808 ns |         - |
-| NPI            | 1245319599        | 15.067 ns | 0.2008 ns | 0.1878 ns |         - |
-|
-| VIN            | 1G8ZG127XWZ157259 | 40.107 ns | 0.3094 ns | 0.2743 ns |         - |
-| VIN            | 1HGEM21292L047875 | 40.206 ns | 0.2919 ns | 0.2438 ns |         - |
-| VIN            | 1M8GDM9AXKP042788 | 40.266 ns | 0.5329 ns | 0.4985 ns |         - |
+| ISIN           | AU0000XVGZA3                    | 25.624 ns | 0.2618 ns | 0.2449 ns |         - |
+| ISIN           | GB0002634946                    | 21.148 ns | 0.2497 ns | 0.2335 ns |         - |
+| ISIN           | US0378331005                    | 21.139 ns | 0.3062 ns | 0.2865 ns |         - |
+|                                                  
+| NHS            | 4505577104                      | 11.933 ns | 0.1477 ns | 0.1309 ns |         - |
+| NHS            | 5301194917                      | 11.898 ns | 0.1416 ns | 0.1324 ns |         - |
+| NHS            | 9434765919                      | 11.917 ns | 0.1627 ns | 0.1522 ns |         - |
+|                                                  
+| NPI            | 1122337797                      | 15.106 ns | 0.2468 ns | 0.2309 ns |         - |
+| NPI            | 1234567893                      | 14.986 ns | 0.0968 ns | 0.0808 ns |         - |
+| NPI            | 1245319599                      | 15.067 ns | 0.2008 ns | 0.1878 ns |         - |
+|                                                  
+| VIN            | 1G8ZG127XWZ157259               | 40.107 ns | 0.3094 ns | 0.2743 ns |         - |
+| VIN            | 1HGEM21292L047875               | 40.206 ns | 0.2919 ns | 0.2438 ns |         - |
+| VIN            | 1M8GDM9AXKP042788               | 40.266 ns | 0.5329 ns | 0.4985 ns |         - |
 
 # Release History/Release Notes
 
