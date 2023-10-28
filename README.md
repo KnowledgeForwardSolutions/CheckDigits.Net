@@ -19,6 +19,7 @@ are up to 10X-50X faster than those in popular Nuget packages.
 - **[Algorithm Descriptions](#algorithm-descriptions)**
     * [ABA RTN (Routing Transit Number) Algorithm](#aba-rtn-algorithm)
     * [Damm Algorithm](#damm-algorithm)
+    * [IBAN (International Bank Account Number) Algorithm](#iban-algorithm)
     * [ISIN (International Securities Identification Number) Algorithm](#isin-algorithm)
     * [ISO/IEC 7064 MOD 11,10 Algorithm](#isoiec-7064-mod-1110-algorithm)
     * [ISO/IEC 7064 MOD 11-2 Algorithm](#isoiec-7064-mod-11-2-algorithm)
@@ -104,6 +105,7 @@ The ISO/IEC 7064:2003 standard is available at https://www.iso.org/standard/3153
 
 * [ABA RTN (Routing Transit Number) Algorithm](#aba-rtn-algorithm)
 * [Damm Algorithm](#damm-algorithm)
+* [IBAN (International Bank Account Number) Algorithm](#iban-algorithm)
 * [ISIN (International Securities Identification Number) Algorithm](#isin-algorithm)
 * [ISO/IEC 7064 MOD 11,10 Algorithm](#isoiec-7064-mod-1110-algorithm)
 * [ISO/IEC 7064 MOD 11-2 Algorithm](#isoiec-7064-mod-11-2-algorithm)
@@ -138,6 +140,7 @@ The ISO/IEC 7064:2003 standard is available at https://www.iso.org/standard/3153
 | GTIN-12				| [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
 | GTIN-13				| [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
 | GTIN-14				| [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
+| IBAN                  | [IBAN Algorithm](#iban-algorithm) |
 | IMEI				    | [Luhn Algorithm](#luhn-algorithm) |
 | IMO Number            | [Modulus10 Algorithm](#modulus10_2-algorithm) |
 | ISBN-10				| [Modulus11 Algorithm](#modulus11-algorithm) |
@@ -329,6 +332,40 @@ on page 111 of Damm's doctoral dissertation.
 #### Links
 
 Wikipedia: https://en.wikipedia.org/wiki/Damm_algorithm
+
+### IBAN Algorithm
+
+#### Description
+
+The IBAN (International Bank Account Number) algorithm uses a variation of the
+ISO/IEC 7064 MOD 97-10 algorithm where alphabetic characters (A-Z) are converted
+to integers (10-35) before calculating the check digit. Additionally, the first
+four characters (2 character country code and 2 decimal check digits) are moved
+to the end of the string before calculating the check digit.
+
+Note that this implementation only confirms that the length of the value is
+sufficient to calculate the check digits (min length = 5) and that check digit 
+characters in positions 3 & 4 are valid for the string. All other IBAN checks
+(the leading two characters indicating a valid country code, the check digit 
+positions only contain digits, maximum length, country specific check digits 
+contained in account number, etc.) are left to the application developer.
+
+#### Details
+
+* Valid characters - alphanumeric characters ('0' - '9', 'A' - 'Z')
+* Check digit size - two characters
+* Check digit value - decimal digits ('0' - '9')
+* Check digit location - character positions 3 & 4 (1-based) when validating
+* Value minimum length - 5
+* Class name - IbanAlgorithm
+
+#### Common Applications
+
+* International Securities Identification Number (ISIN)
+
+#### Links
+
+Wikipedia: https://en.wikipedia.org/wiki/International_Bank_Account_Number
 
 ### ISIN Algorithm
 

@@ -64,41 +64,41 @@ public class IbanAlgorithmTests
    }
 
    [Theory]
-   [InlineData("AA__0", '7', '5')]      // After moving first 4 chars to end and converting alpha to num, the value is 01010 + check digits
-   [InlineData("AA__1", '4', '8')]      // " => 11010 + check digits
-   [InlineData("AA__3", '9', '1')]      // " => 21010 + check digits
-   [InlineData("AA__4", '6', '4')]
-   [InlineData("AA__5", '3', '7')]
-   [InlineData("AA__6", '1', '0')]
-   [InlineData("AA__7", '8', '0')]
-   [InlineData("AA__8", '5', '3')]
-   [InlineData("AA__9", '2', '6')]
-   [InlineData("AA__A", '9', '6')]      // " => 101010 + check digits
-   [InlineData("AA__B", '6', '9')]      // " => 111010 + check digits
-   [InlineData("AA__C", '4', '2')]      // " => 121010 + check digits
-   [InlineData("AA__D", '1', '5')]
-   [InlineData("AA__E", '8', '5')]
-   [InlineData("AA__F", '5', '8')]
-   [InlineData("AA__G", '3', '1')]
-   [InlineData("AA__H", '0', '4')]
-   [InlineData("AA__I", '7', '4')]
-   [InlineData("AA__J", '4', '7')]
-   [InlineData("AA__K", '2', '0')]
-   [InlineData("AA__L", '9', '0')]
-   [InlineData("AA__M", '6', '3')]
-   [InlineData("AA__N", '3', '6')]
-   [InlineData("AA__O", '0', '9')]
-   [InlineData("AA__P", '7', '9')]
-   [InlineData("AA__Q", '5', '2')]
-   [InlineData("AA__R", '2', '5')]
-   [InlineData("AA__S", '9', '5')]
-   [InlineData("AA__T", '6', '8')]
-   [InlineData("AA__U", '4', '1')]
-   [InlineData("AA__V", '1', '4')]
-   [InlineData("AA__W", '8', '4')]
-   [InlineData("AA__X", '5', '7')]
-   [InlineData("AA__Y", '3', '0')]
-   [InlineData("AA__Z", '0', '3')]
+   [InlineData("AA000", '7', '5')]      // After moving first 4 chars to end and converting alpha to num, the value is 01010 + check digits
+   [InlineData("AA001", '4', '8')]      // " => 11010 + check digits
+   [InlineData("AA003", '9', '1')]      // " => 21010 + check digits
+   [InlineData("AA004", '6', '4')]
+   [InlineData("AA005", '3', '7')]
+   [InlineData("AA006", '1', '0')]
+   [InlineData("AA007", '8', '0')]
+   [InlineData("AA008", '5', '3')]
+   [InlineData("AA009", '2', '6')]
+   [InlineData("AA00A", '9', '6')]      // " => 101010 + check digits
+   [InlineData("AA00B", '6', '9')]      // " => 111010 + check digits
+   [InlineData("AA00C", '4', '2')]      // " => 121010 + check digits
+   [InlineData("AA00D", '1', '5')]
+   [InlineData("AA00E", '8', '5')]
+   [InlineData("AA00F", '5', '8')]
+   [InlineData("AA00G", '3', '1')]
+   [InlineData("AA00H", '0', '4')]
+   [InlineData("AA00I", '7', '4')]
+   [InlineData("AA00J", '4', '7')]
+   [InlineData("AA00K", '2', '0')]
+   [InlineData("AA00L", '9', '0')]
+   [InlineData("AA00M", '6', '3')]
+   [InlineData("AA00N", '3', '6')]
+   [InlineData("AA00O", '0', '9')]
+   [InlineData("AA00P", '7', '9')]
+   [InlineData("AA00Q", '5', '2')]
+   [InlineData("AA00R", '2', '5')]
+   [InlineData("AA00S", '9', '5')]
+   [InlineData("AA00T", '6', '8')]
+   [InlineData("AA00U", '4', '1')]
+   [InlineData("AA00V", '1', '4')]
+   [InlineData("AA00W", '8', '4')]
+   [InlineData("AA00X", '5', '7')]
+   [InlineData("AA00Y", '3', '0')]
+   [InlineData("AA00Z", '0', '3')]
    public void IbanAlgorithm_TryCalculateCheckDigits_ShouldCorrectlyMapCharacterValues(
       String value,
       Char expectedFirst,
@@ -111,14 +111,14 @@ public class IbanAlgorithmTests
    }
 
    [Theory]
-   [InlineData("GB__WEST12345698765432", '8', '2')]                // Worked example from Wikipedia https://en.wikipedia.org/wiki/International_Bank_Account_Number
-   [InlineData("AL__202111090000000001234567", '3', '5')]          // Example from https://www.iban.com/structure (Albania)
-   [InlineData("BE__096123456769", '7', '1')]                      // " (Belgium)
-   [InlineData("DO__ACAU00000000000123456789", '2', '2')]          // " (Dominican Republic)
-   [InlineData("EG__0002000156789012345180002", '8', '0')]         // " (Egypt)
-   [InlineData("LU__0010001234567891", '1', '2')]                  // " (Luxembourg)
-   [InlineData("MU__BOMM0101123456789101000MUR", '4', '3')]        // " (Mauritius)
-   [InlineData("SC__MCBL01031234567890123456USD", '7', '4')]       // " (Seychelles)
+   [InlineData("GB00WEST12345698765432", '8', '2')]                // Worked example from Wikipedia https://en.wikipedia.org/wiki/International_Bank_Account_Number
+   [InlineData("AL00202111090000000001234567", '3', '5')]          // Example from https://www.iban.com/structure (Albania)
+   [InlineData("BE00096123456769", '7', '1')]                      // " (Belgium)
+   [InlineData("DO00ACAU00000000000123456789", '2', '2')]          // " (Dominican Republic)
+   [InlineData("EG000002000156789012345180002", '8', '0')]         // " (Egypt)
+   [InlineData("LU000010001234567891", '1', '2')]                  // " (Luxembourg)
+   [InlineData("MU00BOMM0101123456789101000MUR", '4', '3')]        // " (Mauritius)
+   [InlineData("SC00MCBL01031234567890123456USD", '7', '4')]       // " (Seychelles)
    public void IbanAlgorithmAlgorithm_TryCalculateCheckDigits_ShouldCalculateExpectedCheckDigit(
       String value,
       Char expectedFirst,
@@ -131,9 +131,9 @@ public class IbanAlgorithmTests
    }
 
    [Theory]
-   [InlineData("AA__123!56")]
-   [InlineData("AA__123^56")]
-   [InlineData("AA__123=56")]
+   [InlineData("AA00123!56")]
+   [InlineData("AA00123^56")]
+   [InlineData("AA00123=56")]
    public void IbanAlgorithm_TryCalculateCheckDigits_ShouldReturnFalse_WhenInputContainsInvalidCharacter(String value)
    {
       // Act/assert.
