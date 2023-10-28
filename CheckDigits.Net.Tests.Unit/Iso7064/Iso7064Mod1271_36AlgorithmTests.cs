@@ -41,7 +41,7 @@ public class Iso7064Mod1271_36AlgorithmTests
    public void Iso7064Mod1271_36Algorithm_TryCalculateCheckDigits_ShouldReturnFalse_WhenInputIsEmpty()
    {
       // Act/assert.
-      _sut.TryCalculateCheckDigits(null!, out var first, out var second).Should().BeFalse();
+      _sut.TryCalculateCheckDigits(String.Empty, out var first, out var second).Should().BeFalse();
       first.Should().Be('\0');
       second.Should().Be('\0');
    }

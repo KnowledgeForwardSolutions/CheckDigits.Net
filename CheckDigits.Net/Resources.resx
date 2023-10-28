@@ -138,6 +138,12 @@
   <data name="GetCheckCharacterValueOutOfRangeMessage" xml:space="preserve">
     <value>Check digit value is out of range for the character domain</value>
   </data>
+  <data name="IbanAlgorithmDescription" xml:space="preserve">
+    <value>IBAN algorithm - ISO/IEC 7064 MOD 97-10 algorithm with alphabetic characters (A-Z) mapped to integers (10-35)</value>
+  </data>
+  <data name="IbanAlgorithmName" xml:space="preserve">
+    <value>IBAN (International Bank Account Number)</value>
+  </data>
   <data name="IsinAlgorithmDescription" xml:space="preserve">
     <value>Variation of the Luhn algorithm that supports alphanumeric characters</value>
   </data>

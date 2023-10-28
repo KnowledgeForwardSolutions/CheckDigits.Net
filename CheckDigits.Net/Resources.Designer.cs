@@ -124,6 +124,24 @@ namespace CheckDigits.Net {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to IBAN algorithm - ISO/IEC 7064 MOD 97-10 algorithm with alphabetic characters (A-Z) mapped to integers (10-35).
+        /// </summary>
+        internal static string IbanAlgorithmDescription {
+            get {
+                return ResourceManager.GetString("IbanAlgorithmDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to IBAN (International Bank Account Number).
+        /// </summary>
+        internal static string IbanAlgorithmName {
+            get {
+                return ResourceManager.GetString("IbanAlgorithmName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Variation of the Luhn algorithm that supports alphanumeric characters.
         /// </summary>
         internal static string IsinAlgorithmDescription {

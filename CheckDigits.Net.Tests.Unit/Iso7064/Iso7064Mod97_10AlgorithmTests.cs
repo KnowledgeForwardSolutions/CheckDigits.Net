@@ -41,7 +41,7 @@ public class Iso7064Mod97_10AlgorithmTests
    public void Iso7064Mod97_10Algorithm_TryCalculateCheckDigits_ShouldReturnFalse_WhenInputIsEmpty()
    {
       // Act/assert.
-      _sut.TryCalculateCheckDigits(null!, out var first, out var second).Should().BeFalse();
+      _sut.TryCalculateCheckDigits(String.Empty, out var first, out var second).Should().BeFalse();
       first.Should().Be('\0');
       second.Should().Be('\0');
    }
@@ -147,7 +147,7 @@ public class Iso7064Mod97_10AlgorithmTests
    [InlineData("163217581538191038")]     // 163217581835191038 with jump transposition error 835 -> 538
    [InlineData("632175818351910381")]     // 163217581835191038 with circular shift error
    [InlineData("816321758183519103")]     // 163217581835191038 with circular shift error
-   public void Iso7064Mod661_26Algorithm_Validate_ShouldReturnFalse_WhenInputContainsDetectableError(String value)
+   public void Iso7064Mod97_10Algorithm_Validate_ShouldReturnFalse_WhenInputContainsDetectableError(String value)
       => _sut.Validate(value).Should().BeFalse();
 
    [Theory]
