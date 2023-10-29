@@ -97,6 +97,24 @@ namespace CheckDigits.Net {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Variation of ISO/IEC 7064 MOD 97-10 algorithm with alphabetic characters (A-Z) mapped to integers (10-35).
+        /// </summary>
+        internal static string AlphanumericMod97_10AlgorithmDescription {
+            get {
+                return ResourceManager.GetString("AlphanumericMod97_10AlgorithmDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to AlphanumericMod97_10.
+        /// </summary>
+        internal static string AlphanumericMod97_10AlgorithmName {
+            get {
+                return ResourceManager.GetString("AlphanumericMod97_10AlgorithmName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Damm&apos;s quasigroup algorithm.
         /// </summary>
         internal static string DammAlgorithmDescription {

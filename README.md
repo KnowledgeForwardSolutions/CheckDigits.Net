@@ -18,6 +18,7 @@ are up to 10X-50X faster than those in popular Nuget packages.
 - **[Using CheckDigits.Net](#using-checkdigits.net)**
 - **[Algorithm Descriptions](#algorithm-descriptions)**
     * [ABA RTN (Routing Transit Number) Algorithm](#aba-rtn-algorithm)
+    * [Alphanumeric MOD 97-10 Algorithm][#alphanumeric-mod-97-10-algorithm)
     * [Damm Algorithm](#damm-algorithm)
     * [IBAN (International Bank Account Number) Algorithm](#iban-algorithm)
     * [ISIN (International Securities Identification Number) Algorithm](#isin-algorithm)
@@ -104,6 +105,7 @@ The ISO/IEC 7064:2003 standard is available at https://www.iso.org/standard/3153
 ## Supported Algorithms
 
 * [ABA RTN (Routing Transit Number) Algorithm](#aba-rtn-algorithm)
+* [Alphanumeric MOD 97-10 Algorithm](#alphanumeric-mod-97-10-algorithm)
 * [Damm Algorithm](#damm-algorithm)
 * [IBAN (International Bank Account Number) Algorithm](#iban-algorithm)
 * [ISIN (International Securities Identification Number) Algorithm](#isin-algorithm)
@@ -150,10 +152,12 @@ The ISO/IEC 7064:2003 standard is available at https://www.iso.org/standard/3153
 | ISMN					| [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
 | ISNI                  | [ISO/IEC 7064 MOD 11-2 Algorithm](#isoiec-7064-mod-11-2-algorithm) |
 | ISSN   				| [Modulus11 Algorithm](#modulus11-algorithm) |
+| Legal Entity Identifier | [Alphanumeric MOD 97-10 Algorithm][#alphanumeric-mod-97-10-algorithm) |
 | UK National Health Service Number | [NHS Algorithm](#nhs-algorithm) |
 | US National Provider Identifier | [NPI Algorithm](#npi-algorithm) |
 | SSCC					| [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
 | Vehicle Identification Number | [VIN Algorithm](#vin-algorithm) |
+| Universal Loan Identifier | [Alphanumeric MOD 97-10 Algorithm][#alphanumeric-mod-97-10-algorithm) |
 | UPC-A					| [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
 | UPC-E					| [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
 
@@ -308,6 +312,34 @@ calculation of check digits.
 
 Wikipedia: https://en.wikipedia.org/wiki/ABA_routing_transit_number#Check_digit
 
+### Alphanumeric MOD 97-10 Algorithm
+
+#### Description
+
+The Alphanumeric MOD 97-10 algorithm uses a variation of the ISO/IEC 7064 MOD 97-10 
+algorithm where alphabetic characters (A-Z) are mapped to integers (10-35) before 
+calculating the check digit. The algorithm is case insensitive and lowercase 
+letters are mapped to their uppercase equivalent before conversion to integers.
+
+#### Details
+
+* Valid characters - alphanumeric characters ('0' - '9', 'A' - 'Z')
+* Check digit size - two characters
+* Check digit value - decimal digits ('0' - '9')
+* Check digit location - assumed to be the trailing (right-most) characters when validating
+* Class name - AlphanumericMod97_10Algorithm
+
+#### Common Applications
+
+* Legal Entity Identifier (LEI)
+* Universal Loan Identifier (ULI)
+
+#### Links
+
+Wikipedia: 
+https://www.govinfo.gov/content/pkg/CFR-2016-title12-vol8/xml/CFR-2016-title12-vol8-part1003-appC.xml
+https://en.wikipedia.org/wiki/Legal_Entity_Identifier
+
 ### Damm Algorithm
 
 #### Description
@@ -338,7 +370,7 @@ Wikipedia: https://en.wikipedia.org/wiki/Damm_algorithm
 #### Description
 
 The IBAN (International Bank Account Number) algorithm uses a variation of the
-ISO/IEC 7064 MOD 97-10 algorithm where alphabetic characters (A-Z) are converted
+ISO/IEC 7064 MOD 97-10 algorithm where alphabetic characters (A-Z) are mapped
 to integers (10-35) before calculating the check digit. Additionally, the first
 four characters (2 character country code and 2 decimal check digits) are moved
 to the end of the string before calculating the check digit.
@@ -531,7 +563,7 @@ perform the mapping of alphabetic characters internally.
 * Check digit size - two characters
 * Check digit value - decimal digits ('0' - '9')
 * Check digit location - assumed to be the trailing (right-most) characters when validating
-* Class name - Iso7064Mod997_10Algorithm
+* Class name - Iso7064Mod97_10Algorithm
 
 ### Luhn Algorithm
 
