@@ -4,63 +4,77 @@ namespace CheckDigits.Net.Tests.Unit;
 
 public class AlgorithmsTests
 {
-   #region AbaRtn Algorithm Property Tests
+   #region AbaRtn Property Tests
    // ==========================================================================
    // ==========================================================================
 
    [Fact]
-   public void Algorithms_AbaRtnAlgorithm_ShouldNotBeNull()
+   public void Algorithms_AbaRtn_ShouldNotBeNull()
       => Algorithms.AbaRtn.Should().NotBeNull();
 
    [Fact]
-   public void Algorithms_AbaRtnAlgorithm_ShouldBeExpectedType()
+   public void Algorithms_AbaRtn_ShouldBeExpectedType()
       => Algorithms.AbaRtn.Should().BeOfType<AbaRtnAlgorithm>();
 
    #endregion
 
-   #region Damm Algorithm Property Tests
+   #region AlphanumericMod97_10 Property Tests
    // ==========================================================================
    // ==========================================================================
 
    [Fact]
-   public void Algorithms_DammAlgorithm_ShouldNotBeNull()
+   public void Algorithms_AlphanumericMod97_10_ShouldNotBeNull()
+      => Algorithms.AlphanumericMod97_10.Should().NotBeNull();
+
+   [Fact]
+   public void Algorithms_AlphanumericMod97_10_ShouldBeExpectedType()
+      => Algorithms.AlphanumericMod97_10.Should().BeOfType<AlphanumericMod97_10Algorithm>();
+
+   #endregion
+
+   #region Damm Property Tests
+   // ==========================================================================
+   // ==========================================================================
+
+   [Fact]
+   public void Algorithms_Damm_ShouldNotBeNull()
       => Algorithms.Damm.Should().NotBeNull();
 
    [Fact]
-   public void Algorithms_DammAlgorithm_ShouldBeExpectedType()
+   public void Algorithms_Damm_ShouldBeExpectedType()
       => Algorithms.Damm.Should().BeOfType<DammAlgorithm>();
 
    #endregion
 
-   #region Iban Algorithm Property Tests
+   #region Iban Property Tests
    // ==========================================================================
    // ==========================================================================
 
    [Fact]
-   public void Algorithms_IbanAlgorithm_ShouldNotBeNull()
+   public void Algorithms_Iban_ShouldNotBeNull()
       => Algorithms.Iban.Should().NotBeNull();
 
    [Fact]
-   public void Algorithms_IbanAlgorithm_ShouldBeExpectedType()
+   public void Algorithms_Iban_ShouldBeExpectedType()
       => Algorithms.Iban.Should().BeOfType<IbanAlgorithm>();
 
    #endregion
 
-   #region Isin Algorithm Property Tests
+   #region Isin Property Tests
    // ==========================================================================
    // ==========================================================================
 
    [Fact]
-   public void Algorithms_IsinAlgorithm_ShouldNotBeNull()
+   public void Algorithms_Isin_ShouldNotBeNull()
       => Algorithms.Isin.Should().NotBeNull();
 
    [Fact]
-   public void Algorithms_IsinAlgorithm_ShouldBeExpectedType()
+   public void Algorithms_Isin_ShouldBeExpectedType()
       => Algorithms.Isin.Should().BeOfType<IsinAlgorithm>();
 
    #endregion
 
-   #region Iso7064Mod11_10 Algorithm Property Tests
+   #region Iso7064Mod11_10 Property Tests
    // ==========================================================================
    // ==========================================================================
 
@@ -74,7 +88,7 @@ public class AlgorithmsTests
 
    #endregion
 
-   #region Iso7064Mod11_2 Algorithm Property Tests
+   #region Iso7064Mod11_2 Property Tests
    // ==========================================================================
    // ==========================================================================
 
@@ -88,7 +102,7 @@ public class AlgorithmsTests
 
    #endregion
 
-   #region Iso7064Mod1271_36 Algorithm Property Tests
+   #region Iso7064Mod1271_36 Property Tests
    // ==========================================================================
    // ==========================================================================
 
@@ -102,7 +116,7 @@ public class AlgorithmsTests
 
    #endregion
 
-   #region Iso7064Mod27_26 Algorithm Property Tests
+   #region Iso7064Mod27_26 Property Tests
    // ==========================================================================
    // ==========================================================================
 
@@ -116,7 +130,7 @@ public class AlgorithmsTests
 
    #endregion
 
-   #region Iso7064Mod37_2 Algorithm Property Tests
+   #region Iso7064Mod37_2 Property Tests
    // ==========================================================================
    // ==========================================================================
 
@@ -130,7 +144,7 @@ public class AlgorithmsTests
 
    #endregion
 
-   #region Iso7064Mod37_36 Algorithm Property Tests
+   #region Iso7064Mod37_36 Property Tests
    // ==========================================================================
    // ==========================================================================
 
@@ -144,7 +158,7 @@ public class AlgorithmsTests
 
    #endregion
 
-   #region Iso7064Mod661_26 Algorithm Property Tests
+   #region Iso7064Mod661_26 Property Tests
    // ==========================================================================
    // ==========================================================================
 
@@ -158,7 +172,7 @@ public class AlgorithmsTests
 
    #endregion
 
-   #region Iso7064Mod97_10 Algorithm Property Tests
+   #region Iso7064Mod97_10 Property Tests
    // ==========================================================================
    // ==========================================================================
 
@@ -172,128 +186,128 @@ public class AlgorithmsTests
 
    #endregion
 
-   #region Luhn Algorithm Property Tests
+   #region Luhn Property Tests
    // ==========================================================================
    // ==========================================================================
 
    [Fact]
-   public void Algorithms_LuhnAlgorithm_ShouldNotBeNull()
+   public void Algorithms_Luhn_ShouldNotBeNull()
       => Algorithms.Luhn.Should().NotBeNull();
 
    [Fact]
-   public void Algorithms_LuhnAlgorithm_ShouldBeExpectedType()
+   public void Algorithms_Luhn_ShouldBeExpectedType()
       => Algorithms.Luhn.Should().BeOfType<LuhnAlgorithm>();
 
    #endregion
 
-   #region Modulus10_1 Algorithm Property Tests
+   #region Modulus10_1 Property Tests
    // ==========================================================================
    // ==========================================================================
 
    [Fact]
-   public void Algorithms_Modulus10_1Algorithm_ShouldNotBeNull()
+   public void Algorithms_Modulus10_1_ShouldNotBeNull()
       => Algorithms.Modulus10_1.Should().NotBeNull();
 
    [Fact]
-   public void Algorithms_Modulus10_1Algorithm_ShouldBeExpectedType()
+   public void Algorithms_Modulus10_1_ShouldBeExpectedType()
       => Algorithms.Modulus10_1.Should().BeOfType<Modulus10_1Algorithm>();
 
    #endregion
 
-   #region Modulus10_2 Algorithm Property Tests
+   #region Modulus10_2 Property Tests
    // ==========================================================================
    // ==========================================================================
 
    [Fact]
-   public void Algorithms_Modulus10_2Algorithm_ShouldNotBeNull()
+   public void Algorithms_Modulus10_2_ShouldNotBeNull()
       => Algorithms.Modulus10_2.Should().NotBeNull();
 
    [Fact]
-   public void Algorithms_Modulus10_2Algorithm_ShouldBeExpectedType()
+   public void Algorithms_Modulus10_2_ShouldBeExpectedType()
       => Algorithms.Modulus10_2.Should().BeOfType<Modulus10_2Algorithm>();
 
    #endregion
 
-   #region Modulus10_13 Algorithm Property Tests
+   #region Modulus10_13 Property Tests
    // ==========================================================================
    // ==========================================================================
 
    [Fact]
-   public void Algorithms_Modulus10_13Algorithm_ShouldNotBeNull()
+   public void Algorithms_Modulus10_13_ShouldNotBeNull()
       => Algorithms.Modulus10_13.Should().NotBeNull();
 
    [Fact]
-   public void Algorithms_Modulus10_13Algorithm_ShouldBeExpectedType()
+   public void Algorithms_Modulus10_13_ShouldBeExpectedType()
       => Algorithms.Modulus10_13.Should().BeOfType<Modulus10_13Algorithm>();
 
    #endregion
 
-   #region Modulus11 Algorithm Property Tests
+   #region Modulus11 Property Tests
    // ==========================================================================
    // ==========================================================================
 
    [Fact]
-   public void Algorithms_Modulus11Algorithm_ShouldNotBeNull()
+   public void Algorithms_Modulus11_ShouldNotBeNull()
       => Algorithms.Modulus11.Should().NotBeNull();
 
    [Fact]
-   public void Algorithms_Modulus11Algorithm_ShouldBeExpectedType()
+   public void Algorithms_Modulus11_ShouldBeExpectedType()
       => Algorithms.Modulus11.Should().BeOfType<Modulus11Algorithm>();
 
    #endregion
 
-   #region Nhs Algorithm Property Tests
+   #region Nhs Property Tests
    // ==========================================================================
    // ==========================================================================
 
    [Fact]
-   public void Algorithms_NhsAlgorithm_ShouldNotBeNull()
+   public void Algorithms_Nhs_ShouldNotBeNull()
       => Algorithms.Nhs.Should().NotBeNull();
 
    [Fact]
-   public void Algorithms_NhsAlgorithm_ShouldBeExpectedType()
+   public void Algorithms_Nhs_ShouldBeExpectedType()
       => Algorithms.Nhs.Should().BeOfType<NhsAlgorithm>();
 
    #endregion
 
-   #region Npi Algorithm Property Tests
+   #region Npi Property Tests
    // ==========================================================================
    // ==========================================================================
 
    [Fact]
-   public void Algorithms_NpiAlgorithm_ShouldNotBeNull()
+   public void Algorithms_Npi_ShouldNotBeNull()
       => Algorithms.Npi.Should().NotBeNull();
 
    [Fact]
-   public void Algorithms_NpiAlgorithm_ShouldBeExpectedType()
+   public void Algorithms_Npi_ShouldBeExpectedType()
       => Algorithms.Npi.Should().BeOfType<NpiAlgorithm>();
 
    #endregion
 
-   #region Verhoeff Algorithm Property Tests
+   #region Verhoeff Property Tests
    // ==========================================================================
    // ==========================================================================
 
    [Fact]
-   public void Algorithms_VerhoeffAlgorithm_ShouldNotBeNull()
+   public void Algorithms_Verhoeff_ShouldNotBeNull()
       => Algorithms.Verhoeff.Should().NotBeNull();
 
    [Fact]
-   public void Algorithms_VerhoeffAlgorithm_ShouldBeExpectedType()
+   public void Algorithms_Verhoeff_ShouldBeExpectedType()
       => Algorithms.Verhoeff.Should().BeOfType<VerhoeffAlgorithm>();
 
    #endregion
 
-   #region Vin Algorithm Property Tests
+   #region Vin Property Tests
    // ==========================================================================
    // ==========================================================================
 
    [Fact]
-   public void Algorithms_VinAlgorithm_ShouldNotBeNull()
+   public void Algorithms_Vin_ShouldNotBeNull()
       => Algorithms.Vin.Should().NotBeNull();
 
    [Fact]
-   public void Algorithms_VinAlgorithm_ShouldBeExpectedType()
+   public void Algorithms_Vin_ShouldBeExpectedType()
       => Algorithms.Vin.Should().BeOfType<VinAlgorithm>();
 
    #endregion
