@@ -111,7 +111,8 @@ public class AlphanumericMod97_10Algorithm : IDoubleCheckDigitAlgorithm
             }
         }
 
-        // Add value for second check character.
+        // Add value for second check character. Check characters are always
+        // digits.
         var num = value[^1].ToIntegerDigit();
         if (num < 0 || num > 9)
         {

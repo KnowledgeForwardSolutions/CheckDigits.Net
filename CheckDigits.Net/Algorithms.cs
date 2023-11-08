@@ -11,6 +11,9 @@ public static class Algorithms
    private static readonly Lazy<ICheckDigitAlgorithm> _abaRtn =
      new(() => new AbaRtnAlgorithm());
 
+   private static readonly Lazy<IDoubleCheckDigitAlgorithm> _alphanumericMod97_10 =
+     new(() => new AlphanumericMod97_10Algorithm());
+
    private static readonly Lazy<ISingleCheckDigitAlgorithm> _damm =
      new(() => new DammAlgorithm());
 
@@ -76,6 +79,12 @@ public static class Algorithms
    ///   algorithm.
    /// </summary>
    public static ICheckDigitAlgorithm AbaRtn => _abaRtn.Value;
+
+   /// <summary>
+   ///   American Bankers Association (ABA) Routing Transit Number (RTN) 
+   ///   algorithm.
+   /// </summary>
+   public static IDoubleCheckDigitAlgorithm AlphanumericMod97_10 => _alphanumericMod97_10.Value;
 
    /// <summary>
    ///   Damm algorithm.

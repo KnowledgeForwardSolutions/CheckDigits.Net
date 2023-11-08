@@ -100,7 +100,11 @@ public class BenchmarkData
    {
       const String chars = "K1MEL37655H24EDKCA69ID433B";
 
-      var details = DoubleCharacterValues(Algorithms.Iso7064Mod1271_36, chars);
+      var details = DoubleCharacterValues(Algorithms.AlphanumericMod97_10, chars);
+      _outputHelper.WriteLine(details);
+      _outputHelper.WriteLine(String.Empty);
+
+      details = DoubleCharacterValues(Algorithms.Iso7064Mod1271_36, chars);
       _outputHelper.WriteLine(details);
       _outputHelper.WriteLine(String.Empty);
 

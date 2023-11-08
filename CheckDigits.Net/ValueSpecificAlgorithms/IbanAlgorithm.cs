@@ -176,7 +176,7 @@ public class IbanAlgorithm : IDoubleCheckDigitAlgorithm
          }
       }
 
-      // Add value for second check character.
+      // Add value for second check character. Check characters are always digits.
       var num = value[3].ToIntegerDigit();
       if (num < 0 || num > 9)
       {
