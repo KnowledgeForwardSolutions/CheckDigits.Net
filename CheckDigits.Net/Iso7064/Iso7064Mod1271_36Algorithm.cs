@@ -104,20 +104,25 @@ public sealed class Iso7064Mod1271_36Algorithm : IDoubleCheckDigitAlgorithm
       }
 
       // Sum non-check digit characters and first check character.
+      Char ch;
+      Int32 num;
       var sum = 0;
-      Int32 offset;
       for (var index = 0; index < value.Length - 1; index++)
       {
-         offset = value[index] - CharConstants.DigitZero;
-         if ((offset >= _digitLowerBound && offset <= _digitUpperBound)
-            || (offset >= _alphaLowerBound && offset <= _alphaUpperBound))
+         ch = value[index];
+         if (ch >= CharConstants.DigitZero && ch <= CharConstants.DigitNine)
          {
-            sum = (sum + _lookupTable[offset]) * _radix;
+            num = ch.ToIntegerDigit();
+         }
+         else if (ch >= CharConstants.UpperCaseA && ch <= CharConstants.UpperCaseZ)
+         {
+            num = ch - CharConstants.UpperCaseA + 10;
          }
          else
-         {
-            return false;
+         { 
+            return false; 
          }
+         sum = (sum + num) * _radix;
          if (sum >= _reduceThreshold)
          {
             sum %= _modulus;
@@ -125,16 +130,20 @@ public sealed class Iso7064Mod1271_36Algorithm : IDoubleCheckDigitAlgorithm
       }
 
       // Add value for second check character.
-      offset = value[^1] - CharConstants.DigitZero;
-      if ((offset >= _digitLowerBound && offset <= _digitUpperBound)
-         || (offset >= _alphaLowerBound && offset <= _alphaUpperBound))
+      ch = value[^1];
+      if (ch >= CharConstants.DigitZero && ch <= CharConstants.DigitNine)
       {
-         sum += _lookupTable[offset];
+         num = ch.ToIntegerDigit();
+      }
+      else if (ch >= CharConstants.UpperCaseA && ch <= CharConstants.UpperCaseZ)
+      {
+         num = ch - CharConstants.UpperCaseA + 10;
       }
       else
       {
          return false;
       }
+      sum += num;
 
       return sum % _modulus == 1;
    }

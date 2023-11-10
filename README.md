@@ -1183,3 +1183,10 @@ Initial release. Additional included algorithms
 * ISO/IEC 7064 MOD 661-26
 * ISO/IEC 7064 MOD 97-10
 
+## v1.1.0
+Additional included algorithms
+* AlphanumericMod97_10Algorithm
+* IbanAlgorithm
+ 
+Performance increases for:
+* ISO/IEC 7064 MOD 1271-36, Validate method ~18% improvement
