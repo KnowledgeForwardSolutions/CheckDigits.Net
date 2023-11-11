@@ -15,3 +15,4 @@ As a developer of CheckDigits.Net, I want CheckDigits.Net to include highest per
 
 Notes:
  MOD 1271-36 algorithm - Validate method ~18% improvement. TryCalculateCheckDigits no improvement
+ MOD 37-2 algorithm - Validate method ~17% improvement. TryCalculateCheckDigit method ~20% improvement

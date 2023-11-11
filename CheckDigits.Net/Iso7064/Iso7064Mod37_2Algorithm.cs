@@ -29,20 +29,6 @@ public sealed class Iso7064Mod37_2Algorithm : ISingleCheckDigitAlgorithm
    private const Int32 _modulus = 37;
    private const Int32 _radix = 2;
    private const Int32 _reduceThreshold = Int32.MaxValue / _radix;
-   private static readonly Int32[] _lookupTable =
-      Enumerable.Range(CharConstants.Asterisk, CharConstants.UpperCaseZ - CharConstants.Asterisk + 1)
-         .Select(x => x switch
-         {
-            CharConstants.Asterisk => 36,
-            Int32 d when d >= CharConstants.DigitZero && d <= CharConstants.DigitNine => d - CharConstants.DigitZero,
-            Int32 c when c >= CharConstants.UpperCaseA && c <= CharConstants.UpperCaseZ => c - CharConstants.UpperCaseA + 10,
-            _ => -1
-         }).ToArray();
-   private const Int32 _asteriskOffset = 0;
-   private const Int32 _digitLowerBound = CharConstants.DigitZero - CharConstants.Asterisk;
-   private const Int32 _digitUpperBound = CharConstants.DigitNine - CharConstants.Asterisk;
-   private const Int32 _alphaLowerBound = CharConstants.UpperCaseA - CharConstants.Asterisk;
-   private const Int32 _alphaUpperBound = CharConstants.UpperCaseZ - CharConstants.Asterisk;
    private const String _checkCharacters = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ*";
 
    /// <inheritdoc/>
@@ -60,19 +46,25 @@ public sealed class Iso7064Mod37_2Algorithm : ISingleCheckDigitAlgorithm
          return false;
       }
 
+      Char ch;
+      Int32 num;
       var sum = 0;
       for (var index = 0; index < value.Length; index++)
       {
-         var offset = value[index] - CharConstants.Asterisk;
-         if ((offset >= _digitLowerBound && offset <= _digitUpperBound)
-            || (offset >= _alphaLowerBound && offset <= _alphaUpperBound))
+         ch = value[index];
+         if (ch >= CharConstants.DigitZero && ch <= CharConstants.DigitNine)
          {
-            sum = (sum + _lookupTable[offset]) * _radix;
+            num = ch.ToIntegerDigit();
+         }
+         else if (ch >= CharConstants.UpperCaseA && ch <= CharConstants.UpperCaseZ)
+         {
+            num = ch - CharConstants.UpperCaseA + 10;
          }
          else
          {
             return false;
          }
+         sum = (sum + num) * _radix;
          if (sum >= _reduceThreshold)
          {
             sum %= _modulus;
@@ -94,37 +86,49 @@ public sealed class Iso7064Mod37_2Algorithm : ISingleCheckDigitAlgorithm
          return false;
       }
 
+      Char ch;
+      Int32 num;
       var sum = 0;
-      Int32 offset;
       for (var index = 0; index < value.Length - 1; index++)
       {
-         offset = value[index] - CharConstants.Asterisk;
-         if ((offset >= _digitLowerBound && offset <= _digitUpperBound)
-            || (offset >= _alphaLowerBound && offset <= _alphaUpperBound))
+         ch = value[index];
+         if (ch >= CharConstants.DigitZero && ch <= CharConstants.DigitNine)
          {
-            sum = (sum + _lookupTable[offset]) * _radix;
+            num = ch.ToIntegerDigit();
+         }
+         else if (ch >= CharConstants.UpperCaseA && ch <= CharConstants.UpperCaseZ)
+         {
+            num = ch - CharConstants.UpperCaseA + 10;
          }
          else
          {
             return false;
          }
+         sum = (sum + num) * _radix;
          if (sum >= _reduceThreshold)
          {
             sum %= _modulus;
          }
       }
 
-      offset = value[^1] - CharConstants.Asterisk;
-      if (offset == _asteriskOffset
-         || (offset >= _digitLowerBound && offset <= _digitUpperBound)
-         || (offset >= _alphaLowerBound && offset <= _alphaUpperBound))
+      ch = value[^1];
+      if (ch >= CharConstants.DigitZero && ch <= CharConstants.DigitNine)
       {
-         sum += _lookupTable[offset];
+         num = ch.ToIntegerDigit();
+      }
+      else if (ch >= CharConstants.UpperCaseA && ch <= CharConstants.UpperCaseZ)
+      {
+         num = ch - CharConstants.UpperCaseA + 10;
+      }
+      else if (ch == CharConstants.Asterisk)
+      {
+         num = 36;
       }
       else
       {
          return false;
       }
+      sum += num;
 
       return sum % _modulus == 1;
    }

@@ -3,7 +3,7 @@
 [MemoryDiagnoser]
 public class AlphanumericAlgorithmBenchmarks
 {
-   private static readonly Iso7064Mod1271_36Algorithm _sut = new();
+   private static readonly Iso7064Mod37_2Algorithm _sut = new();
 
    public IEnumerable<Object[]> TryCalculateCheckDigitArguments()
    {
@@ -99,20 +99,20 @@ public class AlphanumericAlgorithmBenchmarks
    //   algorithm.Validate(value);
    //}
 
-   [Params("K1M0W", "K1MEL34W", "K1MEL37654L", "K1MEL37655H2KZ", "K1MEL37655H24EDRD", "K1MEL37655H24EDKCA8P", "K1MEL37655H24EDKCA69I8W")]
-   //[Params("K1M", "K1MEL3", "K1MEL3765", "K1MEL37655H2", "K1MEL37655H24ED", "K1MEL37655H24EDKCA", "K1MEL37655H24EDKCA69I")]
+   //[Params("K1MF" ,"K1MEL3M" ,"K1MEL37655", "K1MEL37655H2W", "K1MEL37655H24EDO", "K1MEL37655H24EDKCAV", "K1MEL37655H24EDKCA69IA")]
+   [Params("K1M", "K1MEL3", "K1MEL3765", "K1MEL37655H2", "K1MEL37655H24ED", "K1MEL37655H24EDKCA", "K1MEL37655H24EDKCA69I")]
    public String Value { get; set; } = default!;
 
    //[Benchmark(Baseline = true)]
    //public void Baseline()
    //{
-   //   _ = _sut.TryCalculateCheckDigits(Value, out var first, out var second);
+   //   _ = _sut.TryCalculateCheckDigit(Value, out var checkDigit);
    //}
 
    //[Benchmark]
    //public void TryCalculateCheckDigits2()
    //{
-   //   _ = _sut.TryCalculateCheckDigits2(Value, out var first, out var second);
+   //   _ = _sut.TryCalculateCheckDigit2(Value, out var checkDigit);
    //}
 
    //[Benchmark(Baseline = true)]
@@ -125,11 +125,5 @@ public class AlphanumericAlgorithmBenchmarks
    //public void Validate2()
    //{
    //   _ = _sut.Validate2(Value);
-   //}
-
-   //[Benchmark]
-   //public void Validate3()
-   //{
-   //   _ = _sut.Validate3(Value);
    //}
 }
