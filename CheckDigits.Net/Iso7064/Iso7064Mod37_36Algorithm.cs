@@ -27,18 +27,6 @@ public sealed class Iso7064Mod37_36Algorithm : ISingleCheckDigitAlgorithm
 {
    private readonly Int32 _modulus = 36;
    private readonly Int32 _modulusPlus1 = 37;
-   private static readonly Int32[] _lookupTable =
-      Enumerable.Range(CharConstants.DigitZero, CharConstants.UpperCaseZ - CharConstants.DigitZero + 1)
-         .Select(x => x switch
-         {
-            Int32 d when d >= CharConstants.DigitZero && d <= CharConstants.DigitNine => d - CharConstants.DigitZero,
-            Int32 c when c >= CharConstants.UpperCaseA && c <= CharConstants.UpperCaseZ => c - CharConstants.UpperCaseA + 10,
-            _ => -1
-         }).ToArray();
-   private const Int32 _digitLowerBound = 0;
-   private const Int32 _digitUpperBound = 9;
-   private const Int32 _alphaLowerBound = CharConstants.UpperCaseA - CharConstants.DigitZero;
-   private const Int32 _alphaUpperBound = CharConstants.UpperCaseZ - CharConstants.DigitZero;
    private const String _validCharacters = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
    /// <inheritdoc/>

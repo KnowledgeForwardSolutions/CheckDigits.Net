@@ -1190,3 +1190,5 @@ Additional included algorithms
  
 Performance increases for:
 * ISO/IEC 7064 MOD 1271-36, Validate method ~18% improvement
+* ISO/IEC 7064 MOD 37-2, Validate method ~17% improvement, TryCalculateCheckDigit method ~20% improvement
+* ISO/IEC 7064 MOD 37-36, ValidateMethod ~18% improvement, TryCalculateCheckDigit method ~21% improvement
