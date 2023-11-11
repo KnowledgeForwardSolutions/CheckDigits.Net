@@ -3,7 +3,7 @@
 [MemoryDiagnoser]
 public class AlphanumericAlgorithmBenchmarks
 {
-   private static readonly Iso7064Mod37_2Algorithm _sut = new();
+   private static readonly Iso7064Mod37_36Algorithm _sut = new();
 
    public IEnumerable<Object[]> TryCalculateCheckDigitArguments()
    {
@@ -99,7 +99,7 @@ public class AlphanumericAlgorithmBenchmarks
    //   algorithm.Validate(value);
    //}
 
-   //[Params("K1MF" ,"K1MEL3M" ,"K1MEL37655", "K1MEL37655H2W", "K1MEL37655H24EDO", "K1MEL37655H24EDKCAV", "K1MEL37655H24EDKCA69IA")]
+   //[Params("K1ME", "K1MEL3D", "K1MEL3765E", "K1MEL37655H2Z", "K1MEL37655H24EDI", "K1MEL37655H24EDKCAH", "K1MEL37655H24EDKCA69IG")]
    [Params("K1M", "K1MEL3", "K1MEL3765", "K1MEL37655H2", "K1MEL37655H24ED", "K1MEL37655H24EDKCA", "K1MEL37655H24EDKCA69I")]
    public String Value { get; set; } = default!;
 
