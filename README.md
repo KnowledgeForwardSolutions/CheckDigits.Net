@@ -18,7 +18,7 @@ are up to 10X-50X faster than those in popular Nuget packages.
 - **[Using CheckDigits.Net](#using-checkdigits.net)**
 - **[Algorithm Descriptions](#algorithm-descriptions)**
     * [ABA RTN (Routing Transit Number) Algorithm](#aba-rtn-algorithm)
-    * [Alphanumeric MOD 97-10 Algorithm][#alphanumeric-mod-97-10-algorithm)
+    * [Alphanumeric MOD 97-10 Algorithm](#alphanumeric-mod-97-10-algorithm)
     * [Damm Algorithm](#damm-algorithm)
     * [IBAN (International Bank Account Number) Algorithm](#iban-algorithm)
     * [ISIN (International Securities Identification Number) Algorithm](#isin-algorithm)
@@ -152,12 +152,12 @@ The ISO/IEC 7064:2003 standard is available at https://www.iso.org/standard/3153
 | ISMN					| [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
 | ISNI                  | [ISO/IEC 7064 MOD 11-2 Algorithm](#isoiec-7064-mod-11-2-algorithm) |
 | ISSN   				| [Modulus11 Algorithm](#modulus11-algorithm) |
-| Legal Entity Identifier | [Alphanumeric MOD 97-10 Algorithm][#alphanumeric-mod-97-10-algorithm) |
+| Legal Entity Identifier | [Alphanumeric MOD 97-10 Algorithm](#alphanumeric-mod-97-10-algorithm) |
 | UK National Health Service Number | [NHS Algorithm](#nhs-algorithm) |
 | US National Provider Identifier | [NPI Algorithm](#npi-algorithm) |
 | SSCC					| [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
 | Vehicle Identification Number | [VIN Algorithm](#vin-algorithm) |
-| Universal Loan Identifier | [Alphanumeric MOD 97-10 Algorithm][#alphanumeric-mod-97-10-algorithm) |
+| Universal Loan Identifier | [Alphanumeric MOD 97-10 Algorithm](#alphanumeric-mod-97-10-algorithm) |
 | UPC-A					| [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
 | UPC-E					| [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
 
@@ -947,21 +947,21 @@ benchmarks do not cover lengths greater than 10.
 | ISO/IEC 7064 MOD 1271-36 | K1MEL37655H24EDKCA    | 27.477 ns | 0.1746 ns | 0.1547 ns |         - |
 | ISO/IEC 7064 MOD 1271-36 | K1MEL37655H24EDKCA69I | 32.238 ns | 0.5370 ns | 0.5023 ns |         - |
 |
-| ISO/IEC 7064 MOD 37-2    | K1M                   |  8.460 ns | 0.0492 ns | 0.0411 ns |         - |
-| ISO/IEC 7064 MOD 37-2    | K1MEL3                | 13.301 ns | 0.1528 ns | 0.1429 ns |         - |
-| ISO/IEC 7064 MOD 37-2    | K1MEL3765             | 18.046 ns | 0.1834 ns | 0.1626 ns |         - |
-| ISO/IEC 7064 MOD 37-2    | K1MEL37655H2          | 23.248 ns | 0.3196 ns | 0.2833 ns |         - |
-| ISO/IEC 7064 MOD 37-2    | K1MEL37655H24ED       | 28.486 ns | 0.3582 ns | 0.3351 ns |         - |
-| ISO/IEC 7064 MOD 37-2    | K1MEL37655H24EDKCA    | 34.020 ns | 0.3888 ns | 0.3637 ns |         - |
-| ISO/IEC 7064 MOD 37-2    | K1MEL37655H24EDKCA69I | 39.182 ns | 0.5311 ns | 0.4968 ns |         - |
+| ISO/IEC 7064 MOD 37-2    | K1M                   |  7.182 ns | 0.0572 ns | 0.0507 ns |         - |
+| ISO/IEC 7064 MOD 37-2    | K1MEL3                | 11.216 ns | 0.0702 ns | 0.0622 ns |         - |
+| ISO/IEC 7064 MOD 37-2    | K1MEL3765             | 14.887 ns | 0.1013 ns | 0.0948 ns |         - |
+| ISO/IEC 7064 MOD 37-2    | K1MEL37655H2          | 19.123 ns | 0.1784 ns | 0.1582 ns |         - |
+| ISO/IEC 7064 MOD 37-2    | K1MEL37655H24ED       | 23.105 ns | 0.1653 ns | 0.1465 ns |         - |
+| ISO/IEC 7064 MOD 37-2    | K1MEL37655H24EDKCA    | 27.188 ns | 0.1583 ns | 0.1481 ns |         - |
+| ISO/IEC 7064 MOD 37-2    | K1MEL37655H24EDKCA69I | 30.627 ns | 0.1662 ns | 0.1555 ns |         - |
 |
-| ISO/IEC 7064 MOD 37,36   | K1M                   |  9.696 ns | 0.0993 ns | 0.0775 ns |         - |
-| ISO/IEC 7064 MOD 37,36   | K1MEL3                | 15.387 ns | 0.1850 ns | 0.1544 ns |         - |
-| ISO/IEC 7064 MOD 37,36   | K1MEL3765             | 22.192 ns | 0.1796 ns | 0.1680 ns |         - |
-| ISO/IEC 7064 MOD 37,36   | K1MEL37655H2          | 28.109 ns | 0.2576 ns | 0.2410 ns |         - |
-| ISO/IEC 7064 MOD 37,36   | K1MEL37655H24ED       | 34.080 ns | 0.4169 ns | 0.3900 ns |         - |
-| ISO/IEC 7064 MOD 37,36   | K1MEL37655H24EDKCA    | 39.844 ns | 0.4194 ns | 0.3923 ns |         - |
-| ISO/IEC 7064 MOD 37,36   | K1MEL37655H24EDKCA69I | 46.301 ns | 0.4141 ns | 0.3874 ns |         - |
+| ISO/IEC 7064 MOD 37,36   | K1M                   |  8.321 ns | 0.0571 ns | 0.0534 ns |         - |
+| ISO/IEC 7064 MOD 37,36   | K1MEL3                | 13.299 ns | 0.0963 ns | 0.0854 ns |         - |
+| ISO/IEC 7064 MOD 37,36   | K1MEL3765             | 17.224 ns | 0.1407 ns | 0.1247 ns |         - |
+| ISO/IEC 7064 MOD 37,36   | K1MEL37655H2          | 21.530 ns | 0.1734 ns | 0.1622 ns |         - |
+| ISO/IEC 7064 MOD 37,36   | K1MEL37655H24ED       | 26.526 ns | 0.1751 ns | 0.1638 ns |         - |
+| ISO/IEC 7064 MOD 37,36   | K1MEL37655H24EDKCA    | 32.078 ns | 0.1808 ns | 0.1691 ns |         - |
+| ISO/IEC 7064 MOD 37,36   | K1MEL37655H24EDKCA69I | 36.350 ns | 0.3844 ns | 0.3596 ns |         - |
 
 #### Value Specific Algorithms
 
@@ -1101,29 +1101,29 @@ ISO/IEC 7064 MOD 37,36 use a single check character.
 | AlphanumericMod97_10     | K1MEL37655H24EDKCA67    | 47.562 ns | 0.3638 ns | 0.3403 ns |         - |
 | AlphanumericMod97_10     | K1MEL37655H24EDKCA69I17 | 54.507 ns | 0.4677 ns | 0.4375 ns |         - |
 |
-| ISO/IEC 7064 MOD 1271-36 | K1M0W                   |  9.633 ns | 0.1503 ns | 0.1406 ns |         - |
-| ISO/IEC 7064 MOD 1271-36 | K1MEL34W                | 16.132 ns | 0.3067 ns | 0.2869 ns |         - |
-| ISO/IEC 7064 MOD 1271-36 | K1MEL37654L             | 21.944 ns | 0.2327 ns | 0.2177 ns |         - |
-| ISO/IEC 7064 MOD 1271-36 | K1MEL37655H2KZ          | 27.011 ns | 0.2712 ns | 0.2537 ns |         - |
-| ISO/IEC 7064 MOD 1271-36 | K1MEL37655H24EDRD       | 31.998 ns | 0.4911 ns | 0.4594 ns |         - |
-| ISO/IEC 7064 MOD 1271-36 | K1MEL37655H24EDKCA8P    | 37.718 ns | 0.6574 ns | 0.6149 ns |         - |
-| ISO/IEC 7064 MOD 1271-36 | K1MEL37655H24EDKCA69I8W | 43.569 ns | 0.4744 ns | 0.4206 ns |         - |
+| ISO/IEC 7064 MOD 1271-36 | K1M0W                   |  8.954 ns | 0.0646 ns | 0.0539 ns |         - |
+| ISO/IEC 7064 MOD 1271-36 | K1MEL34W                | 14.014 ns | 0.1141 ns | 0.1011 ns |         - |
+| ISO/IEC 7064 MOD 1271-36 | K1MEL37654L             | 17.518 ns | 0.1200 ns | 0.1122 ns |         - |
+| ISO/IEC 7064 MOD 1271-36 | K1MEL37655H2KZ          | 22.687 ns | 0.1336 ns | 0.1184 ns |         - |
+| ISO/IEC 7064 MOD 1271-36 | K1MEL37655H24EDRD       | 26.384 ns | 0.2536 ns | 0.2372 ns |         - |
+| ISO/IEC 7064 MOD 1271-36 | K1MEL37655H24EDKCA8P    | 30.657 ns | 0.3042 ns | 0.2697 ns |         - |
+| ISO/IEC 7064 MOD 1271-36 | K1MEL37655H24EDKCA69I8W | 35.379 ns | 0.4214 ns | 0.3942 ns |         - |
 |
-| ISO/IEC 7064 MOD 37-2    | K1MF                    |  9.646 ns | 0.1126 ns | 0.0998 ns |         - |
-| ISO/IEC 7064 MOD 37-2    | K1MEL3M                 | 15.996 ns | 0.1632 ns | 0.1527 ns |         - |
-| ISO/IEC 7064 MOD 37-2    | K1MEL37655              | 21.621 ns | 0.2532 ns | 0.2368 ns |         - |
-| ISO/IEC 7064 MOD 37-2    | K1MEL37655H2W           | 28.700 ns | 0.3014 ns | 0.2819 ns |         - |
-| ISO/IEC 7064 MOD 37-2    | K1MEL37655H24EDO        | 34.990 ns | 0.5927 ns | 0.5544 ns |         - |
-| ISO/IEC 7064 MOD 37-2    | K1MEL37655H24EDKCAV     | 40.657 ns | 0.3095 ns | 0.2743 ns |         - |
-| ISO/IEC 7064 MOD 37-2    | K1MEL37655H24EDKCA69IA  | 46.734 ns | 0.2999 ns | 0.2805 ns |         - |
+| ISO/IEC 7064 MOD 37-2    | K1MF                    |  7.115 ns | 0.0568 ns | 0.0531 ns |         - |
+| ISO/IEC 7064 MOD 37-2    | K1MEL3M                 | 11.459 ns | 0.1226 ns | 0.1147 ns |         - |
+| ISO/IEC 7064 MOD 37-2    | K1MEL37655              | 14.364 ns | 0.1356 ns | 0.1269 ns |         - |
+| ISO/IEC 7064 MOD 37-2    | K1MEL37655H2W           | 18.817 ns | 0.1800 ns | 0.1683 ns |         - |
+| ISO/IEC 7064 MOD 37-2    | K1MEL37655H24EDO        | 23.357 ns | 0.2114 ns | 0.1978 ns |         - |
+| ISO/IEC 7064 MOD 37-2    | K1MEL37655H24EDKCAV     | 28.158 ns | 0.2954 ns | 0.2763 ns |         - |
+| ISO/IEC 7064 MOD 37-2    | K1MEL37655H24EDKCA69IA  | 31.930 ns | 0.3158 ns | 0.2799 ns |         - |
 |
-| ISO/IEC 7064 MOD 37,36   | K1ME                    |  9.896 ns | 0.1768 ns | 0.1654 ns |         - |
-| ISO/IEC 7064 MOD 37,36   | K1MEL3D                 | 15.242 ns | 0.2675 ns | 0.2502 ns |         - |
-| ISO/IEC 7064 MOD 37,36   | K1MEL3765E              | 19.472 ns | 0.2607 ns | 0.2311 ns |         - |
-| ISO/IEC 7064 MOD 37,36   | K1MEL37655H2Z           | 24.243 ns | 0.3200 ns | 0.2837 ns |         - |
-| ISO/IEC 7064 MOD 37,36   | K1MEL37655H24EDI        | 29.204 ns | 0.1305 ns | 0.1157 ns |         - |
-| ISO/IEC 7064 MOD 37,36   | K1MEL37655H24EDKCAH     | 34.959 ns | 0.2997 ns | 0.2503 ns |         - |
-| ISO/IEC 7064 MOD 37,36   | K1MEL37655H24EDKCA69IG  | 39.720 ns | 0.3956 ns | 0.3507 ns |         - |
+| ISO/IEC 7064 MOD 37,36   | K1ME                    |  8.637 ns | 0.0738 ns | 0.0690 ns |         - |
+| ISO/IEC 7064 MOD 37,36   | K1MEL3D                 | 13.006 ns | 0.0574 ns | 0.0508 ns |         - |
+| ISO/IEC 7064 MOD 37,36   | K1MEL3765E              | 16.348 ns | 0.1423 ns | 0.1331 ns |         - |
+| ISO/IEC 7064 MOD 37,36   | K1MEL37655H2Z           | 20.454 ns | 0.2239 ns | 0.2094 ns |         - |
+| ISO/IEC 7064 MOD 37,36   | K1MEL37655H24EDI        | 24.746 ns | 0.1230 ns | 0.1091 ns |         - |
+| ISO/IEC 7064 MOD 37,36   | K1MEL37655H24EDKCAH     | 29.077 ns | 0.1466 ns | 0.1371 ns |         - |
+| ISO/IEC 7064 MOD 37,36   | K1MEL37655H24EDKCA69IG  | 33.149 ns | 0.2918 ns | 0.2730 ns |         - |
 
 #### Value Specific Algorithms
 
@@ -1182,4 +1182,17 @@ Initial release. Additional included algorithms
 * ISO/IEC 7064 MOD 37,36
 * ISO/IEC 7064 MOD 661-26
 * ISO/IEC 7064 MOD 97-10
+
+## v1.1.0
+Additional included algorithms
+* AlphanumericMod97_10Algorithm
+* IbanAlgorithm
+ 
+Performance increases for:
+* ISO/IEC 7064 MOD 1271-36, Validate method ~18% improvement
+* ISO/IEC 7064 MOD 37-2, Validate method ~17% improvement, TryCalculateCheckDigit method ~20% improvement
+* ISO/IEC 7064 MOD 37-36, ValidateMethod ~18% improvement, TryCalculateCheckDigit method ~21% improvement
+
+
+
 

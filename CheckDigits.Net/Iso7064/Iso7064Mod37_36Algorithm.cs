@@ -27,18 +27,6 @@ public sealed class Iso7064Mod37_36Algorithm : ISingleCheckDigitAlgorithm
 {
    private readonly Int32 _modulus = 36;
    private readonly Int32 _modulusPlus1 = 37;
-   private static readonly Int32[] _lookupTable =
-      Enumerable.Range(CharConstants.DigitZero, CharConstants.UpperCaseZ - CharConstants.DigitZero + 1)
-         .Select(x => x switch
-         {
-            Int32 d when d >= CharConstants.DigitZero && d <= CharConstants.DigitNine => d - CharConstants.DigitZero,
-            Int32 c when c >= CharConstants.UpperCaseA && c <= CharConstants.UpperCaseZ => c - CharConstants.UpperCaseA + 10,
-            _ => -1
-         }).ToArray();
-   private const Int32 _digitLowerBound = 0;
-   private const Int32 _digitUpperBound = 9;
-   private const Int32 _alphaLowerBound = CharConstants.UpperCaseA - CharConstants.DigitZero;
-   private const Int32 _alphaUpperBound = CharConstants.UpperCaseZ - CharConstants.DigitZero;
    private const String _validCharacters = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
    /// <inheritdoc/>
@@ -56,20 +44,25 @@ public sealed class Iso7064Mod37_36Algorithm : ISingleCheckDigitAlgorithm
          return false;
       }
 
+      Char ch;
+      Int32 num;
       var product = _modulus;
-      Int32 offset;
       for (var index = 0; index < value.Length; index++)
       {
-         offset = value[index] - CharConstants.DigitZero;
-         if ((offset >= _digitLowerBound && offset <= _digitUpperBound)
-            || (offset >= _alphaLowerBound && offset <= _alphaUpperBound))
+         ch = value[index];
+         if (ch >= CharConstants.DigitZero && ch <= CharConstants.DigitNine)
          {
-            product += _lookupTable[offset];
+            num = ch.ToIntegerDigit();
+         }
+         else if (ch >= CharConstants.UpperCaseA && ch <= CharConstants.UpperCaseZ)
+         {
+            num = ch - CharConstants.UpperCaseA + 10;
          }
          else
          {
             return false;
          }
+         product += num;
          if (product > _modulus)
          {
             product -= _modulus;
@@ -95,20 +88,25 @@ public sealed class Iso7064Mod37_36Algorithm : ISingleCheckDigitAlgorithm
          return false;
       }
 
+      Char ch;
+      Int32 num;
       var product = _modulus;
-      Int32 offset;
       for (var index = 0; index < value.Length - 1; index++)
       {
-         offset = value[index] - CharConstants.DigitZero;
-         if ((offset >= _digitLowerBound && offset <= _digitUpperBound)
-            || (offset >= _alphaLowerBound && offset <= _alphaUpperBound))
+         ch = value[index];
+         if (ch >= CharConstants.DigitZero && ch <= CharConstants.DigitNine)
          {
-            product += _lookupTable[offset];
+            num = ch.ToIntegerDigit();
+         }
+         else if (ch >= CharConstants.UpperCaseA && ch <= CharConstants.UpperCaseZ)
+         {
+            num = ch - CharConstants.UpperCaseA + 10;
          }
          else
          {
             return false;
          }
+         product += num;
          if (product > _modulus)
          {
             product -= _modulus;
@@ -120,16 +118,20 @@ public sealed class Iso7064Mod37_36Algorithm : ISingleCheckDigitAlgorithm
          }
       }
 
-      offset = value[^1] - CharConstants.DigitZero;
-      if ((offset >= _digitLowerBound && offset <= _digitUpperBound)
-         || (offset >= _alphaLowerBound && offset <= _alphaUpperBound))
+      ch = value[^1];
+      if (ch >= CharConstants.DigitZero && ch <= CharConstants.DigitNine)
       {
-         product += _lookupTable[offset];
+         num = ch.ToIntegerDigit();
+      }
+      else if (ch >= CharConstants.UpperCaseA && ch <= CharConstants.UpperCaseZ)
+      {
+         num = ch - CharConstants.UpperCaseA + 10;
       }
       else
       {
          return false;
       }
+      product += num;
 
       return product % _modulus == 1;
    }

@@ -11,3 +11,9 @@ As a developer of CheckDigits.Net, I want CheckDigits.Net to include highest per
 1. Benchmarks for proposed changes
 1. README updates
 1. Performance benchmarks
+
+
+Notes:
+ MOD 1271-36 algorithm - Validate method ~18% improvement. TryCalculateCheckDigits no improvement
+ MOD 37-2 algorithm - Validate method ~17% improvement. TryCalculateCheckDigit method ~20% improvement
+ MOD 37,26 algorithm - Validate method ~18% improvement.
