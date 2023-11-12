@@ -36,6 +36,7 @@ are up to 10X-50X faster than those in popular Nuget packages.
     * [Modulus10_13 Algorithm (UPC/EAN/ISBN-13/etc.)](#modulus10_13-algorithm)
     * [Modulus11 Algorithm (ISBN-10/ISSN/etc.)](#modulus11-algorithm)
     * [NHS (UK National Health Service) Algorithm](#nhs-algorithm)
+    * [NOID Check Digit Algorithm](#noid-check-digit-algorithm)
     * [NPI (US National Provider Identifier) Algorithm](#npi-algorithm)
     * [Verhoeff Algorithm](#verhoeff-algorithm)
     * [VIN (Vehicle Identification Number) Algorithm](#vin-algorithm)
@@ -123,6 +124,7 @@ The ISO/IEC 7064:2003 standard is available at https://www.iso.org/standard/3153
 * [Modulus10_13 Algorithm (UPC/EAN/ISBN-13/etc.)](#modulus10_13-algorithm)
 * [Modulus11 Algorithm (ISBN-10/ISSN/etc.)](#modulus11-algorithm)
 * [NHS (UK National Health Service) Algorithm](#nhs-algorithm)
+* [NOID Check Digit Algorithm](#noid-check-digit-algorithm)
 * [NPI (US National Provider Identifier) Algorithm](#npi-algorithm)
 * [Verhoeff Algorithm](#verhoeff-algorithm)
 * [VIN (Vehicle Identification Number) Algorithm](#vin-algorithm)
@@ -732,6 +734,32 @@ calculation of check digits.
 Wikipedia: 
 	https://en.wikipedia.org/wiki/NHS_number#Format,_number_ranges,_and_check_characters
 	https://www.datadictionary.nhs.uk/attributes/nhs_number.html
+
+### NOID Check Digit Algorithm
+
+#### Description
+
+The NOID (Nice Opaque Identifier) Check Digit Algorithm is used by systems that
+deal with persistent identifiers (for example, ARK (Archival Resource Key) 
+identifiers). The algorithm can detect single character transcription errors and
+two character transposition errors for values that are less than 29 characters 
+in length. The algorithm operates on lower case betanumeric characters (i.e. 
+alphanumeric characters, minus vowels and the letter 'l'). The use of betanumeric
+characters reduces the likelihood that an identifier would equal a recognizable
+word or that the digits 0 or 1 could be confused for the letters 'o' or 'l'.
+
+#### Details
+
+* Valid characters - betanumeric characters ('0123456789bcdfghjkmnpqrstvwxyz')
+* Check digit size - one character
+* Check digit value - betanumeric characters ('0123456789bcdfghjkmnpqrstvwxyz')
+* Check digit location - assumed to be the trailing (right-most) character when validating
+* Max length - 27 characters when generating a check digit; 28 characters when validating
+* Class name - NcdAlgorithm
+
+#### Links
+
+https://metacpan.org/dist/Noid/view/noid#NOID-CHECK-DIGIT-ALGORITHM
 
 ### NPI Algorithm
 
