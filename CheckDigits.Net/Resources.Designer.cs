@@ -439,6 +439,24 @@ namespace CheckDigits.Net {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to NOID (Nice Opaque Identifier) check digit algorithm, betanumeric modulus 29.
+        /// </summary>
+        internal static string NcdAlgorithmDescription {
+            get {
+                return ResourceManager.GetString("NcdAlgorithmDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to NOID Check Digit.
+        /// </summary>
+        internal static string NcdAlgorithmName {
+            get {
+                return ResourceManager.GetString("NcdAlgorithmName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to NHS - Modulus 11, but only with check digits of 0-9.
         /// </summary>
         internal static string NhsAlgorithmDescription {

@@ -43,4 +43,31 @@ public static class CharConstants
    public const Char UpperCaseX = 'X';
    public const Char UpperCaseY = 'Y';
    public const Char UpperCaseZ = 'Z';
+
+   public const Char LowerCaseA = 'a';
+   public const Char LowerCaseB = 'b';
+   public const Char LowerCaseC = 'c';
+   public const Char LowerCaseD = 'd';
+   public const Char LowerCaseE = 'e';
+   public const Char LowerCaseF = 'f';
+   public const Char LowerCaseG = 'g';
+   public const Char LowerCaseH = 'h';
+   public const Char LowerCaseI = 'i';
+   public const Char LowerCaseJ = 'j';
+   public const Char LowerCaseK = 'k';
+   public const Char LowerCaseL = 'l';
+   public const Char LowerCaseM = 'm';
+   public const Char LowerCaseN = 'n';
+   public const Char LowerCaseO = 'o';
+   public const Char LowerCaseP = 'p';
+   public const Char LowerCaseQ = 'q';
+   public const Char LowerCaseR = 'r';
+   public const Char LowerCaseS = 's';
+   public const Char LowerCaseT = 't';
+   public const Char LowerCaseU = 'u';
+   public const Char LowerCaseV = 'v';
+   public const Char LowerCaseW = 'w';
+   public const Char LowerCaseX = 'x';
+   public const Char LowerCaseY = 'y';
+   public const Char LowerCaseZ = 'z';
 }

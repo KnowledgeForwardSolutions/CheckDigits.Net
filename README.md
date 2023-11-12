@@ -743,18 +743,19 @@ The NOID (Nice Opaque Identifier) Check Digit Algorithm is used by systems that
 deal with persistent identifiers (for example, ARK (Archival Resource Key) 
 identifiers). The algorithm can detect single character transcription errors and
 two character transposition errors for values that are less than 29 characters 
-in length. The algorithm operates on lower case betanumeric characters (i.e. 
-alphanumeric characters, minus vowels and the letter 'l'). The use of betanumeric
-characters reduces the likelihood that an identifier would equal a recognizable
-word or that the digits 0 or 1 could be confused for the letters 'o' or 'l'.
+in length. If the value is 29 character in length or greater then the algorithm
+is slightly less capable. The algorithm operates on lower case betanumeric 
+characters (i.e. alphanumeric characters, minus vowels, including 'y', and the 
+letter 'l'). The use of betanumeric characters reduces the likelihood that an 
+identifier would equal a recognizable word or that the digits 0 or 1 could be 
+confused for the letters 'o' or 'l'.
 
 #### Details
 
-* Valid characters - betanumeric characters ('0123456789bcdfghjkmnpqrstvwxyz')
+* Valid characters - betanumeric characters ('0123456789bcdfghjkmnpqrstvwxz')
 * Check digit size - one character
-* Check digit value - betanumeric characters ('0123456789bcdfghjkmnpqrstvwxyz')
+* Check digit value - betanumeric characters ('0123456789bcdfghjkmnpqrstvwxz')
 * Check digit location - assumed to be the trailing (right-most) character when validating
-* Max length - 27 characters when generating a check digit; 28 characters when validating
 * Class name - NcdAlgorithm
 
 #### Links

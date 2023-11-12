@@ -243,6 +243,12 @@
   <data name="Modulus11AlgorithmName" xml:space="preserve">
     <value>Modulus11</value>
   </data>
+  <data name="NcdAlgorithmDescription" xml:space="preserve">
+    <value>NOID (Nice Opaque Identifier) check digit algorithm, betanumeric modulus 29</value>
+  </data>
+  <data name="NcdAlgorithmName" xml:space="preserve">
+    <value>NOID Check Digit</value>
+  </data>
   <data name="NhsAlgorithmDescription" xml:space="preserve">
     <value>NHS - Modulus 11, but only with check digits of 0-9</value>
   </data>
