@@ -35,7 +35,32 @@ public class NcdAlgorithm : ISingleCheckDigitAlgorithm
    public string AlgorithmName => Resources.NcdAlgorithmName;
 
    /// <inheritdoc/>
-   public Boolean TryCalculateCheckDigit(String value, out Char checkDigit) => throw new NotImplementedException();
+   public Boolean TryCalculateCheckDigit(String value, out Char checkDigit)
+   {
+      checkDigit = CharConstants.NUL;
+      if (String.IsNullOrEmpty(value))
+      {
+         return false;
+      }
+
+      Int32 num;
+      var sum = 0;
+      for (var index = 0; index < value.Length; index++)
+      {
+         var ch = value[index];
+         num = ch >= CharConstants.DigitZero && ch <= CharConstants.DigitNine
+            ? ch.ToIntegerDigit()
+            : ch >= CharConstants.LowerCaseB && ch <= CharConstants.LowerCaseZ
+               ? _letters[ch - CharConstants.LowerCaseB]
+               : 0;
+         sum += num * (index + 1);
+      }
+
+      var checksum = sum % 29;
+      checkDigit = _checkCharacters[checksum];
+
+      return true;
+   }
 
    /// <inheritdoc/>
    public Boolean Validate(String value)
