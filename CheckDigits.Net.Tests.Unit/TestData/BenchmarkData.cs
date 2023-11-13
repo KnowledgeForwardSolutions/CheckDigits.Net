@@ -1,4 +1,6 @@
-﻿using System.Text;
+﻿// Ignore Spelling: Noid
+
+using System.Text;
 
 namespace CheckDigits.Net.Tests.Unit.TestData;
 
@@ -42,11 +44,28 @@ public class BenchmarkData
       var chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
       var alphabeticData = String.Concat(Enumerable.Range(0, 26)
-         .Select(x => chars[Random.Shared.Next(0, 25)].ToString()));
+         .Select(x => chars[Random.Shared.Next(0, 35)].ToString()));
 
       _outputHelper.WriteLine(alphabeticData);
 
       // K1MEL37655H24EDKCA69ID433B
+      // U7Y8SXRC0O3SC4IHYQF4MYY6XF  updated after only including first 26 characters
+   }
+
+   [Fact]
+   public void BenchmarkData_GenerateNoidData()
+   {
+      var digits = "0123456789";
+      var chars = "0123456789bcdfghjkmnpqrstvwxz";
+
+      var naanData = String.Concat(Enumerable.Range(0, 5)
+         .Select(x => digits[Random.Shared.Next(0, 9)].ToString()));
+      var name = String.Concat(Enumerable.Range(0, 20)
+         .Select(x => chars[Random.Shared.Next(0, 28)].ToString()));
+
+      _outputHelper.WriteLine($"{naanData}/{name}");
+
+      // 11404/2h9tqbxk6rw7dwmq73g3
    }
 
    [Fact]
@@ -98,7 +117,8 @@ public class BenchmarkData
    [Fact]
    public void BenchmarkData_AlphanumericAlgorithms()
    {
-      const String chars = "K1MEL37655H24EDKCA69ID433B";
+      const String chars = "U7Y8SXRC0O3SC4IHYQF4MYY6XF";
+      const String noid = "11404/2h9tqbxk6rw7dwmq73g3";
 
       var details = DoubleCharacterValues(Algorithms.AlphanumericMod97_10, chars);
       _outputHelper.WriteLine(details);
@@ -113,6 +133,10 @@ public class BenchmarkData
       _outputHelper.WriteLine(String.Empty);
 
       details = SingleCharacterValues(Algorithms.Iso7064Mod37_36, chars);
+      _outputHelper.WriteLine(details);
+      _outputHelper.WriteLine(String.Empty);
+
+      details = SingleCharacterValues(Algorithms.Ncd, noid);
       _outputHelper.WriteLine(details);
       _outputHelper.WriteLine(String.Empty);
    }
