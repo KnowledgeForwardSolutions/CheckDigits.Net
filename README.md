@@ -36,6 +36,7 @@ are up to 10X-50X faster than those in popular Nuget packages.
     * [Modulus10_13 Algorithm (UPC/EAN/ISBN-13/etc.)](#modulus10_13-algorithm)
     * [Modulus11 Algorithm (ISBN-10/ISSN/etc.)](#modulus11-algorithm)
     * [NHS (UK National Health Service) Algorithm](#nhs-algorithm)
+    * [NOID Check Digit Algorithm](#noid-check-digit-algorithm)
     * [NPI (US National Provider Identifier) Algorithm](#npi-algorithm)
     * [Verhoeff Algorithm](#verhoeff-algorithm)
     * [VIN (Vehicle Identification Number) Algorithm](#vin-algorithm)
@@ -123,6 +124,7 @@ The ISO/IEC 7064:2003 standard is available at https://www.iso.org/standard/3153
 * [Modulus10_13 Algorithm (UPC/EAN/ISBN-13/etc.)](#modulus10_13-algorithm)
 * [Modulus11 Algorithm (ISBN-10/ISSN/etc.)](#modulus11-algorithm)
 * [NHS (UK National Health Service) Algorithm](#nhs-algorithm)
+* [NOID Check Digit Algorithm](#noid-check-digit-algorithm)
 * [NPI (US National Provider Identifier) Algorithm](#npi-algorithm)
 * [Verhoeff Algorithm](#verhoeff-algorithm)
 * [VIN (Vehicle Identification Number) Algorithm](#vin-algorithm)
@@ -733,6 +735,33 @@ Wikipedia:
 	https://en.wikipedia.org/wiki/NHS_number#Format,_number_ranges,_and_check_characters
 	https://www.datadictionary.nhs.uk/attributes/nhs_number.html
 
+### NOID Check Digit Algorithm
+
+#### Description
+
+The NOID (Nice Opaque Identifier) Check Digit Algorithm is used by systems that
+deal with persistent identifiers (for example, ARK (Archival Resource Key) 
+identifiers). The algorithm can detect single character transcription errors and
+two character transposition errors for values that are less than 29 characters 
+in length. If the value is 29 character in length or greater then the algorithm
+is slightly less capable. The algorithm operates on lower case betanumeric 
+characters (i.e. alphanumeric characters, minus vowels, including 'y', and the 
+letter 'l'). The use of betanumeric characters reduces the likelihood that an 
+identifier would equal a recognizable word or that the digits 0 or 1 could be 
+confused for the letters 'o' or 'l'.
+
+#### Details
+
+* Valid characters - betanumeric characters ('0123456789bcdfghjkmnpqrstvwxz')
+* Check digit size - one character
+* Check digit value - betanumeric characters ('0123456789bcdfghjkmnpqrstvwxz')
+* Check digit location - assumed to be the trailing (right-most) character when validating
+* Class name - NcdAlgorithm
+
+#### Links
+
+https://metacpan.org/dist/Noid/view/noid#NOID-CHECK-DIGIT-ALGORITHM
+
 ### NPI Algorithm
 
 #### Description
@@ -929,39 +958,49 @@ benchmarks do not cover lengths greater than 10.
 
 #### General Alphanumeric Algorithms
 
+Note that the values used for the NOID Check Digit algorithm do not include lengths
+3 or 6 so that benchmarks are not run on purely numeric strings.
+
 | Algorithm Name           | Value                 | Mean      | Error     | StdDev    | Allocated |
 |------------------------- |---------------------- |----------:|----------:|----------:|----------:|
-| AlphanumericMod97_10     | K1M                   | 11.002 ns | 0.1365 ns | 0.1277 ns |         - |
-| AlphanumericMod97_10     | K1MEL3                | 17.797 ns | 0.2443 ns | 0.2165 ns |         - |
-| AlphanumericMod97_10     | K1MEL3765             | 22.489 ns | 0.1779 ns | 0.1485 ns |         - |
-| AlphanumericMod97_10     | K1MEL37655H2          | 28.817 ns | 0.4608 ns | 0.4310 ns |         - |
-| AlphanumericMod97_10     | K1MEL37655H24ED       | 34.900 ns | 0.3153 ns | 0.2633 ns |         - |
-| AlphanumericMod97_10     | K1MEL37655H24EDKCA    | 43.881 ns | 0.6774 ns | 0.6337 ns |         - |
-| AlphanumericMod97_10     | K1MEL37655H24EDKCA69I | 51.921 ns | 1.0400 ns | 1.3523 ns |         - |
+| AlphanumericMod97_10     | U7y                   | 10.957 ns | 0.1313 ns | 0.1229 ns |         - |
+| AlphanumericMod97_10     | U7y8SX                | 20.110 ns | 0.1744 ns | 0.1632 ns |         - |
+| AlphanumericMod97_10     | U7y8SXrC0             | 27.565 ns | 0.4840 ns | 0.4528 ns |         - |
+| AlphanumericMod97_10     | U7y8SXrC0O3S          | 36.799 ns | 0.2212 ns | 0.2069 ns |         - |
+| AlphanumericMod97_10     | U7y8SXrC0O3Sc4I       | 43.957 ns | 0.3136 ns | 0.2933 ns |         - |
+| AlphanumericMod97_10     | U7y8SXrC0O3Sc4IHYQ    | 53.902 ns | 0.3897 ns | 0.3645 ns |         - |
+| AlphanumericMod97_10     | U7y8SXrC0O3Sc4IHYQF4M | 60.975 ns | 0.4534 ns | 0.4241 ns |         - |
 |
-| ISO/IEC 7064 MOD 1271-36 | K1M                   |  8.863 ns | 0.1743 ns | 0.1630 ns |         - |
-| ISO/IEC 7064 MOD 1271-36 | K1MEL3                | 12.580 ns | 0.0931 ns | 0.0871 ns |         - |
-| ISO/IEC 7064 MOD 1271-36 | K1MEL3765             | 16.587 ns | 0.2760 ns | 0.2446 ns |         - |
-| ISO/IEC 7064 MOD 1271-36 | K1MEL37655H2          | 20.065 ns | 0.2071 ns | 0.1836 ns |         - |
-| ISO/IEC 7064 MOD 1271-36 | K1MEL37655H24ED       | 24.160 ns | 0.3622 ns | 0.3388 ns |         - |
-| ISO/IEC 7064 MOD 1271-36 | K1MEL37655H24EDKCA    | 27.477 ns | 0.1746 ns | 0.1547 ns |         - |
-| ISO/IEC 7064 MOD 1271-36 | K1MEL37655H24EDKCA69I | 32.238 ns | 0.5370 ns | 0.5023 ns |         - |
+| ISO/IEC 7064 MOD 1271-36 | U7Y                   |  7.775 ns | 0.1203 ns | 0.1125 ns |         - |
+| ISO/IEC 7064 MOD 1271-36 | U7Y8SX                | 11.586 ns | 0.0878 ns | 0.0821 ns |         - |
+| ISO/IEC 7064 MOD 1271-36 | U7Y8SXRC0             | 16.392 ns | 0.1493 ns | 0.1324 ns |         - |
+| ISO/IEC 7064 MOD 1271-36 | U7Y8SXRC0O3S          | 19.021 ns | 0.1470 ns | 0.1375 ns |         - |
+| ISO/IEC 7064 MOD 1271-36 | U7Y8SXRC0O3SC4I       | 23.149 ns | 0.1528 ns | 0.1429 ns |         - |
+| ISO/IEC 7064 MOD 1271-36 | U7Y8SXRC0O3SC4IHYQ    | 27.458 ns | 0.1873 ns | 0.1752 ns |         - |
+| ISO/IEC 7064 MOD 1271-36 | U7Y8SXRC0O3SC4IHYQF4M | 32.253 ns | 0.3277 ns | 0.3066 ns |         - |
 |
-| ISO/IEC 7064 MOD 37-2    | K1M                   |  7.182 ns | 0.0572 ns | 0.0507 ns |         - |
-| ISO/IEC 7064 MOD 37-2    | K1MEL3                | 11.216 ns | 0.0702 ns | 0.0622 ns |         - |
-| ISO/IEC 7064 MOD 37-2    | K1MEL3765             | 14.887 ns | 0.1013 ns | 0.0948 ns |         - |
-| ISO/IEC 7064 MOD 37-2    | K1MEL37655H2          | 19.123 ns | 0.1784 ns | 0.1582 ns |         - |
-| ISO/IEC 7064 MOD 37-2    | K1MEL37655H24ED       | 23.105 ns | 0.1653 ns | 0.1465 ns |         - |
-| ISO/IEC 7064 MOD 37-2    | K1MEL37655H24EDKCA    | 27.188 ns | 0.1583 ns | 0.1481 ns |         - |
-| ISO/IEC 7064 MOD 37-2    | K1MEL37655H24EDKCA69I | 30.627 ns | 0.1662 ns | 0.1555 ns |         - |
+| ISO/IEC 7064 MOD 37-2    | U7Y                   |  7.287 ns | 0.0465 ns | 0.0388 ns |         - |
+| ISO/IEC 7064 MOD 37-2    | U7Y8SX                | 11.315 ns | 0.0584 ns | 0.0547 ns |         - |
+| ISO/IEC 7064 MOD 37-2    | U7Y8SXRC0             | 15.624 ns | 0.1161 ns | 0.1086 ns |         - |
+| ISO/IEC 7064 MOD 37-2    | U7Y8SXRC0O3S          | 20.231 ns | 0.1653 ns | 0.1546 ns |         - |
+| ISO/IEC 7064 MOD 37-2    | U7Y8SXRC0O3SC4I       | 24.034 ns | 0.2066 ns | 0.1831 ns |         - |
+| ISO/IEC 7064 MOD 37-2    | U7Y8SXRC0O3SC4IHYQ    | 28.953 ns | 0.1903 ns | 0.1589 ns |         - |
+| ISO/IEC 7064 MOD 37-2    | U7Y8SXRC0O3SC4IHYQF4M | 32.639 ns | 0.4190 ns | 0.3919 ns |         - |
 |
-| ISO/IEC 7064 MOD 37,36   | K1M                   |  8.321 ns | 0.0571 ns | 0.0534 ns |         - |
-| ISO/IEC 7064 MOD 37,36   | K1MEL3                | 13.299 ns | 0.0963 ns | 0.0854 ns |         - |
-| ISO/IEC 7064 MOD 37,36   | K1MEL3765             | 17.224 ns | 0.1407 ns | 0.1247 ns |         - |
-| ISO/IEC 7064 MOD 37,36   | K1MEL37655H2          | 21.530 ns | 0.1734 ns | 0.1622 ns |         - |
-| ISO/IEC 7064 MOD 37,36   | K1MEL37655H24ED       | 26.526 ns | 0.1751 ns | 0.1638 ns |         - |
-| ISO/IEC 7064 MOD 37,36   | K1MEL37655H24EDKCA    | 32.078 ns | 0.1808 ns | 0.1691 ns |         - |
-| ISO/IEC 7064 MOD 37,36   | K1MEL37655H24EDKCA69I | 36.350 ns | 0.3844 ns | 0.3596 ns |         - |
+| ISO/IEC 7064 MOD 37,36   | U7Y                   |  7.197 ns | 0.0649 ns | 0.0608 ns |         - |
+| ISO/IEC 7064 MOD 37,36   | U7Y8SX                | 10.884 ns | 0.1312 ns | 0.1227 ns |         - |
+| ISO/IEC 7064 MOD 37,36   | U7Y8SXRC0             | 15.222 ns | 0.1170 ns | 0.1038 ns |         - |
+| ISO/IEC 7064 MOD 37,36   | U7Y8SXRC0O3S          | 19.103 ns | 0.1590 ns | 0.1488 ns |         - |
+| ISO/IEC 7064 MOD 37,36   | U7Y8SXRC0O3SC4I       | 24.701 ns | 0.1302 ns | 0.1218 ns |         - |
+| ISO/IEC 7064 MOD 37,36   | U7Y8SXRC0O3SC4IHYQ    | 28.522 ns | 0.3561 ns | 0.3157 ns |         - |
+| ISO/IEC 7064 MOD 37,36   | U7Y8SXRC0O3SC4IHYQF4M | 33.024 ns | 0.1466 ns | 0.1300 ns |         - |
+|
+| NOID Check Digit         | 11404/2h9             | 10.701 ns | 0.0572 ns | 0.0535 ns |         - |
+| NOID Check Digit         | 11404/2h9tqb          | 16.175 ns | 0.1153 ns | 0.1022 ns |         - |
+| NOID Check Digit         | 11404/2h9tqbxk6       | 19.212 ns | 0.1336 ns | 0.1250 ns |         - |
+| NOID Check Digit         | 11404/2h9tqbxk6rw7    | 22.600 ns | 0.1498 ns | 0.1328 ns |         - |
+| NOID Check Digit         | 11404/2h9tqbxk6rw7dwm | 28.120 ns | 0.1829 ns | 0.1711 ns |         - |
+
 
 #### Value Specific Algorithms
 
@@ -1088,42 +1127,53 @@ uses two check characters.
 
 #### General Alphanumeric Algorithms
 
-ISO/IEC 7064 MOD 1271-36 uses two check characters. ISO/IEC 7064 MOD 37-2 and 
-ISO/IEC 7064 MOD 37,36 use a single check character.
+AlphanumericMod97_10 algorithm and ISO/IEC 7064 MOD 1271-36 uses two check characters. 
+ISO/IEC 7064 MOD 37-2, ISO/IEC 7064 MOD 37,36 and NOID Check Digit algorithms use a 
+single check character.
+
+Note also that the values used for the NOID Check Digit algorithm do not include lengths
+3 or 6 so that benchmarks are not run on purely numeric strings.
 
 | Algorithm Name           | Value                   | Mean      | Error     | StdDev    | Allocated |
 |------------------------- |-------------------------|----------:|----------:|----------:|----------:|
-| AlphanumericMod97_10     | K1M66                   | 12.387 ns | 0.1193 ns | 0.1058 ns |         - |
-| AlphanumericMod97_10     | K1MEL372                | 20.063 ns | 0.2217 ns | 0.2074 ns |         - |
-| AlphanumericMod97_10     | K1MEL376530             | 24.766 ns | 0.3120 ns | 0.2919 ns |         - |
-| AlphanumericMod97_10     | K1MEL37655H272          | 31.257 ns | 0.2680 ns | 0.2376 ns |         - |
-| AlphanumericMod97_10     | K1MEL37655H24ED07       | 38.967 ns | 0.6239 ns | 0.5836 ns |         - |
-| AlphanumericMod97_10     | K1MEL37655H24EDKCA67    | 47.562 ns | 0.3638 ns | 0.3403 ns |         - |
-| AlphanumericMod97_10     | K1MEL37655H24EDKCA69I17 | 54.507 ns | 0.4677 ns | 0.4375 ns |         - |
+| AlphanumericMod97_10     | U7y46                   | 12.354 ns | 0.0603 ns | 0.0534 ns |         - |
+| AlphanumericMod97_10     | U7y8SX89                | 20.738 ns | 0.0957 ns | 0.0799 ns |         - |
+| AlphanumericMod97_10     | U7y8SXrC087             | 28.463 ns | 0.2733 ns | 0.2423 ns |         - |
+| AlphanumericMod97_10     | U7y8SXrC0O3S38          | 36.453 ns | 0.2528 ns | 0.2365 ns |         - |
+| AlphanumericMod97_10     | U7y8SXrC0O3Sc4I27       | 44.678 ns | 0.2166 ns | 0.2026 ns |         - |
+| AlphanumericMod97_10     | U7y8SXrC0O3Sc4IHYQ54    | 54.195 ns | 0.3931 ns | 0.3677 ns |         - |
+| AlphanumericMod97_10     | U7y8SXrC0O3Sc4IHYQF4M21 | 61.407 ns | 0.3487 ns | 0.3262 ns |         - |
 |
-| ISO/IEC 7064 MOD 1271-36 | K1M0W                   |  8.954 ns | 0.0646 ns | 0.0539 ns |         - |
-| ISO/IEC 7064 MOD 1271-36 | K1MEL34W                | 14.014 ns | 0.1141 ns | 0.1011 ns |         - |
-| ISO/IEC 7064 MOD 1271-36 | K1MEL37654L             | 17.518 ns | 0.1200 ns | 0.1122 ns |         - |
-| ISO/IEC 7064 MOD 1271-36 | K1MEL37655H2KZ          | 22.687 ns | 0.1336 ns | 0.1184 ns |         - |
-| ISO/IEC 7064 MOD 1271-36 | K1MEL37655H24EDRD       | 26.384 ns | 0.2536 ns | 0.2372 ns |         - |
-| ISO/IEC 7064 MOD 1271-36 | K1MEL37655H24EDKCA8P    | 30.657 ns | 0.3042 ns | 0.2697 ns |         - |
-| ISO/IEC 7064 MOD 1271-36 | K1MEL37655H24EDKCA69I8W | 35.379 ns | 0.4214 ns | 0.3942 ns |         - |
+| ISO/IEC 7064 MOD 1271-36 | U7YM0                   |  8.423 ns | 0.0587 ns | 0.0549 ns |         - |
+| ISO/IEC 7064 MOD 1271-36 | U7Y8SXOR                | 13.001 ns | 0.1098 ns | 0.1028 ns |         - |
+| ISO/IEC 7064 MOD 1271-36 | U7Y8SXRC0FI             | 17.476 ns | 0.1368 ns | 0.1279 ns |         - |
+| ISO/IEC 7064 MOD 1271-36 | U7Y8SXRC0O3SX4          | 21.074 ns | 0.1622 ns | 0.1517 ns |         - |
+| ISO/IEC 7064 MOD 1271-36 | U7Y8SXRC0O3SC4I9D       | 26.002 ns | 0.2291 ns | 0.2143 ns |         - |
+| ISO/IEC 7064 MOD 1271-36 | U7Y8SXRC0O3SC4IHYQYI    | 30.088 ns | 0.2033 ns | 0.1803 ns |         - |
+| ISO/IEC 7064 MOD 1271-36 | U7Y8SXRC0O3SC4IHYQF4M44 | 33.630 ns | 0.2810 ns | 0.2346 ns |         - |
 |
-| ISO/IEC 7064 MOD 37-2    | K1MF                    |  7.115 ns | 0.0568 ns | 0.0531 ns |         - |
-| ISO/IEC 7064 MOD 37-2    | K1MEL3M                 | 11.459 ns | 0.1226 ns | 0.1147 ns |         - |
-| ISO/IEC 7064 MOD 37-2    | K1MEL37655              | 14.364 ns | 0.1356 ns | 0.1269 ns |         - |
-| ISO/IEC 7064 MOD 37-2    | K1MEL37655H2W           | 18.817 ns | 0.1800 ns | 0.1683 ns |         - |
-| ISO/IEC 7064 MOD 37-2    | K1MEL37655H24EDO        | 23.357 ns | 0.2114 ns | 0.1978 ns |         - |
-| ISO/IEC 7064 MOD 37-2    | K1MEL37655H24EDKCAV     | 28.158 ns | 0.2954 ns | 0.2763 ns |         - |
-| ISO/IEC 7064 MOD 37-2    | K1MEL37655H24EDKCA69IA  | 31.930 ns | 0.3158 ns | 0.2799 ns |         - |
+| ISO/IEC 7064 MOD 37-2    | U7YZ                    |  7.013 ns | 0.0817 ns | 0.0764 ns |         - |
+| ISO/IEC 7064 MOD 37-2    | U7Y8SXV                 | 11.281 ns | 0.1002 ns | 0.0837 ns |         - |
+| ISO/IEC 7064 MOD 37-2    | U7Y8SXRC0E              | 15.225 ns | 0.1731 ns | 0.1619 ns |         - |
+| ISO/IEC 7064 MOD 37-2    | U7Y8SXRC0O3SU           | 19.720 ns | 0.1730 ns | 0.1618 ns |         - |
+| ISO/IEC 7064 MOD 37-2    | U7Y8SXRC0O3SC4IB        | 24.069 ns | 0.2132 ns | 0.1994 ns |         - |
+| ISO/IEC 7064 MOD 37-2    | U7Y8SXRC0O3SC4IHYQG     | 28.596 ns | 0.2424 ns | 0.2267 ns |         - |
+| ISO/IEC 7064 MOD 37-2    | U7Y8SXRC0O3SC4IHYQF4MF  | 32.949 ns | 0.2376 ns | 0.2223 ns |         - |
 |
-| ISO/IEC 7064 MOD 37,36   | K1ME                    |  8.637 ns | 0.0738 ns | 0.0690 ns |         - |
-| ISO/IEC 7064 MOD 37,36   | K1MEL3D                 | 13.006 ns | 0.0574 ns | 0.0508 ns |         - |
-| ISO/IEC 7064 MOD 37,36   | K1MEL3765E              | 16.348 ns | 0.1423 ns | 0.1331 ns |         - |
-| ISO/IEC 7064 MOD 37,36   | K1MEL37655H2Z           | 20.454 ns | 0.2239 ns | 0.2094 ns |         - |
-| ISO/IEC 7064 MOD 37,36   | K1MEL37655H24EDI        | 24.746 ns | 0.1230 ns | 0.1091 ns |         - |
-| ISO/IEC 7064 MOD 37,36   | K1MEL37655H24EDKCAH     | 29.077 ns | 0.1466 ns | 0.1371 ns |         - |
-| ISO/IEC 7064 MOD 37,36   | K1MEL37655H24EDKCA69IG  | 33.149 ns | 0.2918 ns | 0.2730 ns |         - |
+| ISO/IEC 7064 MOD 37,36   | U7YW                    |  8.342 ns | 0.0490 ns | 0.0434 ns |         - |
+| ISO/IEC 7064 MOD 37,36   | U7Y8SX8                 | 12.235 ns | 0.1005 ns | 0.0940 ns |         - |
+| ISO/IEC 7064 MOD 37,36   | U7Y8SXRC0E              | 16.822 ns | 0.1493 ns | 0.1323 ns |         - |
+| ISO/IEC 7064 MOD 37,36   | U7Y8SXRC0O3SR           | 20.733 ns | 0.1190 ns | 0.0994 ns |         - |
+| ISO/IEC 7064 MOD 37,36   | U7Y8SXRC0O3SC4IT        | 25.913 ns | 0.2772 ns | 0.2593 ns |         - |
+| ISO/IEC 7064 MOD 37,36   | U7Y8SXRC0O3SC4IHYQD     | 30.133 ns | 0.3057 ns | 0.2860 ns |         - |
+| ISO/IEC 7064 MOD 37,36   | U7Y8SXRC0O3SC4IHYQF4MP  | 35.250 ns | 0.2788 ns | 0.2608 ns |         - |
+|
+| NOID Check Digit         | 11404/2h9m              | 13.725 ns | 0.0985 ns | 0.0873 ns |         - |
+| NOID Check Digit         | 11404/2h9tqb0           | 19.307 ns | 0.1813 ns | 0.1607 ns |         - |
+| NOID Check Digit         | 11404/2h9tqbxk6d        | 23.805 ns | 0.1584 ns | 0.1482 ns |         - |
+| NOID Check Digit         | 11404/2h9tqbxk6rw74     | 28.676 ns | 0.3153 ns | 0.2795 ns |         - |
+| NOID Check Digit         | 11404/2h9tqbxk6rw7dwmz  | 33.666 ns | 0.3178 ns | 0.2973 ns |         - |
+
 
 #### Value Specific Algorithms
 
