@@ -410,22 +410,29 @@ Wikipedia: https://en.wikipedia.org/wiki/International_Bank_Account_Number
 
 The ISAN (International Standard Audiovisual Number) algorithm uses the ISO/IEC
 7064 MOD 37,36 algorithm internally. The algorithm in CheckDigits.Net is appropriate
-for ISAN values (either root segments or root+version segments) formatted as 
-human readable strings. The leading "ISAN " prefix is ignored as well as the 
-dash ('-') characters used to separate the hexadecimal digits into groups of four
-characters. Values that are 21 characters long are treated as root segments and
-the 21st character is assumed to be the check digit. Values that are 33 characters
-long are treated as root+version segments and **both** the 21st and the 33rd
-characters are assumed to be check digits. Both check digits for root+version 
-segments must be valid for the value to be considered valid.
+for ISAN values formatted as human readable strings. Either ISAN root segments
+(16 hexadecimal digits plus check character and formatting for a total length of 
+26 characters) or root+version segments (24 hexadecimal digits plus two check
+characters and formatting for a total length of 38 characters) can be validated.
+
+For example, the formatted ISAN for the Star Trek episode *Amok Time* is 
+ISAN 0000-0000-C36D-002B-K-0000-0000-E. The 'K' character is the check digit for
+the 16 root characters and the 'E' is the check character for the entire 26
+root+version characters.
+
+When validating an ISAN value, the leading "ISAN " prefix is ignored as well as 
+the dash ('-') characters used to separate the hexadecimal digits into groups of 
+four characters. Per https://www.isan.org/docs/isan_check_digit_calculation_v2.0.pdf,
+both check digits must be correct if the value includes both root and version
+segments.
 
 #### Details
 
 * Valid characters - hexadecimal characters ('0' - '9', 'A' - 'F')
 * Check digit size - one character
 * Check digit value - alphanumeric characters ('0' - '9', 'A' - 'Z')
-* Check digit location - the 21st character (**and** the 33rd character for values longer than 21 characters)
-* Value length - 21 or 33
+* Check digit location - the 26th character (**and** the 38th character for values longer than 26 characters)
+* Value length - 26 or 38
 * Class name - IsanAlgorithm
 
 #### Common Applications
