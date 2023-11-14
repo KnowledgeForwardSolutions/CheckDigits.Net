@@ -21,6 +21,7 @@ are up to 10X-50X faster than those in popular Nuget packages.
     * [Alphanumeric MOD 97-10 Algorithm](#alphanumeric-mod-97-10-algorithm)
     * [Damm Algorithm](#damm-algorithm)
     * [IBAN (International Bank Account Number) Algorithm](#iban-algorithm)
+    * [ISAN (International Standard Audiovisual Number) Algorithm](#isan-algorithm)
     * [ISIN (International Securities Identification Number) Algorithm](#isin-algorithm)
     * [ISO/IEC 7064 MOD 11,10 Algorithm](#isoiec-7064-mod-1110-algorithm)
     * [ISO/IEC 7064 MOD 11-2 Algorithm](#isoiec-7064-mod-11-2-algorithm)
@@ -109,6 +110,7 @@ The ISO/IEC 7064:2003 standard is available at https://www.iso.org/standard/3153
 * [Alphanumeric MOD 97-10 Algorithm](#alphanumeric-mod-97-10-algorithm)
 * [Damm Algorithm](#damm-algorithm)
 * [IBAN (International Bank Account Number) Algorithm](#iban-algorithm)
+* [ISAN (International Standard Audiovisual Number) Algorithm](#isan-algorithm)
 * [ISIN (International Securities Identification Number) Algorithm](#isin-algorithm)
 * [ISO/IEC 7064 MOD 11,10 Algorithm](#isoiec-7064-mod-1110-algorithm)
 * [ISO/IEC 7064 MOD 11-2 Algorithm](#isoiec-7064-mod-11-2-algorithm)
@@ -147,6 +149,7 @@ The ISO/IEC 7064:2003 standard is available at https://www.iso.org/standard/3153
 | IBAN                  | [IBAN Algorithm](#iban-algorithm) |
 | IMEI				    | [Luhn Algorithm](#luhn-algorithm) |
 | IMO Number            | [Modulus10 Algorithm](#modulus10_2-algorithm) |
+| ISAN                  | [ISAN Algorithm](#isan-algorithm) |
 | ISBN-10				| [Modulus11 Algorithm](#modulus11-algorithm) |
 | ISBN-13				| [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
 | ISBT Donation Identification Number |  [ISO/IEC 7064 MOD 37-2 Algorithm](#isoiec-7064-mod-37-2-algorithm) |
@@ -400,6 +403,40 @@ contained in account number, etc.) are left to the application developer.
 #### Links
 
 Wikipedia: https://en.wikipedia.org/wiki/International_Bank_Account_Number
+
+### ISAN Algorithm
+
+#### Description
+
+The ISAN (International Standard Audiovisual Number) algorithm uses the ISO/IEC
+7064 MOD 37,36 algorithm internally. The algorithm in CheckDigits.Net is appropriate
+for ISAN values (either root segments or root+version segments) formatted as 
+human readable strings. The leading "ISAN " prefix is ignored as well as the 
+dash ('-') characters used to separate the hexadecimal digits into groups of four
+characters. Values that are 21 characters long are treated as root segments and
+the 21st character is assumed to be the check digit. Values that are 33 characters
+long are treated as root+version segments and **both** the 21st and the 33rd
+characters are assumed to be check digits. Both check digits for root+version 
+segments must be valid for the value to be considered valid.
+
+#### Details
+
+* Valid characters - hexadecimal characters ('0' - '9', 'A' - 'F')
+* Check digit size - one character
+* Check digit value - alphanumeric characters ('0' - '9', 'A' - 'Z')
+* Check digit location - the 21st character (**and** the 33rd character for values longer than 21 characters)
+* Value length - 21 or 33
+* Class name - IsanAlgorithm
+
+#### Common Applications
+
+* International Standard Audiovisual Number (ISAN)
+
+#### Links
+
+https://en.wikipedia.org/wiki/International_Standard_Audiovisual_Number
+https://www.isan.org/docs/isan_check_digit_calculation_v2.0.pdf
+https://web.isan.org/public/en/search
 
 ### ISIN Algorithm
 
