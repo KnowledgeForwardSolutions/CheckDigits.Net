@@ -1,4 +1,4 @@
-﻿// Ignore Spelling: Aba Damm Iban Isin Luhn Ncd Nhs Npi Rtn Verhoeff
+﻿// Ignore Spelling: Aba Damm Iban Isan Isin Luhn Ncd Nhs Npi Rtn Verhoeff
 
 namespace CheckDigits.Net.Tests.Unit;
 
@@ -57,6 +57,20 @@ public class AlgorithmsTests
    [Fact]
    public void Algorithms_Iban_ShouldBeExpectedType()
       => Algorithms.Iban.Should().BeOfType<IbanAlgorithm>();
+
+   #endregion
+
+   #region Isan Property Tests
+   // ==========================================================================
+   // ==========================================================================
+
+   [Fact]
+   public void Algorithms_Isan_ShouldNotBeNull()
+      => Algorithms.Isan.Should().NotBeNull();
+
+   [Fact]
+   public void Algorithms_Isan_ShouldBeExpectedType()
+      => Algorithms.Isan.Should().BeOfType<IsanAlgorithm>();
 
    #endregion
 

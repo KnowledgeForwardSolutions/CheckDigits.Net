@@ -396,10 +396,6 @@ contained in account number, etc.) are left to the application developer.
 * Value minimum length - 5
 * Class name - IbanAlgorithm
 
-#### Common Applications
-
-* International Securities Identification Number (ISIN)
-
 #### Links
 
 Wikipedia: https://en.wikipedia.org/wiki/International_Bank_Account_Number
@@ -408,36 +404,39 @@ Wikipedia: https://en.wikipedia.org/wiki/International_Bank_Account_Number
 
 #### Description
 
-The ISAN (International Standard Audiovisual Number) algorithm uses the ISO/IEC
-7064 MOD 37,36 algorithm internally. The algorithm in CheckDigits.Net is appropriate
-for ISAN values formatted as human readable strings. Either ISAN root segments
-(16 hexadecimal digits plus check character and formatting for a total length of 
-26 characters) or root+version segments (24 hexadecimal digits plus two check
-characters and formatting for a total length of 38 characters) can be validated.
+The ISAN (International Standard Audiovisual Number) algorithm uses a variation 
+of the ISO/IEC 7064 MOD 37,36 algorithm and can have either one or two check
+characters. 16 character ISAN root segment values have a single trailing check 
+character while 24 character ISAN root+version values contain two check characters,
+the root segment check character in the 17th character position for the first 16
+characters and a trailing check character for the entire 24 character value. Per 
+https://www.isan.org/docs/isan_check_digit_calculation_v2.0.pdf, both check 
+characters must be correct if the value includes both root and version segments.
 
-For example, the formatted ISAN for the Star Trek episode *Amok Time* is 
-ISAN 0000-0000-C36D-002B-K-0000-0000-E. The 'K' character is the check digit for
-the 16 root characters and the 'E' is the check character for the entire 26
-root+version characters.
+CheckDigits.Net can validate either unformatted ISAN values consisting only of 
+hexadecimal digits and alphanumeric check characters or ISAN values that have
+been formatted for human readability. 
 
-When validating an ISAN value, the leading "ISAN " prefix is ignored as well as 
-the dash ('-') characters used to separate the hexadecimal digits into groups of 
-four characters. Per https://www.isan.org/docs/isan_check_digit_calculation_v2.0.pdf,
-both check digits must be correct if the value includes both root and version
-segments.
+To validate unformatted root+version ISAN values, use the Validate method. The
+Validate method only checks 26 character unformatted ISAN root+version values.
+(To check 17 character root segment only ISAN values, use the ISO/IEC 7064 MOD 37,36
+algorithm directly.)
+
+To validate formatted ISAN values, either root segment only or root+version values,
+use the ValidateFormatted method. The ValidateFormatted method will check both
+the format of the value ("ISAN " prefix plus dash characters that separate the
+value into 4 character groups) and the check character(s) in the value.
+
+An example formatted root segment ISAN value is ISAN 0000-0000-C36D-002B-K. And
+example formatted root+version ISAN value is ISAN 0000-0000-C36D-002B-K-0000-0000-E.
 
 #### Details
 
 * Valid characters - hexadecimal characters ('0' - '9', 'A' - 'F')
 * Check digit size - one character
 * Check digit value - alphanumeric characters ('0' - '9', 'A' - 'Z')
-* Check digit location - the 26th character (**and** the 38th character for values longer than 26 characters)
-* Value length - 26 or 38
+* Check digit location - the 17th non-format character (**and** the 26th non-format character for root+version values)
 * Class name - IsanAlgorithm
-
-#### Common Applications
-
-* International Standard Audiovisual Number (ISAN)
 
 #### Links
 
@@ -469,10 +468,6 @@ algorithm cannot detect).
 * Check digit location - assumed to be the trailing (right-most) character when validating
 * Value length - 12
 * Class name - IsinAlgorithm
-
-#### Common Applications
-
-* International Securities Identification Number (ISIN)
 
 #### Links
 

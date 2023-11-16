@@ -1,4 +1,4 @@
-﻿// Ignore Spelling: Aba Damm Iban Isin Luhn Ncd Nhs Npi Rtn Verhoeff
+﻿// Ignore Spelling: Aba Damm Iban Isan Isin Luhn Ncd Nhs Npi Rtn Verhoeff
 
 namespace CheckDigits.Net;
 
@@ -19,6 +19,9 @@ public static class Algorithms
 
    private static readonly Lazy<IDoubleCheckDigitAlgorithm> _iban =
      new(() => new IbanAlgorithm());
+
+   private static readonly Lazy<ICheckDigitAlgorithm> _isan =
+     new(() => new IsanAlgorithm());
 
    private static readonly Lazy<ISingleCheckDigitAlgorithm> _isin =
      new(() => new IsinAlgorithm());
@@ -98,6 +101,11 @@ public static class Algorithms
    ///   International Bank Account Number algorithm.
    /// </summary>
    public static IDoubleCheckDigitAlgorithm Iban => _iban.Value;
+
+   /// <summary>
+   ///   International Standard Audiovisual Number algorithm.
+   /// </summary>
+   public static ICheckDigitAlgorithm Isan => _isan.Value;
 
    /// <summary>
    ///   International Securities Identification Number algorithm.
