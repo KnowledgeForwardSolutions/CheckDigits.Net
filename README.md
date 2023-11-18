@@ -45,6 +45,7 @@ are up to 10X-50X faster than those in popular Nuget packages.
 - **[Release History/Release Notes](#release-historyrelease-notes)**
     - [v1.0.0-alpha](#v100alpha)
     - [v1.0.0](#v100)
+    - [v1.1.0](#v110)
 
 ## Check Digit Overview
 

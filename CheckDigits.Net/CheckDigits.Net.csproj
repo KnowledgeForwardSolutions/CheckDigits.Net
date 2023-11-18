@@ -5,7 +5,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <Title>CheckDigits.Net</Title>
-    <Version>1.0.0</Version>
+    <Version>1.1.0</Version>
     <Authors>Knowledge Forward Solutions</Authors>
     <Company>Knowledge Forward Solutions</Company>
     <Description>An extensive collection of optimized check digit algorithms suitable for a wide range of applications</Description>
@@ -41,7 +41,18 @@ Initial release. Additional included algorithms
 * ISO/IEC 7064 MOD 37-2
 * ISO/IEC 7064 MOD 37,36
 * ISO/IEC 7064 MOD 661-26
-* ISO/IEC 7064 MOD 97-10</PackageReleaseNotes>
+* ISO/IEC 7064 MOD 97-10
+
+## v1.1.0
+Additional included algorithms
+* AlphanumericMod97_10Algorithm
+* IbanAlgorithm
+* IsanAlgorithm (including ValidateFormatted method)
+ 
+Performance increases for:
+* ISO/IEC 7064 MOD 1271-36, Validate method ~18% improvement
+* ISO/IEC 7064 MOD 37-2, Validate method ~17% improvement, TryCalculateCheckDigit method ~20% improvement
+* ISO/IEC 7064 MOD 37-36, ValidateMethod ~18% improvement, TryCalculateCheckDigit method ~21% improvement</PackageReleaseNotes>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
