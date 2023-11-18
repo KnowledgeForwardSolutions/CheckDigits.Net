@@ -1,4 +1,4 @@
-﻿// Ignore Spelling: Noid
+﻿// Ignore Spelling: Isan Noid
 
 using System.Text;
 
