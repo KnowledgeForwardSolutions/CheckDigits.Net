@@ -69,6 +69,23 @@ public class BenchmarkData
    }
 
    [Fact]
+   public void BenchmarkData_GenerateIsanData()
+   {
+      var chars = "0123456789ABCDEF";
+
+      foreach (var n in Enumerable.Range(0, 3))
+      {
+         var full = String.Concat(Enumerable.Range(0, 24)
+            .Select(x => chars[Random.Shared.Next(0, 15)].ToString()));
+         var root = full[..16];
+         Algorithms.Iso7064Mod37_36.TryCalculateCheckDigit(root, out var rootCheckChar);
+         Algorithms.Iso7064Mod37_36.TryCalculateCheckDigit(full, out var fullCheckChar);
+
+         _outputHelper.WriteLine($"{root}{rootCheckChar} {full[16..]}{fullCheckChar}");
+      }
+   }
+
+   [Fact]
    public void BenchmarkData_NumericAlgorithms()
    {
       const String digits = "14066253804255102826542671";

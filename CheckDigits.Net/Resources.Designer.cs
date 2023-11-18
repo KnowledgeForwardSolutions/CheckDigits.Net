@@ -160,6 +160,24 @@ namespace CheckDigits.Net {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Variation of ISO/IEC 7064 MOD 37,36 for ISAN values formatted as human readable strings.
+        /// </summary>
+        internal static string IsanAlgorithmDescription {
+            get {
+                return ResourceManager.GetString("IsanAlgorithmDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ISAN (International Standard Audiovisual Number).
+        /// </summary>
+        internal static string IsanAlgorithmName {
+            get {
+                return ResourceManager.GetString("IsanAlgorithmName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Variation of the Luhn algorithm that supports alphanumeric characters.
         /// </summary>
         internal static string IsinAlgorithmDescription {
