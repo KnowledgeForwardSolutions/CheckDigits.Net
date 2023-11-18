@@ -44,10 +44,6 @@ public class IsanAlgorithm : ICheckDigitAlgorithm
    // Another character must match exactly
    private const String _mask = "ISAN hhhh-hhhh-hhhh-hhhh-#-hhhh-hhhh-#";
 
-   private const Int32 _rootOnlyLength = 26;
-   private const Int32 _rootCheckCharacterIndex = _rootOnlyLength - 1;
-   private const Int32 _rootPlusVersionLength = 38;
-
    /// <inheritdoc/>
    public String AlgorithmDescription => Resources.IsanAlgorithmDescription;
 
@@ -124,12 +120,28 @@ public class IsanAlgorithm : ICheckDigitAlgorithm
       return product % _modulus == 1;
    }
 
-   /// <inheritdoc/>
+   /// <summary>
+   ///   Determine if the <paramref name="value"/> contains a valid check digit
+   ///   (or check digits).
+   /// </summary>
+   /// <param name="value">
+   ///   The value to validate. 
+   /// </param>
+   /// <returns>
+   ///   <see langword="true"/> if the check digit(s) contained in
+   ///   <paramref name="value"/> matches the check digit(s) calculated by this
+   ///   algorithm; otherwise <see langword="false"/>.
+   /// </returns>
+   /// <remarks>
+   ///   Validate will return <see langword="false"/> if <paramref name="value"/>
+   ///   is mal-formed. Examples of mal-formed values are <see langword="null"/>,
+   ///   <see cref="String.Empty"/> or a string that is of invalid length for 
+   ///   this algorithm.
+   /// </remarks>
    public Boolean ValidateFormatted(String value)
    {
       if (String.IsNullOrEmpty(value)
-         || (value.Length != _rootOnlyLength && value.Length != _rootPlusVersionLength)
-         || !value.StartsWith(_prefix, StringComparison.Ordinal)) 
+         || (value.Length != _validateFormattedExpectedRootLength && value.Length != _validateFormattedExpectedVersionLength))
       {
          return false;
       }
@@ -137,60 +149,63 @@ public class IsanAlgorithm : ICheckDigitAlgorithm
       Char ch;
       Int32 num;
       var product = _modulus;
-      for (var index = _prefix.Length; index < value.Length - 1; index++)
+      for (var index = 0; index < value.Length - 1; index++)
       {
          ch = value[index];
-         if (index == 9 || index == 14 || index == 19 || index == 24 || index == 26 || index == 31 || index == 36)
+         var maskChar = _mask[index];
+         switch (maskChar)
          {
-            // Ignore group separator dash characters. Otherwise it's an invalid character.
-            if (ch == CharConstants.Dash)
-            {
-               continue;
-            }
+            case 'h':
+               if (ch >= CharConstants.DigitZero && ch <= CharConstants.DigitNine)
+               {
+                  num = ch.ToIntegerDigit();
+               }
+               else if (ch >= CharConstants.UpperCaseA && ch <= CharConstants.UpperCaseF)
+               {
+                  num = ch - CharConstants.UpperCaseA + 10;
+               }
+               else
+               {
+                  return false;
+               }
+               product += num;
+               if (product > _modulus)
+               {
+                  product -= _modulus;
+               }
+               product *= 2;
+               if (product >= _modulusPlus1)
+               {
+                  product -= _modulusPlus1;
+               }
+               break;
 
-            return false;
-         }
+            case '#':
+               if (ch >= CharConstants.DigitZero && ch <= CharConstants.DigitNine)
+               {
+                  num = ch.ToIntegerDigit();
+               }
+               else if (ch >= CharConstants.UpperCaseA && ch <= CharConstants.UpperCaseZ)
+               {
+                  num = ch - CharConstants.UpperCaseA + 10;
+               }
+               else
+               {
+                  return false;
+               }
+               var rootProduct = product + num;
+               if (rootProduct % _modulus != 1)
+               {
+                  return false;
+               }
+               break;
 
-         if (ch >= CharConstants.DigitZero && ch <= CharConstants.DigitNine)
-         {
-            num = ch.ToIntegerDigit();
-         }
-         else if (ch >= CharConstants.UpperCaseA && ch <= CharConstants.UpperCaseZ)
-         {
-            num = ch - CharConstants.UpperCaseA + 10;
-         }
-         else
-         {
-            return false;
-         }
-
-         // Root segment check character.
-         if (index == _rootCheckCharacterIndex)
-         {
-            var rootProduct = product + num;
-            if (rootProduct % _modulus != 1)
-            {
-               return false;
-            }
-         }
-         else
-         {
-            // Check for non-hexadecimal value.
-            if (num > 15)
-            {
-               return false;
-            }
-
-            product += num;
-            if (product > _modulus)
-            {
-               product -= _modulus;
-            }
-            product *= 2;
-            if (product >= _modulusPlus1)
-            {
-               product -= _modulusPlus1;
-            }
+            default:
+               if (ch != maskChar)
+               {
+                  return false;
+               }
+               break;
          }
       }
 

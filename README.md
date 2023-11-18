@@ -406,12 +406,13 @@ Wikipedia: https://en.wikipedia.org/wiki/International_Bank_Account_Number
 
 The ISAN (International Standard Audiovisual Number) algorithm uses a variation 
 of the ISO/IEC 7064 MOD 37,36 algorithm and can have either one or two check
-characters. 16 character ISAN root segment values have a single trailing check 
-character while 24 character ISAN root+version values contain two check characters,
-the root segment check character in the 17th character position for the first 16
-characters and a trailing check character for the entire 24 character value. Per 
-https://www.isan.org/docs/isan_check_digit_calculation_v2.0.pdf, both check 
-characters must be correct if the value includes both root and version segments.
+characters. A full ISAN value consists of 12 hexadecimal digits for the "root" 
+segment, 4 hexadecimal digits for the "episode" segment, an alphanumeric check
+character calculated for the 16 characters of the root/episode segments and 
+optionally, 8 hexadecimal digits for the version segment and an alphanumeric check 
+character calculated for the 24 characters of the root/episode/version segments. 
+Per https://www.isan.org/docs/isan_check_digit_calculation_v2.0.pdf, both check 
+characters must be correct if the value includes a version segment.
 
 CheckDigits.Net can validate either unformatted ISAN values consisting only of 
 hexadecimal digits and alphanumeric check characters or ISAN values that have
@@ -419,16 +420,16 @@ been formatted for human readability.
 
 To validate unformatted root+version ISAN values, use the Validate method. The
 Validate method only checks 26 character unformatted ISAN root+version values.
-(To check 17 character root segment only ISAN values, use the ISO/IEC 7064 MOD 37,36
+(To check 17 character root/episode only ISAN values, use the ISO/IEC 7064 MOD 37,36
 algorithm directly.)
 
-To validate formatted ISAN values, either root segment only or root+version values,
+To validate formatted ISAN values, either root/episode values or root/episode/version values,
 use the ValidateFormatted method. The ValidateFormatted method will check both
 the format of the value ("ISAN " prefix plus dash characters that separate the
 value into 4 character groups) and the check character(s) in the value.
 
-An example formatted root segment ISAN value is ISAN 0000-0000-C36D-002B-K. And
-example formatted root+version ISAN value is ISAN 0000-0000-C36D-002B-K-0000-0000-E.
+An example formatted root/episode ISAN value is ISAN 0000-0000-C36D-002B-K. An
+example formatted root/episode/version ISAN value is ISAN 0000-0000-C36D-002B-K-0000-0000-E.
 
 #### Details
 
@@ -1216,31 +1217,42 @@ Note also that the values used for the NOID Check Digit algorithm do not include
 
 #### Value Specific Algorithms
 
-| Algorithm Name | Value                           | Mean      | Error     | StdDev    | Allocated |
-|--------------- |-------------------------------- |----------:|----------:|----------:|----------:|
-| ABA RTN        | 111000025                       |  8.862 ns | 0.1623 ns | 0.1518 ns |         - |
-| ABA RTN        | 122235821                       |  8.692 ns | 0.1737 ns | 0.1624 ns |         - |
-| ABA RTN        | 325081403                       |  8.684 ns | 0.1237 ns | 0.1157 ns |         - |
+| Algorithm Name   | Value                                  | Mean      | Error     | StdDev    | Allocated |
+|----------------- |--------------------------------------- |----------:|----------:|----------:|----------:|
+| ABA RTN          | 111000025                              |  8.862 ns | 0.1623 ns | 0.1518 ns |         - |
+| ABA RTN          | 122235821                              |  8.692 ns | 0.1737 ns | 0.1624 ns |         - |
+| ABA RTN          | 325081403                              |  8.684 ns | 0.1237 ns | 0.1157 ns |         - |
+|                                                           
+| IBAN             | BE71096123456769                       | 22.310 ns | 0.2240 ns | 0.1980 ns |         - |
+| IBAN             | GB82WEST12345698765432                 | 34.930 ns | 0.3060 ns | 0.2870 ns |         - |
+| IBAN             | SC74MCBL01031234567890123456USD        | 51.930 ns | 0.8720 ns | 0.7730 ns |         - |
+|                                                           
+| ISAN             | C594660A8B2E5D22X6DDA3272E             | 57.740 ns | 0.7840 ns | 0.6950 ns |         - |
+| ISAN             | D02C42E954183EE2Q1291C8AEO             | 54.680 ns | 0.7400 ns | 0.6560 ns |         - |
+| ISAN             | E9530C32BC0EE83B269867B20F             | 54.830 ns | 0.6520 ns | 0.5780 ns |         - |
+|                                                           
+| ISAN (Formatted) | ISAN C594-660A-8B2E-5D22-X             | 49.680 ns | 0.5080 ns | 0.4750 ns |         - |
+| ISAN (Formatted) | ISAN D02C-42E9-5418-3EE2-Q             | 49.640 ns | 0.3700 ns | 0.3460 ns |         - |
+| ISAN (Formatted) | ISAN E953-0C32-BC0E-E83B-2             | 47.750 ns | 0.4370 ns | 0.4090 ns |         - |
+| ISAN (Formatted) | ISAN C594-660A-8B2E-5D22-X-6DDA-3272-E | 71.010 ns | 0.9400 ns | 0.8790 ns |         - |
+| ISAN (Formatted) | ISAN D02C-42E9-5418-3EE2-Q-1291-C8AE-O | 69.900 ns | 0.9790 ns | 0.8680 ns |         - |
+| ISAN (Formatted) | ISAN E953-0C32-BC0E-E83B-2-6986-7B20-F | 71.490 ns | 0.9130 ns | 0.8540 ns |         - |
 |
-| IBAN           | BE71096123456769                | 22.310 ns | 0.2240 ns | 0.1980 ns |         - |
-| IBAN           | GB82WEST12345698765432          | 34.930 ns | 0.3060 ns | 0.2870 ns |         - |
-| IBAN           | SC74MCBL01031234567890123456USD | 51.930 ns | 0.8720 ns | 0.7730 ns |         - |
-|
-| ISIN           | AU0000XVGZA3                    | 25.624 ns | 0.2618 ns | 0.2449 ns |         - |
-| ISIN           | GB0002634946                    | 21.148 ns | 0.2497 ns | 0.2335 ns |         - |
-| ISIN           | US0378331005                    | 21.139 ns | 0.3062 ns | 0.2865 ns |         - |
-|                                                  
-| NHS            | 4505577104                      | 11.933 ns | 0.1477 ns | 0.1309 ns |         - |
-| NHS            | 5301194917                      | 11.898 ns | 0.1416 ns | 0.1324 ns |         - |
-| NHS            | 9434765919                      | 11.917 ns | 0.1627 ns | 0.1522 ns |         - |
-|                                                  
-| NPI            | 1122337797                      | 15.106 ns | 0.2468 ns | 0.2309 ns |         - |
-| NPI            | 1234567893                      | 14.986 ns | 0.0968 ns | 0.0808 ns |         - |
-| NPI            | 1245319599                      | 15.067 ns | 0.2008 ns | 0.1878 ns |         - |
-|                                                  
-| VIN            | 1G8ZG127XWZ157259               | 40.107 ns | 0.3094 ns | 0.2743 ns |         - |
-| VIN            | 1HGEM21292L047875               | 40.206 ns | 0.2919 ns | 0.2438 ns |         - |
-| VIN            | 1M8GDM9AXKP042788               | 40.266 ns | 0.5329 ns | 0.4985 ns |         - |
+| ISIN             | AU0000XVGZA3                           | 25.624 ns | 0.2618 ns | 0.2449 ns |         - |
+| ISIN             | GB0002634946                           | 21.148 ns | 0.2497 ns | 0.2335 ns |         - |
+| ISIN             | US0378331005                           | 21.139 ns | 0.3062 ns | 0.2865 ns |         - |
+|                                                           
+| NHS              | 4505577104                             | 11.933 ns | 0.1477 ns | 0.1309 ns |         - |
+| NHS              | 5301194917                             | 11.898 ns | 0.1416 ns | 0.1324 ns |         - |
+| NHS              | 9434765919                             | 11.917 ns | 0.1627 ns | 0.1522 ns |         - |
+|                                                           
+| NPI              | 1122337797                             | 15.106 ns | 0.2468 ns | 0.2309 ns |         - |
+| NPI              | 1234567893                             | 14.986 ns | 0.0968 ns | 0.0808 ns |         - |
+| NPI              | 1245319599                             | 15.067 ns | 0.2008 ns | 0.1878 ns |         - |
+|                                                           
+| VIN              | 1G8ZG127XWZ157259                      | 40.107 ns | 0.3094 ns | 0.2743 ns |         - |
+| VIN              | 1HGEM21292L047875                      | 40.206 ns | 0.2919 ns | 0.2438 ns |         - |
+| VIN              | 1M8GDM9AXKP042788                      | 40.266 ns | 0.5329 ns | 0.4985 ns |         - |
 
 # Release History/Release Notes
 
@@ -1276,6 +1288,7 @@ Initial release. Additional included algorithms
 Additional included algorithms
 * AlphanumericMod97_10Algorithm
 * IbanAlgorithm
+* IsanAlgorithm (including ValidateFormatted method)
  
 Performance increases for:
 * ISO/IEC 7064 MOD 1271-36, Validate method ~18% improvement
