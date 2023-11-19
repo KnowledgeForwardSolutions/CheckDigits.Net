@@ -1,7 +1,7 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFrameworks>net7.0;net8.0</TargetFrameworks>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <Title>CheckDigits.Net</Title>
@@ -14,7 +14,7 @@
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <RepositoryUrl>https://github.com/KnowledgeForwardSolutions/CheckDigits.Net</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <PackageTags>Check digit;Luhn;Verhoeff;Damm;UPC-A;EAN-13;ISBN-10;ISBN-13;ISO7064;NPI;NHS Number;VIN</PackageTags>
+    <PackageTags>Check digit;Luhn;Verhoeff;Damm;UPC-A;EAN-13;ISBN-10;ISBN-13;ISO7064;NPI;NHS Number;VIN;IBAN;ISAN;ULI;LEI</PackageTags>
     <PackageReleaseNotes>1.0.0-alpha
 
 Initial limited release. Included algorithms:

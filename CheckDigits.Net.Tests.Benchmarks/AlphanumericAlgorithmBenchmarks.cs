@@ -1,5 +1,7 @@
 ﻿namespace CheckDigits.Net.Tests.Benchmarks;
 
+[SimpleJob(RuntimeMoniker.Net70, baseline: true)]
+[SimpleJob(RuntimeMoniker.Net80)]
 [MemoryDiagnoser]
 public class AlphanumericAlgorithmBenchmarks
 {

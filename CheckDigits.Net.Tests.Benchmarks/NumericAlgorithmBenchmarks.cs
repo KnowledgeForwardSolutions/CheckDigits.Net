@@ -1,5 +1,7 @@
 ﻿namespace CheckDigits.Net.Tests.Benchmarks;
 
+[SimpleJob(RuntimeMoniker.Net70, baseline: true)]
+[SimpleJob(RuntimeMoniker.Net80)]
 [MemoryDiagnoser]
 public class NumericAlgorithmBenchmarks
 {
@@ -148,19 +150,19 @@ public class NumericAlgorithmBenchmarks
       yield return new Object[] { Algorithms.Verhoeff, Algorithms.Verhoeff.AlgorithmName, "1406625380425510282655" };
    }
 
-   //[Benchmark]
-   //[ArgumentsSource(nameof(TryCalculateCheckDigitArguments))]
-   //public void TryCalculateCheckDigit(ISingleCheckDigitAlgorithm algorithm, String name, String value)
-   //{
-   //   algorithm.TryCalculateCheckDigit(value, out var checkDigit);
-   //}
+   [Benchmark]
+   [ArgumentsSource(nameof(TryCalculateCheckDigitArguments))]
+   public void TryCalculateCheckDigit(ISingleCheckDigitAlgorithm algorithm, String name, String value)
+   {
+      algorithm.TryCalculateCheckDigit(value, out var checkDigit);
+   }
 
-   //[Benchmark]
-   //[ArgumentsSource(nameof(TryCalculateCheckDigitsArguments))]
-   //public void TryCalculateCheckDigits(IDoubleCheckDigitAlgorithm algorithm, String name, String value)
-   //{
-   //   algorithm.TryCalculateCheckDigits(value, out var first, out var second);
-   //}
+   [Benchmark]
+   [ArgumentsSource(nameof(TryCalculateCheckDigitsArguments))]
+   public void TryCalculateCheckDigits(IDoubleCheckDigitAlgorithm algorithm, String name, String value)
+   {
+      algorithm.TryCalculateCheckDigits(value, out var first, out var second);
+   }
 
    [Benchmark]
    [ArgumentsSource(nameof(ValidateArguments))]

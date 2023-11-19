@@ -6,3 +6,5 @@
 //BenchmarkRunner.Run<AlphanumericAlgorithmBenchmarks>();
 
 BenchmarkRunner.Run<ValueSpecificAlgorithmBenchmarks>();
+
+//BenchmarkRunner.Run<LuhnAlgorithmBenchmarks>();
