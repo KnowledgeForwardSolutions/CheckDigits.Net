@@ -43,7 +43,8 @@ Initial release. Additional included algorithms
 * ISO/IEC 7064 MOD 661-26
 * ISO/IEC 7064 MOD 97-10
 
-## v1.1.0
+v1.1.0
+
 Additional included algorithms
 * AlphanumericMod97_10Algorithm
 * IbanAlgorithm
@@ -53,7 +54,14 @@ Additional included algorithms
 Performance increases for:
 * ISO/IEC 7064 MOD 1271-36, Validate method ~18% improvement
 * ISO/IEC 7064 MOD 37-2, Validate method ~17% improvement, TryCalculateCheckDigit method ~20% improvement
-* ISO/IEC 7064 MOD 37-36, ValidateMethod ~18% improvement, TryCalculateCheckDigit method ~21% improvement</PackageReleaseNotes>
+* ISO/IEC 7064 MOD 37-36, Validate method ~18% improvement, TryCalculateCheckDigit method ~21% improvement
+
+v2.0.0
+
+Updated to .Net 8.0
+
+Average performance improvement for .Net 8.0 across all algorithms:
+  Validate method ~8% improvement, TryCalculateCheckDigit method ~4.9% improvement</PackageReleaseNotes>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 

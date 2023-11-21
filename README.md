@@ -9,6 +9,11 @@ demonstrate performance over a range of values and the memory allocation (if any
 Benchmarks have shown that the optimized versions of the algorithms in CheckDigits.Net 
 are up to 10X-50X faster than those in popular Nuget packages.
 
+### Future Algorithms
+Is there an algorithm that you would like to see included in CheckDigits.Net? Use
+the "Contact owners" link on https://www.nuget.org/packages/CheckDigits.Net and 
+let us know. Or contribute to the CheckDigits.Net repository: https://github.com/KnowledgeForwardSolutions/CheckDigits.Net
+
 ## Table of Contents
 
 - **[Check Digit Overview](#check-digit-overview)**
@@ -46,6 +51,7 @@ are up to 10X-50X faster than those in popular Nuget packages.
     - [v1.0.0-alpha](#v100alpha)
     - [v1.0.0](#v100)
     - [v1.1.0](#v110)
+    - [v2.0.0](#v200)
 
 ## Check Digit Overview
 
@@ -887,7 +893,7 @@ weighting, summing and calculating sum modulus 11.
 
 Wikipedia: https://en.wikipedia.org/wiki/Vehicle_identification_number#Check-digit_calculation
 
-## Benchmarks (DotNet 8)
+## Benchmarks (.Net 8)
 
 The methodology for the general algorithms is to generate values for the benchmarks
 by taking substrings of lengths 3, 6, 9, etc. from the same randomly generated 
@@ -898,6 +904,8 @@ for the algorithm being benchmarked.
 
 For value specific algorithms, three separate values that are valid for the 
 algorithm being benchmarked are used.
+
+Previous .Net 7 benchmarks available at https://github.com/KnowledgeForwardSolutions/CheckDigits.Net/blob/main/Documentation/DotNet7Benchmarks.md
 
 #### Benchmark Details
 
@@ -1301,8 +1309,15 @@ Additional included algorithms
 Performance increases for:
 * ISO/IEC 7064 MOD 1271-36, Validate method ~18% improvement
 * ISO/IEC 7064 MOD 37-2, Validate method ~17% improvement, TryCalculateCheckDigit method ~20% improvement
-* ISO/IEC 7064 MOD 37-36, ValidateMethod ~18% improvement, TryCalculateCheckDigit method ~21% improvement
+* ISO/IEC 7064 MOD 37-36, Validate method ~18% improvement, TryCalculateCheckDigit method ~21% improvement
 
+## v2.0.0
 
+Updated to .Net 8.0
+
+Average performance improvement for .Net 8.0 across all algorithms:
+  Validate method ~8% improvement, TryCalculateCheckDigit method ~4.9% improvement
+
+Detailed benchmark results for .Net 7 vs .Net 8 located at https://github.com/KnowledgeForwardSolutions/CheckDigits.Net/blob/main/Documentation/DotNet7_DotNet8_PerformanceComparision.md
 
 
