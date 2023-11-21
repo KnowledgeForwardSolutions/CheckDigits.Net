@@ -1,5 +1,7 @@
 ﻿namespace CheckDigits.Net.Tests.Benchmarks;
 
+//[SimpleJob(RuntimeMoniker.Net70, baseline: true)]
+//[SimpleJob(RuntimeMoniker.Net80)]
 [MemoryDiagnoser]
 public class AlphabeticAlgorithmsBenchmarks
 {
@@ -44,12 +46,12 @@ public class AlphabeticAlgorithmsBenchmarks
       yield return new Object[] { Algorithms.Iso7064Mod661_26, Algorithms.Iso7064Mod661_26.AlgorithmName, "EGRNMLJOCECUJIKNWWVVORC" };
    }
 
-   //[Benchmark]
-   //[ArgumentsSource(nameof(TryCalculateCheckDigitArguments))]
-   //public void TryCalculateCheckDigit(ISingleCheckDigitAlgorithm algorithm, String name, String value)
-   //{
-   //   algorithm.TryCalculateCheckDigit(value, out var checkDigit);
-   //}
+   [Benchmark]
+   [ArgumentsSource(nameof(TryCalculateCheckDigitArguments))]
+   public void TryCalculateCheckDigit(ISingleCheckDigitAlgorithm algorithm, String name, String value)
+   {
+      algorithm.TryCalculateCheckDigit(value, out var checkDigit);
+   }
 
    [Benchmark]
    [ArgumentsSource(nameof(TryCalculateCheckDigitsArguments))]
@@ -58,10 +60,10 @@ public class AlphabeticAlgorithmsBenchmarks
       algorithm.TryCalculateCheckDigits(value, out var first, out var second);
    }
 
-   //[Benchmark]
-   //[ArgumentsSource(nameof(ValidateArguments))]
-   //public void Validate(ICheckDigitAlgorithm algorithm, String name, String value)
-   //{
-   //   algorithm.Validate(value);
-   //}
+   [Benchmark]
+   [ArgumentsSource(nameof(ValidateArguments))]
+   public void Validate(ICheckDigitAlgorithm algorithm, String name, String value)
+   {
+      algorithm.Validate(value);
+   }
 }
