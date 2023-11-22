@@ -48,10 +48,10 @@ let us know. Or contribute to the CheckDigits.Net repository: https://github.com
     * [VIN (Vehicle Identification Number) Algorithm](#vin-algorithm)
 - **[Benchmarks](#benchmarks)**
 - **[Release History/Release Notes](#release-historyrelease-notes)**
-    - [v1.0.0-alpha](#v100alpha)
-    - [v1.0.0](#v100)
-    - [v1.1.0](#v110)
-    - [v2.0.0](#v200)
+    - [v1.0.0-alpha](#v1.0.0alpha)
+    - [v1.0.0](#v1.0.0)
+    - [v1.1.0](#v1.1.0)
+    - [v2.0.0](#v2.0.0)
 
 ## Check Digit Overview
 
