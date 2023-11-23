@@ -136,13 +136,13 @@ public class LuhnAlgorithmTests
         checkDigit.Should().Be('\0');
     }
 
-    #endregion
+   #endregion
 
-    #region Validate Tests
-    // ==========================================================================
-    // ==========================================================================
+   #region Validate Tests
+   // ==========================================================================
+   // ==========================================================================
 
-    [Fact]
+   [Fact]
     public void LuhnAlgorithm_Validate_ShouldReturnFalse_WhenInputIsNull()
        => _sut.Validate(null!).Should().BeFalse();
 
@@ -234,5 +234,5 @@ public class LuhnAlgorithmTests
     public void LuhnAlgorithm_Validate_ShouldReturnFalse_WhenInputContainsNonDigitCharacter(string value)
        => _sut.Validate(value).Should().BeFalse();
 
-    #endregion
+   #endregion
 }

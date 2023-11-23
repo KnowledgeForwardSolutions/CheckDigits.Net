@@ -52,6 +52,7 @@ let us know. Or contribute to the CheckDigits.Net repository: https://github.com
     - [v1.0.0](#v1.0.0)
     - [v1.1.0](#v1.1.0)
     - [v2.0.0](#v2.0.0)
+    - [v2.1.0](#v2.1.0)
 
 ## Check Digit Overview
 
@@ -957,13 +958,13 @@ benchmarks do not cover lengths greater than 10.
 | ISO/IEC 706 97-10 | 140662538042551028    | 22.542 ns | 0.2155 ns | 0.2016 ns |         - |
 | ISO/IEC 706 97-10 | 140662538042551028265 | 25.380 ns | 0.2038 ns | 0.1906 ns |         - |
 |                   |                       |           |           |           |           |                                           
-| Luhn              | 140                   |  5.678 ns | 0.0561 ns | 0.0497 ns |         - |
-| Luhn              | 140662                | 10.488 ns | 0.0978 ns | 0.0915 ns |         - |
-| Luhn              | 140662538             | 14.572 ns | 0.1481 ns | 0.1237 ns |         - |
-| Luhn              | 140662538042          | 18.432 ns | 0.1437 ns | 0.1122 ns |         - |
-| Luhn              | 140662538042551       | 22.530 ns | 0.2081 ns | 0.1947 ns |         - |
-| Luhn              | 140662538042551028    | 19.954 ns | 0.2879 ns | 0.2693 ns |         - |
-| Luhn              | 140662538042551028265 | 30.808 ns | 0.5542 ns | 0.5184 ns |         - |
+| Luhn              | 140                   |  6.674 ns | 0.1106 ns | 0.1035 ns |         - |
+| Luhn              | 140662                |  9.396 ns | 0.0575 ns | 0.0538 ns |         - |
+| Luhn              | 140662538             | 14.913 ns | 0.0464 ns | 0.0434 ns |         - |
+| Luhn              | 140662538042          | 14.981 ns | 0.0720 ns | 0.0638 ns |         - |
+| Luhn              | 140662538042551       | 20.813 ns | 0.1534 ns | 0.1435 ns |         - |
+| Luhn              | 140662538042551028    | 22.434 ns | 0.1459 ns | 0.1365 ns |         - |
+| Luhn              | 140662538042551028265 | 27.432 ns | 0.1217 ns | 0.1138 ns |         - |
 |                   |                       |           |           |           |           |                                           
 | Modulus10_13      | 140                   |  4.845 ns | 0.0532 ns | 0.0498 ns |         - |
 | Modulus10_13      | 140662                |  8.806 ns | 0.1316 ns | 0.1167 ns |         - |
@@ -1122,13 +1123,13 @@ benchmarks do not cover lengths greater than 10.
 | ISO/IEC 7064 MOD 97-10 | 14066253804255102853    | 22.186 ns | 0.2068 ns | 0.1935 ns |         - |
 | ISO/IEC 7064 MOD 97-10 | 14066253804255102826587 | 24.965 ns | 0.5259 ns | 0.4919 ns |         - |
 |                        |                         |           |           |           |           |                                           
-| Luhn                   | 1404                    |  7.787 ns | 0.0630 ns | 0.0589 ns |         - |
-| Luhn                   | 1406628                 | 11.274 ns | 0.0995 ns | 0.0931 ns |         - |
-| Luhn                   | 1406625382              | 16.513 ns | 0.2051 ns | 0.1818 ns |         - |
-| Luhn                   | 1406625380421           | 19.712 ns | 0.1856 ns | 0.1736 ns |         - |
-| Luhn                   | 1406625380425514        | 23.241 ns | 0.1690 ns | 0.1581 ns |         - |
-| Luhn                   | 1406625380425510285     | 27.301 ns | 0.2171 ns | 0.1813 ns |         - |
-| Luhn                   | 1406625380425510282651  | 32.255 ns | 0.2482 ns | 0.2321 ns |         - |
+| Luhn                   | 1404                    |  6.671 ns | 0.0366 ns | 0.0305 ns |         - |
+| Luhn                   | 1406628                 |  8.910 ns | 0.0483 ns | 0.0377 ns |         - |
+| Luhn                   | 1406625382              | 12.273 ns | 0.0815 ns | 0.0763 ns |         - |
+| Luhn                   | 1406625380421           | 14.002 ns | 0.0486 ns | 0.0431 ns |         - |
+| Luhn                   | 1406625380425514        | 18.127 ns | 0.2873 ns | 0.2687 ns |         - |
+| Luhn                   | 1406625380425510285     | 19.739 ns | 0.1725 ns | 0.1613 ns |         - |
+| Luhn                   | 1406625380425510282651  | 23.388 ns | 0.1535 ns | 0.1435 ns |         - |
 |                        |                         |           |           |           |           |                                           
 | Modulus10_13           | 1403                    |  5.844 ns | 0.0538 ns | 0.0503 ns |         - |
 | Modulus10_13           | 1406627                 |  9.622 ns | 0.1128 ns | 0.1055 ns |         - |
@@ -1320,4 +1321,8 @@ Average performance improvement for .Net 8.0 across all algorithms:
 
 Detailed benchmark results for .Net 7 vs .Net 8 located at https://github.com/KnowledgeForwardSolutions/CheckDigits.Net/blob/main/Documentation/DotNet7_DotNet8_PerformanceComparision.md
 
+## v2.1.0
 
+Performance increases for:
+* Luhn Algorithm, Validate method ~15% improvement over .Net 7, TryCalculateCheckDigit method ~27% improvement over .Net 7
+  (Luhn algorithm originally saw a slight performance decrease when switching from .Net 7 to .Net 8. This release addresses that performance decrease.) 
