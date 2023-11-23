@@ -24,6 +24,7 @@ let us know. Or contribute to the CheckDigits.Net repository: https://github.com
 - **[Algorithm Descriptions](#algorithm-descriptions)**
     * [ABA RTN (Routing Transit Number) Algorithm](#aba-rtn-algorithm)
     * [Alphanumeric MOD 97-10 Algorithm](#alphanumeric-mod-97-10-algorithm)
+    * [CUSIP Algorithm](#cusip-algorithm)
     * [Damm Algorithm](#damm-algorithm)
     * [IBAN (International Bank Account Number) Algorithm](#iban-algorithm)
     * [ISAN (International Standard Audiovisual Number) Algorithm](#isan-algorithm)
@@ -116,6 +117,7 @@ The ISO/IEC 7064:2003 standard is available at https://www.iso.org/standard/3153
 
 * [ABA RTN (Routing Transit Number) Algorithm](#aba-rtn-algorithm)
 * [Alphanumeric MOD 97-10 Algorithm](#alphanumeric-mod-97-10-algorithm)
+* [CUSIP Algorithm](#cusip-algorithm)
 * [Damm Algorithm](#damm-algorithm)
 * [IBAN (International Bank Account Number) Algorithm](#iban-algorithm)
 * [ISAN (International Standard Audiovisual Number) Algorithm](#isan-algorithm)
@@ -147,6 +149,7 @@ The ISO/IEC 7064:2003 standard is available at https://www.iso.org/standard/3153
 | CA Social Insurance Number | [Luhn Algorithm](#luhn-algorithm) |
 | CAS Registry Number   | [Modulus10 Algorithm](#modulus10_1-algorithm) |
 | Credit card number    | [Luhn Algorithm](#luhn-algorithm) |
+| CUSIP                 | [CUSIP Algorithm](#cusip-algorithm) |
 | EAN-8					| [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
 | EAN-13				| [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
 | Global Release Identifier | [ISO/IEC 7064 MOD 37-36 Algorithm](#isoiec-7064-mod-3736-algorithm) |
@@ -352,6 +355,27 @@ letters are mapped to their uppercase equivalent before conversion to integers.
 Wikipedia: https://en.wikipedia.org/wiki/Legal_Entity_Identifier
 
 https://www.govinfo.gov/content/pkg/CFR-2016-title12-vol8/xml/CFR-2016-title12-vol8-part1003-appC.xml
+
+### CUSIP Algorithm
+
+#### Description
+
+The CUSIP (Committee on Uniform Security Identification Procedures) algorithm is 
+used for nine character alphanumeric codes that identify North American financial
+securities. The algorithm has similarities with both the Luhn algorithm and the 
+ISIN algorithm.
+
+#### Details
+
+* Valid characters - alphanumeric characters ('0' - '9', 'A' - 'Z') plus '*', '@' and '#'
+* Check digit size - one character
+* Check digit value - decimal digit ('0' - '9')
+* Check digit location - assumed to be the trailing (right-most) character when validating
+* Class name - CusipAlgorithm
+
+#### Links
+
+Wikipedia: https://en.wikipedia.org/wiki/CUSIP
 
 ### Damm Algorithm
 

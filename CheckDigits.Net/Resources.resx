@@ -135,6 +135,12 @@
   <data name="AlphanumericMod97_10AlgorithmName" xml:space="preserve">
     <value>AlphanumericMod97_10</value>
   </data>
+  <data name="CusipAlgorithmDescription" xml:space="preserve">
+    <value>CUSIP Algorithm</value>
+  </data>
+  <data name="CusipAlgorithmName" xml:space="preserve">
+    <value>CUSIP</value>
+  </data>
   <data name="DammAlgorithmDescription" xml:space="preserve">
     <value>Damm's quasigroup algorithm</value>
   </data>
