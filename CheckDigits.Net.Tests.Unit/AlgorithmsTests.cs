@@ -1,4 +1,4 @@
-﻿// Ignore Spelling: Aba Damm Iban Isan Isin Luhn Ncd Nhs Npi Rtn Verhoeff
+﻿// Ignore Spelling: Aba Cusip Damm Iban Isan Isin Luhn Ncd Nhs Npi Rtn Verhoeff
 
 namespace CheckDigits.Net.Tests.Unit;
 
@@ -29,6 +29,20 @@ public class AlgorithmsTests
    [Fact]
    public void Algorithms_AlphanumericMod97_10_ShouldBeExpectedType()
       => Algorithms.AlphanumericMod97_10.Should().BeOfType<AlphanumericMod97_10Algorithm>();
+
+   #endregion
+
+   #region Cusip Property Tests
+   // ==========================================================================
+   // ==========================================================================
+
+   [Fact]
+   public void Algorithms_Cusip_ShouldNotBeNull()
+      => Algorithms.Cusip.Should().NotBeNull();
+
+   [Fact]
+   public void Algorithms_Cusip_ShouldBeExpectedType()
+      => Algorithms.Cusip.Should().BeOfType<CusipAlgorithm>();
 
    #endregion
 

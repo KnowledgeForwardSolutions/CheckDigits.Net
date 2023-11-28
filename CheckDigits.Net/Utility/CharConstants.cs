@@ -4,8 +4,10 @@ public static class CharConstants
 {
    public const Char NUL = '\0';
 
+   public const Char HashMark = '#';
    public const Char Asterisk = '*';
    public const Char Dash = '-';
+   public const Char AtSign = '@';
 
    public const Char DigitZero = '0';
    public const Char DigitOne = '1';

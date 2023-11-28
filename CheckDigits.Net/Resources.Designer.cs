@@ -115,6 +115,24 @@ namespace CheckDigits.Net {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to CUSIP Algorithm.
+        /// </summary>
+        internal static string CusipAlgorithmDescription {
+            get {
+                return ResourceManager.GetString("CusipAlgorithmDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CUSIP.
+        /// </summary>
+        internal static string CusipAlgorithmName {
+            get {
+                return ResourceManager.GetString("CusipAlgorithmName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Damm&apos;s quasigroup algorithm.
         /// </summary>
         internal static string DammAlgorithmDescription {
