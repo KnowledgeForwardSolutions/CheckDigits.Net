@@ -1085,7 +1085,7 @@ Note that the values used for the NOID Check Digit algorithm do not include leng
 
 #### Value Specific Algorithms
 
-Note: ABA RTN, NHS and NPI algorithms do not support calculation of check digits, 
+Note: ABA RTN, CUSIP, NHS and NPI algorithms do not support calculation of check digits, 
 only validation of values containing check digits.
 
 | Algorithm Name | Value                           | Mean     | Error    | StdDev   | Allocated |
@@ -1263,6 +1263,10 @@ Note also that the values used for the NOID Check Digit algorithm do not include
 | ABA RTN          | 122235821                              | 10.400 ns | 0.1880 ns | 0.1570 ns |         - |
 | ABA RTN          | 325081403                              | 10.310 ns | 0.0610 ns | 0.0570 ns |         - |
 |                  |                                        |           |           |           |           |                                           
+| CUSIP            | 037833100                              | 16.500 ns | 0.1990 ns | 0.1760 ns |         - |
+| CUSIP            | 38143VAA7                              | 13.020 ns | 0.0830 ns | 0.0770 ns |         - |
+| CUSIP            | 91282CJL6                              | 12.850 ns | 0.0630 ns | 0.0530 ns |         - |
+|                  |                                        |           |           |           |           |                                           
 | IBAN             | BE71096123456769                       | 20.090 ns | 0.1710 ns | 0.1600 ns |         - |
 | IBAN             | GB82WEST12345698765432                 | 34.960 ns | 0.2120 ns | 0.1880 ns |         - |
 | IBAN             | SC74MCBL01031234567890123456USD        | 51.580 ns | 0.2410 ns | 0.2130 ns |         - |
@@ -1346,6 +1350,8 @@ Average performance improvement for .Net 8.0 across all algorithms:
 Detailed benchmark results for .Net 7 vs .Net 8 located at https://github.com/KnowledgeForwardSolutions/CheckDigits.Net/blob/main/Documentation/DotNet7_DotNet8_PerformanceComparision.md
 
 ## v2.1.0
+Additional included algorithms
+* CUSIP
 
 Performance increases for:
 * Luhn Algorithm, Validate method ~15% improvement over .Net 7, TryCalculateCheckDigit method ~27% improvement over .Net 7

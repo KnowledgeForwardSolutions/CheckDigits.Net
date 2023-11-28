@@ -1,4 +1,4 @@
-﻿// Ignore Spelling: Aba Damm Iban Isan Isin Luhn Ncd Nhs Npi Rtn Verhoeff
+﻿// Ignore Spelling: Aba Cusip Damm Iban Isan Isin Luhn Ncd Nhs Npi Rtn Verhoeff
 
 namespace CheckDigits.Net;
 
@@ -13,6 +13,9 @@ public static class Algorithms
 
    private static readonly Lazy<IDoubleCheckDigitAlgorithm> _alphanumericMod97_10 =
      new(() => new AlphanumericMod97_10Algorithm());
+
+   private static readonly Lazy<ICheckDigitAlgorithm> _cusip =
+     new(() => new CusipAlgorithm());
 
    private static readonly Lazy<ISingleCheckDigitAlgorithm> _damm =
      new(() => new DammAlgorithm());
@@ -91,6 +94,11 @@ public static class Algorithms
    ///   algorithm.
    /// </summary>
    public static IDoubleCheckDigitAlgorithm AlphanumericMod97_10 => _alphanumericMod97_10.Value;
+
+   /// <summary>
+   ///   CUSIP algorithm for North American Securities.
+   /// </summary>
+   public static ICheckDigitAlgorithm Cusip => _cusip.Value;
 
    /// <summary>
    ///   Damm algorithm.
