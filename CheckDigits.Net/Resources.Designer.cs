@@ -529,6 +529,24 @@ namespace CheckDigits.Net {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to SEDOL Algorithm.
+        /// </summary>
+        internal static string SedolAlgorithmDescription {
+            get {
+                return ResourceManager.GetString("SedolAlgorithmDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SEDOL.
+        /// </summary>
+        internal static string SedolAlgorithmName {
+            get {
+                return ResourceManager.GetString("SedolAlgorithmName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Verhoeff&apos;s dihedral algorithm.
         /// </summary>
         internal static string VerhoeffAlgorithmDescription {

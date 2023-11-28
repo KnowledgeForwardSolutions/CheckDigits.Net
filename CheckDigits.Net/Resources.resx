@@ -273,6 +273,12 @@
   <data name="NpiAlgorithmName" xml:space="preserve">
     <value>NPI (US National Provider Identifier)</value>
   </data>
+  <data name="SedolAlgorithmDescription" xml:space="preserve">
+    <value>SEDOL Algorithm</value>
+  </data>
+  <data name="SedolAlgorithmName" xml:space="preserve">
+    <value>SEDOL</value>
+  </data>
   <data name="VerhoeffAlgorithmDescription" xml:space="preserve">
     <value>Verhoeff's dihedral algorithm</value>
   </data>
