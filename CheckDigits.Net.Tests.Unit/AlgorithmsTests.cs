@@ -1,4 +1,4 @@
-﻿// Ignore Spelling: Aba Cusip Damm Iban Isan Isin Luhn Ncd Nhs Npi Rtn Verhoeff
+﻿// Ignore Spelling: Aba Cusip Damm Iban Isan Isin Luhn Ncd Nhs Npi Rtn Sedol Verhoeff
 
 namespace CheckDigits.Net.Tests.Unit;
 
@@ -323,6 +323,20 @@ public class AlgorithmsTests
    [Fact]
    public void Algorithms_Npi_ShouldBeExpectedType()
       => Algorithms.Npi.Should().BeOfType<NpiAlgorithm>();
+
+   #endregion
+
+   #region Sedol Property Tests
+   // ==========================================================================
+   // ==========================================================================
+
+   [Fact]
+   public void Algorithms_Sedol_ShouldNotBeNull()
+      => Algorithms.Sedol.Should().NotBeNull();
+
+   [Fact]
+   public void Algorithms_Sedol_ShouldBeExpectedType()
+      => Algorithms.Sedol.Should().BeOfType<SedolAlgorithm>();
 
    #endregion
 

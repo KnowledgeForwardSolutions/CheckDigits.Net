@@ -29,9 +29,9 @@ public class ValueSpecificAlgorithmBenchmarks
       //yield return new Object[] { Algorithms.AbaRtn, Algorithms.AbaRtn.AlgorithmName, "122235821" };
       //yield return new Object[] { Algorithms.AbaRtn, Algorithms.AbaRtn.AlgorithmName, "325081403" };
 
-      yield return new Object[] { Algorithms.Cusip, Algorithms.Cusip.AlgorithmName, "037833100" };
-      yield return new Object[] { Algorithms.Cusip, Algorithms.Cusip.AlgorithmName, "38143VAA7" };
-      yield return new Object[] { Algorithms.Cusip, Algorithms.Cusip.AlgorithmName, "91282CJL6" };
+      //yield return new Object[] { Algorithms.Cusip, Algorithms.Cusip.AlgorithmName, "037833100" };
+      //yield return new Object[] { Algorithms.Cusip, Algorithms.Cusip.AlgorithmName, "38143VAA7" };
+      //yield return new Object[] { Algorithms.Cusip, Algorithms.Cusip.AlgorithmName, "91282CJL6" };
 
       //yield return new Object[] { Algorithms.Iban, Algorithms.Iban.AlgorithmName, "BE71096123456769" };
       //yield return new Object[] { Algorithms.Iban, Algorithms.Iban.AlgorithmName, "GB82WEST12345698765432" };
@@ -52,6 +52,10 @@ public class ValueSpecificAlgorithmBenchmarks
       //yield return new Object[] { Algorithms.Npi, Algorithms.Npi.AlgorithmName, "1234567893" };
       //yield return new Object[] { Algorithms.Npi, Algorithms.Npi.AlgorithmName, "1245319599" };
       //yield return new Object[] { Algorithms.Npi, Algorithms.Npi.AlgorithmName, "1122337797" };
+
+      yield return new Object[] { Algorithms.Sedol, Algorithms.Sedol.AlgorithmName, "3134865" };
+      yield return new Object[] { Algorithms.Sedol, Algorithms.Sedol.AlgorithmName, "B0YQ5W0" };
+      yield return new Object[] { Algorithms.Sedol, Algorithms.Sedol.AlgorithmName, "BRDVMH9" };
 
       //yield return new Object[] { Algorithms.Vin, Algorithms.Vin.AlgorithmName, "1M8GDM9AXKP042788" };
       //yield return new Object[] { Algorithms.Vin, Algorithms.Vin.AlgorithmName, "1G8ZG127XWZ157259" };

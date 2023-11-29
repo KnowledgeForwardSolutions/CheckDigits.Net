@@ -1,4 +1,4 @@
-﻿// Ignore Spelling: Aba Cusip Damm Iban Isan Isin Luhn Ncd Nhs Npi Rtn Verhoeff
+﻿// Ignore Spelling: Aba Cusip Damm Iban Isan Isin Luhn Ncd Nhs Npi Rtn Sedol Verhoeff
 
 namespace CheckDigits.Net;
 
@@ -76,6 +76,9 @@ public static class Algorithms
 
    private static readonly Lazy<ICheckDigitAlgorithm> _npi =
      new(() => new NpiAlgorithm());
+
+   private static readonly Lazy<ICheckDigitAlgorithm> _sedol =
+     new(() => new SedolAlgorithm());
 
    private static readonly Lazy<ISingleCheckDigitAlgorithm> _verhoeff =
      new(() => new VerhoeffAlgorithm());
@@ -199,6 +202,11 @@ public static class Algorithms
    ///   US National Provider Identifier (NPI) algorithm.
    /// </summary>
    public static ICheckDigitAlgorithm Npi => _npi.Value;
+
+   /// <summary>
+   ///   SEDOL algorithm.
+   /// </summary>
+   public static ICheckDigitAlgorithm Sedol => _sedol.Value;
 
    /// <summary>
    ///   Verhoeff algorithm.

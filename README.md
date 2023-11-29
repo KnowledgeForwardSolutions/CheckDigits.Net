@@ -1115,8 +1115,8 @@ Note that the values used for the NOID Check Digit algorithm do not include leng
 
 #### Value Specific Algorithms
 
-Note: ABA RTN, CUSIP, NHS and NPI algorithms do not support calculation of check digits, 
-only validation of values containing check digits.
+Note: ABA RTN, CUSIP, NHS, NPI and SEDOL algorithms do not support calculation of 
+check digits, only validation of values containing check digits.
 
 | Algorithm Name | Value                           | Mean     | Error    | StdDev   | Allocated |
 |--------------- |-------------------------------- |---------:|---------:|---------:|----------:|
@@ -1323,6 +1323,10 @@ Note also that the values used for the NOID Check Digit algorithm do not include
 | NPI              | 1122337797                             | 14.490 ns | 0.0490 ns | 0.0440 ns |         - |
 | NPI              | 1234567893                             | 14.530 ns | 0.0800 ns | 0.0710 ns |         - |
 | NPI              | 1245319599                             | 14.520 ns | 0.0890 ns | 0.0830 ns |         - |
+|                  |                                        |           |           |           |           |                                           
+| SEDOL            | 3134865                                | 12.290 ns | 0.1440 ns | 0.1200 ns |         - |
+| SEDOL            | B0YQ5W0                                | 12.180 ns | 0.0630 ns | 0.0560 ns |         - |
+| SEDOL            | BRDVMH9                                | 12.220 ns | 0.0800 ns | 0.0710 ns |         - |
 |                  |                                        |           |           |           |           |                                           
 | VIN              | 1G8ZG127XWZ157259                      | 21.120 ns | 0.1160 ns | 0.1080 ns |         - |
 | VIN              | 1HGEM21292L047875                      | 20.920 ns | 0.0770 ns | 0.0690 ns |         - |
