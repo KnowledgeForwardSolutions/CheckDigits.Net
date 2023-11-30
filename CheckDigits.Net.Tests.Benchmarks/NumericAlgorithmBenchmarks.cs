@@ -7,13 +7,13 @@ public class NumericAlgorithmBenchmarks
 {
    public IEnumerable<Object[]> TryCalculateCheckDigitArguments()
    {
-      yield return new Object[] { Algorithms.Damm, Algorithms.Damm.AlgorithmName, "140" };
-      yield return new Object[] { Algorithms.Damm, Algorithms.Damm.AlgorithmName, "140662" };
-      yield return new Object[] { Algorithms.Damm, Algorithms.Damm.AlgorithmName, "140662538" };
-      yield return new Object[] { Algorithms.Damm, Algorithms.Damm.AlgorithmName, "140662538042" };
-      yield return new Object[] { Algorithms.Damm, Algorithms.Damm.AlgorithmName, "140662538042551" };
-      yield return new Object[] { Algorithms.Damm, Algorithms.Damm.AlgorithmName, "140662538042551028" };
-      yield return new Object[] { Algorithms.Damm, Algorithms.Damm.AlgorithmName, "140662538042551028265" };
+      //yield return new Object[] { Algorithms.Damm, Algorithms.Damm.AlgorithmName, "140" };
+      //yield return new Object[] { Algorithms.Damm, Algorithms.Damm.AlgorithmName, "140662" };
+      //yield return new Object[] { Algorithms.Damm, Algorithms.Damm.AlgorithmName, "140662538" };
+      //yield return new Object[] { Algorithms.Damm, Algorithms.Damm.AlgorithmName, "140662538042" };
+      //yield return new Object[] { Algorithms.Damm, Algorithms.Damm.AlgorithmName, "140662538042551" };
+      //yield return new Object[] { Algorithms.Damm, Algorithms.Damm.AlgorithmName, "140662538042551028" };
+      //yield return new Object[] { Algorithms.Damm, Algorithms.Damm.AlgorithmName, "140662538042551028265" };
 
       //yield return new Object[] { Algorithms.Iso7064Mod11_10, Algorithms.Iso7064Mod11_10.AlgorithmName, "140" };
       //yield return new Object[] { Algorithms.Iso7064Mod11_10, Algorithms.Iso7064Mod11_10.AlgorithmName, "140662" };
@@ -59,13 +59,13 @@ public class NumericAlgorithmBenchmarks
       //yield return new Object[] { Algorithms.Modulus11, Algorithms.Modulus11.AlgorithmName, "140662" };
       //yield return new Object[] { Algorithms.Modulus11, Algorithms.Modulus11.AlgorithmName, "140662538" };
 
-      //yield return new Object[] { Algorithms.Verhoeff, Algorithms.Verhoeff.AlgorithmName, "140" };
-      //yield return new Object[] { Algorithms.Verhoeff, Algorithms.Verhoeff.AlgorithmName, "140662" };
-      //yield return new Object[] { Algorithms.Verhoeff, Algorithms.Verhoeff.AlgorithmName, "140662538" };
-      //yield return new Object[] { Algorithms.Verhoeff, Algorithms.Verhoeff.AlgorithmName, "140662538042" };
-      //yield return new Object[] { Algorithms.Verhoeff, Algorithms.Verhoeff.AlgorithmName, "140662538042551" };
-      //yield return new Object[] { Algorithms.Verhoeff, Algorithms.Verhoeff.AlgorithmName, "140662538042551028" };
-      //yield return new Object[] { Algorithms.Verhoeff, Algorithms.Verhoeff.AlgorithmName, "140662538042551028265" };
+      yield return new Object[] { Algorithms.Verhoeff, Algorithms.Verhoeff.AlgorithmName, "140" };
+      yield return new Object[] { Algorithms.Verhoeff, Algorithms.Verhoeff.AlgorithmName, "140662" };
+      yield return new Object[] { Algorithms.Verhoeff, Algorithms.Verhoeff.AlgorithmName, "140662538" };
+      yield return new Object[] { Algorithms.Verhoeff, Algorithms.Verhoeff.AlgorithmName, "140662538042" };
+      yield return new Object[] { Algorithms.Verhoeff, Algorithms.Verhoeff.AlgorithmName, "140662538042551" };
+      yield return new Object[] { Algorithms.Verhoeff, Algorithms.Verhoeff.AlgorithmName, "140662538042551028" };
+      yield return new Object[] { Algorithms.Verhoeff, Algorithms.Verhoeff.AlgorithmName, "140662538042551028265" };
    }
 
    public IEnumerable<Object[]> TryCalculateCheckDigitsArguments()
@@ -81,13 +81,13 @@ public class NumericAlgorithmBenchmarks
 
    public IEnumerable<Object[]> ValidateArguments()
    {
-      yield return new Object[] { Algorithms.Damm, Algorithms.Damm.AlgorithmName, "1402" };
-      yield return new Object[] { Algorithms.Damm, Algorithms.Damm.AlgorithmName, "1406622" };
-      yield return new Object[] { Algorithms.Damm, Algorithms.Damm.AlgorithmName, "1406625388" };
-      yield return new Object[] { Algorithms.Damm, Algorithms.Damm.AlgorithmName, "1406625380422" };
-      yield return new Object[] { Algorithms.Damm, Algorithms.Damm.AlgorithmName, "1406625380425518" };
-      yield return new Object[] { Algorithms.Damm, Algorithms.Damm.AlgorithmName, "1406625380425510280" };
-      yield return new Object[] { Algorithms.Damm, Algorithms.Damm.AlgorithmName, "1406625380425510282654" };
+      //yield return new Object[] { Algorithms.Damm, Algorithms.Damm.AlgorithmName, "1402" };
+      //yield return new Object[] { Algorithms.Damm, Algorithms.Damm.AlgorithmName, "1406622" };
+      //yield return new Object[] { Algorithms.Damm, Algorithms.Damm.AlgorithmName, "1406625388" };
+      //yield return new Object[] { Algorithms.Damm, Algorithms.Damm.AlgorithmName, "1406625380422" };
+      //yield return new Object[] { Algorithms.Damm, Algorithms.Damm.AlgorithmName, "1406625380425518" };
+      //yield return new Object[] { Algorithms.Damm, Algorithms.Damm.AlgorithmName, "1406625380425510280" };
+      //yield return new Object[] { Algorithms.Damm, Algorithms.Damm.AlgorithmName, "1406625380425510282654" };
 
       //yield return new Object[] { Algorithms.Iso7064Mod11_10, Algorithms.Iso7064Mod11_10.AlgorithmName, "1409" };
       //yield return new Object[] { Algorithms.Iso7064Mod11_10, Algorithms.Iso7064Mod11_10.AlgorithmName, "1406623" };
@@ -141,13 +141,13 @@ public class NumericAlgorithmBenchmarks
       //yield return new Object[] { Algorithms.Modulus11, Algorithms.Modulus11.AlgorithmName, "1406625" };
       //yield return new Object[] { Algorithms.Modulus11, Algorithms.Modulus11.AlgorithmName, "1406625388" };
 
-      //yield return new Object[] { Algorithms.Verhoeff, Algorithms.Verhoeff.AlgorithmName, "1401" };
-      //yield return new Object[] { Algorithms.Verhoeff, Algorithms.Verhoeff.AlgorithmName, "1406625" };
-      //yield return new Object[] { Algorithms.Verhoeff, Algorithms.Verhoeff.AlgorithmName, "1406625388" };
-      //yield return new Object[] { Algorithms.Verhoeff, Algorithms.Verhoeff.AlgorithmName, "1406625380426" };
-      //yield return new Object[] { Algorithms.Verhoeff, Algorithms.Verhoeff.AlgorithmName, "1406625380425512" };
-      //yield return new Object[] { Algorithms.Verhoeff, Algorithms.Verhoeff.AlgorithmName, "1406625380425510285" };
-      //yield return new Object[] { Algorithms.Verhoeff, Algorithms.Verhoeff.AlgorithmName, "1406625380425510282655" };
+      yield return new Object[] { Algorithms.Verhoeff, Algorithms.Verhoeff.AlgorithmName, "1401" };
+      yield return new Object[] { Algorithms.Verhoeff, Algorithms.Verhoeff.AlgorithmName, "1406625" };
+      yield return new Object[] { Algorithms.Verhoeff, Algorithms.Verhoeff.AlgorithmName, "1406625388" };
+      yield return new Object[] { Algorithms.Verhoeff, Algorithms.Verhoeff.AlgorithmName, "1406625380426" };
+      yield return new Object[] { Algorithms.Verhoeff, Algorithms.Verhoeff.AlgorithmName, "1406625380425512" };
+      yield return new Object[] { Algorithms.Verhoeff, Algorithms.Verhoeff.AlgorithmName, "1406625380425510285" };
+      yield return new Object[] { Algorithms.Verhoeff, Algorithms.Verhoeff.AlgorithmName, "1406625380425510282655" };
    }
 
    [Benchmark]

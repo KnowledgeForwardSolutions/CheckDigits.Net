@@ -149,7 +149,7 @@ The ISO/IEC 7064:2003 standard is available at https://www.iso.org/standard/3153
 | --------------------- | ----------|
 | ABA Routing Transit Number | [ABA RTN Algorithm](#aba-rtn-algorithm) |
 | CA Social Insurance Number | [Luhn Algorithm](#luhn-algorithm) |
-| CAS Registry Number   | [Modulus10 Algorithm](#modulus10_1-algorithm) |
+| CAS Registry Number   | [Modulus10_1 Algorithm](#modulus10_1-algorithm) |
 | Credit card number    | [Luhn Algorithm](#luhn-algorithm) |
 | CUSIP                 | [CUSIP Algorithm](#cusip-algorithm) |
 | EAN-8					| [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
@@ -161,7 +161,7 @@ The ISO/IEC 7064:2003 standard is available at https://www.iso.org/standard/3153
 | GTIN-14				| [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
 | IBAN                  | [IBAN Algorithm](#iban-algorithm) |
 | IMEI				    | [Luhn Algorithm](#luhn-algorithm) |
-| IMO Number            | [Modulus10 Algorithm](#modulus10_2-algorithm) |
+| IMO Number            | [Modulus10_2 Algorithm](#modulus10_2-algorithm) |
 | ISAN                  | [ISAN Algorithm](#isan-algorithm) |
 | ISBN-10				| [Modulus11 Algorithm](#modulus11-algorithm) |
 | ISBN-13				| [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
@@ -1040,13 +1040,13 @@ benchmarks do not cover lengths greater than 10.
 | Modulus11         | 140662                | 10.089 ns | 0.0851 ns | 0.0796 ns |         - |
 | Modulus11         | 140662538             | 13.288 ns | 0.0696 ns | 0.0651 ns |         - |
 |                   |                       |           |           |           |           |                                           
-| Verhoeff          | 140                   |  9.926 ns | 0.0724 ns | 0.0642 ns |         - |
-| Verhoeff          | 140662                | 17.185 ns | 0.0629 ns | 0.0558 ns |         - |
-| Verhoeff          | 140662538             | 24.601 ns | 0.0843 ns | 0.0747 ns |         - |
-| Verhoeff          | 140662538042          | 32.311 ns | 0.6764 ns | 0.8307 ns |         - |
-| Verhoeff          | 140662538042551       | 40.603 ns | 0.1477 ns | 0.1309 ns |         - |
-| Verhoeff          | 140662538042551028    | 48.069 ns | 0.1373 ns | 0.1218 ns |         - |
-| Verhoeff          | 140662538042551028265 | 55.524 ns | 0.1693 ns | 0.1501 ns |         - |
+| Verhoeff          | 140                   |  8.358 ns | 0.1062 ns | 0.0941 ns |         - |
+| Verhoeff          | 140662                | 12.916 ns | 0.0614 ns | 0.0544 ns |         - |
+| Verhoeff          | 140662538             | 17.835 ns | 0.1126 ns | 0.0998 ns |         - |
+| Verhoeff          | 140662538042          | 22.727 ns | 0.1362 ns | 0.1274 ns |         - |
+| Verhoeff          | 140662538042551       | 27.473 ns | 0.1085 ns | 0.0961 ns |         - |
+| Verhoeff          | 140662538042551028    | 32.246 ns | 0.1009 ns | 0.0842 ns |         - |
+| Verhoeff          | 140662538042551028265 | 37.262 ns | 0.1306 ns | 0.1090 ns |         - |
 
 #### General Alphabetic Algorithms
 
@@ -1205,13 +1205,14 @@ benchmarks do not cover lengths greater than 10.
 | Modulus11              | 1406625                 |  6.844 ns | 0.1128 ns | 0.1000 ns |         - |
 | Modulus11              | 1406625388              |  8.112 ns | 0.0454 ns | 0.0425 ns |         - |
 |                        |                         |           |           |           |           |                                           
-| Verhoeff               | 1401                    | 12.043 ns | 0.0532 ns | 0.0472 ns |         - |
-| Verhoeff               | 1406625                 | 19.670 ns | 0.1123 ns | 0.1050 ns |         - |
-| Verhoeff               | 1406625388              | 27.181 ns | 0.1446 ns | 0.1353 ns |         - |
-| Verhoeff               | 1406625380426           | 34.401 ns | 0.1227 ns | 0.1024 ns |         - |
-| Verhoeff               | 1406625380425512        | 41.722 ns | 0.1302 ns | 0.1154 ns |         - |
-| Verhoeff               | 1406625380425510285     | 49.574 ns | 0.2021 ns | 0.1792 ns |         - |
-| Verhoeff               | 1406625380425510282655  | 58.037 ns | 1.1438 ns | 1.1746 ns |         - |
+| Verhoeff               | 1401                    |  9.365 ns | 0.0523 ns | 0.0489 ns |         - |
+| Verhoeff               | 1406625                 | 14.769 ns | 0.0841 ns | 0.0656 ns |         - |
+| Verhoeff               | 1406625388              | 20.334 ns | 0.1164 ns | 0.1089 ns |         - |
+| Verhoeff               | 1406625380426           | 25.942 ns | 0.1319 ns | 0.1234 ns |         - |
+| Verhoeff               | 1406625380425512        | 31.425 ns | 0.1170 ns | 0.0977 ns |         - |
+| Verhoeff               | 1406625380425510285     | 36.982 ns | 0.1119 ns | 0.0935 ns |         - |
+| Verhoeff               | 1406625380425510282655  | 42.288 ns | 0.1756 ns | 0.1642 ns |         - |
+
 
 #### General Alphabetic Algorithms
 
@@ -1332,6 +1333,21 @@ Note also that the values used for the NOID Check Digit algorithm do not include
 | VIN              | 1HGEM21292L047875                      | 20.920 ns | 0.0770 ns | 0.0690 ns |         - |
 | VIN              | 1M8GDM9AXKP042788                      | 21.050 ns | 0.0940 ns | 0.0830 ns |         - |
 
+| TryCalculateCheckDigit | Check(...)rithm [51] | Verhoeff | 140                  |  8.358 ns | 0.1062 ns | 0.0941 ns |         - |
+| TryCalculateCheckDigit | Check(...)rithm [51] | Verhoeff | 140662               | 12.916 ns | 0.0614 ns | 0.0544 ns |         - |
+| TryCalculateCheckDigit | Check(...)rithm [51] | Verhoeff | 140662538            | 17.835 ns | 0.1126 ns | 0.0998 ns |         - |
+| TryCalculateCheckDigit | Check(...)rithm [51] | Verhoeff | 140662538042         | 22.727 ns | 0.1362 ns | 0.1274 ns |         - |
+| TryCalculateCheckDigit | Check(...)rithm [51] | Verhoeff | 140662538042551      | 27.473 ns | 0.1085 ns | 0.0961 ns |         - |
+| TryCalculateCheckDigit | Check(...)rithm [51] | Verhoeff | 140662538042551028   | 32.246 ns | 0.1009 ns | 0.0842 ns |         - |
+| TryCalculateCheckDigit | Check(...)rithm [51] | Verhoeff | 14066(...)28265 [21] | 37.262 ns | 0.1306 ns | 0.1090 ns |         - |
+| Validate               | Check(...)rithm [51] | Verhoeff | 1401                 |  9.365 ns | 0.0523 ns | 0.0489 ns |         - |
+| Validate               | Check(...)rithm [51] | Verhoeff | 1406625              | 14.769 ns | 0.0841 ns | 0.0656 ns |         - |
+| Validate               | Check(...)rithm [51] | Verhoeff | 1406625388           | 20.334 ns | 0.1164 ns | 0.1089 ns |         - |
+| Validate               | Check(...)rithm [51] | Verhoeff | 1406625380426        | 25.942 ns | 0.1319 ns | 0.1234 ns |         - |
+| Validate               | Check(...)rithm [51] | Verhoeff | 1406625380425512     | 31.425 ns | 0.1170 ns | 0.0977 ns |         - |
+| Validate               | Check(...)rithm [51] | Verhoeff | 1406625380425510285  | 36.982 ns | 0.1119 ns | 0.0935 ns |         - |
+| Validate               | Check(...)rithm [51] | Verhoeff | 14066(...)82655 [22] | 42.288 ns | 0.1756 ns | 0.1642 ns |         - |
+
 # Release History/Release Notes
 
 ## v1.0.0-alpha
@@ -1385,9 +1401,11 @@ Detailed benchmark results for .Net 7 vs .Net 8 located at https://github.com/Kn
 
 ## v2.1.0
 Additional included algorithms
-* CUSIP
+* CUSIP Algorithm
+* SEDOL Algorithm
 
 Performance increases for:
 * Luhn Algorithm, Validate method ~15% improvement over .Net 7, TryCalculateCheckDigit method ~27% improvement over .Net 7
   (Luhn algorithm originally saw a slight performance decrease when switching from .Net 7 to .Net 8. This release addresses that performance decrease.) 
 * Damm Algorithm, Validate and TryCalculateCheckDigit methods ~30% improvement
+* Verhoeff Algorithm, Validate method ~20% improvement, TryCalculateCheckDigit method ~30% improvement
