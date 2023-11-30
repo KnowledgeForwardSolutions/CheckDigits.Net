@@ -24,11 +24,11 @@ namespace CheckDigits.Net.GeneralAlgorithms;
 /// </remarks>
 public sealed class DammAlgorithm : ISingleCheckDigitAlgorithm
 {
-    private static readonly DammQuasigroupTable _quasigroupTable =
-       DammQuasigroupTable.Instance;
+   private static readonly DammQuasigroupTable _quasigroupTable =
+      DammQuasigroupTable.Instance;
 
-    /// <inheritdoc/>
-    public string AlgorithmDescription => Resources.DammAlgorithmDescription;
+   /// <inheritdoc/>
+   public string AlgorithmDescription => Resources.DammAlgorithmDescription;
 
     /// <inheritdoc/>
     public string AlgorithmName => Resources.DammAlgorithmName;
@@ -57,25 +57,25 @@ public sealed class DammAlgorithm : ISingleCheckDigitAlgorithm
         return true;
     }
 
-    /// <inheritdoc/>
-    public bool Validate(string value)
-    {
-        if (string.IsNullOrEmpty(value) || value.Length < 2)
-        {
+   /// <inheritdoc/>
+   public bool Validate(string value)
+   {
+      if (string.IsNullOrEmpty(value) || value.Length < 2)
+      {
+         return false;
+      }
+
+      var interim = 0;
+      for (var index = 0; index < value.Length; index++)
+      {
+         var current = value![index].ToIntegerDigit();
+         if (current < 0 || current > 9)
+         {
             return false;
-        }
+         }
+         interim = _quasigroupTable[interim, current];
+      }
 
-        var interim = 0;
-        for (var index = 0; index < value.Length; index++)
-        {
-            var current = value![index].ToIntegerDigit();
-            if (current < 0 || current > 9)
-            {
-                return false;
-            }
-            interim = _quasigroupTable[interim, current];
-        }
-
-        return interim == 0;
-    }
+      return interim == 0;
+   }
 }

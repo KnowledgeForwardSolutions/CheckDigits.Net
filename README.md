@@ -980,13 +980,13 @@ benchmarks do not cover lengths greater than 10.
 
 | Algorithm Name    | Value                 | Mean      | Error     | StdDev    | Allocated |
 |------------------ |---------------------- |----------:|----------:|----------:|----------:|
-| Damm              | 140                   |  5.381 ns | 0.1181 ns | 0.1105 ns |         - |
-| Damm              | 140662                | 11.121 ns | 0.0850 ns | 0.0796 ns |         - |
-| Damm              | 140662538             | 16.117 ns | 0.1801 ns | 0.1684 ns |         - |
-| Damm              | 140662538042          | 20.952 ns | 0.2006 ns | 0.1675 ns |         - |
-| Damm              | 140662538042551       | 25.882 ns | 0.2047 ns | 0.1915 ns |         - |
-| Damm              | 140662538042551028    | 31.169 ns | 0.2748 ns | 0.2436 ns |         - |
-| Damm              | 140662538042551028265 | 37.167 ns | 0.7315 ns | 0.6843 ns |         - |
+| Damm              | 140                   |  4.525 ns | 0.0571 ns | 0.0506 ns |         - |
+| Damm              | 140662                |  5.477 ns | 0.0170 ns | 0.0142 ns |         - |
+| Damm              | 140662538             |  8.315 ns | 0.0803 ns | 0.0712 ns |         - |
+| Damm              | 140662538042          | 11.993 ns | 0.0355 ns | 0.0332 ns |         - |
+| Damm              | 140662538042551       | 16.354 ns | 0.3389 ns | 0.3170 ns |         - |
+| Damm              | 140662538042551028    | 19.487 ns | 0.0783 ns | 0.0654 ns |         - |
+| Damm              | 140662538042551028265 | 23.192 ns | 0.0936 ns | 0.0781 ns |         - |
 |                   |                       |           |           |           |           |                                           
 | ISO/IEC 706 11,10 | 140                   |  6.355 ns | 0.0509 ns | 0.0476 ns |         - |
 | ISO/IEC 706 11,10 | 140662                | 10.266 ns | 0.0631 ns | 0.0590 ns |         - |
@@ -1145,13 +1145,13 @@ benchmarks do not cover lengths greater than 10.
 
 | Algorithm Name         | Value                   | Mean      | Error     | StdDev    | Allocated |
 |----------------------- | ----------------------- |----------:|----------:|----------:|----------:|
-| Damm                   | 1402                    |  5.413 ns | 0.1208 ns | 0.1187 ns |         - |
-| Damm                   | 1406622                 | 10.189 ns | 0.1256 ns | 0.1049 ns |         - |
-| Damm                   | 1406625388              | 15.553 ns | 0.2573 ns | 0.2406 ns |         - |
-| Damm                   | 1406625380422           | 20.646 ns | 0.1639 ns | 0.1533 ns |         - |
-| Damm                   | 1406625380425518        | 25.791 ns | 0.2073 ns | 0.1939 ns |         - |
-| Damm                   | 1406625380425510280     | 30.905 ns | 0.2570 ns | 0.2278 ns |         - |
-| Damm                   | 1406625380425510282654  | 37.264 ns | 0.2827 ns | 0.2644 ns |         - |
+| Damm                   | 1402                    |  3.825 ns | 0.0240 ns | 0.0213 ns |         - |
+| Damm                   | 1406622                 |  6.032 ns | 0.0244 ns | 0.0216 ns |         - |
+| Damm                   | 1406625388              |  9.435 ns | 0.0801 ns | 0.0750 ns |         - |
+| Damm                   | 1406625380422           | 13.104 ns | 0.0813 ns | 0.0760 ns |         - |
+| Damm                   | 1406625380425518        | 16.887 ns | 0.1718 ns | 0.1523 ns |         - |
+| Damm                   | 1406625380425510280     | 20.558 ns | 0.1472 ns | 0.1377 ns |         - |
+| Damm                   | 1406625380425510282654  | 24.074 ns | 0.1599 ns | 0.1495 ns |         - |
 |                        |                         |           |           |           |           |                                           
 | ISO/IEC 7064 MOD 11,10 | 1409                    |  6.567 ns | 0.0645 ns | 0.0572 ns |         - |
 | ISO/IEC 7064 MOD 11,10 | 1406623                 | 11.212 ns | 0.0784 ns | 0.0695 ns |         - |
@@ -1390,3 +1390,4 @@ Additional included algorithms
 Performance increases for:
 * Luhn Algorithm, Validate method ~15% improvement over .Net 7, TryCalculateCheckDigit method ~27% improvement over .Net 7
   (Luhn algorithm originally saw a slight performance decrease when switching from .Net 7 to .Net 8. This release addresses that performance decrease.) 
+* Damm Algorithm, Validate and TryCalculateCheckDigit methods ~30% improvement

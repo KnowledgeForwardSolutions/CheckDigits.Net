@@ -7,13 +7,13 @@ public class NumericAlgorithmBenchmarks
 {
    public IEnumerable<Object[]> TryCalculateCheckDigitArguments()
    {
-      //yield return new Object[] { Algorithms.Damm, Algorithms.Damm.AlgorithmName, "140" };
-      //yield return new Object[] { Algorithms.Damm, Algorithms.Damm.AlgorithmName, "140662" };
-      //yield return new Object[] { Algorithms.Damm, Algorithms.Damm.AlgorithmName, "140662538" };
-      //yield return new Object[] { Algorithms.Damm, Algorithms.Damm.AlgorithmName, "140662538042" };
-      //yield return new Object[] { Algorithms.Damm, Algorithms.Damm.AlgorithmName, "140662538042551" };
-      //yield return new Object[] { Algorithms.Damm, Algorithms.Damm.AlgorithmName, "140662538042551028" };
-      //yield return new Object[] { Algorithms.Damm, Algorithms.Damm.AlgorithmName, "140662538042551028265" };
+      yield return new Object[] { Algorithms.Damm, Algorithms.Damm.AlgorithmName, "140" };
+      yield return new Object[] { Algorithms.Damm, Algorithms.Damm.AlgorithmName, "140662" };
+      yield return new Object[] { Algorithms.Damm, Algorithms.Damm.AlgorithmName, "140662538" };
+      yield return new Object[] { Algorithms.Damm, Algorithms.Damm.AlgorithmName, "140662538042" };
+      yield return new Object[] { Algorithms.Damm, Algorithms.Damm.AlgorithmName, "140662538042551" };
+      yield return new Object[] { Algorithms.Damm, Algorithms.Damm.AlgorithmName, "140662538042551028" };
+      yield return new Object[] { Algorithms.Damm, Algorithms.Damm.AlgorithmName, "140662538042551028265" };
 
       //yield return new Object[] { Algorithms.Iso7064Mod11_10, Algorithms.Iso7064Mod11_10.AlgorithmName, "140" };
       //yield return new Object[] { Algorithms.Iso7064Mod11_10, Algorithms.Iso7064Mod11_10.AlgorithmName, "140662" };
@@ -31,13 +31,13 @@ public class NumericAlgorithmBenchmarks
       //yield return new Object[] { Algorithms.Iso7064Mod11_2, Algorithms.Iso7064Mod11_2.AlgorithmName, "140662538042551028" };
       //yield return new Object[] { Algorithms.Iso7064Mod11_2, Algorithms.Iso7064Mod11_2.AlgorithmName, "140662538042551028265" };
 
-      yield return new Object[] { Algorithms.Luhn, Algorithms.Luhn.AlgorithmName, "140" };
-      yield return new Object[] { Algorithms.Luhn, Algorithms.Luhn.AlgorithmName, "140662" };
-      yield return new Object[] { Algorithms.Luhn, Algorithms.Luhn.AlgorithmName, "140662538" };
-      yield return new Object[] { Algorithms.Luhn, Algorithms.Luhn.AlgorithmName, "140662538042" };
-      yield return new Object[] { Algorithms.Luhn, Algorithms.Luhn.AlgorithmName, "140662538042551" };
-      yield return new Object[] { Algorithms.Luhn, Algorithms.Luhn.AlgorithmName, "140662538042551028" };
-      yield return new Object[] { Algorithms.Luhn, Algorithms.Luhn.AlgorithmName, "140662538042551028265" };
+      //yield return new Object[] { Algorithms.Luhn, Algorithms.Luhn.AlgorithmName, "140" };
+      //yield return new Object[] { Algorithms.Luhn, Algorithms.Luhn.AlgorithmName, "140662" };
+      //yield return new Object[] { Algorithms.Luhn, Algorithms.Luhn.AlgorithmName, "140662538" };
+      //yield return new Object[] { Algorithms.Luhn, Algorithms.Luhn.AlgorithmName, "140662538042" };
+      //yield return new Object[] { Algorithms.Luhn, Algorithms.Luhn.AlgorithmName, "140662538042551" };
+      //yield return new Object[] { Algorithms.Luhn, Algorithms.Luhn.AlgorithmName, "140662538042551028" };
+      //yield return new Object[] { Algorithms.Luhn, Algorithms.Luhn.AlgorithmName, "140662538042551028265" };
 
       //yield return new Object[] { Algorithms.Modulus10_1, Algorithms.Modulus10_1.AlgorithmName, "140" };
       //yield return new Object[] { Algorithms.Modulus10_1, Algorithms.Modulus10_1.AlgorithmName, "140662" };
@@ -81,13 +81,13 @@ public class NumericAlgorithmBenchmarks
 
    public IEnumerable<Object[]> ValidateArguments()
    {
-      //yield return new Object[] { Algorithms.Damm, Algorithms.Damm.AlgorithmName, "1402" };
-      //yield return new Object[] { Algorithms.Damm, Algorithms.Damm.AlgorithmName, "1406622" };
-      //yield return new Object[] { Algorithms.Damm, Algorithms.Damm.AlgorithmName, "1406625388" };
-      //yield return new Object[] { Algorithms.Damm, Algorithms.Damm.AlgorithmName, "1406625380422" };
-      //yield return new Object[] { Algorithms.Damm, Algorithms.Damm.AlgorithmName, "1406625380425518" };
-      //yield return new Object[] { Algorithms.Damm, Algorithms.Damm.AlgorithmName, "1406625380425510280" };
-      //yield return new Object[] { Algorithms.Damm, Algorithms.Damm.AlgorithmName, "1406625380425510282654" };
+      yield return new Object[] { Algorithms.Damm, Algorithms.Damm.AlgorithmName, "1402" };
+      yield return new Object[] { Algorithms.Damm, Algorithms.Damm.AlgorithmName, "1406622" };
+      yield return new Object[] { Algorithms.Damm, Algorithms.Damm.AlgorithmName, "1406625388" };
+      yield return new Object[] { Algorithms.Damm, Algorithms.Damm.AlgorithmName, "1406625380422" };
+      yield return new Object[] { Algorithms.Damm, Algorithms.Damm.AlgorithmName, "1406625380425518" };
+      yield return new Object[] { Algorithms.Damm, Algorithms.Damm.AlgorithmName, "1406625380425510280" };
+      yield return new Object[] { Algorithms.Damm, Algorithms.Damm.AlgorithmName, "1406625380425510282654" };
 
       //yield return new Object[] { Algorithms.Iso7064Mod11_10, Algorithms.Iso7064Mod11_10.AlgorithmName, "1409" };
       //yield return new Object[] { Algorithms.Iso7064Mod11_10, Algorithms.Iso7064Mod11_10.AlgorithmName, "1406623" };
@@ -113,13 +113,13 @@ public class NumericAlgorithmBenchmarks
       //yield return new Object[] { Algorithms.Iso7064Mod97_10, Algorithms.Iso7064Mod97_10.AlgorithmName, "14066253804255102853" };
       //yield return new Object[] { Algorithms.Iso7064Mod97_10, Algorithms.Iso7064Mod97_10.AlgorithmName, "14066253804255102826587" };
 
-      yield return new Object[] { Algorithms.Luhn, Algorithms.Luhn.AlgorithmName, "1404" };
-      yield return new Object[] { Algorithms.Luhn, Algorithms.Luhn.AlgorithmName, "1406628" };
-      yield return new Object[] { Algorithms.Luhn, Algorithms.Luhn.AlgorithmName, "1406625382" };
-      yield return new Object[] { Algorithms.Luhn, Algorithms.Luhn.AlgorithmName, "1406625380421" };
-      yield return new Object[] { Algorithms.Luhn, Algorithms.Luhn.AlgorithmName, "1406625380425514" };
-      yield return new Object[] { Algorithms.Luhn, Algorithms.Luhn.AlgorithmName, "1406625380425510285" };
-      yield return new Object[] { Algorithms.Luhn, Algorithms.Luhn.AlgorithmName, "1406625380425510282651" };
+      //yield return new Object[] { Algorithms.Luhn, Algorithms.Luhn.AlgorithmName, "1404" };
+      //yield return new Object[] { Algorithms.Luhn, Algorithms.Luhn.AlgorithmName, "1406628" };
+      //yield return new Object[] { Algorithms.Luhn, Algorithms.Luhn.AlgorithmName, "1406625382" };
+      //yield return new Object[] { Algorithms.Luhn, Algorithms.Luhn.AlgorithmName, "1406625380421" };
+      //yield return new Object[] { Algorithms.Luhn, Algorithms.Luhn.AlgorithmName, "1406625380425514" };
+      //yield return new Object[] { Algorithms.Luhn, Algorithms.Luhn.AlgorithmName, "1406625380425510285" };
+      //yield return new Object[] { Algorithms.Luhn, Algorithms.Luhn.AlgorithmName, "1406625380425510282651" };
 
       //yield return new Object[] { Algorithms.Modulus10_1, Algorithms.Modulus10_1.AlgorithmName, "1401" };
       //yield return new Object[] { Algorithms.Modulus10_1, Algorithms.Modulus10_1.AlgorithmName, "1406628" };

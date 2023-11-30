@@ -82,13 +82,13 @@ public class DammAlgorithmTests
         checkDigit.Should().Be('\0');
     }
 
-    #endregion
+   #endregion
 
-    #region Validate Tests
-    // ==========================================================================
-    // ==========================================================================
+   #region Validate Tests
+   // ==========================================================================
+   // ==========================================================================
 
-    [Fact]
+   [Fact]
     public void DammAlgorithm_Validate_ShouldReturnFalse_WhenInputIsNull()
        => _sut.Validate(null!).Should().BeFalse();
 
@@ -146,5 +146,5 @@ public class DammAlgorithmTests
     public void DammAlgorithm_Validate_ShouldReturnFalse_WhenInputContainsNonDigitCharacter(string value)
        => _sut.Validate(value).Should().BeFalse();
 
-    #endregion
+   #endregion
 }
