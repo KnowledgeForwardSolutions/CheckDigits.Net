@@ -1,7 +1,5 @@
 ﻿// Ignore Spelling: Cusip
 
-using System.Buffers;
-
 namespace CheckDigits.Net.ValueSpecificAlgorithms;
 
 /// <summary>
@@ -47,9 +45,9 @@ public class CusipAlgorithm : ICheckDigitAlgorithm
       for (var index = value.Length - 2; index >= 0; index--)
       {
          var ch = value[index];
-         if (ch >= '#' && ch <= 'Z')
+         if (ch >= CharConstants.HashMark && ch <= CharConstants.UpperCaseZ)
          {
-            var offset = ch - '#';
+            var offset = ch - CharConstants.HashMark;
             num = oddPosition ? _oddValues[offset] : _evenValues[offset];
          }
          else
@@ -73,7 +71,6 @@ public class CusipAlgorithm : ICheckDigitAlgorithm
       return value[^1].ToIntegerDigit() == checkDigit;
    }
 
-
    private const String _chars = "#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
    private static Int32[] GetLookupTable(Boolean odd)
@@ -81,13 +78,13 @@ public class CusipAlgorithm : ICheckDigitAlgorithm
       {
          var num = x switch
          {
-            var d when x >= CharConstants.DigitZero && x <= CharConstants.DigitNine => x.ToIntegerDigit(),
-            var c when x >= CharConstants.UpperCaseA && x <= CharConstants.UpperCaseZ => x - _letterOffset,
+            var d when x >= CharConstants.DigitZero && x <= CharConstants.DigitNine => d.ToIntegerDigit(),
+            var c when x >= CharConstants.UpperCaseA && x <= CharConstants.UpperCaseZ => c - _letterOffset,
             CharConstants.Asterisk => 36,
             CharConstants.AtSign => 37,
             CharConstants.HashMark => 38,
             _ => -1
-         };;
+         };
          if (num == -1)
          {
             return -1;
