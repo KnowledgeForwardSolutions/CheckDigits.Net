@@ -26,69 +26,69 @@ public sealed class VerhoeffAlgorithm : ISingleCheckDigitAlgorithm
 {
     private static readonly VerhoeffInverseTable _inverseTable =
        VerhoeffInverseTable.Instance;
-    private static readonly VerhoeffMultiplicationTable _multiplicationTable =
-       VerhoeffMultiplicationTable.Instance;
-    private static readonly VerhoeffPermutationTable _permutationTable =
-       VerhoeffPermutationTable.Instance;
+   private static readonly VerhoeffMultiplicationTable _multiplicationTable =
+      VerhoeffMultiplicationTable.Instance;
+   private static readonly VerhoeffPermutationTable _permutationTable =
+      VerhoeffPermutationTable.Instance;
 
-    /// <inheritdoc/>
-    public string AlgorithmDescription => Resources.VerhoeffAlgorithmDescription;
+   /// <inheritdoc/>
+   public string AlgorithmDescription => Resources.VerhoeffAlgorithmDescription;
 
     /// <inheritdoc/>
     public string AlgorithmName => Resources.VerhoeffAlgorithmName;
 
-    /// <inheritdoc/>
-    public bool TryCalculateCheckDigit(string value, out char checkDigit)
-    {
-        checkDigit = CharConstants.NUL;
-        if (string.IsNullOrEmpty(value))
-        {
+   /// <inheritdoc/>
+   public bool TryCalculateCheckDigit(string value, out char checkDigit)
+   {
+      checkDigit = CharConstants.NUL;
+      if (string.IsNullOrEmpty(value))
+      {
+         return false;
+      }
+
+      var c = 0;
+      var i = 1;
+      for (var index = value.Length - 1; index >= 0; index--)
+      {
+         var n = value![index].ToIntegerDigit();
+         if (n < 0 || n > 9)
+         {
             return false;
-        }
+         }
 
-        var c = 0;
-        var i = 1;
-        for (var index = value.Length - 1; index >= 0; index--)
-        {
-            var n = value![index].ToIntegerDigit();
-            if (n < 0 || n > 9)
-            {
-                return false;
-            }
+         var p = _permutationTable[i % 8, n];
+         c = _multiplicationTable[c, p];
 
-            var p = _permutationTable[i % 8, n];
-            c = _multiplicationTable[c, p];
+         i++;
+      }
+      checkDigit = _inverseTable[c].ToDigitChar();
 
-            i++;
-        }
-        checkDigit = _inverseTable[c].ToDigitChar();
+      return true;
+   }
 
-        return true;
-    }
+   /// <inheritdoc/>
+   public bool Validate(string value)
+   {
+      if (string.IsNullOrEmpty(value) || value.Length < 2)
+      {
+         return false;
+      }
 
-    /// <inheritdoc/>
-    public bool Validate(string value)
-    {
-        if (string.IsNullOrEmpty(value) || value.Length < 2)
-        {
+      var c = 0;
+      var i = 0;
+      for (var index = value.Length - 1; index >= 0; index--)
+      {
+         var n = value![index].ToIntegerDigit();
+         if (n < 0 || n > 9)
+         {
             return false;
-        }
+         }
 
-        var c = 0;
-        var i = 0;
-        for (var index = value.Length - 1; index >= 0; index--)
-        {
-            var n = value![index].ToIntegerDigit();
-            if (n < 0 || n > 9)
-            {
-                return false;
-            }
+         var p = _permutationTable[i % 8, n];
+         c = _multiplicationTable[c, p];
 
-            var p = _permutationTable[i % 8, n];
-            c = _multiplicationTable[c, p];
-
-            i++;
-        }
-        return c == 0;
-    }
+         i++;
+      }
+      return c == 0;
+   }
 }
