@@ -10,7 +10,7 @@ Some basic guidelines to promote code uniformity.
 3. Use C# 10 global usings and file-scoped namespaces to reduce code boilerplate.
 4. Add XML code comments for all public methods of interfaces and public classes.
    If a class implements an interface, do not duplicate the XML comments in the
-   interface, use <inheritdoc/> instead. Also update README.md, including examples 
+   interface, use the inheritdoc tag instead. Also update README.md, including examples 
    of usage.
 5. Tabs are three (3) spaces.
 6. Include benchmarks and include results in README.
