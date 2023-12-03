@@ -115,6 +115,16 @@ public class Iso6346AlgorithmTests
    public void Iso6346Algorithm_Validate_ShouldReturnTrue_WhenValueContainsValidCheckDigit(String value)
       => _sut.Validate(value).Should().BeTrue();
 
+   [Theory]
+   [InlineData("CSQU7054383")]      // CSQU3054383 with single digit transcription error 3 -> 7
+   [InlineData("CTQU3054383")]      // CSQU3054383 with single character transcription error S -> T
+   [InlineData("MEDU7807688")]      // MEDU8707688 with two digit transposition error 87 -> 78 
+   [InlineData("MDEU8707688")]      // MEDU8707688 with two character transposition error ED -> DE
+   [InlineData("HLAU1122445")]      // HLAU1122335 with two digit twin error 33 -> 44
+   [InlineData("HMMU1122332")]      // HLLU1122332 with two letter twin error LL -> MM
+   public void Iso6346Algorithm_Validate_ShouldReturnFalse_WhenInputContainsDetectableError(string value)
+      => _sut.Validate(value).Should().BeFalse();
+
    [Fact]
    public void Iso6346Algorithm_Validate_ShouldReturnTrue_WhenCheckDigitIsCalculatesAsZero()
       => _sut.Validate("A0000000000").Should().BeTrue();

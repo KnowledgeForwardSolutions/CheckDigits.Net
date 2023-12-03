@@ -103,6 +103,16 @@ public class SedolAlgorithmTests
    public void SedolAlgorithm_Validate_ShouldReturnTrue_WhenValueContainsValidCheckDigit(String value)
       => _sut.Validate(value).Should().BeTrue();
 
+   [Theory]
+   [InlineData("3174865")]     // 3134865 with single digit transcription error 3 -> 7
+   [InlineData("BTJC712")]     // BSJC712 with single character transcription error S -> T
+   [InlineData("3138465")]     // 3134865 with two digit transposition error 48 -> 84 
+   [InlineData("BJSC712")]     // BSJC712 with two character transposition error SJ -> JS
+   [InlineData("1155334")]     // 1122334 with two digit twin error 22 -> 55
+   [InlineData("BBGGDD4")]     // BBCCDD4 with two letter twin error CC -> GG
+   public void SedolAlgorithm_Validate_ShouldReturnFalse_WhenInputContainsDetectableError(string value)
+      => _sut.Validate(value).Should().BeFalse();
+
    [Fact]
    public void SedolAlgorithm_Validate_ShouldReturnTrue_WhenInputIsAllZeros()
       => _sut.Validate("0000000").Should().BeTrue();
