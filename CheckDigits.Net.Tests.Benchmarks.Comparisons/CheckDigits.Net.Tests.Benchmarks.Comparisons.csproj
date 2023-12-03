@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="BenchmarkDotNet" Version="0.13.10" />
+    <PackageReference Include="CreditCardValidator" Version="3.0.1" />
+    <PackageReference Include="LuhnNet" Version="2.0.0" />
+    <PackageReference Include="Medo.Checksums" Version="1.2.0" />
+    <PackageReference Include="Nager.ArticleNumber" Version="1.0.7" />
+    <PackageReference Include="Tharga.Toolkit" Version="1.10.17" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CheckDigits.Net\CheckDigits.Net.csproj" />
+  </ItemGroup>
+
+</Project>
