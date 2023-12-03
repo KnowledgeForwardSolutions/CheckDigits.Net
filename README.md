@@ -29,6 +29,7 @@ let us know. Or contribute to the CheckDigits.Net repository: https://github.com
     * [IBAN (International Bank Account Number) Algorithm](#iban-algorithm)
     * [ISAN (International Standard Audiovisual Number) Algorithm](#isan-algorithm)
     * [ISIN (International Securities Identification Number) Algorithm](#isin-algorithm)
+    * [ISO 6346 Algorithm](#iso-6346-algorithm)
     * [ISO/IEC 7064 MOD 11,10 Algorithm](#isoiec-7064-mod-1110-algorithm)
     * [ISO/IEC 7064 MOD 11-2 Algorithm](#isoiec-7064-mod-11-2-algorithm)
     * [ISO/IEC 7064 MOD 1271-36 Algorithm](#isoiec-7064-mod-1271-36-algorithm)
@@ -123,6 +124,7 @@ The ISO/IEC 7064:2003 standard is available at https://www.iso.org/standard/3153
 * [IBAN (International Bank Account Number) Algorithm](#iban-algorithm)
 * [ISAN (International Standard Audiovisual Number) Algorithm](#isan-algorithm)
 * [ISIN (International Securities Identification Number) Algorithm](#isin-algorithm)
+* [ISO 6346 Algorithm](#iso-6346-algorithm)
 * [ISO/IEC 7064 MOD 11,10 Algorithm](#isoiec-7064-mod-1110-algorithm)
 * [ISO/IEC 7064 MOD 11-2 Algorithm](#isoiec-7064-mod-11-2-algorithm)
 * [ISO/IEC 7064 MOD 1271-36 Algorithm](#isoiec-7064-mod-1271-36-algorithm)
@@ -172,6 +174,7 @@ The ISO/IEC 7064:2003 standard is available at https://www.iso.org/standard/3153
 | ISSN   				| [Modulus11 Algorithm](#modulus11-algorithm) |
 | Legal Entity Identifier | [Alphanumeric MOD 97-10 Algorithm](#alphanumeric-mod-97-10-algorithm) |
 | SEDOL					| [SEDOL Algorithm](#sedol-algorithm) |
+| Shipping Container Number | [ISO 6346 Algorithm](#iso-6346-algorithm) |
 | SSCC					| [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
 | Universal Loan Identifier | [Alphanumeric MOD 97-10 Algorithm](#alphanumeric-mod-97-10-algorithm) |
 | UK National Health Service Number | [NHS Algorithm](#nhs-algorithm) |
@@ -511,6 +514,23 @@ algorithm cannot detect).
 #### Links
 
 Wikipedia: https://en.wikipedia.org/wiki/International_Securities_Identification_Number
+
+### ISO 6346 Algorithm
+
+The ISO 6346 algorithm is used for eleven character shipping container numbers.
+
+#### Details
+
+* Valid characters - alphanumeric characters ('0' - '9', 'A' - 'Z')
+* Check digit size - one character
+* Check digit value - decimal digit ('0' - '9')
+* Check digit location - assumed to be the trailing (right-most) character when validating
+* Value length - 11
+* Class name - Iso6346Algorithm
+
+#### Links
+
+Wikipedia: https://en.wikipedia.org/wiki/ISO_6346
 
 ### ISO/IEC 7064 MOD 11,10 Algorithm
 
