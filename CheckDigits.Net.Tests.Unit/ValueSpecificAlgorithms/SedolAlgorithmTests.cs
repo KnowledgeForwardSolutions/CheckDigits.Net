@@ -88,7 +88,7 @@ public class SedolAlgorithmTests
    [InlineData("X000007")]
    [InlineData("Y000006")]
    [InlineData("Z000005")]
-   public void SedolAlgorithm_Validate_ShouldCalculateCorrectlyMapCharacters(string value)
+   public void SedolAlgorithm_Validate_ShouldCalculateCorrectlyMapCharacters(String value)
       => _sut.Validate(value).Should().BeTrue();
 
    [Theory]
