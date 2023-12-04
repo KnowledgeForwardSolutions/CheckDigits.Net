@@ -7,13 +7,17 @@ public class ValueSpecificAlgorithmBenchmarks
 {
    public IEnumerable<Object[]> TryCalculateCheckDigitArguments()
    {
-      yield return new Object[] { Algorithms.Isin, Algorithms.Isin.AlgorithmName, "US037833100" };
-      yield return new Object[] { Algorithms.Isin, Algorithms.Isin.AlgorithmName, "AU0000XVGZA" };
-      yield return new Object[] { Algorithms.Isin, Algorithms.Isin.AlgorithmName, "GB000263494" };
+      //yield return new Object[] { Algorithms.Isin, Algorithms.Isin.AlgorithmName, "US037833100" };
+      //yield return new Object[] { Algorithms.Isin, Algorithms.Isin.AlgorithmName, "AU0000XVGZA" };
+      //yield return new Object[] { Algorithms.Isin, Algorithms.Isin.AlgorithmName, "GB000263494" };
 
-      yield return new Object[] { Algorithms.Vin, Algorithms.Vin.AlgorithmName, "1M8GDM9A_KP042788" };
-      yield return new Object[] { Algorithms.Vin, Algorithms.Vin.AlgorithmName, "1G8ZG127_WZ157259" };
-      yield return new Object[] { Algorithms.Vin, Algorithms.Vin.AlgorithmName, "1HGEM212_2L047875" };
+      yield return new Object[] { Algorithms.Iso6346, Algorithms.Iso6346.AlgorithmName, "CSQU305438" };
+      yield return new Object[] { Algorithms.Iso6346, Algorithms.Iso6346.AlgorithmName, "TOLU473478" };
+      yield return new Object[] { Algorithms.Iso6346, Algorithms.Iso6346.AlgorithmName, "MSKU907032" };
+
+      //yield return new Object[] { Algorithms.Vin, Algorithms.Vin.AlgorithmName, "1M8GDM9A_KP042788" };
+      //yield return new Object[] { Algorithms.Vin, Algorithms.Vin.AlgorithmName, "1G8ZG127_WZ157259" };
+      //yield return new Object[] { Algorithms.Vin, Algorithms.Vin.AlgorithmName, "1HGEM212_2L047875" };
    }
 
    public IEnumerable<Object[]> TryCalculateCheckDigitsArguments()
@@ -41,6 +45,10 @@ public class ValueSpecificAlgorithmBenchmarks
       //yield return new Object[] { Algorithms.Isan, Algorithms.Isan.AlgorithmName, "C594660A8B2E5D22X6DDA3272E" };
       //yield return new Object[] { Algorithms.Isan, Algorithms.Isan.AlgorithmName, "E9530C32BC0EE83B269867B20F" };
 
+      yield return new Object[] { Algorithms.Iso6346, Algorithms.Iso6346.AlgorithmName, "CSQU3054383" };
+      yield return new Object[] { Algorithms.Iso6346, Algorithms.Iso6346.AlgorithmName, "TOLU4734787" };
+      yield return new Object[] { Algorithms.Iso6346, Algorithms.Iso6346.AlgorithmName, "MSKU9070323" };
+
       //yield return new Object[] { Algorithms.Isin, Algorithms.Isin.AlgorithmName, "US0378331005" };
       //yield return new Object[] { Algorithms.Isin, Algorithms.Isin.AlgorithmName, "AU0000XVGZA3" };
       //yield return new Object[] { Algorithms.Isin, Algorithms.Isin.AlgorithmName, "GB0002634946" };
@@ -53,9 +61,9 @@ public class ValueSpecificAlgorithmBenchmarks
       //yield return new Object[] { Algorithms.Npi, Algorithms.Npi.AlgorithmName, "1245319599" };
       //yield return new Object[] { Algorithms.Npi, Algorithms.Npi.AlgorithmName, "1122337797" };
 
-      yield return new Object[] { Algorithms.Sedol, Algorithms.Sedol.AlgorithmName, "3134865" };
-      yield return new Object[] { Algorithms.Sedol, Algorithms.Sedol.AlgorithmName, "B0YQ5W0" };
-      yield return new Object[] { Algorithms.Sedol, Algorithms.Sedol.AlgorithmName, "BRDVMH9" };
+      //yield return new Object[] { Algorithms.Sedol, Algorithms.Sedol.AlgorithmName, "3134865" };
+      //yield return new Object[] { Algorithms.Sedol, Algorithms.Sedol.AlgorithmName, "B0YQ5W0" };
+      //yield return new Object[] { Algorithms.Sedol, Algorithms.Sedol.AlgorithmName, "BRDVMH9" };
 
       //yield return new Object[] { Algorithms.Vin, Algorithms.Vin.AlgorithmName, "1M8GDM9AXKP042788" };
       //yield return new Object[] { Algorithms.Vin, Algorithms.Vin.AlgorithmName, "1G8ZG127XWZ157259" };
@@ -72,12 +80,12 @@ public class ValueSpecificAlgorithmBenchmarks
       yield return new Object[] { Algorithms.Isan, Algorithms.Isan.AlgorithmName, "ISAN E953-0C32-BC0E-E83B-2-6986-7B20-F" };
    }
 
-   //[Benchmark]
-   //[ArgumentsSource(nameof(TryCalculateCheckDigitArguments))]
-   //public void TryCalculateCheckDigit(ISingleCheckDigitAlgorithm algorithm, String name, String value)
-   //{
-   //   algorithm.TryCalculateCheckDigit(value, out var checkDigit);
-   //}
+   [Benchmark]
+   [ArgumentsSource(nameof(TryCalculateCheckDigitArguments))]
+   public void TryCalculateCheckDigit(ISingleCheckDigitAlgorithm algorithm, String name, String value)
+   {
+      algorithm.TryCalculateCheckDigit(value, out var checkDigit);
+   }
 
    //[Benchmark]
    //[ArgumentsSource(nameof(TryCalculateCheckDigitsArguments))]

@@ -29,6 +29,9 @@ public static class Algorithms
    private static readonly Lazy<ISingleCheckDigitAlgorithm> _isin =
      new(() => new IsinAlgorithm());
 
+   private static readonly Lazy<ISingleCheckDigitAlgorithm> _iso6346 =
+     new(() => new Iso6346Algorithm());
+
    private static readonly Lazy<ISingleCheckDigitAlgorithm> _iso7064Mod11_10 =
      new(() => new Iso7064Mod11_10Algorithm());
 
@@ -122,6 +125,11 @@ public static class Algorithms
    ///   International Securities Identification Number algorithm.
    /// </summary>
    public static ISingleCheckDigitAlgorithm Isin => _isin.Value;
+
+   /// <summary>
+   ///   ISO 6346 Algorithm for shipping container numbers.
+   /// </summary>
+   public static ISingleCheckDigitAlgorithm Iso6346 => _iso6346.Value;
 
    /// <summary>
    ///   ISO/IEC 7064 MOD 11,10 algorithm.

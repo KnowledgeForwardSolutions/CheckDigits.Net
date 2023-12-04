@@ -1148,6 +1148,10 @@ check digits, only validation of values containing check digits.
 | ISIN           | GB000263494                     | 20.26 ns | 0.098 ns | 0.091 ns |         - |
 | ISIN           | US037833100                     | 19.10 ns | 0.144 ns | 0.135 ns |         - |
 |                |                                 |          |          |          |           |                                           
+| ISO 6346       | CSQU305438                      | 16.74 ns | 0.216 ns | 0.202 ns |         - |
+| ISO 6346       | MSKU907032                      | 16.22 ns | 0.078 ns | 0.069 ns |         - |
+| ISO 6346       | TOLU473478                      | 16.22 ns | 0.135 ns | 0.113 ns |         - |
+|                |                                 |          |          |          |           |                                           
 | VIN            | 1G8ZG127_WZ157259               | 21.46 ns | 0.078 ns | 0.073 ns |         - |
 | VIN            | 1HGEM212_2L047875               | 20.74 ns | 0.131 ns | 0.123 ns |         - |
 | VIN            | 1M8GDM9A_KP042788               | 20.89 ns | 0.076 ns | 0.071 ns |         - |
@@ -1337,6 +1341,10 @@ Note also that the values used for the NOID Check Digit algorithm do not include
 | ISIN             | GB0002634946                           | 19.150 ns | 0.1290 ns | 0.1140 ns |         - |
 | ISIN             | US0378331005                           | 19.110 ns | 0.1400 ns | 0.1310 ns |         - |
 |                  |                                        |           |           |           |           |                                           
+| ISO 6346         | CSQU3054383                            | 14.970 ns | 0.0350 ns | 0.0280 ns |         - |
+| ISO 6346         | MSKU9070323                            | 14.890 ns | 0.0930 ns | 0.0870 ns |         - |
+| ISO 6346         | TOLU4734787                            | 14.840 ns | 0.0980 ns | 0.0870 ns |         - |
+|                  |                                        |           |           |           |           |                                           
 | NHS              | 4505577104                             | 11.280 ns | 0.0360 ns | 0.0340 ns |         - |
 | NHS              | 5301194917                             | 11.270 ns | 0.0400 ns | 0.0360 ns |         - |
 | NHS              | 9434765919                             | 11.270 ns | 0.0450 ns | 0.0430 ns |         - |
@@ -1353,20 +1361,6 @@ Note also that the values used for the NOID Check Digit algorithm do not include
 | VIN              | 1HGEM21292L047875                      | 20.920 ns | 0.0770 ns | 0.0690 ns |         - |
 | VIN              | 1M8GDM9AXKP042788                      | 21.050 ns | 0.0940 ns | 0.0830 ns |         - |
 
-| TryCalculateCheckDigit | Check(...)rithm [51] | Verhoeff | 140                  |  8.358 ns | 0.1062 ns | 0.0941 ns |         - |
-| TryCalculateCheckDigit | Check(...)rithm [51] | Verhoeff | 140662               | 12.916 ns | 0.0614 ns | 0.0544 ns |         - |
-| TryCalculateCheckDigit | Check(...)rithm [51] | Verhoeff | 140662538            | 17.835 ns | 0.1126 ns | 0.0998 ns |         - |
-| TryCalculateCheckDigit | Check(...)rithm [51] | Verhoeff | 140662538042         | 22.727 ns | 0.1362 ns | 0.1274 ns |         - |
-| TryCalculateCheckDigit | Check(...)rithm [51] | Verhoeff | 140662538042551      | 27.473 ns | 0.1085 ns | 0.0961 ns |         - |
-| TryCalculateCheckDigit | Check(...)rithm [51] | Verhoeff | 140662538042551028   | 32.246 ns | 0.1009 ns | 0.0842 ns |         - |
-| TryCalculateCheckDigit | Check(...)rithm [51] | Verhoeff | 14066(...)28265 [21] | 37.262 ns | 0.1306 ns | 0.1090 ns |         - |
-| Validate               | Check(...)rithm [51] | Verhoeff | 1401                 |  9.365 ns | 0.0523 ns | 0.0489 ns |         - |
-| Validate               | Check(...)rithm [51] | Verhoeff | 1406625              | 14.769 ns | 0.0841 ns | 0.0656 ns |         - |
-| Validate               | Check(...)rithm [51] | Verhoeff | 1406625388           | 20.334 ns | 0.1164 ns | 0.1089 ns |         - |
-| Validate               | Check(...)rithm [51] | Verhoeff | 1406625380426        | 25.942 ns | 0.1319 ns | 0.1234 ns |         - |
-| Validate               | Check(...)rithm [51] | Verhoeff | 1406625380425512     | 31.425 ns | 0.1170 ns | 0.0977 ns |         - |
-| Validate               | Check(...)rithm [51] | Verhoeff | 1406625380425510285  | 36.982 ns | 0.1119 ns | 0.0935 ns |         - |
-| Validate               | Check(...)rithm [51] | Verhoeff | 14066(...)82655 [22] | 42.288 ns | 0.1756 ns | 0.1642 ns |         - |
 
 # Release History/Release Notes
 
@@ -1422,6 +1416,7 @@ Detailed benchmark results for .Net 7 vs .Net 8 located at https://github.com/Kn
 ## v2.1.0
 Additional included algorithms
 * CUSIP Algorithm
+* ISO 6346 Algorithm
 * SEDOL Algorithm
 
 Performance increases for:
