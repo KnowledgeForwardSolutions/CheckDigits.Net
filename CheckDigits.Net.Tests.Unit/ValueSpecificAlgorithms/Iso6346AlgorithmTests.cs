@@ -28,6 +28,132 @@ public class Iso6346AlgorithmTests
    // ==========================================================================
    // ==========================================================================
 
+   [Fact]
+   public void Iso6346Algorithm_TryCalculateCheckDigit_ShouldReturnFalse_WhenInputIsNull()
+   {
+      // Act/assert.
+      _sut.TryCalculateCheckDigit(null!, out var checkDigit).Should().BeFalse();
+      checkDigit.Should().Be('\0');
+   }
+
+   [Fact]
+   public void Iso6346Algorithm_TryCalculateCheckDigit_ShouldReturnFalse_WhenInputIsEmpty()
+   {
+      // Act/assert.
+      _sut.TryCalculateCheckDigit(string.Empty, out var checkDigit).Should().BeFalse();
+      checkDigit.Should().Be('\0');
+   }
+
+   [Fact]
+   public void Iso6346Algorithm_TryCalculateCheckDigit_ShouldReturnFalse_WhenInputHasLengthLessThanTenCharacters()
+   {
+      // Act/assert.
+      _sut.TryCalculateCheckDigit("123456789", out var checkDigit).Should().BeFalse();
+      checkDigit.Should().Be('\0');
+   }
+
+   [Fact]
+   public void Iso6346Algorithm_TryCalculateCheckDigit_ShouldReturnFalse_WhenInputHasLengthGreaterThanTenCharacters()
+   {
+      // Act/assert.
+      _sut.TryCalculateCheckDigit("12345678901", out var checkDigit).Should().BeFalse();
+      checkDigit.Should().Be('\0');
+   }
+
+   [Theory]
+   [InlineData("1000000000", '1')]      // Note: Owner prefix code and category char should be alphabetic - 0/1 used for this test
+   [InlineData("0100000000", '2')]
+   [InlineData("0010000000", '4')]
+   [InlineData("0001000000", '8')]
+   [InlineData("0000100000", '5')]
+   [InlineData("0000010000", '0')]
+   [InlineData("0000001000", '9')]
+   [InlineData("0000000100", '7')]
+   [InlineData("0000000010", '3')]
+   [InlineData("0000000001", '6')]
+   public void Iso6346Algorithm_TryCalculateCheckDigit_ShouldCorrectlyWeightByPosition(
+      string value,
+      char expectedCheckDigit)
+   {
+      // Act/assert.
+      _sut.TryCalculateCheckDigit(value, out var checkDigit).Should().BeTrue();
+      checkDigit.Should().Be(expectedCheckDigit);
+   }
+
+   [Theory]
+   [InlineData("0000000000", '0')]      // Note: Owner prefix code and category char should be alphabetic - 0/1 used for this test
+   [InlineData("1000000000", '1')]
+   [InlineData("2000000000", '2')]
+   [InlineData("3000000000", '3')]
+   [InlineData("4000000000", '4')]
+   [InlineData("5000000000", '5')]
+   [InlineData("6000000000", '6')]
+   [InlineData("7000000000", '7')]
+   [InlineData("8000000000", '8')]
+   [InlineData("9000000000", '9')]
+   [InlineData("A000000000", '0')]
+   [InlineData("B000000000", '1')]
+   [InlineData("C000000000", '2')]
+   [InlineData("D000000000", '3')]
+   [InlineData("E000000000", '4')]
+   [InlineData("F000000000", '5')]
+   [InlineData("G000000000", '6')]
+   [InlineData("H000000000", '7')]
+   [InlineData("I000000000", '8')]
+   [InlineData("J000000000", '9')]
+   [InlineData("K000000000", '0')]
+   [InlineData("L000000000", '1')]
+   [InlineData("M000000000", '2')]
+   [InlineData("N000000000", '3')]
+   [InlineData("O000000000", '4')]
+   [InlineData("P000000000", '5')]
+   [InlineData("Q000000000", '6')]
+   [InlineData("R000000000", '7')]
+   [InlineData("S000000000", '8')]
+   [InlineData("T000000000", '9')]
+   [InlineData("U000000000", '0')]
+   [InlineData("V000000000", '1')]
+   [InlineData("W000000000", '2')]
+   [InlineData("X000000000", '3')]
+   [InlineData("Y000000000", '4')]
+   [InlineData("Z000000000", '5')]
+   public void Iso6346Algorithm_TryCalculateCheckDigit_ShouldCorrectlyMapCharacter(
+      string value,
+      char expectedCheckDigit)
+   {
+      // Act/assert.
+      _sut.TryCalculateCheckDigit(value, out var checkDigit).Should().BeTrue();
+      checkDigit.Should().Be(expectedCheckDigit);
+   }
+
+   [Theory]
+   [InlineData("CSQU305438", '3')]      // Worked example from Wikipedia
+   [InlineData("TOLU473478", '7')]      // Photo from Wikipedia
+   [InlineData("HJCU828198", '8')]      // Photo from Wikipedia
+   [InlineData("BICU123456", '5')]      // Example from https://www.bic-code.org/identification-number/
+   [InlineData("MSKU907032", '3')]      // Example from https://www.letterofcredit.biz/index.php/2019/11/04/what-is-a-container-number-explanations-with-examples/
+   [InlineData("MEDU870768", '8')]      // "
+   [InlineData("HLAU123456", '7')]      // Calculated from https://www.bic-code.org/check-digit-calculator/
+   public void Iso6346Algorithm_TryCalculateCheckDigit_ShouldCalculateExpectedCheckDigit(
+      string value,
+      char expectedCheckDigit)
+   {
+      // Act/assert.
+      _sut.TryCalculateCheckDigit(value, out var checkDigit).Should().BeTrue();
+      checkDigit.Should().Be(expectedCheckDigit);
+   }
+
+   [Theory]
+   [InlineData("CSQU3!5438")]
+   [InlineData("CSQU3.5438")]
+   [InlineData("CSQU3:5438")]
+   [InlineData("CSQU3^5438")]
+   public void Iso6346Algorithm_TryCalculateCheckDigit_ShouldReturnFalse_WhenInputContainsInvalidCharacter(string value)
+   {
+      _sut.TryCalculateCheckDigit(value, out var checkDigit).Should().BeFalse();
+      checkDigit.Should().Be('\0');
+   }
+
    #endregion
 
    #region Validate Tests
@@ -134,7 +260,7 @@ public class Iso6346AlgorithmTests
    [InlineData("CSQU3.54383")]
    [InlineData("CSQU3:54383")]
    [InlineData("CSQU3^54383")]
-   public void Iso6346Algorithm_Validate_ShouldReturnFalse_WhenInputContainsNonDigitCharacter(string value)
+   public void Iso6346Algorithm_Validate_ShouldReturnFalse_WhenInputContainsInvalidCharacter(string value)
       => _sut.Validate(value).Should().BeFalse();
 
    #endregion

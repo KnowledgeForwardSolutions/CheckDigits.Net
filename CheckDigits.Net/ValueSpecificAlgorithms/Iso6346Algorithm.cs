@@ -31,7 +31,37 @@ public class Iso6346Algorithm : ISingleCheckDigitAlgorithm
    public string AlgorithmName => Resources.Iso6346AlgorithmName;
 
    /// <inheritdoc/>
-   public Boolean TryCalculateCheckDigit(String value, out Char checkDigit) => throw new NotImplementedException();
+   public Boolean TryCalculateCheckDigit(String value, out Char checkDigit)
+   {
+      checkDigit = CharConstants.NUL;
+      if (String.IsNullOrEmpty(value) || value.Length != _calculateLength)
+      {
+         return false;
+      }
+
+      var sum = 0;
+      Int32 num;
+      for (var index = 0; index < value.Length; index++)
+      {
+         var ch = value[index];
+         num = -1;
+         if (ch >= CharConstants.DigitZero && ch <= CharConstants.UpperCaseZ)
+         {
+            var offset = ch - CharConstants.DigitZero;
+            num = _charValues[offset];
+         }
+
+         if (num == -1)
+         {
+            return false;
+         }
+         sum += num * _weights[index];
+      }
+      var modulo = sum % 11;
+      checkDigit = (modulo == 10 ? 0 : modulo).ToDigitChar();
+
+      return true;
+   }
 
    /// <inheritdoc/>
    public Boolean Validate(String value)
