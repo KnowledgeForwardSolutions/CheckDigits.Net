@@ -6,6 +6,7 @@
 [Luhn Algorithm](#luhn-algorithm)
 [Damm Algorithm](#damm-algorithm)
 [Modulus11 Algorithm (for ISBN-10)](#modulus11-algorithm-for-isbn-10)
+[Modulus10_13 Algorithm (for ISBN-13)](#modulus10_13-algorithm-for-isbn-13)
 
 #### All benchmark details
 
@@ -101,3 +102,16 @@ Nager.ArticleNumber, v1.0.7, 169K downloads as of 11/2023
 |                     |            |           |           |           |       |         |        |           |             |
 | CheckDigits.Net     | 1568656521 |  8.524 ns | 0.0740 ns | 0.0656 ns |  1.00 |    0.00 |      - |         - |          NA |
 | Nager.ArticleNumber | 1568656521 | 43.842 ns | 0.5060 ns | 0.4486 ns |  5.14 |    0.06 | 0.0102 |      64 B |          NA |
+
+### Modulus10_13 Algorithm (for ISBN-13)
+
+|                     | Value         | Mean     | Error    | StdDev   | Ratio | RatioSD | Allocated | Alloc Ratio |
+|-------------------- |-------------- |---------:|---------:|---------:|------:|--------:|----------:|------------:|
+| CheckDigits.Net     | 9780500516959 | 16.04 ns | 0.078 ns | 0.069 ns |  1.00 |    0.00 |         - |          NA |
+| Nager.ArticleNumber | 9780500516959 | 50.63 ns | 0.160 ns | 0.150 ns |  3.16 |    0.02 |         - |          NA |
+|                     |               |          |          |          |       |         |           |             |
+| CheckDigits.Net     | 9780691161730 | 16.50 ns | 0.130 ns | 0.116 ns |  1.00 |    0.00 |         - |          NA |
+| Nager.ArticleNumber | 9780691161730 | 48.05 ns | 0.285 ns | 0.253 ns |  2.91 |    0.03 |         - |          NA |
+|                     |               |          |          |          |       |         |           |             |
+| CheckDigits.Net     | 9781861978769 | 12.97 ns | 0.068 ns | 0.063 ns |  1.00 |    0.00 |         - |          NA |
+| Nager.ArticleNumber | 9781861978769 | 49.03 ns | 0.420 ns | 0.393 ns |  3.78 |    0.04 |         - |          NA |
