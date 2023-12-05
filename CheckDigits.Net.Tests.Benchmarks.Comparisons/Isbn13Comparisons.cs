@@ -3,16 +3,16 @@
 namespace CheckDigits.Net.Tests.Benchmarks.Comparisons;
 
 [MemoryDiagnoser]
-public class Modulus11Comparisons
+public class Isbn13Comparisons
 {
-   private static ICheckDigitAlgorithm _baseline = Algorithms.Modulus11;
+   private static ICheckDigitAlgorithm _baseline = Algorithms.Modulus10_13;
 
-   [Params("1568656521", "0714105449", "050027293X")]
+   [Params("9780500516959", "9781861978769", "9780691161730")]
    public String Value { get; set; } = default!;
 
    [Benchmark(Baseline = true)]
    public Boolean CheckDigitsDotNet() => _baseline.Validate(Value);
 
    [Benchmark]
-   public Boolean NagerArticleNumber() => Nager.ArticleNumber.ArticleNumberHelper.IsValidIsbn10(Value);
+   public Boolean NagerArticleNumber() => Nager.ArticleNumber.ArticleNumberHelper.IsValidIsbn13(Value);
 }

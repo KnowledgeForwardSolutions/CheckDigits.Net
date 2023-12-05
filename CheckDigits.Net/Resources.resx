@@ -168,6 +168,12 @@
   <data name="IsinAlgorithmName" xml:space="preserve">
     <value>ISIN (International Securities Identity Number)</value>
   </data>
+  <data name="Iso6346AlgorithmDescription" xml:space="preserve">
+    <value>ISO 6346 algorithm</value>
+  </data>
+  <data name="Iso6346AlgorithmName" xml:space="preserve">
+    <value>ISO 6346</value>
+  </data>
   <data name="Iso7046AlphabetIsNull" xml:space="preserve">
     <value>Alphabet may not be null</value>
   </data>

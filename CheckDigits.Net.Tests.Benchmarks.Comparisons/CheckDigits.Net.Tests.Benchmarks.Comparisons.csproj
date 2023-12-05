@@ -13,7 +13,7 @@
     <PackageReference Include="LuhnNet" Version="2.0.0" />
     <PackageReference Include="Medo.Checksums" Version="1.2.0" />
     <PackageReference Include="Nager.ArticleNumber" Version="1.0.7" />
-    <PackageReference Include="Tharga.Toolkit" Version="1.10.17" />
+    <PackageReference Include="Tharga.Toolkit" Version="1.10.19" />
   </ItemGroup>
 
   <ItemGroup>

@@ -6,4 +6,6 @@ using CheckDigits.Net.Tests.Benchmarks.Comparisons;
 
 //BenchmarkRunner.Run<DammComparison>();
 
-BenchmarkRunner.Run<Modulus11Comparisons>();
+//BenchmarkRunner.Run<Isbn10Comparisons>();
+
+BenchmarkRunner.Run<Isbn13Comparisons>();

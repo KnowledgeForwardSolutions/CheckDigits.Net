@@ -214,6 +214,24 @@ namespace CheckDigits.Net {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ISO 6346 algorithm.
+        /// </summary>
+        internal static string Iso6346AlgorithmDescription {
+            get {
+                return ResourceManager.GetString("Iso6346AlgorithmDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ISO 6346.
+        /// </summary>
+        internal static string Iso6346AlgorithmName {
+            get {
+                return ResourceManager.GetString("Iso6346AlgorithmName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Alphabet may not be null.
         /// </summary>
         internal static string Iso7046AlphabetIsNull {

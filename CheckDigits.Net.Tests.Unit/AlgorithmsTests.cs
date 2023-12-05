@@ -102,6 +102,20 @@ public class AlgorithmsTests
 
    #endregion
 
+   #region Iso6346 Property Tests
+   // ==========================================================================
+   // ==========================================================================
+
+   [Fact]
+   public void Algorithms_Iso6346_ShouldNotBeNull()
+      => Algorithms.Iso6346.Should().NotBeNull();
+
+   [Fact]
+   public void Algorithms_Iso6346_ShouldBeExpectedType()
+      => Algorithms.Iso6346.Should().BeOfType<Iso6346Algorithm>();
+
+   #endregion
+
    #region Iso7064Mod11_10 Property Tests
    // ==========================================================================
    // ==========================================================================
