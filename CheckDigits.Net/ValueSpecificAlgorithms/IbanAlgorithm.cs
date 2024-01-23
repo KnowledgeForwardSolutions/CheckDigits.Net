@@ -1,6 +1,5 @@
 ﻿// Ignore Spelling: Iban
 
-using System.ComponentModel.DataAnnotations;
 using System.Runtime.CompilerServices;
 using System.Text;
 
