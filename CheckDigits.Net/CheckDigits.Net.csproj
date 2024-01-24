@@ -1,21 +1,22 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net8.0</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;net8.0</TargetFrameworks>
+    <LangVersion>latest</LangVersion>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <Title>CheckDigits.Net</Title>
-    <Version>2.1.0</Version>
+    <Version>2.2.0</Version>
     <Authors>Knowledge Forward Solutions</Authors>
     <Company>Knowledge Forward Solutions</Company>
     <Description>An extensive collection of optimized check digit algorithms suitable for a wide range of applications</Description>
-    <Copyright>Copyright 2023, Knowledge Forward Solutions</Copyright>
+    <Copyright>Copyright 2024, Knowledge Forward Solutions</Copyright>
     <PackageProjectUrl></PackageProjectUrl>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <RepositoryUrl>https://github.com/KnowledgeForwardSolutions/CheckDigits.Net</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>CheckDigit;Luhn;Verhoeff;Damm;UPC;UPC-A;UPC-E;EAN;EAN-8;EAN-13;GTIN;GTIN-8;GTIN-12;GTIN-13;GTIN-14;ISBN;ISBN-10;ISBN-13;ISO7064;NPI;NHS_Number;VIN;IBAN;ISAN;ULI;LEI;NOID;SEDOL;CUSIP;ISO6346</PackageTags>
-    <PackageReleaseNotes>1.0.0-alpha
+    <PackageReleaseNotes>## 1.0.0-alpha
 
 Initial limited release. Included algorithms:
 * ABA RTN (Routing Transit Number) Algorithm
@@ -31,7 +32,7 @@ Initial limited release. Included algorithms:
 * Verhoeff Algorithm
 * VIN (Vehicle Identification Number) Algorithm
 
-1.0.0
+## 1.0.0
 
 Initial release. Additional included algorithms
 * ISO/IEC 7064 MOD 11,10
@@ -43,7 +44,7 @@ Initial release. Additional included algorithms
 * ISO/IEC 7064 MOD 661-26
 * ISO/IEC 7064 MOD 97-10
 
-v1.1.0
+## v1.1.0
 
 Additional included algorithms
 * AlphanumericMod97_10Algorithm
@@ -56,7 +57,7 @@ Performance increases for:
 * ISO/IEC 7064 MOD 37-2, Validate method ~17% improvement, TryCalculateCheckDigit method ~20% improvement
 * ISO/IEC 7064 MOD 37-36, Validate method ~18% improvement, TryCalculateCheckDigit method ~21% improvement
 
-v2.0.0
+## v2.0.0
 
 Updated to .Net 8.0
 
@@ -64,6 +65,7 @@ Average performance improvement for .Net 8.0 across all algorithms:
   Validate method ~8% improvement, TryCalculateCheckDigit method ~4.9% improvement
 
 ## v2.1.0
+
 Additional included algorithms
 * CUSIP Algorithm
 * ISO 6346 Algorithm
@@ -74,6 +76,11 @@ Performance increases for:
   (Luhn algorithm originally saw a slight performance decrease when switching from .Net 7 to .Net 8. This release addresses that performance decrease.) 
 * Damm Algorithm, Validate and TryCalculateCheckDigit methods ~30% improvement
 * Verhoeff Algorithm, Validate method ~20% improvement, TryCalculateCheckDigit method ~30% improvement
+
+## v2.2.0
+
+Support for netstandard2.0
+
 </PackageReleaseNotes>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
@@ -84,7 +91,7 @@ Performance increases for:
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-	  <InternalsVisibleTo Include="CheckDigits.Net.Tests.Unit" />
+    <InternalsVisibleTo Include="CheckDigits.Net.Tests.Unit" />
   </ItemGroup>
 
   <ItemGroup>
@@ -92,6 +99,10 @@ Performance increases for:
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="IndexRange" Version="1.0.3" Condition="'$(TargetFramework)' == 'netstandard2.0'" />
   </ItemGroup>
 
   <ItemGroup>
