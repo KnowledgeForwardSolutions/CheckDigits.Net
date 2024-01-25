@@ -56,6 +56,7 @@ let us know. Or contribute to the CheckDigits.Net repository: https://github.com
     - [v1.1.0](#v1.1.0)
     - [v2.0.0](#v2.0.0)
     - [v2.1.0](#v2.1.0)
+    - [v2.2.0](#v2.2.0)
 
 ## Check Digit Overview
 
@@ -1424,3 +1425,9 @@ Performance increases for:
   (Luhn algorithm originally saw a slight performance decrease when switching from .Net 7 to .Net 8. This release addresses that performance decrease.) 
 * Damm Algorithm, Validate and TryCalculateCheckDigit methods ~30% improvement
 * Verhoeff Algorithm, Validate method ~20% improvement, TryCalculateCheckDigit method ~30% improvement
+
+## v2.2.0
+
+Support for netstandard2.0
+
+Thanks to Steff Beckers for this addition

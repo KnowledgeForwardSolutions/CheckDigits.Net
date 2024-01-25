@@ -81,6 +81,8 @@ Performance increases for:
 
 Support for netstandard2.0
 
+Thanks to Steff Beckers for this addition
+
 </PackageReleaseNotes>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
