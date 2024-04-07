@@ -1,6 +1,6 @@
 # Modulus10_731Algorithm
 
-As a developer of CheckDigits.Net, I want CheckDigits.Net to include the modulus 10 with weights 7, 3, 1 check digit algorithm used  by IACO (International Civil Aviation Organization) MRTODT (Machine Readable Official Travel Documents) in the list of supported algorithms.
+As a developer of CheckDigits.Net, I want CheckDigits.Net to include the modulus 10 with weights 7, 3, 1 check digit algorithm used  by ICAO (International Civil Aviation Organization) MRTODT (Machine Readable Official Travel Documents) in the list of supported algorithms.
 
 https://en.wikipedia.org/wiki/Machine-readable_passport#Official_travel_documents
 https://www.icao.int/publications/Documents/9303_p3_cons_en.pdf

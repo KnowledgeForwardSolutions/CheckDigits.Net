@@ -42,6 +42,7 @@ let us know. Or contribute to the CheckDigits.Net repository: https://github.com
     * [Modulus10_1 Algorithm](#modulus10_1-algorithm)
     * [Modulus10_2 Algorithm](#modulus10_2-algorithm)
     * [Modulus10_13 Algorithm (UPC/EAN/ISBN-13/etc.)](#modulus10_13-algorithm)
+    * [Modulus10_731 Algorithm] (#modulus10_731-algorithm)
     * [Modulus11 Algorithm (ISBN-10/ISSN/etc.)](#modulus11-algorithm)
     * [NHS (UK National Health Service) Algorithm](#nhs-algorithm)
     * [NOID Check Digit Algorithm](#noid-check-digit-algorithm)
@@ -138,6 +139,7 @@ The ISO/IEC 7064:2003 standard is available at https://www.iso.org/standard/3153
 * [Modulus10_1 Algorithm](#modulus10_1-algorithm)
 * [Modulus10_2 Algorithm](#modulus10_2-algorithm)
 * [Modulus10_13 Algorithm (UPC/EAN/ISBN-13/etc.)](#modulus10_13-algorithm)
+* [Modulus10_731 Algorithm] (#modulus10_731-algorithm)
 * [Modulus11 Algorithm (ISBN-10/ISSN/etc.)](#modulus11-algorithm)
 * [NHS (UK National Health Service) Algorithm](#nhs-algorithm)
 * [NOID Check Digit Algorithm](#noid-check-digit-algorithm)
@@ -770,7 +772,35 @@ Wikipedia:
   https://en.wikipedia.org/wiki/Universal_Product_Code#Check_digit_calculation
   https://en.wikipedia.org/wiki/International_Article_Number#Calculation_of_checksum_digit
 
+### Modulus10_731 Algorithm
+
+#### Description
+
+The Modulus10_731 algorithm is a modulus 10 algorithm that uses weights 7, 3, and
+1. The algorithm is used for the check digits of various fields in ICAO (International
+Civil Aviation Organization) MRTODTs (Machine Readable Official Travel Documents).
+
+The Modulus10_731 algorithm also implements the ```IEmbeddedCheckDigitAlgorithm interface```
+which supports the validation of fields that are embedded within a larger string.
+
+#### Details
+
+* Valid characters - decimal digits ('0' - '9'), upper case letters ('A' - 'Z') and a filler character ('<').
+* Check digit size - one character
+* Check digit value - decimal digit ('0' - '9')
+* Check digit location - assumed to be the trailing (right-most) character when validating
+* Class name - Modulus10_731
+
 ### Modulus11 Algorithm
+
+#### Common Applications
+
+* ICAO (International Civil Aviation Organization) MRTODTs (Machine Readable Official Travel Documents)
+
+#### Links
+
+https://en.wikipedia.org/wiki/Machine-readable_passport#Official_travel_documents
+https://www.icao.int/publications/Documents/9303_p3_cons_en.pdf
 
 #### Description
 
