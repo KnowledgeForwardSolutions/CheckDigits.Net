@@ -1,5 +1,7 @@
 ﻿
-BenchmarkRunner.Run<NumericAlgorithmBenchmarks>();
+BenchmarkRunner.Run<PerformanceBenchmarks>();
+
+//BenchmarkRunner.Run<NumericAlgorithmBenchmarks>();
 
 //BenchmarkRunner.Run<AlphabeticAlgorithmsBenchmarks>();
 

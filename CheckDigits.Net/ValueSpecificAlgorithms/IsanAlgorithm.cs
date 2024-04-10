@@ -26,7 +26,6 @@ public class IsanAlgorithm : ICheckDigitAlgorithm
 {
    private readonly Int32 _modulus = 36;
    private readonly Int32 _modulusPlus1 = 37;
-   private const String _prefix = "ISAN ";
 
    private const Int32 _validateExpectedLength = 26;
    private const Int32 _validateFirstCheckCharIndex = 16;

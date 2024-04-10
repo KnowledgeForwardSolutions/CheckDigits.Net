@@ -178,6 +178,24 @@ namespace CheckDigits.Net {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Icao - modulus 10 algorithm used by ICAO (Internation Civil Aviation Organization) machine readable travel documents.
+        /// </summary>
+        internal static string IcaoAlgorithmDescription {
+            get {
+                return ResourceManager.GetString("IcaoAlgorithmDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Icao.
+        /// </summary>
+        internal static string IcaoAlgorithmName {
+            get {
+                return ResourceManager.GetString("IcaoAlgorithmName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Variation of ISO/IEC 7064 MOD 37,36 for ISAN values formatted as human readable strings.
         /// </summary>
         internal static string IsanAlgorithmDescription {
@@ -489,6 +507,24 @@ namespace CheckDigits.Net {
         internal static string Modulus11AlgorithmName {
             get {
                 return ResourceManager.GetString("Modulus11AlgorithmName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Modulus must be &gt;= 2.
+        /// </summary>
+        internal static string ModulusIntModulusOutOfRangeMessage {
+            get {
+                return ResourceManager.GetString("ModulusIntModulusOutOfRangeMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Value must be &gt;= 0 and &lt; {0}.
+        /// </summary>
+        internal static string ModulusIntValueOutOfRangeMessageFormat {
+            get {
+                return ResourceManager.GetString("ModulusIntValueOutOfRangeMessageFormat", resourceCulture);
             }
         }
         

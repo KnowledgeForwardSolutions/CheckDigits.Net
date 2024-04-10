@@ -26,22 +26,22 @@ namespace CheckDigits.Net.ValueSpecificAlgorithms;
 /// </remarks>
 public sealed class IsinAlgorithm : ISingleCheckDigitAlgorithm
 {
-    private const int _calculateLength = 11;
-    private const int _validateLength = 12;
-    private const int _letterOffset = 55;      // Value needed to subtract from an ASCII uppercase letter to transform A-Z to 10-35
-    private static readonly int[] _doubledValues = new int[] { 0, 2, 4, 6, 8, 1, 3, 5, 7, 9 };
+    private const Int32 _calculateLength = 11;
+    private const Int32 _validateLength = 12;
+    private const Int32 _letterOffset = 55;      // Value needed to subtract from an ASCII uppercase letter to transform A-Z to 10-35
+    private static readonly Int32[] _doubledValues = new Int32[] { 0, 2, 4, 6, 8, 1, 3, 5, 7, 9 };
 
     /// <inheritdoc/>
-    public string AlgorithmDescription => Resources.IsinAlgorithmDescription;
+    public String AlgorithmDescription => Resources.IsinAlgorithmDescription;
 
     /// <inheritdoc/>
-    public string AlgorithmName => Resources.IsinAlgorithmName;
+    public String AlgorithmName => Resources.IsinAlgorithmName;
 
     /// <inheritdoc/>
-    public bool TryCalculateCheckDigit(string value, out char checkDigit)
+    public Boolean TryCalculateCheckDigit(String value, out Char checkDigit)
     {
         checkDigit = CharConstants.NUL;
-        if (string.IsNullOrEmpty(value) || value.Length != _calculateLength)
+        if (String.IsNullOrEmpty(value) || value.Length != _calculateLength)
         {
             return false;
         }
@@ -71,15 +71,15 @@ public sealed class IsinAlgorithm : ISingleCheckDigitAlgorithm
                 return false;
             }
         }
-        var mod = 10 - sum % 10;
+        var mod = 10 - (sum % 10);
         checkDigit = mod == 10 ? CharConstants.DigitZero : mod.ToDigitChar();
 
         return true;
     }
 
-    public bool Validate(string value)
+    public Boolean Validate(String value)
     {
-        if (string.IsNullOrEmpty(value) || value.Length != _validateLength)
+        if (String.IsNullOrEmpty(value) || value.Length != _validateLength)
         {
             return false;
         }
@@ -109,7 +109,7 @@ public sealed class IsinAlgorithm : ISingleCheckDigitAlgorithm
                 return false;
             }
         }
-        var checkDigit = (10 - sum % 10) % 10;
+        var checkDigit = (10 - (sum % 10)) % 10;
 
         return value[^1].ToIntegerDigit() == checkDigit;
     }

@@ -776,9 +776,15 @@ Wikipedia:
 
 #### Description
 
-The Modulus10_731 algorithm is a modulus 10 algorithm that uses weights 7, 3, and
-1. The algorithm is used for the check digits of various fields in ICAO (International
-Civil Aviation Organization) MRTODTs (Machine Readable Official Travel Documents).
+The Modulus10_731 algorithm is a modulus 10 algorithm that uses weights 7, 3, and 1. The 
+weights are applied starting from the left most character. The algorithm is used
+for the check digits of various fields in ICAO (International Civil Aviation
+Organization) MRTODTs (Machine Readable Official Travel Documents).
+
+The algorithm can not detect single character transcription errors where the difference
+between the correct character and the incorrect character is 10, i.e. *0 -> A*, *B->L*, 
+and vice versa. Nor can the algorithm detect two character transposition errors 
+where the difference between the transposed characters is 10, i.e. *BL <-> LB*).
 
 The Modulus10_731 algorithm also implements the ```IEmbeddedCheckDigitAlgorithm interface```
 which supports the validation of fields that are embedded within a larger string.
@@ -791,8 +797,6 @@ which supports the validation of fields that are embedded within a larger string
 * Check digit location - assumed to be the trailing (right-most) character when validating
 * Class name - Modulus10_731
 
-### Modulus11 Algorithm
-
 #### Common Applications
 
 * ICAO (International Civil Aviation Organization) MRTODTs (Machine Readable Official Travel Documents)
@@ -801,6 +805,8 @@ which supports the validation of fields that are embedded within a larger string
 
 https://en.wikipedia.org/wiki/Machine-readable_passport#Official_travel_documents
 https://www.icao.int/publications/Documents/9303_p3_cons_en.pdf
+
+### Modulus11 Algorithm
 
 #### Description
 

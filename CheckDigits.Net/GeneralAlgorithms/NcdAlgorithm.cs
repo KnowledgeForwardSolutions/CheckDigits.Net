@@ -29,10 +29,10 @@ public class NcdAlgorithm : ISingleCheckDigitAlgorithm
    private static readonly Int32[] _letters = new Int32[] { 10, 11, 12, 0, 13, 14, 15, 0, 16, 17, 0, 18, 19, 0, 20, 21, 22, 23, 24, 0, 25, 26, 27, 0, 28 };
 
    /// <inheritdoc/>
-   public string AlgorithmDescription => Resources.NcdAlgorithmDescription;
+   public String AlgorithmDescription => Resources.NcdAlgorithmDescription;
 
    /// <inheritdoc/>
-   public string AlgorithmName => Resources.NcdAlgorithmName;
+   public String AlgorithmName => Resources.NcdAlgorithmName;
 
    /// <inheritdoc/>
    public Boolean TryCalculateCheckDigit(String value, out Char checkDigit)

@@ -44,17 +44,17 @@ public class VerhoeffMultiplicationTableTests
     [InlineData(9, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0)]
 
     public void VerhoeffMultiplicationTable_Indexer_ShouldReturnExpectedValues(
-       int x,
-       int y0,
-       int y1,
-       int y2,
-       int y3,
-       int y4,
-       int y5,
-       int y6,
-       int y7,
-       int y8,
-       int y9)
+       Int32 x,
+       Int32 y0,
+       Int32 y1,
+       Int32 y2,
+       Int32 y3,
+       Int32 y4,
+       Int32 y5,
+       Int32 y6,
+       Int32 y7,
+       Int32 y8,
+       Int32 y9)
     {
         // Arrange.
         var sut = VerhoeffMultiplicationTable.Instance;

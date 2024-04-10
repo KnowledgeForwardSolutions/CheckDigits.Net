@@ -8,6 +8,7 @@ public static class CharConstants
    public const Char Asterisk = '*';
    public const Char Dash = '-';
    public const Char AtSign = '@';
+   public const Char LeftAngleBracket = '<';
 
    public const Char DigitZero = '0';
    public const Char DigitOne = '1';

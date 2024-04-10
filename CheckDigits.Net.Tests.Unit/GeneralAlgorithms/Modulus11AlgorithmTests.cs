@@ -40,7 +40,7 @@ public class Modulus11AlgorithmTests
     public void Modulus11Algorithm_TryCalculateCheckDigit_ShouldReturnFalse_WhenInputIsEmpty()
     {
         // Act/assert.
-        _sut.TryCalculateCheckDigit(string.Empty, out var checkDigit).Should().BeFalse();
+        _sut.TryCalculateCheckDigit(String.Empty, out var checkDigit).Should().BeFalse();
         checkDigit.Should().Be('\0');
     }
 
@@ -63,12 +63,12 @@ public class Modulus11AlgorithmTests
     [InlineData("010000000", '2')]
     [InlineData("100000000", '1')]
     public void Modulus11Algorithm_TryCalculateCheckDigit_ShouldCorrectlyWeightCharactersByPosition(
-       string value,
-       char expectedCheckDigit)
+       String value,
+       Char expectedCheckDigit)
     {
         // Act/assert.
         _sut.TryCalculateCheckDigit(value, out var checkDigit).Should().BeTrue();
-        expectedCheckDigit.Should().Be(expectedCheckDigit);
+        checkDigit.Should().Be(expectedCheckDigit);
     }
 
     [Theory]
@@ -83,8 +83,8 @@ public class Modulus11AlgorithmTests
     [InlineData("0317847", '1')]      // Example ISSN from https://www.issn.org/understanding-the-issn/what-is-an-issn/
     [InlineData("1050124", 'X')]      // "
     public void Modulus11Algorithm_TryCalculateCheckDigit_ShouldCalculateExpectedCheckDigit(
-       string value,
-       char expectedCheckDigit)
+       String value,
+       Char expectedCheckDigit)
     {
         // Act/assert.
         _sut.TryCalculateCheckDigit(value, out var checkDigit).Should().BeTrue();
@@ -106,7 +106,7 @@ public class Modulus11AlgorithmTests
     [Theory]
     [InlineData("100G00001")]
     [InlineData("100+00001")]
-    public void Modulus11Algorithm_TryCalculateCheckDigit_ShouldReturnFalse_WhenInputContainsNonDigitCharacter(string value)
+    public void Modulus11Algorithm_TryCalculateCheckDigit_ShouldReturnFalse_WhenInputContainsNonDigitCharacter(String value)
     {
         _sut.TryCalculateCheckDigit(value, out var checkDigit).Should().BeFalse();
         checkDigit.Should().Be('\0');
@@ -124,12 +124,12 @@ public class Modulus11AlgorithmTests
 
     [Fact]
     public void Modulus11Algorithm_Validate_ShouldReturnFalse_WhenInputIsEmpty()
-       => _sut.Validate(string.Empty).Should().BeFalse();
+       => _sut.Validate(String.Empty).Should().BeFalse();
 
     [Theory]
     [InlineData("0")]       // Zero would return true unless length is explicitly checked.
     [InlineData("1")]
-    public void Modulus11Algorithm_Validate_ShouldReturnFalse_WhenInputHasLengthLessThanTwo(string value)
+    public void Modulus11Algorithm_Validate_ShouldReturnFalse_WhenInputHasLengthLessThanTwo(String value)
        => _sut.Validate(value).Should().BeFalse();
 
     [Fact]
@@ -146,7 +146,7 @@ public class Modulus11AlgorithmTests
     [InlineData("0010000003")]
     [InlineData("0100000002")]
     [InlineData("1000000001")]
-    public void Modulus11Algorithm_Validate_ShouldCorrectlyWeightCharactersByPosition(string value)
+    public void Modulus11Algorithm_Validate_ShouldCorrectlyWeightCharactersByPosition(String value)
        => _sut.Validate(value).Should().BeTrue();
 
     [Theory]
@@ -160,7 +160,7 @@ public class Modulus11AlgorithmTests
     [InlineData("2434561X")]      // Example ISSN from Wikipedia
     [InlineData("03178471")]      // Example ISSN from https://www.issn.org/understanding-the-issn/what-is-an-issn/
     [InlineData("1050124X")]      // "
-    public void Modulus11Algorithm_Validate_ShouldReturnTrue_WhenValueContainsValidCheckDigit(string value)
+    public void Modulus11Algorithm_Validate_ShouldReturnTrue_WhenValueContainsValidCheckDigit(String value)
        => _sut.Validate(value).Should().BeTrue();
 
     [Theory]
@@ -168,7 +168,7 @@ public class Modulus11AlgorithmTests
     [InlineData("0441050608")]    // ISBN-10 with two digit transposition error 05 -> 50
     [InlineData("050029273X")]    // ISBN-10 with jump transposition 729 -> 927
     [InlineData("0551005608")]    // ISBN-10 with twin error 44 -> 55
-    public void Modulus11Algorithm_Validate_ShouldReturnFalse_WhenInputContainsDetectableError(string value)
+    public void Modulus11Algorithm_Validate_ShouldReturnFalse_WhenInputContainsDetectableError(String value)
        => _sut.Validate(value).Should().BeFalse();
 
     [Fact]
@@ -182,7 +182,7 @@ public class Modulus11AlgorithmTests
     [Theory]
     [InlineData("1000G00005")]    // Value 1000300005 would have check digit = 5. G is 20 positions later in ASCII table than 3 and would also calculate check digit 5 unless code explicitly checks for non-digit
     [InlineData("1000)00005")]    // ) is 10 positions earlier in ASCII table than 3 and would also calculate check digit 5 unless code explicitly checks for non-digit
-    public void Modulus11Algorithm_Validate_ShouldReturnFalse_WhenInputContainsNonDigitCharacter(string value)
+    public void Modulus11Algorithm_Validate_ShouldReturnFalse_WhenInputContainsNonDigitCharacter(String value)
        => _sut.Validate(value).Should().BeFalse();
 
     #endregion

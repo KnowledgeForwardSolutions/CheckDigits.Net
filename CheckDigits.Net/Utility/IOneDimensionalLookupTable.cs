@@ -5,8 +5,8 @@
 /// </summary>
 public interface IOneDimensionalLookupTable
 {
-    /// <summary>
-    ///   Gets the table entry at the specified index.
-    /// </summary>
-    int this[int index] { get; }
+   /// <summary>
+   ///   Gets the table entry at the specified index.
+   /// </summary>
+   Int32 this[Int32 index] { get; }
 }

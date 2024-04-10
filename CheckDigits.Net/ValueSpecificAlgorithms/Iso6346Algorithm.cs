@@ -17,18 +17,18 @@
 /// </remarks>
 public class Iso6346Algorithm : ISingleCheckDigitAlgorithm
 {
-   private const int _calculateLength = 10;
-   private const int _validateLength = 11;
+   private const Int32 _calculateLength = 10;
+   private const Int32 _validateLength = 11;
 
-   // Character numeric values. (-1 for invalid chars)                         :,  ;,  <,  =,  >,  ?,  @,  A,  B,  C,  D,  E,  F,  G,  H,  I,  J,  K,  L,  M,  N,  O,  P,  Q,  R,  S,  T,  U,  V,  W,  X,  Y,  Z  
-   private static readonly int[] _charValues = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, -1, -1, -1, -1, -1, -1, -1, 10, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 34, 35, 36, 37, 38];
+   // Character numeric values. (-1 for invalid chars)                           :,  ;,  <,  =,  >,  ?,  @,  A,  B,  C,  D,  E,  F,  G,  H,  I,  J,  K,  L,  M,  N,  O,  P,  Q,  R,  S,  T,  U,  V,  W,  X,  Y,  Z  
+   private static readonly Int32[] _charValues = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, -1, -1, -1, -1, -1, -1, -1, 10, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 34, 35, 36, 37, 38];
    private static readonly Int32[] _weights = [1, 2, 4, 8, 16, 32, 64, 128, 256, 512];
 
    /// <inheritdoc/>
-   public string AlgorithmDescription => Resources.Iso6346AlgorithmDescription;
+   public String AlgorithmDescription => Resources.Iso6346AlgorithmDescription;
 
    /// <inheritdoc/>
-   public string AlgorithmName => Resources.Iso6346AlgorithmName;
+   public String AlgorithmName => Resources.Iso6346AlgorithmName;
 
    /// <inheritdoc/>
    public Boolean TryCalculateCheckDigit(String value, out Char checkDigit)

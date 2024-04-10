@@ -110,7 +110,7 @@ public class SedolAlgorithmTests
    [InlineData("BJSC712")]     // BSJC712 with two character transposition error SJ -> JS
    [InlineData("1155334")]     // 1122334 with two digit twin error 22 -> 55
    [InlineData("BBGGDD4")]     // BBCCDD4 with two letter twin error CC -> GG
-   public void SedolAlgorithm_Validate_ShouldReturnFalse_WhenInputContainsDetectableError(string value)
+   public void SedolAlgorithm_Validate_ShouldReturnFalse_WhenInputContainsDetectableError(String value)
       => _sut.Validate(value).Should().BeFalse();
 
    [Fact]
@@ -131,7 +131,7 @@ public class SedolAlgorithmTests
    [InlineData("I000002")]
    [InlineData("O000006")]
    [InlineData("U000000")]
-   public void SedolAlgorithm_Validate_ShouldReturnFalse_WhenInputContainsNonDigitCharacter(string value)
+   public void SedolAlgorithm_Validate_ShouldReturnFalse_WhenInputContainsNonDigitCharacter(String value)
       => _sut.Validate(value).Should().BeFalse();
 
    #endregion

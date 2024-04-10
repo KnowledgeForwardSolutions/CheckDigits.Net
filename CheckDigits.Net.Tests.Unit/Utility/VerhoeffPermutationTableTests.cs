@@ -42,17 +42,17 @@ public class VerhoeffPermutationTableTests
     [InlineData(7, 7, 0, 4, 6, 9, 1, 3, 2, 5, 8)]
 
     public void VerhoeffPermutationTable_Indexer_ShouldReturnExpectedValues(
-       int x,
-       int y0,
-       int y1,
-       int y2,
-       int y3,
-       int y4,
-       int y5,
-       int y6,
-       int y7,
-       int y8,
-       int y9)
+       Int32 x,
+       Int32 y0,
+       Int32 y1,
+       Int32 y2,
+       Int32 y3,
+       Int32 y4,
+       Int32 y5,
+       Int32 y6,
+       Int32 y7,
+       Int32 y8,
+       Int32 y9)
     {
         // Arrange.
         var sut = VerhoeffPermutationTable.Instance;

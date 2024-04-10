@@ -35,5 +35,5 @@ public sealed class DammQuasigroupTable : ITwoDimensionalLookupTable
    public static DammQuasigroupTable Instance => _lazy.Value;
 
    /// <inheritdoc/>
-   public int this[int x, int y] => _quasigroupTable[(x * 10) + y];
+   public Int32 this[Int32 x, Int32 y] => _quasigroupTable[(x * 10) + y];
 }

@@ -121,7 +121,7 @@ public class Iso7064PureSystemDoubleCharacterAlgorithmTests
    public void Iso7064PureSystemDoubleCharacterAlgorithm_Constructor_ShouldThrowArgumentOutOfRangeException_WhenModulusIsLessThan2()
    {
       // Arrange.
-      Int32 modulus = 1;
+      var modulus = 1;
       var act = () => _ = new Iso7064PureSystemDoubleCharacterAlgorithm(
          _algorithmName,
          _algorithmDescription,
@@ -140,7 +140,7 @@ public class Iso7064PureSystemDoubleCharacterAlgorithmTests
    public void Iso7064PureSystemDoubleCharacterAlgorithm_Constructor_ShouldThrowArgumentOutOfRangeException_WhenRadixIsLessThan2()
    {
       // Arrange.
-      Int32 radix = 1;
+      var radix = 1;
       var act = () => _ = new Iso7064PureSystemDoubleCharacterAlgorithm(
          _algorithmName,
          _algorithmDescription,

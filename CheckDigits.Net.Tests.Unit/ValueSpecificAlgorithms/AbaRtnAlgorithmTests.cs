@@ -36,7 +36,7 @@ public class AbaRtnAlgorithmTests
 
     [Fact]
     public void AbaRtnAlgorithm_Validate_ShouldReturnFalse_WhenInputIsEmpty()
-       => _sut.Validate(string.Empty).Should().BeFalse();
+       => _sut.Validate(String.Empty).Should().BeFalse();
 
     [Fact]
     public void AbaRtnAlgorithm_Validate_ShouldReturnFalse_WhenInputHasLengthLessThanNine()
@@ -55,7 +55,7 @@ public class AbaRtnAlgorithmTests
     [InlineData("000001009")]
     [InlineData("000000107")]
     [InlineData("000000013")]
-    public void AbaRtnAlgorithm_Validate_ShouldCorrectlyWeightCharactersByPosition(string value)
+    public void AbaRtnAlgorithm_Validate_ShouldCorrectlyWeightCharactersByPosition(String value)
        => _sut.Validate(value).Should().BeTrue();
 
     [Theory]
@@ -64,12 +64,12 @@ public class AbaRtnAlgorithmTests
     [InlineData("325081403")]     // BECU
     [InlineData("325070760")]     // Chase - Washington
     [InlineData("325272021")]     // Alaska USA Federal Credit Union
-    public void AbaRtnAlgorithm_Validate_ShouldReturnTrue_WhenValueContainsValidCheckDigit(string value)
+    public void AbaRtnAlgorithm_Validate_ShouldReturnTrue_WhenValueContainsValidCheckDigit(String value)
        => _sut.Validate(value).Should().BeTrue();
 
     [Theory]
     [InlineData("325722021")]     // Alaska USA with two digit transposition with delta of 5: 27 -> 72
-    public void AbaRtnAlgorithm_Validate_ShouldReturnTrue_WhenValueContainsUndetectableError(string value)
+    public void AbaRtnAlgorithm_Validate_ShouldReturnTrue_WhenValueContainsUndetectableError(String value)
        => _sut.Validate(value).Should().BeTrue();
 
     [Theory]
@@ -78,7 +78,7 @@ public class AbaRtnAlgorithmTests
     [InlineData("305270760")]     // Chase - WA with jump transposition 250 -> 052
     [InlineData("111235821")]     // US Bank with twin error 22 -> 11
     [InlineData("325373021")]     // Alaska USA with jump twin error 272 -> 373
-    public void AbaRtnAlgorithm_Validate_ShouldReturnFalse_WhenInputContainsDetectableError(string value)
+    public void AbaRtnAlgorithm_Validate_ShouldReturnFalse_WhenInputContainsDetectableError(String value)
        => _sut.Validate(value).Should().BeFalse();
 
     [Fact]
@@ -88,7 +88,7 @@ public class AbaRtnAlgorithmTests
     [Theory]
     [InlineData("32I272021")]     // I is 20 positions later in ASCII table than 5 and would return true unless code explicitly checks for non-digit
     [InlineData("32+272021")]     // + is 10 positions earlier in ASCII table than 5 and would return true unless code explicitly checks for non-digit
-    public void AbaRtnAlgorithm_Validate_ShouldReturnFalse_WhenInputContainsNonDigitCharacter(string value)
+    public void AbaRtnAlgorithm_Validate_ShouldReturnFalse_WhenInputContainsNonDigitCharacter(String value)
        => _sut.Validate(value).Should().BeFalse();
 
     #endregion

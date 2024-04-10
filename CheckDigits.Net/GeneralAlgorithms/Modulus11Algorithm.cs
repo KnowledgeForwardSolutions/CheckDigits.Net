@@ -28,16 +28,16 @@
 public sealed class Modulus11Algorithm : ISingleCheckDigitAlgorithm
 {
     /// <inheritdoc/>
-    public string AlgorithmDescription => Resources.Modulus11AlgorithmDescription;
+    public String AlgorithmDescription => Resources.Modulus11AlgorithmDescription;
 
     /// <inheritdoc/>
-    public string AlgorithmName => Resources.Modulus11AlgorithmName;
+    public String AlgorithmName => Resources.Modulus11AlgorithmName;
 
     /// <inheritdoc/>
-    public bool TryCalculateCheckDigit(string value, out char checkDigit)
+    public Boolean TryCalculateCheckDigit(String value, out Char checkDigit)
     {
         checkDigit = CharConstants.NUL;
-        if (string.IsNullOrEmpty(value) || value.Length > 9)
+        if (String.IsNullOrEmpty(value) || value.Length > 9)
         {
             return false;
         }
@@ -56,16 +56,16 @@ public sealed class Modulus11Algorithm : ISingleCheckDigitAlgorithm
         }
         s += t;
 
-        var mod = (11 - s % 11) % 11;
+        var mod = (11 - (s % 11)) % 11;
         checkDigit = mod < 10 ? mod.ToDigitChar() : CharConstants.UpperCaseX;
 
         return true;
     }
 
     /// <inheritdoc/>
-    public bool Validate(string value)
+    public Boolean Validate(String value)
     {
-        if (string.IsNullOrEmpty(value) || value.Length < 2 || value.Length > 10)
+        if (String.IsNullOrEmpty(value) || value.Length < 2 || value.Length > 10)
         {
             return false;
         }
@@ -84,7 +84,7 @@ public sealed class Modulus11Algorithm : ISingleCheckDigitAlgorithm
         }
         s += t;
 
-        var mod = (11 - s % 11) % 11;
+        var mod = (11 - (s % 11)) % 11;
         var checkDigit = mod < 10 ? mod.ToDigitChar() : CharConstants.UpperCaseX;
 
         return value[^1] == checkDigit;

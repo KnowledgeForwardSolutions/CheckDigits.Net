@@ -20,16 +20,16 @@ namespace CheckDigits.Net.ValueSpecificAlgorithms;
 /// </remarks>
 public class SedolAlgorithm : ICheckDigitAlgorithm
 {
-   private const int _validateLength = 7;
-   private const int _letterOffset = 55;      // Value needed to subtract from an ASCII uppercase letter to transform A-Z to 10-35
+   private const Int32 _validateLength = 7;
+   private const Int32 _letterOffset = 55;      // Value needed to subtract from an ASCII uppercase letter to transform A-Z to 10-35
    private static readonly Int32[] _charValues = GetLookupTable();
    private static readonly Int32[] _weights = [1, 3, 1, 7, 3, 9];
 
    /// <inheritdoc/>
-   public string AlgorithmDescription => Resources.SedolAlgorithmDescription;
+   public String AlgorithmDescription => Resources.SedolAlgorithmDescription;
 
    /// <inheritdoc/>
-   public string AlgorithmName => Resources.SedolAlgorithmName;
+   public String AlgorithmName => Resources.SedolAlgorithmName;
 
    /// <inheritdoc/>
    public Boolean Validate(String value)
@@ -57,7 +57,7 @@ public class SedolAlgorithm : ICheckDigitAlgorithm
          }
          sum += num * _weights[index];
       }
-      var checkDigit = (10 - sum % 10) % 10;
+      var checkDigit = (10 - (sum % 10)) % 10;
 
       return value[^1].ToIntegerDigit() == checkDigit;
    }

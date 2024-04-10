@@ -102,7 +102,7 @@ public class CusipAlgorithmTests
    [InlineData("0000000*1")]  // 36 => 36 * 2 = 72 => 7 + 2 =  9 => 1
    [InlineData("0000000@9")]  // 37 => 37 * 2 = 74 => 7 + 4 = 11 => 9
    [InlineData("0000000#7")]  // 38 => 38 * 2 = 76 => 7 + 6 = 13 => 7
-   public void CusipAlgorithm_Validate_ShouldCalculateCorrectDoubleForOddPositionCharacters(string value)
+   public void CusipAlgorithm_Validate_ShouldCalculateCorrectDoubleForOddPositionCharacters(String value)
       => _sut.Validate(value).Should().BeTrue();
 
    [Theory]
@@ -145,7 +145,7 @@ public class CusipAlgorithmTests
    [InlineData("000000*01")]  // 36 => 3 + 6 =  9 => 1
    [InlineData("000000@00")]  // 37 => 3 + 7 = 10 => 0
    [InlineData("000000#09")]  // 38 => 3 + 8 = 11 => 9
-   public void CusipAlgorithm_Validate_ShouldCalculateCorrectValueForEvenPositionCharacters(string value)
+   public void CusipAlgorithm_Validate_ShouldCalculateCorrectValueForEvenPositionCharacters(String value)
       => _sut.Validate(value).Should().BeTrue();
 
    [Theory]
@@ -168,7 +168,7 @@ public class CusipAlgorithmTests
    [InlineData("91282JCL6")]     // 91282CJL6 with two character transposition error CJ -> JC
    [InlineData("037844100")]     // 037833100 with two digit twin error 33 -> 44
    [InlineData("38143VBB7")]     // 38143VAA7 with two letter twin error AA -> BB
-   public void CusipAlgorithm_Validate_ShouldReturnFalse_WhenInputContainsDetectableError(string value)
+   public void CusipAlgorithm_Validate_ShouldReturnFalse_WhenInputContainsDetectableError(String value)
       => _sut.Validate(value).Should().BeFalse();
 
    [Fact]
@@ -184,7 +184,7 @@ public class CusipAlgorithmTests
    [InlineData("0378.7100")]
    [InlineData("0378:7100")]
    [InlineData("0378^7100")]
-   public void CusipAlgorithm_Validate_ShouldReturnFalse_WhenInputContainsNonDigitCharacter(string value)
+   public void CusipAlgorithm_Validate_ShouldReturnFalse_WhenInputContainsNonDigitCharacter(String value)
       => _sut.Validate(value).Should().BeFalse();
 
    #endregion

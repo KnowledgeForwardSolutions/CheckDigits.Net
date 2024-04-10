@@ -112,7 +112,7 @@ public class Iso7064HybridSystemAlgorithmTests
    public void Iso7064HybridAlgorithm_Constructor_ShouldThrowArgumentOutOfRangeException_WhenModulusIsLessThan2()
    {
       // Arrange.
-      Int32 modulus = 1;
+      var modulus = 1;
       var act = () => _ = new Iso7064HybridSystemAlgorithm(
          _algorithmName,
          _algorithmDescription,

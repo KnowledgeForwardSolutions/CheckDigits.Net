@@ -40,7 +40,7 @@ public class Iso6346AlgorithmTests
    public void Iso6346Algorithm_TryCalculateCheckDigit_ShouldReturnFalse_WhenInputIsEmpty()
    {
       // Act/assert.
-      _sut.TryCalculateCheckDigit(string.Empty, out var checkDigit).Should().BeFalse();
+      _sut.TryCalculateCheckDigit(String.Empty, out var checkDigit).Should().BeFalse();
       checkDigit.Should().Be('\0');
    }
 
@@ -72,8 +72,8 @@ public class Iso6346AlgorithmTests
    [InlineData("0000000010", '3')]
    [InlineData("0000000001", '6')]
    public void Iso6346Algorithm_TryCalculateCheckDigit_ShouldCorrectlyWeightByPosition(
-      string value,
-      char expectedCheckDigit)
+      String value,
+      Char expectedCheckDigit)
    {
       // Act/assert.
       _sut.TryCalculateCheckDigit(value, out var checkDigit).Should().BeTrue();
@@ -118,8 +118,8 @@ public class Iso6346AlgorithmTests
    [InlineData("Y000000000", '4')]
    [InlineData("Z000000000", '5')]
    public void Iso6346Algorithm_TryCalculateCheckDigit_ShouldCorrectlyMapCharacter(
-      string value,
-      char expectedCheckDigit)
+      String value,
+      Char expectedCheckDigit)
    {
       // Act/assert.
       _sut.TryCalculateCheckDigit(value, out var checkDigit).Should().BeTrue();
@@ -135,8 +135,8 @@ public class Iso6346AlgorithmTests
    [InlineData("MEDU870768", '8')]      // "
    [InlineData("HLAU123456", '7')]      // Calculated from https://www.bic-code.org/check-digit-calculator/
    public void Iso6346Algorithm_TryCalculateCheckDigit_ShouldCalculateExpectedCheckDigit(
-      string value,
-      char expectedCheckDigit)
+      String value,
+      Char expectedCheckDigit)
    {
       // Act/assert.
       _sut.TryCalculateCheckDigit(value, out var checkDigit).Should().BeTrue();
@@ -148,7 +148,7 @@ public class Iso6346AlgorithmTests
    [InlineData("CSQU3.5438")]
    [InlineData("CSQU3:5438")]
    [InlineData("CSQU3^5438")]
-   public void Iso6346Algorithm_TryCalculateCheckDigit_ShouldReturnFalse_WhenInputContainsInvalidCharacter(string value)
+   public void Iso6346Algorithm_TryCalculateCheckDigit_ShouldReturnFalse_WhenInputContainsInvalidCharacter(String value)
    {
       _sut.TryCalculateCheckDigit(value, out var checkDigit).Should().BeFalse();
       checkDigit.Should().Be('\0');
@@ -248,7 +248,7 @@ public class Iso6346AlgorithmTests
    [InlineData("MDEU8707688")]      // MEDU8707688 with two character transposition error ED -> DE
    [InlineData("HLAU1122445")]      // HLAU1122335 with two digit twin error 33 -> 44
    [InlineData("HMMU1122332")]      // HLLU1122332 with two letter twin error LL -> MM
-   public void Iso6346Algorithm_Validate_ShouldReturnFalse_WhenInputContainsDetectableError(string value)
+   public void Iso6346Algorithm_Validate_ShouldReturnFalse_WhenInputContainsDetectableError(String value)
       => _sut.Validate(value).Should().BeFalse();
 
    [Fact]
@@ -260,7 +260,7 @@ public class Iso6346AlgorithmTests
    [InlineData("CSQU3.54383")]
    [InlineData("CSQU3:54383")]
    [InlineData("CSQU3^54383")]
-   public void Iso6346Algorithm_Validate_ShouldReturnFalse_WhenInputContainsInvalidCharacter(string value)
+   public void Iso6346Algorithm_Validate_ShouldReturnFalse_WhenInputContainsInvalidCharacter(String value)
       => _sut.Validate(value).Should().BeFalse();
 
    #endregion

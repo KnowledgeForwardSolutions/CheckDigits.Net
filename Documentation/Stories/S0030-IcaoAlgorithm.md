@@ -1,4 +1,4 @@
-# Modulus10_731Algorithm
+# IcaoAlgorithm
 
 As a developer of CheckDigits.Net, I want CheckDigits.Net to include the modulus 10 with weights 7, 3, 1 check digit algorithm used  by ICAO (International Civil Aviation Organization) MRTODT (Machine Readable Official Travel Documents) in the list of supported algorithms.
 
@@ -17,7 +17,7 @@ https://www.icao.int/publications/Documents/9303_p3_cons_en.pdf
 
 ## Definition of DONE
 
-1. Modulus10_731Algorithm class
+1. IcaoAlgorithm class
 1. Full unit tests
 1. README updates
 1. Performance benchmarks

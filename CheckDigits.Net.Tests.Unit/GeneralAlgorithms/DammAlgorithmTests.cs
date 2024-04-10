@@ -42,7 +42,7 @@ public class DammAlgorithmTests
     public void DammAlgorithm_TryCalculateCheckDigit_ShouldReturnFalse_WhenInputIsEmpty()
     {
         // Act/assert.
-        _sut.TryCalculateCheckDigit(string.Empty, out var checkDigit).Should().BeFalse();
+        _sut.TryCalculateCheckDigit(String.Empty, out var checkDigit).Should().BeFalse();
         checkDigit.Should().Be('\0');
     }
 
@@ -53,8 +53,8 @@ public class DammAlgorithmTests
     [InlineData("123456789012345", '0')]          // "
     [InlineData("11223344556677889900", '6')]     // "
     public void DammAlgorithm_TryCalculateCheckDigit_ShouldCalculateExpectedCheckDigit(
-       string value,
-       char expectedCheckDigit)
+       String value,
+       Char expectedCheckDigit)
     {
         // Act/assert.
         _sut.TryCalculateCheckDigit(value, out var checkDigit).Should().BeTrue();
@@ -76,7 +76,7 @@ public class DammAlgorithmTests
     [Theory]
     [InlineData("12G45")]
     [InlineData("12)45")]
-    public void DammAlgorithm_TryCalculateCheckDigit_ShouldReturnFalse_WhenInputContainsNonDigitCharacter(string value)
+    public void DammAlgorithm_TryCalculateCheckDigit_ShouldReturnFalse_WhenInputContainsNonDigitCharacter(String value)
     {
         _sut.TryCalculateCheckDigit(value, out var checkDigit).Should().BeFalse();
         checkDigit.Should().Be('\0');
@@ -94,12 +94,12 @@ public class DammAlgorithmTests
 
     [Fact]
     public void DammAlgorithm_Validate_ShouldReturnFalse_WhenInputIsEmpty()
-       => _sut.Validate(string.Empty).Should().BeFalse();
+       => _sut.Validate(String.Empty).Should().BeFalse();
 
     [Theory]
     [InlineData("0")]    // "0" is the only digit that would pass unless length is checked explicitly
     [InlineData("1")]
-    public void DammAlgorithm_Validate_ShouldReturnFalse_WhenInputIsLengthOne(string value)
+    public void DammAlgorithm_Validate_ShouldReturnFalse_WhenInputIsLengthOne(String value)
        => _sut.Validate(value).Should().BeFalse();
 
     [Theory]
@@ -108,7 +108,7 @@ public class DammAlgorithmTests
     [InlineData("123456789018")]              // Value calculated by https://jackanderson.me/2020/09/damm-algorithm-check-digit-tool/
     [InlineData("1234567890123450")]          // "
     [InlineData("112233445566778899006")]     // "
-    public void DammAlgorithm_Validate_ShouldReturnTrue_WhenInputContainsValidCheckDigit(string value)
+    public void DammAlgorithm_Validate_ShouldReturnTrue_WhenInputContainsValidCheckDigit(String value)
           => _sut.Validate(value).Should().BeTrue();
 
     [Fact]
@@ -137,13 +137,13 @@ public class DammAlgorithmTests
     [InlineData("112233445566778890906")]     // "
     [InlineData("1236547890123450")]          // Jump transposition error using "1234567890123450" as a valid value (456 -> 654)
     [InlineData("112255445566778899006")]     // Twin error using "112233445566778899006" as a valid value (33 -> 55)
-    public void DammAlgorithm_Validate_ShouldReturnFalse_WhenInputContainsDetectableError(string value)
+    public void DammAlgorithm_Validate_ShouldReturnFalse_WhenInputContainsDetectableError(String value)
        => _sut.Validate(value).Should().BeFalse();
 
     [Theory]
     [InlineData("12G455")]
     [InlineData("12)455")]
-    public void DammAlgorithm_Validate_ShouldReturnFalse_WhenInputContainsNonDigitCharacter(string value)
+    public void DammAlgorithm_Validate_ShouldReturnFalse_WhenInputContainsNonDigitCharacter(String value)
        => _sut.Validate(value).Should().BeFalse();
 
    #endregion
