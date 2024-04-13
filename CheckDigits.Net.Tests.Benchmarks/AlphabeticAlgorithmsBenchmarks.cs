@@ -1,11 +1,15 @@
-﻿namespace CheckDigits.Net.Tests.Benchmarks;
+﻿#pragma warning disable IDE0022 // Use expression body for method
+#pragma warning disable IDE0059 // Unnecessary assignment of a value
+#pragma warning disable IDE0060 // Remove unused parameter if it is not part of shipped public API
+
+namespace CheckDigits.Net.Tests.Benchmarks;
 
 //[SimpleJob(RuntimeMoniker.Net70, baseline: true)]
 //[SimpleJob(RuntimeMoniker.Net80)]
 [MemoryDiagnoser]
 public class AlphabeticAlgorithmsBenchmarks
 {
-   public IEnumerable<Object[]> TryCalculateCheckDigitArguments()
+   public static IEnumerable<Object[]> TryCalculateCheckDigitArguments()
    {
       yield return new Object[] { Algorithms.Iso7064Mod27_26, Algorithms.Iso7064Mod27_26.AlgorithmName, "EGR" };
       yield return new Object[] { Algorithms.Iso7064Mod27_26, Algorithms.Iso7064Mod27_26.AlgorithmName, "EGRNML" };
@@ -16,7 +20,7 @@ public class AlphabeticAlgorithmsBenchmarks
       yield return new Object[] { Algorithms.Iso7064Mod27_26, Algorithms.Iso7064Mod27_26.AlgorithmName, "EGRNMLJOCECUJIKNWWVVO" };
    }
 
-   public IEnumerable<Object[]> TryCalculateCheckDigitsArguments()
+   public static IEnumerable<Object[]> TryCalculateCheckDigitsArguments()
    {
       yield return new Object[] { Algorithms.Iso7064Mod661_26, Algorithms.Iso7064Mod661_26.AlgorithmName, "EGR" };
       yield return new Object[] { Algorithms.Iso7064Mod661_26, Algorithms.Iso7064Mod661_26.AlgorithmName, "EGRNML" };
@@ -27,7 +31,7 @@ public class AlphabeticAlgorithmsBenchmarks
       yield return new Object[] { Algorithms.Iso7064Mod661_26, Algorithms.Iso7064Mod661_26.AlgorithmName, "EGRNMLJOCECUJIKNWWVVO" };
    }
 
-   public IEnumerable<Object[]> ValidateArguments()
+   public static IEnumerable<Object[]> ValidateArguments()
    {
       yield return new Object[] { Algorithms.Iso7064Mod27_26, Algorithms.Iso7064Mod27_26.AlgorithmName, "EGRS" };
       yield return new Object[] { Algorithms.Iso7064Mod27_26, Algorithms.Iso7064Mod27_26.AlgorithmName, "EGRNMLU" };

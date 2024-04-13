@@ -178,20 +178,20 @@ namespace CheckDigits.Net {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Icao - modulus 10 algorithm used by ICAO (Internation Civil Aviation Organization) machine readable travel documents.
+        ///   Looks up a localized string similar to ICAO 9303 algorithm - modulus 10 algorithm used by ICAO (Internation Civil Aviation Organization) machine readable travel documents.
         /// </summary>
-        internal static string IcaoAlgorithmDescription {
+        internal static string Icao9303AlgorithmDescription {
             get {
-                return ResourceManager.GetString("IcaoAlgorithmDescription", resourceCulture);
+                return ResourceManager.GetString("Icao9303AlgorithmDescription", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Icao.
+        ///   Looks up a localized string similar to Icao9303.
         /// </summary>
-        internal static string IcaoAlgorithmName {
+        internal static string Icao9303AlgorithmName {
             get {
-                return ResourceManager.GetString("IcaoAlgorithmName", resourceCulture);
+                return ResourceManager.GetString("Icao9303AlgorithmName", resourceCulture);
             }
         }
         

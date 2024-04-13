@@ -156,11 +156,11 @@
   <data name="IbanAlgorithmName" xml:space="preserve">
     <value>IBAN (International Bank Account Number)</value>
   </data>
-  <data name="IcaoAlgorithmDescription" xml:space="preserve">
-    <value>Icao - modulus 10 algorithm used by ICAO (Internation Civil Aviation Organization) machine readable travel documents</value>
+  <data name="Icao9303AlgorithmDescription" xml:space="preserve">
+    <value>ICAO 9303 algorithm - modulus 10 algorithm used by ICAO (Internation Civil Aviation Organization) machine readable travel documents</value>
   </data>
-  <data name="IcaoAlgorithmName" xml:space="preserve">
-    <value>Icao</value>
+  <data name="Icao9303AlgorithmName" xml:space="preserve">
+    <value>Icao9303</value>
   </data>
   <data name="IsanAlgorithmDescription" xml:space="preserve">
     <value>Variation of ISO/IEC 7064 MOD 37,36 for ISAN values formatted as human readable strings</value>

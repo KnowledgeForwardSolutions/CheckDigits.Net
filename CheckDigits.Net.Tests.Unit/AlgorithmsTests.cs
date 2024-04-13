@@ -80,11 +80,11 @@ public class AlgorithmsTests
 
    [Fact]
    public void Algorithms_Icao_ShouldNotBeNull()
-      => Algorithms.Icao.Should().NotBeNull();
+      => Algorithms.Icao9303.Should().NotBeNull();
 
    [Fact]
    public void Algorithms_Icao_ShouldBeExpectedType()
-      => Algorithms.Icao.Should().BeOfType<IcaoAlgorithm>();
+      => Algorithms.Icao9303.Should().BeOfType<Icao9303Algorithm>();
 
    #endregion
 

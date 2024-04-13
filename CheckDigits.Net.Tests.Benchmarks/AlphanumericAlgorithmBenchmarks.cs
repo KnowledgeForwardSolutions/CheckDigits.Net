@@ -1,11 +1,15 @@
-﻿namespace CheckDigits.Net.Tests.Benchmarks;
+﻿#pragma warning disable IDE0022 // Use expression body for method
+#pragma warning disable IDE0059 // Unnecessary assignment of a value
+#pragma warning disable IDE0060 // Remove unused parameter if it is not part of shipped public API
+
+namespace CheckDigits.Net.Tests.Benchmarks;
 
 //[SimpleJob(RuntimeMoniker.Net70, baseline: true)]
 //[SimpleJob(RuntimeMoniker.Net80)]
 [MemoryDiagnoser]
 public class AlphanumericAlgorithmBenchmarks
 {
-   public IEnumerable<Object[]> TryCalculateCheckDigitArguments()
+   public static IEnumerable<Object[]> TryCalculateCheckDigitArguments()
    {
       yield return new Object[] { Algorithms.Iso7064Mod37_2, Algorithms.Iso7064Mod37_2.AlgorithmName, "U7Y" };
       yield return new Object[] { Algorithms.Iso7064Mod37_2, Algorithms.Iso7064Mod37_2.AlgorithmName, "U7Y8SX" };
@@ -30,7 +34,7 @@ public class AlphanumericAlgorithmBenchmarks
       yield return new Object[] { Algorithms.Ncd, Algorithms.Ncd.AlgorithmName, "11404/2h9tqbxk6rw7dwm" };
    }
 
-   public IEnumerable<Object[]> TryCalculateCheckDigitsArguments()
+   public static IEnumerable<Object[]> TryCalculateCheckDigitsArguments()
    {
       yield return new Object[] { Algorithms.AlphanumericMod97_10, Algorithms.AlphanumericMod97_10.AlgorithmName, "U7y" };
       yield return new Object[] { Algorithms.AlphanumericMod97_10, Algorithms.AlphanumericMod97_10.AlgorithmName, "U7y8SX" };
@@ -49,7 +53,7 @@ public class AlphanumericAlgorithmBenchmarks
       yield return new Object[] { Algorithms.Iso7064Mod1271_36, Algorithms.Iso7064Mod1271_36.AlgorithmName, "U7Y8SXRC0O3SC4IHYQF4M" };
    }
 
-   public IEnumerable<Object[]> ValidateArguments()
+   public static IEnumerable<Object[]> ValidateArguments()
    {
       yield return new Object[] { Algorithms.AlphanumericMod97_10, Algorithms.AlphanumericMod97_10.AlgorithmName, "U7y46" };
       yield return new Object[] { Algorithms.AlphanumericMod97_10, Algorithms.AlphanumericMod97_10.AlgorithmName, "U7y8SX89" };

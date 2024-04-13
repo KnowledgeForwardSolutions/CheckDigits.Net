@@ -26,15 +26,15 @@ namespace CheckDigits.Net.ValueSpecificAlgorithms;
 ///   difference between the transposed characters is 10, i.e. BL <-> LB.
 ///   </para>
 /// </remarks>
-public sealed class IcaoAlgorithm : ICheckDigitAlgorithm
+public sealed class Icao9303Algorithm : IEmbeddedCheckDigitAlgorithm
 {
    private static readonly Int32[] _weights = [7, 3, 1];
 
    /// <inheritdoc/>
-   public String AlgorithmDescription => Resources.IcaoAlgorithmDescription;
+   public String AlgorithmDescription => Resources.Icao9303AlgorithmDescription;
 
    /// <inheritdoc/>
-   public String AlgorithmName => Resources.IcaoAlgorithmName;
+   public String AlgorithmName => Resources.Icao9303AlgorithmName;
 
    /// <inheritdoc/>
    public Boolean Validate(String value)
@@ -73,5 +73,48 @@ public sealed class IcaoAlgorithm : ICheckDigitAlgorithm
       var checkDigit = sum % 10;
 
       return value[^1].ToIntegerDigit() == checkDigit;
+   }
+
+   /// <inheritdoc/>
+   public Boolean Validate(String value, Int32 start, Int32 length)
+   {
+      if (String.IsNullOrEmpty(value) 
+         || start < 0
+         || length < 2
+         || start + length > value.Length)
+      {
+         return false;
+      }
+
+      Char ch;
+      Int32 num;
+      var sum = 0;
+      var weightIndex = new ModulusInt32(3);
+      var end = start + length - 1;
+      for(var charIndex = start; charIndex < end; charIndex++)
+      {
+         ch = value[charIndex];
+         if (ch >= CharConstants.DigitZero && ch <= CharConstants.DigitNine)
+         {
+            num = ch.ToIntegerDigit();
+         }
+         else if (ch >= CharConstants.UpperCaseA && ch <= CharConstants.UpperCaseZ)
+         {
+            num = ch - CharConstants.UpperCaseA + 10;
+         }
+         else if (ch == CharConstants.LeftAngleBracket)
+         {
+            num = 0;
+         }
+         else
+         {
+            return false;
+         }
+         sum += num * _weights[weightIndex];
+         weightIndex++;
+      }
+      var checkDigit = sum % 10;
+
+      return value[start + length - 1].ToIntegerDigit() == checkDigit;
    }
 }

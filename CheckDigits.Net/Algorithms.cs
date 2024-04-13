@@ -23,8 +23,8 @@ public static class Algorithms
    private static readonly Lazy<IDoubleCheckDigitAlgorithm> _iban =
      new(() => new IbanAlgorithm());
 
-   private static readonly Lazy<ICheckDigitAlgorithm> _icao =
-     new(() => new IcaoAlgorithm());
+   private static readonly Lazy<ICheckDigitAlgorithm> _icao9303 =
+     new(() => new Icao9303Algorithm());
 
    private static readonly Lazy<ICheckDigitAlgorithm> _isan =
      new(() => new IsanAlgorithm());
@@ -122,7 +122,7 @@ public static class Algorithms
    /// <summary>
    ///   International Civil Aviation Organization algorithm.
    /// </summary>
-   public static ICheckDigitAlgorithm Icao => _icao.Value;
+   public static ICheckDigitAlgorithm Icao9303 => _icao9303.Value;
 
    /// <summary>
    ///   International Standard Audiovisual Number algorithm.
