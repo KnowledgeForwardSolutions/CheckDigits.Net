@@ -28,20 +28,20 @@ namespace CheckDigits.Net.ValueSpecificAlgorithms;
 /// </remarks>
 public sealed class NpiAlgorithm : ICheckDigitAlgorithm
 {
-    private const int _expectedLength = 10;
-    private const int _prefix = 24;
-    private static readonly int[] _doubledValues = new int[] { 0, 2, 4, 6, 8, 1, 3, 5, 7, 9 };
+    private const Int32 _expectedLength = 10;
+    private const Int32 _prefix = 24;
+    private static readonly Int32[] _doubledValues = new Int32[] { 0, 2, 4, 6, 8, 1, 3, 5, 7, 9 };
 
     /// <inheritdoc/>
-    public string AlgorithmDescription => Resources.NpiAlgorithmDescription;
+    public String AlgorithmDescription => Resources.NpiAlgorithmDescription;
 
     /// <inheritdoc/>
-    public string AlgorithmName => Resources.NpiAlgorithmName;
+    public String AlgorithmName => Resources.NpiAlgorithmName;
 
     /// <inheritdoc/>
-    public bool Validate(string value)
+    public Boolean Validate(String value)
     {
-        if (string.IsNullOrEmpty(value) || value.Length != _expectedLength)
+        if (String.IsNullOrEmpty(value) || value.Length != _expectedLength)
         {
             return false;
         }
@@ -58,7 +58,7 @@ public sealed class NpiAlgorithm : ICheckDigitAlgorithm
             sum += oddPosition ? _doubledValues[digit] : digit;
             oddPosition = !oddPosition;
         }
-        var checkDigit = (10 - sum % 10) % 10;
+        var checkDigit = (10 - (sum % 10)) % 10;
 
         return value[^1].ToIntegerDigit() == checkDigit;
     }

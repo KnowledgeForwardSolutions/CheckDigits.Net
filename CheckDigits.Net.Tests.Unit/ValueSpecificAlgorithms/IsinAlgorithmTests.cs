@@ -42,7 +42,7 @@ public class IsinAlgorithmTests
     public void IsinAlgorithm_TryCalculateCheckDigit_ShouldReturnFalse_WhenInputIsEmpty()
     {
         // Act/assert.
-        _sut.TryCalculateCheckDigit(string.Empty, out var checkDigit).Should().BeFalse();
+        _sut.TryCalculateCheckDigit(String.Empty, out var checkDigit).Should().BeFalse();
         checkDigit.Should().Be('\0');
     }
 
@@ -70,8 +70,8 @@ public class IsinAlgorithmTests
     [InlineData("00100000000", '8')]
     [InlineData("10000000000", '8')]
     public void IsinAlgorithm_TryCalculateCheckDigit_ShouldCorrectlyWeightOddPositionDigits(
-       string value,
-       char expectedCheckDigit)
+       String value,
+       Char expectedCheckDigit)
     {
         // Act/assert.
         _sut.TryCalculateCheckDigit(value, out var checkDigit).Should().BeTrue();
@@ -85,8 +85,8 @@ public class IsinAlgorithmTests
     [InlineData("00010000000", '9')]
     [InlineData("01000000000", '9')]
     public void IsinAlgorithm_TryCalculateCheckDigit_ShouldCorrectlyWeightEvenPositionDigits(
-       string value,
-       char expectedCheckDigit)
+       String value,
+       Char expectedCheckDigit)
     {
         // Act/assert.
         _sut.TryCalculateCheckDigit(value, out var checkDigit).Should().BeTrue();
@@ -101,8 +101,8 @@ public class IsinAlgorithmTests
     [InlineData("00A00000000", '9')]
     [InlineData("A0000000000", '9')]
     public void IsinAlgorithm_TryCalculateCheckDigit_ShouldCorrectlyWeightOddPositionLetters(
-       string value,
-       char expectedCheckDigit)
+       String value,
+       Char expectedCheckDigit)
     {
         // Act/assert.
         _sut.TryCalculateCheckDigit(value, out var checkDigit).Should().BeTrue();
@@ -116,8 +116,8 @@ public class IsinAlgorithmTests
     [InlineData("000A0000000", '8')]
     [InlineData("0A000000000", '8')]
     public void IsinAlgorithm_TryCalculateCheckDigit_ShouldCorrectlyWeightEvenPositionLetters(
-       string value,
-       char expectedCheckDigit)
+       String value,
+       Char expectedCheckDigit)
     {
         // Act/assert.
         _sut.TryCalculateCheckDigit(value, out var checkDigit).Should().BeTrue();
@@ -137,8 +137,8 @@ public class IsinAlgorithmTests
     [InlineData("00000000009", '1')]
 
     public void IsinAlgorithm_TryCalculateCheckDigit_ShouldCalculateCorrectDoubleForOddPositionCharacters(
-       string value,
-       char expectedCheckDigit)
+       String value,
+       Char expectedCheckDigit)
     {
         // Act/assert.
         _sut.TryCalculateCheckDigit(value, out var checkDigit).Should().BeTrue();
@@ -173,8 +173,8 @@ public class IsinAlgorithmTests
     [InlineData("0000000000Y", '9')]  //34 = 3 + (2 * 4) => 9
     [InlineData("0000000000Z", '6')]  //35 = 3 + (2 * 5) => 6
     public void IsinAlgorithm_TryCalculateCheckDigit_ShouldCorrectlyCalculateOddPositionLetterValues(
-       string value,
-       char expectedCheckDigit)
+       String value,
+       Char expectedCheckDigit)
     {
         // Act/assert.
         _sut.TryCalculateCheckDigit(value, out var checkDigit).Should().BeTrue();
@@ -209,8 +209,8 @@ public class IsinAlgorithmTests
     [InlineData("000000000Y0", '0')]  //34 = (2 * 3) + 4 => 0
     [InlineData("000000000Z0", '9')]  //35 = (2 * 3) + 5 => 9
     public void IsinAlgorithm_TryCalculateCheckDigit_ShouldCorrectlyCalculateEvenPositionLetterValues(
-       string value,
-       char expectedCheckDigit)
+       String value,
+       Char expectedCheckDigit)
     {
         // Act/assert.
         _sut.TryCalculateCheckDigit(value, out var checkDigit).Should().BeTrue();
@@ -226,8 +226,8 @@ public class IsinAlgorithmTests
     [InlineData("GB003134865", '8')]     // Barclays
     [InlineData("US88160R101", '4')]     // Tesla
     public void IsinAlgorithm_TryCalculateCheckDigit_ShouldCalculateExpectedCheckDigit(
-       string value,
-       char expectedCheckDigit)
+       String value,
+       Char expectedCheckDigit)
     {
         // Act/assert.
         _sut.TryCalculateCheckDigit(value, out var checkDigit).Should().BeTrue();
@@ -248,7 +248,7 @@ public class IsinAlgorithmTests
 
     [Theory]
     [InlineData("US1122)3445")]
-    public void IsinAlgorithm_TryCalculateCheckDigit_ShouldReturnFalse_WhenInputContainsNonDigitCharacter(string value)
+    public void IsinAlgorithm_TryCalculateCheckDigit_ShouldReturnFalse_WhenInputContainsNonDigitCharacter(String value)
     {
         _sut.TryCalculateCheckDigit(value, out var checkDigit).Should().BeFalse();
         checkDigit.Should().Be('\0');
@@ -266,7 +266,7 @@ public class IsinAlgorithmTests
 
     [Fact]
     public void IsinAlgorithm_Validate_ShouldReturnFalse_WhenInputIsEmpty()
-       => _sut.Validate(string.Empty).Should().BeFalse();
+       => _sut.Validate(String.Empty).Should().BeFalse();
 
     [Fact]
     public void IsinAlgorithm_Validate_ShouldReturnFalse_WhenInputHasLengthLessThanTwelveCharacters()
@@ -283,7 +283,7 @@ public class IsinAlgorithmTests
     [InlineData("000010000008")]
     [InlineData("001000000008")]
     [InlineData("100000000008")]
-    public void IsinAlgorithm_Validate_ShouldCorrectlyWeightOddPositionDigits(string value)
+    public void IsinAlgorithm_Validate_ShouldCorrectlyWeightOddPositionDigits(String value)
        => _sut.Validate(value).Should().BeTrue();
 
     [Theory]
@@ -292,7 +292,7 @@ public class IsinAlgorithmTests
     [InlineData("000001000009")]
     [InlineData("000100000009")]
     [InlineData("010000000009")]
-    public void IsinAlgorithm_Validate_ShouldCorrectlyWeightEvenPositionDigits(string value)
+    public void IsinAlgorithm_Validate_ShouldCorrectlyWeightEvenPositionDigits(String value)
        => _sut.Validate(value).Should().BeTrue();
 
     [Theory]
@@ -302,7 +302,7 @@ public class IsinAlgorithmTests
     [InlineData("0000A0000009")]
     [InlineData("00A000000009")]
     [InlineData("A00000000009")]
-    public void IsinAlgorithm_Validate_ShouldCorrectlyWeightOddPositionLetters(string value)
+    public void IsinAlgorithm_Validate_ShouldCorrectlyWeightOddPositionLetters(String value)
        => _sut.Validate(value).Should().BeTrue();
 
     [Theory]
@@ -311,7 +311,7 @@ public class IsinAlgorithmTests
     [InlineData("00000A000008")]
     [InlineData("000A00000008")]
     [InlineData("0A0000000008")]
-    public void IsinAlgorithm_Validate_ShouldCorrectlyWeightEvenPositionLetters(string value)
+    public void IsinAlgorithm_Validate_ShouldCorrectlyWeightEvenPositionLetters(String value)
        => _sut.Validate(value).Should().BeTrue();
 
     [Theory]
@@ -326,7 +326,7 @@ public class IsinAlgorithmTests
     [InlineData("000000000083")]
     [InlineData("000000000091")]
 
-    public void IsinAlgorithm_Validate_ShouldCalculateCorrectDoubleForOddPositionCharacters(string value)
+    public void IsinAlgorithm_Validate_ShouldCalculateCorrectDoubleForOddPositionCharacters(String value)
        => _sut.Validate(value).Should().BeTrue();
 
     [Theory]
@@ -356,7 +356,7 @@ public class IsinAlgorithmTests
     [InlineData("0000000000X1")]  //33 = 3 + (2 * 3) => 1
     [InlineData("0000000000Y9")]  //34 = 3 + (2 * 4) => 9
     [InlineData("0000000000Z6")]  //35 = 3 + (2 * 5 = 10 => 1 + 0 = 1) => 6
-    public void IsinAlgorithm_Validate_ShouldCorrectlyCalculateOddPositionLetterValues(string value)
+    public void IsinAlgorithm_Validate_ShouldCorrectlyCalculateOddPositionLetterValues(String value)
        => _sut.Validate(value).Should().BeTrue();
 
     [Theory]
@@ -386,7 +386,7 @@ public class IsinAlgorithmTests
     [InlineData("000000000X01")]  //33 = (2 * 3) + 3 => 1
     [InlineData("000000000Y00")]  //34 = (2 * 3) + 4 => 0
     [InlineData("000000000Z09")]  //35 = (2 * 3) + 5 => 9
-    public void IsinAlgorithm_Validate_ShouldCorrectlyCalculateEvenPositionLetterValues(string value)
+    public void IsinAlgorithm_Validate_ShouldCorrectlyCalculateEvenPositionLetterValues(String value)
        => _sut.Validate(value).Should().BeTrue();
 
     [Theory]
@@ -397,7 +397,7 @@ public class IsinAlgorithmTests
     [InlineData("US02079K1079")]     // Google Class C
     [InlineData("GB0031348658")]     // Barclays
     [InlineData("US88160R1014")]     // Tesla
-    public void IsinAlgorithm_Validate_ShouldReturnTrue_WhenValueContainsValidCheckDigit(string value)
+    public void IsinAlgorithm_Validate_ShouldReturnTrue_WhenValueContainsValidCheckDigit(String value)
        => _sut.Validate(value).Should().BeTrue();
 
     [Theory]                         // Dummy ISIN values from https://www.isindb.com/fix-isin-calculate-isin-check-digit/
@@ -412,7 +412,7 @@ public class IsinAlgorithmTests
     [InlineData("US303031M027")]     // US30303M1027 with two character transposition M1 -> 1M
     [InlineData("AU000X0VGZA3")]     // AU0000XVGZA3 with two character transposition 0X -> X0
     [InlineData("G0B002634946")]     // GB0002634946 with two character transposition B0 -> 0B
-    public void IsinAlgorithm_Validate_ShouldReturnTrue_WhenValueContainsUndetectableError(string value)
+    public void IsinAlgorithm_Validate_ShouldReturnTrue_WhenValueContainsUndetectableError(String value)
        => _sut.Validate(value).Should().BeTrue();
 
     [Theory]
@@ -424,7 +424,7 @@ public class IsinAlgorithmTests
     [InlineData("US99160R1014")]     // US88160R1014 with two digit twin error 88 -> 99
     [InlineData("GB0112634946")]     // GB0002634946 with two digit twin error 00 -> 11
     [InlineData("US12BB3DD566")]     // US12AA3DD566 with two letter twin error AA -> BB
-    public void IsinAlgorithm_Validate_ShouldReturnFalse_WhenInputContainsDetectableError(string value)
+    public void IsinAlgorithm_Validate_ShouldReturnFalse_WhenInputContainsDetectableError(String value)
        => _sut.Validate(value).Should().BeFalse();
 
     [Fact]
@@ -437,7 +437,7 @@ public class IsinAlgorithmTests
 
     [Theory]
     [InlineData("US1122)34451")]
-    public void IsinAlgorithm_Validate_ShouldReturnFalse_WhenInputContainsNonDigitCharacter(string value)
+    public void IsinAlgorithm_Validate_ShouldReturnFalse_WhenInputContainsNonDigitCharacter(String value)
        => _sut.Validate(value).Should().BeFalse();
 
     #endregion

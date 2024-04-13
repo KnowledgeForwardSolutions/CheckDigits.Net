@@ -36,7 +36,7 @@ public class NhsAlgorithmTests
 
     [Fact]
     public void NhsAlgorithm_Validate_ShouldReturnFalse_WhenInputIsEmpty()
-       => _sut.Validate(string.Empty).Should().BeFalse();
+       => _sut.Validate(String.Empty).Should().BeFalse();
 
     [Fact]
     public void NhsAlgorithm_Validate_ShouldReturnFalse_WhenInputHasLengthLessThanTen()
@@ -56,7 +56,7 @@ public class NhsAlgorithmTests
     [InlineData("0010000003")]
     [InlineData("0100000002")]
     [InlineData("1000000001")]
-    public void NhsAlgorithm_Validate_ShouldCorrectlyWeightCharactersByPosition(string value)
+    public void NhsAlgorithm_Validate_ShouldCorrectlyWeightCharactersByPosition(String value)
        => _sut.Validate(value).Should().BeTrue();
 
     [Theory]
@@ -65,7 +65,7 @@ public class NhsAlgorithmTests
     [InlineData("5301194917")]    // Random NHS number from http://danielbayley.uk/nhs-number/
     [InlineData("8514468243")]    // "
     [InlineData("3967487881")]    // "
-    public void NhsAlgorithm_Validate_ShouldReturnTrue_WhenValueContainsValidCheckDigit(string value)
+    public void NhsAlgorithm_Validate_ShouldReturnTrue_WhenValueContainsValidCheckDigit(String value)
        => _sut.Validate(value).Should().BeTrue();
 
     [Theory]
@@ -73,7 +73,7 @@ public class NhsAlgorithmTests
     [InlineData("4550577104")]    // Valid NHS number (4505577104) with two digit transposition error 05 -> 50
     [InlineData("3946787881")]    // Valid NHS number (9876544321) with jump transposition 674 -> 467
     [InlineData("8515568243")]    // Valid NHS number (8514468243) with twin error 44 -> 55
-    public void NhsAlgorithm_Validate_ShouldReturnFalse_WhenInputContainsDetectableError(string value)
+    public void NhsAlgorithm_Validate_ShouldReturnFalse_WhenInputContainsDetectableError(String value)
        => _sut.Validate(value).Should().BeFalse();
 
     [Fact]
@@ -87,7 +87,7 @@ public class NhsAlgorithmTests
     [Theory]
     [InlineData("1000G00005")]    // Value 1000300005 would have check digit = 5. G is 20 positions later in ASCII table than 3 and would also calculate check digit 5 unless code explicitly checks for non-digit
     [InlineData("1000)00005")]    // ) is 10 positions earlier in ASCII table than 3 and would also calculate check digit 5 unless code explicitly checks for non-digit
-    public void NhsAlgorithm_Validate_ShouldReturnFalse_WhenInputContainsNonDigitCharacter(string value)
+    public void NhsAlgorithm_Validate_ShouldReturnFalse_WhenInputContainsNonDigitCharacter(String value)
        => _sut.Validate(value).Should().BeFalse();
 
     #endregion

@@ -28,19 +28,19 @@ namespace CheckDigits.Net.ValueSpecificAlgorithms;
 /// </remarks>
 public sealed class AbaRtnAlgorithm : ICheckDigitAlgorithm
 {
-    private const int _expectedLength = 9;
-    private static readonly int[] _weights = new int[9] { 3, 7, 1, 3, 7, 1, 3, 7, 1 };
+    private const Int32 _expectedLength = 9;
+    private static readonly Int32[] _weights = new Int32[9] { 3, 7, 1, 3, 7, 1, 3, 7, 1 };
 
     /// <inheritdoc/>
-    public string AlgorithmDescription => Resources.AbaRtnAlgorithmDescription;
+    public String AlgorithmDescription => Resources.AbaRtnAlgorithmDescription;
 
     /// <inheritdoc/>
-    public string AlgorithmName => Resources.AbaRtnAlgorithmName;
+    public String AlgorithmName => Resources.AbaRtnAlgorithmName;
 
     /// <inheritdoc/>
-    public bool Validate(string value)
+    public Boolean Validate(String value)
     {
-        if (string.IsNullOrEmpty(value) || value.Length != _expectedLength)
+        if (String.IsNullOrEmpty(value) || value.Length != _expectedLength)
         {
             return false;
         }

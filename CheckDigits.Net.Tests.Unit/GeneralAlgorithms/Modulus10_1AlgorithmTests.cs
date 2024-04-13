@@ -40,7 +40,7 @@ public class Modulus10_1AlgorithmTests
     public void Modulus10_1Algorithm_TryCalculateCheckDigit_ShouldReturnFalse_WhenInputIsEmpty()
     {
         // Act/assert.
-        _sut.TryCalculateCheckDigit(string.Empty, out var checkDigit).Should().BeFalse();
+        _sut.TryCalculateCheckDigit(String.Empty, out var checkDigit).Should().BeFalse();
         checkDigit.Should().Be('\0');
     }
 
@@ -63,12 +63,12 @@ public class Modulus10_1AlgorithmTests
     [InlineData("010000000", '8')]
     [InlineData("100000000", '9')]
     public void Modulus10_1Algorithm_TryCalculateCheckDigit_ShouldCorrectlyWeightCharactersByPosition(
-       string value,
-       char expectedCheckDigit)
+       String value,
+       Char expectedCheckDigit)
     {
         // Act/assert.
         _sut.TryCalculateCheckDigit(value, out var checkDigit).Should().BeTrue();
-        expectedCheckDigit.Should().Be(expectedCheckDigit);
+        checkDigit.Should().Be(expectedCheckDigit);
     }
 
     [Theory]
@@ -76,8 +76,8 @@ public class Modulus10_1AlgorithmTests
     [InlineData("5808", '2')]         // CAS Registry Number for caffeine
     [InlineData("2872855", '4')]      // CAS Registry Number for Hexadimethrine bromide
     public void Modulus10_1Algorithm_TryCalculateCheckDigit_ShouldCalculateExpectedCheckDigit(
-       string value,
-       char expectedCheckDigit)
+       String value,
+       Char expectedCheckDigit)
     {
         // Act/assert.
         _sut.TryCalculateCheckDigit(value, out var checkDigit).Should().BeTrue();
@@ -99,7 +99,7 @@ public class Modulus10_1AlgorithmTests
     [Theory]
     [InlineData("714G2")]
     [InlineData("714)2")]
-    public void Modulus10_1Algorithm_TryCalculateCheckDigit_ShouldReturnFalse_WhenInputContainsNonDigitCharacter(string value)
+    public void Modulus10_1Algorithm_TryCalculateCheckDigit_ShouldReturnFalse_WhenInputContainsNonDigitCharacter(String value)
     {
         _sut.TryCalculateCheckDigit(value, out var checkDigit).Should().BeFalse();
         checkDigit.Should().Be('\0');
@@ -117,12 +117,12 @@ public class Modulus10_1AlgorithmTests
 
     [Fact]
     public void Modulus10_1Algorithm_Validate_ShouldReturnFalse_WhenInputIsEmpty()
-       => _sut.Validate(string.Empty).Should().BeFalse();
+       => _sut.Validate(String.Empty).Should().BeFalse();
 
     [Theory]
     [InlineData("0")]       // Zero would return true unless length is explicitly checked.
     [InlineData("1")]
-    public void Modulus10_1Algorithm_Validate_ShouldReturnFalse_WhenInputHasLengthLessThanTwo(string value)
+    public void Modulus10_1Algorithm_Validate_ShouldReturnFalse_WhenInputHasLengthLessThanTwo(String value)
        => _sut.Validate(value).Should().BeFalse();
 
     [Theory]
@@ -135,14 +135,14 @@ public class Modulus10_1AlgorithmTests
     [InlineData("0010000007")]
     [InlineData("0100000008")]
     [InlineData("1000000009")]
-    public void Modulus10_1Algorithm_Validate_ShouldCorrectlyWeightCharactersByPosition(string value)
+    public void Modulus10_1Algorithm_Validate_ShouldCorrectlyWeightCharactersByPosition(String value)
        => _sut.Validate(value).Should().BeTrue();
 
     [Theory]
     [InlineData("7732185")]       // Worked example of CAS Registry Number from Wikipedia https://en.wikipedia.org/wiki/CAS_Registry_Number
     [InlineData("58082")]         // CAS Registry Number for caffeine
     [InlineData("28728554")]      // CAS Registry Number for Hexadimethrine bromide
-    public void Modulus10_1Algorithm_Validate_ShouldReturnTrue_WhenValueContainsValidCheckDigit(string value)
+    public void Modulus10_1Algorithm_Validate_ShouldReturnTrue_WhenValueContainsValidCheckDigit(String value)
        => _sut.Validate(value).Should().BeTrue();
 
     [Theory]
@@ -150,7 +150,7 @@ public class Modulus10_1AlgorithmTests
     [InlineData("50882")]         // CAS Registry Number 58082 with two digit transposition error 80 -> 08
     [InlineData("28827554")]      // CAS Registry Number 28728554 with jump transposition 728 -> 827
     [InlineData("6632185")]       // CAS Registry Number 7732185 with twin error 77 -> 66
-    public void Modulus10_1Algorithm_Validate_ShouldReturnFalse_WhenInputContainsDetectableError(string value)
+    public void Modulus10_1Algorithm_Validate_ShouldReturnFalse_WhenInputContainsDetectableError(String value)
        => _sut.Validate(value).Should().BeFalse();
 
     [Fact]
@@ -164,7 +164,7 @@ public class Modulus10_1AlgorithmTests
     [Theory]
     [InlineData("714G2")]       // Value 7143 would have check digit = 2. G is 20 positions later in ASCII table than 3 and would also calculate check digit 5 unless code explicitly checks for non-digit
     [InlineData("714)2")]       // ) is 10 positions earlier in ASCII table than 3 and would also calculate check digit 0 unless code explicitly checks for non-digit
-    public void Modulus10_1Algorithm_Validate_ShouldReturnFalse_WhenInputContainsNonDigitCharacter(string value)
+    public void Modulus10_1Algorithm_Validate_ShouldReturnFalse_WhenInputContainsNonDigitCharacter(String value)
        => _sut.Validate(value).Should().BeFalse();
 
     #endregion

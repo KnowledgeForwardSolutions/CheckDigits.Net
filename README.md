@@ -27,6 +27,7 @@ let us know. Or contribute to the CheckDigits.Net repository: https://github.com
     * [CUSIP Algorithm](#cusip-algorithm)
     * [Damm Algorithm](#damm-algorithm)
     * [IBAN (International Bank Account Number) Algorithm](#iban-algorithm)
+    * [ICAO 9303 Algorithm] (#icao-9303-algorithm)
     * [ISAN (International Standard Audiovisual Number) Algorithm](#isan-algorithm)
     * [ISIN (International Securities Identification Number) Algorithm](#isin-algorithm)
     * [ISO 6346 Algorithm](#iso-6346-algorithm)
@@ -57,6 +58,7 @@ let us know. Or contribute to the CheckDigits.Net repository: https://github.com
     - [v2.0.0](#v2.0.0)
     - [v2.1.0](#v2.1.0)
     - [v2.2.0](#v2.2.0)
+    - [v2.3.0](#v2.3.0)
 
 ## Check Digit Overview
 
@@ -123,6 +125,7 @@ The ISO/IEC 7064:2003 standard is available at https://www.iso.org/standard/3153
 * [CUSIP Algorithm](#cusip-algorithm)
 * [Damm Algorithm](#damm-algorithm)
 * [IBAN (International Bank Account Number) Algorithm](#iban-algorithm)
+* [ICAO 9303 Algorithm] (#icao-9303-algorithm)
 * [ISAN (International Standard Audiovisual Number) Algorithm](#isan-algorithm)
 * [ISIN (International Securities Identification Number) Algorithm](#isin-algorithm)
 * [ISO 6346 Algorithm](#iso-6346-algorithm)
@@ -163,6 +166,7 @@ The ISO/IEC 7064:2003 standard is available at https://www.iso.org/standard/3153
 | GTIN-13				| [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
 | GTIN-14				| [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
 | IBAN                  | [IBAN Algorithm](#iban-algorithm) |
+| ICAO Machine Readable Travel Document Field | [ICAO 9303 Algorithm] (#icao-9303-algorithm) |
 | IMEI				    | [Luhn Algorithm](#luhn-algorithm) |
 | IMO Number            | [Modulus10_2 Algorithm](#modulus10_2-algorithm) |
 | ISAN                  | [ISAN Algorithm](#isan-algorithm) |
@@ -298,6 +302,15 @@ Note that ```ISingleCheckDigitAlgorithm``` and ```IDoubleCheckDigitAlgorithm```
 are not implemented for algorithms for government issued identifiers (for example,
 UK NHS numbers and US NPI numbers) or values issued by a single authority (such
 as ABA Routing Transit Numbers).
+
+The ```IEmbeddedCheckDigitAlgorithm``` interface is used by algorithms that can
+expect the value to check and its associated check digit(s) to be embedded within
+a larger string. (For example, the date of birth field in an ICAO 9303 machine
+readable passport string.) The Validate method defined by ```IEmbeddedCheckDigitAlgorithm```
+includes two additional parameters, start and length which specify the substring
+within the larger string that contains the value to check. An algorithm can 
+implement both ```ICheckDigitAlgorithm``` and ```IEmbeddedCheckDigitAlgorithm```
+and have two overloads for the Validate method.
 
 The ```IAlphabet``` and ```ISupplementalCharacterAlphabet``` interfaces are used 
 for ISO/IEC 7064 algorithms with custom alphabets. ```IAlphabet``` has two 
@@ -441,6 +454,38 @@ contained in account number, etc.) are left to the application developer.
 #### Links
 
 Wikipedia: https://en.wikipedia.org/wiki/International_Bank_Account_Number
+
+### ICAO 9303 Algorithm
+
+#### Description
+
+The ICAO 9303 (International Civil Aviation Organization) algorithm is a modulus 10 
+algorithm used in the field of MRTODTs (Machine Readable Official Travel Documents).
+The algorithm uses weights 7, 3, and 1 with the weights applied starting from the 
+left most character. 
+
+The algorithm can not detect single character transcription errors where the difference
+between the correct character and the incorrect character is 10, i.e. *0 -> A*, *B->L*, 
+and vice versa. Nor can the algorithm detect two character transposition errors 
+where the difference between the transposed characters is a multiple of 5, i.e. 
+*27 <-> 72*, *D8 <-> 8D*, *BL <-> LB*).
+
+The ICAO 9303 algorithm also implements the ```IEmbeddedCheckDigitAlgorithm interface```
+which supports the validation of fields that are embedded within a larger string.
+
+#### Details
+
+* Valid characters - decimal digits ('0' - '9'), upper case letters ('A' - 'Z') and a filler character ('<').
+* Check digit size - one character
+* Check digit value - decimal digit ('0' - '9')
+* Check digit location - assumed to be the trailing (right-most) character when validating
+* Class name - Icao
+
+#### Links
+
+https://en.wikipedia.org/wiki/Machine-readable_passport#Official_travel_documents
+https://www.icao.int/publications/Documents/9303_p3_cons_en.pdf
+
 
 ### ISAN Algorithm
 
@@ -1313,55 +1358,71 @@ Note also that the values used for the NOID Check Digit algorithm do not include
 
 #### Value Specific Algorithms
 
-| Algorithm Name   | Value                                  | Mean      | Error     | StdDev    | Allocated |
-|----------------- |--------------------------------------- |----------:|----------:|----------:|----------:|
-| ABA RTN          | 111000025                              | 10.830 ns | 0.0650 ns | 0.0580 ns |         - |
-| ABA RTN          | 122235821                              | 10.400 ns | 0.1880 ns | 0.1570 ns |         - |
-| ABA RTN          | 325081403                              | 10.310 ns | 0.0610 ns | 0.0570 ns |         - |
-|                  |                                        |           |           |           |           |                                           
-| CUSIP            | 037833100                              | 16.500 ns | 0.1990 ns | 0.1760 ns |         - |
-| CUSIP            | 38143VAA7                              | 13.020 ns | 0.0830 ns | 0.0770 ns |         - |
-| CUSIP            | 91282CJL6                              | 12.850 ns | 0.0630 ns | 0.0530 ns |         - |
-|                  |                                        |           |           |           |           |                                           
-| IBAN             | BE71096123456769                       | 20.090 ns | 0.1710 ns | 0.1600 ns |         - |
-| IBAN             | GB82WEST12345698765432                 | 34.960 ns | 0.2120 ns | 0.1880 ns |         - |
-| IBAN             | SC74MCBL01031234567890123456USD        | 51.580 ns | 0.2410 ns | 0.2130 ns |         - |
-|                  |                                        |           |           |           |           |                                           
-| ISAN             | C594660A8B2E5D22X6DDA3272E             | 54.400 ns | 0.1940 ns | 0.1810 ns |         - |
-| ISAN             | D02C42E954183EE2Q1291C8AEO             | 51.210 ns | 0.2820 ns | 0.2640 ns |         - |
-| ISAN             | E9530C32BC0EE83B269867B20F             | 46.700 ns | 0.1390 ns | 0.1300 ns |         - |
-|                  |                                        |           |           |           |           |                                           
-| ISAN (Formatted) | ISAN C594-660A-8B2E-5D22-X             | 45.420 ns | 0.1530 ns | 0.1360 ns |         - |
-| ISAN (Formatted) | ISAN D02C-42E9-5418-3EE2-Q             | 44.310 ns | 0.2520 ns | 0.2360 ns |         - |
-| ISAN (Formatted) | ISAN E953-0C32-BC0E-E83B-2             | 50.080 ns | 0.2070 ns | 0.1840 ns |         - |
-| ISAN (Formatted) | ISAN C594-660A-8B2E-5D22-X-6DDA-3272-E | 64.650 ns | 0.3200 ns | 0.3000 ns |         - |
-| ISAN (Formatted) | ISAN D02C-42E9-5418-3EE2-Q-1291-C8AE-O | 65.820 ns | 0.3030 ns | 0.2840 ns |         - |
-| ISAN (Formatted) | ISAN E953-0C32-BC0E-E83B-2-6986-7B20-F | 64.220 ns | 0.3640 ns | 0.3400 ns |         - |
-|                  |                                        |           |           |           |           |                                           
-| ISIN             | AU0000XVGZA3                           | 25.520 ns | 0.1260 ns | 0.1170 ns |         - |
-| ISIN             | GB0002634946                           | 19.150 ns | 0.1290 ns | 0.1140 ns |         - |
-| ISIN             | US0378331005                           | 19.110 ns | 0.1400 ns | 0.1310 ns |         - |
-|                  |                                        |           |           |           |           |                                           
-| ISO 6346         | CSQU3054383                            | 14.970 ns | 0.0350 ns | 0.0280 ns |         - |
-| ISO 6346         | MSKU9070323                            | 14.890 ns | 0.0930 ns | 0.0870 ns |         - |
-| ISO 6346         | TOLU4734787                            | 14.840 ns | 0.0980 ns | 0.0870 ns |         - |
-|                  |                                        |           |           |           |           |                                           
-| NHS              | 4505577104                             | 11.280 ns | 0.0360 ns | 0.0340 ns |         - |
-| NHS              | 5301194917                             | 11.270 ns | 0.0400 ns | 0.0360 ns |         - |
-| NHS              | 9434765919                             | 11.270 ns | 0.0450 ns | 0.0430 ns |         - |
-|                  |                                        |           |           |           |           |                                           
-| NPI              | 1122337797                             | 14.490 ns | 0.0490 ns | 0.0440 ns |         - |
-| NPI              | 1234567893                             | 14.530 ns | 0.0800 ns | 0.0710 ns |         - |
-| NPI              | 1245319599                             | 14.520 ns | 0.0890 ns | 0.0830 ns |         - |
-|                  |                                        |           |           |           |           |                                           
-| SEDOL            | 3134865                                | 12.290 ns | 0.1440 ns | 0.1200 ns |         - |
-| SEDOL            | B0YQ5W0                                | 12.180 ns | 0.0630 ns | 0.0560 ns |         - |
-| SEDOL            | BRDVMH9                                | 12.220 ns | 0.0800 ns | 0.0710 ns |         - |
-|                  |                                        |           |           |           |           |                                           
-| VIN              | 1G8ZG127XWZ157259                      | 21.120 ns | 0.1160 ns | 0.1080 ns |         - |
-| VIN              | 1HGEM21292L047875                      | 20.920 ns | 0.0770 ns | 0.0690 ns |         - |
-| VIN              | 1M8GDM9AXKP042788                      | 21.050 ns | 0.0940 ns | 0.0830 ns |         - |
-
+| Algorithm Name       | Value                                  | Mean      | Error     | StdDev    | Allocated |
+|--------------------- |--------------------------------------- |----------:|----------:|----------:|----------:|
+| ABA RTN              | 111000025                              | 10.830 ns | 0.0650 ns | 0.0580 ns |         - |
+| ABA RTN              | 122235821                              | 10.400 ns | 0.1880 ns | 0.1570 ns |         - |
+| ABA RTN              | 325081403                              | 10.310 ns | 0.0610 ns | 0.0570 ns |         - |
+|                      |                                        |           |           |           |           |                                           
+| CUSIP                | 037833100                              | 16.500 ns | 0.1990 ns | 0.1760 ns |         - |
+| CUSIP                | 38143VAA7                              | 13.020 ns | 0.0830 ns | 0.0770 ns |         - |
+| CUSIP                | 91282CJL6                              | 12.850 ns | 0.0630 ns | 0.0530 ns |         - |
+|                      |                                        |           |           |           |           |                                           
+| IBAN                 | BE71096123456769                       | 20.090 ns | 0.1710 ns | 0.1600 ns |         - |
+| IBAN                 | GB82WEST12345698765432                 | 34.960 ns | 0.2120 ns | 0.1880 ns |         - |
+| IBAN                 | SC74MCBL01031234567890123456USD        | 51.580 ns | 0.2410 ns | 0.2130 ns |         - |
+|                      |                                        |           |           |           |           |
+| ICAO 9303            | U7Y5                                   |  6.996 ns | 0.0610 ns | 0.0541 ns |         - |
+| ICAO 9303            | U7Y8SX8                                | 10.663 ns | 0.0545 ns | 0.0509 ns |         - |
+| ICAO 9303            | U7Y8SXRC03                             | 16.002 ns | 0.1061 ns | 0.0993 ns |         - |
+| ICAO 9303            | U7Y8SXRC0O3S8                          | 18.605 ns | 0.0770 ns | 0.0682 ns |         - |
+| ICAO 9303            | U7Y8SXRC0O3SC4I2                       | 23.544 ns | 0.1382 ns | 0.1293 ns |         - |
+| ICAO 9303            | U7Y8SXRC0O3SC4IHYQ9                    | 29.321 ns | 0.2113 ns | 0.1873 ns |         - |
+| ICAO 9303            | U7Y8SXRC0O3SC4IHYQF4M8                 | 33.851 ns | 0.2596 ns | 0.2428 ns |         - |
+|                      |                                        |           |           |           |           |
+| ICAO 9303 (Embedded) | +U7Y5+                                 |  7.199 ns | 0.0497 ns | 0.0441 ns |         - |
+| ICAO 9303 (Embedded) | +U7Y8SX8+                              | 12.778 ns | 0.1064 ns | 0.0944 ns |         - |
+| ICAO 9303 (Embedded) | +U7Y8SXRC03+                           | 15.471 ns | 0.0803 ns | 0.0712 ns |         - |
+| ICAO 9303 (Embedded) | +U7Y8SXRC0O3S8+                        | 17.047 ns | 0.1505 ns | 0.1334 ns |         - |
+| ICAO 9303 (Embedded) | +U7Y8SXRC0O3SC4I2+                     | 23.139 ns | 0.1597 ns | 0.1494 ns |         - |
+| ICAO 9303 (Embedded) | +U7Y8SXRC0O3SC4IHYQ9+                  | 36.988 ns | 0.2180 ns | 0.1933 ns |         - |
+| ICAO 9303 (Embedded) | +U7Y8SXRC0O3SC4IHYQF4M8+               | 47.173 ns | 0.3891 ns | 0.3640 ns |         - |
+|                      |                                        |           |           |           |           |                                           
+| ISAN                 | C594660A8B2E5D22X6DDA3272E             | 54.400 ns | 0.1940 ns | 0.1810 ns |         - |
+| ISAN                 | D02C42E954183EE2Q1291C8AEO             | 51.210 ns | 0.2820 ns | 0.2640 ns |         - |
+| ISAN                 | E9530C32BC0EE83B269867B20F             | 46.700 ns | 0.1390 ns | 0.1300 ns |         - |
+|                      |                                        |           |           |           |           |                                           
+| ISAN (Formatted)     | ISAN C594-660A-8B2E-5D22-X             | 45.420 ns | 0.1530 ns | 0.1360 ns |         - |
+| ISAN (Formatted)     | ISAN D02C-42E9-5418-3EE2-Q             | 44.310 ns | 0.2520 ns | 0.2360 ns |         - |
+| ISAN (Formatted)     | ISAN E953-0C32-BC0E-E83B-2             | 50.080 ns | 0.2070 ns | 0.1840 ns |         - |
+| ISAN (Formatted)     | ISAN C594-660A-8B2E-5D22-X-6DDA-3272-E | 64.650 ns | 0.3200 ns | 0.3000 ns |         - |
+| ISAN (Formatted)     | ISAN D02C-42E9-5418-3EE2-Q-1291-C8AE-O | 65.820 ns | 0.3030 ns | 0.2840 ns |         - |
+| ISAN (Formatted)     | ISAN E953-0C32-BC0E-E83B-2-6986-7B20-F | 64.220 ns | 0.3640 ns | 0.3400 ns |         - |
+|                      |                                        |           |           |           |           |                                           
+| ISIN                 | AU0000XVGZA3                           | 25.520 ns | 0.1260 ns | 0.1170 ns |         - |
+| ISIN                 | GB0002634946                           | 19.150 ns | 0.1290 ns | 0.1140 ns |         - |
+| ISIN                 | US0378331005                           | 19.110 ns | 0.1400 ns | 0.1310 ns |         - |
+|                      |                                        |           |           |           |           |                                           
+| ISO 6346             | CSQU3054383                            | 14.970 ns | 0.0350 ns | 0.0280 ns |         - |
+| ISO 6346             | MSKU9070323                            | 14.890 ns | 0.0930 ns | 0.0870 ns |         - |
+| ISO 6346             | TOLU4734787                            | 14.840 ns | 0.0980 ns | 0.0870 ns |         - |
+|                      |                                        |           |           |           |           |                                           
+| NHS                  | 4505577104                             | 11.280 ns | 0.0360 ns | 0.0340 ns |         - |
+| NHS                  | 5301194917                             | 11.270 ns | 0.0400 ns | 0.0360 ns |         - |
+| NHS                  | 9434765919                             | 11.270 ns | 0.0450 ns | 0.0430 ns |         - |
+|                      |                                        |           |           |           |           |                                           
+| NPI                  | 1122337797                             | 14.490 ns | 0.0490 ns | 0.0440 ns |         - |
+| NPI                  | 1234567893                             | 14.530 ns | 0.0800 ns | 0.0710 ns |         - |
+| NPI                  | 1245319599                             | 14.520 ns | 0.0890 ns | 0.0830 ns |         - |
+|                      |                                        |           |           |           |           |                                           
+| SEDOL                | 3134865                                | 12.290 ns | 0.1440 ns | 0.1200 ns |         - |
+| SEDOL                | B0YQ5W0                                | 12.180 ns | 0.0630 ns | 0.0560 ns |         - |
+| SEDOL                | BRDVMH9                                | 12.220 ns | 0.0800 ns | 0.0710 ns |         - |
+|                      |                                        |           |           |           |           |                                           
+| VIN                  | 1G8ZG127XWZ157259                      | 21.120 ns | 0.1160 ns | 0.1080 ns |         - |
+| VIN                  | 1HGEM21292L047875                      | 20.920 ns | 0.0770 ns | 0.0690 ns |         - |
+| VIN                  | 1M8GDM9AXKP042788                      | 21.050 ns | 0.0940 ns | 0.0830 ns |         - |
+                        
 
 # Release History/Release Notes
 
@@ -1431,3 +1492,7 @@ Performance increases for:
 Support for netstandard2.0
 
 Thanks to Steff Beckers for this addition
+
+## v2.3.0
+Additional included algorithms
+* ICAO Algorithm

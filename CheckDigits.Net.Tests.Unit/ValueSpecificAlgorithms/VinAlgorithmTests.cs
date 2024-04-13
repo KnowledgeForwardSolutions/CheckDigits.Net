@@ -63,8 +63,8 @@ public class VinAlgorithmTests
     [InlineData('Y', 8)]
     [InlineData('Z', 9)]
     public void VinAlgorithm_TransliterateCharacter_ShouldReturnExpectedValue_WhenCharacterIsValid(
-       char ch,
-       int expected)
+       Char ch,
+       Int32 expected)
        => VinAlgorithm.TransliterateCharacter(ch).Should().Be(expected);
 
     [Theory]
@@ -74,7 +74,7 @@ public class VinAlgorithmTests
     [InlineData('+')]
     [InlineData(';')]
     [InlineData('a')]
-    public void VinAlgorithm_TransliterateCharacter_ShouldReturnMinusOne_WhenCharacterIsNotValid(char ch)
+    public void VinAlgorithm_TransliterateCharacter_ShouldReturnMinusOne_WhenCharacterIsNotValid(Char ch)
        => VinAlgorithm.TransliterateCharacter(ch).Should().Be(-1);
 
     #endregion
@@ -95,7 +95,7 @@ public class VinAlgorithmTests
     public void VinAlgorithm_TryCalculateCheckDigit_ShouldReturnFalse_WhenInputIsEmpty()
     {
         // Act/assert.
-        _sut.TryCalculateCheckDigit(string.Empty, out var checkDigit).Should().BeFalse();
+        _sut.TryCalculateCheckDigit(String.Empty, out var checkDigit).Should().BeFalse();
         checkDigit.Should().Be('\0');
     }
 
@@ -132,8 +132,8 @@ public class VinAlgorithmTests
     [InlineData("00000000_00000010", '3')]
     [InlineData("00000000_00000001", '2')]
     public void VinAlgorithm_TryCalculateCheckDigit_ShouldCorrectlyWeightCharactersByPosition(
-       string value,
-       char expectedCheckDigit)
+       String value,
+       Char expectedCheckDigit)
     {
         // Act/assert.
         _sut.TryCalculateCheckDigit(value, out var checkDigit).Should().BeTrue();
@@ -158,8 +158,8 @@ public class VinAlgorithmTests
     [InlineData("1G8ZG127XWZ157259", 'X')]   // Random VIN from https://vingenerator.org/
     [InlineData("1HGEM21292L047875", '9')]   // "
     public void VinAlgorithm_TryCalculateCheckDigit_ShouldCalculateExpectedCheckDigit(
-       string value,
-       char expectedCheckDigit)
+       String value,
+       Char expectedCheckDigit)
     {
         // Act/assert.
         _sut.TryCalculateCheckDigit(value, out var checkDigit).Should().BeTrue();
@@ -200,7 +200,7 @@ public class VinAlgorithmTests
 
     [Fact]
     public void VinAlgorithm_Validate_ShouldReturnFalse_WhenInputIsEmpty()
-       => _sut.Validate(string.Empty).Should().BeFalse();
+       => _sut.Validate(String.Empty).Should().BeFalse();
 
     [Fact]
     public void VinAlgorithm_Validate_ShouldReturnFalse_WhenInputHasLengthLessThan17()
@@ -227,7 +227,7 @@ public class VinAlgorithmTests
     [InlineData("00000000400000100")]
     [InlineData("00000000300000010")]
     [InlineData("00000000200000001")]
-    public void VinAlgorithm_Validate_ShouldCorrectlyWeightCharactersByPosition(string value)
+    public void VinAlgorithm_Validate_ShouldCorrectlyWeightCharactersByPosition(String value)
        => _sut.Validate(value).Should().BeTrue();
 
     [Theory]
@@ -236,7 +236,7 @@ public class VinAlgorithmTests
     [InlineData("11111111111111111")]   // Test value as per Wikipedia 
     [InlineData("1G8ZG127XWZ157259")]   // Random VIN from https://vingenerator.org/
     [InlineData("1HGEM21292L047875")]   // "
-    public void VinAlgorithm_Validate_ShouldReturnTrue_WhenValueContainsValidCheckDigit(string value)
+    public void VinAlgorithm_Validate_ShouldReturnTrue_WhenValueContainsValidCheckDigit(String value)
        => _sut.Validate(value).Should().BeTrue();
 
     [Theory]
@@ -246,7 +246,7 @@ public class VinAlgorithmTests
     [InlineData("1HGME21292L047875")]   // Two character transposition EM -> ME
     [InlineData("1HGEM21W9WL047875")]   // Two character jump transposition 292 -> W9W 
     [InlineData("11100111111111111")]   // Twin error 11 -> 00
-    public void VinAlgorithm_Validate_ShouldReturnFalse_WhenInputContainsDetectableError(string value)
+    public void VinAlgorithm_Validate_ShouldReturnFalse_WhenInputContainsDetectableError(String value)
        => _sut.Validate(value).Should().BeFalse();
 
     [Fact]

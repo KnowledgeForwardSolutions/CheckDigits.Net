@@ -40,7 +40,7 @@ public class Modulus10_13AlgorithmTests
     public void Modulus10_13Algorithm_TryCalculateCheckDigit_ShouldReturnFalse_WhenInputIsEmpty()
     {
         // Act/assert.
-        _sut.TryCalculateCheckDigit(string.Empty, out var checkDigit).Should().BeFalse();
+        _sut.TryCalculateCheckDigit(String.Empty, out var checkDigit).Should().BeFalse();
         checkDigit.Should().Be('\0');
     }
 
@@ -49,8 +49,8 @@ public class Modulus10_13AlgorithmTests
     [InlineData("00000000100", '7')]
     [InlineData("00000010000", '7')]
     public void Modulus10_13Algorithm_TryCalculateCheckDigit_ShouldCorrectlyWeightOddPositionCharacters(
-       string value,
-       char expectedCheckDigit)
+       String value,
+       Char expectedCheckDigit)
     {
         // Act/assert.
         _sut.TryCalculateCheckDigit(value, out var checkDigit).Should().BeTrue();
@@ -62,8 +62,8 @@ public class Modulus10_13AlgorithmTests
     [InlineData("00000001000", '9')]
     [InlineData("00000100000", '9')]
     public void Modulus10_13Algorithm_TryCalculateCheckDigit_ShouldCorrectlyWeightEvenPositionCharacters(
-       string value,
-       char expectedCheckDigit)
+       String value,
+       Char expectedCheckDigit)
     {
         // Act/assert.
         _sut.TryCalculateCheckDigit(value, out var checkDigit).Should().BeTrue();
@@ -78,11 +78,11 @@ public class Modulus10_13AlgorithmTests
     [InlineData("978050051695", '9')]         // ISBN-13, Islamic Geometric Design, Eric Broug
     [InlineData("01234567800004567", '8')]    // Example SSCC number
     public void Modulus10_13Algorithm_TryCalculateCheckDigit_ShouldCalculateExpectedCheckDigit(
-       string value,
-       char expectedCheckDigit)
-    {
-        // Act/assert.
-        _sut.TryCalculateCheckDigit(value, out var checkDigit).Should().BeTrue();
+       String value,
+       Char expectedCheckDigit)
+   {
+      // Act/assert.
+      _sut.TryCalculateCheckDigit(value, out var checkDigit).Should().BeTrue();
         checkDigit.Should().Be(expectedCheckDigit);
     }
 
@@ -102,7 +102,7 @@ public class Modulus10_13AlgorithmTests
     [InlineData("42I26")]      // Value 42526 would have check digit = 1. I is 20 positions later in ASCII table than 5 so test will fail unless code explicitly checks for non-digit
     [InlineData("42+26")]      // + is 10 positions earlier in ASCII table than 5 so test will fail unless code explicitly checks for non-digit
     [InlineData("0 36000 29145")]
-    public void Modulus10_13Algorithm_TryCalculateCheckDigit_ShouldReturnFalse_WhenInputContainsNonDigitCharacter(string value)
+    public void Modulus10_13Algorithm_TryCalculateCheckDigit_ShouldReturnFalse_WhenInputContainsNonDigitCharacter(String value)
     {
         _sut.TryCalculateCheckDigit(value, out var checkDigit).Should().BeFalse();
         checkDigit.Should().Be('\0');
@@ -120,26 +120,26 @@ public class Modulus10_13AlgorithmTests
 
     [Fact]
     public void Modulus10_13Algorithm_Validate_ShouldReturnFalse_WhenInputIsEmpty()
-       => _sut.Validate(string.Empty).Should().BeFalse();
+       => _sut.Validate(String.Empty).Should().BeFalse();
 
     [Theory]
     [InlineData("0")]
     [InlineData("1")]
-    public void Modulus10_13Algorithm_Validate_ShouldReturnFalse_WhenInputIsOneCharacterInLength(string value)
+    public void Modulus10_13Algorithm_Validate_ShouldReturnFalse_WhenInputIsOneCharacterInLength(String value)
        => _sut.Validate(value).Should().BeFalse();
 
     [Theory]
     [InlineData("000000000017")]
     [InlineData("000000001007")]
     [InlineData("000000100007")]
-    public void Modulus10_13Algorithm_Validate_ShouldCorrectlyWeightOddPositionCharacters(string value)
+    public void Modulus10_13Algorithm_Validate_ShouldCorrectlyWeightOddPositionCharacters(String value)
        => _sut.Validate(value).Should().BeTrue();
 
     [Theory]
     [InlineData("000000000109")]
     [InlineData("000000010009")]
     [InlineData("000001000009")]
-    public void Modulus10_13Algorithm_Validate_ShouldCorrectlyWeightEvenPositionCharacters(string value)
+    public void Modulus10_13Algorithm_Validate_ShouldCorrectlyWeightEvenPositionCharacters(String value)
        => _sut.Validate(value).Should().BeTrue();
 
     [Theory]
@@ -149,7 +149,7 @@ public class Modulus10_13AlgorithmTests
     [InlineData("73513537")]            // Worked EAN-8 example from Wikipedia
     [InlineData("9780500516959")]       // ISBN-13, Islamic Geometric Design, Eric Broug
     [InlineData("012345678000045678")]  // Example SSCC number
-    public void Modulus10_13Algorithm_Validate_ShouldReturnTrue_WhenValueContainsValidCheckDigit(string value)
+    public void Modulus10_13Algorithm_Validate_ShouldReturnTrue_WhenValueContainsValidCheckDigit(String value)
        => _sut.Validate(value).Should().BeTrue();
 
     [Theory]
@@ -157,7 +157,7 @@ public class Modulus10_13AlgorithmTests
     [InlineData("9785000516959")]       // ISBN-13 with two digit transposition error (05 -> 50) where difference between digits is 5 
     [InlineData("73315537")]            // EAN-8 with jump transposition error (515 -> 315)
     [InlineData("012345876000045678")]  // SSCC number with jump transposition error (678 -> 876)
-    public void Modulus10_13Algorithm_Validate_ShouldReturnTrue_WhenValueContainsUndetectableError(string value)
+    public void Modulus10_13Algorithm_Validate_ShouldReturnTrue_WhenValueContainsUndetectableError(String value)
        => _sut.Validate(value).Should().BeTrue();
 
     [Theory]
@@ -165,7 +165,7 @@ public class Modulus10_13AlgorithmTests
     [InlineData("427261")]              // UPC-E with single digit transcription error (5 -> 7)
     [InlineData("4006383133931")]       // EAN-13 with two digit transposition error (13 -> 31)
     [InlineData("9870500516959")]       // ISBN-13 with two digit transposition error (78 -> 87)
-    public void Modulus10_13Algorithm_Validate_ShouldReturnFalse_WhenInputContainsDetectableError(string value)
+    public void Modulus10_13Algorithm_Validate_ShouldReturnFalse_WhenInputContainsDetectableError(String value)
        => _sut.Validate(value).Should().BeFalse();
 
     [Fact]
@@ -180,7 +180,7 @@ public class Modulus10_13AlgorithmTests
     [InlineData("42+261")]              // UPC-E example with 5 replaced with character 10 positions before in ASCII table
     [InlineData("42I261")]              // UPC-E example with 5 replaced with character 20 positions later in ASCII table
     [InlineData("0 36000 29145 2")]
-    public void Modulus10_13Algorithm_Validate_ShouldReturnFalse_WhenInputContainsNonDigitCharacter(string value)
+    public void Modulus10_13Algorithm_Validate_ShouldReturnFalse_WhenInputContainsNonDigitCharacter(String value)
        => _sut.Validate(value).Should().BeFalse();
 
     #endregion

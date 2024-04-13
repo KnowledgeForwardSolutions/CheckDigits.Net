@@ -6,9 +6,9 @@ public class DanishAlphabet : IAlphabet
     // diphthong AE (\u00C6) has value 26
     // slashed O (\u00D8) has value 27
     // A with diaeresis (\u00C4) has value 28
-    private const string _validCharacters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ\u00C6\u00D8\u00C4";
+    private const String _validCharacters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ\u00C6\u00D8\u00C4";
 
-    public int CharacterToInteger(char ch)
+    public Int32 CharacterToInteger(Char ch)
        => ch switch
        {
            var x when x >= 'A' && x <= 'Z' => x - 'A',
@@ -18,5 +18,5 @@ public class DanishAlphabet : IAlphabet
            _ => -1
        };
 
-    public char IntegerToCheckCharacter(int checkDigit) => _validCharacters[checkDigit];
+    public Char IntegerToCheckCharacter(Int32 checkDigit) => _validCharacters[checkDigit];
 }

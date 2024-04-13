@@ -2,19 +2,19 @@
 
 public class AlphanumericMod97_10Algorithm : IDoubleCheckDigitAlgorithm
 {
-    private const int _minimumLength = 3;
-    private const int _modulus = 97;
-    private const int _radix = 10;
-    private const int _reduceThreshold = int.MaxValue / _radix;
+    private const Int32 _minimumLength = 3;
+    private const Int32 _modulus = 97;
+    private const Int32 _radix = 10;
+    private const Int32 _reduceThreshold = Int32.MaxValue / _radix;
 
     /// <inheritdoc/>
-    public string AlgorithmDescription => Resources.AlphanumericMod97_10AlgorithmDescription;
+    public String AlgorithmDescription => Resources.AlphanumericMod97_10AlgorithmDescription;
 
     /// <inheritdoc/>
-    public string AlgorithmName => Resources.AlphanumericMod97_10AlgorithmName;
+    public String AlgorithmName => Resources.AlphanumericMod97_10AlgorithmName;
 
     /// <inheritdoc/>
-    public bool TryCalculateCheckDigits(
+    public Boolean TryCalculateCheckDigits(
       String value,
       out Char first,
       out Char second)
@@ -73,7 +73,7 @@ public class AlphanumericMod97_10Algorithm : IDoubleCheckDigitAlgorithm
    }
 
    /// <inheritdoc/>
-   public bool Validate(String value)
+   public Boolean Validate(String value)
     {
       if (String.IsNullOrEmpty(value) || value.Length < _minimumLength)
       {

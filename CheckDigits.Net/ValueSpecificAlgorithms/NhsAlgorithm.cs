@@ -27,18 +27,18 @@ namespace CheckDigits.Net.ValueSpecificAlgorithms;
 /// </remarks>
 public sealed class NhsAlgorithm : ICheckDigitAlgorithm
 {
-    private const int _expectedLength = 10;
+    private const Int32 _expectedLength = 10;
 
     /// <inheritdoc/>
-    public string AlgorithmDescription => Resources.NhsAlgorithmDescription;
+    public String AlgorithmDescription => Resources.NhsAlgorithmDescription;
 
     /// <inheritdoc/>
-    public string AlgorithmName => Resources.NhsAlgorithmName;
+    public String AlgorithmName => Resources.NhsAlgorithmName;
 
     /// <inheritdoc/>
-    public bool Validate(string value)
+    public Boolean Validate(String value)
     {
-        if (string.IsNullOrEmpty(value) || value.Length != _expectedLength)
+        if (String.IsNullOrEmpty(value) || value.Length != _expectedLength)
         {
             return false;
         }
@@ -57,7 +57,7 @@ public sealed class NhsAlgorithm : ICheckDigitAlgorithm
         }
         s += t;
 
-        var checkDigit = (11 - s % 11) % 11;
+        var checkDigit = (11 - (s % 11)) % 11;
         if (checkDigit == 10)
         {
             return false;

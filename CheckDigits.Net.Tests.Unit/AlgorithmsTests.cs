@@ -1,4 +1,4 @@
-﻿// Ignore Spelling: Aba Cusip Damm Iban Isan Isin Luhn Ncd Nhs Npi Rtn Sedol Verhoeff
+﻿// Ignore Spelling: Aba Cusip Damm Iban Icao Isan Isin Luhn Ncd Nhs Npi Rtn Sedol Verhoeff
 
 namespace CheckDigits.Net.Tests.Unit;
 
@@ -71,6 +71,20 @@ public class AlgorithmsTests
    [Fact]
    public void Algorithms_Iban_ShouldBeExpectedType()
       => Algorithms.Iban.Should().BeOfType<IbanAlgorithm>();
+
+   #endregion
+
+   #region Icao Property Tests
+   // ==========================================================================
+   // ==========================================================================
+
+   [Fact]
+   public void Algorithms_Icao_ShouldNotBeNull()
+      => Algorithms.Icao9303.Should().NotBeNull();
+
+   [Fact]
+   public void Algorithms_Icao_ShouldBeExpectedType()
+      => Algorithms.Icao9303.Should().BeOfType<Icao9303Algorithm>();
 
    #endregion
 

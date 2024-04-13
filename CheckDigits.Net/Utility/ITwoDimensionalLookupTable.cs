@@ -5,8 +5,8 @@
 /// </summary>
 public interface ITwoDimensionalLookupTable
 {
-    /// <summary>
-    ///   Gets the table entry at the specified x and y coordinates.
-    /// </summary>
-    int this[int x, int y] { get; }
+   /// <summary>
+   ///   Gets the table entry at the specified x and y coordinates.
+   /// </summary>
+   Int32 this[Int32 x, Int32 y] { get; }
 }

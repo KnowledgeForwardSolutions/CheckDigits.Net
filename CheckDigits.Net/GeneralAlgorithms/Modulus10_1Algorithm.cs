@@ -23,16 +23,16 @@
 public sealed class Modulus10_1Algorithm : ISingleCheckDigitAlgorithm
 {
     /// <inheritdoc/>
-    public string AlgorithmDescription => Resources.Modulus10_1AlgorithmDescription;
+    public String AlgorithmDescription => Resources.Modulus10_1AlgorithmDescription;
 
     /// <inheritdoc/>
-    public string AlgorithmName => Resources.Modulus10_1AlgorithmName;
+    public String AlgorithmName => Resources.Modulus10_1AlgorithmName;
 
     /// <inheritdoc/>
-    public bool TryCalculateCheckDigit(string value, out char checkDigit)
+    public Boolean TryCalculateCheckDigit(String value, out Char checkDigit)
     {
         checkDigit = CharConstants.NUL;
-        if (string.IsNullOrEmpty(value) || value.Length > 9)
+        if (String.IsNullOrEmpty(value) || value.Length > 9)
         {
             return false;
         }
@@ -57,9 +57,9 @@ public sealed class Modulus10_1Algorithm : ISingleCheckDigitAlgorithm
     }
 
     /// <inheritdoc/>
-    public bool Validate(string value)
+    public Boolean Validate(String value)
     {
-        if (string.IsNullOrEmpty(value) || value.Length < 2 || value.Length > 10)
+        if (String.IsNullOrEmpty(value) || value.Length < 2 || value.Length > 10)
         {
             return false;
         }

@@ -28,16 +28,16 @@ public sealed class DammAlgorithm : ISingleCheckDigitAlgorithm
       DammQuasigroupTable.Instance;
 
    /// <inheritdoc/>
-   public string AlgorithmDescription => Resources.DammAlgorithmDescription;
+   public String AlgorithmDescription => Resources.DammAlgorithmDescription;
 
     /// <inheritdoc/>
-    public string AlgorithmName => Resources.DammAlgorithmName;
+    public String AlgorithmName => Resources.DammAlgorithmName;
 
     /// <inheritdoc/>
-    public bool TryCalculateCheckDigit(string value, out char checkDigit)
+    public Boolean TryCalculateCheckDigit(String value, out Char checkDigit)
     {
         checkDigit = CharConstants.NUL;
-        if (string.IsNullOrEmpty(value))
+        if (String.IsNullOrEmpty(value))
         {
             return false;
         }
@@ -58,9 +58,9 @@ public sealed class DammAlgorithm : ISingleCheckDigitAlgorithm
     }
 
    /// <inheritdoc/>
-   public bool Validate(string value)
+   public Boolean Validate(String value)
    {
-      if (string.IsNullOrEmpty(value) || value.Length < 2)
+      if (String.IsNullOrEmpty(value) || value.Length < 2)
       {
          return false;
       }

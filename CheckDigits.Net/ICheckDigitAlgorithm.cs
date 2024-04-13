@@ -34,5 +34,5 @@ public interface ICheckDigitAlgorithm
    ///   <see cref="String.Empty"/> or a string that is of invalid length for 
    ///   this algorithm.
    /// </remarks>
-   Boolean Validate(string value);
+   Boolean Validate(String value);
 }

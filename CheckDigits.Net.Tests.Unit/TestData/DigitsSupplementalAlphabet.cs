@@ -2,15 +2,15 @@
 
 public class DigitsSupplementalAlphabet : ISupplementalCharacterAlphabet
 {
-    private const string _checkCharacters = "0123456789X";
+    private const String _checkCharacters = "0123456789X";
 
-    public int CharacterToInteger(char ch)
+    public Int32 CharacterToInteger(Char ch)
     {
         var num = ch.ToIntegerDigit();
         return num >= 0 && num <= 9 ? num : -1;
     }
 
-    public int CheckCharacterToInteger(char ch)
+    public Int32 CheckCharacterToInteger(Char ch)
     {
         var num = ch.ToIntegerDigit();
         return num >= 0 && num <= 9
@@ -18,5 +18,5 @@ public class DigitsSupplementalAlphabet : ISupplementalCharacterAlphabet
            : ch == CharConstants.UpperCaseX ? 10 : -1;
     }
 
-    public char IntegerToCheckCharacter(int checkDigit) => _checkCharacters[checkDigit];
+    public Char IntegerToCheckCharacter(Int32 checkDigit) => _checkCharacters[checkDigit];
 }

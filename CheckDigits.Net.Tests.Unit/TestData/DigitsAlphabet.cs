@@ -2,12 +2,11 @@
 
 public class DigitsAlphabet : IAlphabet
 {
-    public int CharacterToInteger(char ch)
+    public Int32 CharacterToInteger(Char ch)
     {
         var num = ch.ToIntegerDigit();
         return num >= 0 && num <= 9 ? num : -1;
     }
 
-
-    public char IntegerToCheckCharacter(int checkDigit) => checkDigit.ToDigitChar();
+    public Char IntegerToCheckCharacter(Int32 checkDigit) => checkDigit.ToDigitChar();
 }

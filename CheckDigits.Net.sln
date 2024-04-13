@@ -5,6 +5,7 @@ VisualStudioVersion = 17.7.34009.444
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{7B446A11-601E-4C2D-9EB0-DBF9AEC18A17}"
 	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
 		CodingGuidelines.md = CodingGuidelines.md
 		LICENSE.txt = LICENSE.txt
 		README.md = README.md
@@ -16,7 +17,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CheckDigits.Net.Tests.Unit"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CheckDigits.Net.Tests.Benchmarks", "CheckDigits.Net.Tests.Benchmarks\CheckDigits.Net.Tests.Benchmarks.csproj", "{25185A75-3F30-41BC-91E1-199BE78437A6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CheckDigits.Net.Tests.Benchmarks.Comparisons", "CheckDigits.Net.Tests.Benchmarks.Comparisons\CheckDigits.Net.Tests.Benchmarks.Comparisons.csproj", "{DBFA893A-BE5D-40A2-A25A-BA64F49B1E28}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CheckDigits.Net.Tests.Benchmarks.Comparisons", "CheckDigits.Net.Tests.Benchmarks.Comparisons\CheckDigits.Net.Tests.Benchmarks.Comparisons.csproj", "{DBFA893A-BE5D-40A2-A25A-BA64F49B1E28}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

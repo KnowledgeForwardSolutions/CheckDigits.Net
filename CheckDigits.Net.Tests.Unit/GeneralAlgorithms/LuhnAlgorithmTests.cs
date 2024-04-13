@@ -42,7 +42,7 @@ public class LuhnAlgorithmTests
     public void LuhnAlgorithm_TryCalculateCheckDigit_ShouldReturnFalse_WhenInputIsEmpty()
     {
         // Act/assert.
-        _sut.TryCalculateCheckDigit(string.Empty, out var checkDigit).Should().BeFalse();
+        _sut.TryCalculateCheckDigit(String.Empty, out var checkDigit).Should().BeFalse();
         checkDigit.Should().Be('\0');
     }
 
@@ -53,8 +53,8 @@ public class LuhnAlgorithmTests
     [InlineData("001000000", '8')]
     [InlineData("100000000", '8')]
     public void LuhnAlgorithm_TryCalculateCheckDigit_ShouldCorrectlyWeightOddPositionCharacters(
-       string value,
-       char expectedCheckDigit)
+       String value,
+       Char expectedCheckDigit)
     {
         // Act/assert.
         _sut.TryCalculateCheckDigit(value, out var checkDigit).Should().BeTrue();
@@ -67,8 +67,8 @@ public class LuhnAlgorithmTests
     [InlineData("000100000", '9')]
     [InlineData("010000000", '9')]
     public void LuhnAlgorithm_TryCalculateCheckDigit_ShouldCorrectlyWeightEvenPositionCharacters(
-       string value,
-       char expectedCheckDigit)
+       String value,
+       Char expectedCheckDigit)
     {
         // Act/assert.
         _sut.TryCalculateCheckDigit(value, out var checkDigit).Should().BeTrue();
@@ -87,8 +87,8 @@ public class LuhnAlgorithmTests
     [InlineData("8", '3')]
     [InlineData("9", '1')]
     public void LuhnAlgorithm_TryCalculateCheckDigit_ShouldCalculateCorrectDoubleForOddPositionCharacters(
-       string value,
-       char expectedCheckDigit)
+       String value,
+       Char expectedCheckDigit)
     {
         // Act/assert.
         _sut.TryCalculateCheckDigit(value, out var checkDigit).Should().BeTrue();
@@ -107,8 +107,8 @@ public class LuhnAlgorithmTests
     [InlineData("29344343", '8')]           // Canadian Social Insurance Number from https://www.ibm.com/docs/en/sga?topic=patterns-canada-social-insurance-number
     [InlineData("51170095", '7')]           // "
     public void LuhnAlgorithm_TryCalculateCheckDigit_ShouldCalculateExpectedCheckDigit(
-       string value,
-       char expectedCheckDigit)
+       String value,
+       Char expectedCheckDigit)
     {
         // Act/assert.
         _sut.TryCalculateCheckDigit(value, out var checkDigit).Should().BeTrue();
@@ -130,7 +130,7 @@ public class LuhnAlgorithmTests
     [Theory]
     [InlineData("12G45")]      // Value 12345 would have check digit = 5. G is 20 positions later in ASCII table than 3 so test will fail unless code explicitly checks for non-digit
     [InlineData("12)45")]      // ) is 10 positions earlier in ASCII table than 3 so test will fail unless code explicitly checks for non-digit
-    public void LuhnAlgorithm_TryCalculateCheckDigit_ShouldReturnFalse_WhenInputContainsNonDigitCharacter(string value)
+    public void LuhnAlgorithm_TryCalculateCheckDigit_ShouldReturnFalse_WhenInputContainsNonDigitCharacter(String value)
     {
         _sut.TryCalculateCheckDigit(value, out var checkDigit).Should().BeFalse();
         checkDigit.Should().Be('\0');
@@ -148,12 +148,12 @@ public class LuhnAlgorithmTests
 
     [Fact]
     public void LuhnAlgorithm_Validate_ShouldReturnFalse_WhenInputIsEmpty()
-       => _sut.Validate(string.Empty).Should().BeFalse();
+       => _sut.Validate(String.Empty).Should().BeFalse();
 
     [Theory]
     [InlineData("0")]
     [InlineData("1")]
-    public void LuhnAlgorithm_Validate_ShouldReturnFalse_WhenInputIsOneCharacterInLength(string value)
+    public void LuhnAlgorithm_Validate_ShouldReturnFalse_WhenInputIsOneCharacterInLength(String value)
        => _sut.Validate(value).Should().BeFalse();
 
     [Theory]
@@ -162,7 +162,7 @@ public class LuhnAlgorithmTests
     [InlineData("0000100008")]
     [InlineData("0010000008")]
     [InlineData("1000000008")]
-    public void LuhnAlgorithm_Validate_ShouldCorrectlyWeightOddPositionCharacters(string value)
+    public void LuhnAlgorithm_Validate_ShouldCorrectlyWeightOddPositionCharacters(String value)
        => _sut.Validate(value).Should().BeTrue();
 
     [Theory]
@@ -170,7 +170,7 @@ public class LuhnAlgorithmTests
     [InlineData("0000010009")]
     [InlineData("0001000009")]
     [InlineData("0100000009")]
-    public void LuhnAlgorithm_Validate_ShouldCorrectlyWeightEvenPositionCharacters(string value)
+    public void LuhnAlgorithm_Validate_ShouldCorrectlyWeightEvenPositionCharacters(String value)
        => _sut.Validate(value).Should().BeTrue();
 
     [Theory]
@@ -184,7 +184,7 @@ public class LuhnAlgorithmTests
     [InlineData("75")]
     [InlineData("83")]
     [InlineData("91")]
-    public void LuhnAlgorithm_Validate_ShouldCalculateCorrectDoubleForOddPositionCharacters(string value)
+    public void LuhnAlgorithm_Validate_ShouldCalculateCorrectDoubleForOddPositionCharacters(String value)
        => _sut.Validate(value).Should().BeTrue();
 
     [Theory]
@@ -198,7 +198,7 @@ public class LuhnAlgorithmTests
     [InlineData("490154203237518")]     // IMEI (International Mobile Equipment Identity)
     [InlineData("293443438")]           // Canadian Social Insurance Number from https://www.ibm.com/docs/en/sga?topic=patterns-canada-social-insurance-number
     [InlineData("511700957")]           // "
-    public void LuhnAlgorithm_Validate_ShouldReturnTrue_WhenValueContainsValidCheckDigit(string value)
+    public void LuhnAlgorithm_Validate_ShouldReturnTrue_WhenValueContainsValidCheckDigit(String value)
        => _sut.Validate(value).Should().BeTrue();
 
     [Theory]
@@ -207,7 +207,7 @@ public class LuhnAlgorithmTests
     [InlineData("5555555225554444")]    // MasterCard test card number with two digit twin error 55 -> 22
     [InlineData("5555555225554774")]    // MasterCard test card number with two digit twin error 44 -> 77
     [InlineData("3533111111111113")]    // JCB test card number with two digit twin error 66 -> 33
-    public void LuhnAlgorithm_Validate_ShouldReturnTrue_WhenValueContainsUndetectableError(string value)
+    public void LuhnAlgorithm_Validate_ShouldReturnTrue_WhenValueContainsUndetectableError(String value)
        => _sut.Validate(value).Should().BeTrue();
 
     [Theory]
@@ -217,7 +217,7 @@ public class LuhnAlgorithmTests
     [InlineData("3056930009002004")]    // Diners Club test card number with two digit transposition error 20 -> 02
     [InlineData("5559955555554444")]    // MasterCard test card number with two digit twin error 55 -> 99
     [InlineData("3566111144111113")]    // JCB test card number with two digit twin error 11 -> 44
-    public void LuhnAlgorithm_Validate_ShouldReturnFalse_WhenInputContainsDetectableError(string value)
+    public void LuhnAlgorithm_Validate_ShouldReturnFalse_WhenInputContainsDetectableError(String value)
        => _sut.Validate(value).Should().BeFalse();
 
     [Fact]
@@ -231,7 +231,7 @@ public class LuhnAlgorithmTests
     [Theory]
     [InlineData("12G455")]     // Value 12345 would have check digit = 5. G is 20 positions later in ASCII table than 3 and would also calculate check digit 5 unless code explicitly checks for non-digit
     [InlineData("12)455")]     // ) is 10 positions earlier in ASCII table than 3 and would also calculate check digit 5 unless code explicitly checks for non-digit
-    public void LuhnAlgorithm_Validate_ShouldReturnFalse_WhenInputContainsNonDigitCharacter(string value)
+    public void LuhnAlgorithm_Validate_ShouldReturnFalse_WhenInputContainsNonDigitCharacter(String value)
        => _sut.Validate(value).Should().BeFalse();
 
    #endregion

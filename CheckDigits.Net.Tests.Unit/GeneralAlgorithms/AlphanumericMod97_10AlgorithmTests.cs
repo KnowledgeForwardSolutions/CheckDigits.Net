@@ -241,7 +241,7 @@ public class AlphanumericMod97_10AlgorithmTests
    [InlineData("549300UDFJVWBIHXA058")]                  // LEI for Alphabet, from https://lei.info/
    [InlineData("549300NL8PIYPQDKDA72")]                  // LEI for Apple
    [InlineData("967600DJA1Q8K13MZ845")]                  // LEI for Microsoft
-   public void AlphanumericMod97_10_Validate_ShouldReturnTrue_WhenValueContainsValidCheckDigit(string value)
+   public void AlphanumericMod97_10_Validate_ShouldReturnTrue_WhenValueContainsValidCheckDigit(String value)
       => _sut.Validate(value).Should().BeTrue();
 
    [Theory]

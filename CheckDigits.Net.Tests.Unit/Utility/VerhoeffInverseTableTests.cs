@@ -43,8 +43,8 @@ public class VerhoeffInverseTableTests
     [InlineData(8, 8)]
     [InlineData(9, 9)]
     public void VerhoeffInverseTable_Indexer_ShouldReturnExpectedValues(
-       int index,
-       int expected)
+       Int32 index,
+       Int32 expected)
        => VerhoeffInverseTable.Instance[index].Should().Be(expected);
 
     #endregion

@@ -34,5 +34,5 @@ public sealed class VerhoeffMultiplicationTable : ITwoDimensionalLookupTable
     public static VerhoeffMultiplicationTable Instance => _lazy.Value;
 
     /// <inheritdoc/>
-    public int this[int x, int y] => _multiplicationTable[(x * 10) + y];
+    public Int32 this[Int32 x, Int32 y] => _multiplicationTable[(x * 10) + y];
 }

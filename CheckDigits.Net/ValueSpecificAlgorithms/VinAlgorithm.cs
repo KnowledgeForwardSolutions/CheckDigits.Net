@@ -21,18 +21,18 @@
 /// </remarks>
 public sealed class VinAlgorithm : ISingleCheckDigitAlgorithm
 {
-    private static readonly int[] _weights = new[] { 8, 7, 6, 5, 4, 3, 2, 10, 0, 9, 8, 7, 6, 5, 4, 3, 2 };
-    private const int _expectedLength = 17;
-    private const int _checkDigitPosition = 8;
+    private static readonly Int32[] _weights = new[] { 8, 7, 6, 5, 4, 3, 2, 10, 0, 9, 8, 7, 6, 5, 4, 3, 2 };
+    private const Int32 _expectedLength = 17;
+    private const Int32 _checkDigitPosition = 8;
 
     // Table used to transliterate characters to numeric equivalents. (-1 for invalid chars)        :,  ;,  <,  =,  >,  ?,  @, A, B, C, D, E, F, G, H,  I, J, K, L, M, N,  O, P,  Q, R, S, T, U, V, W, X, Y, Z  
-    private static readonly int[] _transliterationValues = new[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, -1, -1, -1, -1, -1, -1, -1, 1, 2, 3, 4, 5, 6, 7, 8, -1, 1, 2, 3, 4, 5, -1, 7, -1, 9, 2, 3, 4, 5, 6, 7, 8, 9 };
+    private static readonly Int32[] _transliterationValues = new[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, -1, -1, -1, -1, -1, -1, -1, 1, 2, 3, 4, 5, 6, 7, 8, -1, 1, 2, 3, 4, 5, -1, 7, -1, 9, 2, 3, 4, 5, 6, 7, 8, 9 };
 
     /// <inheritdoc/>
-    public string AlgorithmDescription => Resources.VinAlgorithmDescription;
+    public String AlgorithmDescription => Resources.VinAlgorithmDescription;
 
     /// <inheritdoc/>
-    public string AlgorithmName => Resources.VinAlgorithmName;
+    public String AlgorithmName => Resources.VinAlgorithmName;
 
     /// <summary>
     ///   Transliterate a character contained in a VIN to its integer equivalent.
@@ -44,17 +44,17 @@ public sealed class VinAlgorithm : ISingleCheckDigitAlgorithm
     ///   An integer between 0 and 9, or -1 if the <paramref name="ch"/> was not
     ///   a allowed in a VIN.
     /// </returns>
-    public static int TransliterateCharacter(char ch)
+    public static Int32 TransliterateCharacter(Char ch)
     {
         var index = ch - CharConstants.DigitZero;
         return index < 0 || index > 42 ? -1 : _transliterationValues[index];
     }
 
     /// <inheritdoc/>
-    public bool TryCalculateCheckDigit(string value, out char checkDigit)
+    public Boolean TryCalculateCheckDigit(String value, out Char checkDigit)
     {
         checkDigit = CharConstants.NUL;
-        if (string.IsNullOrEmpty(value) || value.Length != _expectedLength)
+        if (String.IsNullOrEmpty(value) || value.Length != _expectedLength)
         {
             return false;
         }
@@ -81,9 +81,9 @@ public sealed class VinAlgorithm : ISingleCheckDigitAlgorithm
     }
 
     /// <inheritdoc/>
-    public bool Validate(string value)
+    public Boolean Validate(String value)
     {
-        if (string.IsNullOrEmpty(value) || value.Length != _expectedLength)
+        if (String.IsNullOrEmpty(value) || value.Length != _expectedLength)
         {
             return false;
         }

@@ -25,16 +25,16 @@
 public sealed class Modulus10_13Algorithm : ISingleCheckDigitAlgorithm
 {
     /// <inheritdoc/>
-    public string AlgorithmDescription => Resources.Modulus10_13AlgorithmDescription;
+    public String AlgorithmDescription => Resources.Modulus10_13AlgorithmDescription;
 
     /// <inheritdoc/>
-    public string AlgorithmName => Resources.Modulus10_13AlgorithmName;
+    public String AlgorithmName => Resources.Modulus10_13AlgorithmName;
 
     /// <inheritdoc/>
-    public bool TryCalculateCheckDigit(string value, out char checkDigit)
+    public Boolean TryCalculateCheckDigit(String value, out Char checkDigit)
     {
         checkDigit = CharConstants.NUL;
-        if (string.IsNullOrEmpty(value))
+        if (String.IsNullOrEmpty(value))
         {
             return false;
         }
@@ -51,16 +51,16 @@ public sealed class Modulus10_13Algorithm : ISingleCheckDigitAlgorithm
             sum += oddPosition ? digit * 3 : digit;
             oddPosition = !oddPosition;
         }
-        var mod = 10 - sum % 10;
+        var mod = 10 - (sum % 10);
         checkDigit = mod == 10 ? CharConstants.DigitZero : mod.ToDigitChar();
 
         return true;
     }
 
     /// <inheritdoc/>
-    public bool Validate(string value)
+    public Boolean Validate(String value)
     {
-        if (string.IsNullOrEmpty(value) || value.Length < 2)
+        if (String.IsNullOrEmpty(value) || value.Length < 2)
         {
             return false;
         }
@@ -77,7 +77,7 @@ public sealed class Modulus10_13Algorithm : ISingleCheckDigitAlgorithm
             sum += oddPosition ? digit * 3 : digit;
             oddPosition = !oddPosition;
         }
-        var checkDigit = (10 - sum % 10) % 10;
+        var checkDigit = (10 - (sum % 10)) % 10;
 
         return value[^1].ToIntegerDigit() == checkDigit;
     }

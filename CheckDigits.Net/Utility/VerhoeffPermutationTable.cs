@@ -32,5 +32,5 @@ public sealed class VerhoeffPermutationTable : ITwoDimensionalLookupTable
     public static VerhoeffPermutationTable Instance => _lazy.Value;
 
     /// <inheritdoc/>
-    public int this[int x, int y] => _permutationTable[(x * 10) + y];
+    public Int32 this[Int32 x, Int32 y] => _permutationTable[(x * 10) + y];
 }

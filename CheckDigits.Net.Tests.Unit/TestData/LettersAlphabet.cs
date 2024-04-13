@@ -2,11 +2,11 @@
 
 public class LettersAlphabet : IAlphabet
 {
-    public int CharacterToInteger(char ch)
+    public Int32 CharacterToInteger(Char ch)
     {
         var num = ch - CharConstants.UpperCaseA;
         return num >= 0 && num <= 25 ? num : -1;
     }
 
-    public char IntegerToCheckCharacter(int checkDigit) => (char)(checkDigit + CharConstants.UpperCaseA);
+    public Char IntegerToCheckCharacter(Int32 checkDigit) => (Char)(checkDigit + CharConstants.UpperCaseA);
 }

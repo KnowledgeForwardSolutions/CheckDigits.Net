@@ -20,16 +20,16 @@ namespace CheckDigits.Net.ValueSpecificAlgorithms;
 /// </remarks>
 public class CusipAlgorithm : ICheckDigitAlgorithm
 {
-   private const int _validateLength = 9;
-   private const int _letterOffset = 55;      // Value needed to subtract from an ASCII uppercase letter to transform A-Z to 10-35
+   private const Int32 _validateLength = 9;
+   private const Int32 _letterOffset = 55;      // Value needed to subtract from an ASCII uppercase letter to transform A-Z to 10-35
    private static readonly Int32[] _evenValues = GetLookupTable(false);
    private static readonly Int32[] _oddValues = GetLookupTable(true);
 
    /// <inheritdoc/>
-   public string AlgorithmDescription => Resources.CusipAlgorithmDescription;
+   public String AlgorithmDescription => Resources.CusipAlgorithmDescription;
 
    /// <inheritdoc/>
-   public string AlgorithmName => Resources.CusipAlgorithmName;
+   public String AlgorithmName => Resources.CusipAlgorithmName;
 
    /// <inheritdoc/>
    public Boolean Validate(String value)
@@ -66,7 +66,7 @@ public class CusipAlgorithm : ICheckDigitAlgorithm
 
          oddPosition = !oddPosition;
       }
-      var checkDigit = (10 - sum % 10) % 10;
+      var checkDigit = (10 - (sum % 10)) % 10;
 
       return value[^1].ToIntegerDigit() == checkDigit;
    }
