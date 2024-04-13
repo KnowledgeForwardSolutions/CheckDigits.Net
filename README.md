@@ -27,7 +27,7 @@ let us know. Or contribute to the CheckDigits.Net repository: https://github.com
     * [CUSIP Algorithm](#cusip-algorithm)
     * [Damm Algorithm](#damm-algorithm)
     * [IBAN (International Bank Account Number) Algorithm](#iban-algorithm)
-    * [ICAO 9303 Algorithm] (#icao-9303-algorithm)
+    * [ICAO 9303 Algorithm](#icao-9303-algorithm)
     * [ISAN (International Standard Audiovisual Number) Algorithm](#isan-algorithm)
     * [ISIN (International Securities Identification Number) Algorithm](#isin-algorithm)
     * [ISO 6346 Algorithm](#iso-6346-algorithm)
