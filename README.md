@@ -28,6 +28,7 @@ let us know. Or contribute to the CheckDigits.Net repository: https://github.com
     * [Damm Algorithm](#damm-algorithm)
     * [IBAN (International Bank Account Number) Algorithm](#iban-algorithm)
     * [ICAO 9303 Algorithm](#icao-9303-algorithm)
+    * [ICAO 9303 Document Size TD3 Algorithm](#icao-9303-document-size-td3-algorithm)
     * [ISAN (International Standard Audiovisual Number) Algorithm](#isan-algorithm)
     * [ISIN (International Securities Identification Number) Algorithm](#isin-algorithm)
     * [ISO 6346 Algorithm](#iso-6346-algorithm)
@@ -126,6 +127,7 @@ The ISO/IEC 7064:2003 standard is available at https://www.iso.org/standard/3153
 * [Damm Algorithm](#damm-algorithm)
 * [IBAN (International Bank Account Number) Algorithm](#iban-algorithm)
 * [ICAO 9303 Algorithm](#icao-9303-algorithm)
+* [ICAO 9303 Document Size TD3 Algorithm](#icao-9303-document-size-td3-algorithm)
 * [ISAN (International Standard Audiovisual Number) Algorithm](#isan-algorithm)
 * [ISIN (International Securities Identification Number) Algorithm](#isin-algorithm)
 * [ISO 6346 Algorithm](#iso-6346-algorithm)
@@ -167,6 +169,7 @@ The ISO/IEC 7064:2003 standard is available at https://www.iso.org/standard/3153
 | GTIN-14				| [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
 | IBAN                  | [IBAN Algorithm](#iban-algorithm) |
 | ICAO Machine Readable Travel Document Field | [ICAO 9303 Algorithm](#icao-9303-algorithm) |
+| ICAO Machine Readable Passports and Size TD3 Documents | [ICAO 9303 Document Size TD3 Algorithm](#icao-9303-document-size-td3-algorithm) |
 | IMEI				    | [Luhn Algorithm](#luhn-algorithm) |
 | IMO Number            | [Modulus10_2 Algorithm](#modulus10_2-algorithm) |
 | ISAN                  | [ISAN Algorithm](#isan-algorithm) |
@@ -479,13 +482,51 @@ which supports the validation of fields that are embedded within a larger string
 * Check digit size - one character
 * Check digit value - decimal digit ('0' - '9')
 * Check digit location - assumed to be the trailing (right-most) character when validating
-* Class name - Icao
+* Class name - Icao9303
 
 #### Links
 
 https://en.wikipedia.org/wiki/Machine-readable_passport#Official_travel_documents
 https://www.icao.int/publications/Documents/9303_p3_cons_en.pdf
 
+### ICAO 9303 Document Size TD3 Algorithm
+
+#### Description
+
+The ICAO 9303 (International Civil Aviation Organization) specification for 
+Machine Readable Passports and other Size TD3 travel documents uses multiple
+check digits in the machine readable zone of the document. The second line of the
+machine readable zone contains fields for passport number, date of birth and date
+of expiry with each field having a check digit calculated using the [ICAO 9303 Algorithm](#icao-9303-algorithm).
+In addition, the machine readable zone contains a final composite check digit
+calculated for all three of the above fields and their check digits. The composite
+check digit is also calculated using the [ICAO 9303 Algorithm](#icao-9303-algorithm).
+
+The machine readable zone of a Size TD3 document consists of two lines of 44
+characters. The value passed to the Validate method should contain both lines of
+data concatenated together. You can specify how the two lines are separated in the
+concatenated value by setting the LineSeparator property of the algorithm class.
+The three values are None (no line separator is used and the 45h character of the
+value is the first character of the second line), Crlf (the Windows line separator,
+carriage return followed by line feed) and Lf (the Unix line separator, line feed
+is used). The default LineSeparator is None.
+
+The ICAO 9303 Document Size TD3 Algorithm will validate the check digits of the
+three fields (passport number, date of birth and date of expiry) as well as the
+composite check digit. If any of the check digits fail validation then the 
+Validate method will return ```false```.
+
+#### Details
+
+* Valid characters - decimal digits ('0' - '9'), upper case letters ('A' - 'Z') and a filler character ('<').
+* Check digit size - one character
+* Check digit value - decimal digit ('0' - '9')
+* Check digit location - trailing (right-most) character of individual fields, trailing character of entire string for composite check digit
+* Class name - Icao9303SizeTD3
+
+#### Links
+
+https://www.icao.int/publications/Documents/9303_p4_cons_en.pdf
 
 ### ISAN Algorithm
 
@@ -1455,6 +1496,7 @@ Initial release. Additional included algorithms
 * ISO/IEC 7064 MOD 97-10
 
 ## v1.1.0
+
 Additional included algorithms
 * AlphanumericMod97_10Algorithm
 * IbanAlgorithm
@@ -1476,6 +1518,7 @@ Average performance improvement for .Net 8.0 across all algorithms:
 Detailed benchmark results for .Net 7 vs .Net 8 located at https://github.com/KnowledgeForwardSolutions/CheckDigits.Net/blob/main/Documentation/DotNet7_DotNet8_PerformanceComparision.md
 
 ## v2.1.0
+
 Additional included algorithms
 * CUSIP Algorithm
 * ISO 6346 Algorithm
@@ -1494,5 +1537,7 @@ Support for netstandard2.0
 Thanks to Steff Beckers for this addition
 
 ## v2.3.0
+
 Additional included algorithms
 * ICAO Algorithm
+* ICAO 9303 Document Size TD3 Algorithm
