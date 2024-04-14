@@ -10,10 +10,13 @@ namespace CheckDigits.Net.Tests.Unit.TestData;
 public class BenchmarkData
 {
    private readonly ITestOutputHelper _outputHelper;
-   private readonly List<Int32> _lengths = new() { 3, 6, 9, 12, 15, 18, 21 };
+   private readonly List<Int32> _lengths = [3, 6, 9, 12, 15, 18, 21];
 
+#pragma warning disable IDE0290 // Use primary constructor
    public BenchmarkData(ITestOutputHelper outputHelper) => _outputHelper = outputHelper;
+#pragma warning restore IDE0290 // Use primary constructor
 
+#if !NET48
    [Fact]
    public void BenchmarkData_GenerateNumericData()
    {
@@ -84,6 +87,7 @@ public class BenchmarkData
          _outputHelper.WriteLine($"{root}{rootCheckChar} {full[16..]}{fullCheckChar}");
       }
    }
+#endif
 
    [Fact]
    public void BenchmarkData_NumericAlgorithms()
