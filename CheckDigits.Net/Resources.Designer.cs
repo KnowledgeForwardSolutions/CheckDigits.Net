@@ -196,6 +196,24 @@ namespace CheckDigits.Net {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to IACO 9303 Algorithm for Machine Readable Documents Size TD3.
+        /// </summary>
+        internal static string Icao9303SizeTD3AlgorithmDescription {
+            get {
+                return ResourceManager.GetString("Icao9303SizeTD3AlgorithmDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to IACO 9303 Document Size TD3 .
+        /// </summary>
+        internal static string Icao9303SizeTD3AlgorithmName {
+            get {
+                return ResourceManager.GetString("Icao9303SizeTD3AlgorithmName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Variation of ISO/IEC 7064 MOD 37,36 for ISAN values formatted as human readable strings.
         /// </summary>
         internal static string IsanAlgorithmDescription {
