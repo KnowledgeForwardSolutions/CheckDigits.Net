@@ -29,6 +29,7 @@ namespace CheckDigits.Net.ValueSpecificAlgorithms;
 public sealed class Icao9303Algorithm : IEmbeddedCheckDigitAlgorithm
 {
    private static readonly Int32[] _weights = [7, 3, 1];
+   private static readonly Int32[] _charMap = Icao9303CharacterMap.GetCharacterMap();
 
    /// <inheritdoc/>
    public String AlgorithmDescription => Resources.Icao9303AlgorithmDescription;
@@ -51,19 +52,10 @@ public sealed class Icao9303Algorithm : IEmbeddedCheckDigitAlgorithm
       for (var charIndex = 0; charIndex < value.Length - 1; charIndex++)
       {
          ch = value[charIndex];
-         if (ch >= CharConstants.DigitZero && ch <= CharConstants.DigitNine)
-         {
-            num = ch.ToIntegerDigit();
-         }
-         else if (ch >= CharConstants.UpperCaseA && ch <= CharConstants.UpperCaseZ)
-         {
-            num = ch - CharConstants.UpperCaseA + 10;
-         }
-         else if (ch == CharConstants.LeftAngleBracket)
-         {
-            num = 0;
-         }
-         else
+         num = (ch >= CharConstants.DigitZero && ch <= CharConstants.UpperCaseZ)
+            ? _charMap[ch - CharConstants.DigitZero]
+            : -1;
+         if (num == -1)
          {
             return false;
          }
@@ -94,19 +86,10 @@ public sealed class Icao9303Algorithm : IEmbeddedCheckDigitAlgorithm
       for(var charIndex = start; charIndex < end; charIndex++)
       {
          ch = value[charIndex];
-         if (ch >= CharConstants.DigitZero && ch <= CharConstants.DigitNine)
-         {
-            num = ch.ToIntegerDigit();
-         }
-         else if (ch >= CharConstants.UpperCaseA && ch <= CharConstants.UpperCaseZ)
-         {
-            num = ch - CharConstants.UpperCaseA + 10;
-         }
-         else if (ch == CharConstants.LeftAngleBracket)
-         {
-            num = 0;
-         }
-         else
+         num = (ch >= CharConstants.DigitZero && ch <= CharConstants.UpperCaseZ)
+            ? _charMap[ch - CharConstants.DigitZero]
+            : -1;
+         if (num == -1)
          {
             return false;
          }

@@ -44,6 +44,7 @@ public sealed class Icao9303SizeTD3Algorithm : ICheckDigitAlgorithm
    private static readonly Int32[] _fieldSLengths = [9, 6, 6, 14];
    private const Int32 _numFields = 4;
    private const Int32 _lineLength = 44;
+   private static readonly Int32[] _charMap = Icao9303CharacterMap.GetCharacterMap();
 
    private LineSeparator _lineSeparator = LineSeparator.None;
 
@@ -99,22 +100,14 @@ public sealed class Icao9303SizeTD3Algorithm : ICheckDigitAlgorithm
          for(var charIndex = start; charIndex < end; charIndex++)
          {
             ch = value[charIndex];
-            if (ch >= CharConstants.DigitZero && ch <= CharConstants.DigitNine)
-            {
-               num = ch.ToIntegerDigit();
-            }
-            else if (ch >= CharConstants.UpperCaseA && ch <= CharConstants.UpperCaseZ)
-            {
-               num = ch - CharConstants.UpperCaseA + 10;
-            }
-            else if (ch == CharConstants.LeftAngleBracket)
-            {
-               num = 0;
-            }
-            else
+            num = (ch >= CharConstants.DigitZero && ch <= CharConstants.UpperCaseZ)
+               ? _charMap[ch - CharConstants.DigitZero]
+               : -1;
+            if (num == -1)
             {
                return false;
             }
+
             fieldSum += num * _weights[fieldWeightIndex];
             fieldWeightIndex++;
 
@@ -137,6 +130,7 @@ public sealed class Icao9303SizeTD3Algorithm : ICheckDigitAlgorithm
          {
             return false;
          }
+
          compositeSum += num * _weights[compositeWeightIndex];
          compositeWeightIndex++;
 

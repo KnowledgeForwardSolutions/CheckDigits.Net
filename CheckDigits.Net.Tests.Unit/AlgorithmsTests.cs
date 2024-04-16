@@ -74,17 +74,31 @@ public class AlgorithmsTests
 
    #endregion
 
-   #region Icao Property Tests
+   #region Icao9303 Property Tests
    // ==========================================================================
    // ==========================================================================
 
    [Fact]
-   public void Algorithms_Icao_ShouldNotBeNull()
+   public void Algorithms_Icao9303_ShouldNotBeNull()
       => Algorithms.Icao9303.Should().NotBeNull();
 
    [Fact]
-   public void Algorithms_Icao_ShouldBeExpectedType()
+   public void Algorithms_Icao9303_ShouldBeExpectedType()
       => Algorithms.Icao9303.Should().BeOfType<Icao9303Algorithm>();
+
+   #region Icao9303SizeTD3 Property Tests
+   // ==========================================================================
+   // ==========================================================================
+
+   [Fact]
+   public void Algorithms_Icao9303SizeTD3_ShouldNotBeNull()
+      => Algorithms.Icao9303SizeTD3.Should().NotBeNull();
+
+   [Fact]
+   public void Algorithms_Icao9303SizeTD3_ShouldBeExpectedType()
+      => Algorithms.Icao9303SizeTD3.Should().BeOfType<Icao9303SizeTD3Algorithm>();
+
+   #endregion
 
    #endregion
 

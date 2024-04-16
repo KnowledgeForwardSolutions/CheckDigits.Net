@@ -1,8 +1,8 @@
 ﻿
-BenchmarkRunner.Run<NumericAlgorithmBenchmarks>();
+//BenchmarkRunner.Run<NumericAlgorithmBenchmarks>();
 
-BenchmarkRunner.Run<AlphabeticAlgorithmsBenchmarks>();
+//BenchmarkRunner.Run<AlphabeticAlgorithmsBenchmarks>();
 
-BenchmarkRunner.Run<AlphanumericAlgorithmBenchmarks>();
+//BenchmarkRunner.Run<AlphanumericAlgorithmBenchmarks>();
 
 BenchmarkRunner.Run<ValueSpecificAlgorithmBenchmarks>();
