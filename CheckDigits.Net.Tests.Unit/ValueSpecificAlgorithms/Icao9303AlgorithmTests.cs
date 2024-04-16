@@ -134,8 +134,8 @@ public class Icao9303AlgorithmTests
       => _sut.Validate("1030").Should().BeTrue();
 
    [Theory]
-   [InlineData("74)8122")]             // 7438122 with 3 replaced with character 10 positions before in ASCII table
-   [InlineData("74=8122")]             // 7438122 with 3 replaced with character 10 positions later in ASCII table
+   [InlineData("74)8122")]             // 7408122 with 0 replaced with character 10 positions before in ASCII table
+   [InlineData("74:8122")]             // 7408122 with 0 replaced with character 10 positions later in ASCII table
    [InlineData("`898902C36")]          // L898902C36 with L replaced with character 20 positions later in ASCII table
    public void Icao9303Algorithm_Validate_ShouldReturnFalse_WhenInputContainsInvalidCharacter(String value)
       => _sut.Validate(value).Should().BeFalse();

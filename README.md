@@ -482,7 +482,7 @@ which supports the validation of fields that are embedded within a larger string
 * Check digit size - one character
 * Check digit value - decimal digit ('0' - '9')
 * Check digit location - assumed to be the trailing (right-most) character when validating
-* Class name - Icao9303
+* Class name - Icao9303Algorithm
 
 #### Links
 
@@ -496,11 +496,12 @@ https://www.icao.int/publications/Documents/9303_p3_cons_en.pdf
 The ICAO 9303 (International Civil Aviation Organization) specification for 
 Machine Readable Passports and other Size TD3 travel documents uses multiple
 check digits in the machine readable zone of the document. The second line of the
-machine readable zone contains fields for passport number, date of birth and date
-of expiry with each field having a check digit calculated using the [ICAO 9303 Algorithm](#icao-9303-algorithm).
-In addition, the machine readable zone contains a final composite check digit
-calculated for all three of the above fields and their check digits. The composite
-check digit is also calculated using the [ICAO 9303 Algorithm](#icao-9303-algorithm).
+machine readable zone contains fields for passport number, date of birth, date of
+expiry and an optional personal number field with each field having a check digit 
+calculated using the [ICAO 9303 Algorithm](#icao-9303-algorithm). In addition, 
+the machine readable zone contains a final composite check digit calculated for 
+all four of the above fields and their check digits. The composite check digit 
+is also calculated using the [ICAO 9303 Algorithm](#icao-9303-algorithm).
 
 The machine readable zone of a Size TD3 document consists of two lines of 44
 characters. The value passed to the Validate method should contain both lines of
@@ -512,9 +513,9 @@ carriage return followed by line feed) and Lf (the Unix line separator, line fee
 is used). The default LineSeparator is None.
 
 The ICAO 9303 Document Size TD3 Algorithm will validate the check digits of the
-three fields (passport number, date of birth and date of expiry) as well as the
-composite check digit. If any of the check digits fail validation then the 
-Validate method will return ```false```.
+four fields (passport number, date of birth, date of expiry and optional personal
+number) as well as the composite check digit. If any of the check digits fail 
+validation then the Validate method will return ```false```.
 
 #### Details
 
@@ -522,7 +523,7 @@ Validate method will return ```false```.
 * Check digit size - one character
 * Check digit value - decimal digit ('0' - '9')
 * Check digit location - trailing (right-most) character of individual fields, trailing character of entire string for composite check digit
-* Class name - Icao9303SizeTD3
+* Class name - Icao9303SizeTD3Algorithm
 
 #### Links
 

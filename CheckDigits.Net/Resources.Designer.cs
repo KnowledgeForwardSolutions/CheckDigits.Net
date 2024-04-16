@@ -439,6 +439,15 @@ namespace CheckDigits.Net {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ator enumeration (None, Crlf or Lf).
+        /// </summary>
+        internal static string LineSeparatorInvalidValueMessage {
+            get {
+                return ResourceManager.GetString("LineSeparatorInvalidValueMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Luhn algorithm - modulus 10 algorithm with weight 2 applied to every odd position character.
         /// </summary>
         internal static string LuhnAlgorithmDescription {

@@ -243,6 +243,9 @@
   <data name="Iso7064RadixOutOfRange" xml:space="preserve">
     <value>Radix must be greater than one</value>
   </data>
+  <data name="LineSeparatorInvalidValueMessage" xml:space="preserve">
+    <value>ator enumeration (None, Crlf or Lf)</value>
+  </data>
   <data name="LuhnAlgorithmDescription" xml:space="preserve">
     <value>Luhn algorithm - modulus 10 algorithm with weight 2 applied to every odd position character</value>
   </data>
