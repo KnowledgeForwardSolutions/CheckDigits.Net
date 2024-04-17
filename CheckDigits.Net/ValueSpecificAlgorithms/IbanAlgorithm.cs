@@ -98,7 +98,7 @@ public class IbanAlgorithm : IDoubleCheckDigitAlgorithm
 
       // Per ISO/IEC 7064, two character algorithms perform one final pass with
       // effective character value of zero.
-      sum = (sum * _radix) % _modulus;
+      sum = sum * _radix % _modulus;
 
       var checkSum = _modulus - sum + 1;
       var quotient = checkSum / _radix;
