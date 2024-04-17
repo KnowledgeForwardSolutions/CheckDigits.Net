@@ -28,6 +28,7 @@ let us know. Or contribute to the CheckDigits.Net repository: https://github.com
     * [Damm Algorithm](#damm-algorithm)
     * [IBAN (International Bank Account Number) Algorithm](#iban-algorithm)
     * [ICAO 9303 Algorithm](#icao-9303-algorithm)
+    * [ICAO 9303 Document Size TD3 Algorithm](#icao-9303-document-size-td3-algorithm)
     * [ISAN (International Standard Audiovisual Number) Algorithm](#isan-algorithm)
     * [ISIN (International Securities Identification Number) Algorithm](#isin-algorithm)
     * [ISO 6346 Algorithm](#iso-6346-algorithm)
@@ -126,6 +127,7 @@ The ISO/IEC 7064:2003 standard is available at https://www.iso.org/standard/3153
 * [Damm Algorithm](#damm-algorithm)
 * [IBAN (International Bank Account Number) Algorithm](#iban-algorithm)
 * [ICAO 9303 Algorithm](#icao-9303-algorithm)
+* [ICAO 9303 Document Size TD3 Algorithm](#icao-9303-document-size-td3-algorithm)
 * [ISAN (International Standard Audiovisual Number) Algorithm](#isan-algorithm)
 * [ISIN (International Securities Identification Number) Algorithm](#isin-algorithm)
 * [ISO 6346 Algorithm](#iso-6346-algorithm)
@@ -167,6 +169,7 @@ The ISO/IEC 7064:2003 standard is available at https://www.iso.org/standard/3153
 | GTIN-14				| [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
 | IBAN                  | [IBAN Algorithm](#iban-algorithm) |
 | ICAO Machine Readable Travel Document Field | [ICAO 9303 Algorithm](#icao-9303-algorithm) |
+| ICAO Machine Readable Passports and Size TD3 Documents | [ICAO 9303 Document Size TD3 Algorithm](#icao-9303-document-size-td3-algorithm) |
 | IMEI				    | [Luhn Algorithm](#luhn-algorithm) |
 | IMO Number            | [Modulus10_2 Algorithm](#modulus10_2-algorithm) |
 | ISAN                  | [ISAN Algorithm](#isan-algorithm) |
@@ -479,13 +482,52 @@ which supports the validation of fields that are embedded within a larger string
 * Check digit size - one character
 * Check digit value - decimal digit ('0' - '9')
 * Check digit location - assumed to be the trailing (right-most) character when validating
-* Class name - Icao
+* Class name - Icao9303Algorithm
 
 #### Links
 
 https://en.wikipedia.org/wiki/Machine-readable_passport#Official_travel_documents
 https://www.icao.int/publications/Documents/9303_p3_cons_en.pdf
 
+### ICAO 9303 Document Size TD3 Algorithm
+
+#### Description
+
+The ICAO 9303 (International Civil Aviation Organization) specification for 
+Machine Readable Passports and other Size TD3 travel documents uses multiple
+check digits in the machine readable zone of the document. The second line of the
+machine readable zone contains fields for passport number, date of birth, date of
+expiry and an optional personal number field with each field having a check digit 
+calculated using the [ICAO 9303 Algorithm](#icao-9303-algorithm). In addition, 
+the machine readable zone contains a final composite check digit calculated for 
+all four of the above fields and their check digits. The composite check digit 
+is also calculated using the [ICAO 9303 Algorithm](#icao-9303-algorithm).
+
+The machine readable zone of a Size TD3 document consists of two lines of 44
+characters. The value passed to the Validate method should contain both lines of
+data concatenated together. You can specify how the two lines are separated in the
+concatenated value by setting the LineSeparator property of the algorithm class.
+The three values are None (no line separator is used and the 45h character of the
+value is the first character of the second line), Crlf (the Windows line separator,
+carriage return followed by line feed) and Lf (the Unix line separator, line feed
+is used). The default LineSeparator is None.
+
+The ICAO 9303 Document Size TD3 Algorithm will validate the check digits of the
+four fields (passport number, date of birth, date of expiry and optional personal
+number) as well as the composite check digit. If any of the check digits fail 
+validation then the Validate method will return ```false```.
+
+#### Details
+
+* Valid characters - decimal digits ('0' - '9'), upper case letters ('A' - 'Z') and a filler character ('<').
+* Check digit size - one character
+* Check digit value - decimal digit ('0' - '9')
+* Check digit location - trailing (right-most) character of individual fields, trailing character of entire string for composite check digit
+* Class name - Icao9303SizeTD3Algorithm
+
+#### Links
+
+https://www.icao.int/publications/Documents/9303_p4_cons_en.pdf
 
 ### ISAN Algorithm
 
@@ -1372,21 +1414,25 @@ Note also that the values used for the NOID Check Digit algorithm do not include
 | IBAN                 | GB82WEST12345698765432                 | 34.960 ns | 0.2120 ns | 0.1880 ns |         - |
 | IBAN                 | SC74MCBL01031234567890123456USD        | 51.580 ns | 0.2410 ns | 0.2130 ns |         - |
 |                      |                                        |           |           |           |           |
-| ICAO 9303            | U7Y5                                   |  6.996 ns | 0.0610 ns | 0.0541 ns |         - |
-| ICAO 9303            | U7Y8SX8                                | 10.663 ns | 0.0545 ns | 0.0509 ns |         - |
-| ICAO 9303            | U7Y8SXRC03                             | 16.002 ns | 0.1061 ns | 0.0993 ns |         - |
-| ICAO 9303            | U7Y8SXRC0O3S8                          | 18.605 ns | 0.0770 ns | 0.0682 ns |         - |
-| ICAO 9303            | U7Y8SXRC0O3SC4I2                       | 23.544 ns | 0.1382 ns | 0.1293 ns |         - |
-| ICAO 9303            | U7Y8SXRC0O3SC4IHYQ9                    | 29.321 ns | 0.2113 ns | 0.1873 ns |         - |
-| ICAO 9303            | U7Y8SXRC0O3SC4IHYQF4M8                 | 33.851 ns | 0.2596 ns | 0.2428 ns |         - |
+| ICAO 9303            | U7Y5                                   |  7.365 ns | 0.0740 ns | 0.0656 ns |         - |
+| ICAO 9303            | U7Y8SX8                                | 12.722 ns | 0.1308 ns | 0.1223 ns |         - |
+| ICAO 9303            | U7Y8SXRC03                             | 17.771 ns | 0.1508 ns | 0.1337 ns |         - |
+| ICAO 9303            | U7Y8SXRC0O3S8                          | 23.627 ns | 0.1262 ns | 0.1119 ns |         - |
+| ICAO 9303            | U7Y8SXRC0O3SC4I2                       | 27.348 ns | 0.2444 ns | 0.2286 ns |         - |
+| ICAO 9303            | U7Y8SXRC0O3SC4IHYQ9                    | 32.199 ns | 0.3203 ns | 0.2996 ns |         - |
+| ICAO 9303            | U7Y8SXRC0O3SC4IHYQF4M8                 | 38.621 ns | 0.2301 ns | 0.2040 ns |         - |
 |                      |                                        |           |           |           |           |
-| ICAO 9303 (Embedded) | +U7Y5+                                 |  7.199 ns | 0.0497 ns | 0.0441 ns |         - |
-| ICAO 9303 (Embedded) | +U7Y8SX8+                              | 12.778 ns | 0.1064 ns | 0.0944 ns |         - |
-| ICAO 9303 (Embedded) | +U7Y8SXRC03+                           | 15.471 ns | 0.0803 ns | 0.0712 ns |         - |
-| ICAO 9303 (Embedded) | +U7Y8SXRC0O3S8+                        | 17.047 ns | 0.1505 ns | 0.1334 ns |         - |
-| ICAO 9303 (Embedded) | +U7Y8SXRC0O3SC4I2+                     | 23.139 ns | 0.1597 ns | 0.1494 ns |         - |
-| ICAO 9303 (Embedded) | +U7Y8SXRC0O3SC4IHYQ9+                  | 36.988 ns | 0.2180 ns | 0.1933 ns |         - |
-| ICAO 9303 (Embedded) | +U7Y8SXRC0O3SC4IHYQF4M8+               | 47.173 ns | 0.3891 ns | 0.3640 ns |         - |
+| ICAO 9303 (Embedded) | +U7Y5+                                 |  8.378 ns | 0.1706 ns | 0.1512 ns |         - |
+| ICAO 9303 (Embedded) | +U7Y8SX8+                              | 11.524 ns | 0.0910 ns | 0.0851 ns |         - |
+| ICAO 9303 (Embedded) | +U7Y8SXRC03+                           | 15.362 ns | 0.1807 ns | 0.1690 ns |         - |
+| ICAO 9303 (Embedded) | +U7Y8SXRC0O3S8+                        | 19.151 ns | 0.1239 ns | 0.1159 ns |         - |
+| ICAO 9303 (Embedded) | +U7Y8SXRC0O3SC4I2+                     | 22.352 ns | 0.1835 ns | 0.1716 ns |         - |
+| ICAO 9303 (Embedded) | +U7Y8SXRC0O3SC4IHYQ9+                  | 25.722 ns | 0.1859 ns | 0.1738 ns |         - |
+| ICAO 9303 (Embedded) | +U7Y8SXRC0O3SC4IHYQF4M8+               | 28.536 ns | 0.2508 ns | 0.2224 ns |         - |
+|                      |                                        |           |           |           |           |
+| IACO 9303 Size TD3   | P<UTOERIKSSON<<ANNA<MARIA<<<<<<<<<<<<<<<<<<<<br>L898902C36UTO7408122F1204159ZE184226B<<<<<10 | 95.210 ns | 0.5933 ns | 0.5549 ns |         - |
+| IACO 9303 Size TD3   | P<UTOQWERTY<<ASDF<<<<<<<<<<<<<<<<<<<<<<<<<<<<br>Q123987655UTO3311226F2010201<<<<<<<<<<<<<<06 | 95.839 ns | 1.0970 ns | 1.0261 ns |         - |
+| IACO 9303 Size TD3   | P<UTOSKYWALKER<<LUKE<<<<<<<<<<<<<<<<<<<<<<<<<br>STARWARS45UTO7705256M2405252HAN<SHOT<FIRST78 | 95.098 ns | 0.6734 ns | 0.6299 ns |         - |
 |                      |                                        |           |           |           |           |                                           
 | ISAN                 | C594660A8B2E5D22X6DDA3272E             | 54.400 ns | 0.1940 ns | 0.1810 ns |         - |
 | ISAN                 | D02C42E954183EE2Q1291C8AEO             | 51.210 ns | 0.2820 ns | 0.2640 ns |         - |
@@ -1455,6 +1501,7 @@ Initial release. Additional included algorithms
 * ISO/IEC 7064 MOD 97-10
 
 ## v1.1.0
+
 Additional included algorithms
 * AlphanumericMod97_10Algorithm
 * IbanAlgorithm
@@ -1476,6 +1523,7 @@ Average performance improvement for .Net 8.0 across all algorithms:
 Detailed benchmark results for .Net 7 vs .Net 8 located at https://github.com/KnowledgeForwardSolutions/CheckDigits.Net/blob/main/Documentation/DotNet7_DotNet8_PerformanceComparision.md
 
 ## v2.1.0
+
 Additional included algorithms
 * CUSIP Algorithm
 * ISO 6346 Algorithm
@@ -1494,5 +1542,7 @@ Support for netstandard2.0
 Thanks to Steff Beckers for this addition
 
 ## v2.3.0
+
 Additional included algorithms
 * ICAO Algorithm
+* ICAO 9303 Document Size TD3 Algorithm
