@@ -1422,13 +1422,13 @@ Note also that the values used for the NOID Check Digit algorithm do not include
 | ICAO 9303            | U7Y8SXRC0O3SC4IHYQ9                    | 32.199 ns | 0.3203 ns | 0.2996 ns |         - |
 | ICAO 9303            | U7Y8SXRC0O3SC4IHYQF4M8                 | 38.621 ns | 0.2301 ns | 0.2040 ns |         - |
 |                      |                                        |           |           |           |           |
-| ICAO 9303 (Embedded) | +U7Y5+                                 |  8.334 ns | 0.1706 ns | 0.1512 ns |         - |
-| ICAO 9303 (Embedded) | +U7Y8SX8+                              | 12.468 ns | 0.1040 ns | 0.0973 ns |         - |
-| ICAO 9303 (Embedded) | +U7Y8SXRC03+                           | 15.320 ns | 0.0898 ns | 0.0750 ns |         - |
-| ICAO 9303 (Embedded) | +U7Y8SXRC0O3S8+                        | 19.111 ns | 0.1357 ns | 0.1270 ns |         - |
-| ICAO 9303 (Embedded) | +U7Y8SXRC0O3SC4I2+                     | 22.239 ns | 0.0915 ns | 0.0811 ns |         - |
-| ICAO 9303 (Embedded) | +U7Y8SXRC0O3SC4IHYQ9+                  | 25.685 ns | 0.2428 ns | 0.2271 ns |         - |
-| ICAO 9303 (Embedded) | +U7Y8SXRC0O3SC4IHYQF4M8+               | 29.081 ns | 0.3835 ns | 0.3587 ns |         - |
+| ICAO 9303 (Embedded) | +U7Y5+                                 |  8.378 ns | 0.1706 ns | 0.1512 ns |         - |
+| ICAO 9303 (Embedded) | +U7Y8SX8+                              | 11.524 ns | 0.0910 ns | 0.0851 ns |         - |
+| ICAO 9303 (Embedded) | +U7Y8SXRC03+                           | 15.362 ns | 0.1807 ns | 0.1690 ns |         - |
+| ICAO 9303 (Embedded) | +U7Y8SXRC0O3S8+                        | 19.151 ns | 0.1239 ns | 0.1159 ns |         - |
+| ICAO 9303 (Embedded) | +U7Y8SXRC0O3SC4I2+                     | 22.352 ns | 0.1835 ns | 0.1716 ns |         - |
+| ICAO 9303 (Embedded) | +U7Y8SXRC0O3SC4IHYQ9+                  | 25.722 ns | 0.1859 ns | 0.1738 ns |         - |
+| ICAO 9303 (Embedded) | +U7Y8SXRC0O3SC4IHYQF4M8+               | 28.536 ns | 0.2508 ns | 0.2224 ns |         - |
 |                      |                                        |           |           |           |           |
 | IACO 9303 Size TD3   | P<UTOERIKSSON<<ANNA<MARIA<<<<<<<<<<<<<<<<<<<<br>L898902C36UTO7408122F1204159ZE184226B<<<<<10 | 95.210 ns | 0.5933 ns | 0.5549 ns |         - |
 | IACO 9303 Size TD3   | P<UTOQWERTY<<ASDF<<<<<<<<<<<<<<<<<<<<<<<<<<<<br>Q123987655UTO3311226F2010201<<<<<<<<<<<<<<06 | 95.839 ns | 1.0970 ns | 1.0261 ns |         - |

@@ -91,7 +91,7 @@ public class ValueSpecificAlgorithmBenchmarks
    public static IEnumerable<Object[]> ValidateEmbeddedArguments()
    {
       yield return new Object[] { Algorithms.Icao9303, Algorithms.Icao9303.AlgorithmName, "+U7Y5+", 4 };
-      yield return new Object[] { Algorithms.Icao9303, Algorithms.Icao9303.AlgorithmName, "+U7Y8SX8+", 8 };
+      yield return new Object[] { Algorithms.Icao9303, Algorithms.Icao9303.AlgorithmName, "+U7Y8SX8+", 7 };
       yield return new Object[] { Algorithms.Icao9303, Algorithms.Icao9303.AlgorithmName, "+U7Y8SXRC03+", 10 };
       yield return new Object[] { Algorithms.Icao9303, Algorithms.Icao9303.AlgorithmName, "+U7Y8SXRC0O3S8+", 13 };
       yield return new Object[] { Algorithms.Icao9303, Algorithms.Icao9303.AlgorithmName, "+U7Y8SXRC0O3SC4I2+", 16 };
