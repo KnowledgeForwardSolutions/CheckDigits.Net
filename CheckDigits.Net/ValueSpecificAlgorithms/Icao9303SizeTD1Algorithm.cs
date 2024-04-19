@@ -5,25 +5,17 @@ namespace CheckDigits.Net.ValueSpecificAlgorithms;
 /// <summary>
 ///   Algorithm used to validate the check digits contained in the machine readable
 ///   zone of ICAO (International Civil Aviation Organization) Machine Readable 
-///   Passports and other Size TD3 travel documents.
+///   Travel Document Size TD1.
 /// </summary>
 /// <remarks>
 ///   <para>
 ///   Validates the following fields in the machine readable zone:
 ///   <list type="bullet">
-///      <item>Passport number, line 2, characters 1-9, check digit in character 10</item>
-///      <item>Date of birth, line 2, characters 14-19, check digit in character 20</item>
-///      <item>Date of expiry, line 2, characters 22-27, check digit in character 28</item>
-///      <item>Optional personal number, line 2, characters 29-42, check digit in character 43</item>
+///      <item>Document number, line 1, characters 6-14, check digit in character 15</item>
+///      <item>Date of birth, line 2, characters 1-6, check digit in character 7</item>
+///      <item>Date of expiry, line 2, characters 9-14, check digit in character 15</item>
 ///      <item>Composite check digit for all of the above fields and their check digits</item>
 ///   </list>
-///   </para>
-///   <para>
-///   If the optional personal number field is not used and consists of all 
-///   filler characters ('<') then the check digit for that field will be either
-///   a filler character or a digit zero. The choice to use a filler character
-///   or digit zero is left to the issuing authority and either version is 
-///   supported by the algorithm.
 ///   </para>
 ///   <para>
 ///   Valid characters are decimal digits (0-9), uppercase alphabetic characters 
@@ -37,22 +29,27 @@ namespace CheckDigits.Net.ValueSpecificAlgorithms;
 ///   and has the same weaknesses as that algorithm.
 ///   </para>
 /// </remarks>
-public sealed class Icao9303SizeTD3Algorithm : ICheckDigitAlgorithm
+public sealed class Icao9303SizeTD1Algorithm : ICheckDigitAlgorithm
 {
    private static readonly Int32[] _weights = [7, 3, 1];
-   private static readonly Int32[] _fieldStartPositions = [0, 13, 21, 28];
-   private static readonly Int32[] _fieldSLengths = [9, 6, 6, 14];
-   private const Int32 _numFields = 4;
-   private const Int32 _lineLength = 44;
+   private static readonly FieldDetails[] _fields = [
+      new (0, 5, 9),    // Document number field
+      new (1, 0, 6),    // Date of birth field
+      new (1, 8, 6)];   // Date of expiry field
+   private const Int32 _numFields = 3;
+   private const Int32 _lineLength = 30;
+   private const Int32 _compositeCheckDigitPosition = 59;
    private static readonly Int32[] _charMap = Icao9303CharacterMap.GetCharacterMap();
 
    private LineSeparator _lineSeparator = LineSeparator.None;
+   private Int32 _lineSeparatorLength = 0;
+   private Int32 _expectedLength = _lineLength * 3;
 
    /// <inheritdoc/>
-   public String AlgorithmDescription => Resources.Icao9303SizeTD3AlgorithmDescription;
+   public String AlgorithmDescription => Resources.Icao9303SizeTD1AlgorithmDescription;
 
    /// <inheritdoc/>
-   public String AlgorithmName => Resources.Icao9303SizeTD3AlgorithmName;
+   public String AlgorithmName => Resources.Icao9303SizeTD1AlgorithmName;
 
    /// <summary>
    ///   Specifies the character(s) used to separate lines in the value being
@@ -73,20 +70,15 @@ public sealed class Icao9303SizeTD3Algorithm : ICheckDigitAlgorithm
          }
 
          _lineSeparator = value;
+         _lineSeparatorLength = value.CharacterLength();
+         _expectedLength = (_lineLength * 3) + (_lineSeparatorLength * 2);
       }
    }
 
    /// <inheritdoc/>
    public Boolean Validate(String value)
    {
-      var lineSeparatorLength = LineSeparator switch
-      {
-         LineSeparator.Crlf => 2,
-         LineSeparator.Lf => 1,
-         _ => 0
-      };
-
-      if (String.IsNullOrEmpty(value) || value.Length != (_lineLength * 2) + lineSeparatorLength)
+      if (String.IsNullOrEmpty(value) || value.Length != _expectedLength)
       {
          return false;
       }
@@ -99,9 +91,10 @@ public sealed class Icao9303SizeTD3Algorithm : ICheckDigitAlgorithm
       {
          var fieldSum = 0;
          var fieldWeightIndex = new ModulusInt32(3);
-         var start = _fieldStartPositions[fieldIndex] + _lineLength + lineSeparatorLength;
-         var end = start + _fieldSLengths[fieldIndex];
-         for(var charIndex = start; charIndex < end; charIndex++)
+         var (line, charPos, length) = _fields[fieldIndex];
+         var start = (line * (_lineLength + _lineSeparatorLength)) + charPos;
+         var end = start + length;
+         for (var charIndex = start; charIndex < end; charIndex++)
          {
             ch = value[charIndex];
             num = (ch >= CharConstants.DigitZero && ch <= CharConstants.UpperCaseZ)
@@ -119,34 +112,28 @@ public sealed class Icao9303SizeTD3Algorithm : ICheckDigitAlgorithm
             compositeWeightIndex++;
          }
 
-         // Handle field check digit for composite check digit calculations.
+         // Field check digit.
          ch = value[end];
          if (ch >= CharConstants.DigitZero && ch <= CharConstants.DigitNine)
          {
             num = ch.ToIntegerDigit();
          }
-         else if (fieldIndex == _numFields - 1 && ch == CharConstants.LeftAngleBracket)
-         {
-            // Only allowed for final, optional field
-            num = 0;
-         }
          else
+         {
+            return false;
+         }
+         if (num != fieldSum % 10)
          {
             return false;
          }
 
          compositeSum += num * _weights[compositeWeightIndex];
          compositeWeightIndex++;
-
-         // Test field check digit.
-         if (num != fieldSum % 10)
-         {
-            return false;
-         }
       }
 
       var compositeCheckDigit = compositeSum % 10;
-      
-      return value[^1].ToIntegerDigit() == compositeCheckDigit;
+      return value[_compositeCheckDigitPosition + _lineSeparatorLength].ToIntegerDigit() == compositeCheckDigit;
    }
+
+   private record struct FieldDetails(Int32 Line, Int32 CharPosition, Int32 Length);
 }

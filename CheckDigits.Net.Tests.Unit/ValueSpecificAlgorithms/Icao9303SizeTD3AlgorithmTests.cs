@@ -15,7 +15,11 @@ public class Icao9303SizeTD3AlgorithmTests
 
    private static String GetTestValue(
       LineSeparator lineSeparator = LineSeparator.None,
+      #if !NET48
       String? secondLineValue = null)
+#else
+      String secondLineValue = null)
+      #endif
    {
       var separatorChars = lineSeparator switch
       {
@@ -186,6 +190,7 @@ public class Icao9303SizeTD3AlgorithmTests
 
    public static TheoryData<LineSeparator, String> WeightByCharacterPositionData => new()
    {
+      // Passport number field
       { LineSeparator.None, "1000000007UTO0000000F0000000<<<<<<<<<<<<<<<6" },
       { LineSeparator.None, "0100000003UTO0000000F0000000<<<<<<<<<<<<<<<4" },
       { LineSeparator.None, "0010000001UTO0000000F0000000<<<<<<<<<<<<<<<8" },
@@ -195,18 +200,24 @@ public class Icao9303SizeTD3AlgorithmTests
       { LineSeparator.None, "0000001007UTO0000000F0000000<<<<<<<<<<<<<<<6" },
       { LineSeparator.None, "0000000103UTO0000000F0000000<<<<<<<<<<<<<<<4" },
       { LineSeparator.None, "0000000011UTO0000000F0000000<<<<<<<<<<<<<<<8" },
+
+      // Date of birth field
       { LineSeparator.Crlf, "0000000000UTO1000007F0000000<<<<<<<<<<<<<<<4" },
       { LineSeparator.Crlf, "0000000000UTO0100003F0000000<<<<<<<<<<<<<<<0" },
       { LineSeparator.Crlf, "0000000000UTO0010001F0000000<<<<<<<<<<<<<<<0" },
       { LineSeparator.Crlf, "0000000000UTO0001007F0000000<<<<<<<<<<<<<<<4" },
       { LineSeparator.Crlf, "0000000000UTO0000103F0000000<<<<<<<<<<<<<<<0" },
       { LineSeparator.Crlf, "0000000000UTO0000011F0000000<<<<<<<<<<<<<<<0" },
+
+      // Date of expiry field
       { LineSeparator.Lf, "0000000000UTO0000000F1000007<<<<<<<<<<<<<<<8" },
       { LineSeparator.Lf, "0000000000UTO0000000F0100003<<<<<<<<<<<<<<<0" },
       { LineSeparator.Lf, "0000000000UTO0000000F0010001<<<<<<<<<<<<<<<4" },
       { LineSeparator.Lf, "0000000000UTO0000000F0001007<<<<<<<<<<<<<<<8" },
       { LineSeparator.Lf, "0000000000UTO0000000F0000103<<<<<<<<<<<<<<<0" },
       { LineSeparator.Lf, "0000000000UTO0000000F0000011<<<<<<<<<<<<<<<4" },
+
+      // Optional data field
       { LineSeparator.None, "0000000000UTO0000000F00000001000000000000074" },
       { LineSeparator.None, "0000000000UTO0000000F00000000100000000000036" },
       { LineSeparator.None, "0000000000UTO0000000F00000000010000000000012" },
@@ -239,6 +250,7 @@ public class Icao9303SizeTD3AlgorithmTests
       // Act/assert.
       sut.Validate(value).Should().BeTrue();
    }
+
    public static TheoryData<LineSeparator, String> ValidMrzData => new()
    {
       { LineSeparator.None, _mrzLineSeparatorNone },
@@ -304,11 +316,11 @@ public class Icao9303SizeTD3AlgorithmTests
    }
 
    [Fact]
-   public void Icao9303SizeTD2Algorithm_Validate_ShouldReturnTrue_WhenFieldsAreAllZeros()
+   public void Icao9303SizeTD3Algorithm_Validate_ShouldReturnTrue_WhenFieldsAreAllZeros()
       => _sut.Validate("P<UTOERIKSSON<<ANNA<MARIA<<<<<<<<<<<<<<<<<<<0000000000UTO0000000F0000000<<<<<<<<<<<<<<<0").Should().BeTrue();
 
    [Fact]
-   public void Icao9303SizeTD2Algorithm_Validate_ShouldReturnTrue_WhenFieldsAreAllFillerCharacters()
+   public void Icao9303SizeTD3Algorithm_Validate_ShouldReturnTrue_WhenFieldsAreAllFillerCharacters()
       => _sut.Validate("P<UTOERIKSSON<<ANNA<MARIA<<<<<<<<<<<<<<<<<<<<<<<<<<<<0UTO<<<<<<0F<<<<<<0<<<<<<<<<<<<<<<0").Should().BeTrue();
 
    [Theory]
@@ -333,14 +345,17 @@ public class Icao9303SizeTD3AlgorithmTests
 
    [Theory]
    [InlineData(LineSeparator.None, "L898902C3AUTO7408122F1204159ZE184226B<<<<<10")]    // Document number check digit is invalid character
+   [InlineData(LineSeparator.Crlf, "L898902C3&UTO7408122F1204159ZE184226B<<<<<10")]    // Document number check digit is invalid character
    [InlineData(LineSeparator.Crlf, "L898902C3<UTO7408122F1204159ZE184226B<<<<<10")]    // Document number check digit is invalid character
-   [InlineData(LineSeparator.Lf,   "L898902C3:UTO7408122F1204159ZE184226B<<<<<10")]    // Document number check digit is invalid character
+   [InlineData(LineSeparator.Lf,   "L898902C3[UTO7408122F1204159ZE184226B<<<<<10")]    // Document number check digit is invalid character
    [InlineData(LineSeparator.None, "L898902C36UTO740812AF1204159ZE184226B<<<<<10")]    // Date of birth check digit is invalid character
+   [InlineData(LineSeparator.Crlf, "L898902C36UTO740812&F1204159ZE184226B<<<<<10")]    // Date of birth check digit is invalid character
    [InlineData(LineSeparator.Crlf, "L898902C36UTO740812<F1204159ZE184226B<<<<<10")]    // Date of birth check digit is invalid character
-   [InlineData(LineSeparator.Lf,   "L898902C36UTO740812:F1204159ZE184226B<<<<<10")]    // Date of birth check digit is invalid character
+   [InlineData(LineSeparator.Lf,   "L898902C36UTO740812[F1204159ZE184226B<<<<<10")]    // Date of birth check digit is invalid character
    [InlineData(LineSeparator.None, "L898902C36UTO7408122F120415AZE184226B<<<<<10")]    // Date of expiry check digit is invalid character
+   [InlineData(LineSeparator.Crlf, "L898902C36UTO7408122F120415&ZE184226B<<<<<10")]    // Date of expiry check digit is invalid character
    [InlineData(LineSeparator.Crlf, "L898902C36UTO7408122F120415<ZE184226B<<<<<10")]    // Date of expiry check digit is invalid character
-   [InlineData(LineSeparator.Lf,   "L898902C36UTO7408122F120415:ZE184226B<<<<<10")]    // Date of expiry check digit is invalid character
+   [InlineData(LineSeparator.Lf,   "L898902C36UTO7408122F120415[ZE184226B<<<<<10")]    // Date of expiry check digit is invalid character
    public void Icao9303SizeTD3Algorithm_Validate_ShouldReturnFalse_WhenRequiredFieldCheckDigitContainsNonDigitCharacter(
       LineSeparator lineSeparator,
       String mrzSecondLine)

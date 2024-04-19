@@ -48,5 +48,29 @@ public static partial class TypeExtensions
 
    }  // IsDefined
 
+   /// <summary>
+   ///   Get the number of characters required by the specified 
+   ///   <see cref="LineSeparator"/> <paramref name="value"/>.
+   /// </summary>
+   /// <param name="value">
+   ///   The value whose character length is required.
+   /// </param>
+   /// <returns>
+   ///   The number of characters required by the specified 
+   ///   <paramref name="value"/>.
+   /// </returns>
+   /// <exception cref="ArgumentOutOfRangeException">
+   ///   The <paramref name="value"/> is not a defined member of the 
+   ///   <see cref="LineSeparator"/> enumeration.
+   /// </exception>
+   public static Int32 CharacterLength(this LineSeparator value)
+      => value switch
+      {
+         LineSeparator.None => 0,
+         LineSeparator.Crlf => 2,
+         LineSeparator.Lf => 1,
+         _ => throw new ArgumentOutOfRangeException(nameof(value), value, Resources.LineSeparatorInvalidValueMessage)
+      };
+
 }  // TypeExtensions
 
