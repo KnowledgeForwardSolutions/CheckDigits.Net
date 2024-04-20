@@ -36,6 +36,7 @@ public sealed class Icao9303SizeTD1Algorithm : ICheckDigitAlgorithm
       new (0, 5, 9),    // Document number field
       new (1, 0, 6),    // Date of birth field
       new (1, 8, 6)];   // Date of expiry field
+   private static readonly FieldDetails _extendedDocumentNumber = new (0, 15, 13);
    private const Int32 _numFields = 3;
    private const Int32 _lineLength = 30;
    private const Int32 _compositeCheckDigitPosition = 59;
@@ -112,6 +113,39 @@ public sealed class Icao9303SizeTD1Algorithm : ICheckDigitAlgorithm
             compositeWeightIndex++;
          }
 
+         // Handle possible extended document number field. See
+         // https://www.icao.int/publications/Documents/9303_p5_cons_en.pdf,
+         // note j on page 17 for details.
+         if (fieldIndex == 0 && value[end] == CharConstants.LeftAngleBracket)
+         {
+            (line, charPos, length) = _extendedDocumentNumber;
+            start = (line * (_lineLength + _lineSeparatorLength)) + charPos;
+            end = start + length;
+            for (var charIndex = start; charIndex < end; charIndex++)
+            {
+               ch = value[charIndex];
+               num = (ch >= CharConstants.DigitZero && ch <= CharConstants.UpperCaseZ)
+                  ? _charMap[ch - CharConstants.DigitZero]
+                  : -1;
+               if (num == -1)
+               {
+                  return false;
+               }
+
+               fieldSum += num * _weights[fieldWeightIndex];
+               fieldWeightIndex++;
+
+               compositeSum += num * _weights[compositeWeightIndex];
+               compositeWeightIndex++;
+
+               if (value[charIndex + 2] == CharConstants.LeftAngleBracket)
+               {
+                  end = charIndex + 1;
+                  break;
+               }
+            }
+         }
+
          // Field check digit.
          ch = value[end];
          if (ch >= CharConstants.DigitZero && ch <= CharConstants.DigitNine)
@@ -128,7 +162,7 @@ public sealed class Icao9303SizeTD1Algorithm : ICheckDigitAlgorithm
          }
 
          compositeSum += num * _weights[compositeWeightIndex];
-         compositeWeightIndex++;
+        compositeWeightIndex++;
       }
 
       var compositeCheckDigit = compositeSum % 10;

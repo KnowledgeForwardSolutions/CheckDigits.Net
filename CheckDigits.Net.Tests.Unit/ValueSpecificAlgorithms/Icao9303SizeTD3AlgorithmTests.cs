@@ -80,6 +80,17 @@ public class Icao9303SizeTD3AlgorithmTests
       act.Should().NotThrow();
    }
 
+   [Theory]
+   [MemberData(nameof(LineSeparatorValues))]
+   public void Icao9303TD3Algorithm_LineSeparator_ShouldReturnExpectedValueAfterSetting(LineSeparator lineSeparator)
+   {
+      // Arrange.
+      var sut = new Icao9303SizeTD1Algorithm() { LineSeparator = lineSeparator };
+
+      // Act/assert.
+      sut.LineSeparator.Should().Be(lineSeparator);
+   }
+
    [Fact]
    public void Icao9302TD3Algorithm_LineSeparator_ShouldThrowArgumentOutOfRangeException_ValueIsInvalid()
    {
@@ -112,10 +123,10 @@ public class Icao9303SizeTD3AlgorithmTests
    [Theory]
    [InlineData(LineSeparator.None, "P<UTOERIKSSON<<ANNA<MARIA<<<<<<<<<<<<<<<<<<L898902C36UTO7408122F1204159ZE184226B<<<<<10")]
    [InlineData(LineSeparator.Crlf, "P<UTOERIKSSON<<ANNA<MARIA<<<<<<<<<<<<<<<<<<\r\nL898902C36UTO7408122F1204159ZE184226B<<<<<10")]
-   [InlineData(LineSeparator.Lf, "P<UTOERIKSSON<<ANNA<MARIA<<<<<<<<<<<<<<<<<<\nL898902C36UTO7408122F1204159ZE184226B<<<<<10")]
+   [InlineData(LineSeparator.Lf,   "P<UTOERIKSSON<<ANNA<MARIA<<<<<<<<<<<<<<<<<<\nL898902C36UTO7408122F1204159ZE184226B<<<<<10")]
    [InlineData(LineSeparator.None, "P<UTOERIKSSON<<ANNA<MARIA<<<<<<<<<<<<<<<<<<<<L898902C36UTO7408122F1204159ZE184226B<<<<<10")]
    [InlineData(LineSeparator.Crlf, "P<UTOERIKSSON<<ANNA<MARIA<<<<<<<<<<<<<<<<<<<<\r\nL898902C36UTO7408122F1204159ZE184226B<<<<<10")]
-   [InlineData(LineSeparator.Lf, "P<UTOERIKSSON<<ANNA<MARIA<<<<<<<<<<<<<<<<<<<<\nL898902C36UTO7408122F1204159ZE184226B<<<<<10")]
+   [InlineData(LineSeparator.Lf,   "P<UTOERIKSSON<<ANNA<MARIA<<<<<<<<<<<<<<<<<<<<\nL898902C36UTO7408122F1204159ZE184226B<<<<<10")]
    public void Icao9303SizeTD3Algorithm_Validate_ShouldReturnFalse_WhenValueIsInvalidLength(
       LineSeparator lineSeparator,
       String value)
@@ -130,49 +141,44 @@ public class Icao9303SizeTD3AlgorithmTests
       sut.Validate(value).Should().BeFalse();
    }
 
-   public static TheoryData<LineSeparator, String> FieldCharacterMapData => new()
-   {
-      { LineSeparator.None, "0000000000UTO0000000F0000000<<<<<<<<<<<<<<<0" },
-      { LineSeparator.None, "0010000001UTO0000000F0000000<<<<<<<<<<<<<<<8" },
-      { LineSeparator.None, "0020000002UTO0000000F0000000<<<<<<<<<<<<<<<6" },
-      { LineSeparator.None, "0030000003UTO0000000F0000000<<<<<<<<<<<<<<<4" },
-      { LineSeparator.None, "0040000004UTO0000000F0000000<<<<<<<<<<<<<<<2" },
-      { LineSeparator.None, "0050000005UTO0000000F0000000<<<<<<<<<<<<<<<0" },
-      { LineSeparator.None, "0060000006UTO0000000F0000000<<<<<<<<<<<<<<<8" },
-      { LineSeparator.None, "0070000007UTO0000000F0000000<<<<<<<<<<<<<<<6" },
-      { LineSeparator.None, "0080000008UTO0000000F0000000<<<<<<<<<<<<<<<4" },
-      { LineSeparator.None, "0090000009UTO0000000F0000000<<<<<<<<<<<<<<<2" },
-      { LineSeparator.Crlf, "00A0000000UTO0000000F0000000<<<<<<<<<<<<<<<0" },
-      { LineSeparator.Crlf, "00B0000001UTO0000000F0000000<<<<<<<<<<<<<<<8" },
-      { LineSeparator.Crlf, "00C0000002UTO0000000F0000000<<<<<<<<<<<<<<<6" },
-      { LineSeparator.Crlf, "00D0000003UTO0000000F0000000<<<<<<<<<<<<<<<4" },
-      { LineSeparator.Crlf, "00E0000004UTO0000000F0000000<<<<<<<<<<<<<<<2" },
-      { LineSeparator.Crlf, "00F0000005UTO0000000F0000000<<<<<<<<<<<<<<<0" },
-      { LineSeparator.Crlf, "00G0000006UTO0000000F0000000<<<<<<<<<<<<<<<8" },
-      { LineSeparator.Crlf, "00H0000007UTO0000000F0000000<<<<<<<<<<<<<<<6" },
-      { LineSeparator.Crlf, "00I0000008UTO0000000F0000000<<<<<<<<<<<<<<<4" },
-      { LineSeparator.Crlf, "00J0000009UTO0000000F0000000<<<<<<<<<<<<<<<2" },
-      { LineSeparator.Lf,   "00K0000000UTO0000000F0000000<<<<<<<<<<<<<<<0" },
-      { LineSeparator.Lf,   "00L0000001UTO0000000F0000000<<<<<<<<<<<<<<<8" },
-      { LineSeparator.Lf,   "00M0000002UTO0000000F0000000<<<<<<<<<<<<<<<6" },
-      { LineSeparator.Lf,   "00N0000003UTO0000000F0000000<<<<<<<<<<<<<<<4" },
-      { LineSeparator.Lf,   "00O0000004UTO0000000F0000000<<<<<<<<<<<<<<<2" },
-      { LineSeparator.Lf,   "00P0000005UTO0000000F0000000<<<<<<<<<<<<<<<0" },
-      { LineSeparator.Lf,   "00Q0000006UTO0000000F0000000<<<<<<<<<<<<<<<8" },
-      { LineSeparator.Lf,   "00R0000007UTO0000000F0000000<<<<<<<<<<<<<<<6" },
-      { LineSeparator.Lf,   "00S0000008UTO0000000F0000000<<<<<<<<<<<<<<<4" },
-      { LineSeparator.Lf,   "00T0000009UTO0000000F0000000<<<<<<<<<<<<<<<2" },
-      { LineSeparator.None, "00U0000000UTO0000000F0000000<<<<<<<<<<<<<<<0" },
-      { LineSeparator.None, "00V0000001UTO0000000F0000000<<<<<<<<<<<<<<<8" },
-      { LineSeparator.None, "00W0000002UTO0000000F0000000<<<<<<<<<<<<<<<6" },
-      { LineSeparator.None, "00X0000003UTO0000000F0000000<<<<<<<<<<<<<<<4" },
-      { LineSeparator.None, "00Y0000004UTO0000000F0000000<<<<<<<<<<<<<<<2" },
-      { LineSeparator.None, "00Z0000005UTO0000000F0000000<<<<<<<<<<<<<<<0" },
-      { LineSeparator.None, "00<0000000UTO0000000F0000000<<<<<<<<<<<<<<<0" },
-   };
-
    [Theory]
-   [MemberData(nameof(FieldCharacterMapData))]
+   [InlineData(LineSeparator.None, "0000000000UTO0000000F0000000<<<<<<<<<<<<<<<0")]
+   [InlineData(LineSeparator.None, "0010000001UTO0000000F0000000<<<<<<<<<<<<<<<8")]
+   [InlineData(LineSeparator.None, "0020000002UTO0000000F0000000<<<<<<<<<<<<<<<6")]
+   [InlineData(LineSeparator.None, "0030000003UTO0000000F0000000<<<<<<<<<<<<<<<4")]
+   [InlineData(LineSeparator.None, "0040000004UTO0000000F0000000<<<<<<<<<<<<<<<2")]
+   [InlineData(LineSeparator.None, "0050000005UTO0000000F0000000<<<<<<<<<<<<<<<0")]
+   [InlineData(LineSeparator.None, "0060000006UTO0000000F0000000<<<<<<<<<<<<<<<8")]
+   [InlineData(LineSeparator.None, "0070000007UTO0000000F0000000<<<<<<<<<<<<<<<6")]
+   [InlineData(LineSeparator.None, "0080000008UTO0000000F0000000<<<<<<<<<<<<<<<4")]
+   [InlineData(LineSeparator.None, "0090000009UTO0000000F0000000<<<<<<<<<<<<<<<2")]
+   [InlineData(LineSeparator.Crlf, "00A0000000UTO0000000F0000000<<<<<<<<<<<<<<<0")]
+   [InlineData(LineSeparator.Crlf, "00B0000001UTO0000000F0000000<<<<<<<<<<<<<<<8")]
+   [InlineData(LineSeparator.Crlf, "00C0000002UTO0000000F0000000<<<<<<<<<<<<<<<6")]
+   [InlineData(LineSeparator.Crlf, "00D0000003UTO0000000F0000000<<<<<<<<<<<<<<<4")]
+   [InlineData(LineSeparator.Crlf, "00E0000004UTO0000000F0000000<<<<<<<<<<<<<<<2")]
+   [InlineData(LineSeparator.Crlf, "00F0000005UTO0000000F0000000<<<<<<<<<<<<<<<0")]
+   [InlineData(LineSeparator.Crlf, "00G0000006UTO0000000F0000000<<<<<<<<<<<<<<<8")]
+   [InlineData(LineSeparator.Crlf, "00H0000007UTO0000000F0000000<<<<<<<<<<<<<<<6")]
+   [InlineData(LineSeparator.Crlf, "00I0000008UTO0000000F0000000<<<<<<<<<<<<<<<4")]
+   [InlineData(LineSeparator.Crlf, "00J0000009UTO0000000F0000000<<<<<<<<<<<<<<<2")]
+   [InlineData(LineSeparator.Lf,   "00K0000000UTO0000000F0000000<<<<<<<<<<<<<<<0")]
+   [InlineData(LineSeparator.Lf,   "00L0000001UTO0000000F0000000<<<<<<<<<<<<<<<8")]
+   [InlineData(LineSeparator.Lf,   "00M0000002UTO0000000F0000000<<<<<<<<<<<<<<<6")]
+   [InlineData(LineSeparator.Lf,   "00N0000003UTO0000000F0000000<<<<<<<<<<<<<<<4")]
+   [InlineData(LineSeparator.Lf,   "00O0000004UTO0000000F0000000<<<<<<<<<<<<<<<2")]
+   [InlineData(LineSeparator.Lf,   "00P0000005UTO0000000F0000000<<<<<<<<<<<<<<<0")]
+   [InlineData(LineSeparator.Lf,   "00Q0000006UTO0000000F0000000<<<<<<<<<<<<<<<8")]
+   [InlineData(LineSeparator.Lf,   "00R0000007UTO0000000F0000000<<<<<<<<<<<<<<<6")]
+   [InlineData(LineSeparator.Lf,   "00S0000008UTO0000000F0000000<<<<<<<<<<<<<<<4")]
+   [InlineData(LineSeparator.Lf,   "00T0000009UTO0000000F0000000<<<<<<<<<<<<<<<2")]
+   [InlineData(LineSeparator.None, "00U0000000UTO0000000F0000000<<<<<<<<<<<<<<<0")]
+   [InlineData(LineSeparator.None, "00V0000001UTO0000000F0000000<<<<<<<<<<<<<<<8")]
+   [InlineData(LineSeparator.None, "00W0000002UTO0000000F0000000<<<<<<<<<<<<<<<6")]
+   [InlineData(LineSeparator.None, "00X0000003UTO0000000F0000000<<<<<<<<<<<<<<<4")]
+   [InlineData(LineSeparator.None, "00Y0000004UTO0000000F0000000<<<<<<<<<<<<<<<2")]
+   [InlineData(LineSeparator.None, "00Z0000005UTO0000000F0000000<<<<<<<<<<<<<<<0")]
+   [InlineData(LineSeparator.None, "00<0000000UTO0000000F0000000<<<<<<<<<<<<<<<0")]
    public void Icao9303SizeTD3Algorithm_Validate_ShouldCorrectlyMapFieldCharacterValues(
       LineSeparator lineSeparator,
       String mrzSecondLine)
@@ -188,54 +194,46 @@ public class Icao9303SizeTD3AlgorithmTests
       sut.Validate(value).Should().BeTrue();
    }
 
-   public static TheoryData<LineSeparator, String> WeightByCharacterPositionData => new()
-   {
-      // Passport number field
-      { LineSeparator.None, "1000000007UTO0000000F0000000<<<<<<<<<<<<<<<6" },
-      { LineSeparator.None, "0100000003UTO0000000F0000000<<<<<<<<<<<<<<<4" },
-      { LineSeparator.None, "0010000001UTO0000000F0000000<<<<<<<<<<<<<<<8" },
-      { LineSeparator.None, "0001000007UTO0000000F0000000<<<<<<<<<<<<<<<6" },
-      { LineSeparator.None, "0000100003UTO0000000F0000000<<<<<<<<<<<<<<<4" },
-      { LineSeparator.None, "0000010001UTO0000000F0000000<<<<<<<<<<<<<<<8" },
-      { LineSeparator.None, "0000001007UTO0000000F0000000<<<<<<<<<<<<<<<6" },
-      { LineSeparator.None, "0000000103UTO0000000F0000000<<<<<<<<<<<<<<<4" },
-      { LineSeparator.None, "0000000011UTO0000000F0000000<<<<<<<<<<<<<<<8" },
-
-      // Date of birth field
-      { LineSeparator.Crlf, "0000000000UTO1000007F0000000<<<<<<<<<<<<<<<4" },
-      { LineSeparator.Crlf, "0000000000UTO0100003F0000000<<<<<<<<<<<<<<<0" },
-      { LineSeparator.Crlf, "0000000000UTO0010001F0000000<<<<<<<<<<<<<<<0" },
-      { LineSeparator.Crlf, "0000000000UTO0001007F0000000<<<<<<<<<<<<<<<4" },
-      { LineSeparator.Crlf, "0000000000UTO0000103F0000000<<<<<<<<<<<<<<<0" },
-      { LineSeparator.Crlf, "0000000000UTO0000011F0000000<<<<<<<<<<<<<<<0" },
-
-      // Date of expiry field
-      { LineSeparator.Lf, "0000000000UTO0000000F1000007<<<<<<<<<<<<<<<8" },
-      { LineSeparator.Lf, "0000000000UTO0000000F0100003<<<<<<<<<<<<<<<0" },
-      { LineSeparator.Lf, "0000000000UTO0000000F0010001<<<<<<<<<<<<<<<4" },
-      { LineSeparator.Lf, "0000000000UTO0000000F0001007<<<<<<<<<<<<<<<8" },
-      { LineSeparator.Lf, "0000000000UTO0000000F0000103<<<<<<<<<<<<<<<0" },
-      { LineSeparator.Lf, "0000000000UTO0000000F0000011<<<<<<<<<<<<<<<4" },
-
-      // Optional data field
-      { LineSeparator.None, "0000000000UTO0000000F00000001000000000000074" },
-      { LineSeparator.None, "0000000000UTO0000000F00000000100000000000036" },
-      { LineSeparator.None, "0000000000UTO0000000F00000000010000000000012" },
-      { LineSeparator.None, "0000000000UTO0000000F00000000001000000000074" },
-      { LineSeparator.None, "0000000000UTO0000000F00000000000100000000036" },
-      { LineSeparator.None, "0000000000UTO0000000F00000000000010000000012" },
-      { LineSeparator.None, "0000000000UTO0000000F00000000000001000000074" },
-      { LineSeparator.None, "0000000000UTO0000000F00000000000000100000036" },
-      { LineSeparator.None, "0000000000UTO0000000F00000000000000010000012" },
-      { LineSeparator.None, "0000000000UTO0000000F00000000000000001000074" },
-      { LineSeparator.None, "0000000000UTO0000000F00000000000000000100036" },
-      { LineSeparator.None, "0000000000UTO0000000F00000000000000000010012" },
-      { LineSeparator.None, "0000000000UTO0000000F00000000000000000001074" },
-      { LineSeparator.None, "0000000000UTO0000000F00000000000000000000136" },
-   };
-
    [Theory]
-   [MemberData(nameof(WeightByCharacterPositionData))]
+   // Passport number field
+   [InlineData(LineSeparator.None, "1000000007UTO0000000F0000000<<<<<<<<<<<<<<<6")]
+   [InlineData(LineSeparator.None, "0100000003UTO0000000F0000000<<<<<<<<<<<<<<<4")]
+   [InlineData(LineSeparator.None, "0010000001UTO0000000F0000000<<<<<<<<<<<<<<<8")]
+   [InlineData(LineSeparator.None, "0001000007UTO0000000F0000000<<<<<<<<<<<<<<<6")]
+   [InlineData(LineSeparator.None, "0000100003UTO0000000F0000000<<<<<<<<<<<<<<<4")]
+   [InlineData(LineSeparator.None, "0000010001UTO0000000F0000000<<<<<<<<<<<<<<<8")]
+   [InlineData(LineSeparator.None, "0000001007UTO0000000F0000000<<<<<<<<<<<<<<<6")]
+   [InlineData(LineSeparator.None, "0000000103UTO0000000F0000000<<<<<<<<<<<<<<<4")]
+   [InlineData(LineSeparator.None, "0000000011UTO0000000F0000000<<<<<<<<<<<<<<<8")]
+   // Date of birth field
+   [InlineData(LineSeparator.Crlf, "0000000000UTO1000007F0000000<<<<<<<<<<<<<<<4")]
+   [InlineData(LineSeparator.Crlf, "0000000000UTO0100003F0000000<<<<<<<<<<<<<<<0")]
+   [InlineData(LineSeparator.Crlf, "0000000000UTO0010001F0000000<<<<<<<<<<<<<<<0")]
+   [InlineData(LineSeparator.Crlf, "0000000000UTO0001007F0000000<<<<<<<<<<<<<<<4")]
+   [InlineData(LineSeparator.Crlf, "0000000000UTO0000103F0000000<<<<<<<<<<<<<<<0")]
+   [InlineData(LineSeparator.Crlf, "0000000000UTO0000011F0000000<<<<<<<<<<<<<<<0")]
+   // Date of expiry field
+   [InlineData(LineSeparator.Lf, "0000000000UTO0000000F1000007<<<<<<<<<<<<<<<8")]
+   [InlineData(LineSeparator.Lf, "0000000000UTO0000000F0100003<<<<<<<<<<<<<<<0")]
+   [InlineData(LineSeparator.Lf, "0000000000UTO0000000F0010001<<<<<<<<<<<<<<<4")]
+   [InlineData(LineSeparator.Lf, "0000000000UTO0000000F0001007<<<<<<<<<<<<<<<8")]
+   [InlineData(LineSeparator.Lf, "0000000000UTO0000000F0000103<<<<<<<<<<<<<<<0")]
+   [InlineData(LineSeparator.Lf, "0000000000UTO0000000F0000011<<<<<<<<<<<<<<<4")]
+   // Optional data field
+   [InlineData(LineSeparator.None, "0000000000UTO0000000F00000001000000000000074")]
+   [InlineData(LineSeparator.None, "0000000000UTO0000000F00000000100000000000036")]
+   [InlineData(LineSeparator.None, "0000000000UTO0000000F00000000010000000000012")]
+   [InlineData(LineSeparator.None, "0000000000UTO0000000F00000000001000000000074")]
+   [InlineData(LineSeparator.None, "0000000000UTO0000000F00000000000100000000036")]
+   [InlineData(LineSeparator.None, "0000000000UTO0000000F00000000000010000000012")]
+   [InlineData(LineSeparator.None, "0000000000UTO0000000F00000000000001000000074")]
+   [InlineData(LineSeparator.None, "0000000000UTO0000000F00000000000000100000036")]
+   [InlineData(LineSeparator.None, "0000000000UTO0000000F00000000000000010000012")]
+   [InlineData(LineSeparator.None, "0000000000UTO0000000F00000000000000001000074")]
+   [InlineData(LineSeparator.None, "0000000000UTO0000000F00000000000000000100036")]
+   [InlineData(LineSeparator.None, "0000000000UTO0000000F00000000000000000010012")]
+   [InlineData(LineSeparator.None, "0000000000UTO0000000F00000000000000000001074")]
+   [InlineData(LineSeparator.None, "0000000000UTO0000000F00000000000000000000136")]
    public void Icao9303SizeTD3Algorithm_Validate_ShouldCorrectlyWeightByCharacterPosition(
       LineSeparator lineSeparator,
       String mrzSecondLine)
