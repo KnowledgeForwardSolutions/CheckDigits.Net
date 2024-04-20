@@ -497,22 +497,21 @@ https://www.icao.int/publications/Documents/9303_p3_cons_en.pdf
 The ICAO 9303 (International Civil Aviation Organization) specification for 
 Machine Readable Travel Documents Size TD1 uses multiple check digits in the 
 machine readable zone of the document. The first line of the machine readable 
-zone contains a field for the document number and associated check digit. The
-second line of the machine readable zone contains fields for date of birth, date
-of expiry and associated check digits for each field. The second line also
-contains a composite check digit for the document number, date of birth and date
-of expiry fields and their check digits. The individual field check digits and
-the composite check digit are all calculated using the 
-[ICAO 9303 Algorithm](#icao-9303-algorithm).
+zone contains a field for the document number (including a possible extended
+document number) and associated check digit. The second line of the machine 
+readable zone contains fields for date of birth, date of expiry and associated 
+check digits for each field. The individual field check digits and the composite
+check digit are all calculated using the[ICAO 9303 Algorithm](#icao-9303-algorithm).
 
 The machine readable zone of a Size TD1 document consists of three lines of 30
 characters. The value passed to the Validate method should contain all lines of
 data concatenated together. You can specify how the lines are separated in the
 concatenated value by setting the LineSeparator property of the algorithm class.
-The three values are None (no line separator is used and the 45h character of the
+The three values are None (no line separator is used and the 31st character of the
 value is the first character of the second line), Crlf (the Windows line separator,
-carriage return followed by line feed) and Lf (the Unix line separator, line feed
-is used). The default LineSeparator is None.
+i.e. a carriage return character followed by a line feed character - '\r\n') and 
+Lf (the Unix line separator, i.e a line feed character - '\n').The default 
+LineSeparator is None.
 
 The ICAO 9303 Document Size TD1 Algorithm will validate the check digits of the
 three fields (document number, date of birth and date of expiry) as well as the 
@@ -547,12 +546,13 @@ is also calculated using the [ICAO 9303 Algorithm](#icao-9303-algorithm).
 
 The machine readable zone of a Size TD3 document consists of two lines of 44
 characters. The value passed to the Validate method should contain both lines of
-data concatenated together. You can specify how the two lines are separated in the
+data concatenated together. You can specify how the lines are separated in the
 concatenated value by setting the LineSeparator property of the algorithm class.
-The three values are None (no line separator is used and the 45h character of the
+The three values are None (no line separator is used and the 45th character of the
 value is the first character of the second line), Crlf (the Windows line separator,
-carriage return followed by line feed) and Lf (the Unix line separator, line feed
-is used). The default LineSeparator is None.
+i.e. a carriage return character followed by a line feed character - '\r\n') and 
+Lf (the Unix line separator, i.e a line feed character - '\n').The default 
+LineSeparator is None.
 
 The ICAO 9303 Document Size TD3 Algorithm will validate the check digits of the
 four fields (passport number, date of birth, date of expiry and optional personal
@@ -1472,9 +1472,13 @@ Note also that the values used for the NOID Check Digit algorithm do not include
 | ICAO 9303 (Embedded) | +U7Y8SXRC0O3SC4IHYQ9+                  | 25.722 ns | 0.1859 ns | 0.1738 ns |         - |
 | ICAO 9303 (Embedded) | +U7Y8SXRC0O3SC4IHYQF4M8+               | 28.536 ns | 0.2508 ns | 0.2224 ns |         - |
 |                      |                                        |           |           |           |           |
-| IACO 9303 Size TD3   | P<UTOERIKSSON<<ANNA<MARIA<<<<<<<<<<<<<<<<<<<<br>L898902C36UTO7408122F1204159ZE184226B<<<<<10 | 95.210 ns | 0.5933 ns | 0.5549 ns |         - |
-| IACO 9303 Size TD3   | P<UTOQWERTY<<ASDF<<<<<<<<<<<<<<<<<<<<<<<<<<<<br>Q123987655UTO3311226F2010201<<<<<<<<<<<<<<06 | 95.839 ns | 1.0970 ns | 1.0261 ns |         - |
-| IACO 9303 Size TD3   | P<UTOSKYWALKER<<LUKE<<<<<<<<<<<<<<<<<<<<<<<<<br>STARWARS45UTO7705256M2405252HAN<SHOT<FIRST78 | 95.098 ns | 0.6734 ns | 0.6299 ns |         - |
+| ICAO 9303 Size TD1   | I<UTOD231458907<<<<<<<<<<<<<<<<br>7408122F1204159UTO<<<<<<<<<<<6<br>ERIKSSON<<ANNA<MARIA<<<<<<<<<< |  82.20 ns | 0.255 ns | 0.213 ns |         - |
+| ICAO 9303 Size TD1   | I<UTOSTARWARS45<<<<<<<<<<<<<<<<br>7705256F2405252UTO<<<<<<<<<<<4<br>SKYWALKER<<LUKE<<<<<<<<<<<<<<< |  78.57 ns | 0.513 ns | 0.479 ns |         - |
+| ICAO 9303 Size TD1   | I<UTOD23145890<AB112234566<<<<<br>7408122F1204159UTO<<<<<<<<<<<4<br>ERIKSSON<<ANNA<MARIA<<<<<<<<<< | 105.01 ns | 1.277 ns | 1.194 ns |         - |
+|                      |                                        |           |           |           |           |
+| ICAO 9303 Size TD3   | P<UTOERIKSSON<<ANNA<MARIA<<<<<<<<<<<<<<<<<<<<br>L898902C36UTO7408122F1204159ZE184226B<<<<<10 | 95.210 ns | 0.5933 ns | 0.5549 ns |         - |
+| ICAO 9303 Size TD3   | P<UTOQWERTY<<ASDF<<<<<<<<<<<<<<<<<<<<<<<<<<<<br>Q123987655UTO3311226F2010201<<<<<<<<<<<<<<06 | 95.839 ns | 1.0970 ns | 1.0261 ns |         - |
+| ICAO 9303 Size TD3   | P<UTOSKYWALKER<<LUKE<<<<<<<<<<<<<<<<<<<<<<<<<br>STARWARS45UTO7705256M2405252HAN<SHOT<FIRST78 | 95.098 ns | 0.6734 ns | 0.6299 ns |         - |
 |                      |                                        |           |           |           |           |                                           
 | ISAN                 | C594660A8B2E5D22X6DDA3272E             | 54.400 ns | 0.1940 ns | 0.1810 ns |         - |
 | ISAN                 | D02C42E954183EE2Q1291C8AEO             | 51.210 ns | 0.2820 ns | 0.2640 ns |         - |
