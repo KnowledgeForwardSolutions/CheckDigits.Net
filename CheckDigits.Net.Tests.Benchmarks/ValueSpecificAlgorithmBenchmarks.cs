@@ -2,12 +2,10 @@
 #pragma warning disable IDE0059 // Unnecessary assignment of a value
 #pragma warning disable IDE0060 // Remove unused parameter if it is not part of shipped public API
 
-using CheckDigits.Net.ValueSpecificAlgorithms;
-
 namespace CheckDigits.Net.Tests.Benchmarks;
 
-//[SimpleJob(RuntimeMoniker.Net70, baseline: true)]
-//[SimpleJob(RuntimeMoniker.Net80)]
+//[SimpleJob(RuntimeMoniker.Net48)]
+//[SimpleJob(RuntimeMoniker.Net80, baseline: true)]
 [MemoryDiagnoser]
 public class ValueSpecificAlgorithmBenchmarks
 {
