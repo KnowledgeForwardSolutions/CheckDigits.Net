@@ -196,6 +196,24 @@ namespace CheckDigits.Net {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to IACO 9303 Algorithm for Machine Readable Documents Size TD1.
+        /// </summary>
+        internal static string Icao9303SizeTD1AlgorithmDescription {
+            get {
+                return ResourceManager.GetString("Icao9303SizeTD1AlgorithmDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to IACO 9303 Document Size TD1.
+        /// </summary>
+        internal static string Icao9303SizeTD1AlgorithmName {
+            get {
+                return ResourceManager.GetString("Icao9303SizeTD1AlgorithmName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to IACO 9303 Algorithm for Machine Readable Documents Size TD3.
         /// </summary>
         internal static string Icao9303SizeTD3AlgorithmDescription {

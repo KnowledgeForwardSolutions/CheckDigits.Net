@@ -2,12 +2,10 @@
 #pragma warning disable IDE0059 // Unnecessary assignment of a value
 #pragma warning disable IDE0060 // Remove unused parameter if it is not part of shipped public API
 
-using CheckDigits.Net.ValueSpecificAlgorithms;
-
 namespace CheckDigits.Net.Tests.Benchmarks;
 
-//[SimpleJob(RuntimeMoniker.Net70, baseline: true)]
-//[SimpleJob(RuntimeMoniker.Net80)]
+//[SimpleJob(RuntimeMoniker.Net48)]
+//[SimpleJob(RuntimeMoniker.Net80, baseline: true)]
 [MemoryDiagnoser]
 public class ValueSpecificAlgorithmBenchmarks
 {
@@ -54,6 +52,10 @@ public class ValueSpecificAlgorithmBenchmarks
       yield return new Object[] { Algorithms.Icao9303, Algorithms.Icao9303.AlgorithmName, "U7Y8SXRC0O3SC4I2" };
       yield return new Object[] { Algorithms.Icao9303, Algorithms.Icao9303.AlgorithmName, "U7Y8SXRC0O3SC4IHYQ9" };
       yield return new Object[] { Algorithms.Icao9303, Algorithms.Icao9303.AlgorithmName, "U7Y8SXRC0O3SC4IHYQF4M8" };
+
+      yield return new Object[] { Algorithms.Icao9303SizeTD1, Algorithms.Icao9303SizeTD1.AlgorithmName, "I<UTOD231458907<<<<<<<<<<<<<<<7408122F1204159UTO<<<<<<<<<<<6ERIKSSON<<ANNA<MARIA<<<<<<<<A<" };
+      yield return new Object[] { Algorithms.Icao9303SizeTD1, Algorithms.Icao9303SizeTD1.AlgorithmName, "I<UTOD23145890<AB112234566<<<<7408122F1204159UTO<<<<<<<<<<<4ERIKSSON<<ANNA<MARIA<<<<<<<<B<" };
+      yield return new Object[] { Algorithms.Icao9303SizeTD1, Algorithms.Icao9303SizeTD1.AlgorithmName, "I<UTOSTARWARS45<<<<<<<<<<<<<<<7705256F2405252UTO<<<<<<<<<<<4SKYWALKER<<LUKE<<<<<<<<<<<<<C<" };
 
       yield return new Object[] { Algorithms.Icao9303SizeTD3, Algorithms.Icao9303SizeTD3.AlgorithmName, "P<UTOERIKSSON<<ANNA<MARIA<<<<<<<<<<<<<<<<<<<L898902C36UTO7408122F1204159ZE184226B<<<<<10" };
       yield return new Object[] { Algorithms.Icao9303SizeTD3, Algorithms.Icao9303SizeTD3.AlgorithmName, "P<UTOQWERTY<<ASDF<<<<<<<<<<<<<<<<<<<<<<<<<<<Q123987655UTO3311226F2010201<<<<<<<<<<<<<<06" };

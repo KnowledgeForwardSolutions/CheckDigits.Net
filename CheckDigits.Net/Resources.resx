@@ -162,6 +162,12 @@
   <data name="Icao9303AlgorithmName" xml:space="preserve">
     <value>Icao9303</value>
   </data>
+  <data name="Icao9303SizeTD1AlgorithmDescription" xml:space="preserve">
+    <value>IACO 9303 Algorithm for Machine Readable Documents Size TD1</value>
+  </data>
+  <data name="Icao9303SizeTD1AlgorithmName" xml:space="preserve">
+    <value>IACO 9303 Document Size TD1</value>
+  </data>
   <data name="Icao9303SizeTD3AlgorithmDescription" xml:space="preserve">
     <value>IACO 9303 Algorithm for Machine Readable Documents Size TD3</value>
   </data>

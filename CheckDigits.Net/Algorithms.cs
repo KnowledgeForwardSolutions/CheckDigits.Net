@@ -26,6 +26,9 @@ public static class Algorithms
    private static readonly Lazy<ICheckDigitAlgorithm> _icao9303 =
      new(() => new Icao9303Algorithm());
 
+   private static readonly Lazy<ICheckDigitAlgorithm> _icao9303SizeTD1 =
+     new(() => new Icao9303SizeTD1Algorithm());
+
    private static readonly Lazy<ICheckDigitAlgorithm> _icao9303SizeTD3 =
      new(() => new Icao9303SizeTD3Algorithm());
 
@@ -129,7 +132,13 @@ public static class Algorithms
 
    /// <summary>
    ///   International Civil Aviation Organization 9303 algorithm for Machine
-   ///   Readable Documents Size TD3 (Machine Readable Passports).
+   ///   Readable Travel Documents Size TD1.
+   /// </summary>
+   public static ICheckDigitAlgorithm Icao9303SizeTD1 => _icao9303SizeTD1.Value;
+
+   /// <summary>
+   ///   International Civil Aviation Organization 9303 algorithm for Machine
+   ///   Readable Travel Documents Size TD3 (Machine Readable Passports).
    /// </summary>
    public static ICheckDigitAlgorithm Icao9303SizeTD3 => _icao9303SizeTD3.Value;
 
