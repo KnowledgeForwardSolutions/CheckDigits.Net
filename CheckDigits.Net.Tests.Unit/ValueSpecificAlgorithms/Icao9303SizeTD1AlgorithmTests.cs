@@ -2,7 +2,6 @@
 
 namespace CheckDigits.Net.Tests.Unit.ValueSpecificAlgorithms;
 
-#pragma warning disable CA2211 // Non-constant fields should not be visible
 public class Icao9303SizeTD1AlgorithmTests
 {
    private readonly Icao9303SizeTD1Algorithm _sut = new();

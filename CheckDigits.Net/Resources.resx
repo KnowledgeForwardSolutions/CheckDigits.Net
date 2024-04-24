@@ -168,7 +168,7 @@
   <data name="Icao9303SizeTD1AlgorithmName" xml:space="preserve">
     <value>IACO 9303 Document Size TD1</value>
   </data>
-  <data name="Icao9303SizeTD2AlgorithmDescription2" xml:space="preserve">
+  <data name="Icao9303SizeTD2AlgorithmDescription" xml:space="preserve">
     <value>IACO 9303 Algorithm for Machine Readable Documents Size TD2</value>
   </data>
   <data name="Icao9303SizeTD2AlgorithmName" xml:space="preserve">

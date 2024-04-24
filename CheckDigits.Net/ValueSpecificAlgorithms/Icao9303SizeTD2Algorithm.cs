@@ -5,16 +5,16 @@ namespace CheckDigits.Net.ValueSpecificAlgorithms;
 /// <summary>
 ///   Algorithm used to validate the check digits contained in the machine readable
 ///   zone of ICAO (International Civil Aviation Organization) Machine Readable 
-///   Travel Document Size TD1.
+///   Travel Document Size TD2.
 /// </summary>
 /// <remarks>
 ///   <para>
 ///   Validates the following fields in the machine readable zone:
 ///   <list type="bullet">
-///      <item>Document number, line 1, characters 6-14, check digit in character 15</item>
-///      <item>Optional document number extension, line 1, characters 16-28, check digit in final non-filler character</item>
-///      <item>Date of birth, line 2, characters 1-6, check digit in character 7</item>
-///      <item>Date of expiry, line 2, characters 9-14, check digit in character 15</item>
+///      <item>Document number, line 2, characters 1-9, check digit in character 10</item>
+///      <item>Optional document number extension, line 2, characters 29-35, check digit in final non-filler character</item>
+///      <item>Date of birth, line 2, characters 14-19, check digit in character 20</item>
+///      <item>Date of expiry, line 2, characters 22-27, check digit in character 28</item>
 ///      <item>Composite check digit for all of the above fields and their check digits</item>
 ///   </list>
 ///   </para>
@@ -30,28 +30,26 @@ namespace CheckDigits.Net.ValueSpecificAlgorithms;
 ///   and has the same weaknesses as that algorithm.
 ///   </para>
 /// </remarks>
-public sealed class Icao9303SizeTD1Algorithm : ICheckDigitAlgorithm
+public sealed class Icao9303SizeTD2Algorithm : ICheckDigitAlgorithm
 {
    private static readonly Int32[] _weights = [7, 3, 1];
-   private static readonly FieldDetails[] _fields = [
-      new (0, 5, 9),    // Document number field
-      new (1, 0, 6),    // Date of birth field
-      new (1, 8, 6)];   // Date of expiry field
-   private static readonly FieldDetails _extendedDocumentNumber = new (0, 15, 13);
-   private const Int32 _numFields = 3;
-   private const Int32 _lineLength = 30;
-   private const Int32 _compositeCheckDigitPosition = 59;
+   private static readonly Int32[] _fieldStartPositions = [0, 13, 21];
+   private static readonly Int32[] _fieldSLengths = [9, 6, 6];
    private static readonly Int32[] _charMap = Icao9303CharacterMap.GetCharacterMap();
+   private const Int32 _extendedDocumentNumberStart = 28;
+   private const Int32 _extendedDocumentNumberLength = 5;
 
+   private const Int32 _numFields = 3;
+   private const Int32 _lineLength = 36;
    private LineSeparator _lineSeparator = LineSeparator.None;
    private Int32 _lineSeparatorLength = 0;
-   private Int32 _expectedLength = _lineLength * 3;
+   private Int32 _expectedLength = _lineLength * 2;
 
    /// <inheritdoc/>
-   public String AlgorithmDescription => Resources.Icao9303SizeTD1AlgorithmDescription;
+   public String AlgorithmDescription => Resources.Icao9303SizeTD2AlgorithmDescription;
 
    /// <inheritdoc/>
-   public String AlgorithmName => Resources.Icao9303SizeTD1AlgorithmName;
+   public String AlgorithmName => Resources.Icao9303SizeTD2AlgorithmName;
 
    /// <summary>
    ///   Specifies the character(s) used to separate lines in the value being
@@ -73,7 +71,7 @@ public sealed class Icao9303SizeTD1Algorithm : ICheckDigitAlgorithm
 
          _lineSeparator = value;
          _lineSeparatorLength = value.CharacterLength();
-         _expectedLength = (_lineLength * 3) + (_lineSeparatorLength * 2);
+         _expectedLength = (_lineLength * 2) + _lineSeparatorLength;
       }
    }
 
@@ -93,9 +91,8 @@ public sealed class Icao9303SizeTD1Algorithm : ICheckDigitAlgorithm
       {
          var fieldSum = 0;
          var fieldWeightIndex = new ModulusInt32(3);
-         var (line, charPos, length) = _fields[fieldIndex];
-         var start = (line * (_lineLength + _lineSeparatorLength)) + charPos;
-         var end = start + length;
+         var start = _fieldStartPositions[fieldIndex] + _lineLength + _lineSeparatorLength;
+         var end = start + _fieldSLengths[fieldIndex];
          for (var charIndex = start; charIndex < end; charIndex++)
          {
             ch = value[charIndex];
@@ -115,13 +112,12 @@ public sealed class Icao9303SizeTD1Algorithm : ICheckDigitAlgorithm
          }
 
          // Handle possible extended document number field. See
-         // https://www.icao.int/publications/Documents/9303_p5_cons_en.pdf,
-         // note j on page 17 for details.
+         // https://www.icao.int/publications/Documents/9303_p6_cons_en.pdf,
+         // note j on page 16 for details.
          if (fieldIndex == 0 && value[end] == CharConstants.LeftAngleBracket)
          {
-            (line, charPos, length) = _extendedDocumentNumber;
-            start = (line * (_lineLength + _lineSeparatorLength)) + charPos;
-            end = start + length;
+            start = _extendedDocumentNumberStart + _lineLength + _lineSeparatorLength;
+            end = start + _extendedDocumentNumberLength;
             for (var charIndex = start; charIndex < end; charIndex++)
             {
                ch = value[charIndex];
@@ -167,8 +163,7 @@ public sealed class Icao9303SizeTD1Algorithm : ICheckDigitAlgorithm
       }
 
       var compositeCheckDigit = compositeSum % 10;
-      return value[_compositeCheckDigitPosition + _lineSeparatorLength].ToIntegerDigit() == compositeCheckDigit;
-   }
 
-   private record struct FieldDetails(Int32 Line, Int32 CharPosition, Int32 Length);
+      return value[^1].ToIntegerDigit() == compositeCheckDigit;
+   }
 }

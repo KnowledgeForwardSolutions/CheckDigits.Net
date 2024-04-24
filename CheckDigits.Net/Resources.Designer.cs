@@ -216,9 +216,9 @@ namespace CheckDigits.Net {
         /// <summary>
         ///   Looks up a localized string similar to IACO 9303 Algorithm for Machine Readable Documents Size TD2.
         /// </summary>
-        internal static string Icao9303SizeTD2AlgorithmDescription2 {
+        internal static string Icao9303SizeTD2AlgorithmDescription {
             get {
-                return ResourceManager.GetString("Icao9303SizeTD2AlgorithmDescription2", resourceCulture);
+                return ResourceManager.GetString("Icao9303SizeTD2AlgorithmDescription", resourceCulture);
             }
         }
         
