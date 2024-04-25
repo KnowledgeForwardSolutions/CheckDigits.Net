@@ -530,6 +530,7 @@ Validate method will return ```false```.
 * Check digit size - one character
 * Check digit value - decimal digit ('0' - '9')
 * Check digit location - trailing (right-most) character of individual fields, trailing character of second line for composite check digit
+* Value length - three lines of 30 characters plus additional line separator characters as specified by the LineSeparator property
 * Class name - Icao9303SizeTD1Algorithm
 
 #### Links
@@ -569,6 +570,7 @@ Validate method will return ```false```.
 * Check digit size - one character
 * Check digit value - decimal digit ('0' - '9')
 * Check digit location - trailing (right-most) character of individual fields, trailing character of second line for composite check digit
+* Value length - two lines of 36 characters plus additional line separator characters as specified by the LineSeparator property
 * Class name - Icao9303SizeTD2Algorithm
 
 #### Links
@@ -610,6 +612,7 @@ validation then the Validate method will return ```false```.
 * Check digit size - one character
 * Check digit value - decimal digit ('0' - '9')
 * Check digit location - trailing (right-most) character of individual fields, trailing character of entire string for composite check digit
+* Value length - two lines of 44 characters plus additional line separator characters as specified by the LineSeparator property
 * Class name - Icao9303SizeTD3Algorithm
 
 #### Links
@@ -624,8 +627,15 @@ The ICAO 9303 (International Civil Aviation Organization) specification for
 Machine Readable Visas uses multiple check digits in the machine readable zone 
 of the document. The second line of the machine readable zone contains fields 
 for document number, date of birth and date of expiry and associated check 
-digits for each field. The individual field check digits are all calculated 
-using the[ICAO 9303 Algorithm](#icao-9303-algorithm).
+digits for each field. (Unlike other ICAO 9303 TD1, TD2 or TD3 documents, no 
+composite check digit is used.) The individual field check digits are all 
+calculated using the[ICAO 9303 Algorithm](#icao-9303-algorithm).
+
+Machine Readable Visas have two formats: MRV-A and MRV-B. The MRV-A format uses
+two lines of 44 characters while the MRV-B format uses two lines of 36 characters.
+The individual fields in the second line of the machine readable zone are located
+in the same character positions regardless of the format. The Validate method
+can validate either format
 
 The machine readable zone of a Machine Readable Visa consists of two lines of 36
 characters. The value passed to the Validate method should contain all lines of
@@ -640,6 +650,9 @@ LineSeparator is None.
 The ICAO 9303 Machine Readable Visa Algorithm will validate the check digits of 
 the three fields (document number, date of birth and date of expiry). If any of 
 the check digits fail validation then the Validate method will return ```false```.
+In addition, if the value is not the correct length (two lines of either 44 or 
+36 characters, plus line separator characters matching the LineSeparator 
+property) then the method will return false.
 
 #### Details
 
@@ -647,6 +660,7 @@ the check digits fail validation then the Validate method will return ```false``
 * Check digit size - one character
 * Check digit value - decimal digit ('0' - '9')
 * Check digit location - trailing (right-most) character of individual fields
+* Value length - two lines of either 44 characters (MRV-A) or 36 characters (MRV-B), plus additional line separator characters as specified by the LineSeparator property
 * Class name - Icao9303MachineReadableVisaAlgorithm
 
 #### Links

@@ -26,6 +26,9 @@ public static class Algorithms
    private static readonly Lazy<ICheckDigitAlgorithm> _icao9303 =
      new(() => new Icao9303Algorithm());
 
+   private static readonly Lazy<ICheckDigitAlgorithm> _icao9303MachineReadableVisa =
+     new(() => new Icao9303MachineReadableVisaAlgorithm());
+
    private static readonly Lazy<ICheckDigitAlgorithm> _icao9303SizeTD1 =
      new(() => new Icao9303SizeTD1Algorithm());
 
@@ -132,6 +135,12 @@ public static class Algorithms
    ///   International Civil Aviation Organization 9303 algorithm.
    /// </summary>
    public static ICheckDigitAlgorithm Icao9303 => _icao9303.Value;
+
+   /// <summary>
+   ///   International Civil Aviation Organization 9303 algorithm for Machine
+   ///   Readable Visas, both format MRV-A and MRV-B.
+   /// </summary>
+   public static ICheckDigitAlgorithm Icao9303MachineReadableVisa => _icao9303MachineReadableVisa.Value;
 
    /// <summary>
    ///   International Civil Aviation Organization 9303 algorithm for Machine
