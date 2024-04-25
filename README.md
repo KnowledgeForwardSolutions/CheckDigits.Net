@@ -1516,6 +1516,10 @@ Note also that the values used for the NOID Check Digit algorithm do not include
 | ICAO 9303 Size TD1   | I<UTOSTARWARS45<<<<<<<<<<<<<<<<br>7705256F2405252UTO<<<<<<<<<<<4<br>SKYWALKER<<LUKE<<<<<<<<<<<<<<< | 97.953 ns | 1.0370 ns | 0.9700 ns |         - |
 | ICAO 9303 Size TD1   | I<UTOD23145890<AB112234566<<<<<br>7408122F1204159UTO<<<<<<<<<<<4<br>ERIKSSON<<ANNA<MARIA<<<<<<<<<< | 97.953 ns | 1.0370 ns | 0.9700 ns |         - |
 |                      |                                        |           |           |           |           |
+| ICAO 9303 Size TD2   | I<UTOERIKSSON<<ANNA<MARIA<<<<<<<<<<<<br>D231458907UTO7408122F1204159<<<<<<<6 | 86.78 ns | 0.816 ns | 0.763 ns |         - |
+| ICAO 9303 Size TD2   | I<UTOQWERTY<<ASDF<<<<<<<<<<<<<<<<<<<<br>D23145890<UTO7408122F1204159AB1124<4 | 95.22 ns | 0.852 ns | 0.797 ns |         - |
+| ICAO 9303 Size TD2   | I<UTOSKYWALKER<<LUKE<<<<<<<<<<<<<<<<<br>STARWARS45UTO7705256M2405252<<<<<<<8 | 87.34 ns | 0.704 ns | 0.658 ns |         - |
+|                      |                                        |           |           |           |           |
 | ICAO 9303 Size TD3   | P<UTOERIKSSON<<ANNA<MARIA<<<<<<<<<<<<<<<<<<<<br>L898902C36UTO7408122F1204159ZE184226B<<<<<10 | 85.675 ns | 0.5136 ns | 0.4804 ns |         - |
 | ICAO 9303 Size TD3   | P<UTOQWERTY<<ASDF<<<<<<<<<<<<<<<<<<<<<<<<<<<<br>Q123987655UTO3311226F2010201<<<<<<<<<<<<<<06 | 85.188 ns | 0.2958 ns | 0.2310 ns |         - |
 | ICAO 9303 Size TD3   | P<UTOSKYWALKER<<LUKE<<<<<<<<<<<<<<<<<<<<<<<<<br>STARWARS45UTO7705256M2405252HAN<SHOT<FIRST78 | 85.401 ns | 0.5888 ns | 0.5507 ns |         - |
