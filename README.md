@@ -31,6 +31,7 @@ let us know. Or contribute to the CheckDigits.Net repository: https://github.com
     * [ICAO 9303 Document Size TD1 Algorithm](#icao-9303-document-size-td1-algorithm)
     * [ICAO 9303 Document Size TD2 Algorithm](#icao-9303-document-size-td2-algorithm)
     * [ICAO 9303 Document Size TD3 Algorithm](#icao-9303-document-size-td3-algorithm)
+    * [ICAO 9303 Machine Readable Visa Algorithm](#icao-9303-machine-readable-visa-algorithm)
     * [ISAN (International Standard Audiovisual Number) Algorithm](#isan-algorithm)
     * [ISIN (International Securities Identification Number) Algorithm](#isin-algorithm)
     * [ISO 6346 Algorithm](#iso-6346-algorithm)
@@ -132,6 +133,7 @@ The ISO/IEC 7064:2003 standard is available at https://www.iso.org/standard/3153
 * [ICAO 9303 Document Size TD1 Algorithm](#icao-9303-document-size-td1-algorithm)
 * [ICAO 9303 Document Size TD2 Algorithm](#icao-9303-document-size-td2-algorithm)
 * [ICAO 9303 Document Size TD3 Algorithm](#icao-9303-document-size-td3-algorithm)
+* [ICAO 9303 Machine Readable Visa Algorithm](#icao-9303-machine-readable-visa-algorithm)
 * [ISAN (International Standard Audiovisual Number) Algorithm](#isan-algorithm)
 * [ISIN (International Securities Identification Number) Algorithm](#isin-algorithm)
 * [ISO 6346 Algorithm](#iso-6346-algorithm)
@@ -173,9 +175,10 @@ The ISO/IEC 7064:2003 standard is available at https://www.iso.org/standard/3153
 | GTIN-14				| [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
 | IBAN                  | [IBAN Algorithm](#iban-algorithm) |
 | ICAO Machine Readable Travel Document Field | [ICAO 9303 Algorithm](#icao-9303-algorithm) |
-| ICAO Machine Readable Travel Documents Size TD1 Documents | [ICAO 9303 Document Size TD1 Algorithm](#icao-9303-document-size-td1-algorithm) |
-| ICAO Machine Readable Travel Documents Size TD2 Documents | [ICAO 9303 Document Size TD2 Algorithm](#icao-9303-document-size-td2-algorithm) |
+| ICAO Machine Readable Travel Documents Size TD1 | [ICAO 9303 Document Size TD1 Algorithm](#icao-9303-document-size-td1-algorithm) |
+| ICAO Machine Readable Travel Documents Size TD2 | [ICAO 9303 Document Size TD2 Algorithm](#icao-9303-document-size-td2-algorithm) |
 | ICAO Machine Readable Passports and Size TD3 Documents | [ICAO 9303 Document Size TD3 Algorithm](#icao-9303-document-size-td3-algorithm) |
+| ICAO Machine Readable Visas | [ICAO 9303 Machine Readable Visa Algorithm](#icao-9303-machine-readable-visa-algorithm) |
 | IMEI				    | [Luhn Algorithm](#luhn-algorithm) |
 | IMO Number            | [Modulus10_2 Algorithm](#modulus10_2-algorithm) |
 | ISAN                  | [ISAN Algorithm](#isan-algorithm) |
@@ -518,7 +521,7 @@ LineSeparator is None.
 
 The ICAO 9303 Document Size TD1 Algorithm will validate the check digits of the
 three fields (document number, date of birth and date of expiry) as well as the 
-composite check digit. If any of the check digits fail  validation then the 
+composite check digit. If any of the check digits fail validation then the 
 Validate method will return ```false```.
 
 #### Details
@@ -535,6 +538,8 @@ https://www.icao.int/publications/Documents/9303_p5_cons_en.pdf
 
 ### ICAO 9303 Document Size TD2 Algorithm
 
+#### Description
+
 The ICAO 9303 (International Civil Aviation Organization) specification for 
 Machine Readable Travel Documents Size TD2 uses multiple check digits in the 
 machine readable zone of the document. The second line of the machine readable 
@@ -547,7 +552,7 @@ The machine readable zone of a Size TD2 document consists of two lines of 36
 characters. The value passed to the Validate method should contain all lines of
 data concatenated together. You can specify how the lines are separated in the
 concatenated value by setting the LineSeparator property of the algorithm class.
-The three values are None (no line separator is used and the 31st character of the
+The three values are None (no line separator is used and the 37th character of the
 value is the first character of the second line), Crlf (the Windows line separator,
 i.e. a carriage return character followed by a line feed character - '\r\n') and 
 Lf (the Unix line separator, i.e a line feed character - '\n').The default 
@@ -555,7 +560,7 @@ LineSeparator is None.
 
 The ICAO 9303 Document Size TD2 Algorithm will validate the check digits of the
 three fields (document number, date of birth and date of expiry) as well as the 
-composite check digit. If any of the check digits fail  validation then the 
+composite check digit. If any of the check digits fail validation then the 
 Validate method will return ```false```.
 
 #### Details
@@ -564,7 +569,7 @@ Validate method will return ```false```.
 * Check digit size - one character
 * Check digit value - decimal digit ('0' - '9')
 * Check digit location - trailing (right-most) character of individual fields, trailing character of second line for composite check digit
-* Class name - Icao9303SizeTD1Algorithm
+* Class name - Icao9303SizeTD2Algorithm
 
 #### Links
 
@@ -610,6 +615,43 @@ validation then the Validate method will return ```false```.
 #### Links
 
 https://www.icao.int/publications/Documents/9303_p4_cons_en.pdf
+
+### ICAO 9303 Machine Readable Visa Algorithm
+
+#### Description
+
+The ICAO 9303 (International Civil Aviation Organization) specification for 
+Machine Readable Visas uses multiple check digits in the machine readable zone 
+of the document. The second line of the machine readable zone contains fields 
+for document number, date of birth and date of expiry and associated check 
+digits for each field. The individual field check digits are all calculated 
+using the[ICAO 9303 Algorithm](#icao-9303-algorithm).
+
+The machine readable zone of a Machine Readable Visa consists of two lines of 36
+characters. The value passed to the Validate method should contain all lines of
+data concatenated together. You can specify how the lines are separated in the
+concatenated value by setting the LineSeparator property of the algorithm class.
+The three values are None (no line separator is used and the 37th character of the
+value is the first character of the second line), Crlf (the Windows line separator,
+i.e. a carriage return character followed by a line feed character - '\r\n') and 
+Lf (the Unix line separator, i.e a line feed character - '\n').The default 
+LineSeparator is None.
+
+The ICAO 9303 Machine Readable Visa Algorithm will validate the check digits of 
+the three fields (document number, date of birth and date of expiry). If any of 
+the check digits fail validation then the Validate method will return ```false```.
+
+#### Details
+
+* Valid characters - decimal digits ('0' - '9'), upper case letters ('A' - 'Z') and a filler character ('<').
+* Check digit size - one character
+* Check digit value - decimal digit ('0' - '9')
+* Check digit location - trailing (right-most) character of individual fields
+* Class name - Icao9303MachineReadableVisaAlgorithm
+
+#### Links
+
+https://www.icao.int/publications/Documents/9303_p7_cons_en.pdf
 
 ### ISAN Algorithm
 
@@ -1513,7 +1555,7 @@ Note also that the values used for the NOID Check Digit algorithm do not include
 | ICAO 9303 (Embedded) | +U7Y8SXRC0O3SC4IHYQF4M8+               | 29.762 ns | 0.5975 ns | 0.6394 ns |         - |
 |                      |                                        |           |           |           |           |
 | ICAO 9303 Size TD1   | I<UTOD231458907<<<<<<<<<<<<<<<<br>7408122F1204159UTO<<<<<<<<<<<6<br>ERIKSSON<<ANNA<MARIA<<<<<<<<<< | 84.945 ns | 1.6663 ns | 1.5586 ns |         - |
-| ICAO 9303 Size TD1   | I<UTOSTARWARS45<<<<<<<<<<<<<<<<br>7705256F2405252UTO<<<<<<<<<<<4<br>SKYWALKER<<LUKE<<<<<<<<<<<<<<< | 97.953 ns | 1.0370 ns | 0.9700 ns |         - |
+| ICAO 9303 Size TD1   | I<UTOSTARWARS45<<<<<<<<<<<<<<<<br>7705256M2405252UTO<<<<<<<<<<<4<br>SKYWALKER<<LUKE<<<<<<<<<<<<<<< | 97.953 ns | 1.0370 ns | 0.9700 ns |         - |
 | ICAO 9303 Size TD1   | I<UTOD23145890<AB112234566<<<<<br>7408122F1204159UTO<<<<<<<<<<<4<br>ERIKSSON<<ANNA<MARIA<<<<<<<<<< | 97.953 ns | 1.0370 ns | 0.9700 ns |         - |
 |                      |                                        |           |           |           |           |
 | ICAO 9303 Size TD2   | I<UTOERIKSSON<<ANNA<MARIA<<<<<<<<<<<<br>D231458907UTO7408122F1204159<<<<<<<6 | 86.78 ns | 0.816 ns | 0.763 ns |         - |
@@ -1638,3 +1680,4 @@ Additional included algorithms
 * ICAO 9303 Document Size TD1 Algorithm
 * ICAO 9303 Document Size TD2 Algorithm
 * ICAO 9303 Document Size TD3 Algorithm
+* ICAO 9303 Machine Readable Visa Algorithm
