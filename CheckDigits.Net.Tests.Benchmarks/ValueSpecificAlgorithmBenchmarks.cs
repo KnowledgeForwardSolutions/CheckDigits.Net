@@ -45,21 +45,25 @@ public class ValueSpecificAlgorithmBenchmarks
       //yield return new Object[] { Algorithms.Iban, Algorithms.Iban.AlgorithmName, "GB82WEST12345698765432" };
       //yield return new Object[] { Algorithms.Iban, Algorithms.Iban.AlgorithmName, "SC74MCBL01031234567890123456USD" };
 
-      yield return new Object[] { Algorithms.Icao9303, Algorithms.Icao9303.AlgorithmName, "U7Y5" };
-      yield return new Object[] { Algorithms.Icao9303, Algorithms.Icao9303.AlgorithmName, "U7Y8SX8" };
-      yield return new Object[] { Algorithms.Icao9303, Algorithms.Icao9303.AlgorithmName, "U7Y8SXRC03" };
-      yield return new Object[] { Algorithms.Icao9303, Algorithms.Icao9303.AlgorithmName, "U7Y8SXRC0O3S8" };
-      yield return new Object[] { Algorithms.Icao9303, Algorithms.Icao9303.AlgorithmName, "U7Y8SXRC0O3SC4I2" };
-      yield return new Object[] { Algorithms.Icao9303, Algorithms.Icao9303.AlgorithmName, "U7Y8SXRC0O3SC4IHYQ9" };
-      yield return new Object[] { Algorithms.Icao9303, Algorithms.Icao9303.AlgorithmName, "U7Y8SXRC0O3SC4IHYQF4M8" };
+      //yield return new Object[] { Algorithms.Icao9303, Algorithms.Icao9303.AlgorithmName, "U7Y5" };
+      //yield return new Object[] { Algorithms.Icao9303, Algorithms.Icao9303.AlgorithmName, "U7Y8SX8" };
+      //yield return new Object[] { Algorithms.Icao9303, Algorithms.Icao9303.AlgorithmName, "U7Y8SXRC03" };
+      //yield return new Object[] { Algorithms.Icao9303, Algorithms.Icao9303.AlgorithmName, "U7Y8SXRC0O3S8" };
+      //yield return new Object[] { Algorithms.Icao9303, Algorithms.Icao9303.AlgorithmName, "U7Y8SXRC0O3SC4I2" };
+      //yield return new Object[] { Algorithms.Icao9303, Algorithms.Icao9303.AlgorithmName, "U7Y8SXRC0O3SC4IHYQ9" };
+      //yield return new Object[] { Algorithms.Icao9303, Algorithms.Icao9303.AlgorithmName, "U7Y8SXRC0O3SC4IHYQF4M8" };
 
-      yield return new Object[] { Algorithms.Icao9303SizeTD1, Algorithms.Icao9303SizeTD1.AlgorithmName, "I<UTOD231458907<<<<<<<<<<<<<<<7408122F1204159UTO<<<<<<<<<<<6ERIKSSON<<ANNA<MARIA<<<<<<<<A<" };
-      yield return new Object[] { Algorithms.Icao9303SizeTD1, Algorithms.Icao9303SizeTD1.AlgorithmName, "I<UTOD23145890<AB112234566<<<<7408122F1204159UTO<<<<<<<<<<<4ERIKSSON<<ANNA<MARIA<<<<<<<<B<" };
-      yield return new Object[] { Algorithms.Icao9303SizeTD1, Algorithms.Icao9303SizeTD1.AlgorithmName, "I<UTOSTARWARS45<<<<<<<<<<<<<<<7705256F2405252UTO<<<<<<<<<<<4SKYWALKER<<LUKE<<<<<<<<<<<<<C<" };
+      //yield return new Object[] { Algorithms.Icao9303SizeTD1, Algorithms.Icao9303SizeTD1.AlgorithmName, "I<UTOD231458907<<<<<<<<<<<<<<<7408122F1204159UTO<<<<<<<<<<<6ERIKSSON<<ANNA<MARIA<<<<<<<<A<" };
+      //yield return new Object[] { Algorithms.Icao9303SizeTD1, Algorithms.Icao9303SizeTD1.AlgorithmName, "I<UTOD23145890<AB112234566<<<<7408122F1204159UTO<<<<<<<<<<<4ERIKSSON<<ANNA<MARIA<<<<<<<<B<" };
+      //yield return new Object[] { Algorithms.Icao9303SizeTD1, Algorithms.Icao9303SizeTD1.AlgorithmName, "I<UTOSTARWARS45<<<<<<<<<<<<<<<7705256M2405252UTO<<<<<<<<<<<4SKYWALKER<<LUKE<<<<<<<<<<<<<C<" };
 
-      yield return new Object[] { Algorithms.Icao9303SizeTD3, Algorithms.Icao9303SizeTD3.AlgorithmName, "P<UTOERIKSSON<<ANNA<MARIA<<<<<<<<<<<<<<<<<<<L898902C36UTO7408122F1204159ZE184226B<<<<<10" };
-      yield return new Object[] { Algorithms.Icao9303SizeTD3, Algorithms.Icao9303SizeTD3.AlgorithmName, "P<UTOQWERTY<<ASDF<<<<<<<<<<<<<<<<<<<<<<<<<<<Q123987655UTO3311226F2010201<<<<<<<<<<<<<<06" };
-      yield return new Object[] { Algorithms.Icao9303SizeTD3, Algorithms.Icao9303SizeTD3.AlgorithmName, "P<UTOSKYWALKER<<LUKE<<<<<<<<<<<<<<<<<<<<<<<<STARWARS45UTO7705256M2405252HAN<SHOT<FIRST78" };
+      yield return new Object[] { Algorithms.Icao9303SizeTD2, Algorithms.Icao9303SizeTD2.AlgorithmName, "I<UTOERIKSSON<<ANNA<MARIA<<<<<<<<<<<D231458907UTO7408122F1204159<<<<<<<6" };
+      yield return new Object[] { Algorithms.Icao9303SizeTD2, Algorithms.Icao9303SizeTD2.AlgorithmName, "I<UTOQWERTY<<ASDF<<<<<<<<<<<<<<<<<<<D23145890<UTO7408122F1204159AB1124<4" };
+      yield return new Object[] { Algorithms.Icao9303SizeTD2, Algorithms.Icao9303SizeTD2.AlgorithmName, "I<UTOSKYWALKER<<LUKE<<<<<<<<<<<<<<<<STARWARS45UTO7705256M2405252<<<<<<<8" };
+
+      //yield return new Object[] { Algorithms.Icao9303SizeTD3, Algorithms.Icao9303SizeTD3.AlgorithmName, "P<UTOERIKSSON<<ANNA<MARIA<<<<<<<<<<<<<<<<<<<L898902C36UTO7408122F1204159ZE184226B<<<<<10" };
+      //yield return new Object[] { Algorithms.Icao9303SizeTD3, Algorithms.Icao9303SizeTD3.AlgorithmName, "P<UTOQWERTY<<ASDF<<<<<<<<<<<<<<<<<<<<<<<<<<<Q123987655UTO3311226F2010201<<<<<<<<<<<<<<06" };
+      //yield return new Object[] { Algorithms.Icao9303SizeTD3, Algorithms.Icao9303SizeTD3.AlgorithmName, "P<UTOSKYWALKER<<LUKE<<<<<<<<<<<<<<<<<<<<<<<<STARWARS45UTO7705256M2405252HAN<SHOT<FIRST78" };
 
       //yield return new Object[] { Algorithms.Isan, Algorithms.Isan.AlgorithmName, "D02C42E954183EE2Q1291C8AEO" };
       //yield return new Object[] { Algorithms.Isan, Algorithms.Isan.AlgorithmName, "C594660A8B2E5D22X6DDA3272E" };
@@ -132,12 +136,12 @@ public class ValueSpecificAlgorithmBenchmarks
       algorithm.Validate(value);
    }
 
-   [Benchmark]
-   [ArgumentsSource(nameof(ValidateEmbeddedArguments))]
-   public void ValidateEmbedded(IEmbeddedCheckDigitAlgorithm algorithm, String name, String value, Int32 length)
-   {
-      algorithm.Validate(value, 1, length);
-   }
+   //[Benchmark]
+   //[ArgumentsSource(nameof(ValidateEmbeddedArguments))]
+   //public void ValidateEmbedded(IEmbeddedCheckDigitAlgorithm algorithm, String name, String value, Int32 length)
+   //{
+   //   algorithm.Validate(value, 1, length);
+   //}
 
    //[Benchmark]
    //[ArgumentsSource(nameof(ValidateFormattedArguments))]

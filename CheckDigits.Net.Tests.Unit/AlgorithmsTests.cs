@@ -102,6 +102,20 @@ public class AlgorithmsTests
 
    #endregion
 
+   #region Icao9303SizeTD2 Property Tests
+   // ==========================================================================
+   // ==========================================================================
+
+   [Fact]
+   public void Algorithms_Icao9303SizeTD2_ShouldNotBeNull()
+      => Algorithms.Icao9303SizeTD2.Should().NotBeNull();
+
+   [Fact]
+   public void Algorithms_Icao9303SizeTD2_ShouldBeExpectedType()
+      => Algorithms.Icao9303SizeTD2.Should().BeOfType<Icao9303SizeTD2Algorithm>();
+
+   #endregion
+
    #region Icao9303SizeTD3 Property Tests
    // ==========================================================================
    // ==========================================================================
