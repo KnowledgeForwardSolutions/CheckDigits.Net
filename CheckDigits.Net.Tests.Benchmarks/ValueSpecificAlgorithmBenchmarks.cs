@@ -53,13 +53,17 @@ public class ValueSpecificAlgorithmBenchmarks
       //yield return new Object[] { Algorithms.Icao9303, Algorithms.Icao9303.AlgorithmName, "U7Y8SXRC0O3SC4IHYQ9" };
       //yield return new Object[] { Algorithms.Icao9303, Algorithms.Icao9303.AlgorithmName, "U7Y8SXRC0O3SC4IHYQF4M8" };
 
+      yield return new Object[] { Algorithms.Icao9303MachineReadableVisa, Algorithms.Icao9303MachineReadableVisa.AlgorithmName, "I<UTOERIKSSON<<ANNA<MARIA<<<<<<<<<<<D231458907UTO7408122F1204159<<<<<<A<" };
+      yield return new Object[] { Algorithms.Icao9303MachineReadableVisa, Algorithms.Icao9303MachineReadableVisa.AlgorithmName, "V<UTOERIKSSON<<ANNA<MARIA<<<<<<<<<<<<<<<<<<<L898902C<3UTO6908061F9406236ZE184226B<<<<<<<" };
+      yield return new Object[] { Algorithms.Icao9303MachineReadableVisa, Algorithms.Icao9303MachineReadableVisa.AlgorithmName, "I<UTOSKYWALKER<<LUKE<<<<<<<<<<<<<<<<STARWARS45UTO7705256M2405252<<<<<<B<" };
+
       //yield return new Object[] { Algorithms.Icao9303SizeTD1, Algorithms.Icao9303SizeTD1.AlgorithmName, "I<UTOD231458907<<<<<<<<<<<<<<<7408122F1204159UTO<<<<<<<<<<<6ERIKSSON<<ANNA<MARIA<<<<<<<<A<" };
       //yield return new Object[] { Algorithms.Icao9303SizeTD1, Algorithms.Icao9303SizeTD1.AlgorithmName, "I<UTOD23145890<AB112234566<<<<7408122F1204159UTO<<<<<<<<<<<4ERIKSSON<<ANNA<MARIA<<<<<<<<B<" };
       //yield return new Object[] { Algorithms.Icao9303SizeTD1, Algorithms.Icao9303SizeTD1.AlgorithmName, "I<UTOSTARWARS45<<<<<<<<<<<<<<<7705256M2405252UTO<<<<<<<<<<<4SKYWALKER<<LUKE<<<<<<<<<<<<<C<" };
 
-      yield return new Object[] { Algorithms.Icao9303SizeTD2, Algorithms.Icao9303SizeTD2.AlgorithmName, "I<UTOERIKSSON<<ANNA<MARIA<<<<<<<<<<<D231458907UTO7408122F1204159<<<<<<<6" };
-      yield return new Object[] { Algorithms.Icao9303SizeTD2, Algorithms.Icao9303SizeTD2.AlgorithmName, "I<UTOQWERTY<<ASDF<<<<<<<<<<<<<<<<<<<D23145890<UTO7408122F1204159AB1124<4" };
-      yield return new Object[] { Algorithms.Icao9303SizeTD2, Algorithms.Icao9303SizeTD2.AlgorithmName, "I<UTOSKYWALKER<<LUKE<<<<<<<<<<<<<<<<STARWARS45UTO7705256M2405252<<<<<<<8" };
+      //yield return new Object[] { Algorithms.Icao9303SizeTD2, Algorithms.Icao9303SizeTD2.AlgorithmName, "I<UTOERIKSSON<<ANNA<MARIA<<<<<<<<<<<D231458907UTO7408122F1204159<<<<<<<6" };
+      //yield return new Object[] { Algorithms.Icao9303SizeTD2, Algorithms.Icao9303SizeTD2.AlgorithmName, "I<UTOQWERTY<<ASDF<<<<<<<<<<<<<<<<<<<D23145890<UTO7408122F1204159AB1124<4" };
+      //yield return new Object[] { Algorithms.Icao9303SizeTD2, Algorithms.Icao9303SizeTD2.AlgorithmName, "I<UTOSKYWALKER<<LUKE<<<<<<<<<<<<<<<<STARWARS45UTO7705256M2405252<<<<<<<8" };
 
       //yield return new Object[] { Algorithms.Icao9303SizeTD3, Algorithms.Icao9303SizeTD3.AlgorithmName, "P<UTOERIKSSON<<ANNA<MARIA<<<<<<<<<<<<<<<<<<<L898902C36UTO7408122F1204159ZE184226B<<<<<10" };
       //yield return new Object[] { Algorithms.Icao9303SizeTD3, Algorithms.Icao9303SizeTD3.AlgorithmName, "P<UTOQWERTY<<ASDF<<<<<<<<<<<<<<<<<<<<<<<<<<<Q123987655UTO3311226F2010201<<<<<<<<<<<<<<06" };

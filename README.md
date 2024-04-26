@@ -1538,82 +1538,86 @@ Note also that the values used for the NOID Check Digit algorithm do not include
 
 #### Value Specific Algorithms
 
-| Algorithm Name       | Value                                  | Mean      | Error     | StdDev    | Allocated |
-|--------------------- |--------------------------------------- |----------:|----------:|----------:|----------:|
-| ABA RTN              | 111000025                              | 10.830 ns | 0.0650 ns | 0.0580 ns |         - |
-| ABA RTN              | 122235821                              | 10.400 ns | 0.1880 ns | 0.1570 ns |         - |
-| ABA RTN              | 325081403                              | 10.310 ns | 0.0610 ns | 0.0570 ns |         - |
-|                      |                                        |           |           |           |           |                                           
-| CUSIP                | 037833100                              | 16.500 ns | 0.1990 ns | 0.1760 ns |         - |
-| CUSIP                | 38143VAA7                              | 13.020 ns | 0.0830 ns | 0.0770 ns |         - |
-| CUSIP                | 91282CJL6                              | 12.850 ns | 0.0630 ns | 0.0530 ns |         - |
-|                      |                                        |           |           |           |           |                                           
-| IBAN                 | BE71096123456769                       | 20.090 ns | 0.1710 ns | 0.1600 ns |         - |
-| IBAN                 | GB82WEST12345698765432                 | 34.960 ns | 0.2120 ns | 0.1880 ns |         - |
-| IBAN                 | SC74MCBL01031234567890123456USD        | 51.580 ns | 0.2410 ns | 0.2130 ns |         - |
-|                      |                                        |           |           |           |           |
-| ICAO 9303            | U7Y5                                   |  7.376 ns | 0.0654 ns | 0.0580 ns |         - |
-| ICAO 9303            | U7Y8SX8                                | 13.371 ns | 0.2098 ns | 0.1752 ns |         - |
-| ICAO 9303            | U7Y8SXRC03                             | 17.766 ns | 0.3089 ns | 0.2890 ns |         - |
-| ICAO 9303            | U7Y8SXRC0O3S8                          | 22.630 ns | 0.4513 ns | 0.4221 ns |         - |
-| ICAO 9303            | U7Y8SXRC0O3SC4I2                       | 28.543 ns | 0.3081 ns | 0.2731 ns |         - |
-| ICAO 9303            | U7Y8SXRC0O3SC4IHYQ9                    | 32.207 ns | 0.3189 ns | 0.2490 ns |         - |
-| ICAO 9303            | U7Y8SXRC0O3SC4IHYQF4M8                 | 39.060 ns | 0.4010 ns | 0.3555 ns |         - |
-|                      |                                        |           |           |           |           |
-| ICAO 9303 (Embedded) | +U7Y5+                                 |  9.022 ns | 0.2106 ns | 0.3278 ns |         - |
-| ICAO 9303 (Embedded) | +U7Y8SX8+                              | 11.690 ns | 0.2177 ns | 0.2036 ns |         - |
-| ICAO 9303 (Embedded) | +U7Y8SXRC03+                           | 15.562 ns | 0.2131 ns | 0.1993 ns |         - |
-| ICAO 9303 (Embedded) | +U7Y8SXRC0O3S8+                        | 19.363 ns | 0.3438 ns | 0.3216 ns |         - |
-| ICAO 9303 (Embedded) | +U7Y8SXRC0O3SC4I2+                     | 22.433 ns | 0.2453 ns | 0.2174 ns |         - |
-| ICAO 9303 (Embedded) | +U7Y8SXRC0O3SC4IHYQ9+                  | 26.724 ns | 0.2726 ns | 0.2416 ns |         - |
-| ICAO 9303 (Embedded) | +U7Y8SXRC0O3SC4IHYQF4M8+               | 29.762 ns | 0.5975 ns | 0.6394 ns |         - |
-|                      |                                        |           |           |           |           |
-| ICAO 9303 Size TD1   | I<UTOD231458907<<<<<<<<<<<<<<<<br>7408122F1204159UTO<<<<<<<<<<<6<br>ERIKSSON<<ANNA<MARIA<<<<<<<<<< | 84.945 ns | 1.6663 ns | 1.5586 ns |         - |
-| ICAO 9303 Size TD1   | I<UTOSTARWARS45<<<<<<<<<<<<<<<<br>7705256M2405252UTO<<<<<<<<<<<4<br>SKYWALKER<<LUKE<<<<<<<<<<<<<<< | 97.953 ns | 1.0370 ns | 0.9700 ns |         - |
-| ICAO 9303 Size TD1   | I<UTOD23145890<AB112234566<<<<<br>7408122F1204159UTO<<<<<<<<<<<4<br>ERIKSSON<<ANNA<MARIA<<<<<<<<<< | 97.953 ns | 1.0370 ns | 0.9700 ns |         - |
-|                      |                                        |           |           |           |           |
-| ICAO 9303 Size TD2   | I<UTOERIKSSON<<ANNA<MARIA<<<<<<<<<<<<br>D231458907UTO7408122F1204159<<<<<<<6 | 86.78 ns | 0.816 ns | 0.763 ns |         - |
-| ICAO 9303 Size TD2   | I<UTOQWERTY<<ASDF<<<<<<<<<<<<<<<<<<<<br>D23145890<UTO7408122F1204159AB1124<4 | 95.22 ns | 0.852 ns | 0.797 ns |         - |
-| ICAO 9303 Size TD2   | I<UTOSKYWALKER<<LUKE<<<<<<<<<<<<<<<<<br>STARWARS45UTO7705256M2405252<<<<<<<8 | 87.34 ns | 0.704 ns | 0.658 ns |         - |
-|                      |                                        |           |           |           |           |
-| ICAO 9303 Size TD3   | P<UTOERIKSSON<<ANNA<MARIA<<<<<<<<<<<<<<<<<<<<br>L898902C36UTO7408122F1204159ZE184226B<<<<<10 | 85.675 ns | 0.5136 ns | 0.4804 ns |         - |
-| ICAO 9303 Size TD3   | P<UTOQWERTY<<ASDF<<<<<<<<<<<<<<<<<<<<<<<<<<<<br>Q123987655UTO3311226F2010201<<<<<<<<<<<<<<06 | 85.188 ns | 0.2958 ns | 0.2310 ns |         - |
-| ICAO 9303 Size TD3   | P<UTOSKYWALKER<<LUKE<<<<<<<<<<<<<<<<<<<<<<<<<br>STARWARS45UTO7705256M2405252HAN<SHOT<FIRST78 | 85.401 ns | 0.5888 ns | 0.5507 ns |         - |
-|                      |                                        |           |           |           |           |                                           
-| ISAN                 | C594660A8B2E5D22X6DDA3272E             | 54.400 ns | 0.1940 ns | 0.1810 ns |         - |
-| ISAN                 | D02C42E954183EE2Q1291C8AEO             | 51.210 ns | 0.2820 ns | 0.2640 ns |         - |
-| ISAN                 | E9530C32BC0EE83B269867B20F             | 46.700 ns | 0.1390 ns | 0.1300 ns |         - |
-|                      |                                        |           |           |           |           |                                           
-| ISAN (Formatted)     | ISAN C594-660A-8B2E-5D22-X             | 45.420 ns | 0.1530 ns | 0.1360 ns |         - |
-| ISAN (Formatted)     | ISAN D02C-42E9-5418-3EE2-Q             | 44.310 ns | 0.2520 ns | 0.2360 ns |         - |
-| ISAN (Formatted)     | ISAN E953-0C32-BC0E-E83B-2             | 50.080 ns | 0.2070 ns | 0.1840 ns |         - |
-| ISAN (Formatted)     | ISAN C594-660A-8B2E-5D22-X-6DDA-3272-E | 64.650 ns | 0.3200 ns | 0.3000 ns |         - |
-| ISAN (Formatted)     | ISAN D02C-42E9-5418-3EE2-Q-1291-C8AE-O | 65.820 ns | 0.3030 ns | 0.2840 ns |         - |
-| ISAN (Formatted)     | ISAN E953-0C32-BC0E-E83B-2-6986-7B20-F | 64.220 ns | 0.3640 ns | 0.3400 ns |         - |
-|                      |                                        |           |           |           |           |                                           
-| ISIN                 | AU0000XVGZA3                           | 25.520 ns | 0.1260 ns | 0.1170 ns |         - |
-| ISIN                 | GB0002634946                           | 19.150 ns | 0.1290 ns | 0.1140 ns |         - |
-| ISIN                 | US0378331005                           | 19.110 ns | 0.1400 ns | 0.1310 ns |         - |
-|                      |                                        |           |           |           |           |                                           
-| ISO 6346             | CSQU3054383                            | 14.970 ns | 0.0350 ns | 0.0280 ns |         - |
-| ISO 6346             | MSKU9070323                            | 14.890 ns | 0.0930 ns | 0.0870 ns |         - |
-| ISO 6346             | TOLU4734787                            | 14.840 ns | 0.0980 ns | 0.0870 ns |         - |
-|                      |                                        |           |           |           |           |                                           
-| NHS                  | 4505577104                             | 11.280 ns | 0.0360 ns | 0.0340 ns |         - |
-| NHS                  | 5301194917                             | 11.270 ns | 0.0400 ns | 0.0360 ns |         - |
-| NHS                  | 9434765919                             | 11.270 ns | 0.0450 ns | 0.0430 ns |         - |
-|                      |                                        |           |           |           |           |                                           
-| NPI                  | 1122337797                             | 14.490 ns | 0.0490 ns | 0.0440 ns |         - |
-| NPI                  | 1234567893                             | 14.530 ns | 0.0800 ns | 0.0710 ns |         - |
-| NPI                  | 1245319599                             | 14.520 ns | 0.0890 ns | 0.0830 ns |         - |
-|                      |                                        |           |           |           |           |                                           
-| SEDOL                | 3134865                                | 12.290 ns | 0.1440 ns | 0.1200 ns |         - |
-| SEDOL                | B0YQ5W0                                | 12.180 ns | 0.0630 ns | 0.0560 ns |         - |
-| SEDOL                | BRDVMH9                                | 12.220 ns | 0.0800 ns | 0.0710 ns |         - |
-|                      |                                        |           |           |           |           |                                           
-| VIN                  | 1G8ZG127XWZ157259                      | 21.120 ns | 0.1160 ns | 0.1080 ns |         - |
-| VIN                  | 1HGEM21292L047875                      | 20.920 ns | 0.0770 ns | 0.0690 ns |         - |
-| VIN                  | 1M8GDM9AXKP042788                      | 21.050 ns | 0.0940 ns | 0.0830 ns |         - |
+| Algorithm Name                  | Value                                  | Mean      | Error     | StdDev    | Allocated |
+|-------------------------------- |--------------------------------------- |----------:|----------:|----------:|----------:|
+| ABA RTN                         | 111000025                              | 10.830 ns | 0.0650 ns | 0.0580 ns |         - |
+| ABA RTN                         | 122235821                              | 10.400 ns | 0.1880 ns | 0.1570 ns |         - |
+| ABA RTN                         | 325081403                              | 10.310 ns | 0.0610 ns | 0.0570 ns |         - |
+|                                 |                                        |           |           |           |           |                                           
+| CUSIP                           | 037833100                              | 16.500 ns | 0.1990 ns | 0.1760 ns |         - |
+| CUSIP                           | 38143VAA7                              | 13.020 ns | 0.0830 ns | 0.0770 ns |         - |
+| CUSIP                           | 91282CJL6                              | 12.850 ns | 0.0630 ns | 0.0530 ns |         - |
+|                                 |                                        |           |           |           |           |                                           
+| IBAN                            | BE71096123456769                       | 20.090 ns | 0.1710 ns | 0.1600 ns |         - |
+| IBAN                            | GB82WEST12345698765432                 | 34.960 ns | 0.2120 ns | 0.1880 ns |         - |
+| IBAN                            | SC74MCBL01031234567890123456USD        | 51.580 ns | 0.2410 ns | 0.2130 ns |         - |
+|                                 |                                        |           |           |           |           |
+| ICAO 9303                       | U7Y5                                   |  7.376 ns | 0.0654 ns | 0.0580 ns |         - |
+| ICAO 9303                       | U7Y8SX8                                | 13.371 ns | 0.2098 ns | 0.1752 ns |         - |
+| ICAO 9303                       | U7Y8SXRC03                             | 17.766 ns | 0.3089 ns | 0.2890 ns |         - |
+| ICAO 9303                       | U7Y8SXRC0O3S8                          | 22.630 ns | 0.4513 ns | 0.4221 ns |         - |
+| ICAO 9303                       | U7Y8SXRC0O3SC4I2                       | 28.543 ns | 0.3081 ns | 0.2731 ns |         - |
+| ICAO 9303                       | U7Y8SXRC0O3SC4IHYQ9                    | 32.207 ns | 0.3189 ns | 0.2490 ns |         - |
+| ICAO 9303                       | U7Y8SXRC0O3SC4IHYQF4M8                 | 39.060 ns | 0.4010 ns | 0.3555 ns |         - |
+|                                 |                                        |           |           |           |           |
+| ICAO 9303 (Embedded)            | +U7Y5+                                 |  9.022 ns | 0.2106 ns | 0.3278 ns |         - |
+| ICAO 9303 (Embedded)            | +U7Y8SX8+                              | 11.690 ns | 0.2177 ns | 0.2036 ns |         - |
+| ICAO 9303 (Embedded)            | +U7Y8SXRC03+                           | 15.562 ns | 0.2131 ns | 0.1993 ns |         - |
+| ICAO 9303 (Embedded)            | +U7Y8SXRC0O3S8+                        | 19.363 ns | 0.3438 ns | 0.3216 ns |         - |
+| ICAO 9303 (Embedded)            | +U7Y8SXRC0O3SC4I2+                     | 22.433 ns | 0.2453 ns | 0.2174 ns |         - |
+| ICAO 9303 (Embedded)            | +U7Y8SXRC0O3SC4IHYQ9+                  | 26.724 ns | 0.2726 ns | 0.2416 ns |         - |
+| ICAO 9303 (Embedded)            | +U7Y8SXRC0O3SC4IHYQF4M8+               | 29.762 ns | 0.5975 ns | 0.6394 ns |         - |
+|                                 |                                        |           |           |           |           |
+| ICAO 9303 Machine Readable Visa | I<UTOERIKSSON<<ANNA<MARIA<<<<<<<<<<<<br>D231458907UTO7408122F1204159<<<<<<<< | 59.49 ns | 1.208 ns | 1.770 ns |         - |
+| ICAO 9303 Machine Readable Visa | I<UTOSKYWALKER<<LUKE<<<<<<<<<<<<<<<<<br>STARWARS45UTO7705256M2405252<<<<<<<< | 53.47 ns | 0.739 ns | 0.655 ns |         - |
+| ICAO 9303 Machine Readable Visa | V<UTOERIKSSON<<ANNA<MARIA<<<<<<<<<<<<<<<<<<<<br>L898902C<3UTO6908061F9406236ZE184226B<<<<<<< | 52.94 ns | 0.527 ns | 0.493 ns |         - |
+|                                 |                                        |           |           |           |           |
+| ICAO 9303 Size TD1              | I<UTOD231458907<<<<<<<<<<<<<<<<br>7408122F1204159UTO<<<<<<<<<<<6<br>ERIKSSON<<ANNA<MARIA<<<<<<<<<< | 84.945 ns | 1.6663 ns | 1.5586 ns |         - |
+| ICAO 9303 Size TD1              | I<UTOSTARWARS45<<<<<<<<<<<<<<<<br>7705256M2405252UTO<<<<<<<<<<<4<br>SKYWALKER<<LUKE<<<<<<<<<<<<<<< | 97.953 ns | 1.0370 ns | 0.9700 ns |         - |
+| ICAO 9303 Size TD1              | I<UTOD23145890<AB112234566<<<<<br>7408122F1204159UTO<<<<<<<<<<<4<br>ERIKSSON<<ANNA<MARIA<<<<<<<<<< | 97.953 ns | 1.0370 ns | 0.9700 ns |         - |
+|                                 |                                        |           |           |           |           |
+| ICAO 9303 Size TD2              | I<UTOERIKSSON<<ANNA<MARIA<<<<<<<<<<<<br>D231458907UTO7408122F1204159<<<<<<<6 | 86.78 ns | 0.816 ns | 0.763 ns |         - |
+| ICAO 9303 Size TD2              | I<UTOQWERTY<<ASDF<<<<<<<<<<<<<<<<<<<<br>D23145890<UTO7408122F1204159AB1124<4 | 95.22 ns | 0.852 ns | 0.797 ns |         - |
+| ICAO 9303 Size TD2              | I<UTOSKYWALKER<<LUKE<<<<<<<<<<<<<<<<<br>STARWARS45UTO7705256M2405252<<<<<<<8 | 87.34 ns | 0.704 ns | 0.658 ns |         - |
+|                                 |                                        |           |           |           |           |
+| ICAO 9303 Size TD3              | P<UTOERIKSSON<<ANNA<MARIA<<<<<<<<<<<<<<<<<<<<br>L898902C36UTO7408122F1204159ZE184226B<<<<<10 | 85.675 ns | 0.5136 ns | 0.4804 ns |         - |
+| ICAO 9303 Size TD3              | P<UTOQWERTY<<ASDF<<<<<<<<<<<<<<<<<<<<<<<<<<<<br>Q123987655UTO3311226F2010201<<<<<<<<<<<<<<06 | 85.188 ns | 0.2958 ns | 0.2310 ns |         - |
+| ICAO 9303 Size TD3              | P<UTOSKYWALKER<<LUKE<<<<<<<<<<<<<<<<<<<<<<<<<br>STARWARS45UTO7705256M2405252HAN<SHOT<FIRST78 | 85.401 ns | 0.5888 ns | 0.5507 ns |         - |
+|                                 |                                        |           |           |           |           |                                           
+| ISAN                            | C594660A8B2E5D22X6DDA3272E             | 54.400 ns | 0.1940 ns | 0.1810 ns |         - |
+| ISAN                            | D02C42E954183EE2Q1291C8AEO             | 51.210 ns | 0.2820 ns | 0.2640 ns |         - |
+| ISAN                            | E9530C32BC0EE83B269867B20F             | 46.700 ns | 0.1390 ns | 0.1300 ns |         - |
+|                                 |                                        |           |           |           |           |                                           
+| ISAN (Formatted)                | ISAN C594-660A-8B2E-5D22-X             | 45.420 ns | 0.1530 ns | 0.1360 ns |         - |
+| ISAN (Formatted)                | ISAN D02C-42E9-5418-3EE2-Q             | 44.310 ns | 0.2520 ns | 0.2360 ns |         - |
+| ISAN (Formatted)                | ISAN E953-0C32-BC0E-E83B-2             | 50.080 ns | 0.2070 ns | 0.1840 ns |         - |
+| ISAN (Formatted)                | ISAN C594-660A-8B2E-5D22-X-6DDA-3272-E | 64.650 ns | 0.3200 ns | 0.3000 ns |         - |
+| ISAN (Formatted)                | ISAN D02C-42E9-5418-3EE2-Q-1291-C8AE-O | 65.820 ns | 0.3030 ns | 0.2840 ns |         - |
+| ISAN (Formatted)                | ISAN E953-0C32-BC0E-E83B-2-6986-7B20-F | 64.220 ns | 0.3640 ns | 0.3400 ns |         - |
+|                                 |                                        |           |           |           |           |                                           
+| ISIN                            | AU0000XVGZA3                           | 25.520 ns | 0.1260 ns | 0.1170 ns |         - |
+| ISIN                            | GB0002634946                           | 19.150 ns | 0.1290 ns | 0.1140 ns |         - |
+| ISIN                            | US0378331005                           | 19.110 ns | 0.1400 ns | 0.1310 ns |         - |
+|                                 |                                        |           |           |           |           |                                           
+| ISO 6346                        | CSQU3054383                            | 14.970 ns | 0.0350 ns | 0.0280 ns |         - |
+| ISO 6346                        | MSKU9070323                            | 14.890 ns | 0.0930 ns | 0.0870 ns |         - |
+| ISO 6346                        | TOLU4734787                            | 14.840 ns | 0.0980 ns | 0.0870 ns |         - |
+|                                 |                                        |           |           |           |           |                                           
+| NHS                             | 4505577104                             | 11.280 ns | 0.0360 ns | 0.0340 ns |         - |
+| NHS                             | 5301194917                             | 11.270 ns | 0.0400 ns | 0.0360 ns |         - |
+| NHS                             | 9434765919                             | 11.270 ns | 0.0450 ns | 0.0430 ns |         - |
+|                                 |                                        |           |           |           |           |                                           
+| NPI                             | 1122337797                             | 14.490 ns | 0.0490 ns | 0.0440 ns |         - |
+| NPI                             | 1234567893                             | 14.530 ns | 0.0800 ns | 0.0710 ns |         - |
+| NPI                             | 1245319599                             | 14.520 ns | 0.0890 ns | 0.0830 ns |         - |
+|                                 |                                        |           |           |           |           |                                           
+| SEDOL                           | 3134865                                | 12.290 ns | 0.1440 ns | 0.1200 ns |         - |
+| SEDOL                           | B0YQ5W0                                | 12.180 ns | 0.0630 ns | 0.0560 ns |         - |
+| SEDOL                           | BRDVMH9                                | 12.220 ns | 0.0800 ns | 0.0710 ns |         - |
+|                                 |                                        |           |           |           |           |                                           
+| VIN                             | 1G8ZG127XWZ157259                      | 21.120 ns | 0.1160 ns | 0.1080 ns |         - |
+| VIN                             | 1HGEM21292L047875                      | 20.920 ns | 0.0770 ns | 0.0690 ns |         - |
+| VIN                             | 1M8GDM9AXKP042788                      | 21.050 ns | 0.0940 ns | 0.0830 ns |         - |
                         
 
 # Release History/Release Notes
