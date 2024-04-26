@@ -6,7 +6,7 @@ public class Icao9303SizeTD1AlgorithmTests
 {
    private readonly Icao9303SizeTD1Algorithm _sut = new();
 
-   // Example MRZ from Example from https://www.icao.int/publications/Documents/9303_p5_cons_en.pdf
+   // Example MRZ from https://www.icao.int/publications/Documents/9303_p5_cons_en.pdf
    private const String _mrzFirstLine = "I<UTOD231458907<<<<<<<<<<<<<<<";
    private const String _mrzSecondLine = "7408122F1204159UTO<<<<<<<<<<<6";
    private const String _mrzThirdLine = "ERIKSSON<<ANNA<MARIA<<<<<<<<<<";
@@ -75,7 +75,7 @@ public class Icao9303SizeTD1AlgorithmTests
 
    [Theory]
    [MemberData(nameof(LineSeparatorValues))]
-   public void Icao9302TD1Algorithm_LineSeparator_ShouldNotThrow_ValueIsValid(LineSeparator lineSeparator)
+   public void Icao9302SizeTD1Algorithm_LineSeparator_ShouldNotThrow_ValueIsValid(LineSeparator lineSeparator)
    {
       // Arrange.
       var act = () => _sut.LineSeparator = lineSeparator;
@@ -86,7 +86,7 @@ public class Icao9303SizeTD1AlgorithmTests
 
    [Theory]
    [MemberData(nameof(LineSeparatorValues))]
-   public void Icao9303TD1Algorithm_LineSeparator_ShouldReturnExpectedValueAfterSetting(LineSeparator lineSeparator)
+   public void Icao9303SizeTD1Algorithm_LineSeparator_ShouldReturnExpectedValueAfterSetting(LineSeparator lineSeparator)
    {
       // Arrange.
       var sut = new Icao9303SizeTD1Algorithm() { LineSeparator = lineSeparator };
@@ -96,7 +96,7 @@ public class Icao9303SizeTD1AlgorithmTests
    }
 
    [Fact]
-   public void Icao9302TD1Algorithm_LineSeparator_ShouldThrowArgumentOutOfRangeException_ValueIsInvalid()
+   public void Icao9302SizeTD1Algorithm_LineSeparator_ShouldThrowArgumentOutOfRangeException_ValueIsInvalid()
    {
       // Arrange.
       var value = (LineSeparator)(-1);

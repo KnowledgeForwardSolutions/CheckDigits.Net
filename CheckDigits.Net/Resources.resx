@@ -162,6 +162,12 @@
   <data name="Icao9303AlgorithmName" xml:space="preserve">
     <value>Icao9303</value>
   </data>
+  <data name="Icao9303MachineReadableVisaAlgorithmDescription" xml:space="preserve">
+    <value>IACO 9303 Algorithm for Machine Readable Visas</value>
+  </data>
+  <data name="Icao9303MachineReadableVisaAlgorithmName" xml:space="preserve">
+    <value>IACO 9303 Machine Readable Visa</value>
+  </data>
   <data name="Icao9303SizeTD1AlgorithmDescription" xml:space="preserve">
     <value>IACO 9303 Algorithm for Machine Readable Documents Size TD1</value>
   </data>

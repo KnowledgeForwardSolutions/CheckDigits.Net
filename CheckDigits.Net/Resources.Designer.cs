@@ -196,6 +196,24 @@ namespace CheckDigits.Net {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to IACO 9303 Algorithm for Machine Readable Visas.
+        /// </summary>
+        internal static string Icao9303MachineReadableVisaAlgorithmDescription {
+            get {
+                return ResourceManager.GetString("Icao9303MachineReadableVisaAlgorithmDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to IACO 9303 Machine Readable Visa.
+        /// </summary>
+        internal static string Icao9303MachineReadableVisaAlgorithmName {
+            get {
+                return ResourceManager.GetString("Icao9303MachineReadableVisaAlgorithmName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to IACO 9303 Algorithm for Machine Readable Documents Size TD1.
         /// </summary>
         internal static string Icao9303SizeTD1AlgorithmDescription {

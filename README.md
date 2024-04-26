@@ -31,6 +31,7 @@ let us know. Or contribute to the CheckDigits.Net repository: https://github.com
     * [ICAO 9303 Document Size TD1 Algorithm](#icao-9303-document-size-td1-algorithm)
     * [ICAO 9303 Document Size TD2 Algorithm](#icao-9303-document-size-td2-algorithm)
     * [ICAO 9303 Document Size TD3 Algorithm](#icao-9303-document-size-td3-algorithm)
+    * [ICAO 9303 Machine Readable Visa Algorithm](#icao-9303-machine-readable-visa-algorithm)
     * [ISAN (International Standard Audiovisual Number) Algorithm](#isan-algorithm)
     * [ISIN (International Securities Identification Number) Algorithm](#isin-algorithm)
     * [ISO 6346 Algorithm](#iso-6346-algorithm)
@@ -132,6 +133,7 @@ The ISO/IEC 7064:2003 standard is available at https://www.iso.org/standard/3153
 * [ICAO 9303 Document Size TD1 Algorithm](#icao-9303-document-size-td1-algorithm)
 * [ICAO 9303 Document Size TD2 Algorithm](#icao-9303-document-size-td2-algorithm)
 * [ICAO 9303 Document Size TD3 Algorithm](#icao-9303-document-size-td3-algorithm)
+* [ICAO 9303 Machine Readable Visa Algorithm](#icao-9303-machine-readable-visa-algorithm)
 * [ISAN (International Standard Audiovisual Number) Algorithm](#isan-algorithm)
 * [ISIN (International Securities Identification Number) Algorithm](#isin-algorithm)
 * [ISO 6346 Algorithm](#iso-6346-algorithm)
@@ -173,9 +175,10 @@ The ISO/IEC 7064:2003 standard is available at https://www.iso.org/standard/3153
 | GTIN-14				| [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
 | IBAN                  | [IBAN Algorithm](#iban-algorithm) |
 | ICAO Machine Readable Travel Document Field | [ICAO 9303 Algorithm](#icao-9303-algorithm) |
-| ICAO Machine Readable Travel Documents Size TD1 Documents | [ICAO 9303 Document Size TD1 Algorithm](#icao-9303-document-size-td1-algorithm) |
-| ICAO Machine Readable Travel Documents Size TD2 Documents | [ICAO 9303 Document Size TD2 Algorithm](#icao-9303-document-size-td2-algorithm) |
+| ICAO Machine Readable Travel Documents Size TD1 | [ICAO 9303 Document Size TD1 Algorithm](#icao-9303-document-size-td1-algorithm) |
+| ICAO Machine Readable Travel Documents Size TD2 | [ICAO 9303 Document Size TD2 Algorithm](#icao-9303-document-size-td2-algorithm) |
 | ICAO Machine Readable Passports and Size TD3 Documents | [ICAO 9303 Document Size TD3 Algorithm](#icao-9303-document-size-td3-algorithm) |
+| ICAO Machine Readable Visas | [ICAO 9303 Machine Readable Visa Algorithm](#icao-9303-machine-readable-visa-algorithm) |
 | IMEI				    | [Luhn Algorithm](#luhn-algorithm) |
 | IMO Number            | [Modulus10_2 Algorithm](#modulus10_2-algorithm) |
 | ISAN                  | [ISAN Algorithm](#isan-algorithm) |
@@ -518,7 +521,7 @@ LineSeparator is None.
 
 The ICAO 9303 Document Size TD1 Algorithm will validate the check digits of the
 three fields (document number, date of birth and date of expiry) as well as the 
-composite check digit. If any of the check digits fail  validation then the 
+composite check digit. If any of the check digits fail validation then the 
 Validate method will return ```false```.
 
 #### Details
@@ -527,6 +530,7 @@ Validate method will return ```false```.
 * Check digit size - one character
 * Check digit value - decimal digit ('0' - '9')
 * Check digit location - trailing (right-most) character of individual fields, trailing character of second line for composite check digit
+* Value length - three lines of 30 characters plus additional line separator characters as specified by the LineSeparator property
 * Class name - Icao9303SizeTD1Algorithm
 
 #### Links
@@ -534,6 +538,8 @@ Validate method will return ```false```.
 https://www.icao.int/publications/Documents/9303_p5_cons_en.pdf
 
 ### ICAO 9303 Document Size TD2 Algorithm
+
+#### Description
 
 The ICAO 9303 (International Civil Aviation Organization) specification for 
 Machine Readable Travel Documents Size TD2 uses multiple check digits in the 
@@ -547,7 +553,7 @@ The machine readable zone of a Size TD2 document consists of two lines of 36
 characters. The value passed to the Validate method should contain all lines of
 data concatenated together. You can specify how the lines are separated in the
 concatenated value by setting the LineSeparator property of the algorithm class.
-The three values are None (no line separator is used and the 31st character of the
+The three values are None (no line separator is used and the 37th character of the
 value is the first character of the second line), Crlf (the Windows line separator,
 i.e. a carriage return character followed by a line feed character - '\r\n') and 
 Lf (the Unix line separator, i.e a line feed character - '\n').The default 
@@ -555,7 +561,7 @@ LineSeparator is None.
 
 The ICAO 9303 Document Size TD2 Algorithm will validate the check digits of the
 three fields (document number, date of birth and date of expiry) as well as the 
-composite check digit. If any of the check digits fail  validation then the 
+composite check digit. If any of the check digits fail validation then the 
 Validate method will return ```false```.
 
 #### Details
@@ -564,7 +570,8 @@ Validate method will return ```false```.
 * Check digit size - one character
 * Check digit value - decimal digit ('0' - '9')
 * Check digit location - trailing (right-most) character of individual fields, trailing character of second line for composite check digit
-* Class name - Icao9303SizeTD1Algorithm
+* Value length - two lines of 36 characters plus additional line separator characters as specified by the LineSeparator property
+* Class name - Icao9303SizeTD2Algorithm
 
 #### Links
 
@@ -605,11 +612,60 @@ validation then the Validate method will return ```false```.
 * Check digit size - one character
 * Check digit value - decimal digit ('0' - '9')
 * Check digit location - trailing (right-most) character of individual fields, trailing character of entire string for composite check digit
+* Value length - two lines of 44 characters plus additional line separator characters as specified by the LineSeparator property
 * Class name - Icao9303SizeTD3Algorithm
 
 #### Links
 
 https://www.icao.int/publications/Documents/9303_p4_cons_en.pdf
+
+### ICAO 9303 Machine Readable Visa Algorithm
+
+#### Description
+
+The ICAO 9303 (International Civil Aviation Organization) specification for 
+Machine Readable Visas uses multiple check digits in the machine readable zone 
+of the document. The second line of the machine readable zone contains fields 
+for document number, date of birth and date of expiry and associated check 
+digits for each field. (Unlike other ICAO 9303 TD1, TD2 or TD3 documents, no 
+composite check digit is used.) The individual field check digits are all 
+calculated using the[ICAO 9303 Algorithm](#icao-9303-algorithm).
+
+Machine Readable Visas have two formats: MRV-A and MRV-B. The MRV-A format uses
+two lines of 44 characters while the MRV-B format uses two lines of 36 characters.
+The individual fields in the second line of the machine readable zone are located
+in the same character positions regardless of the format. The Validate method
+can validate either format
+
+The machine readable zone of a Machine Readable Visa consists of two lines of 36
+characters. The value passed to the Validate method should contain all lines of
+data concatenated together. You can specify how the lines are separated in the
+concatenated value by setting the LineSeparator property of the algorithm class.
+The three values are None (no line separator is used and the 37th character of the
+value is the first character of the second line), Crlf (the Windows line separator,
+i.e. a carriage return character followed by a line feed character - '\r\n') and 
+Lf (the Unix line separator, i.e a line feed character - '\n').The default 
+LineSeparator is None.
+
+The ICAO 9303 Machine Readable Visa Algorithm will validate the check digits of 
+the three fields (document number, date of birth and date of expiry). If any of 
+the check digits fail validation then the Validate method will return ```false```.
+In addition, if the value is not the correct length (two lines of either 44 or 
+36 characters, plus line separator characters matching the LineSeparator 
+property) then the method will return false.
+
+#### Details
+
+* Valid characters - decimal digits ('0' - '9'), upper case letters ('A' - 'Z') and a filler character ('<').
+* Check digit size - one character
+* Check digit value - decimal digit ('0' - '9')
+* Check digit location - trailing (right-most) character of individual fields
+* Value length - two lines of either 44 characters (MRV-A) or 36 characters (MRV-B), plus additional line separator characters as specified by the LineSeparator property
+* Class name - Icao9303MachineReadableVisaAlgorithm
+
+#### Links
+
+https://www.icao.int/publications/Documents/9303_p7_cons_en.pdf
 
 ### ISAN Algorithm
 
@@ -1482,82 +1538,86 @@ Note also that the values used for the NOID Check Digit algorithm do not include
 
 #### Value Specific Algorithms
 
-| Algorithm Name       | Value                                  | Mean      | Error     | StdDev    | Allocated |
-|--------------------- |--------------------------------------- |----------:|----------:|----------:|----------:|
-| ABA RTN              | 111000025                              | 10.830 ns | 0.0650 ns | 0.0580 ns |         - |
-| ABA RTN              | 122235821                              | 10.400 ns | 0.1880 ns | 0.1570 ns |         - |
-| ABA RTN              | 325081403                              | 10.310 ns | 0.0610 ns | 0.0570 ns |         - |
-|                      |                                        |           |           |           |           |                                           
-| CUSIP                | 037833100                              | 16.500 ns | 0.1990 ns | 0.1760 ns |         - |
-| CUSIP                | 38143VAA7                              | 13.020 ns | 0.0830 ns | 0.0770 ns |         - |
-| CUSIP                | 91282CJL6                              | 12.850 ns | 0.0630 ns | 0.0530 ns |         - |
-|                      |                                        |           |           |           |           |                                           
-| IBAN                 | BE71096123456769                       | 20.090 ns | 0.1710 ns | 0.1600 ns |         - |
-| IBAN                 | GB82WEST12345698765432                 | 34.960 ns | 0.2120 ns | 0.1880 ns |         - |
-| IBAN                 | SC74MCBL01031234567890123456USD        | 51.580 ns | 0.2410 ns | 0.2130 ns |         - |
-|                      |                                        |           |           |           |           |
-| ICAO 9303            | U7Y5                                   |  7.376 ns | 0.0654 ns | 0.0580 ns |         - |
-| ICAO 9303            | U7Y8SX8                                | 13.371 ns | 0.2098 ns | 0.1752 ns |         - |
-| ICAO 9303            | U7Y8SXRC03                             | 17.766 ns | 0.3089 ns | 0.2890 ns |         - |
-| ICAO 9303            | U7Y8SXRC0O3S8                          | 22.630 ns | 0.4513 ns | 0.4221 ns |         - |
-| ICAO 9303            | U7Y8SXRC0O3SC4I2                       | 28.543 ns | 0.3081 ns | 0.2731 ns |         - |
-| ICAO 9303            | U7Y8SXRC0O3SC4IHYQ9                    | 32.207 ns | 0.3189 ns | 0.2490 ns |         - |
-| ICAO 9303            | U7Y8SXRC0O3SC4IHYQF4M8                 | 39.060 ns | 0.4010 ns | 0.3555 ns |         - |
-|                      |                                        |           |           |           |           |
-| ICAO 9303 (Embedded) | +U7Y5+                                 |  9.022 ns | 0.2106 ns | 0.3278 ns |         - |
-| ICAO 9303 (Embedded) | +U7Y8SX8+                              | 11.690 ns | 0.2177 ns | 0.2036 ns |         - |
-| ICAO 9303 (Embedded) | +U7Y8SXRC03+                           | 15.562 ns | 0.2131 ns | 0.1993 ns |         - |
-| ICAO 9303 (Embedded) | +U7Y8SXRC0O3S8+                        | 19.363 ns | 0.3438 ns | 0.3216 ns |         - |
-| ICAO 9303 (Embedded) | +U7Y8SXRC0O3SC4I2+                     | 22.433 ns | 0.2453 ns | 0.2174 ns |         - |
-| ICAO 9303 (Embedded) | +U7Y8SXRC0O3SC4IHYQ9+                  | 26.724 ns | 0.2726 ns | 0.2416 ns |         - |
-| ICAO 9303 (Embedded) | +U7Y8SXRC0O3SC4IHYQF4M8+               | 29.762 ns | 0.5975 ns | 0.6394 ns |         - |
-|                      |                                        |           |           |           |           |
-| ICAO 9303 Size TD1   | I<UTOD231458907<<<<<<<<<<<<<<<<br>7408122F1204159UTO<<<<<<<<<<<6<br>ERIKSSON<<ANNA<MARIA<<<<<<<<<< | 84.945 ns | 1.6663 ns | 1.5586 ns |         - |
-| ICAO 9303 Size TD1   | I<UTOSTARWARS45<<<<<<<<<<<<<<<<br>7705256F2405252UTO<<<<<<<<<<<4<br>SKYWALKER<<LUKE<<<<<<<<<<<<<<< | 97.953 ns | 1.0370 ns | 0.9700 ns |         - |
-| ICAO 9303 Size TD1   | I<UTOD23145890<AB112234566<<<<<br>7408122F1204159UTO<<<<<<<<<<<4<br>ERIKSSON<<ANNA<MARIA<<<<<<<<<< | 97.953 ns | 1.0370 ns | 0.9700 ns |         - |
-|                      |                                        |           |           |           |           |
-| ICAO 9303 Size TD2   | I<UTOERIKSSON<<ANNA<MARIA<<<<<<<<<<<<br>D231458907UTO7408122F1204159<<<<<<<6 | 86.78 ns | 0.816 ns | 0.763 ns |         - |
-| ICAO 9303 Size TD2   | I<UTOQWERTY<<ASDF<<<<<<<<<<<<<<<<<<<<br>D23145890<UTO7408122F1204159AB1124<4 | 95.22 ns | 0.852 ns | 0.797 ns |         - |
-| ICAO 9303 Size TD2   | I<UTOSKYWALKER<<LUKE<<<<<<<<<<<<<<<<<br>STARWARS45UTO7705256M2405252<<<<<<<8 | 87.34 ns | 0.704 ns | 0.658 ns |         - |
-|                      |                                        |           |           |           |           |
-| ICAO 9303 Size TD3   | P<UTOERIKSSON<<ANNA<MARIA<<<<<<<<<<<<<<<<<<<<br>L898902C36UTO7408122F1204159ZE184226B<<<<<10 | 85.675 ns | 0.5136 ns | 0.4804 ns |         - |
-| ICAO 9303 Size TD3   | P<UTOQWERTY<<ASDF<<<<<<<<<<<<<<<<<<<<<<<<<<<<br>Q123987655UTO3311226F2010201<<<<<<<<<<<<<<06 | 85.188 ns | 0.2958 ns | 0.2310 ns |         - |
-| ICAO 9303 Size TD3   | P<UTOSKYWALKER<<LUKE<<<<<<<<<<<<<<<<<<<<<<<<<br>STARWARS45UTO7705256M2405252HAN<SHOT<FIRST78 | 85.401 ns | 0.5888 ns | 0.5507 ns |         - |
-|                      |                                        |           |           |           |           |                                           
-| ISAN                 | C594660A8B2E5D22X6DDA3272E             | 54.400 ns | 0.1940 ns | 0.1810 ns |         - |
-| ISAN                 | D02C42E954183EE2Q1291C8AEO             | 51.210 ns | 0.2820 ns | 0.2640 ns |         - |
-| ISAN                 | E9530C32BC0EE83B269867B20F             | 46.700 ns | 0.1390 ns | 0.1300 ns |         - |
-|                      |                                        |           |           |           |           |                                           
-| ISAN (Formatted)     | ISAN C594-660A-8B2E-5D22-X             | 45.420 ns | 0.1530 ns | 0.1360 ns |         - |
-| ISAN (Formatted)     | ISAN D02C-42E9-5418-3EE2-Q             | 44.310 ns | 0.2520 ns | 0.2360 ns |         - |
-| ISAN (Formatted)     | ISAN E953-0C32-BC0E-E83B-2             | 50.080 ns | 0.2070 ns | 0.1840 ns |         - |
-| ISAN (Formatted)     | ISAN C594-660A-8B2E-5D22-X-6DDA-3272-E | 64.650 ns | 0.3200 ns | 0.3000 ns |         - |
-| ISAN (Formatted)     | ISAN D02C-42E9-5418-3EE2-Q-1291-C8AE-O | 65.820 ns | 0.3030 ns | 0.2840 ns |         - |
-| ISAN (Formatted)     | ISAN E953-0C32-BC0E-E83B-2-6986-7B20-F | 64.220 ns | 0.3640 ns | 0.3400 ns |         - |
-|                      |                                        |           |           |           |           |                                           
-| ISIN                 | AU0000XVGZA3                           | 25.520 ns | 0.1260 ns | 0.1170 ns |         - |
-| ISIN                 | GB0002634946                           | 19.150 ns | 0.1290 ns | 0.1140 ns |         - |
-| ISIN                 | US0378331005                           | 19.110 ns | 0.1400 ns | 0.1310 ns |         - |
-|                      |                                        |           |           |           |           |                                           
-| ISO 6346             | CSQU3054383                            | 14.970 ns | 0.0350 ns | 0.0280 ns |         - |
-| ISO 6346             | MSKU9070323                            | 14.890 ns | 0.0930 ns | 0.0870 ns |         - |
-| ISO 6346             | TOLU4734787                            | 14.840 ns | 0.0980 ns | 0.0870 ns |         - |
-|                      |                                        |           |           |           |           |                                           
-| NHS                  | 4505577104                             | 11.280 ns | 0.0360 ns | 0.0340 ns |         - |
-| NHS                  | 5301194917                             | 11.270 ns | 0.0400 ns | 0.0360 ns |         - |
-| NHS                  | 9434765919                             | 11.270 ns | 0.0450 ns | 0.0430 ns |         - |
-|                      |                                        |           |           |           |           |                                           
-| NPI                  | 1122337797                             | 14.490 ns | 0.0490 ns | 0.0440 ns |         - |
-| NPI                  | 1234567893                             | 14.530 ns | 0.0800 ns | 0.0710 ns |         - |
-| NPI                  | 1245319599                             | 14.520 ns | 0.0890 ns | 0.0830 ns |         - |
-|                      |                                        |           |           |           |           |                                           
-| SEDOL                | 3134865                                | 12.290 ns | 0.1440 ns | 0.1200 ns |         - |
-| SEDOL                | B0YQ5W0                                | 12.180 ns | 0.0630 ns | 0.0560 ns |         - |
-| SEDOL                | BRDVMH9                                | 12.220 ns | 0.0800 ns | 0.0710 ns |         - |
-|                      |                                        |           |           |           |           |                                           
-| VIN                  | 1G8ZG127XWZ157259                      | 21.120 ns | 0.1160 ns | 0.1080 ns |         - |
-| VIN                  | 1HGEM21292L047875                      | 20.920 ns | 0.0770 ns | 0.0690 ns |         - |
-| VIN                  | 1M8GDM9AXKP042788                      | 21.050 ns | 0.0940 ns | 0.0830 ns |         - |
+| Algorithm Name                  | Value                                  | Mean      | Error     | StdDev    | Allocated |
+|-------------------------------- |--------------------------------------- |----------:|----------:|----------:|----------:|
+| ABA RTN                         | 111000025                              | 10.830 ns | 0.0650 ns | 0.0580 ns |         - |
+| ABA RTN                         | 122235821                              | 10.400 ns | 0.1880 ns | 0.1570 ns |         - |
+| ABA RTN                         | 325081403                              | 10.310 ns | 0.0610 ns | 0.0570 ns |         - |
+|                                 |                                        |           |           |           |           |                                           
+| CUSIP                           | 037833100                              | 16.500 ns | 0.1990 ns | 0.1760 ns |         - |
+| CUSIP                           | 38143VAA7                              | 13.020 ns | 0.0830 ns | 0.0770 ns |         - |
+| CUSIP                           | 91282CJL6                              | 12.850 ns | 0.0630 ns | 0.0530 ns |         - |
+|                                 |                                        |           |           |           |           |                                           
+| IBAN                            | BE71096123456769                       | 20.090 ns | 0.1710 ns | 0.1600 ns |         - |
+| IBAN                            | GB82WEST12345698765432                 | 34.960 ns | 0.2120 ns | 0.1880 ns |         - |
+| IBAN                            | SC74MCBL01031234567890123456USD        | 51.580 ns | 0.2410 ns | 0.2130 ns |         - |
+|                                 |                                        |           |           |           |           |
+| ICAO 9303                       | U7Y5                                   |  7.376 ns | 0.0654 ns | 0.0580 ns |         - |
+| ICAO 9303                       | U7Y8SX8                                | 13.371 ns | 0.2098 ns | 0.1752 ns |         - |
+| ICAO 9303                       | U7Y8SXRC03                             | 17.766 ns | 0.3089 ns | 0.2890 ns |         - |
+| ICAO 9303                       | U7Y8SXRC0O3S8                          | 22.630 ns | 0.4513 ns | 0.4221 ns |         - |
+| ICAO 9303                       | U7Y8SXRC0O3SC4I2                       | 28.543 ns | 0.3081 ns | 0.2731 ns |         - |
+| ICAO 9303                       | U7Y8SXRC0O3SC4IHYQ9                    | 32.207 ns | 0.3189 ns | 0.2490 ns |         - |
+| ICAO 9303                       | U7Y8SXRC0O3SC4IHYQF4M8                 | 39.060 ns | 0.4010 ns | 0.3555 ns |         - |
+|                                 |                                        |           |           |           |           |
+| ICAO 9303 (Embedded)            | +U7Y5+                                 |  9.022 ns | 0.2106 ns | 0.3278 ns |         - |
+| ICAO 9303 (Embedded)            | +U7Y8SX8+                              | 11.690 ns | 0.2177 ns | 0.2036 ns |         - |
+| ICAO 9303 (Embedded)            | +U7Y8SXRC03+                           | 15.562 ns | 0.2131 ns | 0.1993 ns |         - |
+| ICAO 9303 (Embedded)            | +U7Y8SXRC0O3S8+                        | 19.363 ns | 0.3438 ns | 0.3216 ns |         - |
+| ICAO 9303 (Embedded)            | +U7Y8SXRC0O3SC4I2+                     | 22.433 ns | 0.2453 ns | 0.2174 ns |         - |
+| ICAO 9303 (Embedded)            | +U7Y8SXRC0O3SC4IHYQ9+                  | 26.724 ns | 0.2726 ns | 0.2416 ns |         - |
+| ICAO 9303 (Embedded)            | +U7Y8SXRC0O3SC4IHYQF4M8+               | 29.762 ns | 0.5975 ns | 0.6394 ns |         - |
+|                                 |                                        |           |           |           |           |
+| ICAO 9303 Machine Readable Visa | I<UTOERIKSSON<<ANNA<MARIA<<<<<<<<<<<<br>D231458907UTO7408122F1204159<<<<<<<< | 59.49 ns | 1.208 ns | 1.770 ns |         - |
+| ICAO 9303 Machine Readable Visa | I<UTOSKYWALKER<<LUKE<<<<<<<<<<<<<<<<<br>STARWARS45UTO7705256M2405252<<<<<<<< | 53.47 ns | 0.739 ns | 0.655 ns |         - |
+| ICAO 9303 Machine Readable Visa | V<UTOERIKSSON<<ANNA<MARIA<<<<<<<<<<<<<<<<<<<<br>L898902C<3UTO6908061F9406236ZE184226B<<<<<<< | 52.94 ns | 0.527 ns | 0.493 ns |         - |
+|                                 |                                        |           |           |           |           |
+| ICAO 9303 Size TD1              | I<UTOD231458907<<<<<<<<<<<<<<<<br>7408122F1204159UTO<<<<<<<<<<<6<br>ERIKSSON<<ANNA<MARIA<<<<<<<<<< | 84.945 ns | 1.6663 ns | 1.5586 ns |         - |
+| ICAO 9303 Size TD1              | I<UTOSTARWARS45<<<<<<<<<<<<<<<<br>7705256M2405252UTO<<<<<<<<<<<4<br>SKYWALKER<<LUKE<<<<<<<<<<<<<<< | 97.953 ns | 1.0370 ns | 0.9700 ns |         - |
+| ICAO 9303 Size TD1              | I<UTOD23145890<AB112234566<<<<<br>7408122F1204159UTO<<<<<<<<<<<4<br>ERIKSSON<<ANNA<MARIA<<<<<<<<<< | 97.953 ns | 1.0370 ns | 0.9700 ns |         - |
+|                                 |                                        |           |           |           |           |
+| ICAO 9303 Size TD2              | I<UTOERIKSSON<<ANNA<MARIA<<<<<<<<<<<<br>D231458907UTO7408122F1204159<<<<<<<6 | 86.78 ns | 0.816 ns | 0.763 ns |         - |
+| ICAO 9303 Size TD2              | I<UTOQWERTY<<ASDF<<<<<<<<<<<<<<<<<<<<br>D23145890<UTO7408122F1204159AB1124<4 | 95.22 ns | 0.852 ns | 0.797 ns |         - |
+| ICAO 9303 Size TD2              | I<UTOSKYWALKER<<LUKE<<<<<<<<<<<<<<<<<br>STARWARS45UTO7705256M2405252<<<<<<<8 | 87.34 ns | 0.704 ns | 0.658 ns |         - |
+|                                 |                                        |           |           |           |           |
+| ICAO 9303 Size TD3              | P<UTOERIKSSON<<ANNA<MARIA<<<<<<<<<<<<<<<<<<<<br>L898902C36UTO7408122F1204159ZE184226B<<<<<10 | 85.675 ns | 0.5136 ns | 0.4804 ns |         - |
+| ICAO 9303 Size TD3              | P<UTOQWERTY<<ASDF<<<<<<<<<<<<<<<<<<<<<<<<<<<<br>Q123987655UTO3311226F2010201<<<<<<<<<<<<<<06 | 85.188 ns | 0.2958 ns | 0.2310 ns |         - |
+| ICAO 9303 Size TD3              | P<UTOSKYWALKER<<LUKE<<<<<<<<<<<<<<<<<<<<<<<<<br>STARWARS45UTO7705256M2405252HAN<SHOT<FIRST78 | 85.401 ns | 0.5888 ns | 0.5507 ns |         - |
+|                                 |                                        |           |           |           |           |                                           
+| ISAN                            | C594660A8B2E5D22X6DDA3272E             | 54.400 ns | 0.1940 ns | 0.1810 ns |         - |
+| ISAN                            | D02C42E954183EE2Q1291C8AEO             | 51.210 ns | 0.2820 ns | 0.2640 ns |         - |
+| ISAN                            | E9530C32BC0EE83B269867B20F             | 46.700 ns | 0.1390 ns | 0.1300 ns |         - |
+|                                 |                                        |           |           |           |           |                                           
+| ISAN (Formatted)                | ISAN C594-660A-8B2E-5D22-X             | 45.420 ns | 0.1530 ns | 0.1360 ns |         - |
+| ISAN (Formatted)                | ISAN D02C-42E9-5418-3EE2-Q             | 44.310 ns | 0.2520 ns | 0.2360 ns |         - |
+| ISAN (Formatted)                | ISAN E953-0C32-BC0E-E83B-2             | 50.080 ns | 0.2070 ns | 0.1840 ns |         - |
+| ISAN (Formatted)                | ISAN C594-660A-8B2E-5D22-X-6DDA-3272-E | 64.650 ns | 0.3200 ns | 0.3000 ns |         - |
+| ISAN (Formatted)                | ISAN D02C-42E9-5418-3EE2-Q-1291-C8AE-O | 65.820 ns | 0.3030 ns | 0.2840 ns |         - |
+| ISAN (Formatted)                | ISAN E953-0C32-BC0E-E83B-2-6986-7B20-F | 64.220 ns | 0.3640 ns | 0.3400 ns |         - |
+|                                 |                                        |           |           |           |           |                                           
+| ISIN                            | AU0000XVGZA3                           | 25.520 ns | 0.1260 ns | 0.1170 ns |         - |
+| ISIN                            | GB0002634946                           | 19.150 ns | 0.1290 ns | 0.1140 ns |         - |
+| ISIN                            | US0378331005                           | 19.110 ns | 0.1400 ns | 0.1310 ns |         - |
+|                                 |                                        |           |           |           |           |                                           
+| ISO 6346                        | CSQU3054383                            | 14.970 ns | 0.0350 ns | 0.0280 ns |         - |
+| ISO 6346                        | MSKU9070323                            | 14.890 ns | 0.0930 ns | 0.0870 ns |         - |
+| ISO 6346                        | TOLU4734787                            | 14.840 ns | 0.0980 ns | 0.0870 ns |         - |
+|                                 |                                        |           |           |           |           |                                           
+| NHS                             | 4505577104                             | 11.280 ns | 0.0360 ns | 0.0340 ns |         - |
+| NHS                             | 5301194917                             | 11.270 ns | 0.0400 ns | 0.0360 ns |         - |
+| NHS                             | 9434765919                             | 11.270 ns | 0.0450 ns | 0.0430 ns |         - |
+|                                 |                                        |           |           |           |           |                                           
+| NPI                             | 1122337797                             | 14.490 ns | 0.0490 ns | 0.0440 ns |         - |
+| NPI                             | 1234567893                             | 14.530 ns | 0.0800 ns | 0.0710 ns |         - |
+| NPI                             | 1245319599                             | 14.520 ns | 0.0890 ns | 0.0830 ns |         - |
+|                                 |                                        |           |           |           |           |                                           
+| SEDOL                           | 3134865                                | 12.290 ns | 0.1440 ns | 0.1200 ns |         - |
+| SEDOL                           | B0YQ5W0                                | 12.180 ns | 0.0630 ns | 0.0560 ns |         - |
+| SEDOL                           | BRDVMH9                                | 12.220 ns | 0.0800 ns | 0.0710 ns |         - |
+|                                 |                                        |           |           |           |           |                                           
+| VIN                             | 1G8ZG127XWZ157259                      | 21.120 ns | 0.1160 ns | 0.1080 ns |         - |
+| VIN                             | 1HGEM21292L047875                      | 20.920 ns | 0.0770 ns | 0.0690 ns |         - |
+| VIN                             | 1M8GDM9AXKP042788                      | 21.050 ns | 0.0940 ns | 0.0830 ns |         - |
                         
 
 # Release History/Release Notes
@@ -1638,3 +1698,4 @@ Additional included algorithms
 * ICAO 9303 Document Size TD1 Algorithm
 * ICAO 9303 Document Size TD2 Algorithm
 * ICAO 9303 Document Size TD3 Algorithm
+* ICAO 9303 Machine Readable Visa Algorithm

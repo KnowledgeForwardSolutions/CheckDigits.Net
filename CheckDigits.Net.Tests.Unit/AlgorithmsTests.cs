@@ -88,6 +88,20 @@ public class AlgorithmsTests
 
    #endregion
 
+   #region Icao9303MachineReadableVisa Property Tests
+   // ==========================================================================
+   // ==========================================================================
+
+   [Fact]
+   public void Algorithms_Icao9303MachineReadableVisa_ShouldNotBeNull()
+      => Algorithms.Icao9303MachineReadableVisa.Should().NotBeNull();
+
+   [Fact]
+   public void Algorithms_Icao9303MachineReadableVisa_ShouldBeExpectedType()
+      => Algorithms.Icao9303MachineReadableVisa.Should().BeOfType<Icao9303MachineReadableVisaAlgorithm>();
+
+   #endregion
+
    #region Icao9303SizeTD1 Property Tests
    // ==========================================================================
    // ==========================================================================
