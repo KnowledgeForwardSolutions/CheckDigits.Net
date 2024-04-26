@@ -26,6 +26,7 @@ let us know. Or contribute to the CheckDigits.Net repository: https://github.com
     * [Alphanumeric MOD 97-10 Algorithm](#alphanumeric-mod-97-10-algorithm)
     * [CUSIP Algorithm](#cusip-algorithm)
     * [Damm Algorithm](#damm-algorithm)
+    * [FIGI (Financial Instrument Global Identifier) Algorithm](#figi-algorithm)
     * [IBAN (International Bank Account Number) Algorithm](#iban-algorithm)
     * [ICAO 9303 Algorithm](#icao-9303-algorithm)
     * [ICAO 9303 Document Size TD1 Algorithm](#icao-9303-document-size-td1-algorithm)
@@ -128,6 +129,7 @@ The ISO/IEC 7064:2003 standard is available at https://www.iso.org/standard/3153
 * [Alphanumeric MOD 97-10 Algorithm](#alphanumeric-mod-97-10-algorithm)
 * [CUSIP Algorithm](#cusip-algorithm)
 * [Damm Algorithm](#damm-algorithm)
+* [FIGI (Financial Instrument Global Identifier) Algorithm](#figi-algorithm)
 * [IBAN (International Bank Account Number) Algorithm](#iban-algorithm)
 * [ICAO 9303 Algorithm](#icao-9303-algorithm)
 * [ICAO 9303 Document Size TD1 Algorithm](#icao-9303-document-size-td1-algorithm)
@@ -159,46 +161,47 @@ The ISO/IEC 7064:2003 standard is available at https://www.iso.org/standard/3153
 
 ## Value/Identifier Types and Associated Algorithms
 
-| Value/Identifier Type | Algorithm |
-| --------------------- | ----------|
-| ABA Routing Transit Number | [ABA RTN Algorithm](#aba-rtn-algorithm) |
-| CA Social Insurance Number | [Luhn Algorithm](#luhn-algorithm) |
-| CAS Registry Number   | [Modulus10_1 Algorithm](#modulus10_1-algorithm) |
-| Credit card number    | [Luhn Algorithm](#luhn-algorithm) |
-| CUSIP                 | [CUSIP Algorithm](#cusip-algorithm) |
-| EAN-8					| [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
-| EAN-13				| [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
-| Global Release Identifier | [ISO/IEC 7064 MOD 37-36 Algorithm](#isoiec-7064-mod-3736-algorithm) |
-| GTIN-8				| [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
-| GTIN-12				| [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
-| GTIN-13				| [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
-| GTIN-14				| [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
-| IBAN                  | [IBAN Algorithm](#iban-algorithm) |
-| ICAO Machine Readable Travel Document Field | [ICAO 9303 Algorithm](#icao-9303-algorithm) |
-| ICAO Machine Readable Travel Documents Size TD1 | [ICAO 9303 Document Size TD1 Algorithm](#icao-9303-document-size-td1-algorithm) |
-| ICAO Machine Readable Travel Documents Size TD2 | [ICAO 9303 Document Size TD2 Algorithm](#icao-9303-document-size-td2-algorithm) |
+| Value/Identifier Type                                  | Algorithm                                         |
+| ------------------------------------------------------ | ------------------------------------------------- |
+| ABA Routing Transit Number                             | [ABA RTN Algorithm](#aba-rtn-algorithm)           |
+| CA Social Insurance Number                             | [Luhn Algorithm](#luhn-algorithm)                 |
+| CAS Registry Number                                    | [Modulus10_1 Algorithm](#modulus10_1-algorithm)   |
+| Credit card number                                     | [Luhn Algorithm](#luhn-algorithm)                 |
+| CUSIP                                                  | [CUSIP Algorithm](#cusip-algorithm)               |
+| EAN-8					                                 | [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
+| EAN-13				                                 | [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
+| FIGI                                                   | [FIGI Algorithm](#figi-algorithm)                 |
+| Global Release Identifier                              | [ISO/IEC 7064 MOD 37-36 Algorithm](#isoiec-7064-mod-3736-algorithm) |
+| GTIN-8				                                 | [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
+| GTIN-12				                                 | [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
+| GTIN-13				                                 | [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
+| GTIN-14				                                 | [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
+| IBAN                                                   | [IBAN Algorithm](#iban-algorithm) |
+| ICAO Machine Readable Travel Document Field            | [ICAO 9303 Algorithm](#icao-9303-algorithm) |
+| ICAO Machine Readable Travel Documents Size TD1        | [ICAO 9303 Document Size TD1 Algorithm](#icao-9303-document-size-td1-algorithm) |
+| ICAO Machine Readable Travel Documents Size TD2        | [ICAO 9303 Document Size TD2 Algorithm](#icao-9303-document-size-td2-algorithm) |
 | ICAO Machine Readable Passports and Size TD3 Documents | [ICAO 9303 Document Size TD3 Algorithm](#icao-9303-document-size-td3-algorithm) |
-| ICAO Machine Readable Visas | [ICAO 9303 Machine Readable Visa Algorithm](#icao-9303-machine-readable-visa-algorithm) |
-| IMEI				    | [Luhn Algorithm](#luhn-algorithm) |
-| IMO Number            | [Modulus10_2 Algorithm](#modulus10_2-algorithm) |
-| ISAN                  | [ISAN Algorithm](#isan-algorithm) |
-| ISBN-10				| [Modulus11 Algorithm](#modulus11-algorithm) |
-| ISBN-13				| [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
-| ISBT Donation Identification Number |  [ISO/IEC 7064 MOD 37-2 Algorithm](#isoiec-7064-mod-37-2-algorithm) |
-| ISIN                  | [ISIN Algorithm](#isin-algorithm) |
-| ISMN					| [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
-| ISNI                  | [ISO/IEC 7064 MOD 11-2 Algorithm](#isoiec-7064-mod-11-2-algorithm) |
-| ISSN   				| [Modulus11 Algorithm](#modulus11-algorithm) |
-| Legal Entity Identifier | [Alphanumeric MOD 97-10 Algorithm](#alphanumeric-mod-97-10-algorithm) |
-| SEDOL					| [SEDOL Algorithm](#sedol-algorithm) |
-| Shipping Container Number | [ISO 6346 Algorithm](#iso-6346-algorithm) |
-| SSCC					| [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
-| Universal Loan Identifier | [Alphanumeric MOD 97-10 Algorithm](#alphanumeric-mod-97-10-algorithm) |
-| UK National Health Service Number | [NHS Algorithm](#nhs-algorithm) |
-| UPC-A					| [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
-| UPC-E					| [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
-| US National Provider Identifier | [NPI Algorithm](#npi-algorithm) |
-| Vehicle Identification Number | [VIN Algorithm](#vin-algorithm) |
+| ICAO Machine Readable Visas                            | [ICAO 9303 Machine Readable Visa Algorithm](#icao-9303-machine-readable-visa-algorithm) |
+| IMEI				                                     | [Luhn Algorithm](#luhn-algorithm) |
+| IMO Number                                             | [Modulus10_2 Algorithm](#modulus10_2-algorithm) |
+| ISAN                                                   | [ISAN Algorithm](#isan-algorithm) |
+| ISBN-10				                                 | [Modulus11 Algorithm](#modulus11-algorithm) |
+| ISBN-13				                                 | [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
+| ISBT Donation Identification Number                    | [ISO/IEC 7064 MOD 37-2 Algorithm](#isoiec-7064-mod-37-2-algorithm) |
+| ISIN                                                   | [ISIN Algorithm](#isin-algorithm) |
+| ISMN					                                 | [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
+| ISNI                                                   | [ISO/IEC 7064 MOD 11-2 Algorithm](#isoiec-7064-mod-11-2-algorithm) |
+| ISSN   				                                 | [Modulus11 Algorithm](#modulus11-algorithm) |
+| Legal Entity Identifier                                | [Alphanumeric MOD 97-10 Algorithm](#alphanumeric-mod-97-10-algorithm) |
+| SEDOL					                                 | [SEDOL Algorithm](#sedol-algorithm) |
+| Shipping Container Number                              | [ISO 6346 Algorithm](#iso-6346-algorithm) |
+| SSCC					                                 | [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
+| Universal Loan Identifier                              | [Alphanumeric MOD 97-10 Algorithm](#alphanumeric-mod-97-10-algorithm) |
+| UK National Health Service Number                      | [NHS Algorithm](#nhs-algorithm) |
+| UPC-A					                                 | [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
+| UPC-E					                                 | [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
+| US National Provider Identifier                        | [NPI Algorithm](#npi-algorithm) |
+| Vehicle Identification Number                          | [VIN Algorithm](#vin-algorithm) |
 
 ## Using CheckDigits.Net
 
@@ -437,6 +440,33 @@ on page 111 of Damm's doctoral dissertation.
 
 Wikipedia: https://en.wikipedia.org/wiki/Damm_algorithm
 
+### FIGI Algorithm
+
+#### Description
+
+The FIGI (Financial Instrument Global Identifier) algorithm is used for 12
+character values issued by Bloomberg L.P. that are used to identify a variety of
+financial instruments including common stock, futures, derivatives, bonds and 
+more. The algorithm uses a similar approach as the [ISIN Algorithm](#isin-algorithm)
+and suffers from the same weaknesses as the ISIN algorithm.
+
+The FIGI algorithm only supports validation of check digits and does support 
+calculation of check digits.
+
+#### Details
+
+* Valid characters - betanumeric characters ('0123456789BCDFGHJKMNPQRSTVWXZ')
+* Check digit size - one character
+* Check digit value - decimal digits ('0' - '9')
+* Check digit location - character position 12 (1-based)
+* Value length - 12
+* Class name - FigiAlgorithm
+
+#### Links
+
+https://en.wikipedia.org/wiki/Financial_Instrument_Global_Identifier
+https://www.openfigi.com/assets/content/figi-check-digit-2173341b2d.pdf
+
 ### IBAN Algorithm
 
 #### Description
@@ -482,6 +512,9 @@ and vice versa. Nor can the algorithm detect two character transposition errors
 where the difference between the transposed characters is a multiple of 5, i.e. 
 *27 <-> 72*, *D8 <-> 8D*, *BL <-> LB*).
 
+The ICAO 9303 algorithm only supports validation of check digits and does support 
+calculation of check digits.
+
 The ICAO 9303 algorithm also implements the ```IEmbeddedCheckDigitAlgorithm interface```
 which supports the validation of fields that are embedded within a larger string.
 
@@ -524,6 +557,9 @@ three fields (document number, date of birth and date of expiry) as well as the
 composite check digit. If any of the check digits fail validation then the 
 Validate method will return ```false```.
 
+The ICAO 9303 Document Size TD1 algorithm only supports validation of check 
+digits and does support calculation of check digits.
+
 #### Details
 
 * Valid characters - decimal digits ('0' - '9'), upper case letters ('A' - 'Z') and a filler character ('<').
@@ -563,6 +599,9 @@ The ICAO 9303 Document Size TD2 Algorithm will validate the check digits of the
 three fields (document number, date of birth and date of expiry) as well as the 
 composite check digit. If any of the check digits fail validation then the 
 Validate method will return ```false```.
+
+The ICAO 9303 Document Size TD2 algorithm only supports validation of check 
+digits and does support calculation of check digits.
 
 #### Details
 
@@ -605,6 +644,9 @@ The ICAO 9303 Document Size TD3 Algorithm will validate the check digits of the
 four fields (passport number, date of birth, date of expiry and optional personal
 number) as well as the composite check digit. If any of the check digits fail 
 validation then the Validate method will return ```false```.
+
+The ICAO 9303 Document Size TD3 algorithm only supports validation of check 
+digits and does support calculation of check digits.
 
 #### Details
 
@@ -653,6 +695,9 @@ the check digits fail validation then the Validate method will return ```false``
 In addition, if the value is not the correct length (two lines of either 44 or 
 36 characters, plus line separator characters matching the LineSeparator 
 property) then the method will return false.
+
+The ICAO 9303 Machine Readable Visa algorithm only supports validation of check 
+digits and does support calculation of check digits.
 
 #### Details
 
