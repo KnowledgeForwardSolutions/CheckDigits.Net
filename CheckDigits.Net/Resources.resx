@@ -147,6 +147,12 @@
   <data name="DammAlgorithmName" xml:space="preserve">
     <value>Damm</value>
   </data>
+  <data name="FigiAlgorithmDescription" xml:space="preserve">
+    <value>FIGI Algorithm</value>
+  </data>
+  <data name="FigiAlgorithmName" xml:space="preserve">
+    <value>FIGI</value>
+  </data>
   <data name="GetCheckCharacterValueOutOfRangeMessage" xml:space="preserve">
     <value>Check digit value is out of range for the character domain</value>
   </data>
@@ -262,7 +268,7 @@
     <value>Radix must be greater than one</value>
   </data>
   <data name="LineSeparatorInvalidValueMessage" xml:space="preserve">
-    <value>ator enumeration (None, Crlf or Lf)</value>
+    <value>Value must be a valid member of the LineSeparator enumeration (None, Crlf or Lf)</value>
   </data>
   <data name="LuhnAlgorithmDescription" xml:space="preserve">
     <value>Luhn algorithm - modulus 10 algorithm with weight 2 applied to every odd position character</value>
@@ -323,6 +329,9 @@
   </data>
   <data name="SedolAlgorithmName" xml:space="preserve">
     <value>SEDOL</value>
+  </data>
+  <data name="String1" xml:space="preserve">
+    <value />
   </data>
   <data name="VerhoeffAlgorithmDescription" xml:space="preserve">
     <value>Verhoeff's dihedral algorithm</value>

@@ -151,6 +151,24 @@ namespace CheckDigits.Net {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to FIGI Algorithm.
+        /// </summary>
+        internal static string FigiAlgorithmDescription {
+            get {
+                return ResourceManager.GetString("FigiAlgorithmDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to FIGI.
+        /// </summary>
+        internal static string FigiAlgorithmName {
+            get {
+                return ResourceManager.GetString("FigiAlgorithmName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Check digit value is out of range for the character domain.
         /// </summary>
         internal static string GetCheckCharacterValueOutOfRangeMessage {
@@ -493,7 +511,7 @@ namespace CheckDigits.Net {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ator enumeration (None, Crlf or Lf).
+        ///   Looks up a localized string similar to Value must be a valid member of the LineSeparator enumeration (None, Crlf or Lf).
         /// </summary>
         internal static string LineSeparatorInvalidValueMessage {
             get {
@@ -678,6 +696,15 @@ namespace CheckDigits.Net {
         internal static string SedolAlgorithmName {
             get {
                 return ResourceManager.GetString("SedolAlgorithmName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string String1 {
+            get {
+                return ResourceManager.GetString("String1", resourceCulture);
             }
         }
         
