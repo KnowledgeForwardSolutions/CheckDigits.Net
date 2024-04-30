@@ -447,15 +447,22 @@ Wikipedia: https://en.wikipedia.org/wiki/Damm_algorithm
 The FIGI (Financial Instrument Global Identifier) algorithm is used for 12
 character values issued by Bloomberg L.P. that are used to identify a variety of
 financial instruments including common stock, futures, derivatives, bonds and 
-more. The algorithm uses a similar approach as the [ISIN Algorithm](#isin-algorithm)
-and suffers from the same weaknesses as the ISIN algorithm.
+more. The algorithm is a variation of the [Luhn](#luhn-algorithm) algorithm and
+has the same weaknesses as the Luhn algorithm with digit characters. But like the
+[ISIN](#isin-algorithm) algorithm (which also extends the Luhn algorithm to 
+support alphanumeric strings), the FIGI algorithm has additional weaknesses when
+detecting errors involving alphabetic characters. Each alphabetic character has
+a digit character and at least one other alphabetic character that can be freely
+substituted for that character and which will result in the same check digit
+being calculated. This means that single character transcription errors involving
+those characters can not be detected by the algorithm.
 
 The FIGI algorithm only supports validation of check digits and does support 
 calculation of check digits.
 
 #### Details
 
-* Valid characters - betanumeric characters ('0123456789BCDFGHJKMNPQRSTVWXZ')
+* Valid characters - decimal digits ('0' - '9') and upper case consonants ('BCDFGHJKLMNPQRSTVWXYZ')
 * Check digit size - one character
 * Check digit value - decimal digits ('0' - '9')
 * Check digit location - character position 12 (1-based)

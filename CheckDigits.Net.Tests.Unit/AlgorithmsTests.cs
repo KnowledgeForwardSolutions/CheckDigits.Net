@@ -1,4 +1,4 @@
-﻿// Ignore Spelling: Aba Cusip Damm Iban Icao Isan Isin Luhn Ncd Nhs Npi Rtn Sedol Verhoeff
+﻿// Ignore Spelling: Aba Cusip Damm Figi Iban Icao Isan Isin Luhn Ncd Nhs Npi Rtn Sedol Verhoeff
 
 namespace CheckDigits.Net.Tests.Unit;
 
@@ -57,6 +57,20 @@ public class AlgorithmsTests
    [Fact]
    public void Algorithms_Damm_ShouldBeExpectedType()
       => Algorithms.Damm.Should().BeOfType<DammAlgorithm>();
+
+   #endregion
+
+   #region Figi Property Tests
+   // ==========================================================================
+   // ==========================================================================
+
+   [Fact]
+   public void Algorithms_Figi_ShouldNotBeNull()
+      => Algorithms.Figi.Should().NotBeNull();
+
+   [Fact]
+   public void Algorithms_Figi_ShouldBeExpectedType()
+      => Algorithms.Figi.Should().BeOfType<FigiAlgorithm>();
 
    #endregion
 

@@ -77,7 +77,8 @@ public sealed class IsinAlgorithm : ISingleCheckDigitAlgorithm
         return true;
     }
 
-    public Boolean Validate(String value)
+   /// <inheritdoc/>
+   public Boolean Validate(String value)
     {
         if (String.IsNullOrEmpty(value) || value.Length != _validateLength)
         {
