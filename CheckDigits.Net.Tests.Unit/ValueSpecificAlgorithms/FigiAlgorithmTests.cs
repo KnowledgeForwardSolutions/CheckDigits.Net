@@ -92,11 +92,11 @@ public class FigiAlgorithmTests
    [InlineData("000000000B06")]     // B => 11 => 11 * 2 = 22 => 2 + 2 =>  4 => 10 - ( 4 % 10) = 6
    [InlineData("000000000C04")]     // C => 12 => 12 * 2 = 24 => 2 + 4 =>  6 => 10 - ( 6 % 10) = 4
    [InlineData("000000000D02")]     // D => 13 => 13 * 2 = 26 => 2 + 6 =>  8 => 10 - ( 8 % 10) = 2
-   [InlineData("000000000F07")]     // F => 15 => 15 * 2 = 30 => 3 + 0 =>  0 => 10 - ( 0 % 10) = 7
+   [InlineData("000000000F07")]     // F => 15 => 15 * 2 = 30 => 3 + 0 =>  3 => 10 - ( 3 % 10) = 7
    [InlineData("000000000G05")]     // G => 16 => 16 * 2 = 32 => 3 + 2 =>  5 => 10 - ( 5 % 10) = 5
    [InlineData("000000000H03")]     // H => 17 => 17 * 2 = 34 => 3 + 4 =>  7 => 10 - ( 7 % 10) = 3
-   [InlineData("000000000J09")]     // J => 19 => 19 * 2 = 36 => 3 + 6 =>  9 => 10 - ( 9 % 10) = 9
-   [InlineData("000000000K06")]     // K => 20 => 20 * 2 = 38 => 3 + 8 => 11 => 10 - (11 % 10) = 6
+   [InlineData("000000000J09")]     // J => 19 => 19 * 2 = 38 => 3 + 8 => 11 => 10 - (11 % 10) = 9
+   [InlineData("000000000K06")]     // K => 20 => 20 * 2 = 40 => 4 + 0 =>  4 => 10 - ( 4 % 10) = 6
    [InlineData("000000000L04")]     // L => 21 => 21 * 2 = 42 => 4 + 2 =>  6 => 10 - ( 6 % 10) = 4
    [InlineData("000000000M02")]     // M => 22 => 22 * 2 = 44 => 4 + 4 =>  8 => 10 - ( 8 % 10) = 2
    [InlineData("000000000N00")]     // N => 23 => 23 * 2 = 46 => 4 + 6 => 10 => 10 - (10 % 10) = 0
@@ -191,6 +191,117 @@ public class FigiAlgorithmTests
    [InlineData("BBG000B9Y5X[")]
    public void FigiAlgorithm_Validate_ShouldReturnFalse_WhenCheckDigitIsNonDigCharacter(String value)
       => _sut.Validate(value).Should().BeFalse();
+
+   #endregion
+
+   #region FigiLookupTable Tests
+   // ==========================================================================
+   // ==========================================================================
+
+   [Theory]
+   // Odd positions              // CH => INT => Digits => Result
+   [InlineData('/', 0, -1)]      
+   [InlineData('0', 0,  0)]      //  0 =>   0 =>  0 + 0 =>  0
+   [InlineData('1', 0,  1)]      //  1 =>   1 =>  0 + 1 =>  0
+   [InlineData('2', 0,  2)]      //  2 =>   2 =>  0 + 2 =>  0
+   [InlineData('3', 0,  3)]      //  3 =>   3 =>  0 + 3 =>  0
+   [InlineData('4', 0,  4)]      //  4 =>   4 =>  0 + 4 =>  0
+   [InlineData('5', 0,  5)]      //  5 =>   5 =>  0 + 5 =>  0
+   [InlineData('6', 0,  6)]      //  6 =>   6 =>  0 + 6 =>  0
+   [InlineData('7', 0,  7)]      //  7 =>   7 =>  0 + 7 =>  0
+   [InlineData('8', 0,  8)]      //  8 =>   8 =>  0 + 8 =>  0
+   [InlineData('9', 0,  9)]      //  9 =>   9 =>  0 + 9 =>  0
+   [InlineData(':', 0, -1)]
+   [InlineData(';', 0, -1)]
+   [InlineData('<', 0, -1)]
+   [InlineData('=', 0, -1)]
+   [InlineData('>', 0, -1)]
+   [InlineData('?', 0, -1)]
+   [InlineData('@', 0, -1)]
+   [InlineData('A', 0, -1)]
+   [InlineData('B', 0,  2)]      //  B =>  11 =>  1 + 1 =>  2
+   [InlineData('C', 0,  3)]      //  C =>  12 =>  1 + 2 =>  3
+   [InlineData('D', 0,  4)]      //  D =>  13 =>  1 + 3 =>  4
+   [InlineData('E', 0, -1)]
+   [InlineData('F', 0,  6)]      //  F =>  15 =>  1 + 5 =>  6
+   [InlineData('G', 0,  7)]      //  G =>  16 =>  1 + 6 =>  7
+   [InlineData('H', 0,  8)]      //  H =>  17 =>  1 + 7 =>  8
+   [InlineData('I', 0, -1)]
+   [InlineData('J', 0, 10)]      //  J =>  19 =>  1 + 9 => 10
+   [InlineData('K', 0,  2)]      //  K =>  20 =>  2 + 0 =>  2
+   [InlineData('L', 0,  3)]      //  L =>  21 =>  2 + 1 =>  3
+   [InlineData('M', 0,  4)]      //  M =>  22 =>  2 + 2 =>  4
+   [InlineData('N', 0,  5)]      //  N =>  23 =>  2 + 3 =>  5
+   [InlineData('O', 0, -1)]
+   [InlineData('P', 0,  7)]      //  P =>  25 =>  2 + 5 =>  7
+   [InlineData('Q', 0,  8)]      //  Q =>  26 =>  2 + 6 =>  8
+   [InlineData('R', 0,  9)]      //  R =>  27 =>  2 + 7 =>  9
+   [InlineData('S', 0, 10)]      //  S =>  28 =>  2 + 8 => 10
+   [InlineData('T', 0, 11)]      //  T =>  29 =>  2 + 9 => 11
+   [InlineData('U', 0, -1)]
+   [InlineData('V', 0,  4)]      //  V =>  31 =>  3 + 1 =>  4
+   [InlineData('W', 0,  5)]      //  W =>  32 =>  3 + 2 =>  5
+   [InlineData('X', 0,  6)]      //  X =>  33 =>  3 + 3 =>  6
+   [InlineData('Y', 0,  7)]      //  Y =>  34 =>  3 + 4 =>  7
+   [InlineData('Z', 0,  8)]      //  Z =>  35 =>  3 + 5 =>  8
+   [InlineData('[', 0, -1)]
+   // Even positions             // CH => INT => Doubled    => Digits => Result
+   [InlineData('/', 1, -1)]
+   [InlineData('0', 1,  0)]      //  0 =>   0 => 0 * 2 =  0 =>  0 + 0 =>  0
+   [InlineData('1', 1,  2)]      //  1 =>   1 => 1 * 2 =  2 =>  0 + 2 =>  2
+   [InlineData('2', 1,  4)]      //  2 =>   2 => 2 * 2 =  4 =>  0 + 4 =>  4
+   [InlineData('3', 1,  6)]      //  3 =>   3 => 3 * 2 =  6 =>  0 + 6 =>  6
+   [InlineData('4', 1,  8)]      //  4 =>   4 => 4 * 2 =  8 =>  0 + 8 =>  8
+   [InlineData('5', 1,  1)]      //  5 =>   5 => 5 * 2 = 10 =>  1 + 0 =>  1
+   [InlineData('6', 1,  3)]      //  6 =>   6 => 6 * 2 = 12 =>  1 + 2 =>  3
+   [InlineData('7', 1,  5)]      //  7 =>   7 => 7 * 2 = 14 =>  1 + 4 =>  5
+   [InlineData('8', 1,  7)]      //  8 =>   8 => 8 * 2 = 16 =>  1 + 6 =>  7
+   [InlineData('9', 1,  9)]      //  9 =>   9 => 9 * 2 = 18 =>  1 + 8 =>  9
+   [InlineData(':', 1, -1)]
+   [InlineData(';', 1, -1)]
+   [InlineData('<', 1, -1)]
+   [InlineData('=', 1, -1)]
+   [InlineData('>', 1, -1)]
+   [InlineData('?', 1, -1)]
+   [InlineData('@', 1, -1)]
+   [InlineData('A', 1, -1)]
+   [InlineData('B', 1,  4)]      //  B =>  11 => 11 * 2 = 22 => 2 + 2 =>  4
+   [InlineData('C', 1,  6)]      //  C =>  12 => 12 * 2 = 24 => 2 + 4 =>  6
+   [InlineData('D', 1,  8)]      //  D =>  13 => 13 * 2 = 26 => 2 + 6 =>  8
+   [InlineData('E', 1, -1)]
+   [InlineData('F', 1,  3)]      //  F =>  15 => 15 * 2 = 30 => 3 + 0 =>  0
+   [InlineData('G', 1,  5)]      //  G =>  16 => 16 * 2 = 32 => 3 + 2 =>  5
+   [InlineData('H', 1,  7)]      //  H =>  17 => 17 * 2 = 34 => 3 + 4 =>  7
+   [InlineData('I', 1, -1)]
+   [InlineData('J', 1, 11)]      //  J =>  19 => 19 * 2 = 38 => 3 + 8 => 11
+   [InlineData('K', 1,  4)]      //  K =>  20 => 20 * 2 = 40 => 4 + 0 =>  4
+   [InlineData('L', 1,  6)]      //  L =>  21 => 21 * 2 = 42 => 4 + 2 =>  6
+   [InlineData('M', 1,  8)]      //  M =>  22 => 22 * 2 = 44 => 4 + 4 =>  8
+   [InlineData('N', 1, 10)]      //  N =>  23 => 23 * 2 = 46 => 4 + 6 => 10
+   [InlineData('O', 1, -1)]
+   [InlineData('P', 1,  5)]      //  P =>  25 => 25 * 2 = 50 => 5 + 0 =>  5
+   [InlineData('Q', 1,  7)]      //  Q =>  26 => 26 * 2 = 52 => 5 + 2 =>  7
+   [InlineData('R', 1,  9)]      //  R =>  27 => 27 * 2 = 54 => 5 + 4 =>  9
+   [InlineData('S', 1, 11)]      //  S =>  28 => 28 * 2 = 56 => 5 + 6 => 11
+   [InlineData('T', 1, 13)]      //  T =>  29 => 29 * 2 = 58 => 5 + 8 => 13
+   [InlineData('U', 1, -1)]
+   [InlineData('V', 1,  8)]      //  V =>  31 => 31 * 2 = 62 => 6 + 2 =>  8
+   [InlineData('W', 1, 10)]      //  W =>  32 => 32 * 2 = 64 => 6 + 4 => 10
+   [InlineData('X', 1, 12)]      //  X =>  33 => 33 * 2 = 66 => 6 + 6 => 12
+   [InlineData('Y', 1, 14)]      //  Y =>  34 => 34 * 2 = 68 => 6 + 8 => 14
+   [InlineData('Z', 1,  7)]      //  Z =>  35 => 35 * 2 = 70 => 7 + 0 =>  7
+   [InlineData('[', 1, -1)]
+   public void FigiAlgorithmFigiLookupTable_Indexer_ReturnsExpectedValue(
+      Char ch,
+      Int32 oddEven,
+      Int32 expected)
+   {
+      // Arrange.
+      var sut = new FigiAlgorithm.FigiLookupTable();
+
+      // Act/assert.
+      sut[ch, oddEven].Should().Be(expected);
+   }
 
    #endregion
 }

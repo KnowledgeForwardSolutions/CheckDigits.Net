@@ -28,7 +28,7 @@ namespace CheckDigits.Net.ValueSpecificAlgorithms;
 public class FigiAlgorithm : ICheckDigitAlgorithm
 {
    private const Int32 _expectedLength = 12;
-   private static readonly Int32[] _characterMap = CharacterMapUtility.GetFigiCharacterMap();
+   private static readonly FigiLookupTable _lookupTable = new();
 
    /// <inheritdoc/>
    public String AlgorithmDescription => Resources.FigiAlgorithmDescription;
@@ -45,29 +45,74 @@ public class FigiAlgorithm : ICheckDigitAlgorithm
       }
 
       var sum = 0;
-      var evenPosition = false;
+      var oddEvenIndex = new ModulusInt32(2);
       for (var index = value.Length - 2; index >= 0; index--)
       {
-         var ch = value[index];
-         var num = ch >= CharConstants.DigitZero && ch <= CharConstants.UpperCaseZ
-            ? _characterMap[ch - CharConstants.DigitZero]
-            : -1;
+         var num = _lookupTable[value[index], oddEvenIndex];
          if (num == -1)
          {
             return false;
          }
-         else if (evenPosition)
-         {
-            num *= 2;
-         }
-
-         sum += (num / 10) + (num % 10);
-
-         evenPosition = !evenPosition;
+         sum += num;
+         oddEvenIndex++;
       }
 
       var checkDigit = (10 - (sum % 10)) % 10;
 
       return value[^1].ToIntegerDigit() == checkDigit;
+   }
+
+   /// <summary>
+   ///   Optimized algorithm lookup table. Handles the mapping of characters to
+   ///   their integer equivalent and optimizes the processing for each character
+   ///   by creating a pre-computed lookup table of the processed value for each
+   ///   character, including the doubling applied to even position characters.
+   /// </summary>
+   internal class FigiLookupTable
+   {
+      private const Int32 _mapCount = CharConstants.UpperCaseZ - CharConstants.DigitZero + 1;
+      private static readonly Int32[] _values = [.. GetOddCharacterLookup(), .. GetEvenCharacterLookup()];
+
+      /// <summary>
+      ///   Get the pre-computed value for the <paramref name="ch"/> and the
+      ///   character's <paramref name="oddEven"/> position.
+      /// </summary>
+      /// <param name="ch">
+      ///   The character to lookup.
+      /// </param>
+      /// <param name="oddEven">
+      ///   Zero (0) for odd position characters (no doubling) and one (1) for
+      ///   even position characters (with doubling).
+      /// </param>
+      /// <returns>
+      ///   The <paramref name="ch"/>'s pre-computed value or -1 if the character
+      ///   is not 0-9 or BCDFGHJKLMNPQRSTVWXYZ.
+      /// </returns>
+      /// <remarks>
+      ///   2D array collapsed to a 1D array to take advantage of .Net optimization
+      ///   for 1D array access. This is about 25% more efficient, even with the
+      ///   manual calculation to required to treat a 1D array as a logical 2D
+      ///   array.
+      /// </remarks>
+      public Int32 this[Char ch, Int32 oddEven]
+         => ch >= CharConstants.DigitZero && ch <= CharConstants.UpperCaseZ
+            ? _values[(oddEven * _mapCount) + ch - CharConstants.DigitZero]
+            : -1;
+
+      private static Int32[] GetOddCharacterLookup() =>
+         CharacterMapUtility.GetFigiCharacterMap()
+            .Select(x => x switch
+            {
+               -1 => -1,
+               _ => (x / 10) + (x % 10)
+            }).ToArray();
+
+      private static Int32[] GetEvenCharacterLookup() =>
+         CharacterMapUtility.GetFigiCharacterMap()
+            .Select(x => x switch
+            {
+               -1 => -1,
+               _ => (x * 2 / 10) + (x * 2 % 10)
+            }).ToArray();
    }
 }
