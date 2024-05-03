@@ -1,14 +1,15 @@
-﻿using CheckDigits.Net.ValueSpecificAlgorithms;
-
-namespace CheckDigits.Net.Tests.Benchmarks;
+﻿namespace CheckDigits.Net.Tests.Benchmarks;
 
 [MemoryDiagnoser]
 public class OptimizeBenchmarks
 {
-   private static readonly FigiAlgorithm _algorithm = (FigiAlgorithm)Algorithms.Figi;
+   private static readonly VinAlgorithm _algorithm = (VinAlgorithm)Algorithms.Vin;
 
-   [Params("BBG000B9Y5X2", "BBG111111160", "BBGZYXWVTSR7")]
-   public String Value { get; set; }
+   [Params("1M8GDM9AXKP042788", "1G8ZG127XWZ157259", "1HGEM21292L047875")]
+   public String Value { get; set; } = String.Empty;
+
+   [Benchmark]
+   public void Startup() => _algorithm.Validate(Value);
 
    [Benchmark(Baseline = true)]
    public void Validate() => _ = _algorithm.Validate(Value);
