@@ -29,7 +29,7 @@ namespace CheckDigits.Net.ValueSpecificAlgorithms;
 public sealed class Icao9303Algorithm : IEmbeddedCheckDigitAlgorithm
 {
    private static readonly Int32[] _weights = [7, 3, 1];
-   private static readonly Int32[] _charMap = Icao9303CharacterMap.GetCharacterMap();
+   private static readonly Int32[] _charMap = CharacterMapUtility.GetIcao9303CharacterMap();
 
    /// <inheritdoc/>
    public String AlgorithmDescription => Resources.Icao9303AlgorithmDescription;

@@ -44,7 +44,7 @@ public sealed class Icao9303SizeTD3Algorithm : ICheckDigitAlgorithm
    private static readonly Int32[] _fieldSLengths = [9, 6, 6, 14];
    private const Int32 _numFields = 4;
    private const Int32 _lineLength = 44;
-   private static readonly Int32[] _charMap = Icao9303CharacterMap.GetCharacterMap();
+   private static readonly Int32[] _charMap = CharacterMapUtility.GetIcao9303CharacterMap();
 
    private LineSeparator _lineSeparator = LineSeparator.None;
 

@@ -1,4 +1,4 @@
-﻿// Ignore Spelling: Cusip Figi
+﻿// Ignore Spelling: Cusip Figi Icao
 
 namespace CheckDigits.Net.Utility;
 
@@ -24,6 +24,11 @@ public static class CharacterMapUtility
       CharConstants.DigitZero,
       CharConstants.UpperCaseZ,
       BetanumericMapper);
+
+   public static Int32[] GetIcao9303CharacterMap() => GetCharacterMap(
+      CharConstants.DigitZero,
+      CharConstants.UpperCaseZ,
+      Icao9303Mapper);
 
    /// <summary>
    ///   Get an array that maps character values to the integer equivalent used
@@ -54,6 +59,14 @@ public static class CharacterMapUtility
    {
       var d when ch >= CharConstants.DigitZero && ch <= CharConstants.DigitNine => d.ToIntegerDigit(),
       var c when _upperCaseConsonants.Contains(c) => c - _upperCaseLetterOffset,
+      _ => -1
+   };
+
+   private static Int32 Icao9303Mapper(Char ch) => ch switch
+   {
+      var d when ch >= CharConstants.DigitZero && ch <= CharConstants.DigitNine => d.ToIntegerDigit(),
+      var c when ch >= CharConstants.UpperCaseA && ch <= CharConstants.UpperCaseZ => c - _upperCaseLetterOffset,
+      CharConstants.LeftAngleBracket => 0,
       _ => -1
    };
 

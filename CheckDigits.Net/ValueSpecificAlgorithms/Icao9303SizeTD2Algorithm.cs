@@ -35,7 +35,7 @@ public sealed class Icao9303SizeTD2Algorithm : ICheckDigitAlgorithm
    private static readonly Int32[] _weights = [7, 3, 1];
    private static readonly Int32[] _fieldStartPositions = [0, 13, 21];
    private static readonly Int32[] _fieldSLengths = [9, 6, 6];
-   private static readonly Int32[] _charMap = Icao9303CharacterMap.GetCharacterMap();
+   private static readonly Int32[] _charMap = CharacterMapUtility.GetIcao9303CharacterMap();
    private const Int32 _extendedDocumentNumberStart = 28;
    private const Int32 _extendedDocumentNumberLength = 5;
 
