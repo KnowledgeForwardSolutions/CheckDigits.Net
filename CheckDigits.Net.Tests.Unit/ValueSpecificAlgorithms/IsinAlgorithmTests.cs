@@ -440,5 +440,5 @@ public class IsinAlgorithmTests
     public void IsinAlgorithm_Validate_ShouldReturnFalse_WhenInputContainsNonDigitCharacter(String value)
        => _sut.Validate(value).Should().BeFalse();
 
-    #endregion
+   #endregion
 }

@@ -3,10 +3,13 @@
 [MemoryDiagnoser]
 public class OptimizeBenchmarks
 {
-   private static readonly FigiAlgorithm _algorithm = new();
+   private static readonly IsinAlgorithm _algorithm = new();
 
-   [Params("BBG000B9Y5X2", "BBG111111160", "BBGZYXWVTSR7")]
+   [Params("US0378331005", "AU0000XVGZA3", "GB0002634946")]
    public String Value { get; set; } = String.Empty;
+   //yield return new Object[] { Algorithms.Isin, Algorithms.Isin.AlgorithmName, "US0378331005" };
+   //yield return new Object[] { Algorithms.Isin, Algorithms.Isin.AlgorithmName, "AU0000XVGZA3" };
+   //yield return new Object[] { Algorithms.Isin, Algorithms.Isin.AlgorithmName, "GB0002634946" };
 
    [Benchmark]
    public void Startup() => _algorithm.Validate(Value);

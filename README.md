@@ -1422,9 +1422,9 @@ check digits, only validation of values containing check digits.
 | IBAN           | GB00WEST12345698765432          | 37.50 ns | 0.316 ns | 0.280 ns |         - |
 | IBAN           | SC00MCBL01031234567890123456USD | 54.90 ns | 0.559 ns | 0.467 ns |         - |
 |                |                                 |          |          |          |           |                                           
-| ISIN           | AU0000XVGZA                     | 27.01 ns | 0.071 ns | 0.066 ns |         - |
-| ISIN           | GB000263494                     | 20.26 ns | 0.098 ns | 0.091 ns |         - |
-| ISIN           | US037833100                     | 19.10 ns | 0.144 ns | 0.135 ns |         - |
+| ISIN           | AU0000XVGZA                     | 19.70 ns | 0.158 ns | 0.140 ns |         - |
+| ISIN           | GB000263494                     | 18.31 ns | 0.285 ns | 0.266 ns |         - |
+| ISIN           | US037833100                     | 18.06 ns | 0.114 ns | 0.096 ns |         - |
 |                |                                 |          |          |          |           |                                           
 | ISO 6346       | CSQU305438                      | 16.74 ns | 0.216 ns | 0.202 ns |         - |
 | ISO 6346       | MSKU907032                      | 16.22 ns | 0.078 ns | 0.069 ns |         - |
@@ -1651,9 +1651,9 @@ Note also that the values used for the NOID Check Digit algorithm do not include
 | ISAN (Formatted)                | ISAN D02C-42E9-5418-3EE2-Q-1291-C8AE-O | 65.820 ns | 0.3030 ns | 0.2840 ns |         - |
 | ISAN (Formatted)                | ISAN E953-0C32-BC0E-E83B-2-6986-7B20-F | 64.220 ns | 0.3640 ns | 0.3400 ns |         - |
 |                                 |                                        |           |           |           |           |                                           
-| ISIN                            | AU0000XVGZA3                           | 25.520 ns | 0.1260 ns | 0.1170 ns |         - |
-| ISIN                            | GB0002634946                           | 19.150 ns | 0.1290 ns | 0.1140 ns |         - |
-| ISIN                            | US0378331005                           | 19.110 ns | 0.1400 ns | 0.1310 ns |         - |
+| ISIN                            | AU0000XVGZA3                           | 18.710 ns | 0.1680 ns | 0.1400 ns |         - |
+| ISIN                            | GB0002634946                           | 17.430 ns | 0.1080 ns | 0.0950 ns |         - |
+| ISIN                            | US0378331005                           | 17.390 ns | 0.1190 ns | 0.1050 ns |         - |
 |                                 |                                        |           |           |           |           |                                           
 | ISO 6346                        | CSQU3054383                            | 14.970 ns | 0.0350 ns | 0.0280 ns |         - |
 | ISO 6346                        | MSKU9070323                            | 14.890 ns | 0.0930 ns | 0.0870 ns |         - |
@@ -1750,8 +1750,12 @@ Thanks to Steff Beckers for this addition
 ## v2.3.0
 
 Additional included algorithms
+* FIGI Algorithm
 * ICAO Algorithm
 * ICAO 9303 Document Size TD1 Algorithm
 * ICAO 9303 Document Size TD2 Algorithm
 * ICAO 9303 Document Size TD3 Algorithm
 * ICAO 9303 Machine Readable Visa Algorithm
+
+Performance increases for:
+* ISIN algorithm, ~9% improvement for Validate and TryCalculateCheckDigit methods
