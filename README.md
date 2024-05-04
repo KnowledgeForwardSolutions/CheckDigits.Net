@@ -1600,9 +1600,9 @@ Note also that the values used for the NOID Check Digit algorithm do not include
 | CUSIP                           | 38143VAA7                              | 13.020 ns | 0.0830 ns | 0.0770 ns |         - |
 | CUSIP                           | 91282CJL6                              | 12.850 ns | 0.0630 ns | 0.0530 ns |         - |
 |                                 |                                        |           |           |           |           |                                           
-| FIGI                            | BBG000B9Y5X2                           |  16.98 ns |  0.183 ns |  0.162 ns |         - |
-| FIGI                            | BBG111111160                           |  17.58 ns |  0.382 ns |  0.483 ns |         - |
-| FIGI                            | BBGZYXWVTSR7                           |  17.52 ns |  0.373 ns |  0.429 ns |         - |
+| FIGI                            | BBG000B9Y5X2                           | 19.980 ns | 0.3870 ns | 0.3430 ns |         - |
+| FIGI                            | BBG111111160                           | 19.540 ns | 0.1640 ns | 0.1540 ns |         - |
+| FIGI                            | BBGZYXWVTSR7                           | 19.650 ns | 0.2670 ns | 0.2230 ns |         - |
 |                                 |                                        |           |           |           |           |                                           
 | IBAN                            | BE71096123456769                       | 20.090 ns | 0.1710 ns | 0.1600 ns |         - |
 | IBAN                            | GB82WEST12345698765432                 | 34.960 ns | 0.2120 ns | 0.1880 ns |         - |

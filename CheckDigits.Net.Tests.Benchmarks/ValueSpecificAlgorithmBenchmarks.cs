@@ -41,9 +41,9 @@ public class ValueSpecificAlgorithmBenchmarks
       //yield return new Object[] { Algorithms.Cusip, Algorithms.Cusip.AlgorithmName, "38143VAA7" };
       //yield return new Object[] { Algorithms.Cusip, Algorithms.Cusip.AlgorithmName, "91282CJL6" };
 
-      //yield return new Object[] { Algorithms.Figi, Algorithms.Figi.AlgorithmName, "BBG000B9Y5X2" };
-      //yield return new Object[] { Algorithms.Figi, Algorithms.Figi.AlgorithmName, "BBG111111160" };
-      //yield return new Object[] { Algorithms.Figi, Algorithms.Figi.AlgorithmName, "BBGZYXWVTSR7" };
+      yield return new Object[] { Algorithms.Figi, Algorithms.Figi.AlgorithmName, "BBG000B9Y5X2" };
+      yield return new Object[] { Algorithms.Figi, Algorithms.Figi.AlgorithmName, "BBG111111160" };
+      yield return new Object[] { Algorithms.Figi, Algorithms.Figi.AlgorithmName, "BBGZYXWVTSR7" };
 
       //yield return new Object[] { Algorithms.Iban, Algorithms.Iban.AlgorithmName, "BE71096123456769" };
       //yield return new Object[] { Algorithms.Iban, Algorithms.Iban.AlgorithmName, "GB82WEST12345698765432" };
@@ -97,9 +97,9 @@ public class ValueSpecificAlgorithmBenchmarks
       //yield return new Object[] { Algorithms.Sedol, Algorithms.Sedol.AlgorithmName, "B0YQ5W0" };
       //yield return new Object[] { Algorithms.Sedol, Algorithms.Sedol.AlgorithmName, "BRDVMH9" };
 
-      yield return new Object[] { Algorithms.Vin, Algorithms.Vin.AlgorithmName, "1M8GDM9AXKP042788" };
-      yield return new Object[] { Algorithms.Vin, Algorithms.Vin.AlgorithmName, "1G8ZG127XWZ157259" };
-      yield return new Object[] { Algorithms.Vin, Algorithms.Vin.AlgorithmName, "1HGEM21292L047875" };
+      //yield return new Object[] { Algorithms.Vin, Algorithms.Vin.AlgorithmName, "1M8GDM9AXKP042788" };
+      //yield return new Object[] { Algorithms.Vin, Algorithms.Vin.AlgorithmName, "1G8ZG127XWZ157259" };
+      //yield return new Object[] { Algorithms.Vin, Algorithms.Vin.AlgorithmName, "1HGEM21292L047875" };
    }
 
    public static IEnumerable<Object[]> ValidateEmbeddedArguments()
@@ -123,12 +123,12 @@ public class ValueSpecificAlgorithmBenchmarks
       yield return new Object[] { Algorithms.Isan, Algorithms.Isan.AlgorithmName, "ISAN E953-0C32-BC0E-E83B-2-6986-7B20-F" };
    }
 
-   [Benchmark]
-   [ArgumentsSource(nameof(TryCalculateCheckDigitArguments))]
-   public void TryCalculateCheckDigit(ISingleCheckDigitAlgorithm algorithm, String name, String value)
-   {
-      algorithm.TryCalculateCheckDigit(value, out var checkDigit);
-   }
+   //[Benchmark]
+   //[ArgumentsSource(nameof(TryCalculateCheckDigitArguments))]
+   //public void TryCalculateCheckDigit(ISingleCheckDigitAlgorithm algorithm, String name, String value)
+   //{
+   //   algorithm.TryCalculateCheckDigit(value, out var checkDigit);
+   //}
 
    //[Benchmark]
    //[ArgumentsSource(nameof(TryCalculateCheckDigitsArguments))]

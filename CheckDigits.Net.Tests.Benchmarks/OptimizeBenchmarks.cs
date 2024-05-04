@@ -3,9 +3,9 @@
 [MemoryDiagnoser]
 public class OptimizeBenchmarks
 {
-   private static readonly VinAlgorithm _algorithm = (VinAlgorithm)Algorithms.Vin;
+   private static readonly FigiAlgorithm _algorithm = new();
 
-   [Params("1M8GDM9AXKP042788", "1G8ZG127XWZ157259", "1HGEM21292L047875")]
+   [Params("BBG000B9Y5X2", "BBG111111160", "BBGZYXWVTSR7")]
    public String Value { get; set; } = String.Empty;
 
    [Benchmark]
