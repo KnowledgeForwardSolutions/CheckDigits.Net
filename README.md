@@ -318,15 +318,6 @@ are not implemented for algorithms for government issued identifiers (for exampl
 UK NHS numbers and US NPI numbers) or values issued by a single authority (such
 as ABA Routing Transit Numbers).
 
-The ```IEmbeddedCheckDigitAlgorithm``` interface is used by algorithms that can
-expect the value to check and its associated check digit(s) to be embedded within
-a larger string. (For example, the date of birth field in an ICAO 9303 machine
-readable passport string.) The Validate method defined by ```IEmbeddedCheckDigitAlgorithm```
-includes two additional parameters, start and length which specify the substring
-within the larger string that contains the value to check. An algorithm can 
-implement both ```ICheckDigitAlgorithm``` and ```IEmbeddedCheckDigitAlgorithm```
-and have two overloads for the Validate method.
-
 The ```IAlphabet``` and ```ISupplementalCharacterAlphabet``` interfaces are used 
 for ISO/IEC 7064 algorithms with custom alphabets. ```IAlphabet``` has two 
 methods: CharacterToInteger, which maps a character in the value being processed 
@@ -518,12 +509,6 @@ between the correct character and the incorrect character is 10, i.e. *0 -> A*, 
 and vice versa. Nor can the algorithm detect two character transposition errors 
 where the difference between the transposed characters is a multiple of 5, i.e. 
 *27 <-> 72*, *D8 <-> 8D*, *BL <-> LB*).
-
-The ICAO 9303 algorithm only supports validation of check digits and does support 
-calculation of check digits.
-
-The ICAO 9303 algorithm also implements the ```IEmbeddedCheckDigitAlgorithm interface```
-which supports the validation of fields that are embedded within a larger string.
 
 #### Details
 
@@ -1413,26 +1398,35 @@ Note that the values used for the NOID Check Digit algorithm do not include leng
 
 #### Value Specific Algorithms
 
-Note: ABA RTN, CUSIP, NHS, NPI and SEDOL algorithms do not support calculation of 
-check digits, only validation of values containing check digits.
+Note: ABA RTN, CUSIP, ICAO 9303 multi-field algorithms (Machine Readable Visa, Size TD1, 
+TD2 and TD3), ISAN, NHS, NPI and SEDOL algorithms do not support calculation of check digits, 
+only validation of values containing check digits.
 
-| Algorithm Name | Value                           | Mean     | Error    | StdDev   | Allocated |
-|--------------- |-------------------------------- |---------:|---------:|---------:|----------:|
-| IBAN           | BE00096123456769                | 22.20 ns | 0.108 ns | 0.096 ns |         - |
-| IBAN           | GB00WEST12345698765432          | 37.50 ns | 0.316 ns | 0.280 ns |         - |
-| IBAN           | SC00MCBL01031234567890123456USD | 54.90 ns | 0.559 ns | 0.467 ns |         - |
-|                |                                 |          |          |          |           |                                           
-| ISIN           | AU0000XVGZA                     | 19.70 ns | 0.158 ns | 0.140 ns |         - |
-| ISIN           | GB000263494                     | 18.31 ns | 0.285 ns | 0.266 ns |         - |
-| ISIN           | US037833100                     | 18.06 ns | 0.114 ns | 0.096 ns |         - |
-|                |                                 |          |          |          |           |                                           
-| ISO 6346       | CSQU305438                      | 16.74 ns | 0.216 ns | 0.202 ns |         - |
-| ISO 6346       | MSKU907032                      | 16.22 ns | 0.078 ns | 0.069 ns |         - |
-| ISO 6346       | TOLU473478                      | 16.22 ns | 0.135 ns | 0.113 ns |         - |
-|                |                                 |          |          |          |           |                                           
-| VIN            | 1G8ZG127_WZ157259               | 21.46 ns | 0.078 ns | 0.073 ns |         - |
-| VIN            | 1HGEM212_2L047875               | 20.74 ns | 0.131 ns | 0.123 ns |         - |
-| VIN            | 1M8GDM9A_KP042788               | 20.89 ns | 0.076 ns | 0.071 ns |         - |
+| Algorithm Name | Value                           | Mean      | Error     | StdDev    | Allocated |
+|--------------- |-------------------------------- |----------:|----------:|----------:|----------:|
+| ICAO 9303      | U7Y                             |  7.615 ns | 0.0376 ns | 0.0333 ns |         - |
+| ICAO 9303      | U7Y8SX                          | 13.264 ns | 0.0796 ns | 0.0745 ns |         - |
+| ICAO 9303      | U7Y8SXRC0                       | 18.372 ns | 0.0931 ns | 0.0777 ns |         - |
+| ICAO 9303      | U7Y8SXRC0O3S                    | 22.176 ns | 0.1815 ns | 0.1698 ns |         - |
+| ICAO 9303      | U7Y8SXRC0O3SC4I                 | 27.067 ns | 0.1385 ns | 0.1228 ns |         - |
+| ICAO 9303      | U7Y8SXRC0O3SC4IHYQ              | 32.181 ns | 0.2162 ns | 0.2022 ns |         - |
+| ICAO 9303      | U7Y8SXRC0O3SC4IHYQF4M           | 36.435 ns | 0.2524 ns | 0.2237 ns |         - |
+|                |                                 |           |           |           |           |                                           
+| IBAN           | BE00096123456769                | 22.200 ns | 0.1080 ns | 0.0960 ns |         - |
+| IBAN           | GB00WEST12345698765432          | 37.500 ns | 0.3160 ns | 0.2800 ns |         - |
+| IBAN           | SC00MCBL01031234567890123456USD | 54.900 ns | 0.5590 ns | 0.4670 ns |         - |
+|                |                                 |           |           |           |           |                                           
+| ISIN           | AU0000XVGZA                     | 19.700 ns | 0.1580 ns | 0.1400 ns |         - |
+| ISIN           | GB000263494                     | 18.310 ns | 0.2850 ns | 0.2660 ns |         - |
+| ISIN           | US037833100                     | 18.060 ns | 0.1140 ns | 0.0960 ns |         - |
+|                |                                 |           |           |           |           |                                           
+| ISO 6346       | CSQU305438                      | 16.740 ns | 0.2160 ns | 0.2020 ns |         - |
+| ISO 6346       | MSKU907032                      | 16.220 ns | 0.0780 ns | 0.0690 ns |         - |
+| ISO 6346       | TOLU473478                      | 16.220 ns | 0.1350 ns | 0.1130 ns |         - |
+|                |                                 |           |           |           |           |                                           
+| VIN            | 1G8ZG127_WZ157259               | 21.460 ns | 0.0780 ns | 0.0730 ns |         - |
+| VIN            | 1HGEM212_2L047875               | 20.740 ns | 0.1310 ns | 0.1230 ns |         - |
+| VIN            | 1M8GDM9A_KP042788               | 20.890 ns | 0.0760 ns | 0.0710 ns |         - |
 
 ### Validate Method
 
@@ -1608,21 +1602,13 @@ Note also that the values used for the NOID Check Digit algorithm do not include
 | IBAN                            | GB82WEST12345698765432                 | 34.960 ns | 0.2120 ns | 0.1880 ns |         - |
 | IBAN                            | SC74MCBL01031234567890123456USD        | 51.580 ns | 0.2410 ns | 0.2130 ns |         - |
 |                                 |                                        |           |           |           |           |
-| ICAO 9303                       | U7Y5                                   |  7.376 ns | 0.0654 ns | 0.0580 ns |         - |
-| ICAO 9303                       | U7Y8SX8                                | 13.371 ns | 0.2098 ns | 0.1752 ns |         - |
-| ICAO 9303                       | U7Y8SXRC03                             | 17.766 ns | 0.3089 ns | 0.2890 ns |         - |
-| ICAO 9303                       | U7Y8SXRC0O3S8                          | 22.630 ns | 0.4513 ns | 0.4221 ns |         - |
-| ICAO 9303                       | U7Y8SXRC0O3SC4I2                       | 28.543 ns | 0.3081 ns | 0.2731 ns |         - |
-| ICAO 9303                       | U7Y8SXRC0O3SC4IHYQ9                    | 32.207 ns | 0.3189 ns | 0.2490 ns |         - |
-| ICAO 9303                       | U7Y8SXRC0O3SC4IHYQF4M8                 | 39.060 ns | 0.4010 ns | 0.3555 ns |         - |
-|                                 |                                        |           |           |           |           |
-| ICAO 9303 (Embedded)            | +U7Y5+                                 |  9.022 ns | 0.2106 ns | 0.3278 ns |         - |
-| ICAO 9303 (Embedded)            | +U7Y8SX8+                              | 11.690 ns | 0.2177 ns | 0.2036 ns |         - |
-| ICAO 9303 (Embedded)            | +U7Y8SXRC03+                           | 15.562 ns | 0.2131 ns | 0.1993 ns |         - |
-| ICAO 9303 (Embedded)            | +U7Y8SXRC0O3S8+                        | 19.363 ns | 0.3438 ns | 0.3216 ns |         - |
-| ICAO 9303 (Embedded)            | +U7Y8SXRC0O3SC4I2+                     | 22.433 ns | 0.2453 ns | 0.2174 ns |         - |
-| ICAO 9303 (Embedded)            | +U7Y8SXRC0O3SC4IHYQ9+                  | 26.724 ns | 0.2726 ns | 0.2416 ns |         - |
-| ICAO 9303 (Embedded)            | +U7Y8SXRC0O3SC4IHYQF4M8+               | 29.762 ns | 0.5975 ns | 0.6394 ns |         - |
+| ICAO 9303                       | U7Y5                                   |  7.529 ns | 0.0629 ns | 0.0589 ns |         - |
+| ICAO 9303                       | U7Y8SX8                                | 13.597 ns | 0.0780 ns | 0.0730 ns |         - |
+| ICAO 9303                       | U7Y8SXRC03                             | 19.148 ns | 0.1083 ns | 0.1013 ns |         - |
+| ICAO 9303                       | U7Y8SXRC0O3S8                          | 24.398 ns | 0.1694 ns | 0.1502 ns |         - |
+| ICAO 9303                       | U7Y8SXRC0O3SC4I2                       | 25.424 ns | 0.1976 ns | 0.1751 ns |         - |
+| ICAO 9303                       | U7Y8SXRC0O3SC4IHYQ9                    | 29.443 ns | 0.1393 ns | 0.1235 ns |         - |
+| ICAO 9303                       | U7Y8SXRC0O3SC4IHYQF4M8                 | 33.964 ns | 0.1729 ns | 0.1444 ns |         - |
 |                                 |                                        |           |           |           |           |
 | ICAO 9303 Machine Readable Visa | I<UTOERIKSSON<<ANNA<MARIA<<<<<<<<<<<<br>D231458907UTO7408122F1204159<<<<<<<< | 59.49 ns | 1.208 ns | 1.770 ns |         - |
 | ICAO 9303 Machine Readable Visa | I<UTOSKYWALKER<<LUKE<<<<<<<<<<<<<<<<<br>STARWARS45UTO7705256M2405252<<<<<<<< | 53.47 ns | 0.739 ns | 0.655 ns |         - |

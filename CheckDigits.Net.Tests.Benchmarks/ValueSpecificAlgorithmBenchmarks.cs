@@ -11,9 +11,18 @@ public class ValueSpecificAlgorithmBenchmarks
 {
    public static IEnumerable<Object[]> TryCalculateCheckDigitArguments()
    {
-      yield return new Object[] { Algorithms.Isin, Algorithms.Isin.AlgorithmName, "US037833100" };
-      yield return new Object[] { Algorithms.Isin, Algorithms.Isin.AlgorithmName, "AU0000XVGZA" };
-      yield return new Object[] { Algorithms.Isin, Algorithms.Isin.AlgorithmName, "GB000263494" };
+
+      yield return new Object[] { Algorithms.Icao9303, Algorithms.Icao9303.AlgorithmName, "U7Y" };
+      yield return new Object[] { Algorithms.Icao9303, Algorithms.Icao9303.AlgorithmName, "U7Y8SX" };
+      yield return new Object[] { Algorithms.Icao9303, Algorithms.Icao9303.AlgorithmName, "U7Y8SXRC0" };
+      yield return new Object[] { Algorithms.Icao9303, Algorithms.Icao9303.AlgorithmName, "U7Y8SXRC0O3S" };
+      yield return new Object[] { Algorithms.Icao9303, Algorithms.Icao9303.AlgorithmName, "U7Y8SXRC0O3SC4I" };
+      yield return new Object[] { Algorithms.Icao9303, Algorithms.Icao9303.AlgorithmName, "U7Y8SXRC0O3SC4IHYQ" };
+      yield return new Object[] { Algorithms.Icao9303, Algorithms.Icao9303.AlgorithmName, "U7Y8SXRC0O3SC4IHYQF4M" };
+
+      //yield return new Object[] { Algorithms.Isin, Algorithms.Isin.AlgorithmName, "US037833100" };
+      //yield return new Object[] { Algorithms.Isin, Algorithms.Isin.AlgorithmName, "AU0000XVGZA" };
+      //yield return new Object[] { Algorithms.Isin, Algorithms.Isin.AlgorithmName, "GB000263494" };
 
       //yield return new Object[] { Algorithms.Iso6346, Algorithms.Iso6346.AlgorithmName, "CSQU305438" };
       //yield return new Object[] { Algorithms.Iso6346, Algorithms.Iso6346.AlgorithmName, "TOLU473478" };
@@ -49,13 +58,13 @@ public class ValueSpecificAlgorithmBenchmarks
       //yield return new Object[] { Algorithms.Iban, Algorithms.Iban.AlgorithmName, "GB82WEST12345698765432" };
       //yield return new Object[] { Algorithms.Iban, Algorithms.Iban.AlgorithmName, "SC74MCBL01031234567890123456USD" };
 
-      //yield return new Object[] { Algorithms.Icao9303, Algorithms.Icao9303.AlgorithmName, "U7Y5" };
-      //yield return new Object[] { Algorithms.Icao9303, Algorithms.Icao9303.AlgorithmName, "U7Y8SX8" };
-      //yield return new Object[] { Algorithms.Icao9303, Algorithms.Icao9303.AlgorithmName, "U7Y8SXRC03" };
-      //yield return new Object[] { Algorithms.Icao9303, Algorithms.Icao9303.AlgorithmName, "U7Y8SXRC0O3S8" };
-      //yield return new Object[] { Algorithms.Icao9303, Algorithms.Icao9303.AlgorithmName, "U7Y8SXRC0O3SC4I2" };
-      //yield return new Object[] { Algorithms.Icao9303, Algorithms.Icao9303.AlgorithmName, "U7Y8SXRC0O3SC4IHYQ9" };
-      //yield return new Object[] { Algorithms.Icao9303, Algorithms.Icao9303.AlgorithmName, "U7Y8SXRC0O3SC4IHYQF4M8" };
+      yield return new Object[] { Algorithms.Icao9303, Algorithms.Icao9303.AlgorithmName, "U7Y5" };
+      yield return new Object[] { Algorithms.Icao9303, Algorithms.Icao9303.AlgorithmName, "U7Y8SX8" };
+      yield return new Object[] { Algorithms.Icao9303, Algorithms.Icao9303.AlgorithmName, "U7Y8SXRC03" };
+      yield return new Object[] { Algorithms.Icao9303, Algorithms.Icao9303.AlgorithmName, "U7Y8SXRC0O3S8" };
+      yield return new Object[] { Algorithms.Icao9303, Algorithms.Icao9303.AlgorithmName, "U7Y8SXRC0O3SC4I2" };
+      yield return new Object[] { Algorithms.Icao9303, Algorithms.Icao9303.AlgorithmName, "U7Y8SXRC0O3SC4IHYQ9" };
+      yield return new Object[] { Algorithms.Icao9303, Algorithms.Icao9303.AlgorithmName, "U7Y8SXRC0O3SC4IHYQF4M8" };
 
       //yield return new Object[] { Algorithms.Icao9303MachineReadableVisa, Algorithms.Icao9303MachineReadableVisa.AlgorithmName, "I<UTOERIKSSON<<ANNA<MARIA<<<<<<<<<<<D231458907UTO7408122F1204159<<<<<<A<" };
       //yield return new Object[] { Algorithms.Icao9303MachineReadableVisa, Algorithms.Icao9303MachineReadableVisa.AlgorithmName, "V<UTOERIKSSON<<ANNA<MARIA<<<<<<<<<<<<<<<<<<<L898902C<3UTO6908061F9406236ZE184226B<<<<<<<" };
@@ -81,9 +90,9 @@ public class ValueSpecificAlgorithmBenchmarks
       //yield return new Object[] { Algorithms.Iso6346, Algorithms.Iso6346.AlgorithmName, "TOLU4734787" };
       //yield return new Object[] { Algorithms.Iso6346, Algorithms.Iso6346.AlgorithmName, "MSKU9070323" };
 
-      yield return new Object[] { Algorithms.Isin, Algorithms.Isin.AlgorithmName, "US0378331005" };
-      yield return new Object[] { Algorithms.Isin, Algorithms.Isin.AlgorithmName, "AU0000XVGZA3" };
-      yield return new Object[] { Algorithms.Isin, Algorithms.Isin.AlgorithmName, "GB0002634946" };
+      //yield return new Object[] { Algorithms.Isin, Algorithms.Isin.AlgorithmName, "US0378331005" };
+      //yield return new Object[] { Algorithms.Isin, Algorithms.Isin.AlgorithmName, "AU0000XVGZA3" };
+      //yield return new Object[] { Algorithms.Isin, Algorithms.Isin.AlgorithmName, "GB0002634946" };
 
       //yield return new Object[] { Algorithms.Nhs, Algorithms.Nhs.AlgorithmName, "9434765919" };
       //yield return new Object[] { Algorithms.Nhs, Algorithms.Nhs.AlgorithmName, "4505577104" };

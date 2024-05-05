@@ -26,7 +26,7 @@ namespace CheckDigits.Net.ValueSpecificAlgorithms;
 ///   difference between the transposed characters is 10, i.e. BL <-> LB.
 ///   </para>
 /// </remarks>
-public sealed class Icao9303Algorithm : IEmbeddedCheckDigitAlgorithm
+public sealed class Icao9303Algorithm : ISingleCheckDigitAlgorithm
 {
    private static readonly Int32[] _weights = [7, 3, 1];
    private static readonly Int32[] _charMap = CharacterMapUtility.GetIcao9303CharacterMap();
@@ -36,6 +36,38 @@ public sealed class Icao9303Algorithm : IEmbeddedCheckDigitAlgorithm
 
    /// <inheritdoc/>
    public String AlgorithmName => Resources.Icao9303AlgorithmName;
+
+   /// <inheritdoc/>
+   public Boolean TryCalculateCheckDigit(String value, out Char checkDigit)
+   {
+      checkDigit = CharConstants.NUL;
+      if (String.IsNullOrEmpty(value))
+      {
+         return false;
+      }
+
+      Char ch;
+      Int32 num;
+      var sum = 0;
+      var weightIndex = new ModulusInt32(3);
+      for (var charIndex = 0; charIndex < value.Length; charIndex++)
+      {
+         ch = value[charIndex];
+         num = (ch >= CharConstants.DigitZero && ch <= CharConstants.UpperCaseZ)
+            ? _charMap[ch - CharConstants.DigitZero]
+            : -1;
+         if (num == -1)
+         {
+            return false;
+         }
+         sum += num * _weights[weightIndex];
+         weightIndex++;
+      }
+      
+      checkDigit = (sum % 10).ToDigitChar();
+
+      return true;
+   }
 
    /// <inheritdoc/>
    public Boolean Validate(String value)
@@ -65,39 +97,5 @@ public sealed class Icao9303Algorithm : IEmbeddedCheckDigitAlgorithm
       var checkDigit = sum % 10;
 
       return value[^1].ToIntegerDigit() == checkDigit;
-   }
-
-   /// <inheritdoc/>
-   public Boolean Validate(String value, Int32 start, Int32 length)
-   {
-      if (String.IsNullOrEmpty(value) 
-         || start < 0
-         || length < 2
-         || start + length > value.Length)
-      {
-         return false;
-      }
-
-      Char ch;
-      Int32 num;
-      var sum = 0;
-      var weightIndex = new ModulusInt32(3);
-      var end = start + length - 1;
-      for(var charIndex = start; charIndex < end; charIndex++)
-      {
-         ch = value[charIndex];
-         num = (ch >= CharConstants.DigitZero && ch <= CharConstants.UpperCaseZ)
-            ? _charMap[ch - CharConstants.DigitZero]
-            : -1;
-         if (num == -1)
-         {
-            return false;
-         }
-         sum += num * _weights[weightIndex];
-         weightIndex++;
-      }
-      var checkDigit = sum % 10;
-
-      return value[start + length - 1].ToIntegerDigit() == checkDigit;
    }
 }
