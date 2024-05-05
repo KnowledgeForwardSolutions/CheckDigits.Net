@@ -1,5 +1,23 @@
 ﻿namespace CheckDigits.Net.GeneralAlgorithms;
 
+/// <summary>
+///   Variation of the ISO/IEC 7064 MOD 97-10 algorithm where alphabetic 
+///   characters (A-Z) are mapped to integers (10-35) before calculating the 
+///   check digit. The algorithm is case insensitive and lowercase letters are 
+///   mapped to their uppercase equivalent before conversion to integers.
+/// </summary>
+/// <remarks>
+///   <para>
+///   Valid characters are alphanumeric characters (0-9, A-Z).
+///   </para>
+///   <para>
+///   Check characters calculated by the algorithm are decimal digits (0-9).
+///   </para>
+///   <para>
+///   Assumes that the check characters (if present) are the two right-most 
+///   characters in the input value.
+///   </para>
+/// </remarks>
 public class AlphanumericMod97_10Algorithm : IDoubleCheckDigitAlgorithm
 {
     private const Int32 _minimumLength = 3;
@@ -60,7 +78,7 @@ public class AlphanumericMod97_10Algorithm : IDoubleCheckDigitAlgorithm
 
       // Per ISO/IEC 7064, two character algorithms perform one final pass with
       // effective character value of zero.
-      sum = (sum * _radix) % _modulus;
+      sum = sum * _radix % _modulus;
 
       var checkSum = _modulus - sum + 1;
       var quotient = checkSum / _radix;

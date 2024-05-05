@@ -1,7 +1,5 @@
 ﻿// Ignore Spelling: Isin
 
-using System.Net.Mail;
-
 namespace CheckDigits.Net.ValueSpecificAlgorithms;
 
 /// <summary>
@@ -30,21 +28,23 @@ public sealed class IsinAlgorithm : ISingleCheckDigitAlgorithm
 {
    private const Int32 _calculateLength = 11;
    private const Int32 _validateLength = 12;
-   private static readonly Int32[] _doubledValues = [0, 2, 4, 6, 8, 1, 3, 5, 7, 9];
    private static readonly Int32[] _oddLookupTable =
       CharacterMapUtility.GetAlphanumericCharacterMap()
       .Select(x => x switch
       {
          -1 => -1,
-         _ => (x / 10) + _doubledValues[x % 10]
+         _ => (x / 10) + LuhnDoubledValue(x % 10)
       }).ToArray();
    private static readonly Int32[] _evenLookupTable =
       CharacterMapUtility.GetAlphanumericCharacterMap()
       .Select(x => x switch
       {
          -1 => -1,
-         _ => _doubledValues[x / 10] + (x % 10)
+         _ => LuhnDoubledValue(x / 10) + (x % 10)
       }).ToArray();
+
+   private static Int32 LuhnDoubledValue(Int32 value)
+      => value > 4 ? (value * 2) - 9 : value * 2;
 
    /// <inheritdoc/>
    public String AlgorithmDescription => Resources.IsinAlgorithmDescription;

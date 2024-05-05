@@ -111,17 +111,6 @@ public class ValueSpecificAlgorithmBenchmarks
       //yield return new Object[] { Algorithms.Vin, Algorithms.Vin.AlgorithmName, "1HGEM21292L047875" };
    }
 
-   public static IEnumerable<Object[]> ValidateEmbeddedArguments()
-   {
-      yield return new Object[] { Algorithms.Icao9303, Algorithms.Icao9303.AlgorithmName, "+U7Y5+", 4 };
-      yield return new Object[] { Algorithms.Icao9303, Algorithms.Icao9303.AlgorithmName, "+U7Y8SX8+", 7 };
-      yield return new Object[] { Algorithms.Icao9303, Algorithms.Icao9303.AlgorithmName, "+U7Y8SXRC03+", 10 };
-      yield return new Object[] { Algorithms.Icao9303, Algorithms.Icao9303.AlgorithmName, "+U7Y8SXRC0O3S8+", 13 };
-      yield return new Object[] { Algorithms.Icao9303, Algorithms.Icao9303.AlgorithmName, "+U7Y8SXRC0O3SC4I2+", 16 };
-      yield return new Object[] { Algorithms.Icao9303, Algorithms.Icao9303.AlgorithmName, "+U7Y8SXRC0O3SC4IHYQ9+", 19 };
-      yield return new Object[] { Algorithms.Icao9303, Algorithms.Icao9303.AlgorithmName, "+U7Y8SXRC0O3SC4IHYQF4M8+", 22 };
-   }
-
    public static IEnumerable<Object[]> ValidateFormattedArguments()
    {
       yield return new Object[] { Algorithms.Isan, Algorithms.Isan.AlgorithmName, "ISAN D02C-42E9-5418-3EE2-Q" };
@@ -152,13 +141,6 @@ public class ValueSpecificAlgorithmBenchmarks
    {
       algorithm.Validate(value);
    }
-
-   //[Benchmark]
-   //[ArgumentsSource(nameof(ValidateEmbeddedArguments))]
-   //public void ValidateEmbedded(IEmbeddedCheckDigitAlgorithm algorithm, String name, String value, Int32 length)
-   //{
-   //   algorithm.Validate(value, 1, length);
-   //}
 
    //[Benchmark]
    //[ArgumentsSource(nameof(ValidateFormattedArguments))]
