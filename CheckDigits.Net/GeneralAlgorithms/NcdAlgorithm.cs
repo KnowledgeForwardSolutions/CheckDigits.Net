@@ -24,10 +24,11 @@ namespace CheckDigits.Net.GeneralAlgorithms;
 /// </remarks>
 public class NcdAlgorithm : ISingleCheckDigitAlgorithm
 {
-   private const String _checkCharacters = "0123456789bcdfghjkmnpqrstvwxz";
    private static readonly Int32[] _charMap = Chars.Range(Chars.DigitZero, Chars.LowerCaseZ)
       .Select(x => MapCharacter(x))
       .ToArray();
+   private const String _checkCharacters = "0123456789bcdfghjkmnpqrstvwxz";
+   private const Int32 _validateMinLength = 2;
 
    /// <inheritdoc/>
    public String AlgorithmDescription => Resources.NcdAlgorithmDescription;
@@ -35,6 +36,17 @@ public class NcdAlgorithm : ISingleCheckDigitAlgorithm
    /// <inheritdoc/>
    public String AlgorithmName => Resources.NcdAlgorithmName;
 
+   /// <summary>
+   ///   Map a character to its integer equivalent in the 
+   ///   <see cref="NcdAlgorithm"/>. Characters that are not valid for the 
+   ///   NcdAlgorithm are mapped to 0.
+   /// </summary>
+   /// <param name="ch">
+   ///   The character to map.
+   /// </param>
+   /// <returns>
+   ///   The integer value associated with <paramref name="ch"/>.
+   /// </returns>
    public static Int32 MapCharacter(Char ch) => ch switch
    {
       var d when ch >= Chars.DigitZero && ch <= Chars.DigitNine => d.ToIntegerDigit(),
@@ -84,7 +96,7 @@ public class NcdAlgorithm : ISingleCheckDigitAlgorithm
    /// <inheritdoc/>
    public Boolean Validate(String value)
    {
-      if (String.IsNullOrEmpty(value) || value.Length < 2)
+      if (String.IsNullOrEmpty(value) || value.Length < _validateMinLength)
       {
          return false;
       }

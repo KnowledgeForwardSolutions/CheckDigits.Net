@@ -20,22 +20,22 @@
 /// </remarks>
 public class AlphanumericMod97_10Algorithm : IDoubleCheckDigitAlgorithm
 {
-    private const Int32 _minimumLength = 3;
-    private const Int32 _modulus = 97;
-    private const Int32 _radix = 10;
-    private const Int32 _reduceThreshold = Int32.MaxValue / _radix;
+   private const Int32 _validateMinLength = 3;
+   private const Int32 _modulus = 97;
+   private const Int32 _radix = 10;
+   private const Int32 _reduceThreshold = Int32.MaxValue / _radix;
 
-    /// <inheritdoc/>
-    public String AlgorithmDescription => Resources.AlphanumericMod97_10AlgorithmDescription;
+   /// <inheritdoc/>
+   public String AlgorithmDescription => Resources.AlphanumericMod97_10AlgorithmDescription;
 
-    /// <inheritdoc/>
-    public String AlgorithmName => Resources.AlphanumericMod97_10AlgorithmName;
+   /// <inheritdoc/>
+   public String AlgorithmName => Resources.AlphanumericMod97_10AlgorithmName;
 
-    /// <inheritdoc/>
-    public Boolean TryCalculateCheckDigits(
-      String value,
-      out Char first,
-      out Char second)
+   /// <inheritdoc/>
+   public Boolean TryCalculateCheckDigits(
+   String value,
+   out Char first,
+   out Char second)
    {
       first = Chars.NUL;
       second = Chars.NUL;
@@ -93,7 +93,7 @@ public class AlphanumericMod97_10Algorithm : IDoubleCheckDigitAlgorithm
    /// <inheritdoc/>
    public Boolean Validate(String value)
     {
-      if (String.IsNullOrEmpty(value) || value.Length < _minimumLength)
+      if (String.IsNullOrEmpty(value) || value.Length < _validateMinLength)
       {
          return false;
       }
