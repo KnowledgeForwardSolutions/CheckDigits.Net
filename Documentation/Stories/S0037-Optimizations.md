@@ -13,3 +13,7 @@ As a developer of CheckDigits.Net, I want the algorithms included in CheckDigits
 1. Optimizations applied where opportunities found
 1. All existing unit tests still pass
 1. Performance benchmarks
+
+Look at Iso7064Mod1271_36Algorithm character mapping
+" Iso7064Mod37_2Algorithm
+" AlphanumericMod97_10Algorithm

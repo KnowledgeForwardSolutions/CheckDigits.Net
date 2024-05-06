@@ -25,8 +25,9 @@
 /// </remarks>
 public sealed class Iso7064Mod27_26Algorithm : ISingleCheckDigitAlgorithm
 {
-   private readonly Int32 _modulus = 26;
-   private readonly Int32 _modulusPlus1 = 27;
+   private const Int32 _modulus = 26;
+   private const Int32 _modulusPlus1 = 27;
+   private const Int32 _validateMinLength = 2;
 
    /// <inheritdoc/>
    public String AlgorithmDescription => Resources.Iso7064Mod27_26AlgorithmDescription;
@@ -72,7 +73,7 @@ public sealed class Iso7064Mod27_26Algorithm : ISingleCheckDigitAlgorithm
    /// <inheritdoc/>
    public Boolean Validate(String value)
    {
-      if (String.IsNullOrEmpty(value) || value.Length < 2)
+      if (String.IsNullOrEmpty(value) || value.Length < _validateMinLength)
       {
          return false;
       }

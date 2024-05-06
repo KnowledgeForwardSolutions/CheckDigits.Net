@@ -30,6 +30,7 @@ public sealed class Iso7064Mod37_2Algorithm : ISingleCheckDigitAlgorithm
    private const Int32 _radix = 2;
    private const Int32 _reduceThreshold = Int32.MaxValue / _radix;
    private const String _checkCharacters = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ*";
+   private const Int32 _validateMinLength = 2;
 
    /// <inheritdoc/>
    public String AlgorithmDescription => Resources.Iso7064Mod37_2AlgorithmDescription;
@@ -81,7 +82,7 @@ public sealed class Iso7064Mod37_2Algorithm : ISingleCheckDigitAlgorithm
    /// <inheritdoc/>
    public Boolean Validate(String value)
    {
-      if (String.IsNullOrEmpty(value) || value.Length < 2)
+      if (String.IsNullOrEmpty(value) || value.Length < _validateMinLength)
       {
          return false;
       }

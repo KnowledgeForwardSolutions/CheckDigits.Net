@@ -29,7 +29,7 @@ public sealed class Iso7064Mod661_26Algorithm : IDoubleCheckDigitAlgorithm
    private const Int32 _modulus = 661;
    private const Int32 _radix = 26;
    private const Int32 _reduceThreshold = Int32.MaxValue / _radix;
-   private const String _validCharacters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+   private const Int32 _validateMinLength = 3;
 
    /// <inheritdoc/>
    public String AlgorithmDescription => Resources.Iso7064Mod661_26AlgorithmDescription;
@@ -67,14 +67,14 @@ public sealed class Iso7064Mod661_26Algorithm : IDoubleCheckDigitAlgorithm
 
       // Per ISO/IEC 7064, two character algorithms perform one final pass with
       // effective character value of zero.
-      sum = (sum * _radix) % _modulus;
+      sum = sum * _radix % _modulus;
 
       var checkSum = _modulus - sum + 1;
       var quotient = checkSum / _radix;
       var remainder = checkSum % _radix;
 
-      first = _validCharacters[quotient];
-      second = _validCharacters[remainder];
+      first = (Char)(Chars.UpperCaseA + quotient);
+      second = (Char)(Chars.UpperCaseA + remainder);
 
       return true;
    }
@@ -82,7 +82,7 @@ public sealed class Iso7064Mod661_26Algorithm : IDoubleCheckDigitAlgorithm
    /// <inheritdoc/>
    public Boolean Validate(String value)
    {
-      if (String.IsNullOrEmpty(value) || value.Length < 3)
+      if (String.IsNullOrEmpty(value) || value.Length < _validateMinLength)
       {
          return false;
       }
