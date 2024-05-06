@@ -31,7 +31,7 @@ public sealed class Modulus10_2Algorithm : ISingleCheckDigitAlgorithm
     /// <inheritdoc/>
     public Boolean TryCalculateCheckDigit(String value, out Char checkDigit)
     {
-        checkDigit = CharConstants.NUL;
+        checkDigit = Chars.NUL;
         if (String.IsNullOrEmpty(value) || value.Length > 9)
         {
             return false;

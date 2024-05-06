@@ -28,20 +28,20 @@ namespace CheckDigits.Net.ValueSpecificAlgorithms;
 public class FigiAlgorithm : ICheckDigitAlgorithm
 {
    private const Int32 _expectedLength = 12;
-   private static readonly Int32[] _oddLookupTable =
-         CharacterMapUtility.GetFigiCharacterMap()
-            .Select(x => x switch
-            {
-               -1 => -1,
-               _ => (x / 10) + (x % 10)
-            }).ToArray();
-   private static readonly Int32[] _evenLookupTable =
-         CharacterMapUtility.GetFigiCharacterMap()
-            .Select(x => x switch
-            {
-               -1 => -1,
-               _ => (x * 2 / 10) + (x * 2 % 10)
-            }).ToArray();
+   private static readonly Int32[] _oddLookupTable = Chars.Range(Chars.DigitZero, Chars.UpperCaseZ)
+      .Select(x => Chars.MapBetanumericCharacter(x))
+      .Select(x => x switch
+      {
+         -1 => -1,
+         _ => (x / 10) + (x % 10)
+      }).ToArray();
+   private static readonly Int32[] _evenLookupTable = Chars.Range(Chars.DigitZero, Chars.UpperCaseZ)
+      .Select(x => Chars.MapBetanumericCharacter(x))
+      .Select(x => x switch
+      {
+         -1 => -1,
+         _ => (x * 2 / 10) + (x * 2 % 10)
+      }).ToArray();
 
    /// <inheritdoc/>
    public String AlgorithmDescription => Resources.FigiAlgorithmDescription;
@@ -63,9 +63,9 @@ public class FigiAlgorithm : ICheckDigitAlgorithm
       {
          var ch = value[index];
          var num = -1;
-         if (ch >= CharConstants.DigitZero && ch <= CharConstants.UpperCaseZ)
+         if (ch >= Chars.DigitZero && ch <= Chars.UpperCaseZ)
          {
-            var offset = ch - CharConstants.DigitZero;
+            var offset = ch - Chars.DigitZero;
             num = oddPosition ? _oddLookupTable[offset] : _evenLookupTable[offset];
          }
          if (num == -1)

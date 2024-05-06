@@ -24,6 +24,64 @@ public class VinAlgorithmTests
 
    #endregion
 
+   #region MapCharacter Tests
+   // ==========================================================================
+   // ==========================================================================
+
+   [Theory]
+   [InlineData('\0', -1)]
+   [InlineData('/', -1)]
+   [InlineData('0', 0)]
+   [InlineData('1', 1)]
+   [InlineData('2', 2)]
+   [InlineData('3', 3)]
+   [InlineData('4', 4)]
+   [InlineData('5', 5)]
+   [InlineData('6', 6)]
+   [InlineData('7', 7)]
+   [InlineData('8', 8)]
+   [InlineData('9', 9)]
+   [InlineData(':', -1)]
+   [InlineData(';', -1)]
+   [InlineData('<', -1)]
+   [InlineData('=', -1)]
+   [InlineData('>', -1)]
+   [InlineData('?', -1)]
+   [InlineData('@', -1)]
+   [InlineData('A', 1)]
+   [InlineData('B', 2)]
+   [InlineData('C', 3)]
+   [InlineData('D', 4)]
+   [InlineData('E', 5)]
+   [InlineData('F', 6)]
+   [InlineData('G', 7)]
+   [InlineData('H', 8)]
+   [InlineData('I', -1)]
+   [InlineData('J', 1)]
+   [InlineData('K', 2)]
+   [InlineData('L', 3)]
+   [InlineData('M', 4)]
+   [InlineData('N', 5)]
+   [InlineData('O', -1)]
+   [InlineData('P', 7)]
+   [InlineData('Q', -1)]
+   [InlineData('R', 9)]
+   [InlineData('S', 2)]
+   [InlineData('T', 3)]
+   [InlineData('U', 4)]
+   [InlineData('V', 5)]
+   [InlineData('W', 6)]
+   [InlineData('X', 7)]
+   [InlineData('Y', 8)]
+   [InlineData('Z', 9)]
+   [InlineData('[', -1)]
+   public void VinAlgorithm_MapCharacter_ShouldReturnExpectedValue(
+      Char ch,
+      Int32 expected)
+      => VinAlgorithm.MapCharacter(ch).Should().Be(expected);
+
+   #endregion
+
    #region TryCalculateCheckDigit Tests
    // ==========================================================================
    // ==========================================================================
@@ -116,7 +174,7 @@ public class VinAlgorithmTests
    {
       // Arrange.
       var value = "00000000?00000000";
-      var expectedCheckDigit = CharConstants.DigitZero;
+      var expectedCheckDigit = Chars.DigitZero;
 
       // Act/assert.
       _sut.TryCalculateCheckDigit(value, out var checkDigit).Should().BeTrue();

@@ -22,7 +22,9 @@
 public sealed class VinAlgorithm : ISingleCheckDigitAlgorithm
 {
    private static readonly Int32[] _weights = [8, 7, 6, 5, 4, 3, 2, 10, 0, 9, 8, 7, 6, 5, 4, 3, 2];
-   private static readonly Int32[] _lookupTable = CharacterMapUtility.GetVinCharacterMap();
+   private static readonly Int32[] _lookupTable = Chars.Range(Chars.DigitZero, Chars.UpperCaseZ)
+      .Select(x => MapCharacter(x))
+      .ToArray();
    private const Int32 _expectedLength = 17;
    private const Int32 _checkDigitPosition = 8;
 
@@ -32,10 +34,32 @@ public sealed class VinAlgorithm : ISingleCheckDigitAlgorithm
    /// <inheritdoc/>
    public String AlgorithmName => Resources.VinAlgorithmName;
 
+   /// <summary>
+   ///   Map a character to its integer equivalent in the 
+   ///   <see cref="VinAlgorithm"/>. Characters that are not valid for the 
+   ///   VinAlgorithm are mapped to -1.
+   /// </summary>
+   /// <param name="ch">
+   ///   The character to map.
+   /// </param>
+   /// <returns>
+   ///   The integer value associated with <paramref name="ch"/>.
+   /// </returns>
+   public static Int32 MapCharacter(Char ch) => ch switch
+   {
+      var d when ch >= Chars.DigitZero && ch <= Chars.DigitNine => d.ToIntegerDigit(),
+      var a when ch >= Chars.UpperCaseA && ch <= Chars.UpperCaseH => a - Chars.UpperCaseA + 1,
+      var j when ch >= Chars.UpperCaseJ && ch <= Chars.UpperCaseN => j - Chars.UpperCaseJ + 1,
+      Chars.UpperCaseP => 7,
+      Chars.UpperCaseR => 9,
+      var s when ch >= Chars.UpperCaseS && ch <= Chars.UpperCaseZ => s - Chars.UpperCaseS + 2,
+      _ => -1
+   };
+
    /// <inheritdoc/>
    public Boolean TryCalculateCheckDigit(String value, out Char checkDigit)
    {
-      checkDigit = CharConstants.NUL;
+      checkDigit = Chars.NUL;
       if (String.IsNullOrEmpty(value) || value.Length != _expectedLength)
       {
          return false;
@@ -51,9 +75,9 @@ public sealed class VinAlgorithm : ISingleCheckDigitAlgorithm
 
          var ch = value[index];
          var num = -1;
-         if (ch >= CharConstants.DigitZero && ch <= CharConstants.UpperCaseZ)
+         if (ch >= Chars.DigitZero && ch <= Chars.UpperCaseZ)
          {
-            num = _lookupTable[ch - CharConstants.DigitZero];
+            num = _lookupTable[ch - Chars.DigitZero];
          }
          if (num == -1)
          {
@@ -62,7 +86,7 @@ public sealed class VinAlgorithm : ISingleCheckDigitAlgorithm
          sum += num * _weights[index];
       }
       var mod = sum % 11;
-      checkDigit = mod == 10 ? CharConstants.UpperCaseX : mod.ToDigitChar();
+      checkDigit = mod == 10 ? Chars.UpperCaseX : mod.ToDigitChar();
 
       return true;
    }
@@ -85,9 +109,9 @@ public sealed class VinAlgorithm : ISingleCheckDigitAlgorithm
 
          var ch = value[index];
          var num = -1;
-         if (ch >= CharConstants.DigitZero && ch <= CharConstants.UpperCaseZ)
+         if (ch >= Chars.DigitZero && ch <= Chars.UpperCaseZ)
          {
-            num = _lookupTable[ch - CharConstants.DigitZero];
+            num = _lookupTable[ch - Chars.DigitZero];
          }
          if (num == -1)
          {
@@ -96,7 +120,7 @@ public sealed class VinAlgorithm : ISingleCheckDigitAlgorithm
          sum += num * _weights[index];
       }
       var mod = sum % 11;
-      var checkDigit = mod == 10 ? CharConstants.UpperCaseX : mod.ToDigitChar();
+      var checkDigit = mod == 10 ? Chars.UpperCaseX : mod.ToDigitChar();
 
       return value[_checkDigitPosition] == checkDigit;
    }

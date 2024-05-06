@@ -34,7 +34,7 @@ public sealed class LuhnAlgorithm : ISingleCheckDigitAlgorithm
    /// <inheritdoc/>
    public Boolean TryCalculateCheckDigit(String value, out Char checkDigit)
    {
-      checkDigit = CharConstants.NUL;
+      checkDigit = Chars.NUL;
       if (String.IsNullOrEmpty(value))
       {
          return false;
@@ -55,7 +55,7 @@ public sealed class LuhnAlgorithm : ISingleCheckDigitAlgorithm
          oddPosition = !oddPosition;
       }
       var mod = 10 - (sum % 10);
-      checkDigit = mod == 10 ? CharConstants.DigitZero : mod.ToDigitChar();
+      checkDigit = mod == 10 ? Chars.DigitZero : mod.ToDigitChar();
 
       return true;
    }

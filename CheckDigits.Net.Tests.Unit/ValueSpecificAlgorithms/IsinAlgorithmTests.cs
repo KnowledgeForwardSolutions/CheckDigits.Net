@@ -239,7 +239,7 @@ public class IsinAlgorithmTests
     {
         // Arrange.
         var value = "00000000000";
-        var expectedCheckDigit = CharConstants.DigitZero;
+        var expectedCheckDigit = Chars.DigitZero;
 
         // Act/assert.
         _sut.TryCalculateCheckDigit(value, out var checkDigit).Should().BeTrue();

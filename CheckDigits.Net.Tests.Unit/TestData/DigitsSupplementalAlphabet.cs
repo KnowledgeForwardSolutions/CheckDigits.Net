@@ -15,7 +15,7 @@ public class DigitsSupplementalAlphabet : ISupplementalCharacterAlphabet
         var num = ch.ToIntegerDigit();
         return num >= 0 && num <= 9
            ? num
-           : ch == CharConstants.UpperCaseX ? 10 : -1;
+           : ch == Chars.UpperCaseX ? 10 : -1;
     }
 
     public Char IntegerToCheckCharacter(Int32 checkDigit) => _checkCharacters[checkDigit];

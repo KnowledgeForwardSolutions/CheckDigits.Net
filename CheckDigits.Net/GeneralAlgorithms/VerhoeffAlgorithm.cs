@@ -40,7 +40,7 @@ public sealed class VerhoeffAlgorithm : ISingleCheckDigitAlgorithm
    /// <inheritdoc/>
    public bool TryCalculateCheckDigit(string value, out char checkDigit)
    {
-      checkDigit = CharConstants.NUL;
+      checkDigit = Chars.NUL;
       if (string.IsNullOrEmpty(value))
       {
          return false;

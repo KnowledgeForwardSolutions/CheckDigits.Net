@@ -1,6 +1,11 @@
-﻿namespace CheckDigits.Net.Utility;
+﻿// Ignore Spelling: Betanumeric
 
-public static class CharConstants
+namespace CheckDigits.Net.Utility;
+
+/// <summary>
+///   Character constants and helper methods.
+/// </summary>
+public static class Chars
 {
    public const Char NUL = '\0';
 
@@ -74,4 +79,74 @@ public static class CharConstants
    public const Char LowerCaseX = 'x';
    public const Char LowerCaseY = 'y';
    public const Char LowerCaseZ = 'z';
+
+   private const String _upperCaseConsonants = "BCDFGHJKLMNPQRSTVWXYZ";
+
+   /// <summary>
+   ///   Map a character to an integer value. '0'-'9' map to their integer
+   ///   equivalents. 'A'-'Z' map to 10-35. All other characters map to -1.
+   /// </summary>
+   /// <param name="ch">
+   ///   The character to map.
+   /// </param>
+   /// <returns>
+   ///   The integer value associated with <paramref name="ch"/>.
+   /// </returns>
+   public static Int32 MapAlphanumericCharacter(Char ch) => ch switch
+   {
+      var d when ch >= Chars.DigitZero && ch <= Chars.DigitNine => d.ToIntegerDigit(),
+      var c when ch >= Chars.UpperCaseA && ch <= Chars.UpperCaseZ => c - Chars.UpperCaseA + 10,
+      _ => -1
+   };
+
+   /// <summary>
+   ///   Map a character to an integer value. '0'-'9' map to their integer
+   ///   equivalents. Vowels ('A', 'E', 'I', 'O' and 'U') map to -1 while 
+   ///   consonants ('B'-'Z') map to 11-35. All other characters map to -1.
+   /// </summary>
+   /// <param name="ch">
+   ///   The character to map.
+   /// </param>
+   /// <returns>
+   ///   The integer value associated with <paramref name="ch"/>.
+   /// </returns>
+   public static Int32 MapBetanumericCharacter(Char ch) => ch switch
+   {
+      var d when ch >= Chars.DigitZero && ch <= Chars.DigitNine => d.ToIntegerDigit(),
+      var c when _upperCaseConsonants.Contains(c) => c - Chars.UpperCaseA + 10,
+      _ => -1
+   };
+
+   /// <summary>
+   ///   Get an enumerable collection of characters, ranging from 
+   ///   <paramref name="start"/> to <paramref name="end"/>, inclusive.
+   /// </summary>
+   /// <param name="start">
+   ///   The first character in the range.
+   /// </param>
+   /// <param name="end">
+   ///   The last character in the range.
+   /// </param>
+   /// <returns>
+   ///   An enumerable collection of characters.
+   /// </returns>
+   /// <remarks>
+   ///   If <paramref name="end"/> is less than <paramref name="start"/> then
+   ///   the start and end values are normalized before generating the range of
+   ///   characters.
+   /// </remarks>
+   public static IEnumerable<Char> Range(Char start, Char end)
+   {
+      if (end < start)
+      {
+         (end, start) = (start, end);
+      }
+
+      var ch = start;
+      while(ch <= end)
+      {
+         yield return ch;
+         ch++;
+      }
+   }
 }

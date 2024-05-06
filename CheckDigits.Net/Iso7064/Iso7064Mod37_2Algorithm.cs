@@ -40,7 +40,7 @@ public sealed class Iso7064Mod37_2Algorithm : ISingleCheckDigitAlgorithm
    /// <inheritdoc/>
    public Boolean TryCalculateCheckDigit(String value, out Char checkDigit)
    {
-      checkDigit = CharConstants.NUL;
+      checkDigit = Chars.NUL;
       if (String.IsNullOrEmpty(value))
       {
          return false;
@@ -52,13 +52,13 @@ public sealed class Iso7064Mod37_2Algorithm : ISingleCheckDigitAlgorithm
       for (var index = 0; index < value.Length; index++)
       {
          ch = value[index];
-         if (ch >= CharConstants.DigitZero && ch <= CharConstants.DigitNine)
+         if (ch >= Chars.DigitZero && ch <= Chars.DigitNine)
          {
             num = ch.ToIntegerDigit();
          }
-         else if (ch >= CharConstants.UpperCaseA && ch <= CharConstants.UpperCaseZ)
+         else if (ch >= Chars.UpperCaseA && ch <= Chars.UpperCaseZ)
          {
-            num = ch - CharConstants.UpperCaseA + 10;
+            num = ch - Chars.UpperCaseA + 10;
          }
          else
          {
@@ -92,13 +92,13 @@ public sealed class Iso7064Mod37_2Algorithm : ISingleCheckDigitAlgorithm
       for (var index = 0; index < value.Length - 1; index++)
       {
          ch = value[index];
-         if (ch >= CharConstants.DigitZero && ch <= CharConstants.DigitNine)
+         if (ch >= Chars.DigitZero && ch <= Chars.DigitNine)
          {
             num = ch.ToIntegerDigit();
          }
-         else if (ch >= CharConstants.UpperCaseA && ch <= CharConstants.UpperCaseZ)
+         else if (ch >= Chars.UpperCaseA && ch <= Chars.UpperCaseZ)
          {
-            num = ch - CharConstants.UpperCaseA + 10;
+            num = ch - Chars.UpperCaseA + 10;
          }
          else
          {
@@ -112,15 +112,15 @@ public sealed class Iso7064Mod37_2Algorithm : ISingleCheckDigitAlgorithm
       }
 
       ch = value[^1];
-      if (ch >= CharConstants.DigitZero && ch <= CharConstants.DigitNine)
+      if (ch >= Chars.DigitZero && ch <= Chars.DigitNine)
       {
          num = ch.ToIntegerDigit();
       }
-      else if (ch >= CharConstants.UpperCaseA && ch <= CharConstants.UpperCaseZ)
+      else if (ch >= Chars.UpperCaseA && ch <= Chars.UpperCaseZ)
       {
-         num = ch - CharConstants.UpperCaseA + 10;
+         num = ch - Chars.UpperCaseA + 10;
       }
-      else if (ch == CharConstants.Asterisk)
+      else if (ch == Chars.Asterisk)
       {
          num = 36;
       }

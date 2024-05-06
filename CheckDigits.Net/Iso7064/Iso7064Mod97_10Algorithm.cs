@@ -41,8 +41,8 @@ public sealed class Iso7064Mod97_10Algorithm : IDoubleCheckDigitAlgorithm
       out Char first,
       out Char second)
    {
-      first = CharConstants.NUL;
-      second = CharConstants.NUL;
+      first = Chars.NUL;
+      second = Chars.NUL;
       if (String.IsNullOrEmpty(value))
       {
          return false;

@@ -41,7 +41,9 @@ public sealed class Icao9303SizeTD1Algorithm : ICheckDigitAlgorithm
    private const Int32 _numFields = 3;
    private const Int32 _lineLength = 30;
    private const Int32 _compositeCheckDigitPosition = 59;
-   private static readonly Int32[] _charMap = CharacterMapUtility.GetIcao9303CharacterMap();
+   private static readonly Int32[] _charMap = Chars.Range(Chars.DigitZero, Chars.UpperCaseZ)
+      .Select(x => Icao9303Algorithm.MapCharacter(x))
+      .ToArray();
 
    private LineSeparator _lineSeparator = LineSeparator.None;
    private Int32 _lineSeparatorLength = 0;
@@ -99,8 +101,8 @@ public sealed class Icao9303SizeTD1Algorithm : ICheckDigitAlgorithm
          for (var charIndex = start; charIndex < end; charIndex++)
          {
             ch = value[charIndex];
-            num = (ch >= CharConstants.DigitZero && ch <= CharConstants.UpperCaseZ)
-               ? _charMap[ch - CharConstants.DigitZero]
+            num = (ch >= Chars.DigitZero && ch <= Chars.UpperCaseZ)
+               ? _charMap[ch - Chars.DigitZero]
                : -1;
             if (num == -1)
             {
@@ -117,7 +119,7 @@ public sealed class Icao9303SizeTD1Algorithm : ICheckDigitAlgorithm
          // Handle possible extended document number field. See
          // https://www.icao.int/publications/Documents/9303_p5_cons_en.pdf,
          // note j on page 17 for details.
-         if (fieldIndex == 0 && value[end] == CharConstants.LeftAngleBracket)
+         if (fieldIndex == 0 && value[end] == Chars.LeftAngleBracket)
          {
             (line, charPos, length) = _extendedDocumentNumber;
             start = (line * (_lineLength + _lineSeparatorLength)) + charPos;
@@ -125,8 +127,8 @@ public sealed class Icao9303SizeTD1Algorithm : ICheckDigitAlgorithm
             for (var charIndex = start; charIndex < end; charIndex++)
             {
                ch = value[charIndex];
-               num = (ch >= CharConstants.DigitZero && ch <= CharConstants.UpperCaseZ)
-                  ? _charMap[ch - CharConstants.DigitZero]
+               num = (ch >= Chars.DigitZero && ch <= Chars.UpperCaseZ)
+                  ? _charMap[ch - Chars.DigitZero]
                   : -1;
                if (num == -1)
                {
@@ -139,7 +141,7 @@ public sealed class Icao9303SizeTD1Algorithm : ICheckDigitAlgorithm
                compositeSum += num * _weights[compositeWeightIndex];
                compositeWeightIndex++;
 
-               if (value[charIndex + 2] == CharConstants.LeftAngleBracket)
+               if (value[charIndex + 2] == Chars.LeftAngleBracket)
                {
                   end = charIndex + 1;
                   break;
@@ -149,7 +151,7 @@ public sealed class Icao9303SizeTD1Algorithm : ICheckDigitAlgorithm
 
          // Field check digit.
          ch = value[end];
-         if (ch >= CharConstants.DigitZero && ch <= CharConstants.DigitNine)
+         if (ch >= Chars.DigitZero && ch <= Chars.DigitNine)
          {
             num = ch.ToIntegerDigit();
          }

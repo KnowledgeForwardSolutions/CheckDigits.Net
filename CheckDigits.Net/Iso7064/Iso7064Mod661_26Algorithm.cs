@@ -43,8 +43,8 @@ public sealed class Iso7064Mod661_26Algorithm : IDoubleCheckDigitAlgorithm
       out Char first,
       out Char second)
    {
-      first = CharConstants.NUL;
-      second = CharConstants.NUL;
+      first = Chars.NUL;
+      second = Chars.NUL;
       if (String.IsNullOrEmpty(value))
       {
          return false;
@@ -53,7 +53,7 @@ public sealed class Iso7064Mod661_26Algorithm : IDoubleCheckDigitAlgorithm
       var sum = 0;
       for (var index = 0; index < value.Length; index++)
       {
-         var num = value[index] - CharConstants.UpperCaseA;
+         var num = value[index] - Chars.UpperCaseA;
          if (num < 0 || num > 25)
          {
             return false;
@@ -92,7 +92,7 @@ public sealed class Iso7064Mod661_26Algorithm : IDoubleCheckDigitAlgorithm
       Int32 num;
       for (var index = 0; index < value.Length - 1; index++)
       {
-         num = value[index] - CharConstants.UpperCaseA;
+         num = value[index] - Chars.UpperCaseA;
          if (num < 0 || num > 25)
          {
             return false;
@@ -105,7 +105,7 @@ public sealed class Iso7064Mod661_26Algorithm : IDoubleCheckDigitAlgorithm
       }
 
       // Add value for second check character.
-      num = value[^1] - CharConstants.UpperCaseA;
+      num = value[^1] - Chars.UpperCaseA;
       if (num < 0 || num > 25)
       {
          return false;

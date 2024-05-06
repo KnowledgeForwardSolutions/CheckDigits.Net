@@ -29,14 +29,16 @@ public sealed class IsinAlgorithm : ISingleCheckDigitAlgorithm
    private const Int32 _calculateLength = 11;
    private const Int32 _validateLength = 12;
    private static readonly Int32[] _oddLookupTable =
-      CharacterMapUtility.GetAlphanumericCharacterMap()
+      Chars.Range(Chars.DigitZero, Chars.UpperCaseZ)
+      .Select(x => Chars.MapAlphanumericCharacter(x))
       .Select(x => x switch
       {
          -1 => -1,
          _ => (x / 10) + LuhnDoubledValue(x % 10)
       }).ToArray();
    private static readonly Int32[] _evenLookupTable =
-      CharacterMapUtility.GetAlphanumericCharacterMap()
+      Chars.Range(Chars.DigitZero, Chars.UpperCaseZ)
+      .Select(x => Chars.MapAlphanumericCharacter(x))
       .Select(x => x switch
       {
          -1 => -1,
@@ -55,7 +57,7 @@ public sealed class IsinAlgorithm : ISingleCheckDigitAlgorithm
    /// <inheritdoc/>
    public Boolean TryCalculateCheckDigit(String value, out Char checkDigit)
    {
-      checkDigit = CharConstants.NUL;
+      checkDigit = Chars.NUL;
       if (String.IsNullOrEmpty(value) || value.Length != _calculateLength)
       {
          return false;
@@ -66,15 +68,15 @@ public sealed class IsinAlgorithm : ISingleCheckDigitAlgorithm
       for (var index = value.Length - 1; index >= 0; index--)
       {
          var ch = value[index];
-         if (ch >= CharConstants.DigitZero && ch <= CharConstants.DigitNine)
+         if (ch >= Chars.DigitZero && ch <= Chars.DigitNine)
          {
             var digit = ch.ToIntegerDigit();
             sum += oddPosition ? _oddLookupTable[digit] : digit;
             oddPosition = !oddPosition;
          }
-         else if (ch >= CharConstants.UpperCaseA && ch <= CharConstants.UpperCaseZ)
+         else if (ch >= Chars.UpperCaseA && ch <= Chars.UpperCaseZ)
          {
-            var offset = ch - CharConstants.DigitZero;
+            var offset = ch - Chars.DigitZero;
             var num = oddPosition ? _oddLookupTable[offset] : _evenLookupTable[offset];
             sum += num;
          }
@@ -84,7 +86,7 @@ public sealed class IsinAlgorithm : ISingleCheckDigitAlgorithm
          }
       }
       var mod = 10 - (sum % 10);
-      checkDigit = mod == 10 ? CharConstants.DigitZero : mod.ToDigitChar();
+      checkDigit = mod == 10 ? Chars.DigitZero : mod.ToDigitChar();
 
       return true;
    }
@@ -102,15 +104,15 @@ public sealed class IsinAlgorithm : ISingleCheckDigitAlgorithm
       for (var index = value.Length - 2; index >= 0; index--)
       {
          var ch = value[index];
-         if (ch >= CharConstants.DigitZero && ch <= CharConstants.DigitNine)
+         if (ch >= Chars.DigitZero && ch <= Chars.DigitNine)
          {
             var digit = ch.ToIntegerDigit();
             sum += oddPosition ? _oddLookupTable[digit] : digit;
             oddPosition = !oddPosition;
          }
-         else if (ch >= CharConstants.UpperCaseA && ch <= CharConstants.UpperCaseZ)
+         else if (ch >= Chars.UpperCaseA && ch <= Chars.UpperCaseZ)
          {
-            var offset = ch - CharConstants.DigitZero;
+            var offset = ch - Chars.DigitZero;
             var num = oddPosition ? _oddLookupTable[offset] : _evenLookupTable[offset];
             sum += num;
          }

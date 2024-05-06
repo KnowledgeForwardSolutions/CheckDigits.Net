@@ -29,7 +29,9 @@ namespace CheckDigits.Net.ValueSpecificAlgorithms;
 public sealed class Icao9303Algorithm : ISingleCheckDigitAlgorithm
 {
    private static readonly Int32[] _weights = [7, 3, 1];
-   private static readonly Int32[] _charMap = CharacterMapUtility.GetIcao9303CharacterMap();
+   private static readonly Int32[] _charMap = Chars.Range(Chars.DigitZero, Chars.UpperCaseZ)
+      .Select(x => MapCharacter(x))
+      .ToArray();
 
    /// <inheritdoc/>
    public String AlgorithmDescription => Resources.Icao9303AlgorithmDescription;
@@ -37,10 +39,29 @@ public sealed class Icao9303Algorithm : ISingleCheckDigitAlgorithm
    /// <inheritdoc/>
    public String AlgorithmName => Resources.Icao9303AlgorithmName;
 
+   /// <summary>
+   ///   Map a character to its integer equivalent in the 
+   ///   <see cref="Icao9303Algorithm"/>. Characters that are not valid for the 
+   ///   Icao9303Algorithm are mapped to -1.
+   /// </summary>
+   /// <param name="ch">
+   ///   The character to map.
+   /// </param>
+   /// <returns>
+   ///   The integer value associated with <paramref name="ch"/>.
+   /// </returns>
+   public static Int32 MapCharacter(Char ch) => ch switch
+   {
+      var d when ch >= Chars.DigitZero && ch <= Chars.DigitNine => d.ToIntegerDigit(),
+      var c when ch >= Chars.UpperCaseA && ch <= Chars.UpperCaseZ => c - Chars.UpperCaseA + 10,
+      Chars.LeftAngleBracket => 0,
+      _ => -1
+   };
+
    /// <inheritdoc/>
    public Boolean TryCalculateCheckDigit(String value, out Char checkDigit)
    {
-      checkDigit = CharConstants.NUL;
+      checkDigit = Chars.NUL;
       if (String.IsNullOrEmpty(value))
       {
          return false;
@@ -53,8 +74,8 @@ public sealed class Icao9303Algorithm : ISingleCheckDigitAlgorithm
       for (var charIndex = 0; charIndex < value.Length; charIndex++)
       {
          ch = value[charIndex];
-         num = (ch >= CharConstants.DigitZero && ch <= CharConstants.UpperCaseZ)
-            ? _charMap[ch - CharConstants.DigitZero]
+         num = (ch >= Chars.DigitZero && ch <= Chars.UpperCaseZ)
+            ? _charMap[ch - Chars.DigitZero]
             : -1;
          if (num == -1)
          {
@@ -84,8 +105,8 @@ public sealed class Icao9303Algorithm : ISingleCheckDigitAlgorithm
       for (var charIndex = 0; charIndex < value.Length - 1; charIndex++)
       {
          ch = value[charIndex];
-         num = (ch >= CharConstants.DigitZero && ch <= CharConstants.UpperCaseZ)
-            ? _charMap[ch - CharConstants.DigitZero]
+         num = (ch >= Chars.DigitZero && ch <= Chars.UpperCaseZ)
+            ? _charMap[ch - Chars.DigitZero]
             : -1;
          if (num == -1)
          {

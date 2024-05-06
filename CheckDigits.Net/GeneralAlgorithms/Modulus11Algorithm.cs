@@ -36,7 +36,7 @@ public sealed class Modulus11Algorithm : ISingleCheckDigitAlgorithm
     /// <inheritdoc/>
     public Boolean TryCalculateCheckDigit(String value, out Char checkDigit)
     {
-        checkDigit = CharConstants.NUL;
+        checkDigit = Chars.NUL;
         if (String.IsNullOrEmpty(value) || value.Length > 9)
         {
             return false;
@@ -57,7 +57,7 @@ public sealed class Modulus11Algorithm : ISingleCheckDigitAlgorithm
         s += t;
 
         var mod = (11 - (s % 11)) % 11;
-        checkDigit = mod < 10 ? mod.ToDigitChar() : CharConstants.UpperCaseX;
+        checkDigit = mod < 10 ? mod.ToDigitChar() : Chars.UpperCaseX;
 
         return true;
     }
@@ -85,7 +85,7 @@ public sealed class Modulus11Algorithm : ISingleCheckDigitAlgorithm
         s += t;
 
         var mod = (11 - (s % 11)) % 11;
-        var checkDigit = mod < 10 ? mod.ToDigitChar() : CharConstants.UpperCaseX;
+        var checkDigit = mod < 10 ? mod.ToDigitChar() : Chars.UpperCaseX;
 
         return value[^1] == checkDigit;
     }

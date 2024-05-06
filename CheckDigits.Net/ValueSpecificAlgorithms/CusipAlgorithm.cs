@@ -45,9 +45,9 @@ public class CusipAlgorithm : ICheckDigitAlgorithm
       for (var index = value.Length - 2; index >= 0; index--)
       {
          var ch = value[index];
-         if (ch >= CharConstants.HashMark && ch <= CharConstants.UpperCaseZ)
+         if (ch >= Chars.HashMark && ch <= Chars.UpperCaseZ)
          {
-            var offset = ch - CharConstants.HashMark;
+            var offset = ch - Chars.HashMark;
             num = oddPosition ? _oddValues[offset] : _evenValues[offset];
          }
          else
@@ -78,11 +78,11 @@ public class CusipAlgorithm : ICheckDigitAlgorithm
       {
          var num = x switch
          {
-            var d when x >= CharConstants.DigitZero && x <= CharConstants.DigitNine => d.ToIntegerDigit(),
-            var c when x >= CharConstants.UpperCaseA && x <= CharConstants.UpperCaseZ => c - _letterOffset,
-            CharConstants.Asterisk => 36,
-            CharConstants.AtSign => 37,
-            CharConstants.HashMark => 38,
+            var d when x >= Chars.DigitZero && x <= Chars.DigitNine => d.ToIntegerDigit(),
+            var c when x >= Chars.UpperCaseA && x <= Chars.UpperCaseZ => c - _letterOffset,
+            Chars.Asterisk => 36,
+            Chars.AtSign => 37,
+            Chars.HashMark => 38,
             _ => -1
          };
          if (num == -1)

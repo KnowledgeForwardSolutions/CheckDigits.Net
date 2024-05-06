@@ -39,7 +39,7 @@ public sealed class Iso7064Mod11_2Algorithm : ISingleCheckDigitAlgorithm
    /// <inheritdoc/>
    public Boolean TryCalculateCheckDigit(String value, out Char checkDigit)
    {
-      checkDigit = CharConstants.NUL;
+      checkDigit = Chars.NUL;
       if (String.IsNullOrEmpty(value))
       {
          return false;
@@ -63,7 +63,7 @@ public sealed class Iso7064Mod11_2Algorithm : ISingleCheckDigitAlgorithm
 
       var remainder = sum % _modulus;
       var x = (_modulus - remainder + 1) % _modulus;
-      checkDigit = x == 10 ? CharConstants.UpperCaseX : x.ToDigitChar();
+      checkDigit = x == 10 ? Chars.UpperCaseX : x.ToDigitChar();
 
       return true;
    }

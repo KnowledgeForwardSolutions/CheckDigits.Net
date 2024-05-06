@@ -63,14 +63,14 @@ public class IsanAlgorithm : ICheckDigitAlgorithm
       for (var index = 0; index < value.Length - 1; index++)
       {
          ch = value[index];
-         if (ch >= CharConstants.DigitZero && ch <= CharConstants.DigitNine)
+         if (ch >= Chars.DigitZero && ch <= Chars.DigitNine)
          {
             num = ch.ToIntegerDigit();
          }
-         else if ((ch >= CharConstants.UpperCaseA && ch <= CharConstants.UpperCaseF)      // Hexadecimal chars only, unless check character position
-                 || (ch >= CharConstants.UpperCaseG && ch <= CharConstants.UpperCaseZ && index == _validateFirstCheckCharIndex))
+         else if ((ch >= Chars.UpperCaseA && ch <= Chars.UpperCaseF)      // Hexadecimal chars only, unless check character position
+                 || (ch >= Chars.UpperCaseG && ch <= Chars.UpperCaseZ && index == _validateFirstCheckCharIndex))
          {
-            num = ch - CharConstants.UpperCaseA + 10;
+            num = ch - Chars.UpperCaseA + 10;
          }
          else
          {
@@ -102,13 +102,13 @@ public class IsanAlgorithm : ICheckDigitAlgorithm
       }
 
       ch = value[^1];
-      if (ch >= CharConstants.DigitZero && ch <= CharConstants.DigitNine)
+      if (ch >= Chars.DigitZero && ch <= Chars.DigitNine)
       {
          num = ch.ToIntegerDigit();
       }
-      else if (ch >= CharConstants.UpperCaseA && ch <= CharConstants.UpperCaseZ)
+      else if (ch >= Chars.UpperCaseA && ch <= Chars.UpperCaseZ)
       {
-         num = ch - CharConstants.UpperCaseA + 10;
+         num = ch - Chars.UpperCaseA + 10;
       }
       else
       {
@@ -155,13 +155,13 @@ public class IsanAlgorithm : ICheckDigitAlgorithm
          switch (maskChar)
          {
             case 'h':
-               if (ch >= CharConstants.DigitZero && ch <= CharConstants.DigitNine)
+               if (ch >= Chars.DigitZero && ch <= Chars.DigitNine)
                {
                   num = ch.ToIntegerDigit();
                }
-               else if (ch >= CharConstants.UpperCaseA && ch <= CharConstants.UpperCaseF)
+               else if (ch >= Chars.UpperCaseA && ch <= Chars.UpperCaseF)
                {
-                  num = ch - CharConstants.UpperCaseA + 10;
+                  num = ch - Chars.UpperCaseA + 10;
                }
                else
                {
@@ -180,13 +180,13 @@ public class IsanAlgorithm : ICheckDigitAlgorithm
                break;
 
             case '#':
-               if (ch >= CharConstants.DigitZero && ch <= CharConstants.DigitNine)
+               if (ch >= Chars.DigitZero && ch <= Chars.DigitNine)
                {
                   num = ch.ToIntegerDigit();
                }
-               else if (ch >= CharConstants.UpperCaseA && ch <= CharConstants.UpperCaseZ)
+               else if (ch >= Chars.UpperCaseA && ch <= Chars.UpperCaseZ)
                {
-                  num = ch - CharConstants.UpperCaseA + 10;
+                  num = ch - Chars.UpperCaseA + 10;
                }
                else
                {
@@ -209,13 +209,13 @@ public class IsanAlgorithm : ICheckDigitAlgorithm
       }
 
       ch = value[^1];
-      if (ch >= CharConstants.DigitZero && ch <= CharConstants.DigitNine)
+      if (ch >= Chars.DigitZero && ch <= Chars.DigitNine)
       {
          num = ch.ToIntegerDigit();
       }
-      else if (ch >= CharConstants.UpperCaseA && ch <= CharConstants.UpperCaseZ)
+      else if (ch >= Chars.UpperCaseA && ch <= Chars.UpperCaseZ)
       {
-         num = ch - CharConstants.UpperCaseA + 10;
+         num = ch - Chars.UpperCaseA + 10;
       }
       else
       {

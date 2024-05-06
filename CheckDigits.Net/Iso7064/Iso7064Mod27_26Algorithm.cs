@@ -37,7 +37,7 @@ public sealed class Iso7064Mod27_26Algorithm : ISingleCheckDigitAlgorithm
    /// <inheritdoc/>
    public Boolean TryCalculateCheckDigit(String value, out Char checkDigit)
    {
-      checkDigit = CharConstants.NUL;
+      checkDigit = Chars.NUL;
       if (String.IsNullOrEmpty(value))
       {
          return false;
@@ -46,7 +46,7 @@ public sealed class Iso7064Mod27_26Algorithm : ISingleCheckDigitAlgorithm
       var product = _modulus;
       for (var index = 0; index < value.Length; index++)
       {
-         var num = value[index] - CharConstants.UpperCaseA;
+         var num = value[index] - Chars.UpperCaseA;
          if (num < 0 || num > 25)
          {
             return false;
@@ -64,7 +64,7 @@ public sealed class Iso7064Mod27_26Algorithm : ISingleCheckDigitAlgorithm
       }
 
       var x = (_modulus - product + 1) % _modulus;
-      checkDigit = x == 26 ? CharConstants.UpperCaseA : (Char)(CharConstants.UpperCaseA + x);
+      checkDigit = x == 26 ? Chars.UpperCaseA : (Char)(Chars.UpperCaseA + x);
 
       return true;
    }
@@ -81,7 +81,7 @@ public sealed class Iso7064Mod27_26Algorithm : ISingleCheckDigitAlgorithm
       Int32 num;
       for (var index = 0; index < value.Length - 1; index++)
       {
-         num = value[index] - CharConstants.UpperCaseA;
+         num = value[index] - Chars.UpperCaseA;
          if (num < 0 || num > 25)
          {
             return false;
@@ -98,7 +98,7 @@ public sealed class Iso7064Mod27_26Algorithm : ISingleCheckDigitAlgorithm
          }
       }
 
-      num = value[^1] - CharConstants.UpperCaseA;
+      num = value[^1] - Chars.UpperCaseA;
       if (num < 0 || num > 25)
       {
          return false;

@@ -45,9 +45,9 @@ public class SedolAlgorithm : ICheckDigitAlgorithm
       {
          var ch = value[index];
          num = -1;
-         if (ch >= CharConstants.DigitZero && ch <= CharConstants.UpperCaseZ)
+         if (ch >= Chars.DigitZero && ch <= Chars.UpperCaseZ)
          {
-            var offset = ch - CharConstants.DigitZero;
+            var offset = ch - Chars.DigitZero;
             num = _charValues[offset];
          }
 
@@ -67,7 +67,7 @@ public class SedolAlgorithm : ICheckDigitAlgorithm
    public static Int32[] GetLookupTable()
       => _chars.Select(x => x switch
       {
-         var d when x >= CharConstants.DigitZero && x <= CharConstants.DigitNine => d.ToIntegerDigit(),
+         var d when x >= Chars.DigitZero && x <= Chars.DigitNine => d.ToIntegerDigit(),
          var c when "BCDFGHJKLMNPQRSTVWXYZ".Contains(x) => c - _letterOffset,
          _ => -1
       })

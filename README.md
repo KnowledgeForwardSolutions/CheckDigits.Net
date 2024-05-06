@@ -1390,11 +1390,12 @@ Note that the values used for the NOID Check Digit algorithm do not include leng
 | ISO/IEC 7064 MOD 37,36   | U7Y8SXRC0O3SC4IHYQ    | 30.263 ns | 0.1079 ns | 0.0956 ns |         - |
 | ISO/IEC 7064 MOD 37,36   | U7Y8SXRC0O3SC4IHYQF4M | 35.554 ns | 0.1783 ns | 0.1668 ns |         - |
 |                          |                       |           |           |           |           |                                           
-| NOID Check Digit         | 11404/2h9             |  8.473 ns | 0.0361 ns | 0.0337 ns |         - |
-| NOID Check Digit         | 11404/2h9tqb          | 12.857 ns | 0.0650 ns | 0.0576 ns |         - |
-| NOID Check Digit         | 11404/2h9tqbxk6       | 16.108 ns | 0.0807 ns | 0.0755 ns |         - |
-| NOID Check Digit         | 11404/2h9tqbxk6rw7    | 19.350 ns | 0.1326 ns | 0.1240 ns |         - |
-| NOID Check Digit         | 11404/2h9tqbxk6rw7dwm | 25.295 ns | 0.0684 ns | 0.0571 ns |         - |
+| NOID Check Digit         | 11404/2h9             | 10.900 ns | 0.1480 ns | 0.1390 ns |         - |
+| NOID Check Digit         | 11404/2h9tqb          | 13.440 ns | 0.2840 ns | 0.2790 ns |         - |
+| NOID Check Digit         | 11404/2h9tqbxk6       | 16.450 ns | 0.1590 ns | 0.1410 ns |         - |
+| NOID Check Digit         | 11404/2h9tqbxk6rw7    | 20.090 ns | 0.2470 ns | 0.2190 ns |         - |
+| NOID Check Digit         | 11404/2h9tqbxk6rw7dwm | 20.750 ns | 0.1330 ns | 0.1240 ns |         - |
+
 
 #### Value Specific Algorithms
 
@@ -1576,11 +1577,12 @@ Note also that the values used for the NOID Check Digit algorithm do not include
 | ISO/IEC 7064 MOD 37,36   | U7Y8SXRC0O3SC4IHYQD     | 27.938 ns | 0.1244 ns | 0.0971 ns |         - |
 | ISO/IEC 7064 MOD 37,36   | U7Y8SXRC0O3SC4IHYQF4MP  | 32.631 ns | 0.1183 ns | 0.1049 ns |         - |
 |                          |                         |           |           |           |           |                                           
-| NOID Check Digit         | 11404/2h9m              | 12.579 ns | 0.0894 ns | 0.0837 ns |         - |
-| NOID Check Digit         | 11404/2h9tqb0           | 16.119 ns | 0.0622 ns | 0.0551 ns |         - |
-| NOID Check Digit         | 11404/2h9tqbxk6d        | 20.225 ns | 0.0792 ns | 0.0740 ns |         - |
-| NOID Check Digit         | 11404/2h9tqbxk6rw74     | 24.573 ns | 0.1188 ns | 0.1111 ns |         - |
-| NOID Check Digit         | 11404/2h9tqbxk6rw7dwmz  | 30.319 ns | 0.0998 ns | 0.0833 ns |         - |
+| NOID Check Digit         | 11404/2h9m              | 11.450 ns | 0.0710 ns | 0.0660 ns |         - |
+| NOID Check Digit         | 11404/2h9tqb0           | 14.290 ns | 0.0960 ns | 0.0850 ns |         - |
+| NOID Check Digit         | 11404/2h9tqbxk6d        | 17.010 ns | 0.0900 ns | 0.0790 ns |         - |
+| NOID Check Digit         | 11404/2h9tqbxk6rw74     | 19.710 ns | 0.2040 ns | 0.1910 ns |         - |
+| NOID Check Digit         | 11404/2h9tqbxk6rw7dwmz  | 22.590 ns | 0.1490 ns | 0.1250 ns |         - |
+
 
 #### Value Specific Algorithms
 
@@ -1745,3 +1747,4 @@ Additional included algorithms
 
 Performance increases for:
 * ISIN algorithm, ~9% improvement for Validate and TryCalculateCheckDigit methods
+* NcdAlgorithm (NOID Check Digit), minimum 10% improvement for Validate method, improvement increases with length of value.

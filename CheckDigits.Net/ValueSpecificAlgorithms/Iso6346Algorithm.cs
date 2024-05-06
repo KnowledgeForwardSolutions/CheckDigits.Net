@@ -33,7 +33,7 @@ public class Iso6346Algorithm : ISingleCheckDigitAlgorithm
    /// <inheritdoc/>
    public Boolean TryCalculateCheckDigit(String value, out Char checkDigit)
    {
-      checkDigit = CharConstants.NUL;
+      checkDigit = Chars.NUL;
       if (String.IsNullOrEmpty(value) || value.Length != _calculateLength)
       {
          return false;
@@ -45,9 +45,9 @@ public class Iso6346Algorithm : ISingleCheckDigitAlgorithm
       {
          var ch = value[index];
          num = -1;
-         if (ch >= CharConstants.DigitZero && ch <= CharConstants.UpperCaseZ)
+         if (ch >= Chars.DigitZero && ch <= Chars.UpperCaseZ)
          {
-            var offset = ch - CharConstants.DigitZero;
+            var offset = ch - Chars.DigitZero;
             num = _charValues[offset];
          }
 
@@ -77,9 +77,9 @@ public class Iso6346Algorithm : ISingleCheckDigitAlgorithm
       {
          var ch = value[index];
          num = -1;
-         if (ch >= CharConstants.DigitZero && ch <= CharConstants.UpperCaseZ)
+         if (ch >= Chars.DigitZero && ch <= Chars.UpperCaseZ)
          {
-            var offset = ch - CharConstants.DigitZero;
+            var offset = ch - Chars.DigitZero;
             num = _charValues[offset];
          }
 
