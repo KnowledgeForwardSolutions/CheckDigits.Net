@@ -20,7 +20,7 @@ namespace CheckDigits.Net.ValueSpecificAlgorithms;
 /// </remarks>
 public class CusipAlgorithm : ICheckDigitAlgorithm
 {
-   private const Int32 _validateLength = 9;
+   private const Int32 _validateMinLength = 9;
    private const Int32 _letterOffset = 55;      // Value needed to subtract from an ASCII uppercase letter to transform A-Z to 10-35
    private static readonly Int32[] _evenValues = GetLookupTable(false);
    private static readonly Int32[] _oddValues = GetLookupTable(true);
@@ -34,7 +34,7 @@ public class CusipAlgorithm : ICheckDigitAlgorithm
    /// <inheritdoc/>
    public Boolean Validate(String value)
    {
-      if (String.IsNullOrEmpty(value) || value.Length != _validateLength)
+      if (String.IsNullOrEmpty(value) || value.Length != _validateMinLength)
       {
          return false;
       }

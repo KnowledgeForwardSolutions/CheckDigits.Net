@@ -32,6 +32,7 @@ public sealed class Icao9303Algorithm : ISingleCheckDigitAlgorithm
    private static readonly Int32[] _charMap = Chars.Range(Chars.DigitZero, Chars.UpperCaseZ)
       .Select(x => MapCharacter(x))
       .ToArray();
+   private const Int32 _validateMinLength = 2;
 
    /// <inheritdoc/>
    public String AlgorithmDescription => Resources.Icao9303AlgorithmDescription;
@@ -93,7 +94,7 @@ public sealed class Icao9303Algorithm : ISingleCheckDigitAlgorithm
    /// <inheritdoc/>
    public Boolean Validate(String value)
    {
-      if (String.IsNullOrEmpty(value) || value.Length < 2)
+      if (String.IsNullOrEmpty(value) || value.Length < _validateMinLength)
       {
          return false;
       }

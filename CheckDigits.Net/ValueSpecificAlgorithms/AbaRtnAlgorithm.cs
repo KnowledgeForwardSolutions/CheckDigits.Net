@@ -28,35 +28,35 @@ namespace CheckDigits.Net.ValueSpecificAlgorithms;
 /// </remarks>
 public sealed class AbaRtnAlgorithm : ICheckDigitAlgorithm
 {
-    private const Int32 _expectedLength = 9;
-    private static readonly Int32[] _weights = new Int32[9] { 3, 7, 1, 3, 7, 1, 3, 7, 1 };
+   private const Int32 _expectedLength = 9;
+   private static readonly Int32[] _weights = [3, 7, 1, 3, 7, 1, 3, 7, 1];
 
-    /// <inheritdoc/>
-    public String AlgorithmDescription => Resources.AbaRtnAlgorithmDescription;
+   /// <inheritdoc/>
+   public String AlgorithmDescription => Resources.AbaRtnAlgorithmDescription;
 
-    /// <inheritdoc/>
-    public String AlgorithmName => Resources.AbaRtnAlgorithmName;
+   /// <inheritdoc/>
+   public String AlgorithmName => Resources.AbaRtnAlgorithmName;
 
-    /// <inheritdoc/>
-    public Boolean Validate(String value)
-    {
-        if (String.IsNullOrEmpty(value) || value.Length != _expectedLength)
-        {
-            return false;
-        }
+   /// <inheritdoc/>
+   public Boolean Validate(String value)
+   {
+      if (String.IsNullOrEmpty(value) || value.Length != _expectedLength)
+      {
+         return false;
+      }
 
-        var sum = 0;
-        for (var index = 0; index < value.Length; index++)
-        {
-            var currentDigit = value[index].ToIntegerDigit();
-            if (currentDigit < 0 || currentDigit > 9)
-            {
-                return false;
-            }
+      var sum = 0;
+      for (var index = 0; index < value.Length; index++)
+      {
+         var currentDigit = value[index].ToIntegerDigit();
+         if (currentDigit < 0 || currentDigit > 9)
+         {
+               return false;
+         }
 
-            sum += currentDigit * _weights[index];
-        }
+         sum += currentDigit * _weights[index];
+      }
 
-        return sum % 10 == 0;
-    }
+      return sum % 10 == 0;
+   }
 }

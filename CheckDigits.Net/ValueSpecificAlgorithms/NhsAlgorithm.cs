@@ -27,42 +27,42 @@ namespace CheckDigits.Net.ValueSpecificAlgorithms;
 /// </remarks>
 public sealed class NhsAlgorithm : ICheckDigitAlgorithm
 {
-    private const Int32 _expectedLength = 10;
+   private const Int32 _expectedLength = 10;
 
-    /// <inheritdoc/>
-    public String AlgorithmDescription => Resources.NhsAlgorithmDescription;
+   /// <inheritdoc/>
+   public String AlgorithmDescription => Resources.NhsAlgorithmDescription;
 
-    /// <inheritdoc/>
-    public String AlgorithmName => Resources.NhsAlgorithmName;
+   /// <inheritdoc/>
+   public String AlgorithmName => Resources.NhsAlgorithmName;
 
-    /// <inheritdoc/>
-    public Boolean Validate(String value)
-    {
-        if (String.IsNullOrEmpty(value) || value.Length != _expectedLength)
-        {
-            return false;
-        }
+   /// <inheritdoc/>
+   public Boolean Validate(String value)
+   {
+      if (String.IsNullOrEmpty(value) || value.Length != _expectedLength)
+      {
+         return false;
+      }
 
-        var s = 0;
-        var t = 0;
-        for (var index = 0; index < value.Length - 1; index++)
-        {
-            var currentDigit = value![index].ToIntegerDigit();
-            if (currentDigit < 0 || currentDigit > 9)
-            {
-                return false;
-            }
-            t += currentDigit;
-            s += t;
-        }
-        s += t;
+      var s = 0;
+      var t = 0;
+      for (var index = 0; index < value.Length - 1; index++)
+      {
+         var currentDigit = value![index].ToIntegerDigit();
+         if (currentDigit < 0 || currentDigit > 9)
+         {
+               return false;
+         }
+         t += currentDigit;
+         s += t;
+      }
+      s += t;
 
-        var checkDigit = (11 - (s % 11)) % 11;
-        if (checkDigit == 10)
-        {
-            return false;
-        }
+      var checkDigit = (11 - (s % 11)) % 11;
+      if (checkDigit == 10)
+      {
+         return false;
+      }
 
-        return value[^1].ToIntegerDigit() == checkDigit;
+      return value[^1].ToIntegerDigit() == checkDigit;
     }
 }
