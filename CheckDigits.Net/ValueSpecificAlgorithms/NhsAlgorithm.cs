@@ -58,11 +58,14 @@ public sealed class NhsAlgorithm : ICheckDigitAlgorithm
       s += t;
 
       var checkDigit = (11 - (s % 11)) % 11;
+
+#pragma warning disable IDE0046 // Convert to conditional expression
       if (checkDigit == 10)
       {
          return false;
       }
 
       return value[^1].ToIntegerDigit() == checkDigit;
-    }
+#pragma warning restore IDE0046 // Convert to conditional expression
+   }
 }

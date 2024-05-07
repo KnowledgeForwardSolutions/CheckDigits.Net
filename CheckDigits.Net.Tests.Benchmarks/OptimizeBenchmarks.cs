@@ -3,9 +3,9 @@
 [MemoryDiagnoser]
 public class OptimizeBenchmarks
 {
-   private static readonly NcdAlgorithm _algorithm = new();
+   private static readonly NpiAlgorithm _algorithm = new();
 
-   [Params("11404/2h9m", "11404/2h9tqb0", "11404/2h9tqbxk6d", "11404/2h9tqbxk6rw74", "11404/2h9tqbxk6rw7dwmz")]
+   [Params("1234567893", "1245319599", "1122337797")]
    public String Value { get; set; } = String.Empty;
 
    [Benchmark]

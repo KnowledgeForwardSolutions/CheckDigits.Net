@@ -1651,9 +1651,9 @@ Note also that the values used for the NOID Check Digit algorithm do not include
 | NHS                             | 5301194917                             | 11.270 ns | 0.0400 ns | 0.0360 ns |         - |
 | NHS                             | 9434765919                             | 11.270 ns | 0.0450 ns | 0.0430 ns |         - |
 |                                 |                                        |           |           |           |           |                                           
-| NPI                             | 1122337797                             | 14.490 ns | 0.0490 ns | 0.0440 ns |         - |
-| NPI                             | 1234567893                             | 14.530 ns | 0.0800 ns | 0.0710 ns |         - |
-| NPI                             | 1245319599                             | 14.520 ns | 0.0890 ns | 0.0830 ns |         - |
+| NPI                             | 1122337797                             | 12.790 ns | 0.1540 ns | 0.1440 ns |         - |
+| NPI                             | 1234567893                             | 12.400 ns | 0.0670 ns | 0.0590 ns |         - |
+| NPI                             | 1245319599                             | 12.610 ns | 0.0700 ns | 0.0660 ns |         - |
 |                                 |                                        |           |           |           |           |                                           
 | SEDOL                           | 3134865                                | 12.290 ns | 0.1440 ns | 0.1200 ns |         - |
 | SEDOL                           | B0YQ5W0                                | 12.180 ns | 0.0630 ns | 0.0560 ns |         - |
@@ -1748,3 +1748,4 @@ Additional included algorithms
 Performance increases for:
 * ISIN algorithm, ~9% improvement for Validate and TryCalculateCheckDigit methods
 * NcdAlgorithm (NOID Check Digit), minimum 10% improvement for Validate method, improvement increases with length of value.
+* NpiAlgorithm, ~8 improvement for Validate method
