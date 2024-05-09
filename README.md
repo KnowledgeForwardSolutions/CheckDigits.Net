@@ -1358,13 +1358,13 @@ Note that the values used for the NOID Check Digit algorithm do not include leng
 
 | Algorithm Name           | Value                 | Mean      | Error     | StdDev    | Allocated |
 |------------------------- |---------------------- |----------:|----------:|----------:|----------:|
-| AlphanumericMod97_10     | U7y                   | 10.603 ns | 0.0421 ns | 0.0329 ns |         - |
-| AlphanumericMod97_10     | U7y8SX                | 18.684 ns | 0.0887 ns | 0.0786 ns |         - |
-| AlphanumericMod97_10     | U7y8SXrC0             | 27.203 ns | 0.1398 ns | 0.1239 ns |         - |
-| AlphanumericMod97_10     | U7y8SXrC0O3S          | 33.243 ns | 0.1609 ns | 0.1427 ns |         - |
-| AlphanumericMod97_10     | U7y8SXrC0O3Sc4I       | 42.317 ns | 0.2219 ns | 0.1853 ns |         - |
-| AlphanumericMod97_10     | U7y8SXrC0O3Sc4IHYQ    | 46.321 ns | 0.2685 ns | 0.2242 ns |         - |
-| AlphanumericMod97_10     | U7y8SXrC0O3Sc4IHYQF4M | 51.706 ns | 0.1936 ns | 0.1811 ns |         - |
+| AlphanumericMod97_10     | U7y                   |  8.867 ns | 0.1108 ns | 0.0982 ns |         - |
+| AlphanumericMod97_10     | U7y8SX                | 15.700 ns | 0.2916 ns | 0.2727 ns |         - |
+| AlphanumericMod97_10     | U7y8SXrC0             | 25.414 ns | 0.1013 ns | 0.0791 ns |         - |
+| AlphanumericMod97_10     | U7y8SXrC0O3S          | 30.480 ns | 0.2305 ns | 0.2043 ns |         - |
+| AlphanumericMod97_10     | U7y8SXrC0O3Sc4I       | 38.288 ns | 0.2435 ns | 0.2278 ns |         - |
+| AlphanumericMod97_10     | U7y8SXrC0O3Sc4IHYQ    | 45.774 ns | 0.2720 ns | 0.2411 ns |         - |
+| AlphanumericMod97_10     | U7y8SXrC0O3Sc4IHYQF4M | 54.707 ns | 0.5074 ns | 0.4746 ns |         - |
 |                          |                       |           |           |           |           |                                           
 | ISO/IEC 7064 MOD 1271-36 | U7Y                   |  9.381 ns | 0.0675 ns | 0.0599 ns |         - |
 | ISO/IEC 7064 MOD 1271-36 | U7Y8SX                | 13.931 ns | 0.0701 ns | 0.0621 ns |         - |
@@ -1545,13 +1545,13 @@ Note also that the values used for the NOID Check Digit algorithm do not include
 
 | Algorithm Name           | Value                   | Mean      | Error     | StdDev    | Allocated |
 |------------------------- |-------------------------|----------:|----------:|----------:|----------:|
-| AlphanumericMod97_10     | U7y46                   | 10.741 ns | 0.0950 ns | 0.0793 ns |         - |
-| AlphanumericMod97_10     | U7y8SX89                | 19.366 ns | 0.1097 ns | 0.0972 ns |         - |
-| AlphanumericMod97_10     | U7y8SXrC087             | 28.522 ns | 0.2386 ns | 0.2232 ns |         - |
-| AlphanumericMod97_10     | U7y8SXrC0O3S38          | 35.760 ns | 0.1844 ns | 0.1724 ns |         - |
-| AlphanumericMod97_10     | U7y8SXrC0O3Sc4I27       | 44.344 ns | 0.0969 ns | 0.0810 ns |         - |
-| AlphanumericMod97_10     | U7y8SXrC0O3Sc4IHYQ54    | 49.380 ns | 0.1968 ns | 0.1744 ns |         - |
-| AlphanumericMod97_10     | U7y8SXrC0O3Sc4IHYQF4M21 | 57.042 ns | 0.1509 ns | 0.1260 ns |         - |
+| AlphanumericMod97_10     | U7y46                   | 10.601 ns | 0.0477 ns | 0.0423 ns |         - |
+| AlphanumericMod97_10     | U7y8SX89                | 16.772 ns | 0.1559 ns | 0.1458 ns |         - |
+| AlphanumericMod97_10     | U7y8SXrC087             | 23.859 ns | 0.2663 ns | 0.2491 ns |         - |
+| AlphanumericMod97_10     | U7y8SXrC0O3S38          | 30.912 ns | 0.2579 ns | 0.2412 ns |         - |
+| AlphanumericMod97_10     | U7y8SXrC0O3Sc4I27       | 37.383 ns | 0.5385 ns | 0.4774 ns |         - |
+| AlphanumericMod97_10     | U7y8SXrC0O3Sc4IHYQ54    | 45.008 ns | 0.2819 ns | 0.2354 ns |         - |
+| AlphanumericMod97_10     | U7y8SXrC0O3Sc4IHYQF4M21 | 49.544 ns | 0.2715 ns | 0.2539 ns |         - |
 |                          |                         |           |           |           |           |                                           
 | ISO/IEC 7064 MOD 1271-36 | U7YM0                   |  8.068 ns | 0.0306 ns | 0.0271 ns |         - |
 | ISO/IEC 7064 MOD 1271-36 | U7Y8SXOR                | 13.625 ns | 0.0857 ns | 0.0760 ns |         - |
@@ -1746,6 +1746,7 @@ Additional included algorithms
 * ICAO 9303 Machine Readable Visa Algorithm
 
 Performance increases for:
+* AlphanumericMod97_10Algorithm, Validate method ~15% improvement, TryCalculateCheckDigits method ~8% improvement
 * ISIN algorithm, ~9% improvement for Validate and TryCalculateCheckDigit methods
 * NcdAlgorithm (NOID Check Digit), minimum 10% improvement for Validate method, improvement increases with length of value.
-* NpiAlgorithm, ~8 improvement for Validate method
+* NpiAlgorithm, Validate method ~8 improvement
