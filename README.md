@@ -1413,9 +1413,9 @@ only validation of values containing check digits.
 | ICAO 9303      | U7Y8SXRC0O3SC4IHYQ              | 32.181 ns | 0.2162 ns | 0.2022 ns |         - |
 | ICAO 9303      | U7Y8SXRC0O3SC4IHYQF4M           | 36.435 ns | 0.2524 ns | 0.2237 ns |         - |
 |                |                                 |           |           |           |           |                                           
-| IBAN           | BE00096123456769                | 22.200 ns | 0.1080 ns | 0.0960 ns |         - |
-| IBAN           | GB00WEST12345698765432          | 37.500 ns | 0.3160 ns | 0.2800 ns |         - |
-| IBAN           | SC00MCBL01031234567890123456USD | 54.900 ns | 0.5590 ns | 0.4670 ns |         - |
+| IBAN           | BE00096123456769                | 25.840 ns | 0.3480 ns | 0.3250 ns |         - |
+| IBAN           | GB00WEST12345698765432          | 38.170 ns | 0.2620 ns | 0.2320 ns |         - |
+| IBAN           | SC00MCBL01031234567890123456USD | 49.910 ns | 0.2270 ns | 0.2010 ns |         - |
 |                |                                 |           |           |           |           |                                           
 | ISIN           | AU0000XVGZA                     | 19.700 ns | 0.1580 ns | 0.1400 ns |         - |
 | ISIN           | GB000263494                     | 18.310 ns | 0.2850 ns | 0.2660 ns |         - |
@@ -1600,9 +1600,9 @@ Note also that the values used for the NOID Check Digit algorithm do not include
 | FIGI                            | BBG111111160                           | 19.540 ns | 0.1640 ns | 0.1540 ns |         - |
 | FIGI                            | BBGZYXWVTSR7                           | 19.650 ns | 0.2670 ns | 0.2230 ns |         - |
 |                                 |                                        |           |           |           |           |                                           
-| IBAN                            | BE71096123456769                       | 20.090 ns | 0.1710 ns | 0.1600 ns |         - |
-| IBAN                            | GB82WEST12345698765432                 | 34.960 ns | 0.2120 ns | 0.1880 ns |         - |
-| IBAN                            | SC74MCBL01031234567890123456USD        | 51.580 ns | 0.2410 ns | 0.2130 ns |         - |
+| IBAN                            | BE71096123456769                       | 20.090 ns | 0.1330 ns | 0.1180 ns |         - |
+| IBAN                            | GB82WEST12345698765432                 | 33.800 ns | 0.2340 ns | 0.2080 ns |         - |
+| IBAN                            | SC74MCBL01031234567890123456USD        | 48.680 ns | 0.1980 ns | 0.1850 ns |         - |
 |                                 |                                        |           |           |           |           |
 | ICAO 9303                       | U7Y5                                   |  7.529 ns | 0.0629 ns | 0.0589 ns |         - |
 | ICAO 9303                       | U7Y8SX8                                | 13.597 ns | 0.0780 ns | 0.0730 ns |         - |
@@ -1747,6 +1747,7 @@ Additional included algorithms
 
 Performance increases for:
 * AlphanumericMod97_10Algorithm, Validate method ~15% improvement, TryCalculateCheckDigits method ~8% improvement
+* IBAN Algorithm, Validate method ~8% improvement
 * ISIN algorithm, ~9% improvement for Validate and TryCalculateCheckDigit methods
 * NcdAlgorithm (NOID Check Digit), minimum 10% improvement for Validate method, improvement increases with length of value.
 * NpiAlgorithm, Validate method ~8 improvement

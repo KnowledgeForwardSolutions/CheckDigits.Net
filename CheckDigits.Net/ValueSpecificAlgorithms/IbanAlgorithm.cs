@@ -21,6 +21,14 @@ public class IbanAlgorithm : IDoubleCheckDigitAlgorithm
    private const Int32 _modulus = 97;
    private const Int32 _radix = 10;
    private const Int32 _reduceThreshold = Int32.MaxValue / _radix;
+   private static readonly Int32[] _letterFirstDigits = Chars.Range(Chars.UpperCaseA, Chars.UpperCaseZ)
+      .Select(x => x - Chars.UpperCaseA + 10)
+      .Select(x => x / 10)
+      .ToArray();
+   private static readonly Int32[] _letterSecondDigits = Chars.Range(Chars.UpperCaseA, Chars.UpperCaseZ)
+      .Select(x => x - Chars.UpperCaseA + 10)
+      .Select(x => x % 10)
+      .ToArray();
 
    /// <inheritdoc/>
    public String AlgorithmDescription => Resources.IbanAlgorithmDescription;
@@ -30,8 +38,8 @@ public class IbanAlgorithm : IDoubleCheckDigitAlgorithm
 
    /// <inheritdoc/>
    public Boolean TryCalculateCheckDigits(
-      String value, 
-      out Char first, 
+      String value,
+      out Char first,
       out Char second)
    {
       first = Chars.NUL;
@@ -68,22 +76,19 @@ public class IbanAlgorithm : IDoubleCheckDigitAlgorithm
          for (var index = start; index <= end; index++)
          {
             var ch = value[index];
-            if (ch >= '0' && ch <= '9')
+            if (ch >= Chars.DigitZero && ch <= Chars.DigitNine)
             {
-               var digit = ch.ToIntegerDigit();
-               sum = (sum + digit) * _radix;
+               sum = (sum + ch.ToIntegerDigit()) * _radix;
             }
-            else if (ch >= 'A' && ch <= 'Z')
+            else if (ch >= Chars.UpperCaseA && ch <= Chars.UpperCaseZ)
             {
-               var number = ch - 55;
-               var firstDigit = number / 10;
-               var secondDigit = number % 10;
-               sum = (sum + firstDigit) * _radix;
+               var offset = ch - Chars.UpperCaseA;
+               sum = (sum + _letterFirstDigits[offset]) * _radix;
                if (sum >= _reduceThreshold)
                {
                   sum %= _modulus;
                }
-               sum = (sum + secondDigit) * _radix;
+               sum = (sum + _letterSecondDigits[offset]) * _radix;
             }
             else
             {
@@ -141,25 +146,22 @@ public class IbanAlgorithm : IDoubleCheckDigitAlgorithm
          // This is essentially the same loop as for the ISO/IEC 7064 MOD 97-10
          // algorithm, except that we process two integers when the current
          // character is A-Z.
-         for(var index = start; index <= end; index++)
+         for (var index = start; index <= end; index++)
          {
             var ch = value[index];
-            if (ch >= '0' && ch <= '9')
+            if (ch >= Chars.DigitZero && ch <= Chars.DigitNine)
             {
-               var digit = ch.ToIntegerDigit();
-               sum = (sum + digit) * _radix;
+               sum = (sum + ch.ToIntegerDigit()) * _radix;
             }
-            else if (ch >= 'A' && ch <= 'Z')
+            else if (ch >= Chars.UpperCaseA && ch <= Chars.UpperCaseZ)
             {
-               var number = ch - 55;
-               var firstDigit = number / 10;
-               var secondDigit = number % 10;
-               sum = (sum + firstDigit) * _radix;
+               var offset = ch - Chars.UpperCaseA;
+               sum = (sum + _letterFirstDigits[offset]) * _radix;
                if (sum >= _reduceThreshold)
                {
                   sum %= _modulus;
                }
-               sum = (sum + secondDigit) * _radix;
+               sum = (sum + _letterSecondDigits[offset]) * _radix;
             }
             else
             {

@@ -11,7 +11,6 @@ public class ValueSpecificAlgorithmBenchmarks
 {
    public static IEnumerable<Object[]> TryCalculateCheckDigitArguments()
    {
-
       yield return new Object[] { Algorithms.Icao9303, Algorithms.Icao9303.AlgorithmName, "U7Y" };
       yield return new Object[] { Algorithms.Icao9303, Algorithms.Icao9303.AlgorithmName, "U7Y8SX" };
       yield return new Object[] { Algorithms.Icao9303, Algorithms.Icao9303.AlgorithmName, "U7Y8SXRC0" };
@@ -54,9 +53,9 @@ public class ValueSpecificAlgorithmBenchmarks
       //yield return new Object[] { Algorithms.Figi, Algorithms.Figi.AlgorithmName, "BBG111111160" };
       //yield return new Object[] { Algorithms.Figi, Algorithms.Figi.AlgorithmName, "BBGZYXWVTSR7" };
 
-      //yield return new Object[] { Algorithms.Iban, Algorithms.Iban.AlgorithmName, "BE71096123456769" };
-      //yield return new Object[] { Algorithms.Iban, Algorithms.Iban.AlgorithmName, "GB82WEST12345698765432" };
-      //yield return new Object[] { Algorithms.Iban, Algorithms.Iban.AlgorithmName, "SC74MCBL01031234567890123456USD" };
+      yield return new Object[] { Algorithms.Iban, Algorithms.Iban.AlgorithmName, "BE71096123456769" };
+      yield return new Object[] { Algorithms.Iban, Algorithms.Iban.AlgorithmName, "GB82WEST12345698765432" };
+      yield return new Object[] { Algorithms.Iban, Algorithms.Iban.AlgorithmName, "SC74MCBL01031234567890123456USD" };
 
       //yield return new Object[] { Algorithms.Icao9303, Algorithms.Icao9303.AlgorithmName, "U7Y5" };
       //yield return new Object[] { Algorithms.Icao9303, Algorithms.Icao9303.AlgorithmName, "U7Y8SX8" };
@@ -98,9 +97,9 @@ public class ValueSpecificAlgorithmBenchmarks
       //yield return new Object[] { Algorithms.Nhs, Algorithms.Nhs.AlgorithmName, "4505577104" };
       //yield return new Object[] { Algorithms.Nhs, Algorithms.Nhs.AlgorithmName, "5301194917" };
 
-      yield return new Object[] { Algorithms.Npi, Algorithms.Npi.AlgorithmName, "1234567893" };
-      yield return new Object[] { Algorithms.Npi, Algorithms.Npi.AlgorithmName, "1245319599" };
-      yield return new Object[] { Algorithms.Npi, Algorithms.Npi.AlgorithmName, "1122337797" };
+      //yield return new Object[] { Algorithms.Npi, Algorithms.Npi.AlgorithmName, "1234567893" };
+      //yield return new Object[] { Algorithms.Npi, Algorithms.Npi.AlgorithmName, "1245319599" };
+      //yield return new Object[] { Algorithms.Npi, Algorithms.Npi.AlgorithmName, "1122337797" };
 
       //yield return new Object[] { Algorithms.Sedol, Algorithms.Sedol.AlgorithmName, "3134865" };
       //yield return new Object[] { Algorithms.Sedol, Algorithms.Sedol.AlgorithmName, "B0YQ5W0" };
@@ -128,12 +127,12 @@ public class ValueSpecificAlgorithmBenchmarks
    //   algorithm.TryCalculateCheckDigit(value, out var checkDigit);
    //}
 
-   //[Benchmark]
-   //[ArgumentsSource(nameof(TryCalculateCheckDigitsArguments))]
-   //public void TryCalculateCheckDigits(IDoubleCheckDigitAlgorithm algorithm, String name, String value)
-   //{
-   //   algorithm.TryCalculateCheckDigits(value, out var first, out var second);
-   //}
+   [Benchmark]
+   [ArgumentsSource(nameof(TryCalculateCheckDigitsArguments))]
+   public void TryCalculateCheckDigits(IDoubleCheckDigitAlgorithm algorithm, String name, String value)
+   {
+      algorithm.TryCalculateCheckDigits(value, out var first, out var second);
+   }
 
    [Benchmark]
    [ArgumentsSource(nameof(ValidateArguments))]

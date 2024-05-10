@@ -3,9 +3,9 @@
 [MemoryDiagnoser]
 public class OptimizeBenchmarks
 {
-   private static readonly CusipAlgorithm _algorithm = new();
+   private static readonly IbanAlgorithm _algorithm = new();
 
-   [Params("037833100", "38143VAA7", "91282CJL6")]
+   [Params("BE71096123456769", "GB82WEST12345698765432", "SC74MCBL01031234567890123456USD")]
    public String Value { get; set; } = String.Empty;
 
    [Benchmark]
@@ -23,7 +23,7 @@ public class OptimizeBenchmarks
    //[Benchmark]
    //public void Startup() => _algorithm.TryCalculateCheckDigits(TryValue, out var ch, out var ch2);
 
-   //[Params("U7y", "U7y8SX", "U7y8SXrC0", "U7y8SXrC0O3S", "U7y8SXrC0O3Sc4I", "U7y8SXrC0O3Sc4IHYQ", "U7y8SXrC0O3Sc4IHYQF4M")]
+   //[Params("BE00096123456769", "GB00WEST12345698765432", "SC00MCBL01031234567890123456USD")]
    //public String TryValue { get; set; } = String.Empty;
 
    //[Benchmark(Baseline = true)]
