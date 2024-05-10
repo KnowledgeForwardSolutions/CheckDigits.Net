@@ -19,9 +19,9 @@ public class Iso6346Algorithm : ISingleCheckDigitAlgorithm
 {
    private const Int32 _calculateLength = 10;
    private const Int32 _validateLength = 11;
-
-   // Character numeric values. (-1 for invalid chars)                           :,  ;,  <,  =,  >,  ?,  @,  A,  B,  C,  D,  E,  F,  G,  H,  I,  J,  K,  L,  M,  N,  O,  P,  Q,  R,  S,  T,  U,  V,  W,  X,  Y,  Z  
-   private static readonly Int32[] _charValues = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, -1, -1, -1, -1, -1, -1, -1, 10, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 34, 35, 36, 37, 38];
+   private static readonly Int32[] _charValues = Chars.Range(Chars.DigitZero, Chars.UpperCaseZ)
+         .Select(x => MapCharacter(x))
+         .ToArray();
    private static readonly Int32[] _weights = [1, 2, 4, 8, 16, 32, 64, 128, 256, 512];
 
    /// <inheritdoc/>
@@ -29,6 +29,27 @@ public class Iso6346Algorithm : ISingleCheckDigitAlgorithm
 
    /// <inheritdoc/>
    public String AlgorithmName => Resources.Iso6346AlgorithmName;
+
+   /// <summary>
+   ///   Map a character to its integer equivalent in the 
+   ///   <see cref="Iso6346Algorithm"/>. Characters that are not valid for the 
+   ///   Iso6346Algorithm are mapped to -1.
+   /// </summary>
+   /// <param name="ch">
+   ///   The character to map.
+   /// </param>
+   /// <returns>
+   ///   The integer value associated with <paramref name="ch"/>.
+   /// </returns>
+   public static Int32 MapCharacter(Char ch) => ch switch
+   {
+      var d when ch >= Chars.DigitZero && ch <= Chars.DigitNine => d.ToIntegerDigit(),
+      Chars.UpperCaseA => 10,
+      var b when ch >= Chars.UpperCaseB && ch <= Chars.UpperCaseK => b - Chars.UpperCaseB + 12,
+      var l when ch >= Chars.UpperCaseL && ch <= Chars.UpperCaseU => l - Chars.UpperCaseL + 23,
+      var v when ch >= Chars.UpperCaseV && ch <= Chars.UpperCaseZ => v - Chars.UpperCaseV + 34,
+      _ => -1
+   };
 
    /// <inheritdoc/>
    public Boolean TryCalculateCheckDigit(String value, out Char checkDigit)

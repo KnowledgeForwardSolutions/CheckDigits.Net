@@ -24,6 +24,64 @@ public class Iso6346AlgorithmTests
 
    #endregion
 
+   #region MapCharacter Tests
+   // ==========================================================================
+   // ==========================================================================
+
+   [Theory]
+   [InlineData('\0', -1)]
+   [InlineData('/', -1)]
+   [InlineData('0', 0)]
+   [InlineData('1', 1)]
+   [InlineData('2', 2)]
+   [InlineData('3', 3)]
+   [InlineData('4', 4)]
+   [InlineData('5', 5)]
+   [InlineData('6', 6)]
+   [InlineData('7', 7)]
+   [InlineData('8', 8)]
+   [InlineData('9', 9)]
+   [InlineData(':', -1)]
+   [InlineData(';', -1)]
+   [InlineData('<', -1)]
+   [InlineData('=', -1)]
+   [InlineData('>', -1)]
+   [InlineData('?', -1)]
+   [InlineData('@', -1)]
+   [InlineData('A', 10)]
+   [InlineData('B', 12)]
+   [InlineData('C', 13)]
+   [InlineData('D', 14)]
+   [InlineData('E', 15)]
+   [InlineData('F', 16)]
+   [InlineData('G', 17)]
+   [InlineData('H', 18)]
+   [InlineData('I', 19)]
+   [InlineData('J', 20)]
+   [InlineData('K', 21)]
+   [InlineData('L', 23)]
+   [InlineData('M', 24)]
+   [InlineData('N', 25)]
+   [InlineData('O', 26)]
+   [InlineData('P', 27)]
+   [InlineData('Q', 28)]
+   [InlineData('R', 29)]
+   [InlineData('S', 30)]
+   [InlineData('T', 31)]
+   [InlineData('U', 32)]
+   [InlineData('V', 34)]
+   [InlineData('W', 35)]
+   [InlineData('X', 36)]
+   [InlineData('Y', 37)]
+   [InlineData('Z', 38)]
+   [InlineData('[', -1)]
+   public void Iso6346Algorithm_MapCharacter_ShouldReturnExpectedValue(
+      Char ch,
+      Int32 expected)
+      => Iso6346Algorithm.MapCharacter(ch).Should().Be(expected);
+
+   #endregion
+
    #region TryCalculateCheckDigit Tests
    // ==========================================================================
    // ==========================================================================
