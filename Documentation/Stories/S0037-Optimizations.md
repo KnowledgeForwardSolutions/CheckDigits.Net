@@ -16,4 +16,3 @@ As a developer of CheckDigits.Net, I want the algorithms included in CheckDigits
 
 Look at Iso7064Mod1271_36Algorithm character mapping
 " Iso7064Mod37_2Algorithm
-" SedolAlgorithm
