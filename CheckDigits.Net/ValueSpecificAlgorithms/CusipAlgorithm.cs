@@ -21,15 +21,41 @@ namespace CheckDigits.Net.ValueSpecificAlgorithms;
 public class CusipAlgorithm : ICheckDigitAlgorithm
 {
    private const Int32 _validateMinLength = 9;
-   private const Int32 _letterOffset = 55;      // Value needed to subtract from an ASCII uppercase letter to transform A-Z to 10-35
-   private static readonly Int32[] _evenValues = GetLookupTable(false);
-   private static readonly Int32[] _oddValues = GetLookupTable(true);
+   private static readonly Int32[] _evenValues = Chars.Range(Chars.HashMark, Chars.UpperCaseZ)
+      .Select(x => MapCharacter(x))
+      .Select(x => (x * 2 / 10) + (x * 2 % 10))
+      .ToArray();
+   private static readonly Int32[] _oddValues = Chars.Range(Chars.HashMark, Chars.UpperCaseZ)
+      .Select(x => MapCharacter(x))
+      .Select(x => (x / 10) + (x % 10))
+      .ToArray();
 
    /// <inheritdoc/>
    public String AlgorithmDescription => Resources.CusipAlgorithmDescription;
 
    /// <inheritdoc/>
    public String AlgorithmName => Resources.CusipAlgorithmName;
+
+   /// <summary>
+   ///   Map a character to its integer equivalent in the 
+   ///   <see cref="CusipAlgorithm"/>. Characters that are not valid for the 
+   ///   CusipAlgorithm are mapped to -1.
+   /// </summary>
+   /// <param name="ch">
+   ///   The character to map.
+   /// </param>
+   /// <returns>
+   ///   The integer value associated with <paramref name="ch"/>.
+   /// </returns>
+   public static Int32 MapCharacter(Char ch) => ch switch
+   {
+      var d when ch >= Chars.DigitZero && ch <= Chars.DigitNine => d.ToIntegerDigit(),
+      var c when ch >= Chars.UpperCaseA && ch <= Chars.UpperCaseZ => c - Chars.UpperCaseA + 10,
+      Chars.Asterisk => 36,
+      Chars.AtSign => 37,
+      Chars.HashMark => 38,
+      _ => -1
+   };
 
    /// <inheritdoc/>
    public Boolean Validate(String value)
@@ -40,7 +66,7 @@ public class CusipAlgorithm : ICheckDigitAlgorithm
       }
 
       var sum = 0;
-      var oddPosition = true;
+      var oddPosition = false;
       Int32 num;
       for (var index = value.Length - 2; index >= 0; index--)
       {
@@ -70,31 +96,4 @@ public class CusipAlgorithm : ICheckDigitAlgorithm
 
       return value[^1].ToIntegerDigit() == checkDigit;
    }
-
-   private const String _chars = "#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-
-   private static Int32[] GetLookupTable(Boolean odd)
-      => _chars.Select(x =>
-      {
-         var num = x switch
-         {
-            var d when x >= Chars.DigitZero && x <= Chars.DigitNine => d.ToIntegerDigit(),
-            var c when x >= Chars.UpperCaseA && x <= Chars.UpperCaseZ => c - _letterOffset,
-            Chars.Asterisk => 36,
-            Chars.AtSign => 37,
-            Chars.HashMark => 38,
-            _ => -1
-         };
-         if (num == -1)
-         {
-            return -1;
-         }
-         if (odd)
-         {
-            num *= 2;
-         }
-
-         return (num / 10) + (num % 10);
-      })
-      .ToArray();
 }
