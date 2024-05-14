@@ -1366,13 +1366,13 @@ Note that the values used for the NOID Check Digit algorithm do not include leng
 | AlphanumericMod97_10     | U7y8SXrC0O3Sc4IHYQ    | 45.774 ns | 0.2720 ns | 0.2411 ns |         - |
 | AlphanumericMod97_10     | U7y8SXrC0O3Sc4IHYQF4M | 54.707 ns | 0.5074 ns | 0.4746 ns |         - |
 |                          |                       |           |           |           |           |                                           
-| ISO/IEC 7064 MOD 1271-36 | U7Y                   |  9.381 ns | 0.0675 ns | 0.0599 ns |         - |
-| ISO/IEC 7064 MOD 1271-36 | U7Y8SX                | 13.931 ns | 0.0701 ns | 0.0621 ns |         - |
-| ISO/IEC 7064 MOD 1271-36 | U7Y8SXRC0             | 17.402 ns | 0.0820 ns | 0.0727 ns |         - |
-| ISO/IEC 7064 MOD 1271-36 | U7Y8SXRC0O3S          | 22.540 ns | 0.0591 ns | 0.0524 ns |         - |
-| ISO/IEC 7064 MOD 1271-36 | U7Y8SXRC0O3SC4I       | 27.310 ns | 0.1040 ns | 0.0922 ns |         - |
-| ISO/IEC 7064 MOD 1271-36 | U7Y8SXRC0O3SC4IHYQ    | 32.300 ns | 0.1056 ns | 0.0936 ns |         - |
-| ISO/IEC 7064 MOD 1271-36 | U7Y8SXRC0O3SC4IHYQF4M | 35.724 ns | 0.1192 ns | 0.0995 ns |         - |
+| ISO/IEC 7064 MOD 1271-36 | U7Y                   |  7.648 ns | 0.0591 ns | 0.0553 ns |         - |
+| ISO/IEC 7064 MOD 1271-36 | U7Y8SX                | 12.700 ns | 0.0698 ns | 0.0653 ns |         - |
+| ISO/IEC 7064 MOD 1271-36 | U7Y8SXRC0             | 17.990 ns | 0.3459 ns | 0.3236 ns |         - |
+| ISO/IEC 7064 MOD 1271-36 | U7Y8SXRC0O3S          | 21.011 ns | 0.1960 ns | 0.1738 ns |         - |
+| ISO/IEC 7064 MOD 1271-36 | U7Y8SXRC0O3SC4I       | 25.927 ns | 0.3262 ns | 0.2547 ns |         - |
+| ISO/IEC 7064 MOD 1271-36 | U7Y8SXRC0O3SC4IHYQ    | 29.930 ns | 0.3608 ns | 0.3013 ns |         - |
+| ISO/IEC 7064 MOD 1271-36 | U7Y8SXRC0O3SC4IHYQF4M | 34.753 ns | 0.3039 ns | 0.2537 ns |         - |
 |                          |                       |           |           |           |           |                                           
 | ISO/IEC 7064 MOD 37-2    | U7Y                   |  7.391 ns | 0.0347 ns | 0.0324 ns |         - |
 | ISO/IEC 7064 MOD 37-2    | U7Y8SX                | 11.461 ns | 0.0774 ns | 0.0724 ns |         - |
@@ -1749,5 +1749,6 @@ Performance increases for:
 * AlphanumericMod97_10Algorithm, Validate method ~15% improvement, TryCalculateCheckDigits method ~8% improvement
 * IBAN Algorithm, Validate method ~8% improvement
 * ISIN algorithm, ~9% improvement for Validate and TryCalculateCheckDigit methods
+* ISO/IEC 7064 MOD 1271-36, TryCalculateCheckDigits method ~8% improvement
 * NcdAlgorithm (NOID Check Digit), minimum 10% improvement for Validate method, improvement increases with length of value.
 * NpiAlgorithm, Validate method ~8 improvement

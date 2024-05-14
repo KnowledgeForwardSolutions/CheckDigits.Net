@@ -29,18 +29,6 @@ public sealed class Iso7064Mod1271_36Algorithm : IDoubleCheckDigitAlgorithm
    private const Int32 _modulus = 1271;
    private const Int32 _radix = 36;
    private const Int32 _reduceThreshold = Int32.MaxValue / _radix;
-   private static readonly Int32[] _lookupTable =
-      Enumerable.Range(Chars.DigitZero, Chars.UpperCaseZ - Chars.DigitZero + 1)
-         .Select(x => x switch
-         {
-            Int32 d when d >= Chars.DigitZero && d <= Chars.DigitNine => d - Chars.DigitZero,
-            Int32 c when c >= Chars.UpperCaseA && c <= Chars.UpperCaseZ => c - Chars.UpperCaseA + 10,
-            _ => -1
-         }).ToArray();
-   private const Int32 _digitLowerBound = 0;
-   private const Int32 _digitUpperBound = 9;
-   private const Int32 _alphaLowerBound = Chars.UpperCaseA - Chars.DigitZero;
-   private const Int32 _alphaUpperBound = Chars.UpperCaseZ - Chars.DigitZero;
    private const String _validCharacters = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
    private const Int32 _validateMinLength = 3;
 
@@ -63,19 +51,24 @@ public sealed class Iso7064Mod1271_36Algorithm : IDoubleCheckDigitAlgorithm
          return false;
       }
 
+      Int32 num;
       var sum = 0;
       for (var index = 0; index < value.Length; index++)
       {
-         var offset = value[index] - Chars.DigitZero;
-         if ((offset >= _digitLowerBound && offset <= _digitUpperBound)
-            || (offset >= _alphaLowerBound && offset <= _alphaUpperBound))
+         var ch = value[index];
+         if (ch >= Chars.DigitZero && ch <= Chars.DigitNine)
          {
-            sum = (sum + _lookupTable[offset]) * _radix;
+            num = ch.ToIntegerDigit();
+         }
+         else if (ch >= Chars.UpperCaseA && ch <= Chars.UpperCaseZ)
+         {
+            num = ch - Chars.UpperCaseA + 10;
          }
          else
          {
             return false;
          }
+         sum = (sum + num) * _radix;
          if (sum >= _reduceThreshold)
          {
             sum %= _modulus;

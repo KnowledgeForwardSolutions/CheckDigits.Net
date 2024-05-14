@@ -36,21 +36,21 @@ public class AlphanumericAlgorithmBenchmarks
 
    public static IEnumerable<Object[]> TryCalculateCheckDigitsArguments()
    {
-      yield return new Object[] { Algorithms.AlphanumericMod97_10, Algorithms.AlphanumericMod97_10.AlgorithmName, "U7y" };
-      yield return new Object[] { Algorithms.AlphanumericMod97_10, Algorithms.AlphanumericMod97_10.AlgorithmName, "U7y8SX" };
-      yield return new Object[] { Algorithms.AlphanumericMod97_10, Algorithms.AlphanumericMod97_10.AlgorithmName, "U7y8SXrC0" };
-      yield return new Object[] { Algorithms.AlphanumericMod97_10, Algorithms.AlphanumericMod97_10.AlgorithmName, "U7y8SXrC0O3S" };
-      yield return new Object[] { Algorithms.AlphanumericMod97_10, Algorithms.AlphanumericMod97_10.AlgorithmName, "U7y8SXrC0O3Sc4I" };
-      yield return new Object[] { Algorithms.AlphanumericMod97_10, Algorithms.AlphanumericMod97_10.AlgorithmName, "U7y8SXrC0O3Sc4IHYQ" };
-      yield return new Object[] { Algorithms.AlphanumericMod97_10, Algorithms.AlphanumericMod97_10.AlgorithmName, "U7y8SXrC0O3Sc4IHYQF4M" };
+      //yield return new Object[] { Algorithms.AlphanumericMod97_10, Algorithms.AlphanumericMod97_10.AlgorithmName, "U7y" };
+      //yield return new Object[] { Algorithms.AlphanumericMod97_10, Algorithms.AlphanumericMod97_10.AlgorithmName, "U7y8SX" };
+      //yield return new Object[] { Algorithms.AlphanumericMod97_10, Algorithms.AlphanumericMod97_10.AlgorithmName, "U7y8SXrC0" };
+      //yield return new Object[] { Algorithms.AlphanumericMod97_10, Algorithms.AlphanumericMod97_10.AlgorithmName, "U7y8SXrC0O3S" };
+      //yield return new Object[] { Algorithms.AlphanumericMod97_10, Algorithms.AlphanumericMod97_10.AlgorithmName, "U7y8SXrC0O3Sc4I" };
+      //yield return new Object[] { Algorithms.AlphanumericMod97_10, Algorithms.AlphanumericMod97_10.AlgorithmName, "U7y8SXrC0O3Sc4IHYQ" };
+      //yield return new Object[] { Algorithms.AlphanumericMod97_10, Algorithms.AlphanumericMod97_10.AlgorithmName, "U7y8SXrC0O3Sc4IHYQF4M" };
 
-      //yield return new Object[] { Algorithms.Iso7064Mod1271_36, Algorithms.Iso7064Mod1271_36.AlgorithmName, "U7Y" };
-      //yield return new Object[] { Algorithms.Iso7064Mod1271_36, Algorithms.Iso7064Mod1271_36.AlgorithmName, "U7Y8SX" };
-      //yield return new Object[] { Algorithms.Iso7064Mod1271_36, Algorithms.Iso7064Mod1271_36.AlgorithmName, "U7Y8SXRC0" };
-      //yield return new Object[] { Algorithms.Iso7064Mod1271_36, Algorithms.Iso7064Mod1271_36.AlgorithmName, "U7Y8SXRC0O3S" };
-      //yield return new Object[] { Algorithms.Iso7064Mod1271_36, Algorithms.Iso7064Mod1271_36.AlgorithmName, "U7Y8SXRC0O3SC4I" };
-      //yield return new Object[] { Algorithms.Iso7064Mod1271_36, Algorithms.Iso7064Mod1271_36.AlgorithmName, "U7Y8SXRC0O3SC4IHYQ" };
-      //yield return new Object[] { Algorithms.Iso7064Mod1271_36, Algorithms.Iso7064Mod1271_36.AlgorithmName, "U7Y8SXRC0O3SC4IHYQF4M" };
+      yield return new Object[] { Algorithms.Iso7064Mod1271_36, Algorithms.Iso7064Mod1271_36.AlgorithmName, "U7Y" };
+      yield return new Object[] { Algorithms.Iso7064Mod1271_36, Algorithms.Iso7064Mod1271_36.AlgorithmName, "U7Y8SX" };
+      yield return new Object[] { Algorithms.Iso7064Mod1271_36, Algorithms.Iso7064Mod1271_36.AlgorithmName, "U7Y8SXRC0" };
+      yield return new Object[] { Algorithms.Iso7064Mod1271_36, Algorithms.Iso7064Mod1271_36.AlgorithmName, "U7Y8SXRC0O3S" };
+      yield return new Object[] { Algorithms.Iso7064Mod1271_36, Algorithms.Iso7064Mod1271_36.AlgorithmName, "U7Y8SXRC0O3SC4I" };
+      yield return new Object[] { Algorithms.Iso7064Mod1271_36, Algorithms.Iso7064Mod1271_36.AlgorithmName, "U7Y8SXRC0O3SC4IHYQ" };
+      yield return new Object[] { Algorithms.Iso7064Mod1271_36, Algorithms.Iso7064Mod1271_36.AlgorithmName, "U7Y8SXRC0O3SC4IHYQF4M" };
    }
 
    public static IEnumerable<Object[]> ValidateArguments()
@@ -108,10 +108,10 @@ public class AlphanumericAlgorithmBenchmarks
       algorithm.TryCalculateCheckDigits(value, out var first, out var second);
    }
 
-   [Benchmark]
-   [ArgumentsSource(nameof(ValidateArguments))]
-   public void Validate(ICheckDigitAlgorithm algorithm, String name, String value)
-   {
-      algorithm.Validate(value);
-   }
+   //[Benchmark]
+   //[ArgumentsSource(nameof(ValidateArguments))]
+   //public void Validate(ICheckDigitAlgorithm algorithm, String name, String value)
+   //{
+   //   algorithm.Validate(value);
+   //}
 }
