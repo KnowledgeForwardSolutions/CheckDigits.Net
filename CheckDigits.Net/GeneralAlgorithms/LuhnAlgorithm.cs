@@ -25,16 +25,18 @@ namespace CheckDigits.Net.GeneralAlgorithms;
 /// </remarks>
 public sealed class LuhnAlgorithm : ISingleCheckDigitAlgorithm
 {
-    /// <inheritdoc/>
-    public String AlgorithmDescription => Resources.LuhnAlgorithmDescription;
+   private const Int32 _validateMinLength = 2;
 
-    /// <inheritdoc/>
-    public String AlgorithmName => Resources.LuhnAlgorithmName;
+   /// <inheritdoc/>
+   public String AlgorithmDescription => Resources.LuhnAlgorithmDescription;
+
+   /// <inheritdoc/>
+   public String AlgorithmName => Resources.LuhnAlgorithmName;
 
    /// <inheritdoc/>
    public Boolean TryCalculateCheckDigit(String value, out Char checkDigit)
    {
-      checkDigit = CharConstants.NUL;
+      checkDigit = Chars.NUL;
       if (String.IsNullOrEmpty(value))
       {
          return false;
@@ -55,7 +57,7 @@ public sealed class LuhnAlgorithm : ISingleCheckDigitAlgorithm
          oddPosition = !oddPosition;
       }
       var mod = 10 - (sum % 10);
-      checkDigit = mod == 10 ? CharConstants.DigitZero : mod.ToDigitChar();
+      checkDigit = mod == 10 ? Chars.DigitZero : mod.ToDigitChar();
 
       return true;
    }
@@ -63,7 +65,7 @@ public sealed class LuhnAlgorithm : ISingleCheckDigitAlgorithm
    /// <inheritdoc/>
    public Boolean Validate(String value)
    {
-      if (String.IsNullOrEmpty(value) || value.Length < 2)
+      if (String.IsNullOrEmpty(value) || value.Length < _validateMinLength)
       {
          return false;
       }

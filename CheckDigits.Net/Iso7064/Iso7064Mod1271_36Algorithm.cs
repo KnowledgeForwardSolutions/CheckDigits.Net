@@ -29,19 +29,8 @@ public sealed class Iso7064Mod1271_36Algorithm : IDoubleCheckDigitAlgorithm
    private const Int32 _modulus = 1271;
    private const Int32 _radix = 36;
    private const Int32 _reduceThreshold = Int32.MaxValue / _radix;
-   private static readonly Int32[] _lookupTable =
-      Enumerable.Range(CharConstants.DigitZero, CharConstants.UpperCaseZ - CharConstants.DigitZero + 1)
-         .Select(x => x switch
-         {
-            Int32 d when d >= CharConstants.DigitZero && d <= CharConstants.DigitNine => d - CharConstants.DigitZero,
-            Int32 c when c >= CharConstants.UpperCaseA && c <= CharConstants.UpperCaseZ => c - CharConstants.UpperCaseA + 10,
-            _ => -1
-         }).ToArray();
-   private const Int32 _digitLowerBound = 0;
-   private const Int32 _digitUpperBound = 9;
-   private const Int32 _alphaLowerBound = CharConstants.UpperCaseA - CharConstants.DigitZero;
-   private const Int32 _alphaUpperBound = CharConstants.UpperCaseZ - CharConstants.DigitZero;
    private const String _validCharacters = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+   private const Int32 _validateMinLength = 3;
 
    /// <inheritdoc/>
    public String AlgorithmDescription => Resources.Iso7064Mod1271_36AlgorithmDescription;
@@ -55,26 +44,31 @@ public sealed class Iso7064Mod1271_36Algorithm : IDoubleCheckDigitAlgorithm
       out Char first,
       out Char second)
    {
-      first = CharConstants.NUL;
-      second = CharConstants.NUL;
+      first = Chars.NUL;
+      second = Chars.NUL;
       if (String.IsNullOrEmpty(value))
       {
          return false;
       }
 
+      Int32 num;
       var sum = 0;
       for (var index = 0; index < value.Length; index++)
       {
-         var offset = value[index] - CharConstants.DigitZero;
-         if ((offset >= _digitLowerBound && offset <= _digitUpperBound)
-            || (offset >= _alphaLowerBound && offset <= _alphaUpperBound))
+         var ch = value[index];
+         if (ch >= Chars.DigitZero && ch <= Chars.DigitNine)
          {
-            sum = (sum + _lookupTable[offset]) * _radix;
+            num = ch.ToIntegerDigit();
+         }
+         else if (ch >= Chars.UpperCaseA && ch <= Chars.UpperCaseZ)
+         {
+            num = ch - Chars.UpperCaseA + 10;
          }
          else
          {
             return false;
          }
+         sum = (sum + num) * _radix;
          if (sum >= _reduceThreshold)
          {
             sum %= _modulus;
@@ -83,7 +77,7 @@ public sealed class Iso7064Mod1271_36Algorithm : IDoubleCheckDigitAlgorithm
 
       // Per ISO/IEC 7064, two character algorithms perform one final pass with
       // effective character value of zero.
-      sum = (sum * _radix) % _modulus;
+      sum = sum * _radix % _modulus;
 
       var checkSum = _modulus - sum + 1;
       var quotient = checkSum / _radix;
@@ -98,7 +92,7 @@ public sealed class Iso7064Mod1271_36Algorithm : IDoubleCheckDigitAlgorithm
    /// <inheritdoc/>
    public Boolean Validate(String value)
    {
-      if (String.IsNullOrEmpty(value) || value.Length < 3)
+      if (String.IsNullOrEmpty(value) || value.Length < _validateMinLength)
       {
          return false;
       }
@@ -110,13 +104,13 @@ public sealed class Iso7064Mod1271_36Algorithm : IDoubleCheckDigitAlgorithm
       for (var index = 0; index < value.Length - 1; index++)
       {
          ch = value[index];
-         if (ch >= CharConstants.DigitZero && ch <= CharConstants.DigitNine)
+         if (ch >= Chars.DigitZero && ch <= Chars.DigitNine)
          {
             num = ch.ToIntegerDigit();
          }
-         else if (ch >= CharConstants.UpperCaseA && ch <= CharConstants.UpperCaseZ)
+         else if (ch >= Chars.UpperCaseA && ch <= Chars.UpperCaseZ)
          {
-            num = ch - CharConstants.UpperCaseA + 10;
+            num = ch - Chars.UpperCaseA + 10;
          }
          else
          { 
@@ -131,13 +125,13 @@ public sealed class Iso7064Mod1271_36Algorithm : IDoubleCheckDigitAlgorithm
 
       // Add value for second check character.
       ch = value[^1];
-      if (ch >= CharConstants.DigitZero && ch <= CharConstants.DigitNine)
+      if (ch >= Chars.DigitZero && ch <= Chars.DigitNine)
       {
          num = ch.ToIntegerDigit();
       }
-      else if (ch >= CharConstants.UpperCaseA && ch <= CharConstants.UpperCaseZ)
+      else if (ch >= Chars.UpperCaseA && ch <= Chars.UpperCaseZ)
       {
-         num = ch - CharConstants.UpperCaseA + 10;
+         num = ch - Chars.UpperCaseA + 10;
       }
       else
       {

@@ -44,7 +44,9 @@ public sealed class Icao9303SizeTD3Algorithm : ICheckDigitAlgorithm
    private static readonly Int32[] _fieldSLengths = [9, 6, 6, 14];
    private const Int32 _numFields = 4;
    private const Int32 _lineLength = 44;
-   private static readonly Int32[] _charMap = Icao9303CharacterMap.GetCharacterMap();
+   private static readonly Int32[] _charMap = Chars.Range(Chars.DigitZero, Chars.UpperCaseZ)
+      .Select(x => Icao9303Algorithm.MapCharacter(x))
+      .ToArray();
 
    private LineSeparator _lineSeparator = LineSeparator.None;
 
@@ -104,8 +106,8 @@ public sealed class Icao9303SizeTD3Algorithm : ICheckDigitAlgorithm
          for(var charIndex = start; charIndex < end; charIndex++)
          {
             ch = value[charIndex];
-            num = (ch >= CharConstants.DigitZero && ch <= CharConstants.UpperCaseZ)
-               ? _charMap[ch - CharConstants.DigitZero]
+            num = (ch >= Chars.DigitZero && ch <= Chars.UpperCaseZ)
+               ? _charMap[ch - Chars.DigitZero]
                : -1;
             if (num == -1)
             {
@@ -121,11 +123,11 @@ public sealed class Icao9303SizeTD3Algorithm : ICheckDigitAlgorithm
 
          // Handle field check digit for composite check digit calculations.
          ch = value[end];
-         if (ch >= CharConstants.DigitZero && ch <= CharConstants.DigitNine)
+         if (ch >= Chars.DigitZero && ch <= Chars.DigitNine)
          {
             num = ch.ToIntegerDigit();
          }
-         else if (fieldIndex == _numFields - 1 && ch == CharConstants.LeftAngleBracket)
+         else if (fieldIndex == _numFields - 1 && ch == Chars.LeftAngleBracket)
          {
             // Only allowed for final, optional field
             num = 0;

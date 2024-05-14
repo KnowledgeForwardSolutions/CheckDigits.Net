@@ -26,41 +26,42 @@ public sealed class DammAlgorithm : ISingleCheckDigitAlgorithm
 {
    private static readonly DammQuasigroupTable _quasigroupTable =
       DammQuasigroupTable.Instance;
+   private const Int32 _validateMinLength = 2;
 
    /// <inheritdoc/>
    public String AlgorithmDescription => Resources.DammAlgorithmDescription;
 
-    /// <inheritdoc/>
-    public String AlgorithmName => Resources.DammAlgorithmName;
+   /// <inheritdoc/>
+   public String AlgorithmName => Resources.DammAlgorithmName;
 
-    /// <inheritdoc/>
-    public Boolean TryCalculateCheckDigit(String value, out Char checkDigit)
-    {
-        checkDigit = CharConstants.NUL;
-        if (String.IsNullOrEmpty(value))
-        {
-            return false;
-        }
+   /// <inheritdoc/>
+   public Boolean TryCalculateCheckDigit(String value, out Char checkDigit)
+   {
+      checkDigit = Chars.NUL;
+      if (String.IsNullOrEmpty(value))
+      {
+         return false;
+      }
 
-        var interim = 0;
-        for (var index = 0; index < value.Length; index++)
-        {
-            var current = value![index].ToIntegerDigit();
-            if (current < 0 || current > 9)
-            {
-                return false;
-            }
-            interim = _quasigroupTable[interim, current];
-        }
+      var interim = 0;
+      for (var index = 0; index < value.Length; index++)
+      {
+         var current = value![index].ToIntegerDigit();
+         if (current < 0 || current > 9)
+         {
+               return false;
+         }
+         interim = _quasigroupTable[interim, current];
+      }
 
-        checkDigit = interim.ToDigitChar();
-        return true;
-    }
+      checkDigit = interim.ToDigitChar();
+      return true;
+   }
 
    /// <inheritdoc/>
    public Boolean Validate(String value)
    {
-      if (String.IsNullOrEmpty(value) || value.Length < 2)
+      if (String.IsNullOrEmpty(value) || value.Length < _validateMinLength)
       {
          return false;
       }

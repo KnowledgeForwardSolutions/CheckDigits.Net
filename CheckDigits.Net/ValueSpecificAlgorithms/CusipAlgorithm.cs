@@ -20,10 +20,15 @@ namespace CheckDigits.Net.ValueSpecificAlgorithms;
 /// </remarks>
 public class CusipAlgorithm : ICheckDigitAlgorithm
 {
-   private const Int32 _validateLength = 9;
-   private const Int32 _letterOffset = 55;      // Value needed to subtract from an ASCII uppercase letter to transform A-Z to 10-35
-   private static readonly Int32[] _evenValues = GetLookupTable(false);
-   private static readonly Int32[] _oddValues = GetLookupTable(true);
+   private const Int32 _validateMinLength = 9;
+   private static readonly Int32[] _evenValues = Chars.Range(Chars.HashMark, Chars.UpperCaseZ)
+      .Select(x => MapCharacter(x))
+      .Select(x => (x * 2 / 10) + (x * 2 % 10))
+      .ToArray();
+   private static readonly Int32[] _oddValues = Chars.Range(Chars.HashMark, Chars.UpperCaseZ)
+      .Select(x => MapCharacter(x))
+      .Select(x => (x / 10) + (x % 10))
+      .ToArray();
 
    /// <inheritdoc/>
    public String AlgorithmDescription => Resources.CusipAlgorithmDescription;
@@ -31,23 +36,44 @@ public class CusipAlgorithm : ICheckDigitAlgorithm
    /// <inheritdoc/>
    public String AlgorithmName => Resources.CusipAlgorithmName;
 
+   /// <summary>
+   ///   Map a character to its integer equivalent in the 
+   ///   <see cref="CusipAlgorithm"/>. Characters that are not valid for the 
+   ///   CusipAlgorithm are mapped to -1.
+   /// </summary>
+   /// <param name="ch">
+   ///   The character to map.
+   /// </param>
+   /// <returns>
+   ///   The integer value associated with <paramref name="ch"/>.
+   /// </returns>
+   public static Int32 MapCharacter(Char ch) => ch switch
+   {
+      var d when ch >= Chars.DigitZero && ch <= Chars.DigitNine => d.ToIntegerDigit(),
+      var c when ch >= Chars.UpperCaseA && ch <= Chars.UpperCaseZ => c - Chars.UpperCaseA + 10,
+      Chars.Asterisk => 36,
+      Chars.AtSign => 37,
+      Chars.HashMark => 38,
+      _ => -1
+   };
+
    /// <inheritdoc/>
    public Boolean Validate(String value)
    {
-      if (String.IsNullOrEmpty(value) || value.Length != _validateLength)
+      if (String.IsNullOrEmpty(value) || value.Length != _validateMinLength)
       {
          return false;
       }
 
       var sum = 0;
-      var oddPosition = true;
+      var oddPosition = false;
       Int32 num;
       for (var index = value.Length - 2; index >= 0; index--)
       {
          var ch = value[index];
-         if (ch >= CharConstants.HashMark && ch <= CharConstants.UpperCaseZ)
+         if (ch >= Chars.HashMark && ch <= Chars.UpperCaseZ)
          {
-            var offset = ch - CharConstants.HashMark;
+            var offset = ch - Chars.HashMark;
             num = oddPosition ? _oddValues[offset] : _evenValues[offset];
          }
          else
@@ -70,31 +96,4 @@ public class CusipAlgorithm : ICheckDigitAlgorithm
 
       return value[^1].ToIntegerDigit() == checkDigit;
    }
-
-   private const String _chars = "#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-
-   private static Int32[] GetLookupTable(Boolean odd)
-      => _chars.Select(x =>
-      {
-         var num = x switch
-         {
-            var d when x >= CharConstants.DigitZero && x <= CharConstants.DigitNine => d.ToIntegerDigit(),
-            var c when x >= CharConstants.UpperCaseA && x <= CharConstants.UpperCaseZ => c - _letterOffset,
-            CharConstants.Asterisk => 36,
-            CharConstants.AtSign => 37,
-            CharConstants.HashMark => 38,
-            _ => -1
-         };
-         if (num == -1)
-         {
-            return -1;
-         }
-         if (odd)
-         {
-            num *= 2;
-         }
-
-         return (num / 10) + (num % 10);
-      })
-      .ToArray();
 }

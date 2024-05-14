@@ -26,6 +26,7 @@ let us know. Or contribute to the CheckDigits.Net repository: https://github.com
     * [Alphanumeric MOD 97-10 Algorithm](#alphanumeric-mod-97-10-algorithm)
     * [CUSIP Algorithm](#cusip-algorithm)
     * [Damm Algorithm](#damm-algorithm)
+    * [FIGI (Financial Instrument Global Identifier) Algorithm](#figi-algorithm)
     * [IBAN (International Bank Account Number) Algorithm](#iban-algorithm)
     * [ICAO 9303 Algorithm](#icao-9303-algorithm)
     * [ICAO 9303 Document Size TD1 Algorithm](#icao-9303-document-size-td1-algorithm)
@@ -128,6 +129,7 @@ The ISO/IEC 7064:2003 standard is available at https://www.iso.org/standard/3153
 * [Alphanumeric MOD 97-10 Algorithm](#alphanumeric-mod-97-10-algorithm)
 * [CUSIP Algorithm](#cusip-algorithm)
 * [Damm Algorithm](#damm-algorithm)
+* [FIGI (Financial Instrument Global Identifier) Algorithm](#figi-algorithm)
 * [IBAN (International Bank Account Number) Algorithm](#iban-algorithm)
 * [ICAO 9303 Algorithm](#icao-9303-algorithm)
 * [ICAO 9303 Document Size TD1 Algorithm](#icao-9303-document-size-td1-algorithm)
@@ -159,46 +161,47 @@ The ISO/IEC 7064:2003 standard is available at https://www.iso.org/standard/3153
 
 ## Value/Identifier Types and Associated Algorithms
 
-| Value/Identifier Type | Algorithm |
-| --------------------- | ----------|
-| ABA Routing Transit Number | [ABA RTN Algorithm](#aba-rtn-algorithm) |
-| CA Social Insurance Number | [Luhn Algorithm](#luhn-algorithm) |
-| CAS Registry Number   | [Modulus10_1 Algorithm](#modulus10_1-algorithm) |
-| Credit card number    | [Luhn Algorithm](#luhn-algorithm) |
-| CUSIP                 | [CUSIP Algorithm](#cusip-algorithm) |
-| EAN-8					| [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
-| EAN-13				| [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
-| Global Release Identifier | [ISO/IEC 7064 MOD 37-36 Algorithm](#isoiec-7064-mod-3736-algorithm) |
-| GTIN-8				| [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
-| GTIN-12				| [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
-| GTIN-13				| [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
-| GTIN-14				| [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
-| IBAN                  | [IBAN Algorithm](#iban-algorithm) |
-| ICAO Machine Readable Travel Document Field | [ICAO 9303 Algorithm](#icao-9303-algorithm) |
-| ICAO Machine Readable Travel Documents Size TD1 | [ICAO 9303 Document Size TD1 Algorithm](#icao-9303-document-size-td1-algorithm) |
-| ICAO Machine Readable Travel Documents Size TD2 | [ICAO 9303 Document Size TD2 Algorithm](#icao-9303-document-size-td2-algorithm) |
+| Value/Identifier Type                                  | Algorithm                                         |
+| ------------------------------------------------------ | ------------------------------------------------- |
+| ABA Routing Transit Number                             | [ABA RTN Algorithm](#aba-rtn-algorithm)           |
+| CA Social Insurance Number                             | [Luhn Algorithm](#luhn-algorithm)                 |
+| CAS Registry Number                                    | [Modulus10_1 Algorithm](#modulus10_1-algorithm)   |
+| Credit card number                                     | [Luhn Algorithm](#luhn-algorithm)                 |
+| CUSIP                                                  | [CUSIP Algorithm](#cusip-algorithm)               |
+| EAN-8					                                 | [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
+| EAN-13				                                 | [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
+| FIGI                                                   | [FIGI Algorithm](#figi-algorithm)                 |
+| Global Release Identifier                              | [ISO/IEC 7064 MOD 37-36 Algorithm](#isoiec-7064-mod-3736-algorithm) |
+| GTIN-8				                                 | [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
+| GTIN-12				                                 | [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
+| GTIN-13				                                 | [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
+| GTIN-14				                                 | [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
+| IBAN                                                   | [IBAN Algorithm](#iban-algorithm) |
+| ICAO Machine Readable Travel Document Field            | [ICAO 9303 Algorithm](#icao-9303-algorithm) |
+| ICAO Machine Readable Travel Documents Size TD1        | [ICAO 9303 Document Size TD1 Algorithm](#icao-9303-document-size-td1-algorithm) |
+| ICAO Machine Readable Travel Documents Size TD2        | [ICAO 9303 Document Size TD2 Algorithm](#icao-9303-document-size-td2-algorithm) |
 | ICAO Machine Readable Passports and Size TD3 Documents | [ICAO 9303 Document Size TD3 Algorithm](#icao-9303-document-size-td3-algorithm) |
-| ICAO Machine Readable Visas | [ICAO 9303 Machine Readable Visa Algorithm](#icao-9303-machine-readable-visa-algorithm) |
-| IMEI				    | [Luhn Algorithm](#luhn-algorithm) |
-| IMO Number            | [Modulus10_2 Algorithm](#modulus10_2-algorithm) |
-| ISAN                  | [ISAN Algorithm](#isan-algorithm) |
-| ISBN-10				| [Modulus11 Algorithm](#modulus11-algorithm) |
-| ISBN-13				| [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
-| ISBT Donation Identification Number |  [ISO/IEC 7064 MOD 37-2 Algorithm](#isoiec-7064-mod-37-2-algorithm) |
-| ISIN                  | [ISIN Algorithm](#isin-algorithm) |
-| ISMN					| [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
-| ISNI                  | [ISO/IEC 7064 MOD 11-2 Algorithm](#isoiec-7064-mod-11-2-algorithm) |
-| ISSN   				| [Modulus11 Algorithm](#modulus11-algorithm) |
-| Legal Entity Identifier | [Alphanumeric MOD 97-10 Algorithm](#alphanumeric-mod-97-10-algorithm) |
-| SEDOL					| [SEDOL Algorithm](#sedol-algorithm) |
-| Shipping Container Number | [ISO 6346 Algorithm](#iso-6346-algorithm) |
-| SSCC					| [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
-| Universal Loan Identifier | [Alphanumeric MOD 97-10 Algorithm](#alphanumeric-mod-97-10-algorithm) |
-| UK National Health Service Number | [NHS Algorithm](#nhs-algorithm) |
-| UPC-A					| [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
-| UPC-E					| [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
-| US National Provider Identifier | [NPI Algorithm](#npi-algorithm) |
-| Vehicle Identification Number | [VIN Algorithm](#vin-algorithm) |
+| ICAO Machine Readable Visas                            | [ICAO 9303 Machine Readable Visa Algorithm](#icao-9303-machine-readable-visa-algorithm) |
+| IMEI				                                     | [Luhn Algorithm](#luhn-algorithm) |
+| IMO Number                                             | [Modulus10_2 Algorithm](#modulus10_2-algorithm) |
+| ISAN                                                   | [ISAN Algorithm](#isan-algorithm) |
+| ISBN-10				                                 | [Modulus11 Algorithm](#modulus11-algorithm) |
+| ISBN-13				                                 | [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
+| ISBT Donation Identification Number                    | [ISO/IEC 7064 MOD 37-2 Algorithm](#isoiec-7064-mod-37-2-algorithm) |
+| ISIN                                                   | [ISIN Algorithm](#isin-algorithm) |
+| ISMN					                                 | [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
+| ISNI                                                   | [ISO/IEC 7064 MOD 11-2 Algorithm](#isoiec-7064-mod-11-2-algorithm) |
+| ISSN   				                                 | [Modulus11 Algorithm](#modulus11-algorithm) |
+| Legal Entity Identifier                                | [Alphanumeric MOD 97-10 Algorithm](#alphanumeric-mod-97-10-algorithm) |
+| SEDOL					                                 | [SEDOL Algorithm](#sedol-algorithm) |
+| Shipping Container Number                              | [ISO 6346 Algorithm](#iso-6346-algorithm) |
+| SSCC					                                 | [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
+| Universal Loan Identifier                              | [Alphanumeric MOD 97-10 Algorithm](#alphanumeric-mod-97-10-algorithm) |
+| UK National Health Service Number                      | [NHS Algorithm](#nhs-algorithm) |
+| UPC-A					                                 | [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
+| UPC-E					                                 | [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
+| US National Provider Identifier                        | [NPI Algorithm](#npi-algorithm) |
+| Vehicle Identification Number                          | [VIN Algorithm](#vin-algorithm) |
 
 ## Using CheckDigits.Net
 
@@ -315,15 +318,6 @@ are not implemented for algorithms for government issued identifiers (for exampl
 UK NHS numbers and US NPI numbers) or values issued by a single authority (such
 as ABA Routing Transit Numbers).
 
-The ```IEmbeddedCheckDigitAlgorithm``` interface is used by algorithms that can
-expect the value to check and its associated check digit(s) to be embedded within
-a larger string. (For example, the date of birth field in an ICAO 9303 machine
-readable passport string.) The Validate method defined by ```IEmbeddedCheckDigitAlgorithm```
-includes two additional parameters, start and length which specify the substring
-within the larger string that contains the value to check. An algorithm can 
-implement both ```ICheckDigitAlgorithm``` and ```IEmbeddedCheckDigitAlgorithm```
-and have two overloads for the Validate method.
-
 The ```IAlphabet``` and ```ISupplementalCharacterAlphabet``` interfaces are used 
 for ISO/IEC 7064 algorithms with custom alphabets. ```IAlphabet``` has two 
 methods: CharacterToInteger, which maps a character in the value being processed 
@@ -437,6 +431,40 @@ on page 111 of Damm's doctoral dissertation.
 
 Wikipedia: https://en.wikipedia.org/wiki/Damm_algorithm
 
+### FIGI Algorithm
+
+#### Description
+
+The FIGI (Financial Instrument Global Identifier) algorithm is used for 12
+character values issued by Bloomberg L.P. that are used to identify a variety of
+financial instruments including common stock, futures, derivatives, bonds and 
+more. The algorithm is a variation of the [Luhn](#luhn-algorithm) algorithm and
+has the same weaknesses as the Luhn algorithm with digit characters. But like the
+[ISIN](#isin-algorithm) algorithm (which also extends the Luhn algorithm to 
+support alphanumeric strings), the FIGI algorithm has additional weaknesses when
+detecting errors involving alphabetic characters. Each alphabetic character has
+a digit character and at least one other alphabetic character that can be freely
+substituted for that character and which will result in the same check digit
+being calculated. This means that single character transcription errors involving
+those characters can not be detected by the algorithm.
+
+The FIGI algorithm only supports validation of check digits and does support 
+calculation of check digits.
+
+#### Details
+
+* Valid characters - decimal digits ('0' - '9') and upper case consonants ('BCDFGHJKLMNPQRSTVWXYZ')
+* Check digit size - one character
+* Check digit value - decimal digits ('0' - '9')
+* Check digit location - character position 12 (1-based)
+* Value length - 12
+* Class name - FigiAlgorithm
+
+#### Links
+
+https://en.wikipedia.org/wiki/Financial_Instrument_Global_Identifier
+https://www.openfigi.com/assets/content/figi-check-digit-2173341b2d.pdf
+
 ### IBAN Algorithm
 
 #### Description
@@ -482,9 +510,6 @@ and vice versa. Nor can the algorithm detect two character transposition errors
 where the difference between the transposed characters is a multiple of 5, i.e. 
 *27 <-> 72*, *D8 <-> 8D*, *BL <-> LB*).
 
-The ICAO 9303 algorithm also implements the ```IEmbeddedCheckDigitAlgorithm interface```
-which supports the validation of fields that are embedded within a larger string.
-
 #### Details
 
 * Valid characters - decimal digits ('0' - '9'), upper case letters ('A' - 'Z') and a filler character ('<').
@@ -523,6 +548,9 @@ The ICAO 9303 Document Size TD1 Algorithm will validate the check digits of the
 three fields (document number, date of birth and date of expiry) as well as the 
 composite check digit. If any of the check digits fail validation then the 
 Validate method will return ```false```.
+
+The ICAO 9303 Document Size TD1 algorithm only supports validation of check 
+digits and does support calculation of check digits.
 
 #### Details
 
@@ -563,6 +591,9 @@ The ICAO 9303 Document Size TD2 Algorithm will validate the check digits of the
 three fields (document number, date of birth and date of expiry) as well as the 
 composite check digit. If any of the check digits fail validation then the 
 Validate method will return ```false```.
+
+The ICAO 9303 Document Size TD2 algorithm only supports validation of check 
+digits and does support calculation of check digits.
 
 #### Details
 
@@ -605,6 +636,9 @@ The ICAO 9303 Document Size TD3 Algorithm will validate the check digits of the
 four fields (passport number, date of birth, date of expiry and optional personal
 number) as well as the composite check digit. If any of the check digits fail 
 validation then the Validate method will return ```false```.
+
+The ICAO 9303 Document Size TD3 algorithm only supports validation of check 
+digits and does support calculation of check digits.
 
 #### Details
 
@@ -653,6 +687,9 @@ the check digits fail validation then the Validate method will return ```false``
 In addition, if the value is not the correct length (two lines of either 44 or 
 36 characters, plus line separator characters matching the LineSeparator 
 property) then the method will return false.
+
+The ICAO 9303 Machine Readable Visa algorithm only supports validation of check 
+digits and does support calculation of check digits.
 
 #### Details
 
@@ -1321,21 +1358,21 @@ Note that the values used for the NOID Check Digit algorithm do not include leng
 
 | Algorithm Name           | Value                 | Mean      | Error     | StdDev    | Allocated |
 |------------------------- |---------------------- |----------:|----------:|----------:|----------:|
-| AlphanumericMod97_10     | U7y                   | 10.603 ns | 0.0421 ns | 0.0329 ns |         - |
-| AlphanumericMod97_10     | U7y8SX                | 18.684 ns | 0.0887 ns | 0.0786 ns |         - |
-| AlphanumericMod97_10     | U7y8SXrC0             | 27.203 ns | 0.1398 ns | 0.1239 ns |         - |
-| AlphanumericMod97_10     | U7y8SXrC0O3S          | 33.243 ns | 0.1609 ns | 0.1427 ns |         - |
-| AlphanumericMod97_10     | U7y8SXrC0O3Sc4I       | 42.317 ns | 0.2219 ns | 0.1853 ns |         - |
-| AlphanumericMod97_10     | U7y8SXrC0O3Sc4IHYQ    | 46.321 ns | 0.2685 ns | 0.2242 ns |         - |
-| AlphanumericMod97_10     | U7y8SXrC0O3Sc4IHYQF4M | 51.706 ns | 0.1936 ns | 0.1811 ns |         - |
+| AlphanumericMod97_10     | U7y                   |  8.867 ns | 0.1108 ns | 0.0982 ns |         - |
+| AlphanumericMod97_10     | U7y8SX                | 15.700 ns | 0.2916 ns | 0.2727 ns |         - |
+| AlphanumericMod97_10     | U7y8SXrC0             | 25.414 ns | 0.1013 ns | 0.0791 ns |         - |
+| AlphanumericMod97_10     | U7y8SXrC0O3S          | 30.480 ns | 0.2305 ns | 0.2043 ns |         - |
+| AlphanumericMod97_10     | U7y8SXrC0O3Sc4I       | 38.288 ns | 0.2435 ns | 0.2278 ns |         - |
+| AlphanumericMod97_10     | U7y8SXrC0O3Sc4IHYQ    | 45.774 ns | 0.2720 ns | 0.2411 ns |         - |
+| AlphanumericMod97_10     | U7y8SXrC0O3Sc4IHYQF4M | 54.707 ns | 0.5074 ns | 0.4746 ns |         - |
 |                          |                       |           |           |           |           |                                           
-| ISO/IEC 7064 MOD 1271-36 | U7Y                   |  9.381 ns | 0.0675 ns | 0.0599 ns |         - |
-| ISO/IEC 7064 MOD 1271-36 | U7Y8SX                | 13.931 ns | 0.0701 ns | 0.0621 ns |         - |
-| ISO/IEC 7064 MOD 1271-36 | U7Y8SXRC0             | 17.402 ns | 0.0820 ns | 0.0727 ns |         - |
-| ISO/IEC 7064 MOD 1271-36 | U7Y8SXRC0O3S          | 22.540 ns | 0.0591 ns | 0.0524 ns |         - |
-| ISO/IEC 7064 MOD 1271-36 | U7Y8SXRC0O3SC4I       | 27.310 ns | 0.1040 ns | 0.0922 ns |         - |
-| ISO/IEC 7064 MOD 1271-36 | U7Y8SXRC0O3SC4IHYQ    | 32.300 ns | 0.1056 ns | 0.0936 ns |         - |
-| ISO/IEC 7064 MOD 1271-36 | U7Y8SXRC0O3SC4IHYQF4M | 35.724 ns | 0.1192 ns | 0.0995 ns |         - |
+| ISO/IEC 7064 MOD 1271-36 | U7Y                   |  7.648 ns | 0.0591 ns | 0.0553 ns |         - |
+| ISO/IEC 7064 MOD 1271-36 | U7Y8SX                | 12.700 ns | 0.0698 ns | 0.0653 ns |         - |
+| ISO/IEC 7064 MOD 1271-36 | U7Y8SXRC0             | 17.990 ns | 0.3459 ns | 0.3236 ns |         - |
+| ISO/IEC 7064 MOD 1271-36 | U7Y8SXRC0O3S          | 21.011 ns | 0.1960 ns | 0.1738 ns |         - |
+| ISO/IEC 7064 MOD 1271-36 | U7Y8SXRC0O3SC4I       | 25.927 ns | 0.3262 ns | 0.2547 ns |         - |
+| ISO/IEC 7064 MOD 1271-36 | U7Y8SXRC0O3SC4IHYQ    | 29.930 ns | 0.3608 ns | 0.3013 ns |         - |
+| ISO/IEC 7064 MOD 1271-36 | U7Y8SXRC0O3SC4IHYQF4M | 34.753 ns | 0.3039 ns | 0.2537 ns |         - |
 |                          |                       |           |           |           |           |                                           
 | ISO/IEC 7064 MOD 37-2    | U7Y                   |  7.391 ns | 0.0347 ns | 0.0324 ns |         - |
 | ISO/IEC 7064 MOD 37-2    | U7Y8SX                | 11.461 ns | 0.0774 ns | 0.0724 ns |         - |
@@ -1353,34 +1390,44 @@ Note that the values used for the NOID Check Digit algorithm do not include leng
 | ISO/IEC 7064 MOD 37,36   | U7Y8SXRC0O3SC4IHYQ    | 30.263 ns | 0.1079 ns | 0.0956 ns |         - |
 | ISO/IEC 7064 MOD 37,36   | U7Y8SXRC0O3SC4IHYQF4M | 35.554 ns | 0.1783 ns | 0.1668 ns |         - |
 |                          |                       |           |           |           |           |                                           
-| NOID Check Digit         | 11404/2h9             |  8.473 ns | 0.0361 ns | 0.0337 ns |         - |
-| NOID Check Digit         | 11404/2h9tqb          | 12.857 ns | 0.0650 ns | 0.0576 ns |         - |
-| NOID Check Digit         | 11404/2h9tqbxk6       | 16.108 ns | 0.0807 ns | 0.0755 ns |         - |
-| NOID Check Digit         | 11404/2h9tqbxk6rw7    | 19.350 ns | 0.1326 ns | 0.1240 ns |         - |
-| NOID Check Digit         | 11404/2h9tqbxk6rw7dwm | 25.295 ns | 0.0684 ns | 0.0571 ns |         - |
+| NOID Check Digit         | 11404/2h9             | 10.900 ns | 0.1480 ns | 0.1390 ns |         - |
+| NOID Check Digit         | 11404/2h9tqb          | 13.440 ns | 0.2840 ns | 0.2790 ns |         - |
+| NOID Check Digit         | 11404/2h9tqbxk6       | 16.450 ns | 0.1590 ns | 0.1410 ns |         - |
+| NOID Check Digit         | 11404/2h9tqbxk6rw7    | 20.090 ns | 0.2470 ns | 0.2190 ns |         - |
+| NOID Check Digit         | 11404/2h9tqbxk6rw7dwm | 20.750 ns | 0.1330 ns | 0.1240 ns |         - |
+
 
 #### Value Specific Algorithms
 
-Note: ABA RTN, CUSIP, NHS, NPI and SEDOL algorithms do not support calculation of 
-check digits, only validation of values containing check digits.
+Note: ABA RTN, CUSIP, ICAO 9303 multi-field algorithms (Machine Readable Visa, Size TD1, 
+TD2 and TD3), ISAN, NHS, NPI and SEDOL algorithms do not support calculation of check digits, 
+only validation of values containing check digits.
 
-| Algorithm Name | Value                           | Mean     | Error    | StdDev   | Allocated |
-|--------------- |-------------------------------- |---------:|---------:|---------:|----------:|
-| IBAN           | BE00096123456769                | 22.20 ns | 0.108 ns | 0.096 ns |         - |
-| IBAN           | GB00WEST12345698765432          | 37.50 ns | 0.316 ns | 0.280 ns |         - |
-| IBAN           | SC00MCBL01031234567890123456USD | 54.90 ns | 0.559 ns | 0.467 ns |         - |
-|                |                                 |          |          |          |           |                                           
-| ISIN           | AU0000XVGZA                     | 27.01 ns | 0.071 ns | 0.066 ns |         - |
-| ISIN           | GB000263494                     | 20.26 ns | 0.098 ns | 0.091 ns |         - |
-| ISIN           | US037833100                     | 19.10 ns | 0.144 ns | 0.135 ns |         - |
-|                |                                 |          |          |          |           |                                           
-| ISO 6346       | CSQU305438                      | 16.74 ns | 0.216 ns | 0.202 ns |         - |
-| ISO 6346       | MSKU907032                      | 16.22 ns | 0.078 ns | 0.069 ns |         - |
-| ISO 6346       | TOLU473478                      | 16.22 ns | 0.135 ns | 0.113 ns |         - |
-|                |                                 |          |          |          |           |                                           
-| VIN            | 1G8ZG127_WZ157259               | 21.46 ns | 0.078 ns | 0.073 ns |         - |
-| VIN            | 1HGEM212_2L047875               | 20.74 ns | 0.131 ns | 0.123 ns |         - |
-| VIN            | 1M8GDM9A_KP042788               | 20.89 ns | 0.076 ns | 0.071 ns |         - |
+| Algorithm Name | Value                           | Mean      | Error     | StdDev    | Allocated |
+|--------------- |-------------------------------- |----------:|----------:|----------:|----------:|
+| ICAO 9303      | U7Y                             |  7.615 ns | 0.0376 ns | 0.0333 ns |         - |
+| ICAO 9303      | U7Y8SX                          | 13.264 ns | 0.0796 ns | 0.0745 ns |         - |
+| ICAO 9303      | U7Y8SXRC0                       | 18.372 ns | 0.0931 ns | 0.0777 ns |         - |
+| ICAO 9303      | U7Y8SXRC0O3S                    | 22.176 ns | 0.1815 ns | 0.1698 ns |         - |
+| ICAO 9303      | U7Y8SXRC0O3SC4I                 | 27.067 ns | 0.1385 ns | 0.1228 ns |         - |
+| ICAO 9303      | U7Y8SXRC0O3SC4IHYQ              | 32.181 ns | 0.2162 ns | 0.2022 ns |         - |
+| ICAO 9303      | U7Y8SXRC0O3SC4IHYQF4M           | 36.435 ns | 0.2524 ns | 0.2237 ns |         - |
+|                |                                 |           |           |           |           |                                           
+| IBAN           | BE00096123456769                | 25.840 ns | 0.3480 ns | 0.3250 ns |         - |
+| IBAN           | GB00WEST12345698765432          | 38.170 ns | 0.2620 ns | 0.2320 ns |         - |
+| IBAN           | SC00MCBL01031234567890123456USD | 49.910 ns | 0.2270 ns | 0.2010 ns |         - |
+|                |                                 |           |           |           |           |                                           
+| ISIN           | AU0000XVGZA                     | 19.700 ns | 0.1580 ns | 0.1400 ns |         - |
+| ISIN           | GB000263494                     | 18.310 ns | 0.2850 ns | 0.2660 ns |         - |
+| ISIN           | US037833100                     | 18.060 ns | 0.1140 ns | 0.0960 ns |         - |
+|                |                                 |           |           |           |           |                                           
+| ISO 6346       | CSQU305438                      | 16.740 ns | 0.2160 ns | 0.2020 ns |         - |
+| ISO 6346       | MSKU907032                      | 16.220 ns | 0.0780 ns | 0.0690 ns |         - |
+| ISO 6346       | TOLU473478                      | 16.220 ns | 0.1350 ns | 0.1130 ns |         - |
+|                |                                 |           |           |           |           |                                           
+| VIN            | 1G8ZG127_WZ157259               | 21.460 ns | 0.0780 ns | 0.0730 ns |         - |
+| VIN            | 1HGEM212_2L047875               | 20.740 ns | 0.1310 ns | 0.1230 ns |         - |
+| VIN            | 1M8GDM9A_KP042788               | 20.890 ns | 0.0760 ns | 0.0710 ns |         - |
 
 ### Validate Method
 
@@ -1498,13 +1545,13 @@ Note also that the values used for the NOID Check Digit algorithm do not include
 
 | Algorithm Name           | Value                   | Mean      | Error     | StdDev    | Allocated |
 |------------------------- |-------------------------|----------:|----------:|----------:|----------:|
-| AlphanumericMod97_10     | U7y46                   | 10.741 ns | 0.0950 ns | 0.0793 ns |         - |
-| AlphanumericMod97_10     | U7y8SX89                | 19.366 ns | 0.1097 ns | 0.0972 ns |         - |
-| AlphanumericMod97_10     | U7y8SXrC087             | 28.522 ns | 0.2386 ns | 0.2232 ns |         - |
-| AlphanumericMod97_10     | U7y8SXrC0O3S38          | 35.760 ns | 0.1844 ns | 0.1724 ns |         - |
-| AlphanumericMod97_10     | U7y8SXrC0O3Sc4I27       | 44.344 ns | 0.0969 ns | 0.0810 ns |         - |
-| AlphanumericMod97_10     | U7y8SXrC0O3Sc4IHYQ54    | 49.380 ns | 0.1968 ns | 0.1744 ns |         - |
-| AlphanumericMod97_10     | U7y8SXrC0O3Sc4IHYQF4M21 | 57.042 ns | 0.1509 ns | 0.1260 ns |         - |
+| AlphanumericMod97_10     | U7y46                   | 10.601 ns | 0.0477 ns | 0.0423 ns |         - |
+| AlphanumericMod97_10     | U7y8SX89                | 16.772 ns | 0.1559 ns | 0.1458 ns |         - |
+| AlphanumericMod97_10     | U7y8SXrC087             | 23.859 ns | 0.2663 ns | 0.2491 ns |         - |
+| AlphanumericMod97_10     | U7y8SXrC0O3S38          | 30.912 ns | 0.2579 ns | 0.2412 ns |         - |
+| AlphanumericMod97_10     | U7y8SXrC0O3Sc4I27       | 37.383 ns | 0.5385 ns | 0.4774 ns |         - |
+| AlphanumericMod97_10     | U7y8SXrC0O3Sc4IHYQ54    | 45.008 ns | 0.2819 ns | 0.2354 ns |         - |
+| AlphanumericMod97_10     | U7y8SXrC0O3Sc4IHYQF4M21 | 49.544 ns | 0.2715 ns | 0.2539 ns |         - |
 |                          |                         |           |           |           |           |                                           
 | ISO/IEC 7064 MOD 1271-36 | U7YM0                   |  8.068 ns | 0.0306 ns | 0.0271 ns |         - |
 | ISO/IEC 7064 MOD 1271-36 | U7Y8SXOR                | 13.625 ns | 0.0857 ns | 0.0760 ns |         - |
@@ -1530,11 +1577,12 @@ Note also that the values used for the NOID Check Digit algorithm do not include
 | ISO/IEC 7064 MOD 37,36   | U7Y8SXRC0O3SC4IHYQD     | 27.938 ns | 0.1244 ns | 0.0971 ns |         - |
 | ISO/IEC 7064 MOD 37,36   | U7Y8SXRC0O3SC4IHYQF4MP  | 32.631 ns | 0.1183 ns | 0.1049 ns |         - |
 |                          |                         |           |           |           |           |                                           
-| NOID Check Digit         | 11404/2h9m              | 12.579 ns | 0.0894 ns | 0.0837 ns |         - |
-| NOID Check Digit         | 11404/2h9tqb0           | 16.119 ns | 0.0622 ns | 0.0551 ns |         - |
-| NOID Check Digit         | 11404/2h9tqbxk6d        | 20.225 ns | 0.0792 ns | 0.0740 ns |         - |
-| NOID Check Digit         | 11404/2h9tqbxk6rw74     | 24.573 ns | 0.1188 ns | 0.1111 ns |         - |
-| NOID Check Digit         | 11404/2h9tqbxk6rw7dwmz  | 30.319 ns | 0.0998 ns | 0.0833 ns |         - |
+| NOID Check Digit         | 11404/2h9m              | 11.450 ns | 0.0710 ns | 0.0660 ns |         - |
+| NOID Check Digit         | 11404/2h9tqb0           | 14.290 ns | 0.0960 ns | 0.0850 ns |         - |
+| NOID Check Digit         | 11404/2h9tqbxk6d        | 17.010 ns | 0.0900 ns | 0.0790 ns |         - |
+| NOID Check Digit         | 11404/2h9tqbxk6rw74     | 19.710 ns | 0.2040 ns | 0.1910 ns |         - |
+| NOID Check Digit         | 11404/2h9tqbxk6rw7dwmz  | 22.590 ns | 0.1490 ns | 0.1250 ns |         - |
+
 
 #### Value Specific Algorithms
 
@@ -1548,25 +1596,21 @@ Note also that the values used for the NOID Check Digit algorithm do not include
 | CUSIP                           | 38143VAA7                              | 13.020 ns | 0.0830 ns | 0.0770 ns |         - |
 | CUSIP                           | 91282CJL6                              | 12.850 ns | 0.0630 ns | 0.0530 ns |         - |
 |                                 |                                        |           |           |           |           |                                           
-| IBAN                            | BE71096123456769                       | 20.090 ns | 0.1710 ns | 0.1600 ns |         - |
-| IBAN                            | GB82WEST12345698765432                 | 34.960 ns | 0.2120 ns | 0.1880 ns |         - |
-| IBAN                            | SC74MCBL01031234567890123456USD        | 51.580 ns | 0.2410 ns | 0.2130 ns |         - |
+| FIGI                            | BBG000B9Y5X2                           | 19.980 ns | 0.3870 ns | 0.3430 ns |         - |
+| FIGI                            | BBG111111160                           | 19.540 ns | 0.1640 ns | 0.1540 ns |         - |
+| FIGI                            | BBGZYXWVTSR7                           | 19.650 ns | 0.2670 ns | 0.2230 ns |         - |
+|                                 |                                        |           |           |           |           |                                           
+| IBAN                            | BE71096123456769                       | 20.090 ns | 0.1330 ns | 0.1180 ns |         - |
+| IBAN                            | GB82WEST12345698765432                 | 33.800 ns | 0.2340 ns | 0.2080 ns |         - |
+| IBAN                            | SC74MCBL01031234567890123456USD        | 48.680 ns | 0.1980 ns | 0.1850 ns |         - |
 |                                 |                                        |           |           |           |           |
-| ICAO 9303                       | U7Y5                                   |  7.376 ns | 0.0654 ns | 0.0580 ns |         - |
-| ICAO 9303                       | U7Y8SX8                                | 13.371 ns | 0.2098 ns | 0.1752 ns |         - |
-| ICAO 9303                       | U7Y8SXRC03                             | 17.766 ns | 0.3089 ns | 0.2890 ns |         - |
-| ICAO 9303                       | U7Y8SXRC0O3S8                          | 22.630 ns | 0.4513 ns | 0.4221 ns |         - |
-| ICAO 9303                       | U7Y8SXRC0O3SC4I2                       | 28.543 ns | 0.3081 ns | 0.2731 ns |         - |
-| ICAO 9303                       | U7Y8SXRC0O3SC4IHYQ9                    | 32.207 ns | 0.3189 ns | 0.2490 ns |         - |
-| ICAO 9303                       | U7Y8SXRC0O3SC4IHYQF4M8                 | 39.060 ns | 0.4010 ns | 0.3555 ns |         - |
-|                                 |                                        |           |           |           |           |
-| ICAO 9303 (Embedded)            | +U7Y5+                                 |  9.022 ns | 0.2106 ns | 0.3278 ns |         - |
-| ICAO 9303 (Embedded)            | +U7Y8SX8+                              | 11.690 ns | 0.2177 ns | 0.2036 ns |         - |
-| ICAO 9303 (Embedded)            | +U7Y8SXRC03+                           | 15.562 ns | 0.2131 ns | 0.1993 ns |         - |
-| ICAO 9303 (Embedded)            | +U7Y8SXRC0O3S8+                        | 19.363 ns | 0.3438 ns | 0.3216 ns |         - |
-| ICAO 9303 (Embedded)            | +U7Y8SXRC0O3SC4I2+                     | 22.433 ns | 0.2453 ns | 0.2174 ns |         - |
-| ICAO 9303 (Embedded)            | +U7Y8SXRC0O3SC4IHYQ9+                  | 26.724 ns | 0.2726 ns | 0.2416 ns |         - |
-| ICAO 9303 (Embedded)            | +U7Y8SXRC0O3SC4IHYQF4M8+               | 29.762 ns | 0.5975 ns | 0.6394 ns |         - |
+| ICAO 9303                       | U7Y5                                   |  7.529 ns | 0.0629 ns | 0.0589 ns |         - |
+| ICAO 9303                       | U7Y8SX8                                | 13.597 ns | 0.0780 ns | 0.0730 ns |         - |
+| ICAO 9303                       | U7Y8SXRC03                             | 19.148 ns | 0.1083 ns | 0.1013 ns |         - |
+| ICAO 9303                       | U7Y8SXRC0O3S8                          | 24.398 ns | 0.1694 ns | 0.1502 ns |         - |
+| ICAO 9303                       | U7Y8SXRC0O3SC4I2                       | 25.424 ns | 0.1976 ns | 0.1751 ns |         - |
+| ICAO 9303                       | U7Y8SXRC0O3SC4IHYQ9                    | 29.443 ns | 0.1393 ns | 0.1235 ns |         - |
+| ICAO 9303                       | U7Y8SXRC0O3SC4IHYQF4M8                 | 33.964 ns | 0.1729 ns | 0.1444 ns |         - |
 |                                 |                                        |           |           |           |           |
 | ICAO 9303 Machine Readable Visa | I<UTOERIKSSON<<ANNA<MARIA<<<<<<<<<<<<br>D231458907UTO7408122F1204159<<<<<<<< | 59.49 ns | 1.208 ns | 1.770 ns |         - |
 | ICAO 9303 Machine Readable Visa | I<UTOSKYWALKER<<LUKE<<<<<<<<<<<<<<<<<br>STARWARS45UTO7705256M2405252<<<<<<<< | 53.47 ns | 0.739 ns | 0.655 ns |         - |
@@ -1595,9 +1639,9 @@ Note also that the values used for the NOID Check Digit algorithm do not include
 | ISAN (Formatted)                | ISAN D02C-42E9-5418-3EE2-Q-1291-C8AE-O | 65.820 ns | 0.3030 ns | 0.2840 ns |         - |
 | ISAN (Formatted)                | ISAN E953-0C32-BC0E-E83B-2-6986-7B20-F | 64.220 ns | 0.3640 ns | 0.3400 ns |         - |
 |                                 |                                        |           |           |           |           |                                           
-| ISIN                            | AU0000XVGZA3                           | 25.520 ns | 0.1260 ns | 0.1170 ns |         - |
-| ISIN                            | GB0002634946                           | 19.150 ns | 0.1290 ns | 0.1140 ns |         - |
-| ISIN                            | US0378331005                           | 19.110 ns | 0.1400 ns | 0.1310 ns |         - |
+| ISIN                            | AU0000XVGZA3                           | 18.710 ns | 0.1680 ns | 0.1400 ns |         - |
+| ISIN                            | GB0002634946                           | 17.430 ns | 0.1080 ns | 0.0950 ns |         - |
+| ISIN                            | US0378331005                           | 17.390 ns | 0.1190 ns | 0.1050 ns |         - |
 |                                 |                                        |           |           |           |           |                                           
 | ISO 6346                        | CSQU3054383                            | 14.970 ns | 0.0350 ns | 0.0280 ns |         - |
 | ISO 6346                        | MSKU9070323                            | 14.890 ns | 0.0930 ns | 0.0870 ns |         - |
@@ -1607,9 +1651,9 @@ Note also that the values used for the NOID Check Digit algorithm do not include
 | NHS                             | 5301194917                             | 11.270 ns | 0.0400 ns | 0.0360 ns |         - |
 | NHS                             | 9434765919                             | 11.270 ns | 0.0450 ns | 0.0430 ns |         - |
 |                                 |                                        |           |           |           |           |                                           
-| NPI                             | 1122337797                             | 14.490 ns | 0.0490 ns | 0.0440 ns |         - |
-| NPI                             | 1234567893                             | 14.530 ns | 0.0800 ns | 0.0710 ns |         - |
-| NPI                             | 1245319599                             | 14.520 ns | 0.0890 ns | 0.0830 ns |         - |
+| NPI                             | 1122337797                             | 12.790 ns | 0.1540 ns | 0.1440 ns |         - |
+| NPI                             | 1234567893                             | 12.400 ns | 0.0670 ns | 0.0590 ns |         - |
+| NPI                             | 1245319599                             | 12.610 ns | 0.0700 ns | 0.0660 ns |         - |
 |                                 |                                        |           |           |           |           |                                           
 | SEDOL                           | 3134865                                | 12.290 ns | 0.1440 ns | 0.1200 ns |         - |
 | SEDOL                           | B0YQ5W0                                | 12.180 ns | 0.0630 ns | 0.0560 ns |         - |
@@ -1694,8 +1738,17 @@ Thanks to Steff Beckers for this addition
 ## v2.3.0
 
 Additional included algorithms
+* FIGI Algorithm
 * ICAO Algorithm
 * ICAO 9303 Document Size TD1 Algorithm
 * ICAO 9303 Document Size TD2 Algorithm
 * ICAO 9303 Document Size TD3 Algorithm
 * ICAO 9303 Machine Readable Visa Algorithm
+
+Performance increases for:
+* AlphanumericMod97_10Algorithm, Validate method ~15% improvement, TryCalculateCheckDigits method ~8% improvement
+* IBAN Algorithm, Validate method ~8% improvement
+* ISIN algorithm, ~9% improvement for Validate and TryCalculateCheckDigit methods
+* ISO/IEC 7064 MOD 1271-36, TryCalculateCheckDigits method ~8% improvement
+* NcdAlgorithm (NOID Check Digit), minimum 10% improvement for Validate method, improvement increases with length of value.
+* NpiAlgorithm, Validate method ~8 improvement

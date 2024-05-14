@@ -32,7 +32,9 @@ public sealed class Icao9303MachineReadableVisaAlgorithm : ICheckDigitAlgorithm
    private static readonly Int32[] _weights = [7, 3, 1];
    private static readonly Int32[] _fieldStartPositions = [0, 13, 21];
    private static readonly Int32[] _fieldSLengths = [9, 6, 6];
-   private static readonly Int32[] _charMap = Icao9303CharacterMap.GetCharacterMap();
+   private static readonly Int32[] _charMap = Chars.Range(Chars.DigitZero, Chars.UpperCaseZ)
+      .Select(x => Icao9303Algorithm.MapCharacter(x))
+      .ToArray();
 
    private const Int32 _numFields = 3;
    private const Int32 _formatALineLength = 44;
@@ -101,8 +103,8 @@ public sealed class Icao9303MachineReadableVisaAlgorithm : ICheckDigitAlgorithm
          for (var charIndex = start; charIndex < end; charIndex++)
          {
             ch = value[charIndex];
-            num = (ch >= CharConstants.DigitZero && ch <= CharConstants.UpperCaseZ)
-               ? _charMap[ch - CharConstants.DigitZero]
+            num = (ch >= Chars.DigitZero && ch <= Chars.UpperCaseZ)
+               ? _charMap[ch - Chars.DigitZero]
                : -1;
             if (num == -1)
             {
@@ -115,7 +117,7 @@ public sealed class Icao9303MachineReadableVisaAlgorithm : ICheckDigitAlgorithm
 
          // Field check digit.
          ch = value[end];
-         if (ch >= CharConstants.DigitZero && ch <= CharConstants.DigitNine)
+         if (ch >= Chars.DigitZero && ch <= Chars.DigitNine)
          {
             num = ch.ToIntegerDigit();
          }

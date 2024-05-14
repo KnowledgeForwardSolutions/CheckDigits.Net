@@ -239,7 +239,7 @@ public class IsinAlgorithmTests
     {
         // Arrange.
         var value = "00000000000";
-        var expectedCheckDigit = CharConstants.DigitZero;
+        var expectedCheckDigit = Chars.DigitZero;
 
         // Act/assert.
         _sut.TryCalculateCheckDigit(value, out var checkDigit).Should().BeTrue();
@@ -440,5 +440,5 @@ public class IsinAlgorithmTests
     public void IsinAlgorithm_Validate_ShouldReturnFalse_WhenInputContainsNonDigitCharacter(String value)
        => _sut.Validate(value).Should().BeFalse();
 
-    #endregion
+   #endregion
 }

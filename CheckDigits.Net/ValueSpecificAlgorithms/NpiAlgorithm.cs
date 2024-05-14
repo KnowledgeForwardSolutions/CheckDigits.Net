@@ -28,38 +28,39 @@ namespace CheckDigits.Net.ValueSpecificAlgorithms;
 /// </remarks>
 public sealed class NpiAlgorithm : ICheckDigitAlgorithm
 {
-    private const Int32 _expectedLength = 10;
-    private const Int32 _prefix = 24;
-    private static readonly Int32[] _doubledValues = new Int32[] { 0, 2, 4, 6, 8, 1, 3, 5, 7, 9 };
+   private const Int32 _expectedLength = 10;
+   private const Int32 _prefix = 24; 
 
-    /// <inheritdoc/>
-    public String AlgorithmDescription => Resources.NpiAlgorithmDescription;
+   /// <inheritdoc/>
+   public String AlgorithmDescription => Resources.NpiAlgorithmDescription;
 
-    /// <inheritdoc/>
-    public String AlgorithmName => Resources.NpiAlgorithmName;
+   /// <inheritdoc/>
+   public String AlgorithmName => Resources.NpiAlgorithmName;
 
-    /// <inheritdoc/>
-    public Boolean Validate(String value)
-    {
-        if (String.IsNullOrEmpty(value) || value.Length != _expectedLength)
-        {
+   /// <inheritdoc/>
+   public Boolean Validate(String value)
+   {
+      if (String.IsNullOrEmpty(value) || value.Length != _expectedLength)
+      {
+         return false;
+      }
+
+      var sum = _prefix;         // Initializing to prefix (24) has the same effect as prefixing the value with "80840"
+      var oddPosition = true;
+      for (var index = value.Length - 2; index >= 0; index--)
+      {
+         var digit = value[index].ToIntegerDigit();
+         if (digit < 0 || digit > 9)
+         {
             return false;
-        }
+         }
+         sum += oddPosition
+            ? digit > 4 ? (digit * 2) - 9 : digit * 2
+            : digit;
+         oddPosition = !oddPosition;
+      }
+      var checkDigit = (10 - (sum % 10)) % 10;
 
-        var sum = _prefix;         // Initializing to prefix (24) has the same effect as prefixing the value with "80840"
-        var oddPosition = true;
-        for (var index = value.Length - 2; index >= 0; index--)
-        {
-            var digit = value[index].ToIntegerDigit();
-            if (digit < 0 || digit > 9)
-            {
-                return false;
-            }
-            sum += oddPosition ? _doubledValues[digit] : digit;
-            oddPosition = !oddPosition;
-        }
-        var checkDigit = (10 - (sum % 10)) % 10;
-
-        return value[^1].ToIntegerDigit() == checkDigit;
-    }
+      return value[^1].ToIntegerDigit() == checkDigit;
+   }
 }

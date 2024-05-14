@@ -26,91 +26,103 @@ namespace CheckDigits.Net.ValueSpecificAlgorithms;
 /// </remarks>
 public sealed class IsinAlgorithm : ISingleCheckDigitAlgorithm
 {
-    private const Int32 _calculateLength = 11;
-    private const Int32 _validateLength = 12;
-    private const Int32 _letterOffset = 55;      // Value needed to subtract from an ASCII uppercase letter to transform A-Z to 10-35
-    private static readonly Int32[] _doubledValues = new Int32[] { 0, 2, 4, 6, 8, 1, 3, 5, 7, 9 };
+   private const Int32 _calculateLength = 11;
+   private const Int32 _validateLength = 12;
+   private static readonly Int32[] _oddLookupTable =
+      Chars.Range(Chars.DigitZero, Chars.UpperCaseZ)
+      .Select(x => Chars.MapAlphanumericCharacter(x))
+      .Select(x => x switch
+      {
+         -1 => -1,
+         _ => (x / 10) + LuhnDoubledValue(x % 10)
+      }).ToArray();
+   private static readonly Int32[] _evenLookupTable =
+      Chars.Range(Chars.DigitZero, Chars.UpperCaseZ)
+      .Select(x => Chars.MapAlphanumericCharacter(x))
+      .Select(x => x switch
+      {
+         -1 => -1,
+         _ => LuhnDoubledValue(x / 10) + (x % 10)
+      }).ToArray();
 
-    /// <inheritdoc/>
-    public String AlgorithmDescription => Resources.IsinAlgorithmDescription;
+   private static Int32 LuhnDoubledValue(Int32 value)
+      => value > 4 ? (value * 2) - 9 : value * 2;
 
-    /// <inheritdoc/>
-    public String AlgorithmName => Resources.IsinAlgorithmName;
+   /// <inheritdoc/>
+   public String AlgorithmDescription => Resources.IsinAlgorithmDescription;
 
-    /// <inheritdoc/>
-    public Boolean TryCalculateCheckDigit(String value, out Char checkDigit)
-    {
-        checkDigit = CharConstants.NUL;
-        if (String.IsNullOrEmpty(value) || value.Length != _calculateLength)
-        {
+   /// <inheritdoc/>
+   public String AlgorithmName => Resources.IsinAlgorithmName;
+
+   /// <inheritdoc/>
+   public Boolean TryCalculateCheckDigit(String value, out Char checkDigit)
+   {
+      checkDigit = Chars.NUL;
+      if (String.IsNullOrEmpty(value) || value.Length != _calculateLength)
+      {
+         return false;
+      }
+
+      var sum = 0;
+      var oddPosition = true;
+      for (var index = value.Length - 1; index >= 0; index--)
+      {
+         var ch = value[index];
+         if (ch >= Chars.DigitZero && ch <= Chars.DigitNine)
+         {
+            var digit = ch.ToIntegerDigit();
+            sum += oddPosition ? _oddLookupTable[digit] : digit;
+            oddPosition = !oddPosition;
+         }
+         else if (ch >= Chars.UpperCaseA && ch <= Chars.UpperCaseZ)
+         {
+            var offset = ch - Chars.DigitZero;
+            var num = oddPosition ? _oddLookupTable[offset] : _evenLookupTable[offset];
+            sum += num;
+         }
+         else
+         {
             return false;
-        }
+         }
+      }
+      var mod = 10 - (sum % 10);
+      checkDigit = mod == 10 ? Chars.DigitZero : mod.ToDigitChar();
 
-        var sum = 0;
-        var oddPosition = true;
-        for (var index = value.Length - 1; index >= 0; index--)
-        {
-            var ch = value[index];
-            if (ch >= CharConstants.DigitZero && ch <= CharConstants.DigitNine)
-            {
-                var digit = ch.ToIntegerDigit();
-                sum += oddPosition ? _doubledValues[digit] : digit;
-                oddPosition = !oddPosition;
-            }
-            else if (ch >= CharConstants.UpperCaseA && ch <= CharConstants.UpperCaseZ)
-            {
-                var number = ch - _letterOffset;
-                var firstDigit = number / 10;
-                var secondDigit = number % 10;
-                sum += oddPosition
-                   ? firstDigit + _doubledValues[secondDigit]
-                   : _doubledValues[firstDigit] + secondDigit;
-            }
-            else
-            {
-                return false;
-            }
-        }
-        var mod = 10 - (sum % 10);
-        checkDigit = mod == 10 ? CharConstants.DigitZero : mod.ToDigitChar();
+      return true;
+   }
 
-        return true;
-    }
+   /// <inheritdoc/>
+   public Boolean Validate(String value)
+   {
+      if (String.IsNullOrEmpty(value) || value.Length != _validateLength)
+      {
+         return false;
+      }
 
-    public Boolean Validate(String value)
-    {
-        if (String.IsNullOrEmpty(value) || value.Length != _validateLength)
-        {
+      var sum = 0;
+      var oddPosition = true;
+      for (var index = value.Length - 2; index >= 0; index--)
+      {
+         var ch = value[index];
+         if (ch >= Chars.DigitZero && ch <= Chars.DigitNine)
+         {
+            var digit = ch.ToIntegerDigit();
+            sum += oddPosition ? _oddLookupTable[digit] : digit;
+            oddPosition = !oddPosition;
+         }
+         else if (ch >= Chars.UpperCaseA && ch <= Chars.UpperCaseZ)
+         {
+            var offset = ch - Chars.DigitZero;
+            var num = oddPosition ? _oddLookupTable[offset] : _evenLookupTable[offset];
+            sum += num;
+         }
+         else
+         {
             return false;
-        }
+         }
+      }
+      var checkDigit = (10 - (sum % 10)) % 10;
 
-        var sum = 0;
-        var oddPosition = true;
-        for (var index = value.Length - 2; index >= 0; index--)
-        {
-            var ch = value[index];
-            if (ch >= CharConstants.DigitZero && ch <= CharConstants.DigitNine)
-            {
-                var digit = ch.ToIntegerDigit();
-                sum += oddPosition ? _doubledValues[digit] : digit;
-                oddPosition = !oddPosition;
-            }
-            else if (ch >= CharConstants.UpperCaseA && ch <= CharConstants.UpperCaseZ)
-            {
-                var number = ch - _letterOffset;
-                var firstDigit = number / 10;
-                var secondDigit = number % 10;
-                sum += oddPosition
-                   ? firstDigit + _doubledValues[secondDigit]
-                   : _doubledValues[firstDigit] + secondDigit;
-            }
-            else
-            {
-                return false;
-            }
-        }
-        var checkDigit = (10 - (sum % 10)) % 10;
-
-        return value[^1].ToIntegerDigit() == checkDigit;
-    }
+      return value[^1].ToIntegerDigit() == checkDigit;
+   }
 }

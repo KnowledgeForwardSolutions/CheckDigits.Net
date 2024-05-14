@@ -15,7 +15,7 @@ public static class ExtensionMethods
    ///   If <paramref name="num"/> is not between 0-9 then this method will
    ///   return an unexpected value
    /// </remarks>
-   public static Char ToDigitChar(this Int32 num) => (Char)(CharConstants.DigitZero + num);
+   public static Char ToDigitChar(this Int32 num) => (Char)(Chars.DigitZero + num);
 
    /// <summary>
    ///   Get the integer equivalent of an ASCII digit character.
@@ -30,5 +30,5 @@ public static class ExtensionMethods
    ///   If <paramref name="ch"/> is not an ASCII digit char (0-9) then this 
    ///   method will return a value that is not between 0-9.
    /// </remarks>
-   public static Int32 ToIntegerDigit(this Char ch) => ch - CharConstants.DigitZero;
+   public static Int32 ToIntegerDigit(this Char ch) => ch - Chars.DigitZero;
 }

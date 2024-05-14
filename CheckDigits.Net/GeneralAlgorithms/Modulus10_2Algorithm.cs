@@ -22,65 +22,71 @@
 /// </remarks>
 public sealed class Modulus10_2Algorithm : ISingleCheckDigitAlgorithm
 {
-    /// <inheritdoc/>
-    public String AlgorithmDescription => Resources.Modulus10_2AlgorithmDescription;
+   private const Int32 _tryCalculateMaxLength = 9;
+   private const Int32 _validateMinLength = 2;
+   private const Int32 _validateMaxLength = 10;
 
-    /// <inheritdoc/>
-    public String AlgorithmName => Resources.Modulus10_2AlgorithmName;
+   /// <inheritdoc/>
+   public String AlgorithmDescription => Resources.Modulus10_2AlgorithmDescription;
 
-    /// <inheritdoc/>
-    public Boolean TryCalculateCheckDigit(String value, out Char checkDigit)
-    {
-        checkDigit = CharConstants.NUL;
-        if (String.IsNullOrEmpty(value) || value.Length > 9)
-        {
-            return false;
-        }
+   /// <inheritdoc/>
+   public String AlgorithmName => Resources.Modulus10_2AlgorithmName;
 
-        var s = 0;
-        var t = 0;
-        for (var index = 0; index < value.Length; index++)
-        {
-            var currentDigit = value![index].ToIntegerDigit();
-            if (currentDigit < 0 || currentDigit > 9)
-            {
-                return false;
-            }
-            t += currentDigit;
-            s += t;
-        }
-        s += t;
+   /// <inheritdoc/>
+   public Boolean TryCalculateCheckDigit(String value, out Char checkDigit)
+   {
+      checkDigit = Chars.NUL;
+      if (String.IsNullOrEmpty(value) || value.Length > _tryCalculateMaxLength)
+      {
+         return false;
+      }
 
-        var mod = s % 10;
-        checkDigit = mod.ToDigitChar();
+      var s = 0;
+      var t = 0;
+      for (var index = 0; index < value.Length; index++)
+      {
+         var currentDigit = value![index].ToIntegerDigit();
+         if (currentDigit < 0 || currentDigit > 9)
+         {
+               return false;
+         }
+         t += currentDigit;
+         s += t;
+      }
+      s += t;
 
-        return true;
-    }
+      var mod = s % 10;
+      checkDigit = mod.ToDigitChar();
 
-    /// <inheritdoc/>
-    public Boolean Validate(String value)
-    {
-        if (String.IsNullOrEmpty(value) || value.Length < 2 || value.Length > 10)
-        {
-            return false;
-        }
+      return true;
+   }
 
-        var s = 0;
-        var t = 0;
-        for (var index = 0; index < value.Length - 1; index++)
-        {
-            var currentDigit = value![index].ToIntegerDigit();
-            if (currentDigit < 0 || currentDigit > 9)
-            {
-                return false;
-            }
-            t += currentDigit;
-            s += t;
-        }
-        s += t;
+   /// <inheritdoc/>
+   public Boolean Validate(String value)
+   {
+      if (String.IsNullOrEmpty(value) 
+         || value.Length < _validateMinLength 
+         || value.Length > _validateMaxLength)
+      {
+         return false;
+      }
 
-        var checkDigit = s % 10;
+      var s = 0;
+      var t = 0;
+      for (var index = 0; index < value.Length - 1; index++)
+      {
+         var currentDigit = value![index].ToIntegerDigit();
+         if (currentDigit < 0 || currentDigit > 9)
+         {
+               return false;
+         }
+         t += currentDigit;
+         s += t;
+      }
+      s += t;
 
-        return value[^1].ToIntegerDigit() == checkDigit;
-    }
+      var checkDigit = s % 10;
+
+      return value[^1].ToIntegerDigit() == checkDigit;
+   }
 }

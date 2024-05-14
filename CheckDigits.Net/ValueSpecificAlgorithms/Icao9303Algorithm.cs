@@ -26,10 +26,13 @@ namespace CheckDigits.Net.ValueSpecificAlgorithms;
 ///   difference between the transposed characters is 10, i.e. BL <-> LB.
 ///   </para>
 /// </remarks>
-public sealed class Icao9303Algorithm : IEmbeddedCheckDigitAlgorithm
+public sealed class Icao9303Algorithm : ISingleCheckDigitAlgorithm
 {
    private static readonly Int32[] _weights = [7, 3, 1];
-   private static readonly Int32[] _charMap = Icao9303CharacterMap.GetCharacterMap();
+   private static readonly Int32[] _charMap = Chars.Range(Chars.DigitZero, Chars.UpperCaseZ)
+      .Select(x => MapCharacter(x))
+      .ToArray();
+   private const Int32 _validateMinLength = 2;
 
    /// <inheritdoc/>
    public String AlgorithmDescription => Resources.Icao9303AlgorithmDescription;
@@ -37,10 +40,61 @@ public sealed class Icao9303Algorithm : IEmbeddedCheckDigitAlgorithm
    /// <inheritdoc/>
    public String AlgorithmName => Resources.Icao9303AlgorithmName;
 
+   /// <summary>
+   ///   Map a character to its integer equivalent in the 
+   ///   <see cref="Icao9303Algorithm"/>. Characters that are not valid for the 
+   ///   Icao9303Algorithm are mapped to -1.
+   /// </summary>
+   /// <param name="ch">
+   ///   The character to map.
+   /// </param>
+   /// <returns>
+   ///   The integer value associated with <paramref name="ch"/>.
+   /// </returns>
+   public static Int32 MapCharacter(Char ch) => ch switch
+   {
+      var d when ch >= Chars.DigitZero && ch <= Chars.DigitNine => d.ToIntegerDigit(),
+      var c when ch >= Chars.UpperCaseA && ch <= Chars.UpperCaseZ => c - Chars.UpperCaseA + 10,
+      Chars.LeftAngleBracket => 0,
+      _ => -1
+   };
+
+   /// <inheritdoc/>
+   public Boolean TryCalculateCheckDigit(String value, out Char checkDigit)
+   {
+      checkDigit = Chars.NUL;
+      if (String.IsNullOrEmpty(value))
+      {
+         return false;
+      }
+
+      Char ch;
+      Int32 num;
+      var sum = 0;
+      var weightIndex = new ModulusInt32(3);
+      for (var charIndex = 0; charIndex < value.Length; charIndex++)
+      {
+         ch = value[charIndex];
+         num = (ch >= Chars.DigitZero && ch <= Chars.UpperCaseZ)
+            ? _charMap[ch - Chars.DigitZero]
+            : -1;
+         if (num == -1)
+         {
+            return false;
+         }
+         sum += num * _weights[weightIndex];
+         weightIndex++;
+      }
+      
+      checkDigit = (sum % 10).ToDigitChar();
+
+      return true;
+   }
+
    /// <inheritdoc/>
    public Boolean Validate(String value)
    {
-      if (String.IsNullOrEmpty(value) || value.Length < 2)
+      if (String.IsNullOrEmpty(value) || value.Length < _validateMinLength)
       {
          return false;
       }
@@ -52,8 +106,8 @@ public sealed class Icao9303Algorithm : IEmbeddedCheckDigitAlgorithm
       for (var charIndex = 0; charIndex < value.Length - 1; charIndex++)
       {
          ch = value[charIndex];
-         num = (ch >= CharConstants.DigitZero && ch <= CharConstants.UpperCaseZ)
-            ? _charMap[ch - CharConstants.DigitZero]
+         num = (ch >= Chars.DigitZero && ch <= Chars.UpperCaseZ)
+            ? _charMap[ch - Chars.DigitZero]
             : -1;
          if (num == -1)
          {
@@ -65,39 +119,5 @@ public sealed class Icao9303Algorithm : IEmbeddedCheckDigitAlgorithm
       var checkDigit = sum % 10;
 
       return value[^1].ToIntegerDigit() == checkDigit;
-   }
-
-   /// <inheritdoc/>
-   public Boolean Validate(String value, Int32 start, Int32 length)
-   {
-      if (String.IsNullOrEmpty(value) 
-         || start < 0
-         || length < 2
-         || start + length > value.Length)
-      {
-         return false;
-      }
-
-      Char ch;
-      Int32 num;
-      var sum = 0;
-      var weightIndex = new ModulusInt32(3);
-      var end = start + length - 1;
-      for(var charIndex = start; charIndex < end; charIndex++)
-      {
-         ch = value[charIndex];
-         num = (ch >= CharConstants.DigitZero && ch <= CharConstants.UpperCaseZ)
-            ? _charMap[ch - CharConstants.DigitZero]
-            : -1;
-         if (num == -1)
-         {
-            return false;
-         }
-         sum += num * _weights[weightIndex];
-         weightIndex++;
-      }
-      var checkDigit = sum % 10;
-
-      return value[start + length - 1].ToIntegerDigit() == checkDigit;
    }
 }

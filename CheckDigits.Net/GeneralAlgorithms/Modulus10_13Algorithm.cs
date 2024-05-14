@@ -24,61 +24,63 @@
 /// </remarks>
 public sealed class Modulus10_13Algorithm : ISingleCheckDigitAlgorithm
 {
-    /// <inheritdoc/>
-    public String AlgorithmDescription => Resources.Modulus10_13AlgorithmDescription;
+   private const Int32 _validateMinLength = 2;
 
-    /// <inheritdoc/>
-    public String AlgorithmName => Resources.Modulus10_13AlgorithmName;
+   /// <inheritdoc/>
+   public String AlgorithmDescription => Resources.Modulus10_13AlgorithmDescription;
 
-    /// <inheritdoc/>
-    public Boolean TryCalculateCheckDigit(String value, out Char checkDigit)
-    {
-        checkDigit = CharConstants.NUL;
-        if (String.IsNullOrEmpty(value))
-        {
-            return false;
-        }
+   /// <inheritdoc/>
+   public String AlgorithmName => Resources.Modulus10_13AlgorithmName;
 
-        var sum = 0;
-        var oddPosition = true;
-        for (var index = value.Length - 1; index >= 0; index--)
-        {
-            var digit = value[index].ToIntegerDigit();
-            if (digit < 0 || digit > 9)
-            {
-                return false;
-            }
-            sum += oddPosition ? digit * 3 : digit;
-            oddPosition = !oddPosition;
-        }
-        var mod = 10 - (sum % 10);
-        checkDigit = mod == 10 ? CharConstants.DigitZero : mod.ToDigitChar();
+   /// <inheritdoc/>
+   public Boolean TryCalculateCheckDigit(String value, out Char checkDigit)
+   {
+      checkDigit = Chars.NUL;
+      if (String.IsNullOrEmpty(value))
+      {
+         return false;
+      }
 
-        return true;
-    }
+      var sum = 0;
+      var oddPosition = true;
+      for (var index = value.Length - 1; index >= 0; index--)
+      {
+         var digit = value[index].ToIntegerDigit();
+         if (digit < 0 || digit > 9)
+         {
+               return false;
+         }
+         sum += oddPosition ? digit * 3 : digit;
+         oddPosition = !oddPosition;
+      }
+      var mod = 10 - (sum % 10);
+      checkDigit = mod == 10 ? Chars.DigitZero : mod.ToDigitChar();
 
-    /// <inheritdoc/>
-    public Boolean Validate(String value)
-    {
-        if (String.IsNullOrEmpty(value) || value.Length < 2)
-        {
-            return false;
-        }
+      return true;
+   }
 
-        var sum = 0;
-        var oddPosition = true;
-        for (var index = value.Length - 2; index >= 0; index--)
-        {
-            var digit = value[index].ToIntegerDigit();
-            if (digit < 0 || digit > 9)
-            {
-                return false;
-            }
-            sum += oddPosition ? digit * 3 : digit;
-            oddPosition = !oddPosition;
-        }
-        var checkDigit = (10 - (sum % 10)) % 10;
+   /// <inheritdoc/>
+   public Boolean Validate(String value)
+   {
+      if (String.IsNullOrEmpty(value) || value.Length < _validateMinLength)
+      {
+         return false;
+      }
 
-        return value[^1].ToIntegerDigit() == checkDigit;
-    }
+      var sum = 0;
+      var oddPosition = true;
+      for (var index = value.Length - 2; index >= 0; index--)
+      {
+         var digit = value[index].ToIntegerDigit();
+         if (digit < 0 || digit > 9)
+         {
+               return false;
+         }
+         sum += oddPosition ? digit * 3 : digit;
+         oddPosition = !oddPosition;
+      }
+      var checkDigit = (10 - (sum % 10)) % 10;
+
+      return value[^1].ToIntegerDigit() == checkDigit;
+   }
 }

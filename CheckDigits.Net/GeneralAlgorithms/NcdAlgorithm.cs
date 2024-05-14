@@ -24,9 +24,11 @@ namespace CheckDigits.Net.GeneralAlgorithms;
 /// </remarks>
 public class NcdAlgorithm : ISingleCheckDigitAlgorithm
 {
+   private static readonly Int32[] _charMap = Chars.Range(Chars.DigitZero, Chars.LowerCaseZ)
+      .Select(x => MapCharacter(x))
+      .ToArray();
    private const String _checkCharacters = "0123456789bcdfghjkmnpqrstvwxz";
-   //                                                        b   c   d  e   f   g   h  i   j   k  l   m   n  o   p   q   r   s   t  u   v   w   x  y   z
-   private static readonly Int32[] _letters = new Int32[] { 10, 11, 12, 0, 13, 14, 15, 0, 16, 17, 0, 18, 19, 0, 20, 21, 22, 23, 24, 0, 25, 26, 27, 0, 28 };
+   private const Int32 _validateMinLength = 2;
 
    /// <inheritdoc/>
    public String AlgorithmDescription => Resources.NcdAlgorithmDescription;
@@ -34,10 +36,36 @@ public class NcdAlgorithm : ISingleCheckDigitAlgorithm
    /// <inheritdoc/>
    public String AlgorithmName => Resources.NcdAlgorithmName;
 
+   /// <summary>
+   ///   Map a character to its integer equivalent in the 
+   ///   <see cref="NcdAlgorithm"/>. Characters that are not valid for the 
+   ///   NcdAlgorithm are mapped to 0.
+   /// </summary>
+   /// <param name="ch">
+   ///   The character to map.
+   /// </param>
+   /// <returns>
+   ///   The integer value associated with <paramref name="ch"/>.
+   /// </returns>
+   public static Int32 MapCharacter(Char ch) => ch switch
+   {
+      var d when ch >= Chars.DigitZero && ch <= Chars.DigitNine => d.ToIntegerDigit(),
+      var b when ch >= Chars.LowerCaseB && ch <= Chars.LowerCaseD => b - Chars.LowerCaseB + 10,
+      var f when ch >= Chars.LowerCaseF && ch <= Chars.LowerCaseH => f - Chars.LowerCaseF + 13,
+      Chars.LowerCaseJ => 16,
+      Chars.LowerCaseK => 17,
+      Chars.LowerCaseM => 18,
+      Chars.LowerCaseN => 19,
+      var p when ch >= Chars.LowerCaseP && ch <= Chars.LowerCaseT => p - Chars.LowerCaseP + 20,
+      var v when ch >= Chars.LowerCaseV && ch <= Chars.LowerCaseX => v - Chars.LowerCaseV + 25,
+      Chars.LowerCaseZ => 28,
+      _ => 0
+   };
+
    /// <inheritdoc/>
    public Boolean TryCalculateCheckDigit(String value, out Char checkDigit)
    {
-      checkDigit = CharConstants.NUL;
+      checkDigit = Chars.NUL;
       if (String.IsNullOrEmpty(value))
       {
          return false;
@@ -48,10 +76,13 @@ public class NcdAlgorithm : ISingleCheckDigitAlgorithm
       for (var index = 0; index < value.Length; index++)
       {
          var ch = value[index];
-         num = ch >= CharConstants.DigitZero && ch <= CharConstants.DigitNine
+         // Benchmarks show that this version of character mapping is more
+         // performant TryCalculateCheckDigit than the version used in the
+         // Validate method.
+         num = ch >= Chars.DigitZero && ch <= Chars.DigitNine
             ? ch.ToIntegerDigit()
-            : ch >= CharConstants.LowerCaseB && ch <= CharConstants.LowerCaseZ
-               ? _letters[ch - CharConstants.LowerCaseB]
+            : ch >= Chars.LowerCaseB && ch <= Chars.LowerCaseZ
+               ? _charMap[ch - Chars.DigitZero]
                : 0;
          sum += num * (index + 1);
       }
@@ -65,26 +96,24 @@ public class NcdAlgorithm : ISingleCheckDigitAlgorithm
    /// <inheritdoc/>
    public Boolean Validate(String value)
    {
-      if (String.IsNullOrEmpty(value) || value.Length < 2)
+      if (String.IsNullOrEmpty(value) || value.Length < _validateMinLength)
       {
          return false;
       }
 
       Int32 num;
       var sum = 0;
-      for(var index = 0; index < value.Length - 1; index++)
+      for (var index = 0; index < value.Length - 1; index++)
       {
          var ch = value[index];
-         num = ch >= CharConstants.DigitZero && ch <= CharConstants.DigitNine
-            ? ch.ToIntegerDigit()
-            : ch >= CharConstants.LowerCaseB && ch <= CharConstants.LowerCaseZ 
-               ? _letters[ch - CharConstants.LowerCaseB] 
-               : 0;
+         num = ch >= Chars.DigitZero && ch <= Chars.LowerCaseZ
+            ? _charMap[ch - Chars.DigitZero]
+            : 0;
          sum += num * (index + 1);
       }
 
       var checksum = sum % 29;
-      
+
       return value[^1] == _checkCharacters[checksum];
    }
 }

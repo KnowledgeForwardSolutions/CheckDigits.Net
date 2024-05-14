@@ -24,24 +24,25 @@ namespace CheckDigits.Net.GeneralAlgorithms;
 /// </remarks>
 public sealed class VerhoeffAlgorithm : ISingleCheckDigitAlgorithm
 {
-    private static readonly VerhoeffInverseTable _inverseTable =
-       VerhoeffInverseTable.Instance;
+   private static readonly VerhoeffInverseTable _inverseTable =
+      VerhoeffInverseTable.Instance;
    private static readonly VerhoeffMultiplicationTable _multiplicationTable =
       VerhoeffMultiplicationTable.Instance;
    private static readonly VerhoeffPermutationTable _permutationTable =
       VerhoeffPermutationTable.Instance;
+   private const Int32 _validateMinLength = 2;
 
    /// <inheritdoc/>
-   public string AlgorithmDescription => Resources.VerhoeffAlgorithmDescription;
-
-    /// <inheritdoc/>
-    public string AlgorithmName => Resources.VerhoeffAlgorithmName;
+   public String AlgorithmDescription => Resources.VerhoeffAlgorithmDescription;
 
    /// <inheritdoc/>
-   public bool TryCalculateCheckDigit(string value, out char checkDigit)
+   public String AlgorithmName => Resources.VerhoeffAlgorithmName;
+
+   /// <inheritdoc/>
+   public Boolean TryCalculateCheckDigit(String value, out Char checkDigit)
    {
-      checkDigit = CharConstants.NUL;
-      if (string.IsNullOrEmpty(value))
+      checkDigit = Chars.NUL;
+      if (String.IsNullOrEmpty(value))
       {
          return false;
       }
@@ -67,9 +68,9 @@ public sealed class VerhoeffAlgorithm : ISingleCheckDigitAlgorithm
    }
 
    /// <inheritdoc/>
-   public bool Validate(string value)
+   public Boolean Validate(String value)
    {
-      if (string.IsNullOrEmpty(value) || value.Length < 2)
+      if (String.IsNullOrEmpty(value) || value.Length < _validateMinLength)
       {
          return false;
       }
@@ -89,6 +90,7 @@ public sealed class VerhoeffAlgorithm : ISingleCheckDigitAlgorithm
 
          i++;
       }
+
       return c == 0;
    }
 }

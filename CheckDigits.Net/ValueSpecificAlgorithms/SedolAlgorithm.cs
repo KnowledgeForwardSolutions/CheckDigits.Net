@@ -21,8 +21,9 @@ namespace CheckDigits.Net.ValueSpecificAlgorithms;
 public class SedolAlgorithm : ICheckDigitAlgorithm
 {
    private const Int32 _validateLength = 7;
-   private const Int32 _letterOffset = 55;      // Value needed to subtract from an ASCII uppercase letter to transform A-Z to 10-35
-   private static readonly Int32[] _charValues = GetLookupTable();
+   private static readonly Int32[] _charValues = Chars.Range(Chars.DigitZero, Chars.UpperCaseZ)
+      .Select(x => Chars.MapBetanumericCharacter(x))
+      .ToArray();
    private static readonly Int32[] _weights = [1, 3, 1, 7, 3, 9];
 
    /// <inheritdoc/>
@@ -45,9 +46,9 @@ public class SedolAlgorithm : ICheckDigitAlgorithm
       {
          var ch = value[index];
          num = -1;
-         if (ch >= CharConstants.DigitZero && ch <= CharConstants.UpperCaseZ)
+         if (ch >= Chars.DigitZero && ch <= Chars.UpperCaseZ)
          {
-            var offset = ch - CharConstants.DigitZero;
+            var offset = ch - Chars.DigitZero;
             num = _charValues[offset];
          }
 
@@ -61,15 +62,4 @@ public class SedolAlgorithm : ICheckDigitAlgorithm
 
       return value[^1].ToIntegerDigit() == checkDigit;
    }
-
-   private const String _chars = "0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-
-   public static Int32[] GetLookupTable()
-      => _chars.Select(x => x switch
-      {
-         var d when x >= CharConstants.DigitZero && x <= CharConstants.DigitNine => d.ToIntegerDigit(),
-         var c when "BCDFGHJKLMNPQRSTVWXYZ".Contains(x) => c - _letterOffset,
-         _ => -1
-      })
-      .ToArray();
 }

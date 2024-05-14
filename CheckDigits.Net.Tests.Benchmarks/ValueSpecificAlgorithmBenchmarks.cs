@@ -1,5 +1,5 @@
 ﻿#pragma warning disable IDE0022 // Use expression body for method
-#pragma warning disable IDE0059 // Unnecessary assignment of a value
+//#pragma warning disable IDE0059 // Unnecessary assignment of a value
 #pragma warning disable IDE0060 // Remove unused parameter if it is not part of shipped public API
 
 namespace CheckDigits.Net.Tests.Benchmarks;
@@ -11,17 +11,25 @@ public class ValueSpecificAlgorithmBenchmarks
 {
    public static IEnumerable<Object[]> TryCalculateCheckDigitArguments()
    {
-      yield return new Object[] { Algorithms.Isin, Algorithms.Isin.AlgorithmName, "US037833100" };
-      yield return new Object[] { Algorithms.Isin, Algorithms.Isin.AlgorithmName, "AU0000XVGZA" };
-      yield return new Object[] { Algorithms.Isin, Algorithms.Isin.AlgorithmName, "GB000263494" };
+      yield return new Object[] { Algorithms.Icao9303, Algorithms.Icao9303.AlgorithmName, "U7Y" };
+      yield return new Object[] { Algorithms.Icao9303, Algorithms.Icao9303.AlgorithmName, "U7Y8SX" };
+      yield return new Object[] { Algorithms.Icao9303, Algorithms.Icao9303.AlgorithmName, "U7Y8SXRC0" };
+      yield return new Object[] { Algorithms.Icao9303, Algorithms.Icao9303.AlgorithmName, "U7Y8SXRC0O3S" };
+      yield return new Object[] { Algorithms.Icao9303, Algorithms.Icao9303.AlgorithmName, "U7Y8SXRC0O3SC4I" };
+      yield return new Object[] { Algorithms.Icao9303, Algorithms.Icao9303.AlgorithmName, "U7Y8SXRC0O3SC4IHYQ" };
+      yield return new Object[] { Algorithms.Icao9303, Algorithms.Icao9303.AlgorithmName, "U7Y8SXRC0O3SC4IHYQF4M" };
 
-      yield return new Object[] { Algorithms.Iso6346, Algorithms.Iso6346.AlgorithmName, "CSQU305438" };
-      yield return new Object[] { Algorithms.Iso6346, Algorithms.Iso6346.AlgorithmName, "TOLU473478" };
-      yield return new Object[] { Algorithms.Iso6346, Algorithms.Iso6346.AlgorithmName, "MSKU907032" };
+      //yield return new Object[] { Algorithms.Isin, Algorithms.Isin.AlgorithmName, "US037833100" };
+      //yield return new Object[] { Algorithms.Isin, Algorithms.Isin.AlgorithmName, "AU0000XVGZA" };
+      //yield return new Object[] { Algorithms.Isin, Algorithms.Isin.AlgorithmName, "GB000263494" };
 
-      yield return new Object[] { Algorithms.Vin, Algorithms.Vin.AlgorithmName, "1M8GDM9A_KP042788" };
-      yield return new Object[] { Algorithms.Vin, Algorithms.Vin.AlgorithmName, "1G8ZG127_WZ157259" };
-      yield return new Object[] { Algorithms.Vin, Algorithms.Vin.AlgorithmName, "1HGEM212_2L047875" };
+      //yield return new Object[] { Algorithms.Iso6346, Algorithms.Iso6346.AlgorithmName, "CSQU305438" };
+      //yield return new Object[] { Algorithms.Iso6346, Algorithms.Iso6346.AlgorithmName, "TOLU473478" };
+      //yield return new Object[] { Algorithms.Iso6346, Algorithms.Iso6346.AlgorithmName, "MSKU907032" };
+
+      //yield return new Object[] { Algorithms.Vin, Algorithms.Vin.AlgorithmName, "1M8GDM9A_KP042788" };
+      //yield return new Object[] { Algorithms.Vin, Algorithms.Vin.AlgorithmName, "1G8ZG127_WZ157259" };
+      //yield return new Object[] { Algorithms.Vin, Algorithms.Vin.AlgorithmName, "1HGEM212_2L047875" };
    }
 
    public static IEnumerable<Object[]> TryCalculateCheckDigitsArguments()
@@ -41,9 +49,13 @@ public class ValueSpecificAlgorithmBenchmarks
       //yield return new Object[] { Algorithms.Cusip, Algorithms.Cusip.AlgorithmName, "38143VAA7" };
       //yield return new Object[] { Algorithms.Cusip, Algorithms.Cusip.AlgorithmName, "91282CJL6" };
 
-      //yield return new Object[] { Algorithms.Iban, Algorithms.Iban.AlgorithmName, "BE71096123456769" };
-      //yield return new Object[] { Algorithms.Iban, Algorithms.Iban.AlgorithmName, "GB82WEST12345698765432" };
-      //yield return new Object[] { Algorithms.Iban, Algorithms.Iban.AlgorithmName, "SC74MCBL01031234567890123456USD" };
+      //yield return new Object[] { Algorithms.Figi, Algorithms.Figi.AlgorithmName, "BBG000B9Y5X2" };
+      //yield return new Object[] { Algorithms.Figi, Algorithms.Figi.AlgorithmName, "BBG111111160" };
+      //yield return new Object[] { Algorithms.Figi, Algorithms.Figi.AlgorithmName, "BBGZYXWVTSR7" };
+
+      yield return new Object[] { Algorithms.Iban, Algorithms.Iban.AlgorithmName, "BE71096123456769" };
+      yield return new Object[] { Algorithms.Iban, Algorithms.Iban.AlgorithmName, "GB82WEST12345698765432" };
+      yield return new Object[] { Algorithms.Iban, Algorithms.Iban.AlgorithmName, "SC74MCBL01031234567890123456USD" };
 
       //yield return new Object[] { Algorithms.Icao9303, Algorithms.Icao9303.AlgorithmName, "U7Y5" };
       //yield return new Object[] { Algorithms.Icao9303, Algorithms.Icao9303.AlgorithmName, "U7Y8SX8" };
@@ -53,9 +65,9 @@ public class ValueSpecificAlgorithmBenchmarks
       //yield return new Object[] { Algorithms.Icao9303, Algorithms.Icao9303.AlgorithmName, "U7Y8SXRC0O3SC4IHYQ9" };
       //yield return new Object[] { Algorithms.Icao9303, Algorithms.Icao9303.AlgorithmName, "U7Y8SXRC0O3SC4IHYQF4M8" };
 
-      yield return new Object[] { Algorithms.Icao9303MachineReadableVisa, Algorithms.Icao9303MachineReadableVisa.AlgorithmName, "I<UTOERIKSSON<<ANNA<MARIA<<<<<<<<<<<D231458907UTO7408122F1204159<<<<<<A<" };
-      yield return new Object[] { Algorithms.Icao9303MachineReadableVisa, Algorithms.Icao9303MachineReadableVisa.AlgorithmName, "V<UTOERIKSSON<<ANNA<MARIA<<<<<<<<<<<<<<<<<<<L898902C<3UTO6908061F9406236ZE184226B<<<<<<<" };
-      yield return new Object[] { Algorithms.Icao9303MachineReadableVisa, Algorithms.Icao9303MachineReadableVisa.AlgorithmName, "I<UTOSKYWALKER<<LUKE<<<<<<<<<<<<<<<<STARWARS45UTO7705256M2405252<<<<<<B<" };
+      //yield return new Object[] { Algorithms.Icao9303MachineReadableVisa, Algorithms.Icao9303MachineReadableVisa.AlgorithmName, "I<UTOERIKSSON<<ANNA<MARIA<<<<<<<<<<<D231458907UTO7408122F1204159<<<<<<A<" };
+      //yield return new Object[] { Algorithms.Icao9303MachineReadableVisa, Algorithms.Icao9303MachineReadableVisa.AlgorithmName, "V<UTOERIKSSON<<ANNA<MARIA<<<<<<<<<<<<<<<<<<<L898902C<3UTO6908061F9406236ZE184226B<<<<<<<" };
+      //yield return new Object[] { Algorithms.Icao9303MachineReadableVisa, Algorithms.Icao9303MachineReadableVisa.AlgorithmName, "I<UTOSKYWALKER<<LUKE<<<<<<<<<<<<<<<<STARWARS45UTO7705256M2405252<<<<<<B<" };
 
       //yield return new Object[] { Algorithms.Icao9303SizeTD1, Algorithms.Icao9303SizeTD1.AlgorithmName, "I<UTOD231458907<<<<<<<<<<<<<<<7408122F1204159UTO<<<<<<<<<<<6ERIKSSON<<ANNA<MARIA<<<<<<<<A<" };
       //yield return new Object[] { Algorithms.Icao9303SizeTD1, Algorithms.Icao9303SizeTD1.AlgorithmName, "I<UTOD23145890<AB112234566<<<<7408122F1204159UTO<<<<<<<<<<<4ERIKSSON<<ANNA<MARIA<<<<<<<<B<" };
@@ -98,17 +110,6 @@ public class ValueSpecificAlgorithmBenchmarks
       //yield return new Object[] { Algorithms.Vin, Algorithms.Vin.AlgorithmName, "1HGEM21292L047875" };
    }
 
-   public static IEnumerable<Object[]> ValidateEmbeddedArguments()
-   {
-      yield return new Object[] { Algorithms.Icao9303, Algorithms.Icao9303.AlgorithmName, "+U7Y5+", 4 };
-      yield return new Object[] { Algorithms.Icao9303, Algorithms.Icao9303.AlgorithmName, "+U7Y8SX8+", 7 };
-      yield return new Object[] { Algorithms.Icao9303, Algorithms.Icao9303.AlgorithmName, "+U7Y8SXRC03+", 10 };
-      yield return new Object[] { Algorithms.Icao9303, Algorithms.Icao9303.AlgorithmName, "+U7Y8SXRC0O3S8+", 13 };
-      yield return new Object[] { Algorithms.Icao9303, Algorithms.Icao9303.AlgorithmName, "+U7Y8SXRC0O3SC4I2+", 16 };
-      yield return new Object[] { Algorithms.Icao9303, Algorithms.Icao9303.AlgorithmName, "+U7Y8SXRC0O3SC4IHYQ9+", 19 };
-      yield return new Object[] { Algorithms.Icao9303, Algorithms.Icao9303.AlgorithmName, "+U7Y8SXRC0O3SC4IHYQF4M8+", 22 };
-   }
-
    public static IEnumerable<Object[]> ValidateFormattedArguments()
    {
       yield return new Object[] { Algorithms.Isan, Algorithms.Isan.AlgorithmName, "ISAN D02C-42E9-5418-3EE2-Q" };
@@ -126,12 +127,12 @@ public class ValueSpecificAlgorithmBenchmarks
    //   algorithm.TryCalculateCheckDigit(value, out var checkDigit);
    //}
 
-   //[Benchmark]
-   //[ArgumentsSource(nameof(TryCalculateCheckDigitsArguments))]
-   //public void TryCalculateCheckDigits(IDoubleCheckDigitAlgorithm algorithm, String name, String value)
-   //{
-   //   algorithm.TryCalculateCheckDigits(value, out var first, out var second);
-   //}
+   [Benchmark]
+   [ArgumentsSource(nameof(TryCalculateCheckDigitsArguments))]
+   public void TryCalculateCheckDigits(IDoubleCheckDigitAlgorithm algorithm, String name, String value)
+   {
+      algorithm.TryCalculateCheckDigits(value, out var first, out var second);
+   }
 
    [Benchmark]
    [ArgumentsSource(nameof(ValidateArguments))]
@@ -139,13 +140,6 @@ public class ValueSpecificAlgorithmBenchmarks
    {
       algorithm.Validate(value);
    }
-
-   //[Benchmark]
-   //[ArgumentsSource(nameof(ValidateEmbeddedArguments))]
-   //public void ValidateEmbedded(IEmbeddedCheckDigitAlgorithm algorithm, String name, String value, Int32 length)
-   //{
-   //   algorithm.Validate(value, 1, length);
-   //}
 
    //[Benchmark]
    //[ArgumentsSource(nameof(ValidateFormattedArguments))]

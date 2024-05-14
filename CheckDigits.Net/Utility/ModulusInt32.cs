@@ -8,6 +8,7 @@
 public struct ModulusInt32
 {
    private Int32 _value;
+   [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0032:Use auto property", Justification = "<Pending>")]
    private readonly Int32 _modulus;
 
    /// <summary>
@@ -47,6 +48,7 @@ public struct ModulusInt32
    ///   During assignment, if the assigned value equals or exceeds the modulus 
    ///   of this struct, the final value will be assigned value mod modulus. 
    /// </remarks>
+   [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0251:Make member 'readonly'", Justification = "<Pending>")]
    public Int32 Value
    {
       get => _value;

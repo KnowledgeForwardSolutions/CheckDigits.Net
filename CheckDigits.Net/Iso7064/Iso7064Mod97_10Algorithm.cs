@@ -28,6 +28,7 @@ public sealed class Iso7064Mod97_10Algorithm : IDoubleCheckDigitAlgorithm
    private const Int32 _modulus = 97;
    private const Int32 _radix = 10;
    private const Int32 _reduceThreshold = Int32.MaxValue / _radix;
+   private const Int32 _validateMinLength = 3;
 
    /// <inheritdoc/>
    public String AlgorithmDescription => Resources.Iso7064Mod97_10AlgorithmDescription;
@@ -41,8 +42,8 @@ public sealed class Iso7064Mod97_10Algorithm : IDoubleCheckDigitAlgorithm
       out Char first,
       out Char second)
    {
-      first = CharConstants.NUL;
-      second = CharConstants.NUL;
+      first = Chars.NUL;
+      second = Chars.NUL;
       if (String.IsNullOrEmpty(value))
       {
          return false;
@@ -65,7 +66,7 @@ public sealed class Iso7064Mod97_10Algorithm : IDoubleCheckDigitAlgorithm
 
       // Per ISO/IEC 7064, two character algorithms perform one final pass with
       // effective character value of zero.
-      sum = (sum * _radix) % _modulus;
+      sum = sum * _radix % _modulus;
 
       var checkSum = _modulus - sum + 1;
       var quotient = checkSum / _radix;
@@ -80,7 +81,7 @@ public sealed class Iso7064Mod97_10Algorithm : IDoubleCheckDigitAlgorithm
    /// <inheritdoc/>
    public Boolean Validate(String value)
    {
-      if (String.IsNullOrEmpty(value) || value.Length < 3)
+      if (String.IsNullOrEmpty(value) || value.Length < _validateMinLength)
       {
          return false;
       }

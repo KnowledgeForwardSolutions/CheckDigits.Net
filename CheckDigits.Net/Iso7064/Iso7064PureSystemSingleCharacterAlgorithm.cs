@@ -10,6 +10,7 @@ public class Iso7064PureSystemSingleCharacterAlgorithm : ISingleCheckDigitAlgori
    private readonly Int32 _modulus;
    private readonly Int32 _radix;
    private readonly Int32 _reduceThreshold;
+   private const Int32 _validateMinLength = 2;
 
    /// <summary>
    ///   Initialize a new <see cref="Iso7064PureSystemSingleCharacterAlgorithm"/>.
@@ -94,7 +95,7 @@ public class Iso7064PureSystemSingleCharacterAlgorithm : ISingleCheckDigitAlgori
    /// <inheritdoc/>
    public Boolean TryCalculateCheckDigit(String value, out Char checkDigit)
    {
-      checkDigit = CharConstants.NUL;
+      checkDigit = Chars.NUL;
       if (String.IsNullOrEmpty(value))
       {
          return false;
@@ -125,7 +126,7 @@ public class Iso7064PureSystemSingleCharacterAlgorithm : ISingleCheckDigitAlgori
    /// <inheritdoc/>
    public Boolean Validate(String value)
    {
-      if (String.IsNullOrEmpty(value) || value.Length < 2)
+      if (String.IsNullOrEmpty(value) || value.Length < _validateMinLength)
       {
          return false;
       }

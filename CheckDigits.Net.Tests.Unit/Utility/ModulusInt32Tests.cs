@@ -72,7 +72,9 @@ public class ModulusInt32Tests
    public void ModulusInt32_ValueSet_ShouldAssignValue_WhenValueIsInRange(Int32 value)
    {
       // Arrange.
+#pragma warning disable IDE0017 // Simplify object initialization
       var sut = new ModulusInt32(13);
+#pragma warning restore IDE0017 // Simplify object initialization
 
       // Act.
       sut.Value = value;

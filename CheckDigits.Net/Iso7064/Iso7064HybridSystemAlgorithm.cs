@@ -9,6 +9,7 @@ public class Iso7064HybridSystemAlgorithm : ISingleCheckDigitAlgorithm
    private readonly IAlphabet _alphabet;
    private readonly Int32 _modulus;
    private readonly Int32 _modulusPlus1;
+   private const Int32 _validateMinLength = 2;
 
    /// <summary>
    ///   Initialize a new <see cref="Iso7064HybridSystemAlgorithm"/>.
@@ -81,7 +82,7 @@ public class Iso7064HybridSystemAlgorithm : ISingleCheckDigitAlgorithm
    /// <inheritdoc/>
    public Boolean TryCalculateCheckDigit(String value, out Char checkDigit)
    {
-      checkDigit = CharConstants.NUL;
+      checkDigit = Chars.NUL;
       if (String.IsNullOrEmpty(value))
       {
          return false;
@@ -100,7 +101,7 @@ public class Iso7064HybridSystemAlgorithm : ISingleCheckDigitAlgorithm
          {
             product = _modulus;
          }
-         product = (product * 2) % _modulusPlus1;
+         product = product * 2 % _modulusPlus1;
       }
 
       var x = (_modulus - product + 1) % _modulus;
@@ -112,7 +113,7 @@ public class Iso7064HybridSystemAlgorithm : ISingleCheckDigitAlgorithm
    /// <inheritdoc/>
    public Boolean Validate(String value)
    {
-      if (String.IsNullOrEmpty(value) || value.Length < 2)
+      if (String.IsNullOrEmpty(value) || value.Length < _validateMinLength)
       {
          return false;
       }
@@ -131,7 +132,7 @@ public class Iso7064HybridSystemAlgorithm : ISingleCheckDigitAlgorithm
          {
             product = _modulus;
          }
-         product = (product * 2) % _modulusPlus1;
+         product = product * 2 % _modulusPlus1;
       }
 
       num = _alphabet.CharacterToInteger(value[^1]);

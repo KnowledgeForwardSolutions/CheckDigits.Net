@@ -29,6 +29,7 @@ public sealed class Iso7064Mod11_2Algorithm : ISingleCheckDigitAlgorithm
    private const Int32 _modulus = 11;
    private const Int32 _radix = 2;
    private const Int32 _reduceThreshold = Int32.MaxValue / _radix;
+   private const Int32 _validateMinLength = 2;
 
    /// <inheritdoc/>
    public String AlgorithmDescription => Resources.Iso7064Mod11_2AlgorithmDescription;
@@ -39,7 +40,7 @@ public sealed class Iso7064Mod11_2Algorithm : ISingleCheckDigitAlgorithm
    /// <inheritdoc/>
    public Boolean TryCalculateCheckDigit(String value, out Char checkDigit)
    {
-      checkDigit = CharConstants.NUL;
+      checkDigit = Chars.NUL;
       if (String.IsNullOrEmpty(value))
       {
          return false;
@@ -63,7 +64,7 @@ public sealed class Iso7064Mod11_2Algorithm : ISingleCheckDigitAlgorithm
 
       var remainder = sum % _modulus;
       var x = (_modulus - remainder + 1) % _modulus;
-      checkDigit = x == 10 ? CharConstants.UpperCaseX : x.ToDigitChar();
+      checkDigit = x == 10 ? Chars.UpperCaseX : x.ToDigitChar();
 
       return true;
    }
@@ -71,7 +72,7 @@ public sealed class Iso7064Mod11_2Algorithm : ISingleCheckDigitAlgorithm
    /// <inheritdoc/>
    public Boolean Validate(String value)
    {
-      if (String.IsNullOrEmpty(value) || value.Length < 2)
+      if (String.IsNullOrEmpty(value) || value.Length < _validateMinLength)
       {
          return false;
       }
