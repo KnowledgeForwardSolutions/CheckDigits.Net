@@ -6,7 +6,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <Title>CheckDigits.Net</Title>
-    <Version>2.2.0</Version>
+    <Version>2.3.0</Version>
     <Authors>Knowledge Forward Solutions</Authors>
     <Company>Knowledge Forward Solutions</Company>
     <Description>An extensive collection of optimized check digit algorithms suitable for a wide range of applications</Description>
@@ -15,7 +15,7 @@
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <RepositoryUrl>https://github.com/KnowledgeForwardSolutions/CheckDigits.Net</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <PackageTags>CheckDigit;Luhn;Verhoeff;Damm;UPC;UPC-A;UPC-E;EAN;EAN-8;EAN-13;GTIN;GTIN-8;GTIN-12;GTIN-13;GTIN-14;ISBN;ISBN-10;ISBN-13;ISO7064;NPI;NHS_Number;VIN;IBAN;ISAN;ULI;LEI;NOID;SEDOL;CUSIP;ISO6346</PackageTags>
+    <PackageTags>CheckDigit;Luhn;Verhoeff;Damm;UPC;UPC-A;UPC-E;EAN;EAN-8;EAN-13;GTIN;GTIN-8;GTIN-12;GTIN-13;GTIN-14;ISBN;ISBN-10;ISBN-13;ISO7064;NPI;NHS_Number;VIN;IBAN;ISAN;ULI;LEI;NOID;SEDOL;CUSIP;ISO6346;FIGI;ICAO9303</PackageTags>
     <PackageReleaseNotes>## 1.0.0-alpha
 
 Initial limited release. Included algorithms:
@@ -83,7 +83,23 @@ Support for netstandard2.0
 
 Thanks to Steff Beckers for this addition
 
-</PackageReleaseNotes>
+## v2.3.0
+
+Additional included algorithms
+* FIGI Algorithm
+* ICAO Algorithm
+* ICAO 9303 Document Size TD1 Algorithm
+* ICAO 9303 Document Size TD2 Algorithm
+* ICAO 9303 Document Size TD3 Algorithm
+* ICAO 9303 Machine Readable Visa Algorithm
+
+Performance increases for:
+* AlphanumericMod97_10Algorithm, Validate method ~15% improvement, TryCalculateCheckDigits method ~8% improvement
+* IBAN Algorithm, Validate method ~8% improvement
+* ISIN algorithm, ~9% improvement for Validate and TryCalculateCheckDigit methods
+* ISO/IEC 7064 MOD 1271-36, TryCalculateCheckDigits method ~8% improvement
+* NcdAlgorithm (NOID Check Digit), minimum 10% improvement for Validate method, improvement increases with length of value.
+* NpiAlgorithm, Validate method ~8 improvement</PackageReleaseNotes>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
