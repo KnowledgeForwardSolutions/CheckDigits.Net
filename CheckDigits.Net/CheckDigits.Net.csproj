@@ -6,7 +6,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <Title>CheckDigits.Net</Title>
-    <Version>2.3.0</Version>
+    <Version>2.3.1</Version>
     <Authors>Knowledge Forward Solutions</Authors>
     <Company>Knowledge Forward Solutions</Company>
     <Description>An extensive collection of optimized check digit algorithms suitable for a wide range of applications</Description>
@@ -99,7 +99,11 @@ Performance increases for:
 * ISIN algorithm, ~9% improvement for Validate and TryCalculateCheckDigit methods
 * ISO/IEC 7064 MOD 1271-36, TryCalculateCheckDigits method ~8% improvement
 * NcdAlgorithm (NOID Check Digit), minimum 10% improvement for Validate method, improvement increases with length of value.
-* NpiAlgorithm, Validate method ~8 improvement</PackageReleaseNotes>
+* NpiAlgorithm, Validate method ~8 improvement
+
+## v2.3.1
+
+Documentation update. Fix several minor documentation errors in README file. No code changes.</PackageReleaseNotes>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 

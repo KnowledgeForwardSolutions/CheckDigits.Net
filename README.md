@@ -64,6 +64,7 @@ let us know. Or contribute to the CheckDigits.Net repository: https://github.com
     - [v2.1.0](#v2.1.0)
     - [v2.2.0](#v2.2.0)
     - [v2.3.0](#v2.3.0)
+    - [v2.3.1](#v2.3.1)
 
 ## Check Digit Overview
 
@@ -338,8 +339,8 @@ a modulus 10 algorithm that uses weights 3, 7 and 1. The algorithm can detect al
 single digit transcription errors and most two digit transposition errors except
 those where the transposed digits differ by 5 (i.e. *1 <-> 6*, *2 <-> 7*, etc.).
 
-The ABA RTN algorithm only supports validation of check digits and does support 
-calculation of check digits.
+The ABA RTN algorithm only supports validation of check digits and does not
+support calculation of check digits.
 
 #### Details
 
@@ -391,8 +392,8 @@ used for nine character alphanumeric codes that identify North American financia
 securities. The algorithm has similarities with both the Luhn algorithm and the 
 ISIN algorithm.
 
-The CUSIP algorithm only supports validation of check digits and does support 
-calculation of check digits.
+The CUSIP algorithm only supports validation of check digits and does not
+support calculation of check digits.
 
 #### Details
 
@@ -448,7 +449,7 @@ substituted for that character and which will result in the same check digit
 being calculated. This means that single character transcription errors involving
 those characters can not be detected by the algorithm.
 
-The FIGI algorithm only supports validation of check digits and does support 
+The FIGI algorithm only supports validation of check digits and does not support 
 calculation of check digits.
 
 #### Details
@@ -550,7 +551,7 @@ composite check digit. If any of the check digits fail validation then the
 Validate method will return ```false```.
 
 The ICAO 9303 Document Size TD1 algorithm only supports validation of check 
-digits and does support calculation of check digits.
+digits and does not support calculation of check digits.
 
 #### Details
 
@@ -593,7 +594,7 @@ composite check digit. If any of the check digits fail validation then the
 Validate method will return ```false```.
 
 The ICAO 9303 Document Size TD2 algorithm only supports validation of check 
-digits and does support calculation of check digits.
+digits and does not support calculation of check digits.
 
 #### Details
 
@@ -638,7 +639,7 @@ number) as well as the composite check digit. If any of the check digits fail
 validation then the Validate method will return ```false```.
 
 The ICAO 9303 Document Size TD3 algorithm only supports validation of check 
-digits and does support calculation of check digits.
+digits and does not support calculation of check digits.
 
 #### Details
 
@@ -689,7 +690,7 @@ In addition, if the value is not the correct length (two lines of either 44 or
 property) then the method will return false.
 
 The ICAO 9303 Machine Readable Visa algorithm only supports validation of check 
-digits and does support calculation of check digits.
+digits and does not support calculation of check digits.
 
 #### Details
 
@@ -871,6 +872,10 @@ supplementary '*' character.
 * Check digit location - assumed to be the trailing (right-most) character when validating
 * Class name - Iso7064Mod37_2Algorithm
 
+#### Common Applications
+
+* International Society of Blood Transfusion (ISBT) Donation Identification Numbers
+
 ### ISO/IEC 7064 MOD 37,36 Algorithm
 
 The ISO/IEC 7064 MOD 37,36 algorithm is a hybrid system algorithm (with M = 36
@@ -888,10 +893,6 @@ single check character that is an alphanumeric character.
 #### Common Applications
 
 * Global Release Identifier (GRid)
-
-#### Common Applications
-
-* International Society of Blood Transfusion (ISBT) Donation Identification Numbers
 
 ### ISO/IEC 7064 MOD 661-26 Algorithm
 
@@ -1078,7 +1079,7 @@ digit for a NHS number remains '0' - '9'. The NHS algorithm retains all error
 detecting capabilities of the Modulus 11 algorithm (detecting all single digit 
 transcription errors and all two digit transposition errors).
 
-The NHS algorithm only supports validation of check digits and does support 
+The NHS algorithm only supports validation of check digits and does not support 
 calculation of check digits.
 
 #### Details
@@ -1141,7 +1142,7 @@ by first prefixing your value with "80840". However, CheckDigits.Net's
 implementation of the NPI algorithm handles the prefix internally and without 
 allocating an extra string.)
 
-The NPI algorithm only supports validation of check digits and does support 
+The NPI algorithm only supports validation of check digits and does not support 
 calculation of check digits.
 
 #### Details
@@ -1165,8 +1166,8 @@ The SEDOL (Stock Exchange Daily Official List) algorithm is used for seven
 character alphanumeric codes that identify financial securities in the United
 Kingdom and Ireland.
 
-The SEDOL algorithm only supports validation of check digits and does support 
-calculation of check digits.
+The SEDOL algorithm only supports validation of check digits and does not 
+support calculation of check digits.
 
 #### Details
 
@@ -1752,3 +1753,7 @@ Performance increases for:
 * ISO/IEC 7064 MOD 1271-36, TryCalculateCheckDigits method ~8% improvement
 * NcdAlgorithm (NOID Check Digit), minimum 10% improvement for Validate method, improvement increases with length of value.
 * NpiAlgorithm, Validate method ~8 improvement
+
+## v2.3.1
+
+Documentation update. Fix several minor documentation errors in README file. No code changes.
