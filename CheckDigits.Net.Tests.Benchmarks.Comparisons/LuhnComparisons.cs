@@ -12,7 +12,7 @@ using EkLuhn = EnKor.Luhn;
 
 using LuChecker = LuhnChecker.LuhnValidator;
 
-using LnDotNet = LuhnDotNet.Luhn;
+using LnDotNet = LuhnDotNet.Algorithm.Luhn.LuhnValidator;
 
 using LnLuhn = LuhnNet.Luhn;
 
@@ -50,7 +50,7 @@ public class LuhnComparisons
    public Boolean LuhnChecker() => LuChecker.IsValid(Value);
 
    [Benchmark]
-   public Boolean LuhnDotNet() => LnDotNet.IsValid(Value);
+   public Boolean LuhnDotNet() => LnDotNet.IsValidLuhnNumber(Value);
 
    [Benchmark]
    public Boolean LuhnNet() => LnLuhn.IsValid(Value);

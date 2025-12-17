@@ -8,20 +8,20 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="BenchmarkDotNet" Version="0.13.12" />
+    <PackageReference Include="BenchmarkDotNet" Version="0.15.8" />
     <PackageReference Include="CheckDigits.Net" Version="2.3.1" />
     <PackageReference Include="CreditCardHelper" Version="1.1.6" />
     <PackageReference Include="CreditCardValidator" Version="3.0.1" />
     <PackageReference Include="Dandago.Finance" Version="2.0.1" />
     <PackageReference Include="EnKor.Luhn" Version="1.0.0" />
     <PackageReference Include="LuhnChecker" Version="1.0.3" />
-    <PackageReference Include="LuhnDotNet" Version="1.1.0" />
+    <PackageReference Include="LuhnDotNet" Version="2.0.1" />
     <PackageReference Include="LuhnNet" Version="2.0.0" />
-    <PackageReference Include="Medo.Checksums" Version="1.2.0" />
+    <PackageReference Include="Medo.Checksums" Version="1.4.0" />
     <PackageReference Include="Nager.ArticleNumber" Version="1.0.7" />
-    <PackageReference Include="ObjectValidation" Version="2.5.0" />
+    <PackageReference Include="ObjectValidation" Version="2.8.0" />
     <PackageReference Include="SlxLuhnLibrary" Version="1.0.2" />
-    <PackageReference Include="Tharga.Toolkit" Version="1.11.5" />
+    <PackageReference Include="Tharga.Toolkit" Version="1.15.12" />
   </ItemGroup>
 
 </Project>

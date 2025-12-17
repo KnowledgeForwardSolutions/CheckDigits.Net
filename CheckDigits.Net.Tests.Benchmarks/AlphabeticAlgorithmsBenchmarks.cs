@@ -4,50 +4,50 @@
 
 namespace CheckDigits.Net.Tests.Benchmarks;
 
-//[SimpleJob(RuntimeMoniker.Net70, baseline: true)]
-//[SimpleJob(RuntimeMoniker.Net80)]
+[SimpleJob(RuntimeMoniker.Net80, baseline: true)]
+[SimpleJob(RuntimeMoniker.Net10_0)]
 [MemoryDiagnoser]
 public class AlphabeticAlgorithmsBenchmarks
 {
    public static IEnumerable<Object[]> TryCalculateCheckDigitArguments()
    {
-      yield return new Object[] { Algorithms.Iso7064Mod27_26, Algorithms.Iso7064Mod27_26.AlgorithmName, "EGR" };
-      yield return new Object[] { Algorithms.Iso7064Mod27_26, Algorithms.Iso7064Mod27_26.AlgorithmName, "EGRNML" };
-      yield return new Object[] { Algorithms.Iso7064Mod27_26, Algorithms.Iso7064Mod27_26.AlgorithmName, "EGRNMLJOC" };
-      yield return new Object[] { Algorithms.Iso7064Mod27_26, Algorithms.Iso7064Mod27_26.AlgorithmName, "EGRNMLJOCECU" };
-      yield return new Object[] { Algorithms.Iso7064Mod27_26, Algorithms.Iso7064Mod27_26.AlgorithmName, "EGRNMLJOCECUJIK" };
-      yield return new Object[] { Algorithms.Iso7064Mod27_26, Algorithms.Iso7064Mod27_26.AlgorithmName, "EGRNMLJOCECUJIKNWW" };
-      yield return new Object[] { Algorithms.Iso7064Mod27_26, Algorithms.Iso7064Mod27_26.AlgorithmName, "EGRNMLJOCECUJIKNWWVVO" };
+      yield return [ Algorithms.Iso7064Mod27_26, Algorithms.Iso7064Mod27_26.AlgorithmName, "EGR" ];
+      yield return [ Algorithms.Iso7064Mod27_26, Algorithms.Iso7064Mod27_26.AlgorithmName, "EGRNML" ];
+      yield return [ Algorithms.Iso7064Mod27_26, Algorithms.Iso7064Mod27_26.AlgorithmName, "EGRNMLJOC" ];
+      yield return [ Algorithms.Iso7064Mod27_26, Algorithms.Iso7064Mod27_26.AlgorithmName, "EGRNMLJOCECU" ];
+      yield return [ Algorithms.Iso7064Mod27_26, Algorithms.Iso7064Mod27_26.AlgorithmName, "EGRNMLJOCECUJIK" ];
+      yield return [ Algorithms.Iso7064Mod27_26, Algorithms.Iso7064Mod27_26.AlgorithmName, "EGRNMLJOCECUJIKNWW" ];
+      yield return [ Algorithms.Iso7064Mod27_26, Algorithms.Iso7064Mod27_26.AlgorithmName, "EGRNMLJOCECUJIKNWWVVO" ];
    }
 
    public static IEnumerable<Object[]> TryCalculateCheckDigitsArguments()
    {
-      yield return new Object[] { Algorithms.Iso7064Mod661_26, Algorithms.Iso7064Mod661_26.AlgorithmName, "EGR" };
-      yield return new Object[] { Algorithms.Iso7064Mod661_26, Algorithms.Iso7064Mod661_26.AlgorithmName, "EGRNML" };
-      yield return new Object[] { Algorithms.Iso7064Mod661_26, Algorithms.Iso7064Mod661_26.AlgorithmName, "EGRNMLJOC" };
-      yield return new Object[] { Algorithms.Iso7064Mod661_26, Algorithms.Iso7064Mod661_26.AlgorithmName, "EGRNMLJOCECU" };
-      yield return new Object[] { Algorithms.Iso7064Mod661_26, Algorithms.Iso7064Mod661_26.AlgorithmName, "EGRNMLJOCECUJIK" };
-      yield return new Object[] { Algorithms.Iso7064Mod661_26, Algorithms.Iso7064Mod661_26.AlgorithmName, "EGRNMLJOCECUJIKNWW" };
-      yield return new Object[] { Algorithms.Iso7064Mod661_26, Algorithms.Iso7064Mod661_26.AlgorithmName, "EGRNMLJOCECUJIKNWWVVO" };
+      yield return [ Algorithms.Iso7064Mod661_26, Algorithms.Iso7064Mod661_26.AlgorithmName, "EGR" ];
+      yield return [ Algorithms.Iso7064Mod661_26, Algorithms.Iso7064Mod661_26.AlgorithmName, "EGRNML" ];
+      yield return [ Algorithms.Iso7064Mod661_26, Algorithms.Iso7064Mod661_26.AlgorithmName, "EGRNMLJOC" ];
+      yield return [ Algorithms.Iso7064Mod661_26, Algorithms.Iso7064Mod661_26.AlgorithmName, "EGRNMLJOCECU" ];
+      yield return [ Algorithms.Iso7064Mod661_26, Algorithms.Iso7064Mod661_26.AlgorithmName, "EGRNMLJOCECUJIK" ];
+      yield return [ Algorithms.Iso7064Mod661_26, Algorithms.Iso7064Mod661_26.AlgorithmName, "EGRNMLJOCECUJIKNWW" ];
+      yield return [ Algorithms.Iso7064Mod661_26, Algorithms.Iso7064Mod661_26.AlgorithmName, "EGRNMLJOCECUJIKNWWVVO" ];
    }
 
    public static IEnumerable<Object[]> ValidateArguments()
    {
-      yield return new Object[] { Algorithms.Iso7064Mod27_26, Algorithms.Iso7064Mod27_26.AlgorithmName, "EGRS" };
-      yield return new Object[] { Algorithms.Iso7064Mod27_26, Algorithms.Iso7064Mod27_26.AlgorithmName, "EGRNMLU" };
-      yield return new Object[] { Algorithms.Iso7064Mod27_26, Algorithms.Iso7064Mod27_26.AlgorithmName, "EGRNMLJOCB" };
-      yield return new Object[] { Algorithms.Iso7064Mod27_26, Algorithms.Iso7064Mod27_26.AlgorithmName, "EGRNMLJOCECUA" };
-      yield return new Object[] { Algorithms.Iso7064Mod27_26, Algorithms.Iso7064Mod27_26.AlgorithmName, "EGRNMLJOCECUJIKA" };
-      yield return new Object[] { Algorithms.Iso7064Mod27_26, Algorithms.Iso7064Mod27_26.AlgorithmName, "EGRNMLJOCECUJIKNWWY" };
-      yield return new Object[] { Algorithms.Iso7064Mod27_26, Algorithms.Iso7064Mod27_26.AlgorithmName, "EGRNMLJOCECUJIKNWWVVOQ" };
+      yield return [ Algorithms.Iso7064Mod27_26, Algorithms.Iso7064Mod27_26.AlgorithmName, "EGRS" ];
+      yield return [ Algorithms.Iso7064Mod27_26, Algorithms.Iso7064Mod27_26.AlgorithmName, "EGRNMLU" ];
+      yield return [ Algorithms.Iso7064Mod27_26, Algorithms.Iso7064Mod27_26.AlgorithmName, "EGRNMLJOCB" ];
+      yield return [ Algorithms.Iso7064Mod27_26, Algorithms.Iso7064Mod27_26.AlgorithmName, "EGRNMLJOCECUA" ];
+      yield return [ Algorithms.Iso7064Mod27_26, Algorithms.Iso7064Mod27_26.AlgorithmName, "EGRNMLJOCECUJIKA" ];
+      yield return [ Algorithms.Iso7064Mod27_26, Algorithms.Iso7064Mod27_26.AlgorithmName, "EGRNMLJOCECUJIKNWWY" ];
+      yield return [ Algorithms.Iso7064Mod27_26, Algorithms.Iso7064Mod27_26.AlgorithmName, "EGRNMLJOCECUJIKNWWVVOQ" ];
 
-      yield return new Object[] { Algorithms.Iso7064Mod661_26, Algorithms.Iso7064Mod661_26.AlgorithmName, "EGRSE" };
-      yield return new Object[] { Algorithms.Iso7064Mod661_26, Algorithms.Iso7064Mod661_26.AlgorithmName, "EGRNMLDR" };
-      yield return new Object[] { Algorithms.Iso7064Mod661_26, Algorithms.Iso7064Mod661_26.AlgorithmName, "EGRNMLJOCCK" };
-      yield return new Object[] { Algorithms.Iso7064Mod661_26, Algorithms.Iso7064Mod661_26.AlgorithmName, "EGRNMLJOCECUZJ" };
-      yield return new Object[] { Algorithms.Iso7064Mod661_26, Algorithms.Iso7064Mod661_26.AlgorithmName, "EGRNMLJOCECUJIKFQ" };
-      yield return new Object[] { Algorithms.Iso7064Mod661_26, Algorithms.Iso7064Mod661_26.AlgorithmName, "EGRNMLJOCECUJIKNWWQN" };
-      yield return new Object[] { Algorithms.Iso7064Mod661_26, Algorithms.Iso7064Mod661_26.AlgorithmName, "EGRNMLJOCECUJIKNWWVVORC" };
+      yield return [ Algorithms.Iso7064Mod661_26, Algorithms.Iso7064Mod661_26.AlgorithmName, "EGRSE" ];
+      yield return [ Algorithms.Iso7064Mod661_26, Algorithms.Iso7064Mod661_26.AlgorithmName, "EGRNMLDR" ];
+      yield return [ Algorithms.Iso7064Mod661_26, Algorithms.Iso7064Mod661_26.AlgorithmName, "EGRNMLJOCCK" ];
+      yield return [ Algorithms.Iso7064Mod661_26, Algorithms.Iso7064Mod661_26.AlgorithmName, "EGRNMLJOCECUZJ" ];
+      yield return [ Algorithms.Iso7064Mod661_26, Algorithms.Iso7064Mod661_26.AlgorithmName, "EGRNMLJOCECUJIKFQ" ];
+      yield return [ Algorithms.Iso7064Mod661_26, Algorithms.Iso7064Mod661_26.AlgorithmName, "EGRNMLJOCECUJIKNWWQN" ];
+      yield return [ Algorithms.Iso7064Mod661_26, Algorithms.Iso7064Mod661_26.AlgorithmName, "EGRNMLJOCECUJIKNWWVVORC" ];
    }
 
    [Benchmark]
