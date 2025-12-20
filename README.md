@@ -21,6 +21,7 @@ let us know. Or contribute to the CheckDigits.Net repository: https://github.com
 - **[Supported Algorithms](#supported-algorithms)**
 - **[Value/Identifier Types and Associated Algorithms](#valueidentifier-types-and-associated-algorithms)**
 - **[Using CheckDigits.Net](#using-checkdigits.net)**
+- **[Interfaces](#interfaces)**
 - **[Algorithm Descriptions](#algorithm-descriptions)**
     * [ABA RTN (Routing Transit Number) Algorithm](#aba-rtn-algorithm)
     * [Alphanumeric MOD 97-10 Algorithm](#alphanumeric-mod-97-10-algorithm)
