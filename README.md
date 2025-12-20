@@ -1233,7 +1233,7 @@ weighting, summing and calculating sum modulus 11.
 
 Wikipedia: https://en.wikipedia.org/wiki/Vehicle_identification_number#Check-digit_calculation
 
-## Benchmarks (.Net 10)
+## Benchmarks
 
 The methodology for the general algorithms is to generate values for the benchmarks
 by taking substrings of lengths 3, 6, 9, etc. from the same randomly generated 
