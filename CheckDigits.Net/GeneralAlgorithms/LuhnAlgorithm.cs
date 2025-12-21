@@ -23,7 +23,7 @@ namespace CheckDigits.Net.GeneralAlgorithms;
 ///   twin errors (i.e. 11 <-> 44) except 22 <-> 55,  33 <-> 66 and 44 <-> 77.
 ///   </para>
 /// </remarks>
-public sealed class LuhnAlgorithm : ISingleCheckDigitAlgorithm
+public sealed class LuhnAlgorithm : ISingleCheckDigitAlgorithm, IMaskedCheckDigitAlgorithm
 {
    private const Int32 _validateMinLength = 2;
 
@@ -83,6 +83,43 @@ public sealed class LuhnAlgorithm : ISingleCheckDigitAlgorithm
             ? digit > 4 ? (digit * 2) - 9 : digit * 2
             : digit;
          oddPosition = !oddPosition;
+      }
+      var checkDigit = (10 - (sum % 10)) % 10;
+
+      return value[^1].ToIntegerDigit() == checkDigit;
+   }
+
+   /// <inheritdoc/>
+   public Boolean Validate(String value, ICheckDigitMask mask)
+   {
+      if (String.IsNullOrEmpty(value))
+      {
+         return false;
+      }
+
+      var sum = 0;
+      var oddPosition = true;
+      var processedDigits = 0;
+      for (var index = value.Length - 2; index >= 0; index--)
+      {
+         if (mask.ExcludeCharacter(index))
+         {
+            continue;
+         }
+         var digit = value[index].ToIntegerDigit();
+         if (digit < 0 || digit > 9)
+         {
+            return false;
+         }
+         sum += oddPosition
+            ? digit > 4 ? (digit * 2) - 9 : digit * 2
+            : digit;
+         oddPosition = !oddPosition;
+         processedDigits++;
+      }
+      if (processedDigits == 0)
+      {
+         return false;
       }
       var checkDigit = (10 - (sum % 10)) % 10;
 
