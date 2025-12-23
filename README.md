@@ -350,7 +350,7 @@ support calculation of check digits.
 * Check digit value - decimal digit ('0' - '9')
 * Check digit location - ninth digit
 * Value length - 9 characters
-* Class name - AbaRtnAlgorithm
+* Class name - ```AbaRtnAlgorithm```
 
 #### Links
 
@@ -371,7 +371,7 @@ letters are mapped to their uppercase equivalent before conversion to integers.
 * Check digit size - two characters
 * Check digit value - decimal digits ('0' - '9')
 * Check digit location - assumed to be the trailing (right-most) characters when validating
-* Class name - AlphanumericMod97_10Algorithm
+* Class name - ```AlphanumericMod97_10Algorithm```
 
 #### Common Applications
 
@@ -402,7 +402,7 @@ support calculation of check digits.
 * Check digit size - one character
 * Check digit value - decimal digit ('0' - '9')
 * Check digit location - assumed to be the trailing (right-most) character when validating
-* Class name - CusipAlgorithm
+* Class name - ```CusipAlgorithm```
 
 #### Links
 
@@ -427,7 +427,7 @@ on page 111 of Damm's doctoral dissertation.
 * Check digit size - one character
 * Check digit value - decimal digit ('0' - '9')
 * Check digit location - assumed to be the trailing (right-most) character when validating
-* Class name - DammAlgorithm
+* Class name - ```DammAlgorithm```
 
 #### Links
 
@@ -460,7 +460,7 @@ calculation of check digits.
 * Check digit value - decimal digits ('0' - '9')
 * Check digit location - character position 12 (1-based)
 * Value length - 12
-* Class name - FigiAlgorithm
+* Class name - ```FigiAlgorithm```
 
 #### Links
 
@@ -491,7 +491,7 @@ contained in account number, etc.) are left to the application developer.
 * Check digit value - decimal digits ('0' - '9')
 * Check digit location - character positions 3 & 4 (1-based) when validating
 * Value minimum length - 5
-* Class name - IbanAlgorithm
+* Class name - ```IbanAlgorithm```
 
 #### Links
 
@@ -518,7 +518,7 @@ where the difference between the transposed characters is a multiple of 5, i.e.
 * Check digit size - one character
 * Check digit value - decimal digit ('0' - '9')
 * Check digit location - assumed to be the trailing (right-most) character when validating
-* Class name - Icao9303Algorithm
+* Class name - ```Icao9303Algorithm```
 
 #### Links
 
@@ -561,7 +561,7 @@ digits and does not support calculation of check digits.
 * Check digit value - decimal digit ('0' - '9')
 * Check digit location - trailing (right-most) character of individual fields, trailing character of second line for composite check digit
 * Value length - three lines of 30 characters plus additional line separator characters as specified by the LineSeparator property
-* Class name - Icao9303SizeTD1Algorithm
+* Class name - ```Icao9303SizeTD1Algorithm```
 
 #### Links
 
@@ -604,7 +604,7 @@ digits and does not support calculation of check digits.
 * Check digit value - decimal digit ('0' - '9')
 * Check digit location - trailing (right-most) character of individual fields, trailing character of second line for composite check digit
 * Value length - two lines of 36 characters plus additional line separator characters as specified by the LineSeparator property
-* Class name - Icao9303SizeTD2Algorithm
+* Class name - ```Icao9303SizeTD2Algorithm```
 
 #### Links
 
@@ -649,7 +649,7 @@ digits and does not support calculation of check digits.
 * Check digit value - decimal digit ('0' - '9')
 * Check digit location - trailing (right-most) character of individual fields, trailing character of entire string for composite check digit
 * Value length - two lines of 44 characters plus additional line separator characters as specified by the LineSeparator property
-* Class name - Icao9303SizeTD3Algorithm
+* Class name - ```Icao9303SizeTD3Algorithm```
 
 #### Links
 
@@ -700,7 +700,7 @@ digits and does not support calculation of check digits.
 * Check digit value - decimal digit ('0' - '9')
 * Check digit location - trailing (right-most) character of individual fields
 * Value length - two lines of either 44 characters (MRV-A) or 36 characters (MRV-B), plus additional line separator characters as specified by the LineSeparator property
-* Class name - Icao9303MachineReadableVisaAlgorithm
+* Class name - ```Icao9303MachineReadableVisaAlgorithm```
 
 #### Links
 
@@ -743,7 +743,7 @@ example formatted root/episode/version ISAN value is ISAN 0000-0000-C36D-002B-K-
 * Check digit size - one character
 * Check digit value - alphanumeric characters ('0' - '9', 'A' - 'Z')
 * Check digit location - the 17th non-format character (**and** the 26th non-format character for root+version values)
-* Class name - IsanAlgorithm
+* Class name - ```IsanAlgorithm```
 
 #### Links
 
@@ -774,7 +774,7 @@ algorithm cannot detect).
 * Check digit value - decimal digit ('0' - '9')
 * Check digit location - assumed to be the trailing (right-most) character when validating
 * Value length - 12
-* Class name - IsinAlgorithm
+* Class name - ```IsinAlgorithm```
 
 #### Links
 
@@ -791,7 +791,7 @@ The ISO 6346 algorithm is used for eleven character shipping container numbers.
 * Check digit value - decimal digit ('0' - '9')
 * Check digit location - assumed to be the trailing (right-most) character when validating
 * Value length - 11
-* Class name - Iso6346Algorithm
+* Class name - ```Iso6346Algorithm```
 
 #### Links
 
@@ -809,7 +809,7 @@ single check character that is a decimal digit.
 * Check digit size - one character
 * Check digit value - decimal digit ('0' - '9')
 * Check digit location - assumed to be the trailing (right-most) character when validating
-* Class name - Iso7064Mod11_10Algorithm
+* Class name - ```Iso7064Mod11_10Algorithm```
 
 ### ISO/IEC 7064 MOD 11-2 Algorithm
 
@@ -824,7 +824,7 @@ character.
 * Check digit size - one character
 * Check digit value - either decimal digit ('0' - '9') or an uppercase 'X'
 * Check digit location - assumed to be the trailing (right-most) character when validating
-* Class name - Iso7064Mod11_2Algorithm
+* Class name - ```Iso7064Mod11_2Algorithm```
 
 #### Common Applications
 
@@ -842,7 +842,7 @@ generates two check alphanumeric characters.
 * Check digit size - two characters
 * Check digit value - alphanumeric characters ('0' - '9', 'A' - 'Z')
 * Check digit location - assumed to be the trailing (right-most) characters when validating
-* Class name - Iso7064Mod1271_36Algorithm
+* Class name - ```Iso7064Mod1271_36Algorithm```
 
 ### ISO/IEC 7064 MOD 27,26 Algorithm
 
@@ -871,7 +871,7 @@ supplementary '*' character.
 * Check digit size - one character
 * Check digit value - either decimal digit ('0' - '9', 'A' - 'Z') or an asterisk '*'
 * Check digit location - assumed to be the trailing (right-most) character when validating
-* Class name - Iso7064Mod37_2Algorithm
+* Class name - ```Iso7064Mod37_2Algorithm```
 
 #### Common Applications
 
@@ -889,7 +889,7 @@ single check character that is an alphanumeric character.
 * Check digit size - one character
 * Check digit value - alphanumeric characters ('0' - '9', 'A' - 'Z')
 * Check digit location - assumed to be the trailing (right-most) character when validating
-* Class name - Iso7064Mod37_36Algorithm
+* Class name - ```Iso7064Mod37_36Algorithm```
 
 #### Common Applications
 
@@ -907,7 +907,7 @@ two check alphabetic characters.
 * Check digit size - two characters
 * Check digit value - alphabetic characters ('A' - 'Z')
 * Check digit location - assumed to be the trailing (right-most) characters when validating
-* Class name - Iso7064Mod661_26Algorithm
+* Class name - ```Iso7064Mod661_26Algorithm```
 
 ### ISO/IEC 7064 MOD 97-10 Algorithm
 
@@ -928,7 +928,7 @@ perform the mapping of alphabetic characters internally.
 * Check digit size - two characters
 * Check digit value - decimal digits ('0' - '9')
 * Check digit location - assumed to be the trailing (right-most) characters when validating
-* Class name - Iso7064Mod97_10Algorithm
+* Class name - ```Iso7064Mod97_10Algorithm```
 
 ### Luhn Algorithm
 
@@ -939,13 +939,17 @@ Peter Luhn. It can detect all single digit transcription errors and most two dig
 transposition errors except *09 -> 90* and vice versa. It can also detect most
 twin errors (i.e. *11 <-> 44*) except *22 <-> 55*,  *33 <-> 66* and *44 <-> 77*.
 
+```LuhnAlgorithm``` implements ```IMaskedCheckDigitAlgorithm``` and can be used 
+to validate values that are formatted with non-check digit characters (for example,
+a credit card number formatted with spaces or dashes).
+
 #### Details
 
 * Valid characters - decimal digits ('0' - '9')
 * Check digit size - one character
 * Check digit value - decimal digit ('0' - '9')
 * Check digit location - assumed to be the trailing (right-most) character when validating
-* Class name - LuhnAlgorithm
+* Class name - ```LuhnAlgorithm```
 
 #### Common Applications
 
@@ -969,7 +973,7 @@ in the value, starting with weight 1 for the right-most non-check digit characte
 * Check digit value - either decimal digit ('0' - '9')
 * Check digit location - assumed to be the trailing (right-most) character when validating
 * Max length - 9 characters when generating a check digit; 10 characters when validating
-* Class name - Modulus10_1Algorithm
+* Class name - ```Modulus10_1Algorithm```
 
 #### Common Applications
 
@@ -991,7 +995,7 @@ in the value, starting with weight 2 for the right-most non-check digit characte
 * Check digit value - either decimal digit ('0' - '9')
 * Check digit location - assumed to be the trailing (right-most) character when validating
 * Max length - 9 characters when generating a check digit; 10 characters when validating
-* Class name - Modulus10_2Algorithm
+* Class name - ```Modulus10_2Algorithm```
 
 #### Common Applications
 
@@ -1017,7 +1021,7 @@ etc.). The algorithm cannot detect two digit jump transpositions.
 * Check digit size - one character
 * Check digit value - decimal digit ('0' - '9')
 * Check digit location - assumed to be the trailing (right-most) character when validating
-* Class name - Modulus10_13Algorithm
+* Class name - ```Modulus10_13Algorithm```
 
 #### Common Applications
 
@@ -1054,7 +1058,7 @@ stored as numbers and instead must be strings.
 * Check digit value - either decimal digit ('0' - '9') or an uppercase 'X'
 * Check digit location - assumed to be the trailing (right-most) character when validating
 * Max length - 9 characters when generating a check digit; 10 characters when validating
-* Class name - Modulus11Algorithm
+* Class name - ```Modulus11Algorithm```
 
 #### Common Applications
 
@@ -1090,7 +1094,7 @@ calculation of check digits.
 * Check digit value - decimal digit ('0' - '9')
 * Check digit location - assumed to be the trailing (right-most) character when validating
 * Value length - 10 characters
-* Class name - NhsAlgorithm
+* Class name - ```NhsAlgorithm```
 
 #### Links
 
@@ -1153,7 +1157,7 @@ calculation of check digits.
 * Check digit value - decimal digit ('0' - '9')
 * Check digit location - assumed to be the trailing (right-most) character when validating
 * Value length - 10 characters
-* Class name - NpiAlgorithm
+* Class name - ```NpiAlgorithm```
 
 #### Links
 
@@ -1204,7 +1208,7 @@ twin errors.
 * Check digit size - one character
 * Check digit value - decimal digit ('0' - '9')
 * Check digit location - assumed to be the trailing (right-most) character when validating
-* Class name - VerhoeffAlgorithm
+* Class name - ```VerhoeffAlgorithm```
 
 #### Links
 
@@ -1227,7 +1231,7 @@ weighting, summing and calculating sum modulus 11.
 * Check digit value - either decimal digit ('0' - '9') or an uppercase 'X'
 * Check digit location - 9th character of 17
 * Length - 17 characters
-* Class name - VinAlgorithm
+* Class name - ```VinAlgorithm```
 
 #### Links
 
@@ -1671,7 +1675,30 @@ Note also that the values used for the NOID Check Digit algorithm do not include
 | VIN                             | 1G8ZG127XWZ157259                      | 12.377 ns       | -                    | 12.944 ns        | -                     | -5%                                          |
 | VIN                             | 1HGEM21292L047875                      | 12.398 ns       | -                    | 12.865 ns        | -                     | -4%                                          |
 | VIN                             | 1M8GDM9AXKP042788                      | 12.134 ns       | -                    | 13.088 ns        | -                     | -8%                                          |
-                        
+
+### Validate Method (with ICheckDigitMask)
+
+The following implementation of ICheckDigitMask is used for the benchmarks:
+```C#
+public class GroupsOfThreeCheckDigitMask : ICheckDigitMask
+{
+   public Boolean ExcludeCharacter(Int32 index) => (index + 1) % 4 == 0;
+
+   public Boolean IncludeCharacter(Int32 index) => (index + 1) % 4 != 0;
+}
+```
+
+#### General Numeric Algorithms
+
+| Algorithm Name         | Value                          | Mean (.Net 8.0) | Allocated (.Net 8.0) | Mean (.Net 10.0) | Allocated (.Net 10.0) | Performance Delta<br>(.Net 8.0 -> .Net 10.0) |
+|----------------------- |------------------------------- |-----------------|----------------------|------------------|-----------------------|----------------------------------------------|
+| Luhn                   | 140 4                          |  4.743 ns       | -                    |  4.675 ns        | -                     |  1%                                          |
+| Luhn                   | 140 662 8                      |  6.800 ns       | -                    |  6.032 ns        | -                     | 11%                                          |
+| Luhn                   | 140 662 538 2                  | 10.294 ns       | -                    |  7.948 ns        | -                     | 23%                                          |
+| Luhn                   | 140 662 538 042 1              | 11.998 ns       | -                    |  9.833 ns        | -                     | 18%                                          |
+| Luhn                   | 140 662 538 042 551 4          | 14.930 ns       | -                    | 12.079 ns        | -                     | 19%                                          |
+| Luhn                   | 140 662 538 042 551 028 5      | 17.257 ns       | -                    | 14.282 ns        | -                     | 17%                                          |
+| Luhn                   | 140 662 538 042 551 028 265 1  | 19.668 ns       | -                    | 16.428 ns        | -                     | 16%                                          |
 
 # Release History/Release Notes
 
