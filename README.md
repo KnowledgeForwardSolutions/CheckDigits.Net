@@ -66,6 +66,7 @@ let us know. Or contribute to the CheckDigits.Net repository: https://github.com
     - [v2.2.0](#v2.2.0)
     - [v2.3.0](#v2.3.0)
     - [v2.3.1](#v2.3.1)
+    - [v3.0.0](#v3.0.0)
 
 ## Check Digit Overview
 
@@ -1792,3 +1793,15 @@ Performance increases for:
 ## v2.3.1
 
 Documentation update. Fix several minor documentation errors in README file. No code changes.
+
+## v3.0.0
+
+Updated to .Net 10.0
+
+Average performance improvement for .Net 10.0 across all algorithms:
+  Validate method ~4% improvement, TryCalculateCheckDigit method ~6% improvement
+
+Detailed benchmark results for .Net 8 vs .Net 10 located at 
+
+Added masked validation support for algorithms via ICheckDigitMask and IMaskedCheckDigitAlgorithm interfaces. Algorithms that implement IMaskedCheckDigitAlgorithm:
+* Luhn Algorithm
