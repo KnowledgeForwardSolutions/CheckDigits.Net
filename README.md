@@ -1250,22 +1250,19 @@ for the algorithm being benchmarked.
 For value specific algorithms, three separate values that are valid for the 
 algorithm being benchmarked are used.
 
-Previous .Net 7 benchmarks available at https://github.com/KnowledgeForwardSolutions/CheckDigits.Net/blob/main/Documentation/DotNet7Benchmarks.md
-
 Previous .Net 8 benchmarks available at https://github.com/KnowledgeForwardSolutions/CheckDigits.Net/blob/main/Documentation/DotNet8Benchmarks.md
+
+Detailed benchmark results for .Net 8 vs .Net 10 located at https://github.com/KnowledgeForwardSolutions/CheckDigits.Net/blob/main/Documentation/DotNet8_DotNet10_PerformanceComparision.md
 
 #### Benchmark Details
 
-enchmarkDotNet v0.15.8, Windows 11 (10.0.26200.7462/25H2/2025Update/HudsonValley2)
+BenchmarkDotNet v0.15.8, Windows 11 (10.0.26200.7462/25H2/2025Update/HudsonValley2)
 AMD RYZEN AI MAX+ 395 w/ Radeon 8060S 3.00GHz, 1 CPU, 32 logical and 16 physical cores
 .NET SDK 10.0.101
-  [Host]    : .NET 8.0.22 (8.0.22, 8.0.2225.52707), X64 RyuJIT x86-64-v4
-  .NET 10.0 : .NET 10.0.1 (10.0.1, 10.0.125.57005), X64 RyuJIT x86-64-v4
-  .NET 8.0  : .NET 8.0.22 (8.0.22, 8.0.2225.52707), X64 RyuJIT x86-64-v4
+  [Host]     : .NET 10.0.1 (10.0.1, 10.0.125.57005), X64 RyuJIT x86-64-v4
+  DefaultJob : .NET 10.0.1 (10.0.1, 10.0.125.57005), X64 RyuJIT x86-64-v4
 
-Note that the computer used to run the current benchmarks is different than the 
-one used in previous .Net 7 and .Net 8 benchmarks. Therefore, columns for both 
-.Net 8 and .Net 10 from the same computer are included here for direct comparison.
+Note that the .Net 10.0 benchmarks were run on a newer computer than the .Net 8.0 benchmarks.
 
 ### TryCalculateCheckDigit/TryCalculateCheckDigits Methods
 
@@ -1275,141 +1272,140 @@ Note that the Modulus10_1, Modulus10_2 and Modulus11 algorithms have a maximum
 length of 10 (including the check digit) for values being validated so their
 benchmarks do not cover lengths greater than 10.
 
-| Algorithm Name         | Value                 | Mean (.Net 8.0) | Allocated (.Net 8.0) | Mean (.Net 10.0) | Allocated (.Net 10.0) | Performance Delta<br>(.Net 8.0 -> .Net 10.0) |
-|----------------------- |---------------------- |-----------------|----------------------|------------------|-----------------------|--------------------------------------------- |
-| Damm                   | 140                   |  2.140 ns       | -                    |  2.128 ns        | -                     |  1%                                          |
-| Damm                   | 140662                |  4.664 ns       | -                    |  3.617 ns        | -                     | 22%                                          |
-| Damm                   | 140662538             |  5.740 ns       | -                    |  5.411 ns        | -                     |  6%                                          |
-| Damm                   | 140662538042          |  7.801 ns       | -                    |  7.707 ns        | -                     |  1%                                          |
-| Damm                   | 140662538042551       | 10.183 ns       | -                    |  9.992 ns        | -                     |  2%                                          |
-| Damm                   | 140662538042551028    | 13.874 ns       | -                    | 13.920 ns        | -                     |  0%                                          |
-| Damm                   | 140662538042551028265 | 17.891 ns       | -                    | 17.150 ns        | -                     |  4%                                          |
-|                        |                       |                 |                      |                  |                       |                                              |                                   
-| ISO/IEC 7064 MOD 11,10 | 140                   |  2.340 ns       | -                    |  2.228 ns        | -                     |  5%                                          |
-| ISO/IEC 7064 MOD 11,10 | 140662                |  4.350 ns       | -                    |  3.977 ns        | -                     |  9%                                          |
-| ISO/IEC 7064 MOD 11,10 | 140662538             |  5.364 ns       | -                    |  5.070 ns        | -                     |  5%                                          |
-| ISO/IEC 7064 MOD 11,10 | 140662538042          |  6.734 ns       | -                    |  6.322 ns        | -                     |  6%                                          |
-| ISO/IEC 7064 MOD 11,10 | 140662538042551       |  8.258 ns       | -                    |  7.878 ns        | -                     |  5%                                          |
-| ISO/IEC 7064 MOD 11,10 | 140662538042551028    |  9.671 ns       | -                    |  9.299 ns        | -                     |  4%                                          |
-| ISO/IEC 7064 MOD 11,10 | 140662538042551028265 | 11.511 ns       | -                    | 10.910 ns        | -                     |  5%                                          |
-|                        |                       |                 |                      |                  |                       |                                              |                                   
-| ISO/IEC 7064 MOD 11-2  | 140                   |  2.170 ns       | -                    |  2.167 ns        | -                     |  8%                                          |
-| ISO/IEC 7064 MOD 11-2  | 140662                |  3.937 ns       | -                    |  3.635 ns        | -                     |  1%                                          |
-| ISO/IEC 7064 MOD 11-2  | 140662538             |  4.496 ns       | -                    |  4.464 ns        | -                     | 12%                                          |
-| ISO/IEC 7064 MOD 11-2  | 140662538042          |  6.296 ns       | -                    |  5.517 ns        | -                     |  4%                                          |
-| ISO/IEC 7064 MOD 11-2  | 140662538042551       |  6.617 ns       | -                    |  6.340 ns        | -                     | -1%                                          |
-| ISO/IEC 7064 MOD 11-2  | 140662538042551028    |  7.537 ns       | -                    |  7.618 ns        | -                     |  3%                                          |
-| ISO/IEC 7064 MOD 11-2  | 140662538042551028265 |  8.806 ns       | -                    |  8.536 ns        | -                     |                                              |
-|                        |                       |                 |                      |                  |                       |                                              |                                   
-| ISO/IEC 7064 MOD 97-10 | 140                   |  3.436 ns       | -                    |  2.867 ns        | -                     | 17%                                          |
-| ISO/IEC 7064 MOD 97-10 | 140662                |  4.229 ns       | -                    |  4.166 ns        | -                     |  1%                                          |
-| ISO/IEC 7064 MOD 97-10 | 140662538             |  6.651 ns       | -                    |  5.948 ns        | -                     | 11%                                          |
-| ISO/IEC 7064 MOD 97-10 | 140662538042          |  7.638 ns       | -                    |  7.425 ns        | -                     |  3%                                          |
-| ISO/IEC 7064 MOD 97-10 | 140662538042551       | 9.163 ns        | -                    |  8.967 ns        | -                     |  2%                                          |
-| ISO/IEC 7064 MOD 97-10 | 140662538042551028    | 11.611 ns       | -                    | 11.091 ns        | -                     |  4%                                          |
-| ISO/IEC 7064 MOD 97-10 | 140662538042551028265 | 13.412 ns       | -                    | 12.914 ns        | -                     |  4%                                          |
-|                        |                       |                 |                      |                  |                       |                                              |                                   
-| Luhn                   | 140                   |  2.552 ns       | -                    |  2.754 ns        | -                     | -8%                                          |
-| Luhn                   | 140662                |  4.487 ns       | -                    |  4.299 ns        | -                     |  4%                                          |
-| Luhn                   | 140662538             |  5.479 ns       | -                    |  5.809 ns        | -                     | -6%                                          |
-| Luhn                   | 140662538042          |  6.606 ns       | -                    |  6.453 ns        | -                     |  2%                                          |
-| Luhn                   | 140662538042551       |  8.167 ns       | -                    |  8.102 ns        | -                     |  1%                                          |
-| Luhn                   | 140662538042551028    |  9.605 ns       | -                    |  9.534 ns        | -                     |  1%                                          |
-| Luhn                   | 140662538042551028265 | 11.290 ns       | -                    | 11.440 ns        | -                     | -1%                                          |
-|                        |                       |                 |                      |                  |                       |                                              |                                   
-| Modulus10_13           | 140                   |  2.577 ns       | -                    |  2.603 ns        | -                     | -1%                                          |
-| Modulus10_13           | 140662                |  4.378 ns       | -                    |  4.224 ns        | -                     |  3%                                          |
-| Modulus10_13           | 140662538             |  5.135 ns       | -                    |  5.132 ns        | -                     |  0%                                          |
-| Modulus10_13           | 140662538042          |  6.386 ns       | -                    |  6.975 ns        | -                     | -9%                                          |
-| Modulus10_13           | 140662538042551       |  7.671 ns       | -                    |  7.685 ns        | -                     |  0%                                          |
-| Modulus10_13           | 140662538042551028    |  9.039 ns       | -                    |  8.919 ns        | -                     |  1%                                          |
-| Modulus10_13           | 140662538042551028265 | 10.622 ns       | -                    | 10.287 ns        | -                     |  3%                                          |
-|                        |                       |                 |                      |                  |                       |                                              |                                   
-| Modulus10_1            | 140                   |  1.812 ns       | -                    |  1.804 ns        | -                     |  0%                                          |
-| Modulus10_1            | 140662                |  2.857 ns       | -                    |  2.599 ns        | -                     |  9%                                          |
-| Modulus10_1            | 140662538             |  4.202 ns       | -                    |  3.973 ns        | -                     |  5%                                          |
-|                        |                       |                 |                      |                  |                       |                                              |                                  
-| Modulus10_2            | 140                   |  1.843 ns       | -                    |  1.810 ns        | -                     |  2%                                          |
-| Modulus10_2            | 140662                |  2.786 ns       | -                    |  2.585 ns        | -                     |  7%                                          |
-| Modulus10_2            | 140662538             |  4.179 ns       | -                    |  3.980 ns        | -                     |  5%                                          |
-|                        |                       |                 |                      |                  |                       |                                              |                                  
-| Modulus11              | 140                   |  2.410 ns       | -                    |  2.319 ns        | -                     |  4%                                          |
-| Modulus11              | 140662                |  3.746 ns       | -                    |  3.304 ns        | -                     | 12%                                          |
-| Modulus11              | 140662538             |  4.325 ns       | -                    |  4.183 ns        | -                     |  3%                                          |
-|                        |                       |                 |                      |                  |                       |                                              |                                   
-| Verhoeff               | 140                   |  4.344 ns       | -                    |  4.133 ns        | -                     |  5%                                          |
-| Verhoeff               | 140662                |  6.599 ns       | -                    |  6.186 ns        | -                     |  6%                                          |
-| Verhoeff               | 140662538             |  9.924 ns       | -                    |  9.881 ns        | -                     |  0%                                          |
-| Verhoeff               | 140662538042          | 13.347 ns       | -                    | 13.193 ns        | -                     |  1%                                          |
-| Verhoeff               | 140662538042551       | 16.834 ns       | -                    | 16.671 ns        | -                     |  1%                                          |
-| Verhoeff               | 140662538042551028    | 19.969 ns       | -                    | 19.555 ns        | -                     |  2%                                          |
-| Verhoeff               | 140662538042551028265 | 23.187 ns       | -                    | 22.675 ns        | -                     |  2%                                          |
+| Algorithm Name        | Value                 | Mean      | Error     | StdDev    | Allocated |
+|-----------------------|-----------------------|----------:|-----------|-----------|-----------|
+| Damm                  | 140                   | 1.956 ns  | 0.0017 ns | 0.0015 ns | -         |
+| Damm                  | 140662                | 3.367 ns  | 0.0102 ns | 0.0096 ns | -         |
+| Damm                  | 140662538             | 5.075 ns  | 0.0045 ns | 0.0040 ns | -         |
+| Damm                  | 140662538042          | 7.286 ns  | 0.0254 ns | 0.0238 ns | -         |
+| Damm                  | 140662538042551       | 9.441 ns  | 0.0226 ns | 0.0212 ns | -         |
+| Damm                  | 140662538042551028    | 13.189 ns | 0.0125 ns | 0.0105 ns | -         |
+| Damm                  | 140662538042551028265 | 16.549 ns | 0.0689 ns | 0.0611 ns | -         |
+|                       |                       |           |           |           |           |
+| ISO/IEC 706 MOD 11,10 | 140                   | 2.256 ns  | 0.0292 ns | 0.0273 ns | -         |
+| ISO/IEC 706 MOD 11,10 | 140662                | 4.046 ns  | 0.0359 ns | 0.0318 ns | -         |
+| ISO/IEC 706 MOD 11,10 | 140662538             | 5.119 ns  | 0.0255 ns | 0.0239 ns | -         |
+| ISO/IEC 706 MOD 11,10 | 140662538042          | 6.555 ns  | 0.0703 ns | 0.0657 ns | -         |
+| ISO/IEC 706 MOD 11,10 | 140662538042551       | 8.083 ns  | 0.0997 ns | 0.0933 ns | -         |
+| ISO/IEC 706 MOD 11,10 | 140662538042551028    | 9.338 ns  | 0.0474 ns | 0.0420 ns | -         |
+| ISO/IEC 706 MOD 11,10 | 140662538042551028265 | 10.988 ns | 0.0404 ns | 0.0378 ns | -         |
+|                       |                       |           |           |           |           |
+| ISO/IEC 706 MOD 11-2  | 140                   | 2.235 ns  | 0.0176 ns | 0.0165 ns | -         |
+| ISO/IEC 706 MOD 11-2  | 140662                | 3.839 ns  | 0.0250 ns | 0.0234 ns | -         |
+| ISO/IEC 706 MOD 11-2  | 140662538             | 4.636 ns  | 0.0240 ns | 0.0200 ns | -         |
+| ISO/IEC 706 MOD 11-2  | 140662538042          | 5.603 ns  | 0.0362 ns | 0.0321 ns | -         |
+| ISO/IEC 706 MOD 11-2  | 140662538042551       | 6.611 ns  | 0.0755 ns | 0.0707 ns | -         |
+| ISO/IEC 706 MOD 11-2  | 140662538042551028    | 7.308 ns  | 0.0351 ns | 0.0329 ns | -         |
+| ISO/IEC 706 MOD 11-2  | 140662538042551028265 | 8.910 ns  | 0.0669 ns | 0.0626 ns | -         |
+|                       |                       |           |           |           |           |
+| ISO/IEC 706 MOD 97-10 | 140                   | 2.926 ns  | 0.0236 ns | 0.0221 ns | -         |
+| ISO/IEC 706 MOD 97-10 | 140662                | 4.230 ns  | 0.0289 ns | 0.0270 ns | -         |
+| ISO/IEC 706 MOD 97-10 | 140662538             | 6.013 ns  | 0.0216 ns | 0.0202 ns | -         |
+| ISO/IEC 706 MOD 97-10 | 140662538042          | 7.501 ns  | 0.0379 ns | 0.0336 ns | -         |
+| ISO/IEC 706 MOD 97-10 | 140662538042551       | 9.122 ns  | 0.0407 ns | 0.0361 ns | -         |
+| ISO/IEC 706 MOD 97-10 | 140662538042551028    | 11.271 ns | 0.0390 ns | 0.0364 ns | -         |
+| ISO/IEC 706 MOD 97-10 | 140662538042551028265 | 13.185 ns | 0.0484 ns | 0.0429 ns | -         |
+|                       |                       |           |           |           |           |
+| Luhn                  | 140                   | 2.739 ns  | 0.0284 ns | 0.0265 ns | -         |
+| Luhn                  | 140662                | 4.375 ns  | 0.0256 ns | 0.0227 ns | -         |
+| Luhn                  | 140662538             | 5.987 ns  | 0.0550 ns | 0.0514 ns | -         |
+| Luhn                  | 140662538042          | 6.769 ns  | 0.0602 ns | 0.0533 ns | -         |
+| Luhn                  | 140662538042551       | 8.452 ns  | 0.0505 ns | 0.0448 ns | -         |
+| Luhn                  | 140662538042551028    | 9.905 ns  | 0.0575 ns | 0.0538 ns | -         |
+| Luhn                  | 140662538042551028265 | 11.526 ns | 0.0598 ns | 0.0559 ns | -         |
+|                       |                       |           |           |           |           |
+| Modulus10_13          | 140                   | 2.536 ns  | 0.0202 ns | 0.0179 ns | -         |
+| Modulus10_13          | 140662                | 4.280 ns  | 0.0267 ns | 0.0250 ns | -         |
+| Modulus10_13          | 140662538             | 5.105 ns  | 0.0284 ns | 0.0265 ns | -         |
+| Modulus10_13          | 140662538042          | 6.363 ns  | 0.0230 ns | 0.0192 ns | -         |
+| Modulus10_13          | 140662538042551       | 7.715 ns  | 0.0326 ns | 0.0305 ns | -         |
+| Modulus10_13          | 140662538042551028    | 9.209 ns  | 0.0357 ns | 0.0334 ns | -         |
+| Modulus10_13          | 140662538042551028265 | 10.628 ns | 0.0633 ns | 0.0561 ns | -         |
+|                       |                       |           |           |           |           |
+| Modulus10_1           | 140                   | 1.808 ns  | 0.0124 ns | 0.0096 ns | -         |
+| Modulus10_1           | 140662                | 2.587 ns  | 0.0193 ns | 0.0171 ns | -         |
+| Modulus10_1           | 140662538             | 4.043 ns  | 0.0233 ns | 0.0218 ns | -         |
+|                       |                       |           |           |           |           |
+| Modulus10_2           | 140                   | 1.854 ns  | 0.0206 ns | 0.0183 ns | -         |
+| Modulus10_2           | 140662                | 2.656 ns  | 0.0145 ns | 0.0136 ns | -         |
+| Modulus10_2           | 140662538             | 4.024 ns  | 0.0173 ns | 0.0162 ns | -         |
+|                       |                       |           |           |           |           |
+| Modulus11             | 140                   | 2.364 ns  | 0.0171 ns | 0.0152 ns | -         |
+| Modulus11             | 140662                | 3.323 ns  | 0.0300 ns | 0.0280 ns | -         |
+| Modulus11             | 140662538             | 4.341 ns  | 0.0301 ns | 0.0281 ns | -         |
+|                       |                       |           |           |           |           |
+| Verhoeff              | 140                   | 4.250 ns  | 0.0312 ns | 0.0277 ns | -         |
+| Verhoeff              | 140662                | 6.399 ns  | 0.0542 ns | 0.0452 ns | -         |
+| Verhoeff              | 140662538             | 9.977 ns  | 0.0363 ns | 0.0340 ns | -         |
+| Verhoeff              | 140662538042          | 13.351 ns | 0.0441 ns | 0.0413 ns | -         |
+| Verhoeff              | 140662538042551       | 16.793 ns | 0.0614 ns | 0.0574 ns | -         |
+| Verhoeff              | 140662538042551028    | 19.818 ns | 0.0811 ns | 0.0758 ns | -         |
+| Verhoeff              | 140662538042551028265 | 22.861 ns | 0.0866 ns | 0.0768 ns | -         |
 
 #### General Alphabetic Algorithms
 
-| Algorithm Name          | Value                 | Mean (.Net 8.0) | Allocated (.Net 8.0) | Mean (.Net 10.0) | Allocated (.Net 10.0) | Performance Delta<br>(.Net 8.0 -> .Net 10.0) |
-|------------------------ |---------------------- |-----------------|----------------------|------------------|-----------------------|--------------------------------------------- |
-| ISO/IEC 7064 MOD 27,26  | EGR                   |  2.404 ns       | -                    |  2.217 ns        | -                     |   8%                                         |
-| ISO/IEC 7064 MOD 27,26  | EGRNML                |  4.354 ns       | -                    |  3.950 ns        | -                     |   9%                                         |
-| ISO/IEC 7064 MOD 27,26  | EGRNMLJOC             |  5.767 ns       | -                    |  5.695 ns        | -                     |   1%                                         |
-| ISO/IEC 7064 MOD 27,26  | EGRNMLJOCECU          |  7.165 ns       | -                    |  6.808 ns        | -                     |   5%                                         |
-| ISO/IEC 7064 MOD 27,26  | EGRNMLJOCECUJIK       |  8.946 ns       | -                    |  10.582 ns        | -                     | -18%                                         |
-| ISO/IEC 7064 MOD 27,26  | EGRNMLJOCECUJIKNWW    | 10.589 ns       | -                    |  9.674 ns        | -                     |   9%                                         |
-| ISO/IEC 7064 MOD 27,26  | EGRNMLJOCECUJIKNWWVVO | 12.218 ns       | -                    | 11.011 ns        | -                     |  10%                                         |
-|                         |                       |                 |                      |                  |                       |                                              |                                           
-| ISO/IEC 7064 MOD 661-26 | EGR                   |  3.323 ns       | -                    |  3.154 ns        | -                     |   5%                                         |
-| ISO/IEC 7064 MOD 661-26 | EGRNML                |  5.340 ns       | -                    |  4.907 ns        | -                     |   8%                                         |
-| ISO/IEC 7064 MOD 661-26 | EGRNMLJOC             |  6.837 ns       | -                    |  6.456 ns        | -                     |   6%                                         |
-| ISO/IEC 7064 MOD 661-26 | EGRNMLJOCECU          |  9.708 ns       | -                    |  8.820 ns        | -                     |   9%                                         |
-| ISO/IEC 7064 MOD 661-26 | EGRNMLJOCECUJIK       | 12.467 ns       | -                    | 11.282 ns        | -                     |  10%                                         |
-| ISO/IEC 7064 MOD 661-26 | EGRNMLJOCECUJIKNWW    | 14.415 ns       | -                    | 13.344 ns        | -                     |   7%                                         |
-| ISO/IEC 7064 MOD 661-26 | EGRNMLJOCECUJIKNWWVVO | 17.969 ns       | -                    | 16.138 ns        | -                     |  10%                                         |
+| Algorithm Name          | Value                 | Mean      | Error     | StdDev    | Allocated |
+|-------------------------|-----------------------|----------:|-----------|-----------|-----------|
+| ISO/IEC 7064 MOD 27,26  | EGR                   | 2.178 ns  | 0.0032 ns | 0.0030 ns | -         |
+| ISO/IEC 7064 MOD 27,26  | EGRNML                | 3.900 ns  | 0.0091 ns | 0.0085 ns | -         |
+| ISO/IEC 7064 MOD 27,26  | EGRNMLJOC             | 5.088 ns  | 0.0505 ns | 0.0472 ns | -         |
+| ISO/IEC 7064 MOD 27,26  | EGRNMLJOCECU          | 6.933 ns  | 0.0953 ns | 0.0891 ns | -         |
+| ISO/IEC 7064 MOD 27,26  | EGRNMLJOCECUJIK       | 7.753 ns  | 0.0516 ns | 0.0458 ns | -         |
+| ISO/IEC 7064 MOD 27,26  | EGRNMLJOCECUJIKNWW    | 9.899 ns  | 0.2137 ns | 0.3570 ns | -         |
+| ISO/IEC 7064 MOD 27,26  | EGRNMLJOCECUJIKNWWVVO | 11.228 ns | 0.2467 ns | 0.4694 ns | -         |
+|                         |                       |           |           |           |           |
+| ISO/IEC 7064 MOD 661-26 | EGR                   | 3.193 ns  | 0.0212 ns | 0.0198 ns | -         |
+| ISO/IEC 7064 MOD 661-26 | EGRNML                | 4.940 ns  | 0.0303 ns | 0.0268 ns | -         |
+| ISO/IEC 7064 MOD 661-26 | EGRNMLJOC             | 6.459 ns  | 0.0187 ns | 0.0174 ns | -         |
+| ISO/IEC 7064 MOD 661-26 | EGRNMLJOCECU          | 8.844 ns  | 0.0380 ns | 0.0297 ns | -         |
+| ISO/IEC 7064 MOD 661-26 | EGRNMLJOCECUJIK       | 11.127 ns | 0.0432 ns | 0.0361 ns | -         |
+| ISO/IEC 7064 MOD 661-26 | EGRNMLJOCECUJIKNWW    | 13.005 ns | 0.0354 ns | 0.0331 ns | -         |
+| ISO/IEC 7064 MOD 661-26 | EGRNMLJOCECUJIKNWWVVO | 15.670 ns | 0.0925 ns | 0.0820 ns | -         |
 
 #### General Alphanumeric Algorithms
 
 Note that the values used for the NOID Check Digit algorithm do not include lengths
 3 or 6 so that benchmarks are not run on purely numeric strings.
 
-| Algorithm Name           | Value                 | Mean (.Net 8.0) | Allocated (.Net 8.0) | Mean (.Net 10.0) | Allocated (.Net 10.0) | Performance Delta<br>(.Net 8.0 -> .Net 10.0) |
-|------------------------- |---------------------- |-----------------|----------------------|------------------|-----------------------|--------------------------------------------- |
-| AlphanumericMod97_10     | U7y                   |  4.939 ns       | -                    |  5.023 ns        | -                     | -2%                                          |
-| AlphanumericMod97_10     | U7y8SX                |  8.575 ns       | -                    |  8.310 ns        | -                     |  3%                                          |
-| AlphanumericMod97_10     | U7y8SXrC0             | 12.375 ns       | -                    | 11.792 ns        | -                     |  5%                                          |
-| AlphanumericMod97_10     | U7y8SXrC0O3S          | 15.880 ns       | -                    | 15.184 ns        | -                     |  4%                                          |
-| AlphanumericMod97_10     | U7y8SXrC0O3Sc4I       | 20.458 ns       | -                    | 19.243 ns        | -                     |  6%                                          |
-| AlphanumericMod97_10     | U7y8SXrC0O3Sc4IHYQ    | 25.418 ns       | -                    | 24.129 ns        | -                     |  5%                                          |
-| AlphanumericMod97_10     | U7y8SXrC0O3Sc4IHYQF4M | 30.169 ns       | -                    | 28.308 ns        | -                     |  6%                                          |
-|                          |                       |                 |                      |                  |                       |                                              |                                           
-| ISO/IEC 7064 MOD 1271-36 | U7Y                   |  4.147 ns       | -                    |  4.010 ns        | -                     |  3%                                          |
-| ISO/IEC 7064 MOD 1271-36 | U7Y8SX                |  5.936 ns       | -                    | 17.238 ns        | -                     | 12%                                          |
-| ISO/IEC 7064 MOD 1271-36 | U7Y8SXRC0             |  9.121 ns       | -                    |  7.945 ns        | -                     | 13%                                          |
-| ISO/IEC 7064 MOD 1271-36 | U7Y8SXRC0O3S          | 10.523 ns       | -                    |  9.729 ns        | -                     |  8%                                          |
-| ISO/IEC 7064 MOD 1271-36 | U7Y8SXRC0O3SC4I       | 13.200 ns       | -                    | 11.875 ns        | -                     | 10%                                          |
-| ISO/IEC 7064 MOD 1271-36 | U7Y8SXRC0O3SC4IHYQ    | 16.453 ns       | -                    | 14.703 ns        | -                     | 11%                                          |
-| ISO/IEC 7064 MOD 1271-36 | U7Y8SXRC0O3SC4IHYQF4M | 19.511 ns       | -                    |  5.760 ns        | -                     |  3%                                          |
-|                          |                       |                 |                      |                  |                       |                                              |                                           
-| ISO/IEC 7064 MOD 37-2    | U7Y                   |  3.538 ns       | -                    |  3.133 ns        | -                     | 11%                                          |
-| ISO/IEC 7064 MOD 37-2    | U7Y8SX                |  4.660 ns       | -                    |  4.498 ns        | -                     |  3%                                          |
-| ISO/IEC 7064 MOD 37-2    | U7Y8SXRC0             |  6.114 ns       | -                    |  6.056 ns        | -                     |  1%                                          |
-| ISO/IEC 7064 MOD 37-2    | U7Y8SXRC0O3S          |  7.229 ns       | -                    |  7.078 ns        | -                     |  2%                                          |
-| ISO/IEC 7064 MOD 37-2    | U7Y8SXRC0O3SC4I       |  8.526 ns       | -                    |  8.343 ns        | -                     |  2%                                          |
-| ISO/IEC 7064 MOD 37-2    | U7Y8SXRC0O3SC4IHYQ    |  9.911 ns       | -                    |  9.745 ns        | -                     |  2%                                          |
-| ISO/IEC 7064 MOD 37-2    | U7Y8SXRC0O3SC4IHYQF4M | 11.231 ns       | -                    | 11.176 ns        | -                     |  0%                                          |
-|                          |                       |                 |                      |                  |                       |                                              |                                           
-| ISO/IEC 7064 MOD 37,36   | U7Y                   |  5.005 ns       | -                    |  3.098 ns        | -                     | 38%                                          |
-| ISO/IEC 7064 MOD 37,36   | U7Y8SX                |  5.136 ns       | -                    |  4.837 ns        | -                     |  6%                                          |
-| ISO/IEC 7064 MOD 37,36   | U7Y8SXRC0             |  6.800 ns       | -                    |  6.641 ns        | -                     |  2%                                          |
-| ISO/IEC 7064 MOD 37,36   | U7Y8SXRC0O3S          |  8.513 ns       | -                    |  8.219 ns        | -                     |  3%                                          |
-| ISO/IEC 7064 MOD 37,36   | U7Y8SXRC0O3SC4I       | 10.846 ns       | -                    |  9.906 ns        | -                     |  9%                                          |
-| ISO/IEC 7064 MOD 37,36   | U7Y8SXRC0O3SC4IHYQ    | 13.508 ns       | -                    | 11.580 ns        | -                     | 14%                                          |
-| ISO/IEC 7064 MOD 37,36   | U7Y8SXRC0O3SC4IHYQF4M | 15.356 ns       | -                    | 13.155 ns        | -                     | 14%                                          |
-|                          |                       |                 |                      |                  |                       |                                              |                                           
-| NOID Check Digit         | 11404/2h9             |  4.959 ns       | -                    |  4.403 ns        | -                     | 11%                                          |
-| NOID Check Digit         | 11404/2h9tqb          |  6.317 ns       | -                    |  5.980 ns        | -                     |  5%                                          |
-| NOID Check Digit         | 11404/2h9tqbxk6       |  7.695 ns       | -                    |  7.178 ns        | -                     |  7%                                          |
-| NOID Check Digit         | 11404/2h9tqbxk6rw7    |  8.957 ns       | -                    |  9.154 ns        | -                     | -2%                                          |
-| NOID Check Digit         | 11404/2h9tqbxk6rw7dwm | 11.803 ns       | -                    | 10.440 ns        | -                     | 12%                                          |
-
+| Algorithm Name           | Value                 | Mean      | Error     | StdDev    | Allocated |
+|--------------------------|-----------------------|----------:|-----------|-----------|-----------|
+| AlphanumericMod97_10     | U7y                   | 4.951 ns  | 0.0035 ns | 0.0033 ns | -         |
+| AlphanumericMod97_10     | U7y8SX                | 8.103 ns  | 0.0134 ns | 0.0112 ns | -         |
+| AlphanumericMod97_10     | U7y8SXrC0             | 11.861 ns | 0.0131 ns | 0.0116 ns | -         |
+| AlphanumericMod97_10     | U7y8SXrC0O3S          | 14.879 ns | 0.0324 ns | 0.0270 ns | -         |
+| AlphanumericMod97_10     | U7y8SXrC0O3Sc4I       | 19.017 ns | 0.0234 ns | 0.0219 ns | -         |
+| AlphanumericMod97_10     | U7y8SXrC0O3Sc4IHYQ    | 24.122 ns | 0.0783 ns | 0.0654 ns | -         |
+| AlphanumericMod97_10     | U7y8SXrC0O3Sc4IHYQF4M | 28.224 ns | 0.0837 ns | 0.0742 ns | -         |
+|                          |                       |           |           |           |           |
+| ISO/IEC 7064 MOD 1271-36 | U7Y                   | 3.993 ns  | 0.0239 ns | 0.0223 ns | -         |
+| ISO/IEC 7064 MOD 1271-36 | U7Y8SX                | 5.886 ns  | 0.0195 ns | 0.0173 ns | -         |
+| ISO/IEC 7064 MOD 1271-36 | U7Y8SXRC0             | 7.876 ns  | 0.0498 ns | 0.0466 ns | -         |
+| ISO/IEC 7064 MOD 1271-36 | U7Y8SXRC0O3S          | 9.690 ns  | 0.0557 ns | 0.0494 ns | -         |
+| ISO/IEC 7064 MOD 1271-36 | U7Y8SXRC0O3SC4I       | 12.064 ns | 0.0856 ns | 0.0801 ns | -         |
+| ISO/IEC 7064 MOD 1271-36 | U7Y8SXRC0O3SC4IHYQ    | 14.832 ns | 0.0857 ns | 0.0760 ns | -         |
+| ISO/IEC 7064 MOD 1271-36 | U7Y8SXRC0O3SC4IHYQF4M | 17.734 ns | 0.1363 ns | 0.1275 ns | -         |
+|                          |                       |           |           |           |           |
+| ISO/IEC 7064 MOD 37-2    | U7Y                   | 3.182 ns  | 0.0303 ns | 0.0253 ns | -         |
+| ISO/IEC 7064 MOD 37-2    | U7Y8SX                | 4.540 ns  | 0.0299 ns | 0.0280 ns | -         |
+| ISO/IEC 7064 MOD 37-2    | U7Y8SXRC0             | 6.188 ns  | 0.0817 ns | 0.0764 ns | -         |
+| ISO/IEC 7064 MOD 37-2    | U7Y8SXRC0O3S          | 6.959 ns  | 0.0358 ns | 0.0299 ns | -         |
+| ISO/IEC 7064 MOD 37-2    | U7Y8SXRC0O3SC4I       | 8.238 ns  | 0.0535 ns | 0.0474 ns | -         |
+| ISO/IEC 7064 MOD 37-2    | U7Y8SXRC0O3SC4IHYQ    | 9.840 ns  | 0.0572 ns | 0.0507 ns | -         |
+| ISO/IEC 7064 MOD 37-2    | U7Y8SXRC0O3SC4IHYQF4M | 10.781 ns | 0.0573 ns | 0.0508 ns | -         |
+|                          |                       |           |           |           |           |
+| ISO/IEC 7064 MOD 37,36   | U7Y                   | 3.191 ns  | 0.0277 ns | 0.0231 ns | -         |
+| ISO/IEC 7064 MOD 37,36   | U7Y8SX                | 4.903 ns  | 0.0462 ns | 0.0432 ns | -         |
+| ISO/IEC 7064 MOD 37,36   | U7Y8SXRC0             | 6.787 ns  | 0.1198 ns | 0.1120 ns | -         |
+| ISO/IEC 7064 MOD 37,36   | U7Y8SXRC0O3S          | 8.334 ns  | 0.0563 ns | 0.0499 ns | -         |
+| ISO/IEC 7064 MOD 37,36   | U7Y8SXRC0O3SC4I       | 9.866 ns  | 0.0656 ns | 0.0548 ns | -         |
+| ISO/IEC 7064 MOD 37,36   | U7Y8SXRC0O3SC4IHYQ    | 11.466 ns | 0.0786 ns | 0.0735 ns | -         |
+| ISO/IEC 7064 MOD 37,36   | U7Y8SXRC0O3SC4IHYQF4M | 13.145 ns | 0.0616 ns | 0.0577 ns | -         |
+|                          |                       |           |           |           |           |
+| NOID Check Digit         | 11404/2h9             | 4.511 ns  | 0.0313 ns | 0.0262 ns | -         |
+| NOID Check Digit         | 11404/2h9tqb          | 6.029 ns  | 0.0305 ns | 0.0285 ns | -         |
+| NOID Check Digit         | 11404/2h9tqbxk6       | 7.134 ns  | 0.0436 ns | 0.0407 ns | -         |
+| NOID Check Digit         | 11404/2h9tqbxk6rw7    | 8.861 ns  | 0.0767 ns | 0.0718 ns | -         |
+| NOID Check Digit         | 11404/2h9tqbxk6rw7dwm | 10.324 ns | 0.0848 ns | 0.0793 ns | -         |
 
 #### Value Specific Algorithms
 
@@ -1417,31 +1413,31 @@ Note: ABA RTN, CUSIP, ICAO 9303 multi-field algorithms (Machine Readable Visa, S
 TD2 and TD3), ISAN, NHS, NPI and SEDOL algorithms do not support calculation of check digits, 
 only validation of values containing check digits.
 
-| Algorithm Name | Value                           | Mean (.Net 8.0) | Allocated (.Net 8.0) | Mean (.Net 10.0) | Allocated (.Net 10.0) | Performance Delta<br>(.Net 8.0 -> .Net 10.0) |
-|--------------- |-------------------------------- |-----------------|----------------------|------------------|-----------------------|--------------------------------------------- |
-| ICAO 9303      | U7Y                             |  5.497 ns       | -                    |  3.989 ns        | -                     |  27%                                         |
-| ICAO 9303      | U7Y8SX                          |  6.154 ns       | -                    |  5.769 ns        | -                     |   6%                                         |
-| ICAO 9303      | U7Y8SXRC0                       |  9.505 ns       | -                    |  7.103 ns        | -                     |  25%                                         |
-| ICAO 9303      | U7Y8SXRC0O3S                    | 11.701 ns       | -                    |  8.796 ns        | -                     |  25%                                         |
-| ICAO 9303      | U7Y8SXRC0O3SC4I                 | 14.353 ns       | -                    | 10.514 ns        | -                     |  27%                                         |
-| ICAO 9303      | U7Y8SXRC0O3SC4IHYQ              | 18.138 ns       | -                    | 14.586 ns        | -                     |  20%                                         |
-| ICAO 9303      | U7Y8SXRC0O3SC4IHYQF4M           | 19.707 ns       | -                    | 17.068 ns        | -                     |  13%                                         |
-|                |                                 |                 |                      |                  |                       |                                              |                                           
-| IBAN           | BE00096123456769                | 13.425 ns       | -                    | 12.713 ns        | -                     |   5%                                         |
-| IBAN           | GB00WEST12345698765432          | 23.336 ns       | -                    | 21.497 ns        | -                     |   8%                                         |
-| IBAN           | SC00MCBL01031234567890123456USD | 34.706 ns       | -                    | 33.375 ns        | -                     |   4%                                         |
-|                |                                 |                 |                      |                  |                       |                                              |                                           
-| ISIN           | AU0000XVGZA                     |  7.468 ns       | -                    |  8.011 ns        | -                     |  -7%                                         |
-| ISIN           | GB000263494                     |  7.922 ns       | -                    |  7.536 ns        | -                     |   5%                                         |
-| ISIN           | US037833100                     |  7.930 ns       | -                    |  7.596 ns        | -                     |   4%                                         |
-|                |                                 |                 |                      |                  |                       |                                              |                                           
-| ISO 6346       | CSQU305438                      |  7.345 ns       | -                    |  7.197 ns        | -                     |   2%                                         |
-| ISO 6346       | MSKU907032                      |  7.344 ns       | -                    |  7.203 ns        | -                     |   2%                                         |
-| ISO 6346       | TOLU473478                      |  7.318 ns       | -                    |  7.181 ns        | -                     |   2%                                         |
-|                |                                 |                 |                      |                  |                       |                                              |                                           
-| VIN            | 1G8ZG127_WZ157259               | 11.711 ns       | -                    | 13.019 ns        | -                     | -11%                                         |
-| VIN            | 1HGEM212_2L047875               | 11.801 ns       | -                    | 13.235 ns        | -                     | -12%                                         |
-| VIN            | 1M8GDM9A_KP042788               | 11.642 ns       | -                    | 12.801 ns        | -                     | -10%                                         |
+| Algorithm Name | Value                           | Mean      | Error     | StdDev    | Allocated |
+|----------------|---------------------------------|----------:|-----------|-----------|-----------|
+| IBAN           | BE00096123456769                | 12.797 ns | 0.0626 ns | 0.0586 ns | -         |
+| IBAN           | GB00WEST12345698765432          | 22.264 ns | 0.2030 ns | 0.1695 ns | -         |
+| IBAN           | SC00MCBL01031234567890123456USD | 33.121 ns | 0.1529 ns | 0.1355 ns | -         |
+|                |                                 |           |           |           |           |
+| ICAO 9303      | U7Y                             | 4.193 ns  | 0.0450 ns | 0.0421 ns | -         |
+| ICAO 9303      | U7Y8SX                          | 5.840 ns  | 0.0395 ns | 0.0370 ns | -         |
+| ICAO 9303      | U7Y8SXRC0                       | 7.757 ns  | 0.1317 ns | 0.1293 ns | -         |
+| ICAO 9303      | U7Y8SXRC0O3S                    | 9.235 ns  | 0.0897 ns | 0.0839 ns | -         |
+| ICAO 9303      | U7Y8SXRC0O3SC4I                 | 11.032 ns | 0.2064 ns | 0.1723 ns | -         |
+| ICAO 9303      | U7Y8SXRC0O3SC4IHYQ              | 12.823 ns | 0.0541 ns | 0.0452 ns | -         |
+| ICAO 9303      | U7Y8SXRC0O3SC4IHYQF4M           | 14.776 ns | 0.1006 ns | 0.0941 ns | -         |
+|                |                                 |           |           |           |           |
+| ISIN           | AU0000XVGZA                     | 7.917 ns  | 0.0690 ns | 0.0645 ns | -         |
+| ISIN           | GB000263494                     | 7.118 ns  | 0.0536 ns | 0.0475 ns | -         |
+| ISIN           | US037833100                     | 7.132 ns  | 0.0948 ns | 0.0792 ns | -         |
+|                |                                 |           |           |           |           |
+| ISO 6346       | CSQU305438                      | 7.445 ns  | 0.0693 ns | 0.0579 ns | -         |
+| ISO 6346       | MSKU907032                      | 7.493 ns  | 0.0903 ns | 0.0800 ns | -         |
+| ISO 6346       | TOLU473478                      | 7.467 ns  | 0.0621 ns | 0.0550 ns | -         |
+|                |                                 |           |           |           |           |
+| VIN            | 1G8ZG127_WZ157259               | 13.113 ns | 0.0649 ns | 0.0542 ns | -         |
+| VIN            | 1HGEM212_2L047875               | 12.975 ns | 0.0850 ns | 0.0710 ns | -         |
+| VIN            | 1M8GDM9A_KP042788               | 13.377 ns | 0.1008 ns | 0.0942 ns | -         |
 
 ### Validate Method
 
@@ -1454,99 +1450,98 @@ Note that the Modulus10_1, Modulus10_2 and Modulus11 algorithms have a maximum
 length of 10 (including the check digit) for values being validated so their
 benchmarks do not cover lengths greater than 10.
 
-| Algorithm Name         | Value                   | Mean (.Net 8.0) | Allocated (.Net 8.0) | Mean (.Net 10.0) | Allocated (.Net 10.0) | Performance Delta<br>(.Net 8.0 -> .Net 10.0) |
-|----------------------- |------------------------ |-----------------|----------------------|------------------|-----------------------|----------------------------------------------|
-| Damm                   | 1402                    |  2.513 ns       | -                    |  2.289 ns        | -                     |   9%                                         |
-| Damm                   | 1406622                 |  4.617 ns       | -                    |  4.212 ns        | -                     |   9%                                         |
-| Damm                   | 1406625388              |  5.634 ns       | -                    |  6.032 ns        | -                     |  -7%                                         |
-| Damm                   | 1406625380422           |  8.322 ns       | -                    |  8.771 ns        | -                     |  -5%                                         |
-| Damm                   | 1406625380425518        | 10.849 ns       | -                    | 12.298 ns        | -                     | -13%                                         |
-| Damm                   | 1406625380425510280     | 14.540 ns       | -                    | 15.589 ns        | -                     |  -7%                                         |
-| Damm                   | 1406625380425510282654  | 17.838 ns       | -                    | 18.620 ns        | -                     |  -4%                                         |
-|                        |                         |                 |                      |                  |                       |                                              |                                          
-| ISO/IEC 7064 MOD 11,10 | 1409                    |  2.495 ns       | -                    |  2.282 ns        | -                     |   9%                                         |
-| ISO/IEC 7064 MOD 11,10 | 1406623                 |  4.447 ns       | -                    |  4.126 ns        | -                     |   7%                                         |
-| ISO/IEC 7064 MOD 11,10 | 1406625381              |  5.462 ns       | -                    |  5.205 ns        | -                     |   5%                                         |
-| ISO/IEC 7064 MOD 11,10 | 1406625380426           |  6.788 ns       | -                    |  6.362 ns        | -                     |   6%                                         |
-| ISO/IEC 7064 MOD 11,10 | 1406625380425514        |  8.273 ns       | -                    |  7.661 ns        | -                     |   7%                                         |
-| ISO/IEC 7064 MOD 11,10 | 1406625380425510286     |  9.812 ns       | -                    |  9.362 ns        | -                     |   5%                                         |
-| ISO/IEC 7064 MOD 11,10 | 1406625380425510282657  | 11.392 ns       | -                    | 10.868 ns        | -                     |   5%                                         |
-|                        |                         |                 |                      |                  |                       |                                              |                                          
-| ISO/IEC 7064 MOD 11-2  | 140X                    |  2.093 ns       | -                    | 2.087 ns         | -                     |   0%                                         |
-| ISO/IEC 7064 MOD 11-2  | 1406628                 |  3.988 ns       | -                    | 3.687 ns         | -                     |   8%                                         |
-| ISO/IEC 7064 MOD 11-2  | 1406625380              |  4.608 ns       | -                    | 4.480 ns         | -                     |   3%                                         |
-| ISO/IEC 7064 MOD 11-2  | 1406625380426           |  5.347 ns       | -                    | 5.218 ns         | -                     |   2%                                         |
-| ISO/IEC 7064 MOD 11-2  | 1406625380425511        |  6.253 ns       | -                    | 5.953 ns         | -                     |   5%                                         |
-| ISO/IEC 7064 MOD 11-2  | 140662538042551028X     |  8.354 ns       | -                    | 7.961 ns         | -                     |   5%                                         |
-| ISO/IEC 7064 MOD 11-2  | 1406625380425510282651  |  7.220 ns       | -                    | 6.943 ns         | -                     |   4%                                         |
-|                        |                         |                 |                      |                  |                       |                                              |                                          
-| ISO/IEC 7064 MOD 97-10 | 14066                   |  2.418 ns       | -                    |  2.373 ns        | -                     |   2%                                         |
-| ISO/IEC 7064 MOD 97-10 | 14066262                |  4.161 ns       | -                    |  4.031 ns        | -                     |   3%                                         |
-| ISO/IEC 7064 MOD 97-10 | 14066253823             |  5.441 ns       | -                    |  5.391 ns        | -                     |   1%                                         |
-| ISO/IEC 7064 MOD 97-10 | 14066253804250          |  6.791 ns       | -                    |  6.872 ns        | -                     |  -1%                                         |
-| ISO/IEC 7064 MOD 97-10 | 14066253804255112       |  9.182 ns       | -                    |  8.874 ns        | -                     |   3%                                         |
-| ISO/IEC 7064 MOD 97-10 | 14066253804255102853    | 10.718 ns       | -                    | 10.413 ns        | -                     |   3%                                         |
-| ISO/IEC 7064 MOD 97-10 | 14066253804255102826587 | 12.301 ns       | -                    | 11.832 ns        | -                     |   4%                                         |
-|                        |                         |                 |                      |                  |                       |                                              |                                          
-| Luhn                   | 1404                    |  3.562 ns       | -                    |  3.407 ns        | -                     |  4%                                          |
-| Luhn                   | 1406628                 |  4.855 ns       | -                    |  4.581 ns        | -                     |  6%                                          |
-| Luhn                   | 1406625382              |  6.014 ns       | -                    |  6.227 ns        | -                     | -4%                                          |
-| Luhn                   | 1406625380421           |  7.267 ns       | -                    |  7.078 ns        | -                     |  3%                                          |
-| Luhn                   | 1406625380425514        |  9.052 ns       | -                    |  8.659 ns        | -                     |  4%                                          |
-| Luhn                   | 1406625380425510285     | 10.257 ns       | -                    |  9.822 ns        | -                     |  4%                                          |
-| Luhn                   | 1406625380425510282651  | 12.062 ns       | -                    | 11.765 ns        | -                     |  2%                                          |
-|                        |                         |                 |                      |                  |                       |                                              |                                           
-| Modulus10_13           | 1403                    |  2.982 ns       | -                    |  2.953 ns        | -                     |  1%                                          |
-| Modulus10_13           | 1406627                 |  4.414 ns       | -                    |  4.376 ns        | -                     |  1%                                          |
-| Modulus10_13           | 1406625385              |  5.448 ns       | -                    |  5.453 ns        | -                     |  0%                                          |
-| Modulus10_13           | 1406625380425           |  6.750 ns       | -                    |  6.533 ns        | -                     |  3%                                          |
-| Modulus10_13           | 1406625380425518        |  8.194 ns       | -                    |  8.231 ns        | -                     |  0%                                          |
-| Modulus10_13           | 1406625380425510288     |  9.488 ns       | -                    | 10.041 ns        | -                     | -6%                                          |
-| Modulus10_13           | 1406625380425510282657  |  10.916 ns      | -                    | 10.875 ns        | -                     |  0%                                          |
-|                        |                         |                 |                      |                  |                       |                                              |                                           
-| Modulus10_1            | 1401                    |  1.961 ns       | -                    |  1.867 ns        | -                     |  5%                                          |
-| Modulus10_1            | 1406628                 |  3.011 ns       | -                    |  2.724 ns        | -                     |  10%                                         |
-| Modulus10_1            | 1406625384              |  4.216 ns       | -                    |  4.086 ns        | -                     |  3%                                          |
-|                        |                         |                 |                      |                  |                       |                                              |                                           
-| Modulus10_2            | 1406                    |  1.950 ns       | -                    |  1.792 ns        | -                     |  8%                                          |
-| Modulus10_2            | 1406627                 |  3.223 ns       | -                    |  2.811 ns        | -                     |  13%                                         |
-| Modulus10_2            | 1406625389              |  4.355 ns       | -                    |  4.054 ns        | -                     |  7%                                          |
-|                        |                         |                 |                      |                  |                       |                                              |                                           
-| Modulus11              | 1406                    |  3.085 ns       | -                    |  2.895 ns        | -                     |  6%                                          |
-| Modulus11              | 1406625                 |  4.148 ns       | -                    |  3.957 ns        | -                     |  5%                                          |
-| Modulus11              | 1406625388              |  4.679 ns       | -                    |  4.345 ns        | -                     |  7%                                          |
-|                        |                         |                 |                      |                  |                       |                                              |                                           
-| Verhoeff               | 1401                    |  5.662 ns       | -                    |  4.579 ns        | -                     | 19%                                          |
-| Verhoeff               | 1406625                 |  6.910 ns       | -                    |  6.675 ns        | -                     |  3%                                          |
-| Verhoeff               | 1406625388              | 10.139 ns       | -                    | 10.084 ns        | -                     |  1%                                          |
-| Verhoeff               | 1406625380426           | 13.779 ns       | -                    | 13.504 ns        | -                     |  2%                                          |
-| Verhoeff               | 1406625380425512        | 17.176 ns       | -                    | 17.051 ns        | -                     |  1%                                          |
-| Verhoeff               | 1406625380425510285     | 20.188 ns       | -                    | 19.774 ns        | -                     |  2%                                          |
-| Verhoeff               | 1406625380425510282655  | 23.386 ns       | -                    | 23.085 ns        | -                     |  1%                                          |
-
+| Algorithm Name        | Value                         | Mean      | Error     | StdDev    | Allocated |
+|-----------------------|-------------------------------|----------:|-----------|-----------|-----------|
+| Damm                  | 1402                          | 2.107 ns  | 0.0153 ns | 0.0144 ns | -         |
+| Damm                  | 1406622                       | 3.959 ns  | 0.0172 ns | 0.0160 ns | -         |
+| Damm                  | 1406625388                    | 6.171 ns  | 0.0498 ns | 0.0441 ns | -         |
+| Damm                  | 1406625380422                 | 8.236 ns  | 0.0080 ns | 0.0071 ns | -         |
+| Damm                  | 1406625380425518              | 11.350 ns | 0.2009 ns | 0.1879 ns | -         |
+| Damm                  | 1406625380425510280           | 14.888 ns | 0.1275 ns | 0.1130 ns | -         |
+| Damm                  | 1406625380425510282654        | 17.861 ns | 0.1244 ns | 0.1103 ns | -         |
+|                       |                               |           |           |           |           |
+| ISO/IEC 706 MOD 11,10 | 1409                          | 2.482 ns  | 0.0221 ns | 0.0196 ns | -         |
+| ISO/IEC 706 MOD 11,10 | 1406623                       | 4.196 ns  | 0.0318 ns | 0.0297 ns | -         |
+| ISO/IEC 706 MOD 11,10 | 1406625381                    | 5.715 ns  | 0.0421 ns | 0.0394 ns | -         |
+| ISO/IEC 706 MOD 11,10 | 1406625380426                 | 6.553 ns  | 0.0593 ns | 0.0526 ns | -         |
+| ISO/IEC 706 MOD 11,10 | 1406625380425514              | 8.079 ns  | 0.1089 ns | 0.0909 ns | -         |
+| ISO/IEC 706 MOD 11,10 | 1406625380425510286           | 9.670 ns  | 0.1054 ns | 0.0934 ns | -         |
+| ISO/IEC 706 MOD 11,10 | 1406625380425510282657        | 11.182 ns | 0.0617 ns | 0.0577 ns | -         |
+|                       |                               |           |           |           |           |
+| ISO/IEC 706 MOD 11-2  | 140X                          | 2.074 ns  | 0.0171 ns | 0.0152 ns | -         |
+| ISO/IEC 706 MOD 11-2  | 1406628                       | 3.803 ns  | 0.0240 ns | 0.0213 ns | -         |
+| ISO/IEC 706 MOD 11-2  | 1406625380                    | 4.420 ns  | 0.0263 ns | 0.0246 ns | -         |
+| ISO/IEC 706 MOD 11-2  | 1406625380426                 | 5.091 ns  | 0.0302 ns | 0.0282 ns | -         |
+| ISO/IEC 706 MOD 11-2  | 1406625380425511              | 5.880 ns  | 0.0254 ns | 0.0225 ns | -         |
+| ISO/IEC 706 MOD 11-2  | 140662538042551028X           | 6.881 ns  | 0.0434 ns | 0.0385 ns | -         |
+| ISO/IEC 706 MOD 11-2  | 1406625380425510282651        | 7.915 ns  | 0.0558 ns | 0.0466 ns | -         |
+|                       |                               |           |           |           |           |
+| ISO/IEC 706 MOD 97-10 | 14066                         | 2.411 ns  | 0.0131 ns | 0.0122 ns | -         |
+| ISO/IEC 706 MOD 97-10 | 14066262                      | 4.086 ns  | 0.0298 ns | 0.0264 ns | -         |
+| ISO/IEC 706 MOD 97-10 | 14066253823                   | 5.394 ns  | 0.0314 ns | 0.0294 ns | -         |
+| ISO/IEC 706 MOD 97-10 | 14066253804250                | 6.914 ns  | 0.0428 ns | 0.0380 ns | -         |
+| ISO/IEC 706 MOD 97-10 | 14066253804255112             | 8.808 ns  | 0.0543 ns | 0.0508 ns | -         |
+| ISO/IEC 706 MOD 97-10 | 14066253804255102853          | 10.441 ns | 0.0491 ns | 0.0460 ns | -         |
+| ISO/IEC 706 MOD 97-10 | 14066253804255102826587       | 12.202 ns | 0.0511 ns | 0.0478 ns | -         |
+|                       |                               |           |           |           |           |
+| Luhn                  | 1404                          | 3.544 ns  | 0.0239 ns | 0.0224 ns | -         |
+| Luhn                  | 1406628                       | 4.607 ns  | 0.0323 ns | 0.0286 ns | -         |
+| Luhn                  | 1406625382                    | 6.550 ns  | 0.0597 ns | 0.0558 ns | -         |
+| Luhn                  | 1406625380421                 | 7.363 ns  | 0.0547 ns | 0.0485 ns | -         |
+| Luhn                  | 1406625380425514              | 9.138 ns  | 0.0823 ns | 0.0730 ns | -         |
+| Luhn                  | 1406625380425510285           | 10.409 ns | 0.0735 ns | 0.0614 ns | -         |
+| Luhn                  | 1406625380425510282651        | 12.164 ns | 0.0669 ns | 0.0626 ns | -         |
+|                       |                               |           |           |           |           |
+| Modulus10_13          | 1403                          | 3.020 ns  | 0.0234 ns | 0.0219 ns | -         |
+| Modulus10_13          | 1406627                       | 4.638 ns  | 0.0212 ns | 0.0177 ns | -         |
+| Modulus10_13          | 1406625385                    | 5.447 ns  | 0.0333 ns | 0.0311 ns | -         |
+| Modulus10_13          | 1406625380425                 | 6.674 ns  | 0.0399 ns | 0.0333 ns | -         |
+| Modulus10_13          | 1406625380425518              | 8.093 ns  | 0.0361 ns | 0.0320 ns | -         |
+| Modulus10_13          | 1406625380425510288           | 9.428 ns  | 0.0437 ns | 0.0387 ns | -         |
+| Modulus10_13          | 1406625380425510282657        | 10.903 ns | 0.0325 ns | 0.0304 ns | -         |
+|                       |                               |           |           |           |           |
+| Modulus10_1           | 1401                          | 1.904 ns  | 0.0188 ns | 0.0157 ns | -         |
+| Modulus10_1           | 1406628                       | 2.879 ns  | 0.0315 ns | 0.0295 ns | -         |
+| Modulus10_1           | 1406625384                    | 4.125 ns  | 0.0316 ns | 0.0295 ns | -         |
+|                       |                               |           |           |           |           |
+| Modulus10_2           | 1406                          | 1.847 ns  | 0.0170 ns | 0.0151 ns | -         |
+| Modulus10_2           | 1406627                       | 2.898 ns  | 0.0227 ns | 0.0212 ns | -         |
+| Modulus10_2           | 1406625389                    | 4.048 ns  | 0.0270 ns | 0.0253 ns | -         |
+|                       |                               |           |           |           |           |
+| Modulus11             | 1406                          | 2.948 ns  | 0.0241 ns | 0.0214 ns | -         |
+| Modulus11             | 1406625                       | 4.062 ns  | 0.0213 ns | 0.0200 ns | -         |
+| Modulus11             | 1406625388                    | 4.506 ns  | 0.0278 ns | 0.0247 ns | -         |
+|                       |                               |           |           |           |           |
+| Verhoeff              | 1401                          | 4.827 ns  | 0.0255 ns | 0.0239 ns | -         |
+| Verhoeff              | 1406625                       | 6.848 ns  | 0.0410 ns | 0.0383 ns | -         |
+| Verhoeff              | 1406625388                    | 10.197 ns | 0.0473 ns | 0.0419 ns | -         |
+| Verhoeff              | 1406625380426                 | 13.644 ns | 0.0384 ns | 0.0340 ns | -         |
+| Verhoeff              | 1406625380425512              | 17.068 ns | 0.0725 ns | 0.0643 ns | -         |
+| Verhoeff              | 1406625380425510285           | 20.048 ns | 0.0891 ns | 0.0790 ns | -         |
+| Verhoeff              | 1406625380425510282655        | 23.163 ns | 0.0715 ns | 0.0597 ns | -         |
 
 #### General Alphabetic Algorithms
 
 ISO/IEC 7064 MOD 27,26 uses a single check character. ISO/IEC 7064 MOD 661-26
 uses two check characters.
 
-| Algorithm Name          | Value                   | Mean (.Net 8.0) | Allocated (.Net 8.0) | Mean (.Net 10.0) | Allocated (.Net 10.0) | Performance Delta<br>(.Net 8.0 -> .Net 10.0) |
-|------------------------ |------------------------ |-----------------|----------------------|------------------|-----------------------|--------------------------------------------- |
-| ISO/IEC 7064 MOD 27,26  | EGRS                    |  2.448 ns       | -                    |  2.353 ns        | -                     |  4%                                          |
-| ISO/IEC 7064 MOD 27,26  | EGRNMLU                 |  4.697 ns       | -                    |  4.105 ns        | -                     | 13%                                          |
-| ISO/IEC 7064 MOD 27,26  | EGRNMLJOCB              |  5.551 ns       | -                    |  5.298 ns        | -                     |  5%                                          |
-| ISO/IEC 7064 MOD 27,26  | EGRNMLJOCECUA           |  7.587 ns       | -                    |  6.911 ns        | -                     |  9%                                          |
-| ISO/IEC 7064 MOD 27,26  | EGRNMLJOCECUJIKA        |  9.596 ns       | -                    |  8.277 ns        | -                     | 14%                                          |
-| ISO/IEC 7064 MOD 27,26  | EGRNMLJOCECUJIKNWWY     | 10.929 ns       | -                    |  9.625 ns        | -                     | 12%                                          |
-| ISO/IEC 7064 MOD 27,26  | EGRNMLJOCECUJIKNWWVVOQ  | 12.595 ns       | -                    | 11.115 ns        | -                     | 12%                                          |
-|                         |                         |                 |                      |                  |                       |                                              |                                          
-| ISO/IEC 7064 MOD 661-26 | EGRSE                   |  2.803 ns       | -                    |  2.617 ns        | -                     |  7%                                          |
-| ISO/IEC 7064 MOD 661-26 | EGRNMLDR                |  4.642 ns       | -                    |  4.296 ns        | -                     |  7%                                          |
-| ISO/IEC 7064 MOD 661-26 | EGRNMLJOCCK             |  7.066 ns       | -                    |  6.398 ns        | -                     |  9%                                          |
-| ISO/IEC 7064 MOD 661-26 | EGRNMLJOCECUZJ          |  8.675 ns       | -                    |  8.321 ns        | -                     |  4%                                          |
-| ISO/IEC 7064 MOD 661-26 | EGRNMLJOCECUJIKFQ       | 11.459 ns       | -                    | 10.845 ns        | -                     |  5%                                          |
-| ISO/IEC 7064 MOD 661-26 | EGRNMLJOCECUJIKNWWQN    | 14.497 ns       | -                    | 13.446 ns        | -                     |  7%                                          |
-| ISO/IEC 7064 MOD 661-26 | EGRNMLJOCECUJIKNWWVVORC | 16.463 ns       | -                    | 15.430 ns        | -                     |  6%                                          |
+| Algorithm Name          | Value                   | Mean      | Error     | StdDev    | Allocated |
+|-------------------------|-------------------------|----------:|-----------|-----------|-----------|
+| ISO/IEC 7064 MOD 27,26  | EGRS                    | 2.332 ns  | 0.0226 ns | 0.0211 ns | -         |
+| ISO/IEC 7064 MOD 27,26  | EGRNMLU                 | 4.097 ns  | 0.0308 ns | 0.0273 ns | -         |
+| ISO/IEC 7064 MOD 27,26  | EGRNMLJOCB              | 5.679 ns  | 0.1293 ns | 0.2195 ns | -         |
+| ISO/IEC 7064 MOD 27,26  | EGRNMLJOCECUA           | 7.347 ns  | 0.1623 ns | 0.2379 ns | -         |
+| ISO/IEC 7064 MOD 27,26  | EGRNMLJOCECUJIKA        | 9.034 ns  | 0.1990 ns | 0.4729 ns | -         |
+| ISO/IEC 7064 MOD 27,26  | EGRNMLJOCECUJIKNWWY     | 10.673 ns | 0.1450 ns | 0.1356 ns | -         |
+| ISO/IEC 7064 MOD 27,26  | EGRNMLJOCECUJIKNWWVVOQ  | 11.102 ns | 0.1145 ns | 0.0956 ns | -         |
+|                         |                         |           |           |           |           |
+| ISO/IEC 7064 MOD 661-26 | EGRSE                   | 2.641 ns  | 0.0136 ns | 0.0121 ns | -         |
+| ISO/IEC 7064 MOD 661-26 | EGRNMLDR                | 4.459 ns  | 0.0364 ns | 0.0340 ns | -         |
+| ISO/IEC 7064 MOD 661-26 | EGRNMLJOCCK             | 6.448 ns  | 0.0262 ns | 0.0245 ns | -         |
+| ISO/IEC 7064 MOD 661-26 | EGRNMLJOCECUZJ          | 8.374 ns  | 0.0898 ns | 0.0796 ns | -         |
+| ISO/IEC 7064 MOD 661-26 | EGRNMLJOCECUJIKFQ       | 10.262 ns | 0.0453 ns | 0.0402 ns | -         |
+| ISO/IEC 7064 MOD 661-26 | EGRNMLJOCECUJIKNWWQN    | 13.125 ns | 0.0858 ns | 0.0760 ns | -         |
+| ISO/IEC 7064 MOD 661-26 | EGRNMLJOCECUJIKNWWVVORC | 15.238 ns | 0.0584 ns | 0.0546 ns | -         |
 
 #### General Alphanumeric Algorithms
 
@@ -1557,125 +1552,124 @@ single check character.
 Note also that the values used for the NOID Check Digit algorithm do not include lengths
 3 or 6 so that benchmarks are not run on purely numeric strings.
 
-| Algorithm Name           | Value                   | Mean (.Net 8.0) | Allocated (.Net 8.0) | Mean (.Net 10.0) | Allocated (.Net 10.0) | Performance Delta<br>(.Net 8.0 -> .Net 10.0) |
-|------------------------- |------------------------ |-----------------|----------------------|------------------|-----------------------|--------------------------------------------- |
-| AlphanumericMod97_10     | U7y46                   |  4.562 ns       | -                    |  4.900 ns        | -                     | -7%                                          |
-| AlphanumericMod97_10     | U7y8SX89                |  7.542 ns       | -                    |  7.506 ns        | -                     |  0%                                          |
-| AlphanumericMod97_10     | U7y8SXrC087             | 11.450 ns       | -                    | 10.967 ns        | -                     |  4%                                          |
-| AlphanumericMod97_10     | U7y8SXrC0O3S38          | 14.851 ns       | -                    | 14.361 ns        | -                     |  3%                                          |
-| AlphanumericMod97_10     | U7y8SXrC0O3Sc4I27       | 19.575 ns       | -                    | 18.510 ns        | -                     |  5%                                          |
-| AlphanumericMod97_10     | U7y8SXrC0O3Sc4IHYQ54    | 24.436 ns       | -                    | 23.303 ns        | -                     |  5%                                          |
-| AlphanumericMod97_10     | U7y8SXrC0O3Sc4IHYQF4M21 | 29.116 ns       | -                    | 27.540 ns        | -                     |  5%                                          |
-|                          |                         |                 |                      |                  |                       |                                              |                                           
-| ISO/IEC 7064 MOD 1271-36 | U7YM0                   |  3.848 ns       | -                    |  3.732 ns        | -                     |  3%                                          |
-| ISO/IEC 7064 MOD 1271-36 | U7Y8SXOR                |  5.364 ns       | -                    |  5.149 ns        | -                     |  4%                                          |
-| ISO/IEC 7064 MOD 1271-36 | U7Y8SXRC0FI             |  8.003 ns       | -                    |  7.150 ns        | -                     | 11%                                          |
-| ISO/IEC 7064 MOD 1271-36 | U7Y8SXRC0O3SX4          | 10.208 ns       | -                    |  9.087 ns        | -                     | 11%                                          |
-| ISO/IEC 7064 MOD 1271-36 | U7Y8SXRC0O3SC4I9D       | 12.261 ns       | -                    | 11.030 ns        | -                     | 10%                                          |
-| ISO/IEC 7064 MOD 1271-36 | U7Y8SXRC0O3SC4IHYQYI    | 15.567 ns       | -                    | 13.515 ns        | -                     | 13%                                          |
-| ISO/IEC 7064 MOD 1271-36 | U7Y8SXRC0O3SC4IHYQF4M44 | 18.665 ns       | -                    | 16.054 ns        | -                     | 14%                                          |
-|                          |                         |                 |                      |                  |                       |                                              |                                           
-| ISO/IEC 7064 MOD 37-2    | U7YZ                    |  2.807 ns       | -                    |  2.599 ns        | -                     |  7%                                          |
-| ISO/IEC 7064 MOD 37-2    | U7Y8SXV                 |  4.752 ns       | -                    |  4.603 ns        | -                     |  3%                                          |
-| ISO/IEC 7064 MOD 37-2    | U7Y8SXRC0E              |  6.582 ns       | -                    |  5.131 ns        | -                     | 22%                                          |
-| ISO/IEC 7064 MOD 37-2    | U7Y8SXRC0O3SU           |  7.037 ns       | -                    |  7.150 ns        | -                     | -2%                                          |
-| ISO/IEC 7064 MOD 37-2    | U7Y8SXRC0O3SC4IB        |  8.335 ns       | -                    |  7.513 ns        | -                     | 10%                                          |
-| ISO/IEC 7064 MOD 37-2    | U7Y8SXRC0O3SC4IHYQG     |  9.729 ns       | -                    |  8.759 ns        | -                     | 10%                                          |
-| ISO/IEC 7064 MOD 37-2    | U7Y8SXRC0O3SC4IHYQF4MF  | 11.103 ns       | -                    |  9.895 ns        | -                     | 11%                                          |
-|                          |                         |                 |                      |                  |                       |                                              |                                           
-| ISO/IEC 7064 MOD 37,36   | U7YW                    |  3.396 ns       | -                    |  3.228 ns        | -                     |  5%                                          |
-| ISO/IEC 7064 MOD 37,36   | U7Y8SX8                 |  5.293 ns       | -                    |  4.698 ns        | -                     | 11%                                          |
-| ISO/IEC 7064 MOD 37,36   | U7Y8SXRC0E              |  6.757 ns       | -                    |  6.347 ns        | -                     |  6%                                          |
-| ISO/IEC 7064 MOD 37,36   | U7Y8SXRC0O3SR           |  8.296 ns       | -                    |  7.975 ns        | -                     |  4%                                          |
-| ISO/IEC 7064 MOD 37,36   | U7Y8SXRC0O3SC4IT        | 11.002 ns       | -                    |  9.497 ns        | -                     | 14%                                          |
-| ISO/IEC 7064 MOD 37,36   | U7Y8SXRC0O3SC4IHYQD     | 12.623 ns       | -                    | 11.252 ns        | -                     | 11%                                          |
-| ISO/IEC 7064 MOD 37,36   | U7Y8SXRC0O3SC4IHYQF4MP  | 14.467 ns       | -                    | 13.636 ns        | -                     |  6%                                          |
-|                          |                         |                 |                      |                  |                       |                                              |                                           
-| NOID Check Digit         | 11404/2h9m              |  5.367 ns       | -                    |  5.196 ns        | -                     |  3%                                          |
-| NOID Check Digit         | 11404/2h9tqb0           |  6.565 ns       | -                    |  6.392 ns        | -                     |  3%                                          |
-| NOID Check Digit         | 11404/2h9tqbxk6d        |  7.765 ns       | -                    |  7.587 ns        | -                     |  2%                                          |
-| NOID Check Digit         | 11404/2h9tqbxk6rw74     |  8.960 ns       | -                    |  8.754 ns        | -                     |  2%                                          |
-| NOID Check Digit         | 11404/2h9tqbxk6rw7dwmz  | 10.152 ns       | -                    |  9.957 ns        | -                     |  2%                                          |
-
+| Algorithm Name           | Value                   | Mean      | Error     | StdDev    | Allocated |
+|--------------------------|-------------------------|----------:|-----------|-----------|-----------|
+| AlphanumericMod97_10     | U7y46                   | 5.297 ns  | 0.0975 ns | 0.0912 ns | -         |
+| AlphanumericMod97_10     | U7y8SX89                | 7.339 ns  | 0.0166 ns | 0.0147 ns | -         |
+| AlphanumericMod97_10     | U7y8SXrC087             | 10.939 ns | 0.0123 ns | 0.0115 ns | -         |
+| AlphanumericMod97_10     | U7y8SXrC0O3S38          | 14.217 ns | 0.0401 ns | 0.0375 ns | -         |
+| AlphanumericMod97_10     | U7y8SXrC0O3Sc4I27       | 18.788 ns | 0.3287 ns | 0.7553 ns | -         |
+| AlphanumericMod97_10     | U7y8SXrC0O3Sc4IHYQ54    | 23.346 ns | 0.0715 ns | 0.0669 ns | -         |
+| AlphanumericMod97_10     | U7y8SXrC0O3Sc4IHYQF4M21 | 27.472 ns | 0.0671 ns | 0.0595 ns | -         |
+|                          |                         |           |           |           |           |
+| ISO/IEC 7064 MOD 1271-36 | U7YM0                   | 3.781 ns  | 0.0263 ns | 0.0233 ns | -         |
+| ISO/IEC 7064 MOD 1271-36 | U7Y8SXOR                | 5.045 ns  | 0.0353 ns | 0.0330 ns | -         |
+| ISO/IEC 7064 MOD 1271-36 | U7Y8SXRC0FI             | 7.174 ns  | 0.0804 ns | 0.0713 ns | -         |
+| ISO/IEC 7064 MOD 1271-36 | U7Y8SXRC0O3SX4          | 9.202 ns  | 0.0654 ns | 0.0580 ns | -         |
+| ISO/IEC 7064 MOD 1271-36 | U7Y8SXRC0O3SC4I9D       | 11.000 ns | 0.0479 ns | 0.0424 ns | -         |
+| ISO/IEC 7064 MOD 1271-36 | U7Y8SXRC0O3SC4IHYQYI    | 13.747 ns | 0.0482 ns | 0.0376 ns | -         |
+| ISO/IEC 7064 MOD 1271-36 | U7Y8SXRC0O3SC4IHYQF4M44 | 16.055 ns | 0.0694 ns | 0.0615 ns | -         |
+|                          |                         |           |           |           |           |
+| ISO/IEC 7064 MOD 37-2    | U7YZ                    | 2.688 ns  | 0.0120 ns | 0.0100 ns | -         |
+| ISO/IEC 7064 MOD 37-2    | U7Y8SXV                 | 4.350 ns  | 0.0338 ns | 0.0299 ns | -         |
+| ISO/IEC 7064 MOD 37-2    | U7Y8SXRC0E              | 5.145 ns  | 0.0262 ns | 0.0245 ns | -         |
+| ISO/IEC 7064 MOD 37-2    | U7Y8SXRC0O3SU           | 6.425 ns  | 0.0441 ns | 0.0391 ns | -         |
+| ISO/IEC 7064 MOD 37-2    | U7Y8SXRC0O3SC4IB        | 7.772 ns  | 0.0609 ns | 0.0570 ns | -         |
+| ISO/IEC 7064 MOD 37-2    | U7Y8SXRC0O3SC4IHYQG     | 9.111 ns  | 0.0870 ns | 0.0813 ns | -         |
+| ISO/IEC 7064 MOD 37-2    | U7Y8SXRC0O3SC4IHYQF4MF  | 10.416 ns | 0.1256 ns | 0.1113 ns | -         |
+|                          |                         |           |           |           |           |
+| ISO/IEC 7064 MOD 37,36   | U7YW                    | 3.189 ns  | 0.0284 ns | 0.0252 ns | -         |
+| ISO/IEC 7064 MOD 37,36   | U7Y8SX8                 | 5.281 ns  | 0.0747 ns | 0.0624 ns | -         |
+| ISO/IEC 7064 MOD 37,36   | U7Y8SXRC0E              | 6.783 ns  | 0.0679 ns | 0.0635 ns | -         |
+| ISO/IEC 7064 MOD 37,36   | U7Y8SXRC0O3SR           | 8.329 ns  | 0.0880 ns | 0.0780 ns | -         |
+| ISO/IEC 7064 MOD 37,36   | U7Y8SXRC0O3SC4IT        | 9.865 ns  | 0.1457 ns | 0.1292 ns | -         |
+| ISO/IEC 7064 MOD 37,36   | U7Y8SXRC0O3SC4IHYQD     | 11.894 ns | 0.1117 ns | 0.0990 ns | -         |
+| ISO/IEC 7064 MOD 37,36   | U7Y8SXRC0O3SC4IHYQF4MP  | 13.173 ns | 0.0399 ns | 0.0354 ns | -         |
+|                          |                         |           |           |           |           |
+| NOID Check Digit         | 11404/2h9m              | 5.089 ns  | 0.0247 ns | 0.0219 ns | -         |
+| NOID Check Digit         | 11404/2h9tqb0           | 6.419 ns  | 0.0417 ns | 0.0369 ns | -         |
+| NOID Check Digit         | 11404/2h9tqbxk6d        | 7.598 ns  | 0.0334 ns | 0.0279 ns | -         |
+| NOID Check Digit         | 11404/2h9tqbxk6rw74     | 8.816 ns  | 0.0623 ns | 0.0552 ns | -         |
+| NOID Check Digit         | 11404/2h9tqbxk6rw7dwmz  | 10.007 ns | 0.0597 ns | 0.0466 ns | -         |
 
 #### Value Specific Algorithms
 
-| Algorithm Name                  | Value                                  | Mean (.Net 8.0) | Allocated (.Net 8.0) | Mean (.Net 10.0) | Allocated (.Net 10.0) | Performance Delta<br>(.Net 8.0 -> .Net 10.0) |
-|-------------------------------- |--------------------------------------- |-----------------|----------------------|------------------|-----------------------|--------------------------------------------- |
-| ABA RTN                         | 111000025                              |  5.033 ns       | -                    |  4.692 ns        | -                     |  7%                                          |
-| ABA RTN                         | 122235821                              |  5.038 ns       | -                    |  4.678 ns        | -                     |  7%                                          |
-| ABA RTN                         | 325081403                              |  5.028 ns       | -                    |  4.600 ns        | -                     |  9%                                          |
-|                                 |                                        |                 |                      |                  |                       |                                              |                                           
-| CUSIP                           | 037833100                              |  6.844 ns       | -                    |  6.232 ns        | -                     |  9%                                          |
-| CUSIP                           | 38143VAA7                              |  6.875 ns       | -                    |  6.083 ns        | -                     | 11%                                          |
-| CUSIP                           | 91282CJL6                              |  6.831 ns       | -                    |  6.229 ns        | -                     |  9%                                          |
-|                                 |                                        |                 |                      |                  |                       |                                              |                                           
-| FIGI                            | BBG000B9Y5X2                           |  9.662 ns       | -                    |  8.008 ns        | -                     | 17%                                          |
-| FIGI                            | BBG111111160                           |  9.716 ns       | -                    |  8.170 ns        | -                     | 16%                                          |
-| FIGI                            | BBGZYXWVTSR7                           |  9.648 ns       | -                    |  8.004 ns        | -                     | 17%                                          |
-|                                 |                                        |                 |                      |                  |                       |                                              |                                           
-| IBAN                            | BE71096123456769                       | 12.425 ns       | -                    | 11.738 ns        | -                     |  6%                                          |
-| IBAN                            | GB82WEST12345698765432                 | 21.797 ns       | -                    | 20.776 ns        | -                     |  5%                                          |
-| IBAN                            | SC74MCBL01031234567890123456USD        | 33.618 ns       | -                    | 31.848 ns        | -                     |  5%                                          |
-|                                 |                                        |                 |                      |                  |                       |                                              |
-| ICAO 9303                       | U7Y5                                   |  4.614 ns       | -                    |  4.171 ns        | -                     | 10%                                          |
-| ICAO 9303                       | U7Y8SX8                                |  6.050 ns       | -                    |  5.820 ns        | -                     |  4%                                          |
-| ICAO 9303                       | U7Y8SXRC03                             |  7.776 ns       | -                    |  7.358 ns        | -                     |  5%                                          |
-| ICAO 9303                       | U7Y8SXRC0O3S8                          |  9.595 ns       | -                    |  9.811 ns        | -                     | -2%                                          |
-| ICAO 9303                       | U7Y8SXRC0O3SC4I2                       | 11.372 ns       | -                    | 11.839 ns        | -                     | -4%                                          |
-| ICAO 9303                       | U7Y8SXRC0O3SC4IHYQ9                    | 13.186 ns       | -                    | 13.739 ns        | -                     | -4%                                          |
-| ICAO 9303                       | U7Y8SXRC0O3SC4IHYQF4M8                 | 15.074 ns       | -                    | 15.888 ns        | -                     | -5%                                          |
-|                                 |                                                                                                    |                 |                      |                  |                       |                                              |
-| ICAO 9303 Machine Readable Visa | I<UTOERIKSSON<<ANNA<MARIA<<<<<<<<<<<<br>D231458907UTO7408122F1204159<<<<<<<<                       | 19.565 ns       | -                    | 18.568 ns        | -                     |  5%                                          |
-| ICAO 9303 Machine Readable Visa | I<UTOSKYWALKER<<LUKE<<<<<<<<<<<<<<<<<br>STARWARS45UTO7705256M2405252<<<<<<<<                       | 19.520 ns       | -                    | 18.535 ns        | -                     |  5%                                          |
-| ICAO 9303 Machine Readable Visa | V<UTOERIKSSON<<ANNA<MARIA<<<<<<<<<<<<<<<<<<<<br>L898902C<3UTO6908061F9406236ZE184226B<<<<<<<       | 18.751 ns       | -                    | 18.520 ns        | -                     |  1%                                          |
-|                                 |                                                                                                    |                 |                      |                  |                       |                                              |
-| ICAO 9303 Size TD1              | I<UTOD231458907<<<<<<<<<<<<<<<<br>7408122F1204159UTO<<<<<<<<<<<6<br>ERIKSSON<<ANNA<MARIA<<<<<<<<<< | 32.991 ns       | -                    | 33.525 ns        | -                     | -2%                                          |
-| ICAO 9303 Size TD1              | I<UTOSTARWARS45<<<<<<<<<<<<<<<<br>7705256M2405252UTO<<<<<<<<<<<4<br>SKYWALKER<<LUKE<<<<<<<<<<<<<<< | 41.699 ns       | -                    | 37.326 ns        | -                     | 10%                                          |
-| ICAO 9303 Size TD1              | I<UTOD23145890<AB112234566<<<<<br>7408122F1204159UTO<<<<<<<<<<<4<br>ERIKSSON<<ANNA<MARIA<<<<<<<<<< | 32.963 ns       | -                    | 33.294 ns        | -                     | -1%                                          |
-|                                 |                                                                                                    |                 |                      |                  |                       |                                              |
-| ICAO 9303 Size TD2              | I<UTOERIKSSON<<ANNA<MARIA<<<<<<<<<<<<br>D231458907UTO7408122F1204159<<<<<<<6                       | 30.565 ns       | -                    | 30.815 ns        | -                     | -1%                                          |
-| ICAO 9303 Size TD2              | I<UTOQWERTY<<ASDF<<<<<<<<<<<<<<<<<<<<br>D23145890<UTO7408122F1204159AB1124<4                       | 30.817 ns       | -                    | 30.814 ns        | -                     |  0%                                          |
-| ICAO 9303 Size TD2              | I<UTOSKYWALKER<<LUKE<<<<<<<<<<<<<<<<<br>STARWARS45UTO7705256M2405252<<<<<<<8                       | 30.745 ns       | -                    | 30.814 ns        | -                     |  0%                                          |
-|                                 |                                                                                                    |                 |                      |                  |                       |                                              |
-| ICAO 9303 Size TD3              | P<UTOERIKSSON<<ANNA<MARIA<<<<<<<<<<<<<<<<<<<<br>L898902C36UTO7408122F1204159ZE184226B<<<<<10       | 39.632 ns       | -                    | 40.555 ns        | -                     | -2%                                          |
-| ICAO 9303 Size TD3              | P<UTOQWERTY<<ASDF<<<<<<<<<<<<<<<<<<<<<<<<<<<<br>Q123987655UTO3311226F2010201<<<<<<<<<<<<<<06       | 40.310 ns       | -                    | 40.680 ns        | -                     | -1%                                          |
-| ICAO 9303 Size TD3              | P<UTOSKYWALKER<<LUKE<<<<<<<<<<<<<<<<<<<<<<<<<br>STARWARS45UTO7705256M2405252HAN<SHOT<FIRST78       | 39.529 ns       | -                    | 40.659 ns        | -                     | -3%                                          |
-|                                 |                                        |                 |                      |                  |                       |                                              |
-| ISAN                            | C594660A8B2E5D22X6DDA3272E             | 19.312 ns       | -                    | 17.983 ns        | -                     |  7%                                          |
-| ISAN                            | D02C42E954183EE2Q1291C8AEO             | 19.336 ns       | -                    | 20.953 ns        | -                     | -8%                                          |
-| ISAN                            | E9530C32BC0EE83B269867B20F             | 19.682 ns       | -                    | 16.865 ns        | -                     | 14%                                          |
-|                                 |                                        |                 |                      |                  |                       |                                              |                                          
-| ISAN (Formatted)                | ISAN C594-660A-8B2E-5D22-X             | 17.979 ns       | -                    | 14.649 ns        | -                     | 19%                                          |
-| ISAN (Formatted)                | ISAN D02C-42E9-5418-3EE2-Q             | 17.555 ns       | -                    | 15.328 ns        | -                     | 13%                                          |
-| ISAN (Formatted)                | ISAN E953-0C32-BC0E-E83B-2             | 17.977 ns       | -                    | 15.452 ns        | -                     | 14%                                          |
-| ISAN (Formatted)                | ISAN C594-660A-8B2E-5D22-X-6DDA-3272-E | 26.585 ns       | -                    | 22.362 ns        | -                     | 16%                                          |
-| ISAN (Formatted)                | ISAN D02C-42E9-5418-3EE2-Q-1291-C8AE-O | 26.834 ns       | -                    | 22.603 ns        | -                     | 16%                                          |
-| ISAN (Formatted)                | ISAN E953-0C32-BC0E-E83B-2-6986-7B20-F | 26.475 ns       | -                    | 22.446 ns        | -                     | 15%                                          |
-|                                 |                                        |                 |                      |                  |                       |                                              |                                          
-| ISIN                            | AU0000XVGZA3                           |  8.262 ns       | -                    |  7.678 ns        | -                     |  7%                                          |
-| ISIN                            | GB0002634946                           |  8.165 ns       | -                    |  7.469 ns        | -                     |  9%                                          |
-| ISIN                            | US0378331005                           |  8.195 ns       | -                    |  7.505 ns        | -                     |  8%                                          |
-|                                 |                                        |                 |                      |                  |                       |                                              |                                          
-| ISO 6346                        | CSQU3054383                            |  7.441 ns       | -                    |  7.811 ns        | -                     | -5%                                          |
-| ISO 6346                        | MSKU9070323                            |  7.432 ns       | -                    |  7.835 ns        | -                     | -5%                                          |
-| ISO 6346                        | TOLU4734787                            |  7.458 ns       | -                    |  7.831 ns        | -                     | -5%                                          |
-|                                 |                                        |                 |                      |                  |                       |                                              |                                          
-| NHS                             | 4505577104                             |  4.404 ns       | -                    |  4.455 ns        | -                     | -1%                                          |
-| NHS                             | 5301194917                             |  4.411 ns       | -                    |  4.445 ns        | -                     | -1%                                          |
-| NHS                             | 9434765919                             |  4.404 ns       | -                    |  4.438 ns        | -                     | -1%                                          |
-|                                 |                                        |                 |                      |                  |                       |                                              |                                          
-| NPI                             | 1122337797                             |  6.166 ns       | -                    |  5.829 ns        | -                     |  5%                                          |
-| NPI                             | 1234567893                             |  5.962 ns       | -                    |  5.931 ns        | -                     |  1%                                          |
-| NPI                             | 1245319599                             |  5.951 ns       | -                    |  5.830 ns        | -                     |  2%                                          |
-|                                 |                                        |                 |                      |                  |                       |                                              |                                          
-| SEDOL                           | 3134865                                |  5.612 ns       | -                    |  5.815 ns        | -                     | -4%                                          |
-| SEDOL                           | B0YQ5W0                                |  5.603 ns       | -                    |  5.813 ns        | -                     | -4%                                          |
-| SEDOL                           | BRDVMH9                                |  5.609 ns       | -                    |  5.819 ns        | -                     | -4%                                          |
-|                                 |                                        |                 |                      |                  |                       |                                              |                                          
-| VIN                             | 1G8ZG127XWZ157259                      | 12.377 ns       | -                    | 12.944 ns        | -                     | -5%                                          |
-| VIN                             | 1HGEM21292L047875                      | 12.398 ns       | -                    | 12.865 ns        | -                     | -4%                                          |
-| VIN                             | 1M8GDM9AXKP042788                      | 12.134 ns       | -                    | 13.088 ns        | -                     | -8%                                          |
+| Algorithm Name                  | Value                                  | Mean      | Error     | StdDev    | Allocated |
+|---------------------------------|----------------------------------------|----------:|-----------|-----------|-----------|
+| ABA RTN                         | 111000025                              | 4.572 ns  | 0.0099 ns | 0.0088 ns | -         |
+| ABA RTN                         | 122235821                              | 4.528 ns  | 0.0049 ns | 0.0046 ns | -         |
+| ABA RTN                         | 325081403                              | 4.526 ns  | 0.0029 ns | 0.0022 ns | -         |
+|                                 |                                        |           |           |           |           |
+| CUSIP                           | 37833100                               | 6.268 ns  | 0.0053 ns | 0.0049 ns | -         |
+| CUSIP                           | 38143VAA7                              | 6.258 ns  | 0.0057 ns | 0.0050 ns | -         |
+| CUSIP                           | 91282CJL6                              | 6.258 ns  | 0.0073 ns | 0.0065 ns | -         |
+|                                 |                                        |           |           |           |           |
+| FIGI                            | BBG000B9Y5X2                           | 7.885 ns  | 0.0056 ns | 0.0050 ns | -         |
+| FIGI                            | BBG111111160                           | 7.929 ns  | 0.0053 ns | 0.0045 ns | -         |
+| FIGI                            | BBGZYXWVTSR7                           | 8.047 ns  | 0.0575 ns | 0.0537 ns | -         |
+|                                 |                                        |           |           |           |           |
+| IBAN                            | BE71096123456769                       | 11.903 ns | 0.0768 ns | 0.0718 ns | -         |
+| IBAN                            | GB82WEST12345698765432                 | 21.263 ns | 0.2220 ns | 0.2076 ns | -         |
+| IBAN                            | SC74MCBL01031234567890123456USD        | 32.737 ns | 0.3820 ns | 0.3190 ns | -         |
+|                                 |                                        |           |           |           |           |
+| ICAO 9303                       | U7Y5                                   | 4.321 ns  | 0.0208 ns | 0.0195 ns | -         |
+| ICAO 9303                       | U7Y8SX8                                | 6.020 ns  | 0.0632 ns | 0.0591 ns | -         |
+| ICAO 9303                       | U7Y8SXRC03                             | 7.693 ns  | 0.0856 ns | 0.0801 ns | -         |
+| ICAO 9303                       | U7Y8SXRC0O3S8                          | 9.483 ns  | 0.2059 ns | 0.2749 ns | -         |
+| ICAO 9303                       | U7Y8SXRC0O3SC4I2                       | 10.983 ns | 0.0744 ns | 0.0696 ns | -         |
+| ICAO 9303                       | U7Y8SXRC0O3SC4IHYQ9                    | 12.690 ns | 0.0482 ns | 0.0427 ns | -         |
+| ICAO 9303                       | U7Y8SXRC0O3SC4IHYQF4M8                 | 14.541 ns | 0.0988 ns | 0.0876 ns | -         |
+|                                 |                                        |           |           |           |           |
+| ICAO 9303 Machine Readable Visa | I<UTOERIKSSON<<ANNA<MARIA<<<<<<<<<<<<br>D231458907UTO7408122F1204159<<<<<<<<                 | 19.684 ns | 0.1291 ns | 0.1207 ns | -         |
+| ICAO 9303 Machine Readable Visa | I<UTOSKYWALKER<<LUKE<<<<<<<<<<<<<<<<<br>STARWARS45UTO7705256M2405252<<<<<<<<                 | 19.651 ns | 0.1502 ns | 0.1405 ns | -         |
+| ICAO 9303 Machine Readable Visa | V<UTOERIKSSON<<ANNA<MARIA<<<<<<<<<<<<<<<<<<<<br>L898902C<3UTO6908061F9406236ZE184226B<<<<<<< | 18.538 ns | 0.2393 ns | 0.1998 ns | -         |
+|                                 |                                        |           |           |           |           |
+| ICAO 9303 Size TD1              | I<UTOD231458907<<<<<<<<<<<<<<<<br>7408122F1204159UTO<<<<<<<<<<<6<br>ERIKSSON<<ANNA<MARIA<<<<<<<<<< | 33.773 ns | 0.1454 ns | 0.1289 ns | -         |
+| ICAO 9303 Size TD1              | I<UTOSTARWARS45<<<<<<<<<<<<<<<<br>7705256M2405252UTO<<<<<<<<<<<4<br>SKYWALKER<<LUKE<<<<<<<<<<<<<<< | 38.206 ns | 0.1840 ns | 0.1631 ns | -         |
+| ICAO 9303 Size TD1              | I<UTOD23145890<AB112234566<<<<<br>7408122F1204159UTO<<<<<<<<<<<4<br>ERIKSSON<<ANNA<MARIA<<<<<<<<<< | 34.386 ns | 0.2079 ns | 0.1945 ns | -         |
+|                                 |                                        |           |           |           |           |
+| ICAO 9303 Size TD2              | I<UTOERIKSSON<<ANNA<MARIA<<<<<<<<<<<<br>D231458907UTO7408122F1204159<<<<<<<6 | 31.622 ns | 0.2665 ns | 0.2492 ns | -         |
+| ICAO 9303 Size TD2              | I<UTOQWERTY<<ASDF<<<<<<<<<<<<<<<<<<<<br>D23145890<UTO7408122F1204159AB1124<4 | 31.700 ns | 0.2532 ns | 0.2368 ns | -         |
+| ICAO 9303 Size TD2              | I<UTOSKYWALKER<<LUKE<<<<<<<<<<<<<<<<<br>STARWARS45UTO7705256M2405252<<<<<<<8 | 31.443 ns | 0.1810 ns | 0.1604 ns | -         |
+|                                 |                                        |           |           |           |           |
+| ICAO 9303 Size TD3              | P<UTOERIKSSON<<ANNA<MARIA<<<<<<<<<<<<<<<<<<<<br>L898902C36UTO7408122F1204159ZE184226B<<<<<10 | 41.579 ns | 0.2136 ns | 0.1998 ns | -         |
+| ICAO 9303 Size TD3              | P<UTOQWERTY<<ASDF<<<<<<<<<<<<<<<<<<<<<<<<<<<<br>Q123987655UTO3311226F2010201<<<<<<<<<<<<<<06 | 44.731 ns | 0.1975 ns | 0.1847 ns | -         |
+| ICAO 9303 Size TD3              | P<UTOSKYWALKER<<LUKE<<<<<<<<<<<<<<<<<<<<<<<<<br>STARWARS45UTO7705256M2405252HAN<SHOT<FIRST78 | 44.764 ns | 0.2196 ns | 0.1947 ns | -         |
+|                                 |                                        |           |           |           |           |
+| ISAN                            | C594660A8B2E5D22X6DDA3272E             | 18.823 ns | 0.2636 ns | 0.2336 ns | -         |
+| ISAN                            | D02C42E954183EE2Q1291C8AEO             | 17.367 ns | 0.1634 ns | 0.1364 ns | -         |
+| ISAN                            | E9530C32BC0EE83B269867B20F             | 16.964 ns | 0.1627 ns | 0.1442 ns | -         |
+|                                 |                                        |           |           |           |           |
+| ISAN (Formatted)                | ISAN C594-660A-8B2E-5D22-X             | 15.646 ns | 0.1663 ns | 0.1474 ns | -         |
+| ISAN (Formatted)                | ISAN D02C-42E9-5418-3EE2-Q             | 14.682 ns | 0.1183 ns | 0.1049 ns | -         |
+| ISAN (Formatted)                | ISAN E953-0C32-BC0E-E83B-2             | 15.727 ns | 0.1711 ns | 0.1516 ns | -         |
+| ISAN (Formatted)                | ISAN C594-660A-8B2E-5D22-X-6DDA-3272-E | 24.230 ns | 0.2041 ns | 0.1909 ns | -         |
+| ISAN (Formatted)                | ISAN D02C-42E9-5418-3EE2-Q-1291-C8AE-O | 25.131 ns | 0.1821 ns | 0.1614 ns | -         |
+| ISAN (Formatted)                | ISAN E953-0C32-BC0E-E83B-2-6986-7B20-F | 25.201 ns | 0.1258 ns | 0.1051 ns | -         |
+|                                 |                                        |           |           |           |           |
+| ISIN                            | AU0000XVGZA3                           | 7.816 ns  | 0.0852 ns | 0.0797 ns | -         |
+| ISIN                            | GB0002634946                           | 7.346 ns  | 0.0458 ns | 0.0428 ns | -         |
+| ISIN                            | US0378331005                           | 7.348 ns  | 0.0563 ns | 0.0526 ns | -         |
+|                                 |                                        |           |           |           |           |
+| ISO 6346                        | CSQU3054383                            | 7.957 ns  | 0.0592 ns | 0.0554 ns | -         |
+| ISO 6346                        | MSKU9070323                            | 7.953 ns  | 0.0625 ns | 0.0554 ns | -         |
+| ISO 6346                        | TOLU4734787                            | 7.950 ns  | 0.0467 ns | 0.0437 ns | -         |
+|                                 |                                        |           |           |           |           |
+| NHS                             | 4505577104                             | 4.584 ns  | 0.0319 ns | 0.0298 ns | -         |
+| NHS                             | 5301194917                             | 4.577 ns  | 0.0302 ns | 0.0268 ns | -         |
+| NHS                             | 9434765919                             | 4.574 ns  | 0.0262 ns | 0.0245 ns | -         |
+|                                 |                                        |           |           |           |           |
+| NPI                             | 1122337797                             | 6.099 ns  | 0.0248 ns | 0.0232 ns | -         |
+| NPI                             | 1234567893                             | 6.748 ns  | 0.0648 ns | 0.0574 ns | -         |
+| NPI                             | 1245319599                             | 6.038 ns  | 0.0320 ns | 0.0267 ns | -         |
+|                                 |                                        |           |           |           |           |
+| SEDOL                           | 3134865                                | 5.849 ns  | 0.0271 ns | 0.0240 ns | -         |
+| SEDOL                           | B0YQ5W0                                | 5.872 ns  | 0.0328 ns | 0.0291 ns | -         |
+| SEDOL                           | BRDVMH9                                | 5.860 ns  | 0.0361 ns | 0.0302 ns | -         |
+|                                 |                                        |           |           |           |           |
+| VIN                             | 1G8ZG127XWZ157259                      | 13.278 ns | 0.0645 ns | 0.0538 ns | -         |
+| VIN                             | 1HGEM21292L047875                      | 13.297 ns | 0.0520 ns | 0.0434 ns | -         |
+| VIN                             | 1M8GDM9AXKP042788                      | 12.869 ns | 0.0624 ns | 0.0521 ns | -         |
 
 ### Validate Method (with ICheckDigitMask)
 
@@ -1691,15 +1685,15 @@ public class GroupsOfThreeCheckDigitMask : ICheckDigitMask
 
 #### General Numeric Algorithms
 
-| Algorithm Name         | Value                          | Mean (.Net 8.0) | Allocated (.Net 8.0) | Mean (.Net 10.0) | Allocated (.Net 10.0) | Performance Delta<br>(.Net 8.0 -> .Net 10.0) |
-|----------------------- |------------------------------- |-----------------|----------------------|------------------|-----------------------|----------------------------------------------|
-| Luhn                   | 140 4                          |  4.743 ns       | -                    |  4.675 ns        | -                     |  1%                                          |
-| Luhn                   | 140 662 8                      |  6.800 ns       | -                    |  6.032 ns        | -                     | 11%                                          |
-| Luhn                   | 140 662 538 2                  | 10.294 ns       | -                    |  7.948 ns        | -                     | 23%                                          |
-| Luhn                   | 140 662 538 042 1              | 11.998 ns       | -                    |  9.833 ns        | -                     | 18%                                          |
-| Luhn                   | 140 662 538 042 551 4          | 14.930 ns       | -                    | 12.079 ns        | -                     | 19%                                          |
-| Luhn                   | 140 662 538 042 551 028 5      | 17.257 ns       | -                    | 14.282 ns        | -                     | 17%                                          |
-| Luhn                   | 140 662 538 042 551 028 265 1  | 19.668 ns       | -                    | 16.428 ns        | -                     | 16%                                          |
+| Algorithm Name        | Value                         | Mean      | Error     | StdDev    | Allocated |
+|-----------------------|-------------------------------|----------:|-----------|-----------|-----------|
+| Luhn                  | 140 4                         | 4.647 ns  | 0.0278 ns | 0.0232 ns | -         |
+| Luhn                  | 140 662 8                     | 6.048 ns  | 0.0490 ns | 0.0458 ns | -         |
+| Luhn                  | 140 662 538 2                 | 8.229 ns  | 0.0595 ns | 0.0528 ns | -         |
+| Luhn                  | 140 662 538 042 1             | 9.500 ns  | 0.0665 ns | 0.0622 ns | -         |
+| Luhn                  | 140 662 538 042 551 4         | 11.272 ns | 0.0564 ns | 0.0528 ns | -         |
+| Luhn                  | 140 662 538 042 551 028 5     | 13.034 ns | 0.0692 ns | 0.0613 ns | -         |
+| Luhn                  | 140 662 538 042 551 028 265 1 | 14.754 ns | 0.1212 ns | 0.1075 ns | -         |
 
 # Release History/Release Notes
 
@@ -1801,7 +1795,7 @@ Updated to .Net 10.0
 Average performance improvement for .Net 10.0 across all algorithms:
   Validate method ~4% improvement, TryCalculateCheckDigit method ~6% improvement
 
-Detailed benchmark results for .Net 8 vs .Net 10 located at 
+Detailed benchmark results for .Net 8 vs .Net 10 located at https://github.com/KnowledgeForwardSolutions/CheckDigits.Net/blob/main/Documentation/DotNet8_DotNet10_PerformanceComparision.md
 
 Added masked validation support for algorithms via ICheckDigitMask and IMaskedCheckDigitAlgorithm interfaces. Algorithms that implement IMaskedCheckDigitAlgorithm:
 * Luhn Algorithm
