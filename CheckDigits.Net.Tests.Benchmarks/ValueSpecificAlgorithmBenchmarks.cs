@@ -4,8 +4,8 @@
 
 namespace CheckDigits.Net.Tests.Benchmarks;
 
-[SimpleJob(RuntimeMoniker.Net80, baseline: true)]
-[SimpleJob(RuntimeMoniker.Net10_0)]
+//[SimpleJob(RuntimeMoniker.Net80, baseline: true)]
+//[SimpleJob(RuntimeMoniker.Net10_0)]
 [MemoryDiagnoser]
 public class ValueSpecificAlgorithmBenchmarks
 {

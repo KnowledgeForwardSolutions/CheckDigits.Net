@@ -18,6 +18,11 @@ public interface ICheckDigitMask
    ///   be excluded from check digit calculations; otherwise, 
    ///   <see langword="false"/>.
    /// </returns>
+   /// <remarks>
+   ///   Note that the determination to include or exclude a character is based
+   ///   only on the index of the character in the string value, and not on the
+   ///   value of the character at that index.
+   /// </remarks>
    Boolean ExcludeCharacter(Int32 index);
 
    /// <summary>
@@ -32,5 +37,10 @@ public interface ICheckDigitMask
    ///   be included in check digit calculations; otherwise, 
    ///   <see langword="false"/>.
    /// </returns>
+   /// <remarks>
+   ///   Note that the determination to include or exclude a character is based
+   ///   only on the index of the character in the string value, and not on the
+   ///   value of the character at that index.
+   /// </remarks>
    Boolean IncludeCharacter(Int32 index);
 }

@@ -6,11 +6,11 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <Title>CheckDigits.Net</Title>
-    <Version>2.3.1</Version>
+    <Version>3.0.0</Version>
     <Authors>Knowledge Forward Solutions</Authors>
     <Company>Knowledge Forward Solutions</Company>
     <Description>An extensive collection of optimized check digit algorithms suitable for a wide range of applications</Description>
-    <Copyright>Copyright 2024, Knowledge Forward Solutions</Copyright>
+    <Copyright>Copyright 2024, 2025, Knowledge Forward Solutions</Copyright>
     <PackageProjectUrl></PackageProjectUrl>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <RepositoryUrl>https://github.com/KnowledgeForwardSolutions/CheckDigits.Net</RepositoryUrl>
@@ -103,7 +103,20 @@ Performance increases for:
 
 ## v2.3.1
 
-Documentation update. Fix several minor documentation errors in README file. No code changes.</PackageReleaseNotes>
+Documentation update. Fix several minor documentation errors in README file. No code changes.
+
+## v3.0.0
+
+Updated to .Net 10.0
+
+Average performance improvement for .Net 10.0 across all algorithms is ~4% for 
+both Validate and TryCalculateCheckDigit methods.
+
+Detailed benchmark results for .Net 8 vs .Net 10 located at https://github.com/KnowledgeForwardSolutions/CheckDigits.Net/blob/main/Documentation/DotNet8_DotNet10_PerformanceComparision.md
+
+Added masked validation support for algorithms via ICheckDigitMask and IMaskedCheckDigitAlgorithm interfaces. Algorithms that implement IMaskedCheckDigitAlgorithm:
+* Luhn Algorithm
+</PackageReleaseNotes>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 

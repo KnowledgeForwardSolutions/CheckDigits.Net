@@ -5,8 +5,8 @@
 
 namespace CheckDigits.Net.Tests.Benchmarks;
 
-[SimpleJob(RuntimeMoniker.Net80, baseline: true)]
-[SimpleJob(RuntimeMoniker.Net10_0)]
+//[SimpleJob(RuntimeMoniker.Net80, baseline: true)]
+//[SimpleJob(RuntimeMoniker.Net10_0)]
 [MemoryDiagnoser]
 public class NumericAlgorithmBenchmarks
 {
@@ -168,26 +168,26 @@ public class NumericAlgorithmBenchmarks
       yield return [Algorithms.Luhn, Algorithms.Luhn.AlgorithmName, "140 662 538 042 551 028 265 1"];
    }
 
-   //[Benchmark]
-   //[ArgumentsSource(nameof(TryCalculateCheckDigitArguments))]
-   //public void TryCalculateCheckDigit(ISingleCheckDigitAlgorithm algorithm, String name, String value)
-   //{
-   //   algorithm.TryCalculateCheckDigit(value, out var checkDigit);
-   //}
+   [Benchmark]
+   [ArgumentsSource(nameof(TryCalculateCheckDigitArguments))]
+   public void TryCalculateCheckDigit(ISingleCheckDigitAlgorithm algorithm, String name, String value)
+   {
+      algorithm.TryCalculateCheckDigit(value, out var checkDigit);
+   }
 
-   //[Benchmark]
-   //[ArgumentsSource(nameof(TryCalculateCheckDigitsArguments))]
-   //public void TryCalculateCheckDigits(IDoubleCheckDigitAlgorithm algorithm, String name, String value)
-   //{
-   //   algorithm.TryCalculateCheckDigits(value, out var first, out var second);
-   //}
+   [Benchmark]
+   [ArgumentsSource(nameof(TryCalculateCheckDigitsArguments))]
+   public void TryCalculateCheckDigits(IDoubleCheckDigitAlgorithm algorithm, String name, String value)
+   {
+      algorithm.TryCalculateCheckDigits(value, out var first, out var second);
+   }
 
-   //[Benchmark]
-   //[ArgumentsSource(nameof(ValidateArguments))]
-   //public void Validate(ICheckDigitAlgorithm algorithm, String name, String value)
-   //{
-   //   algorithm.Validate(value);
-   //}
+   [Benchmark]
+   [ArgumentsSource(nameof(ValidateArguments))]
+   public void Validate(ICheckDigitAlgorithm algorithm, String name, String value)
+   {
+      algorithm.Validate(value);
+   }
 
    [Benchmark]
    [ArgumentsSource(nameof(ValidateMaskedArguments))]
