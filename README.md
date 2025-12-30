@@ -70,9 +70,12 @@ let us know. Or contribute to the CheckDigits.Net repository: https://github.com
 
 ## Check Digit Overview
 
-Check digits are a useful tool for detecting human transcription errors. By embedding
+Check digits are a useful tool for detecting data transcription errors. By embedding
 a check digit in a piece of information it is possible to detect common data entry
 errors early, often before performing more extensive and time consuming processing.
+A very common example of early error detection is validating a credit card number's 
+check digit in the UI layer while the user is entering the credit card number before 
+attempting to authorize a transaction with the card issuer.
 
 Typical errors that can be detected by check digit algorithms include:
 
@@ -83,13 +86,16 @@ Typical errors that can be detected by check digit algorithms include:
 * Jump twin errors (two identical digits separated by one position being replaced by another pair, i.e. *aba -> cbc*).
 
 Check digit algorithms attempt to balance detection capabilities with the cost in 
-execution time and/or the complexity to implement.
-
-Note also that if a value has a valid check digit, it does not imply that the 
-value is valid, only that the value was transcribed correctly. There may be other
-requirements that are specific to the type of value that could cause a value with
-a valid check digit to be considered incorrect/invalid.
-
+execution time and/or the complexity to implement. While check digits are designed
+to catch common errors early, they are not foolproof. Statistically, check digit 
+algorithms are subject to "False Positive" results where the check digit appears 
+to be valid, but the value contains a transcription error that the algorithm is not 
+capable of detecting (for example, the Luhn algorithm fails to detect two digit 
+transposition errors with the digits *9* and *0*, i.e. *90 -> 09* or vice versa).
+Conversely, check digit algorithms are not subject to "False Negative" results. 
+If a value contains an incorrect check digit, then you can be certain that the 
+value was not transcribed correctly.
+ 
 ## ISO/IEC 7064 Algorithms
 
 The ISO/IEC 7064 standard defines a family of algorithms capable of detecting a
@@ -301,16 +307,19 @@ A check digit algorithm is a class that implements two different interfaces. Eve
 algorithm implements ```ICheckDigitAlgorithm``` which has properties for getting
 the algorithm name and algorithm description and a Validate method that accepts 
 a string and returns a boolean value that indicates if the string contains a valid
-check digit.
+check digit. Mal-formed input such as a null value, an empty string,
+a string of incorrect length or a string that contains characters that are not
+valid for the algorithm will return false instead of throwing an exception.
 
 Check digit algorithms that use a single character also implement 
 ```ISingleCheckDigitAlgorithm``` which has a TryCalculateCheckDigit method that
 accepts a string value and an out parameter which will contain the calculated 
 check digit or '\0' if it was not possible to calculate the check digit.
 TryCalculateCheckDigit also returns a boolean value that indicates if the check
-digit was calculated or not. Mal-formed input such as a null value, an empty string,
-a string of incorrect length or a string that contains characters that are not
-valid for the algorithm will return false instead of throwing an exception.
+digit was calculated or not. As with the Validate method, mal-formed input such 
+as a null value, an empty string, a string of incorrect length or a string that 
+contains characters that are not valid for the algorithm will return false instead 
+of throwing an exception.
 
 Check digit algorithms that use two character check digits also implement
 ```IDoubleCheckDigitAlgorithm```. This interface has a TryCalculateCheckDigits
@@ -329,6 +338,38 @@ check digit to its character equivalent. ```ISupplementalCharacterAlphabet```
 extends ```IAlphabet``` by adding the CheckCharacterToInteger method which maps 
 a check character to its integer equivalent. ```ISupplementalCharacterAlphabet```
 is only used by ```Iso7064PureSystemSingleCharacterAlgorithm```.
+
+The ```ICheckDigitMask``` interface is used to define a mask that filters out 
+characters from the value being checked. ```ICheckDigitMask``` defines 
+IncludeCharacter and ExcludeCharacter methods that return true/false to indicate
+if a character at a particular zero based index should be included or excluded
+when calculating the check digit.
+
+The ```IMaskedCheckDigitAlgorithm``` is derived from ```ICheckDigitAlgorithm```
+and defines an overload for the Validate method that accepts an ```ICheckDigitMask``` 
+instance that is used to filter characters from the value being checked. Currently
+only the [Luhn Algorithm](#luhn-algorithm) implements ```IMaskedCheckDigitAlgorithm```.
+
+**ICheckDigitMask Example:**
+```C#
+
+// Excludes every 5th character, allowing for spaces or dashes in credit card numbers.
+public class CreditCardMask : ICheckDigitMask
+{
+   public Boolean ExcludeCharacter(Int32 index) => (index + 1) % 5 == 0;
+
+   public Boolean IncludeCharacter(Int32 index) => (index + 1) % 5 != 0;
+}
+
+// Excludes the 4th and 8th characters from Canadian Social Insurance Numbers which breaks the SIN into groups of three digits.
+public class CaSocialInsuranceNumberMask : ICheckDigitMask
+{
+   public Boolean ExcludeCharacter(Int32 index) => index == 3 || index == 7;
+
+   public Boolean IncludeCharacter(Int32 index) => index != 3 && index != 7;
+}
+
+```
 
 ## Algorithm Descriptions
 
@@ -1254,6 +1295,12 @@ Previous .Net 8 benchmarks available at https://github.com/KnowledgeForwardSolut
 
 Detailed benchmark results for .Net 8 vs .Net 10 located at https://github.com/KnowledgeForwardSolutions/CheckDigits.Net/blob/main/Documentation/DotNet8_DotNet10_PerformanceComparision.md
 
+Note that the benchmarks for version 2.x.x of CheckDigits.Net were run on an Intel
+i7-7700HQ CPU @ 2.80GHz computer while the benchmarks for version 3.x.x of 
+CheckDigits.Net were run on an AMD RYZEN AI MAX+ 3950 CPU @ 3.00GHz computer.
+The comparison benchmarks between .Net 8.0 and .Net 10.0 were all run on the same 
+newer computer to ensure accurate comparisons. 
+
 #### Benchmark Details
 
 BenchmarkDotNet v0.15.8, Windows 11 (10.0.26200.7462/25H2/2025Update/HudsonValley2)
@@ -1261,8 +1308,6 @@ AMD RYZEN AI MAX+ 395 w/ Radeon 8060S 3.00GHz, 1 CPU, 32 logical and 16 physical
 .NET SDK 10.0.101
   [Host]     : .NET 10.0.1 (10.0.1, 10.0.125.57005), X64 RyuJIT x86-64-v4
   DefaultJob : .NET 10.0.1 (10.0.1, 10.0.125.57005), X64 RyuJIT x86-64-v4
-
-Note that the .Net 10.0 benchmarks were run on a newer computer than the .Net 8.0 benchmarks.
 
 ### TryCalculateCheckDigit/TryCalculateCheckDigits Methods
 
@@ -1792,8 +1837,8 @@ Documentation update. Fix several minor documentation errors in README file. No 
 
 Updated to .Net 10.0
 
-Average performance improvement for .Net 10.0 across all algorithms:
-  Validate method ~4% improvement, TryCalculateCheckDigit method ~6% improvement
+Average performance improvement for .Net 10.0 across all algorithms is ~4% for 
+both Validate and TryCalculateCheckDigit methods.
 
 Detailed benchmark results for .Net 8 vs .Net 10 located at https://github.com/KnowledgeForwardSolutions/CheckDigits.Net/blob/main/Documentation/DotNet8_DotNet10_PerformanceComparision.md
 

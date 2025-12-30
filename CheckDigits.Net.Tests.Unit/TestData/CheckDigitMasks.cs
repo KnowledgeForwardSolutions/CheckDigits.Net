@@ -20,6 +20,7 @@ internal class CreditCardMask : ICheckDigitMask
 
    public Boolean IncludeCharacter(Int32 index) => (index + 1) % 5 != 0;
 }
+
 public class GroupsOfThreeCheckDigitMask : ICheckDigitMask
 {
    public Boolean ExcludeCharacter(Int32 index) => (index + 1) % 4 == 0;
