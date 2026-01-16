@@ -1,0 +1,18 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path=".editorconfig" />
+    <File Path="CodingGuidelines.md" />
+    <File Path="LICENSE.txt" />
+    <File Path="README.md" />
+  </Folder>
+  <Folder Name="/source/">
+    <Project Path="CheckDigits.Net.DataAnnotations/CheckDigits.Net.DataAnnotations.csproj" Id="6d8db8af-2ad0-42a0-854e-d386ba2461b2" />
+    <Project Path="CheckDigits.Net/CheckDigits.Net.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="CheckDigits.Net.DataAnnotations.Tests.Unit/CheckDigits.Net.DataAnnotations.Tests.Unit.csproj" Id="36175270-f9e4-4221-b388-a10b304bad8a" />
+    <Project Path="CheckDigits.Net.Tests.Benchmarks.Comparisons/CheckDigits.Net.Tests.Benchmarks.Comparisons.csproj" />
+    <Project Path="CheckDigits.Net.Tests.Benchmarks/CheckDigits.Net.Tests.Benchmarks.csproj" />
+    <Project Path="CheckDigits.Net.Tests.Unit/CheckDigits.Net.Tests.Unit.csproj" />
+  </Folder>
+</Solution>
