@@ -2,13 +2,9 @@
 
 namespace CheckDigits.Net.DataAnnotations;
 
-public class LuhnCheckDigitAttribute : ValidationAttribute
+public class LuhnCheckDigitAttribute() 
+   : ValidationAttribute(Messages.SingleCheckDigitFailure)
 {
-   public LuhnCheckDigitAttribute() 
-      : base(Messages.LuhnError) 
-   {
-   }
-
    protected override ValidationResult? IsValid(
       Object? value, 
       ValidationContext validationContext) 

@@ -1,12 +1,28 @@
 ﻿// Ignore Spelling: Luhn
 
+using Xunit.Sdk;
+
 namespace CheckDigits.Net.DataAnnotations.Tests.Unit;
 
 public class LuhnCheckDigitAttributeTests
 {
+   private const String _customErrorMessage = "Need a valid card number";
+
    public class PaymentRequest
    {
       [LuhnCheckDigit]
+      public String CardNumber { get; set; } = null!;
+   }
+
+   public class PaymentRequestCustomMessage
+   {
+      [LuhnCheckDigit(ErrorMessage = _customErrorMessage)]
+      public String CardNumber { get; set; } = null!;
+   }
+
+   public class RequiredPaymentRequest
+   {
+      [Required, LuhnCheckDigit]
       public String CardNumber { get; set; } = null!;
    }
 
@@ -37,7 +53,7 @@ public class LuhnCheckDigitAttributeTests
    }
 
    [Fact]
-   public void LuhnCheckDigitAttribute_Validate_ShouldReturnSuccess_WhenValueIsNull()
+   public void LuhnCheckDigitAttribute_Validate_ShouldReturnSuccess_WhenNonRequiredValueIsNull()
    {
       // Arrange.
       var request = new PaymentRequest();
@@ -51,7 +67,7 @@ public class LuhnCheckDigitAttributeTests
    }
 
    [Fact]
-   public void LuhnCheckDigitAttribute_Validate_ShouldReturnSuccess_WhenValueIsEmpty()
+   public void LuhnCheckDigitAttribute_Validate_ShouldReturnSuccess_WhenNonRequiredValueIsEmpty()
    {
       // Arrange.
       var request = new PaymentRequest
@@ -74,13 +90,47 @@ public class LuhnCheckDigitAttributeTests
       {
          ItemCode = 123456
       };
+      var expectedMessage = String.Format(Messages.InvalidPropertyType, nameof(item.ItemCode));
 
       // Act.
       var results = Utility.ValidateModel(item);
 
       // Assert.
       results.Should().HaveCount(1);
-      results[0].ErrorMessage.Should().Be("The property 'ItemCode' is of an invalid type for check digit validation.");
+      results[0].ErrorMessage.Should().Be(expectedMessage);
+   }
+
+   [Fact]
+   public void LuhnCheckDigitAttribute_Validate_ShouldReturnFailure_WhenRequiredValueIsNull()
+   {
+      // Arrange.
+      var request = new RequiredPaymentRequest();
+      var expectedMessage = "The CardNumber field is required.";
+
+      // Act.
+      var results = Utility.ValidateModel(request);
+
+      // Assert.
+      results.Should().HaveCount(1);
+      results[0].ErrorMessage.Should().Be(expectedMessage);
+   }
+
+   [Fact]
+   public void LuhnCheckDigitAttribute_Validate_ShouldReturnFailure_WhenRequiredValueIsEmpty()
+   {
+      // Arrange.
+      var request = new RequiredPaymentRequest 
+      { 
+         CardNumber = String.Empty 
+      };
+      var expectedMessage = "The CardNumber field is required.";
+
+      // Act.
+      var results = Utility.ValidateModel(request);
+
+      // Assert.
+      results.Should().HaveCount(1);
+      results[0].ErrorMessage.Should().Be(expectedMessage);
    }
 
    [Fact]
@@ -91,13 +141,32 @@ public class LuhnCheckDigitAttributeTests
       {
          CardNumber = "4539148803436468"
       };
+      var expectedMessage = String.Format(Messages.SingleCheckDigitFailure, nameof(request.CardNumber));
 
       // Act.
       var results = Utility.ValidateModel(request);
 
       // Assert.
       results.Should().HaveCount(1);
-      results[0].ErrorMessage.Should().Be("The field CardNumber fails Luhn check digit validation");
+      results[0].ErrorMessage.Should().Be(expectedMessage);
+   }
+
+   [Fact]
+   public void LuhnCheckDigitAttribute_Validate_ShouldReturnFailure_WhenValueHasInvalidLuhnCheckDigitAndCustomErrorMessageIsSupplied()
+   {
+      // Arrange.
+      var request = new PaymentRequestCustomMessage
+      {
+         CardNumber = "4539148803436468"
+      };
+      var expectedMessage = _customErrorMessage;
+
+      // Act.
+      var results = Utility.ValidateModel(request);
+
+      // Assert.
+      results.Should().HaveCount(1);
+      results[0].ErrorMessage.Should().Be(expectedMessage);
    }
 
    #endregion

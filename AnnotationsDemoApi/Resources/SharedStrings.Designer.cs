@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace CheckDigits.Net.DataAnnotations {
+namespace AnnotationsDemoApi.Resources {
     using System;
     
     
@@ -22,14 +22,14 @@ namespace CheckDigits.Net.DataAnnotations {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "18.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class Messages {
+    public class SharedStrings {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Messages() {
+        internal SharedStrings() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace CheckDigits.Net.DataAnnotations {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("CheckDigits.Net.DataAnnotations.Messages", typeof(Messages).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("AnnotationsDemoApi.Resources.SharedStrings", typeof(SharedStrings).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,29 +61,20 @@ namespace CheckDigits.Net.DataAnnotations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The property &apos;{0}&apos; is of an invalid type for check digit validation..
+        ///   Looks up a localized string similar to Invalid card number.
         /// </summary>
-        public static string InvalidPropertyType {
+        public static string InvalidCardNumber {
             get {
-                return ResourceManager.GetString("InvalidPropertyType", resourceCulture);
+                return ResourceManager.GetString("InvalidCardNumber", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0} has invalid check digits. Verify that the value was entered correctly.
+        ///   Looks up a localized string similar to Valid request.
         /// </summary>
-        public static string MultiCheckDigitFailure {
+        public static string ValidRequest {
             get {
-                return ResourceManager.GetString("MultiCheckDigitFailure", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to {0} has invalid check digit. Verify that the value was entered correctly.
-        /// </summary>
-        public static string SingleCheckDigitFailure {
-            get {
-                return ResourceManager.GetString("SingleCheckDigitFailure", resourceCulture);
+                return ResourceManager.GetString("ValidRequest", resourceCulture);
             }
         }
     }

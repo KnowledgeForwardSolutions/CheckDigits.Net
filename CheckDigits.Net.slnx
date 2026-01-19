@@ -1,4 +1,7 @@
 <Solution>
+  <Folder Name="/demos/">
+    <Project Path="AnnotationsDemoApi/AnnotationsDemoApi.csproj" Id="7bb5e36b-fee7-4fe6-8dc4-94b75dfe734d" />
+  </Folder>
   <Folder Name="/Solution Items/">
     <File Path=".editorconfig" />
     <File Path="CodingGuidelines.md" />
