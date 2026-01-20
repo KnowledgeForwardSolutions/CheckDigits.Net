@@ -70,7 +70,7 @@ namespace CheckDigits.Net.DataAnnotations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0} has invalid check digits. Verify that the value was entered correctly.
+        ///   Looks up a localized string similar to {0} has invalid check digits..
         /// </summary>
         public static string MultiCheckDigitFailure {
             get {
@@ -79,7 +79,7 @@ namespace CheckDigits.Net.DataAnnotations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0} has invalid check digit. Verify that the value was entered correctly.
+        ///   Looks up a localized string similar to {0} has an invalid check digit..
         /// </summary>
         public static string SingleCheckDigitFailure {
             get {
