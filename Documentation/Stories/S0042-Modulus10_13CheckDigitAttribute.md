@@ -15,7 +15,7 @@ Many identifiers (including GTIN and UPC identifiers) rely on a Modulus 10 algor
 - Validation succeeds when the value is valid per the Modulus10_13 algorithm.
 - Validation fails when the value does not pass the Modulus10_13 check.
 - Validation succeeds when the value is `null` or empty and the field is not marked as required.
-- A default error message is provided (e.g., *“The field {0} fails Modulus10_13 check digit validation”*).
+- A default error message is provided (e.g., *“The field {0} has an invalid Modulus10_13 check digit*).
 - The error message can be customized using the `ErrorMessage` property.
 - New annotation to exist in CheckDigits.Net.DataAnnotations namespace.
 - New annotation named Modulus10_13CheckDigit
@@ -29,8 +29,8 @@ Many identifiers (including GTIN and UPC identifiers) rely on a Modulus 10 algor
 
 ## Out of Scope
 - Client-side validation.
-- Generating or calculating Luhn check digits (validation only).
-- Support for non-Luhn check digit algorithms.
+- Generating or calculating MOdulus10_13 check digits (validation only).
+- Support for non-MOdulus10_13 check digit algorithms.
 
 ## Example Usage
 ```csharp
