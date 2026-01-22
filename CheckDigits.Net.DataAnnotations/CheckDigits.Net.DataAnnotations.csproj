@@ -1,7 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-	<TargetFramework>net10.0</TargetFramework>
+	<TargetFrameworks>netstandard2.0;net8.0;net10.0</TargetFrameworks>
+	  <LangVersion>latestMajor</LangVersion>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <Title>CheckDigits.Net.Annotations</Title>
@@ -29,6 +30,10 @@ Initial release</PackageReleaseNotes>
 
   <ItemGroup>
     <PackageReference Include="CheckDigits.Net" Version="3.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+	<PackageReference Include="System.ComponentModel.Annotations" Version="4.7.0" Condition="'$(TargetFramework)' == 'netstandard2.0'" />
   </ItemGroup>
 
   <ItemGroup>

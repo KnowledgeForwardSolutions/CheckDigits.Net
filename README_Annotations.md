@@ -40,9 +40,9 @@ public class PaymentDetails
 }
 ```
 
-In this example, attempting to send a `PaymentDetails` object with an invalid
-`CardNumber` to an API endpoint with validation enabled will result in a 400 Bad Request
-response.
+In this example, attempting to send a `PaymentDetails` object with a `CardNumber`
+that does not pass the Luhn check digit validation to an API endpoint with validation 
+enabled will result in a 400 Bad Request response.
 
 By default, the error message for an invalid check digit will be:
 `{0} has an invalid check digit.` (or `{0} has invalid check digits.` for check
@@ -90,3 +90,8 @@ The `LuhnCheckDigitAttribute` validates that a string property conforms to the
 Luhn check digit algorithm. This is commonly used for credit card numbers and other
 identification numbers such as IMEI numbers and national identifiers like the
 Canadian Social Insurance Number (SIN).
+
+The `LuhnCheckDigitAttribute` will return validation errors for the following conditions:
+- The value does not contain a valid Luhn check digit.
+- The value contains non-ASCII digit characters.
+- The value is shorter than two characters (i.e., it cannot contain a check digit).
