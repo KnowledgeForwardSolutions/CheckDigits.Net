@@ -9,7 +9,7 @@
 /// <remarks>
 ///   <para>
 ///      Use this attribute to enforce that a value, such as a GTIN code, EAN 
-///      code UPC code or other identifier, conforms to the Modulus 10 (with 
+///      code UPC code or other identifier conforms to the Modulus 10 (with 
 ///      weights 1 and 3) algorithm. The validation passes if the value is null 
 ///      or an empty string or if the value contains a valid Modulus 10 (with 
 ///      weights 1 and 3) check digit in the right-most character position.
