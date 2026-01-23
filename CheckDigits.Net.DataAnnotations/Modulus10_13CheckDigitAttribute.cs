@@ -12,7 +12,7 @@
 ///      code UPC code or other identifier, conforms to the Modulus 10 (with 
 ///      weights 1 and 3) algorithm. The validation passes if the value is null 
 ///      or an empty string or if the value contains a valid Modulus 10 (with 
-///      weights 1 and 3) check digit in the trailing character position.
+///      weights 1 and 3) check digit in the right-most character position.
 ///   </para>
 ///   <para>
 ///      If applied to a non-empty string property, validation will fail under 
@@ -28,13 +28,17 @@
 ///         </item>
 ///         <item>
 ///            The value does not contain a valid Modulus10_13 check digit in 
-///            the trailing character position.
+///            the right-most character position.
 ///         </item>
 ///      </list> 
 ///   </para>
 ///   <para>
 ///      Validation will also fail if the attribute is applied to a non-string
 ///      property.
+///   </para>
+///   <para>
+///      The Modulus 10 algorith with weights 1 and 3 is commonly used in 
+///      product identification codes such as GTIN-13 (EAN-13) and UPC codes.
 ///   </para>
 /// </remarks>
 public class Modulus10_13CheckDigitAttribute()

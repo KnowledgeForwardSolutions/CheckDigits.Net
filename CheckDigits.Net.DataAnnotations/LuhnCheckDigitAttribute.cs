@@ -11,7 +11,7 @@ namespace CheckDigits.Net.DataAnnotations;
 ///      Use this attribute to enforce that a value, such as a credit card 
 ///      number or other identifier, conforms to the Luhn algorithm. The 
 ///      validation passes if the value is null or an empty string or if the
-///      value contains a valid Luhn check digit in the trailing character 
+///      value contains a valid Luhn check digit in the right-most character 
 ///      position.
 ///   </para>
 ///   <para>
@@ -28,7 +28,7 @@ namespace CheckDigits.Net.DataAnnotations;
 ///         </item>
 ///         <item>
 ///            The value does not contain a valid Luhn check digit in the 
-///            trailing character position.
+///            right-most character position.
 ///         </item>
 ///      </list> 
 ///   </para>
