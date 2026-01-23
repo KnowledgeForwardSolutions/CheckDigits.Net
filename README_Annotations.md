@@ -13,7 +13,8 @@ to the CheckDigits.Net [README file]( https://github.com/KnowledgeForwardSolutio
 - **[Using CheckDigits.Net.Annotations](#using-checkdigits.net.annotations)**
 - **[Supported Attributes](#supported-attributes)**
     * [LuhnCheckDigitAttribute](#luhncheckdigitattribute)
-    * [Modulus11_13CheckDigitAttribute](#modulus11_13checkdigitattribute)
+    * [Modulus10_13CheckDigitAttribute](#modulus10_13checkdigitattribute)
+    * [Modulus11CheckDigitAttribute](#modulus11checkdigitattribute)
 
 
 ## Using CheckDigits.Net.Annotations
@@ -97,13 +98,31 @@ The `LuhnCheckDigitAttribute` will return validation errors for the following co
 - The value contains non-ASCII digit characters.
 - The value is shorter than two characters (i.e., it cannot contain a check digit).
 
-### Modulus11_13CheckDigitAttribute
+### Modulus10_13CheckDigitAttribute
 
-The `Modulus11_13CheckDigitAttribute` validates that a string property conforms 
+The `Modulus10_13CheckDigitAttribute` validates that a string property conforms 
 to the Modulus10 (with weights 1 and 3) check digit algorithm. This is commonly 
 used for global item numbers such as GTIN, EAN and UPC codes.
 
-The `Modulus11_13CheckDigitAttribute` will return validation errors for the following conditions:
-- The value does not contain a valid Modulus11_13 check digit.
+The `Modulus10_13CheckDigitAttribute` will return validation errors for the following conditions:
+- The value does not contain a valid Modulus10_13 check digit.
 - The value contains non-ASCII digit characters.
 - The value is shorter than two characters (i.e., it cannot contain a check digit).
+
+### Modulus11CheckDigitAttribute
+
+The `Modulus11CheckDigitAttribute` validates that a string property conforms 
+to the Modulus11 check digit algorithm. Two common uses of the Modulus11
+algorithm are ISBN-10 (International Standard Book Number, 10 character format,
+in use prior to January 1, 2007) and ISSN (International Standard Serial Number).
+
+Because the algorithm uses modulus 11, the calculated check digit can be the 
+value 10. In order to represent this in a single character, the letter 'X' is 
+used to represent the value 10. This is only valid in the trailing check digit
+position.
+
+The `Modulus11CheckDigitAttribute` will return validation errors for the following conditions:
+- The value does not contain a valid Modulus11 check digit.
+- The value contains characters other than ASCII digits or 'X'.
+- The value is shorter than two characters (i.e., it cannot contain a check digit).
+- The value is longer than 10 characters (the maximum length supported by the Modulus11 algorithm).
