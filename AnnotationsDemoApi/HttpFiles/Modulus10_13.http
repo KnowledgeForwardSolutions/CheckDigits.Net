@@ -1,0 +1,55 @@
+﻿@AnnotationsDemoApi_HostAddress = http://localhost:5079
+
+### [Modulus10_13CheckDigit] Valid UPC Code - Should return 200 OK
+POST {{AnnotationsDemoApi_HostAddress}}/modulus1013
+Content-Type: application/json
+
+{
+  "upcCode": "036000291452"
+}
+
+
+### [Modulus10_13CheckDigit] Invalid UPC Code - Should return 400 Bad Request
+POST {{AnnotationsDemoApi_HostAddress}}/modulus1013
+Content-Type: application/json
+
+{
+  "upcCode": "036000291455"
+}
+
+### [Modulus10_13CheckDigit(ErrorMessage =...)] Valid UPC Code - Should return 200 OK
+POST {{AnnotationsDemoApi_HostAddress}}/modulus1013message
+Content-Type: application/json
+
+{
+  "upcCode": "036000291452"
+}
+
+
+### [Modulus10_13CheckDigit(ErrorMessage =...)] Invalid UPC Code - Should return 400 Bad Request
+POST {{AnnotationsDemoApi_HostAddress}}/modulus1013message
+Content-Type: application/json
+
+{
+  "upcCode": "036000291455"
+}
+
+
+### [Modulus10_13CheckDigit(ErrorMessageResourceName =...)] Valid UPC Code - Should return 200 OK
+POST {{AnnotationsDemoApi_HostAddress}}/modulus1013global
+Content-Type: application/json
+Accept-Language: de-DE
+
+{
+  "upcCode": "036000291452"
+}
+
+
+### [Modulus10_13CheckDigit(ErrorMessageResourceName =...)] Invalid UPC Code - Should return 400 Bad Request and localized message
+POST {{AnnotationsDemoApi_HostAddress}}/modulus1013global
+Content-Type: application/json
+Accept-Language: de-DE
+
+{
+  "upcCode": "036000291455"
+}

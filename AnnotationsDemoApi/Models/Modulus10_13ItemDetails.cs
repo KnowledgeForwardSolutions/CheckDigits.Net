@@ -12,7 +12,7 @@ public class Modulus10_13ItemDetailsCustomErrorMessage
    public String UpcCode { get; set; } = null!;
 }
 
-public class Modulus10_13ItemDetailsCGlobalizedErrorMessage
+public class Modulus10_13ItemDetailsGlobalizedErrorMessage
 {
    [Modulus10_13CheckDigit(ErrorMessageResourceName = "InvalidUpcCode", ErrorMessageResourceType = typeof(Resources.SharedStrings))]
    public String UpcCode { get; set; } = null!;
