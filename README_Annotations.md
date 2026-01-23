@@ -13,6 +13,7 @@ to the CheckDigits.Net [README file]( https://github.com/KnowledgeForwardSolutio
 - **[Using CheckDigits.Net.Annotations](#using-checkdigits.net.annotations)**
 - **[Supported Attributes](#supported-attributes)**
     * [LuhnCheckDigitAttribute](#luhncheckdigitattribute)
+    * [Modulus11_13CheckDigitAttribute](#modulus11_13checkdigitattribute)
 
 
 ## Using CheckDigits.Net.Annotations
@@ -93,5 +94,16 @@ Canadian Social Insurance Number (SIN).
 
 The `LuhnCheckDigitAttribute` will return validation errors for the following conditions:
 - The value does not contain a valid Luhn check digit.
+- The value contains non-ASCII digit characters.
+- The value is shorter than two characters (i.e., it cannot contain a check digit).
+
+### Modulus11_13CheckDigitAttribute
+
+The `Modulus11_13CheckDigitAttribute` validates that a string property conforms 
+to the Modulus10 (with weights 1 and 3) check digit algorithm. This is commonly 
+used for global item numbers such as GTIN, EAN and UPC codes.
+
+The `Modulus11_13CheckDigitAttribute` will return validation errors for the following conditions:
+- The value does not contain a valid Modulus11_13 check digit.
 - The value contains non-ASCII digit characters.
 - The value is shorter than two characters (i.e., it cannot contain a check digit).

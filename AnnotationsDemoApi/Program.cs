@@ -31,10 +31,23 @@ app.MapPost("/luhn",
    (LuhnPaymentRequest request) => Results.Ok("Credit card number is valid"));
 
 app.MapPost("/luhnmessage",
-   (LuhnErrorMessagePaymentRequest request) => Results.Ok("Credit card number is valid"));
+   (LuhnPaymentRequestCustomErrorMessage request) => Results.Ok("Credit card number is valid"));
 
 app.MapPost("/luhnglobal",
-   (LuhnGlobalPaymentRequest request, IStringLocalizer<SharedStrings> localizer) => 
+   (LuhnPaymentRequestGlobalizedErrorMessage request, IStringLocalizer<SharedStrings> localizer) => 
+   {
+      var response = localizer["ValidRequest"];
+      return Results.Ok(response.ToString());
+   });
+
+app.MapPost("/modulus1013",
+   (Modulus10_13ItemDetails request) => Results.Ok("UPC code is valid"));
+
+app.MapPost("/modulus1013message",
+   (Modulus10_13ItemDetailsCustomErrorMessage request) => Results.Ok("UPC code is valid"));
+
+app.MapPost("/modulus1013global",
+   (Modulus10_13ItemDetailsCGlobalizedErrorMessage request, IStringLocalizer<SharedStrings> localizer) =>
    {
       var response = localizer["ValidRequest"];
       return Results.Ok(response.ToString());

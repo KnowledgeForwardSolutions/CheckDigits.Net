@@ -1,7 +1,5 @@
 ﻿// Ignore Spelling: Luhn
 
-using Xunit.Sdk;
-
 namespace CheckDigits.Net.DataAnnotations.Tests.Unit;
 
 public class LuhnCheckDigitAttributeTests
@@ -26,7 +24,7 @@ public class LuhnCheckDigitAttributeTests
       public String CardNumber { get; set; } = null!;
    }
 
-   public class OrderItem
+   public class PaymentRequestInvalidType
    {
       [LuhnCheckDigit]
       public Int32 ItemCode { get; set; }
@@ -86,7 +84,7 @@ public class LuhnCheckDigitAttributeTests
    public void LuhnCheckDigitAttribute_Validate_ShouldReturnFailure_WhenValueIsNotTypeString()
    {
       // Arrange.
-      var item = new OrderItem
+      var item = new PaymentRequestInvalidType
       {
          ItemCode = 123456
       };

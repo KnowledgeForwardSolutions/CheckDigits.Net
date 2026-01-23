@@ -120,6 +120,9 @@
   <data name="InvalidCardNumber" xml:space="preserve">
     <value>Ungültige Kartennummer</value>
   </data>
+  <data name="InvalidUpcCode" xml:space="preserve">
+    <value>Ungültiger UPC-Code</value>
+  </data>
   <data name="ValidRequest" xml:space="preserve">
     <value>Gültige Anfrage</value>
   </data>
