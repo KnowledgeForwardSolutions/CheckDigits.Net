@@ -8,13 +8,13 @@ public class LuhnPaymentRequest
    public String CardNumber { get; set; } = null!;
 }
 
-public class LuhnErrorMessagePaymentRequest
+public class LuhnPaymentRequestCustomErrorMessage
 {
    [LuhnCheckDigit(ErrorMessage = "CardNumber check digit error")]
    public String CardNumber { get; set; } = null!;
 }
 
-public class LuhnGlobalPaymentRequest
+public class LuhnPaymentRequestGlobalizedErrorMessage
 {
    [LuhnCheckDigit(ErrorMessageResourceName = "InvalidCardNumber", ErrorMessageResourceType = typeof(Resources.SharedStrings))]
    public String CardNumber { get; set; } = null!;

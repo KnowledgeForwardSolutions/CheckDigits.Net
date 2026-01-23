@@ -120,6 +120,9 @@
   <data name="InvalidCardNumber" xml:space="preserve">
     <value>Número de tarjeta inválido</value>
   </data>
+  <data name="InvalidUpcCode" xml:space="preserve">
+    <value>Código UPC no válido</value>
+  </data>
   <data name="ValidRequest" xml:space="preserve">
     <value>Solicitud válida</value>
   </data>

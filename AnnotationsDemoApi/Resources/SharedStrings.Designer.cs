@@ -70,6 +70,15 @@ namespace AnnotationsDemoApi.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid UPC Code.
+        /// </summary>
+        public static string InvalidUpcCode {
+            get {
+                return ResourceManager.GetString("InvalidUpcCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Valid request.
         /// </summary>
         public static string ValidRequest {
