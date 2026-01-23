@@ -39,10 +39,6 @@
 ///      Validation will also fail if the attribute is applied to a non-string
 ///      property.
 ///   </para>
-///   <para>
-///      Two common uses of the Modulus 11 algorithm are in ISBN-10 and ISSN 
-///      codes.
-///   </para>
 /// </remarks>
 public class Modulus11CheckDigitAttribute()
    : BaseCheckDigitAttribute(Algorithms.Modulus11, Messages.SingleCheckDigitFailure)

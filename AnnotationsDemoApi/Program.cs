@@ -27,6 +27,7 @@ app.UseRequestLocalization(localizationOptions);
 
 // Configure the HTTP request pipeline.
 
+// Luhn Check Digit Endpoints
 app.MapPost("/luhn",
    (LuhnPaymentRequest request) => Results.Ok("Credit card number is valid"));
 
@@ -40,6 +41,7 @@ app.MapPost("/luhnglobal",
       return Results.Ok(response.ToString());
    });
 
+// Modulus 10_13 Check Digit Endpoints
 app.MapPost("/modulus1013",
    (Modulus10_13ItemDetails request) => Results.Ok("UPC code is valid"));
 
@@ -47,7 +49,21 @@ app.MapPost("/modulus1013message",
    (Modulus10_13ItemDetailsCustomErrorMessage request) => Results.Ok("UPC code is valid"));
 
 app.MapPost("/modulus1013global",
-   (Modulus10_13ItemDetailsCGlobalizedErrorMessage request, IStringLocalizer<SharedStrings> localizer) =>
+   (Modulus10_13ItemDetailsGlobalizedErrorMessage request, IStringLocalizer<SharedStrings> localizer) =>
+   {
+      var response = localizer["ValidRequest"];
+      return Results.Ok(response.ToString());
+   });
+
+// Modulus 11 Check Digit Endpoints
+app.MapPost("/modulus11",
+   (Modulus11Publication request) => Results.Ok("ISBN is valid"));
+
+app.MapPost("/modulus11message",
+   (Modulus11PublicationCustomErrorMessage request) => Results.Ok("ISBN is valid"));
+
+app.MapPost("/modulus11global",
+   (Modulus11PublicationGlobalizedErrorMessage request, IStringLocalizer<SharedStrings> localizer) =>
    {
       var response = localizer["ValidRequest"];
       return Results.Ok(response.ToString());

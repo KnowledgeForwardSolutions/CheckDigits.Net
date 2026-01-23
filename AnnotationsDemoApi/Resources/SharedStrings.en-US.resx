@@ -120,6 +120,9 @@
   <data name="InvalidCardNumber" xml:space="preserve">
     <value>Invalid card number</value>
   </data>
+  <data name="InvalidIsbn10" xml:space="preserve">
+    <value>Invalid ISBN-10</value>
+  </data>
   <data name="InvalidUpcCode" xml:space="preserve">
     <value>Invalid UPC Code</value>
   </data>

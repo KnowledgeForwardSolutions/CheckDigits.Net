@@ -70,6 +70,15 @@ namespace AnnotationsDemoApi.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid ISBN-10.
+        /// </summary>
+        public static string InvalidIsbn10 {
+            get {
+                return ResourceManager.GetString("InvalidIsbn10", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Invalid UPC Code.
         /// </summary>
         public static string InvalidUpcCode {

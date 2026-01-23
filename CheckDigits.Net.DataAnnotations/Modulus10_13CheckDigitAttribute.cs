@@ -36,10 +36,6 @@
 ///      Validation will also fail if the attribute is applied to a non-string
 ///      property.
 ///   </para>
-///   <para>
-///      The Modulus 10 algorith with weights 1 and 3 is commonly used in 
-///      product identification codes such as GTIN-13 (EAN-13) and UPC codes.
-///   </para>
 /// </remarks>
 public class Modulus10_13CheckDigitAttribute()
    : BaseCheckDigitAttribute(Algorithms.Modulus10_13, Messages.SingleCheckDigitFailure)

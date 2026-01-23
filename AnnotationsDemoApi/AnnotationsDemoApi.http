@@ -116,6 +116,64 @@ Accept-Language: de-DE
   "upcCode": "036000291455"
 }
 
+################################################################################
+### Modulus11CheckDigit
+################################################################################
+
+### [Modulus11CheckDigit] Valid ISBN-10 - Should return 200 OK
+POST {{AnnotationsDemoApi_HostAddress}}/modulus11
+Content-Type: application/json
+
+{
+  "isbn": "1568656521"
+}
+
+
+### [Modulus11CheckDigit] Invalid ISBN-10 - Should return 400 Bad Request
+POST {{AnnotationsDemoApi_HostAddress}}/modulus11
+Content-Type: application/json
+
+{
+  "isbn": "0441050608"
+}
+
+### [Modulus11CheckDigit(ErrorMessage =...)] Valid ISBN-10 - Should return 200 OK
+POST {{AnnotationsDemoApi_HostAddress}}/modulus11message
+Content-Type: application/json
+
+{
+  "isbn": "1568656521"
+}
+
+
+### [Modulus11CheckDigit(ErrorMessage =...)] Invalid ISBN-10 - Should return 400 Bad Request
+POST {{AnnotationsDemoApi_HostAddress}}/modulus11message
+Content-Type: application/json
+
+{
+  "isbn": "0441050608"
+}
+
+
+### [Modulus11CheckDigit(ErrorMessageResourceName =...)] Valid ISBN-10 - Should return 200 OK
+POST {{AnnotationsDemoApi_HostAddress}}/modulus11global
+Content-Type: application/json
+Accept-Language: de-DE
+
+{
+  "isbn": "1568656521"
+}
+
+
+### [Modulus11CheckDigit(ErrorMessageResourceName =...)] Invalid ISBN-10 - Should return 400 Bad Request and localized message
+POST {{AnnotationsDemoApi_HostAddress}}/modulus11global
+Content-Type: application/json
+Accept-Language: de-DE
+
+{
+  "isbn": "0441050608"
+}
+
 
 
 
