@@ -1,0 +1,55 @@
+@AnnotationsDemoApi_HostAddress = http://localhost:5079
+
+### [VerhoeffCheckDigit] Valid Verhoeff Card Number - Should return 200 OK
+POST {{AnnotationsDemoApi_HostAddress}}/verhoeff
+Content-Type: application/json
+
+{
+  "aadhaarIdNumber": "84736430954837284567892"
+}
+
+
+### [VerhoeffCheckDigit] Invalid Verhoeff Card Number - Should return 400 Bad Request
+POST {{AnnotationsDemoApi_HostAddress}}/verhoeff
+Content-Type: application/json
+
+{
+  "aadhaarIdNumber": "112255445566778899009"
+}
+
+### [VerhoeffCheckDigit(ErrorMessage =...)] Valid Verhoeff Card Number - Should return 200 OK
+POST {{AnnotationsDemoApi_HostAddress}}/verhoeffmessage
+Content-Type: application/json
+
+{
+  "aadhaarIdNumber": "84736430954837284567892"
+}
+
+
+### [VerhoeffCheckDigit(ErrorMessage =...)] Invalid Verhoeff Card Number - Should return 400 Bad Request
+POST {{AnnotationsDemoApi_HostAddress}}/verhoeffmessage
+Content-Type: application/json
+
+{
+  "aadhaarIdNumber": "112255445566778899009"
+}
+
+
+### [VerhoeffCheckDigit(ErrorMessageResourceName =...)] Valid Verhoeff Card Number - Should return 200 OK
+POST {{AnnotationsDemoApi_HostAddress}}/verhoeffglobal
+Content-Type: application/json
+Accept-Language: es-ES
+
+{
+  "aadhaarIdNumber": "84736430954837284567892"
+}
+
+
+### [VerhoeffCheckDigit(ErrorMessageResourceName =...)] Invalid Verhoeff Card Number - Should return 400 Bad Request and localized message
+POST {{AnnotationsDemoApi_HostAddress}}/verhoeffglobal
+Content-Type: application/json
+Accept-Language: es-ES
+
+{
+  "aadhaarIdNumber": "112255445566778899009"
+}

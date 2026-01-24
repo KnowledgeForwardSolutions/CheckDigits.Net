@@ -61,6 +61,15 @@ namespace AnnotationsDemoApi.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid Aadhaar ID number.
+        /// </summary>
+        public static string InvalidAadhaarNumber {
+            get {
+                return ResourceManager.GetString("InvalidAadhaarNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Invalid card number.
         /// </summary>
         public static string InvalidCardNumber {
