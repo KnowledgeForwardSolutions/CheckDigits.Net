@@ -27,35 +27,35 @@ app.UseRequestLocalization(localizationOptions);
 
 // Luhn Check Digit Endpoints
 app.MapPost("/luhn",
-   (LuhnPaymentRequest request) => Results.Ok("Credit card number is valid"));
+   (LuhnRequest request) => Results.Ok("Credit card number is valid"));
 
 app.MapPost("/luhnmessage",
-   (LuhnPaymentRequestCustomErrorMessage request) => Results.Ok("Credit card number is valid"));
+   (LuhnRequestCustomErrorMessage request) => Results.Ok("Credit card number is valid"));
 
 app.MapPost("/luhnglobal",
-   (LuhnPaymentRequestGlobalizedErrorMessage request, IStringLocalizer<SharedStrings> localizer)
+   (LuhnRequestGlobalizedErrorMessage request, IStringLocalizer<SharedStrings> localizer)
    => Results.Ok(localizer["ValidRequest"].ToString()));
 
 // Modulus 10_13 Check Digit Endpoints
 app.MapPost("/modulus1013",
-   (Modulus10_13ItemDetails request) => Results.Ok("UPC code is valid"));
+   (Modulus10_13Request request) => Results.Ok("UPC code is valid"));
 
 app.MapPost("/modulus1013message",
-   (Modulus10_13ItemDetailsCustomErrorMessage request) => Results.Ok("UPC code is valid"));
+   (Modulus10_13RequestCustomErrorMessage request) => Results.Ok("UPC code is valid"));
 
 app.MapPost("/modulus1013global",
-   (Modulus10_13ItemDetailsGlobalizedErrorMessage request, IStringLocalizer<SharedStrings> localizer)
+   (Modulus10_13RequestGlobalizedErrorMessage request, IStringLocalizer<SharedStrings> localizer)
    => Results.Ok(localizer["ValidRequest"].ToString()));
 
 // Modulus 11 Check Digit Endpoints
 app.MapPost("/modulus11",
-   (Modulus11Publication request) => Results.Ok("ISBN is valid"));
+   (Modulus11Request request) => Results.Ok("ISBN is valid"));
 
 app.MapPost("/modulus11message",
-   (Modulus11PublicationCustomErrorMessage request) => Results.Ok("ISBN is valid"));
+   (Modulus11RequestCustomErrorMessage request) => Results.Ok("ISBN is valid"));
 
 app.MapPost("/modulus11global",
-   (Modulus11PublicationGlobalizedErrorMessage request, IStringLocalizer<SharedStrings> localizer)
+   (Modulus11RequestGlobalizedErrorMessage request, IStringLocalizer<SharedStrings> localizer)
    => Results.Ok(localizer["ValidRequest"].ToString()));
 
 // Verhoeff Check Digit Endpoints
