@@ -2,7 +2,9 @@
 
 /// <summary>
 ///   Specifies that a string property or parameter must contain a valid 
-///   Modulus 11 check digit sequence for validation to succeed.
+///   Modulus 11 check digit sequence for validation to succeed. Successful 
+///   validation means that the value does not contain any transcription errors 
+///   capable of being detected by the Modulus11 algorithm.
 /// </summary>
 /// <remarks>
 ///   <para>

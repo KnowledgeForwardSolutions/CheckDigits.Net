@@ -1,5 +1,3 @@
-// Ignore Spelling: Luhn
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -35,11 +33,8 @@ app.MapPost("/luhnmessage",
    (LuhnPaymentRequestCustomErrorMessage request) => Results.Ok("Credit card number is valid"));
 
 app.MapPost("/luhnglobal",
-   (LuhnPaymentRequestGlobalizedErrorMessage request, IStringLocalizer<SharedStrings> localizer) => 
-   {
-      var response = localizer["ValidRequest"];
-      return Results.Ok(response.ToString());
-   });
+   (LuhnPaymentRequestGlobalizedErrorMessage request, IStringLocalizer<SharedStrings> localizer)
+   => Results.Ok(localizer["ValidRequest"].ToString()));
 
 // Modulus 10_13 Check Digit Endpoints
 app.MapPost("/modulus1013",
@@ -49,11 +44,8 @@ app.MapPost("/modulus1013message",
    (Modulus10_13ItemDetailsCustomErrorMessage request) => Results.Ok("UPC code is valid"));
 
 app.MapPost("/modulus1013global",
-   (Modulus10_13ItemDetailsGlobalizedErrorMessage request, IStringLocalizer<SharedStrings> localizer) =>
-   {
-      var response = localizer["ValidRequest"];
-      return Results.Ok(response.ToString());
-   });
+   (Modulus10_13ItemDetailsGlobalizedErrorMessage request, IStringLocalizer<SharedStrings> localizer)
+   => Results.Ok(localizer["ValidRequest"].ToString()));
 
 // Modulus 11 Check Digit Endpoints
 app.MapPost("/modulus11",
@@ -63,11 +55,19 @@ app.MapPost("/modulus11message",
    (Modulus11PublicationCustomErrorMessage request) => Results.Ok("ISBN is valid"));
 
 app.MapPost("/modulus11global",
-   (Modulus11PublicationGlobalizedErrorMessage request, IStringLocalizer<SharedStrings> localizer) =>
-   {
-      var response = localizer["ValidRequest"];
-      return Results.Ok(response.ToString());
-   });
+   (Modulus11PublicationGlobalizedErrorMessage request, IStringLocalizer<SharedStrings> localizer)
+   => Results.Ok(localizer["ValidRequest"].ToString()));
+
+// Verhoeff Check Digit Endpoints
+app.MapPost("/verhoeff",
+   (VerhoeffRequest request) => Results.Ok("Aadhaar ID number is valid"));
+
+app.MapPost("/verhoeffmessage",
+   (VerhoeffRequestCustomErrorMessage request) => Results.Ok("Aadhaar ID number is valid"));
+
+app.MapPost("/verhoeffglobal",
+   (VerhoeffRequestGlobalizedErrorMessage request, IStringLocalizer<SharedStrings> localizer) 
+   => Results.Ok(localizer["ValidRequest"].ToString()));
 
 app.Run();
 

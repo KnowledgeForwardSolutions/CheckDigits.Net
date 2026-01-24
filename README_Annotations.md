@@ -15,6 +15,7 @@ to the CheckDigits.Net [README file]( https://github.com/KnowledgeForwardSolutio
     * [LuhnCheckDigitAttribute](#luhncheckdigitattribute)
     * [Modulus10_13CheckDigitAttribute](#modulus10_13checkdigitattribute)
     * [Modulus11CheckDigitAttribute](#modulus11checkdigitattribute)
+    * [VerhoeffCheckDigitAttribute](#verhoeffcheckdigitattribute)
 
 
 ## Using CheckDigits.Net.Annotations
@@ -97,6 +98,7 @@ The `LuhnCheckDigitAttribute` will return validation errors for the following co
 - The value does not contain a valid Luhn check digit.
 - The value contains non-ASCII digit characters.
 - The value is shorter than two characters (i.e., it cannot contain a check digit).
+- The value being validated is not of type `string`.
 
 ### Modulus10_13CheckDigitAttribute
 
@@ -108,6 +110,7 @@ The `Modulus10_13CheckDigitAttribute` will return validation errors for the foll
 - The value does not contain a valid Modulus10_13 check digit.
 - The value contains non-ASCII digit characters.
 - The value is shorter than two characters (i.e., it cannot contain a check digit).
+- The value being validated is not of type `string`.
 
 ### Modulus11CheckDigitAttribute
 
@@ -126,3 +129,19 @@ The `Modulus11CheckDigitAttribute` will return validation errors for the followi
 - The value contains characters other than ASCII digits or 'X'.
 - The value is shorter than two characters (i.e., it cannot contain a check digit).
 - The value is longer than 10 characters (the maximum length supported by the Modulus11 algorithm).
+- The value being validated is not of type `string`.
+
+### VerhoeffCheckDigitAttribute
+
+The `VerhoeffCheckDigitAttribute` validates that a string property conforms to the
+Verhoeff check digit algorithm. The Verhoeff algorithm was the first algorithm using 
+a single decimal check digit that was capable of detecting all single digit 
+transcription errors and all two digit transposition errors. It is used in a 
+variety of applications including the Aadhaar identification number in India.
+
+The `VerhoeffCheckDigitAttribute` will return validation errors for the following conditions:
+- The value does not contain a valid Verhoeff check digit.
+- The value contains non-ASCII digit characters.
+- The value is shorter than two characters (i.e., it cannot contain a check digit).
+- The value being validated is not of type `string`.
+
