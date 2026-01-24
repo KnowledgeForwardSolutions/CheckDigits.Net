@@ -4,7 +4,9 @@ namespace CheckDigits.Net.DataAnnotations;
 
 /// <summary>
 ///   Specifies that a string property or parameter must contain a valid Luhn 
-///   check digit sequence for validation to succeed.
+///   check digit sequence for validation to succeed. Successful validation 
+///   means that the value does not contain any transcription errors capable of
+///   being detected by the Luhn algorithm.
 /// </summary>
 /// <remarks>
 ///   <para>

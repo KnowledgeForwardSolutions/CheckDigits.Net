@@ -4,7 +4,9 @@
 /// <summary>
 ///   Specifies that a string property or parameter must contain a valid 
 ///   Modulus 10 (with weights 1 and 3) check digit sequence for validation to 
-///   succeed.
+///   succeed. Successful validation means that the value does not contain any 
+///   transcription errors capable of being detected by the Modulus10_13 
+///   algorithm.
 /// </summary>
 /// <remarks>
 ///   <para>
