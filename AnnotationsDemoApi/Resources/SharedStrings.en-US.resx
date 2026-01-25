@@ -126,6 +126,9 @@
   <data name="InvalidIsbn10" xml:space="preserve">
     <value>Invalid ISBN-10</value>
   </data>
+  <data name="InvalidSubmissionIdentifier" xml:space="preserve">
+    <value>Invalid Submission Identifier</value>
+  </data>
   <data name="InvalidUpcCode" xml:space="preserve">
     <value>Invalid UPC Code</value>
   </data>

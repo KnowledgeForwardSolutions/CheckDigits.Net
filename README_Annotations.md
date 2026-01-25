@@ -12,6 +12,7 @@ to the CheckDigits.Net [README file]( https://github.com/KnowledgeForwardSolutio
 
 - **[Using CheckDigits.Net.Annotations](#using-checkdigits.net.annotations)**
 - **[Supported Attributes](#supported-attributes)**
+    * [DammCheckDigitAttribute](#dammcheckdigitattribute)
     * [LuhnCheckDigitAttribute](#luhncheckdigitattribute)
     * [Modulus10_13CheckDigitAttribute](#modulus10_13checkdigitattribute)
     * [Modulus11CheckDigitAttribute](#modulus11checkdigitattribute)
@@ -86,6 +87,18 @@ or empty. The check digit attributes do not perform null or empty checks by defa
 and should be used in conjunction with the `Required` attribute when necessary.
 
 ## Supported Attributes
+
+### DammCheckDigitAttribute
+
+The `DammCheckDigitAttribute` validates that a string property conforms to the
+Damm check digit algorithm. The Damm algorithm is quite capable of detecting
+transcription errors and is used in a range of applications.
+
+The `DammCheckDigitAttribute` will return validation errors for the following conditions:
+- The value does not contain a valid Damm check digit.
+- The value contains non-ASCII digit characters.
+- The value is shorter than two characters (i.e., it cannot contain a check digit).
+- The value being validated is not of type `string`.
 
 ### LuhnCheckDigitAttribute
 

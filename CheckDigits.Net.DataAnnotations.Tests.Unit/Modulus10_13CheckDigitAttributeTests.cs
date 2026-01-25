@@ -4,25 +4,25 @@ public class Modulus10_13CheckDigitAttributeTests
 {
    private const String _customErrorMessage = "Need a valid UPC code";
 
-   public class ItemDetails
+   public class Modulus10_13Request
    {
       [Modulus10_13CheckDigit]
       public String UpcCode { get; set; } = null!;
    }
 
-   public class ItemDetailsCustomMessage
+   public class Modulus10_13RequestCustomMessage
    {
       [Modulus10_13CheckDigit(ErrorMessage = _customErrorMessage)]
       public String UpcCode { get; set; } = null!;
    }
 
-   public class RequiredItemDetails
+   public class Modulus10_13RequestRequiredField
    {
       [Required, Modulus10_13CheckDigit]
       public String UpcCode { get; set; } = null!;
    }
 
-   public class ItemDetailsInvalidType
+   public class Modulus10_13RequestInvalidType
    {
       [Modulus10_13CheckDigit]
       public Int32 UpcCode { get; set; }
@@ -36,7 +36,7 @@ public class Modulus10_13CheckDigitAttributeTests
    public void Modulus10_13CheckDigitAttribute_Validate_ShouldReturnSuccess_WhenValueHasValidModulus10_13CheckDigit()
    {
       // Arrange.
-      var request = new ItemDetails
+      var request = new Modulus10_13Request
       {
          UpcCode = "036000291452" // Valid UPC-A code
       };
@@ -52,7 +52,7 @@ public class Modulus10_13CheckDigitAttributeTests
    public void Modulus10_13CheckDigitAttribute_Validate_ShouldReturnSuccess_WhenNonRequiredValueIsNull()
    {
       // Arrange.
-      var request = new ItemDetails();
+      var request = new Modulus10_13Request();
 
       // Act.
       var results = Utility.ValidateModel(request);
@@ -66,7 +66,7 @@ public class Modulus10_13CheckDigitAttributeTests
    public void Modulus10_13CheckDigitAttribute_Validate_ShouldReturnSuccess_WhenNonRequiredValueIsEmpty()
    {
       // Arrange.
-      var request = new ItemDetails
+      var request = new Modulus10_13Request
       {
          UpcCode = String.Empty
       };
@@ -82,7 +82,7 @@ public class Modulus10_13CheckDigitAttributeTests
    public void Modulus10_13CheckDigitAttribute_Validate_ShouldReturnFailure_WhenValueIsNotTypeString()
    {
       // Arrange.
-      var item = new ItemDetailsInvalidType
+      var item = new Modulus10_13RequestInvalidType
       {
          UpcCode = 123456
       };
@@ -100,7 +100,7 @@ public class Modulus10_13CheckDigitAttributeTests
    public void Modulus10_13CheckDigitAttribute_Validate_ShouldReturnFailure_WhenRequiredValueIsNull()
    {
       // Arrange.
-      var request = new RequiredItemDetails();
+      var request = new Modulus10_13RequestRequiredField();
       var expectedMessage = "The UpcCode field is required.";
 
       // Act.
@@ -115,7 +115,7 @@ public class Modulus10_13CheckDigitAttributeTests
    public void Modulus10_13CheckDigitAttribute_Validate_ShouldReturnFailure_WhenRequiredValueIsEmpty()
    {
       // Arrange.
-      var request = new RequiredItemDetails
+      var request = new Modulus10_13RequestRequiredField
       {
          UpcCode = String.Empty
       };
@@ -133,7 +133,7 @@ public class Modulus10_13CheckDigitAttributeTests
    public void Modulus10_13CheckDigitAttribute_Validate_ShouldReturnFailure_WhenValueHasInvalidModulus10_13CheckDigit()
    {
       // Arrange.
-      var request = new ItemDetails
+      var request = new Modulus10_13Request
       {
          UpcCode = "036000291455"
       };
@@ -151,7 +151,7 @@ public class Modulus10_13CheckDigitAttributeTests
    public void Modulus10_13CheckDigitAttribute_Validate_ShouldReturnFailure_WhenValueHasInvalidModulus10_13CheckDigitAndCustomErrorMessageIsSupplied()
    {
       // Arrange.
-      var request = new ItemDetailsCustomMessage
+      var request = new Modulus10_13RequestCustomMessage
       {
          UpcCode = "036000291455"
       };

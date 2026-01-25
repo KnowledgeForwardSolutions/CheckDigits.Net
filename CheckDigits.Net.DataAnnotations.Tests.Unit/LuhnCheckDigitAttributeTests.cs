@@ -6,25 +6,25 @@ public class LuhnCheckDigitAttributeTests
 {
    private const String _customErrorMessage = "Need a valid card number";
 
-   public class PaymentRequest
+   public class LuhnRequest
    {
       [LuhnCheckDigit]
       public String CardNumber { get; set; } = null!;
    }
 
-   public class PaymentRequestCustomMessage
+   public class LuhnRequestCustomMessage
    {
       [LuhnCheckDigit(ErrorMessage = _customErrorMessage)]
       public String CardNumber { get; set; } = null!;
    }
 
-   public class RequiredPaymentRequest
+   public class LuhnRequestRequiredField
    {
       [Required, LuhnCheckDigit]
       public String CardNumber { get; set; } = null!;
    }
 
-   public class PaymentRequestInvalidType
+   public class LuhnRequestInvalidType
    {
       [LuhnCheckDigit]
       public Int32 ItemCode { get; set; }
@@ -38,7 +38,7 @@ public class LuhnCheckDigitAttributeTests
    public void LuhnCheckDigitAttribute_Validate_ShouldReturnSuccess_WhenValueHasValidLuhnCheckDigit()
    {
       // Arrange.
-      var request = new PaymentRequest
+      var request = new LuhnRequest
       {
          CardNumber = "4539148803436467" // Valid Luhn number
       };
@@ -54,7 +54,7 @@ public class LuhnCheckDigitAttributeTests
    public void LuhnCheckDigitAttribute_Validate_ShouldReturnSuccess_WhenNonRequiredValueIsNull()
    {
       // Arrange.
-      var request = new PaymentRequest();
+      var request = new LuhnRequest();
 
       // Act.
       var results = Utility.ValidateModel(request);
@@ -68,7 +68,7 @@ public class LuhnCheckDigitAttributeTests
    public void LuhnCheckDigitAttribute_Validate_ShouldReturnSuccess_WhenNonRequiredValueIsEmpty()
    {
       // Arrange.
-      var request = new PaymentRequest
+      var request = new LuhnRequest
       {
          CardNumber = String.Empty
       };
@@ -84,7 +84,7 @@ public class LuhnCheckDigitAttributeTests
    public void LuhnCheckDigitAttribute_Validate_ShouldReturnFailure_WhenValueIsNotTypeString()
    {
       // Arrange.
-      var item = new PaymentRequestInvalidType
+      var item = new LuhnRequestInvalidType
       {
          ItemCode = 123456
       };
@@ -102,7 +102,7 @@ public class LuhnCheckDigitAttributeTests
    public void LuhnCheckDigitAttribute_Validate_ShouldReturnFailure_WhenRequiredValueIsNull()
    {
       // Arrange.
-      var request = new RequiredPaymentRequest();
+      var request = new LuhnRequestRequiredField();
       var expectedMessage = "The CardNumber field is required.";
 
       // Act.
@@ -117,7 +117,7 @@ public class LuhnCheckDigitAttributeTests
    public void LuhnCheckDigitAttribute_Validate_ShouldReturnFailure_WhenRequiredValueIsEmpty()
    {
       // Arrange.
-      var request = new RequiredPaymentRequest 
+      var request = new LuhnRequestRequiredField 
       { 
          CardNumber = String.Empty 
       };
@@ -135,7 +135,7 @@ public class LuhnCheckDigitAttributeTests
    public void LuhnCheckDigitAttribute_Validate_ShouldReturnFailure_WhenValueHasInvalidLuhnCheckDigit()
    {
       // Arrange.
-      var request = new PaymentRequest
+      var request = new LuhnRequest
       {
          CardNumber = "4539148803436468"
       };
@@ -153,7 +153,7 @@ public class LuhnCheckDigitAttributeTests
    public void LuhnCheckDigitAttribute_Validate_ShouldReturnFailure_WhenValueHasInvalidLuhnCheckDigitAndCustomErrorMessageIsSupplied()
    {
       // Arrange.
-      var request = new PaymentRequestCustomMessage
+      var request = new LuhnRequestCustomMessage
       {
          CardNumber = "4539148803436468"
       };

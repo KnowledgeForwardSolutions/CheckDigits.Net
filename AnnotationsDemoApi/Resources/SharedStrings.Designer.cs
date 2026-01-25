@@ -88,6 +88,15 @@ namespace AnnotationsDemoApi.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid Submission Identifier.
+        /// </summary>
+        public static string InvalidSubmissionIdentifier {
+            get {
+                return ResourceManager.GetString("InvalidSubmissionIdentifier", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Invalid UPC Code.
         /// </summary>
         public static string InvalidUpcCode {

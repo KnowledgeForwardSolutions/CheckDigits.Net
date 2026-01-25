@@ -6,25 +6,25 @@ public class Modulus11CheckDigitAttributeTests
 {
    private const String _customErrorMessage = "Need a valid ISSN";
 
-   public class Publication
+   public class Modulus11Request
    {
       [Modulus11CheckDigit]
       public String Issn { get; set; } = null!;
    }
 
-   public class PublicationCustomMessage
+   public class Modulus11RequestCustomMessage
    {
       [Modulus11CheckDigit(ErrorMessage = _customErrorMessage)]
       public String Issn { get; set; } = null!;
    }
 
-   public class RequiredPublication
+   public class Modulus11RequestRequiredField
    {
       [Required, Modulus11CheckDigit]
       public String Issn { get; set; } = null!;
    }
 
-   public class PublicationInvalidType
+   public class Modulus11RequestInvalidType
    {
       [Modulus11CheckDigit]
       public Int32 Issn { get; set; }
@@ -40,7 +40,7 @@ public class Modulus11CheckDigitAttributeTests
    public void Modulus11CheckDigitAttribute_Validate_ShouldReturnSuccess_WhenValueHasValidModulus11CheckDigit(String issn)
    {
       // Arrange.
-      var request = new Publication
+      var request = new Modulus11Request
       {
          Issn = issn
       };
@@ -56,7 +56,7 @@ public class Modulus11CheckDigitAttributeTests
    public void Modulus11CheckDigitAttribute_Validate_ShouldReturnSuccess_WhenNonRequiredValueIsNull()
    {
       // Arrange.
-      var request = new Publication();
+      var request = new Modulus11Request();
 
       // Act.
       var results = Utility.ValidateModel(request);
@@ -70,7 +70,7 @@ public class Modulus11CheckDigitAttributeTests
    public void Modulus11CheckDigitAttribute_Validate_ShouldReturnSuccess_WhenNonRequiredValueIsEmpty()
    {
       // Arrange.
-      var request = new Publication
+      var request = new Modulus11Request
       {
          Issn = String.Empty
       };
@@ -86,7 +86,7 @@ public class Modulus11CheckDigitAttributeTests
    public void Modulus11CheckDigitAttribute_Validate_ShouldReturnFailure_WhenValueIsNotTypeString()
    {
       // Arrange.
-      var item = new PublicationInvalidType
+      var item = new Modulus11RequestInvalidType
       {
          Issn = 123456
       };
@@ -104,7 +104,7 @@ public class Modulus11CheckDigitAttributeTests
    public void Modulus11CheckDigitAttribute_Validate_ShouldReturnFailure_WhenRequiredValueIsNull()
    {
       // Arrange.
-      var request = new RequiredPublication();
+      var request = new Modulus11RequestRequiredField();
       var expectedMessage = "The Issn field is required.";
 
       // Act.
@@ -119,7 +119,7 @@ public class Modulus11CheckDigitAttributeTests
    public void Modulus11CheckDigitAttribute_Validate_ShouldReturnFailure_WhenRequiredValueIsEmpty()
    {
       // Arrange.
-      var request = new RequiredPublication
+      var request = new Modulus11RequestRequiredField
       {
          Issn = String.Empty
       };
@@ -141,7 +141,7 @@ public class Modulus11CheckDigitAttributeTests
    public void Modulus11CheckDigitAttribute_Validate_ShouldReturnFailure_WhenValueHasInvalidModulus11CheckDigit(String issn)
    {
       // Arrange.
-      var request = new Publication
+      var request = new Modulus11Request
       {
          Issn = issn
       };
@@ -163,7 +163,7 @@ public class Modulus11CheckDigitAttributeTests
    public void Modulus11CheckDigitAttribute_Validate_ShouldReturnFailure_WhenValueHasInvalidModulus11CheckDigitAndCustomErrorMessageIsSupplied(String issn)
    {
       // Arrange.
-      var request = new PublicationCustomMessage
+      var request = new Modulus11RequestCustomMessage
       {
          Issn = issn
       };
