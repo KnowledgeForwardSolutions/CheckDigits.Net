@@ -12,6 +12,7 @@ to the CheckDigits.Net [README file]( https://github.com/KnowledgeForwardSolutio
 
 - **[Using CheckDigits.Net.Annotations](#using-checkdigits.net.annotations)**
 - **[Supported Attributes](#supported-attributes)**
+    * [AlphanumericMod97_10DigitAttribute](#alphanumericmod97_10checkdigitattribute)
     * [DammCheckDigitAttribute](#dammcheckdigitattribute)
     * [LuhnCheckDigitAttribute](#luhncheckdigitattribute)
     * [Modulus10_13CheckDigitAttribute](#modulus10_13checkdigitattribute)
@@ -87,6 +88,19 @@ or empty. The check digit attributes do not perform null or empty checks by defa
 and should be used in conjunction with the `Required` attribute when necessary.
 
 ## Supported Attributes
+
+### AlphanumericMod97_10DigitAttribute
+
+The `AlphanumericMod97_10DigitAttribute` validates that a string property conforms to the
+AlphanumericMod97_10 check digit algorithm, a variation of the ISO/IEC 7064 MOD 97-10 algorithm. 
+The algorithm is supports alphanumeric characters by mapping letters A-Z to the values 10-35.
+The algorithm is case-insensitive and lower case letters are treated as their uppercase equivalents.
+
+The `AlphanumericMod97_10DigitAttribute` will return validation errors for the following conditions:
+- The value does not contain a valid AlphanumericMod97_10 check digit.
+- The value contains characters other than 0-9, A-Z and a-z.
+- The value is shorter than 3 characters (i.e., it cannot contain the two check digit characters required by the algorithm).
+- The value being validated is not of type `string`.
 
 ### DammCheckDigitAttribute
 
