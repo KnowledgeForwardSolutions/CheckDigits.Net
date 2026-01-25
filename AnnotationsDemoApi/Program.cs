@@ -26,6 +26,17 @@ app.UseRequestLocalization(localizationOptions);
 // Configure the HTTP request pipeline.
 
 // Damm Check Digit Endpoints
+app.MapPost("/alphanumericmod9710",
+   (AlphanumericMod97_10Request request) => Results.Ok("Legal entity identifier is valid"));
+
+app.MapPost("/alphanumericmod9710message",
+   (AlphanumericMod97_10RequestCustomErrorMessage request) => Results.Ok("Legal entity identifier is valid"));
+
+app.MapPost("/alphanumericmod9710global",
+   (AlphanumericMod97_10RequestGlobalizedErrorMessage request, IStringLocalizer<SharedStrings> localizer)
+      => Results.Ok(localizer["ValidRequest"].ToString()));
+
+// Damm Check Digit Endpoints
 app.MapPost("/damm",
    (DammRequest request) => Results.Ok("Submission identifier is valid"));
 
