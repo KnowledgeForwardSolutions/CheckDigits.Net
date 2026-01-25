@@ -1,0 +1,55 @@
+@AnnotationsDemoApi_HostAddress = http://localhost:5079
+
+### [DammCheckDigit] Valid Damm Card Number - Should return 200 OK
+POST {{AnnotationsDemoApi_HostAddress}}/damm
+Content-Type: application/json
+
+{
+  "submissionIdentifier": "123456789018"
+}
+
+
+### [DammCheckDigit] Invalid Damm Card Number - Should return 400 Bad Request
+POST {{AnnotationsDemoApi_HostAddress}}/damm
+Content-Type: application/json
+
+{
+  "submissionIdentifier": "1236547890123450"
+}
+
+### [DammCheckDigit(ErrorMessage =...)] Valid Damm Card Number - Should return 200 OK
+POST {{AnnotationsDemoApi_HostAddress}}/dammmessage
+Content-Type: application/json
+
+{
+  "submissionIdentifier": "123456789018"
+}
+
+
+### [DammCheckDigit(ErrorMessage =...)] Invalid Damm Card Number - Should return 400 Bad Request
+POST {{AnnotationsDemoApi_HostAddress}}/dammmessage
+Content-Type: application/json
+
+{
+  "submissionIdentifier": "1236547890123450"
+}
+
+
+### [DammCheckDigit(ErrorMessageResourceName =...)] Valid Damm Card Number - Should return 200 OK
+POST {{AnnotationsDemoApi_HostAddress}}/dammglobal
+Content-Type: application/json
+Accept-Language: de-DE
+
+{
+  "submissionIdentifier": "123456789018"
+}
+
+
+### [DammCheckDigit(ErrorMessageResourceName =...)] Invalid Damm Card Number - Should return 400 Bad Request and localized message
+POST {{AnnotationsDemoApi_HostAddress}}/dammglobal
+Content-Type: application/json
+Accept-Language: de-DE
+
+{
+  "submissionIdentifier": "1236547890123450"
+}

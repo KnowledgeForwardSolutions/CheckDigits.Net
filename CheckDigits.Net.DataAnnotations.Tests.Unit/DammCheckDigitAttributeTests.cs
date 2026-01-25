@@ -2,31 +2,31 @@
 
 namespace CheckDigits.Net.DataAnnotations.Tests.Unit;
 
-public class DammCheckDigitAlgorithmTests
+public class DammCheckDigitAttributeTests
 {
    private const String _customErrorMessage = "Need a valid Submission Identifier";
 
    public class DammRequest
    {
-      [DammCheckDigitAlgorithm]
+      [DammCheckDigitAttribute]
       public String SubmissionIdentifier { get; set; } = null!;
    }
 
    public class DammRequestCustomMessage
    {
-      [DammCheckDigitAlgorithm(ErrorMessage = _customErrorMessage)]
+      [DammCheckDigitAttribute(ErrorMessage = _customErrorMessage)]
       public String SubmissionIdentifier { get; set; } = null!;
    }
 
    public class DammRequestRequiredField
    {
-      [Required, DammCheckDigitAlgorithm]
+      [Required, DammCheckDigitAttribute]
       public String SubmissionIdentifier { get; set; } = null!;
    }
 
    public class DammRequestInvalidType
    {
-      [DammCheckDigitAlgorithm]
+      [DammCheckDigitAttribute]
       public Int32 SubmissionIdentifier { get; set; }
    }
 

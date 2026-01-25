@@ -25,6 +25,17 @@ app.UseRequestLocalization(localizationOptions);
 
 // Configure the HTTP request pipeline.
 
+// Damm Check Digit Endpoints
+app.MapPost("/damm",
+   (DammRequest request) => Results.Ok("Submission identifier is valid"));
+
+app.MapPost("/dammmessage",
+   (DammRequestCustomErrorMessage request) => Results.Ok("Submission identifier is valid"));
+
+app.MapPost("/dammglobal",
+   (DammRequestGlobalizedErrorMessage request, IStringLocalizer<SharedStrings> localizer)
+      => Results.Ok(localizer["ValidRequest"].ToString()));
+
 // Luhn Check Digit Endpoints
 app.MapPost("/luhn",
    (LuhnRequest request) => Results.Ok("Credit card number is valid"));

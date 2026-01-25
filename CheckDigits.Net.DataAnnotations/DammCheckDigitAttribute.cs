@@ -38,7 +38,7 @@ namespace CheckDigits.Net.DataAnnotations;
 ///      property.
 ///   </para>
 /// </remarks>
-public class DammCheckDigitAlgorithm()
+public class DammCheckDigitAttribute()
    : BaseCheckDigitAttribute(Algorithms.Damm, Messages.SingleCheckDigitFailure)
 {
 }
