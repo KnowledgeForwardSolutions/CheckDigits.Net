@@ -130,9 +130,10 @@ The `LuhnCheckDigitAttribute` will return validation errors for the following co
 
 ### Modulus10_13CheckDigitAttribute
 
-The `Modulus10_13CheckDigitAttribute` validates that a string property conforms 
-to the Modulus10 (with weights 1 and 3) check digit algorithm. This is commonly 
-used for global item numbers such as GTIN, EAN and UPC codes.
+The `Modulus10_13CheckDigitAttribute` validates that a string property contains 
+a valid modulus 10 check digit computed using alternating weights of 1 and 3. 
+This algorithm is commonly used for global item numbers such as GTIN, EAN and 
+UPC codes.
 
 The `Modulus10_13CheckDigitAttribute` will return validation errors for the following conditions:
 - The value does not contain a valid Modulus10_13 check digit.
@@ -142,10 +143,10 @@ The `Modulus10_13CheckDigitAttribute` will return validation errors for the foll
 
 ### Modulus10_1CheckDigitAttribute
 
-The `Modulus10_1CheckDigitAttribute` validates that a string property conforms 
-to the Modulus10 check digit algorithm using progressive weights starting with 1. 
-One prominent use of this algorithm is by the Chemical Abstract Service for CAS 
-numbers.
+The `Modulus10_1CheckDigitAttribute` validates that a string property contains a 
+valid modulus 10 check digit computed using progressive weights starting with 1. 
+One prominent use of this algorithm is by the Chemical Abstracts Service (CAS) 
+Registry Number.
 
 The `Modulus10_1CheckDigitAttribute` will return validation errors for the following conditions:
 - The value does not contain a valid Modulus10_1 check digit.
