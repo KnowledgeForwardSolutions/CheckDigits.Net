@@ -16,6 +16,7 @@ to the CheckDigits.Net [README file]( https://github.com/KnowledgeForwardSolutio
     * [DammCheckDigitAttribute](#dammcheckdigitattribute)
     * [LuhnCheckDigitAttribute](#luhncheckdigitattribute)
     * [Modulus10_13CheckDigitAttribute](#modulus10_13checkdigitattribute)
+    * [Modulus1_1CheckDigitAttribute](#modulus10_1checkdigitattribute)
     * [Modulus11CheckDigitAttribute](#modulus11checkdigitattribute)
     * [VerhoeffCheckDigitAttribute](#verhoeffcheckdigitattribute)
 
@@ -137,6 +138,20 @@ The `Modulus10_13CheckDigitAttribute` will return validation errors for the foll
 - The value does not contain a valid Modulus10_13 check digit.
 - The value contains non-ASCII digit characters.
 - The value is shorter than two characters (i.e., it cannot contain a check digit).
+- The value being validated is not of type `string`.
+
+### Modulus10_1CheckDigitAttribute
+
+The `Modulus10_1CheckDigitAttribute` validates that a string property conforms 
+to the Modulus10 check digit algorithm using progressive weights starting with 1. 
+One prominent use of this algorithm is by the Chemical Abstract Service for CAS 
+numbers.
+
+The `Modulus10_1CheckDigitAttribute` will return validation errors for the following conditions:
+- The value does not contain a valid Modulus10_1 check digit.
+- The value contains non-ASCII digit characters.
+- The value is shorter than two characters (i.e., it cannot contain a check digit).
+- The value is longer than 10 characters (the maximum length supported by the Modulus10_1 algorithm).
 - The value being validated is not of type `string`.
 
 ### Modulus11CheckDigitAttribute
