@@ -1,6 +1,6 @@
 @AnnotationsDemoApi_HostAddress = http://localhost:5079
 
-### [VerhoeffCheckDigit] Valid Verhoeff Card Number - Should return 200 OK
+### [VerhoeffCheckDigit] Valid Verhoeff Aadhaar ID Number - Should return 200 OK
 POST {{AnnotationsDemoApi_HostAddress}}/verhoeff
 Content-Type: application/json
 
@@ -9,7 +9,7 @@ Content-Type: application/json
 }
 
 
-### [VerhoeffCheckDigit] Invalid Verhoeff Card Number - Should return 400 Bad Request
+### [VerhoeffCheckDigit] Invalid Verhoeff Aadhaar ID Number - Should return 400 Bad Request
 POST {{AnnotationsDemoApi_HostAddress}}/verhoeff
 Content-Type: application/json
 
@@ -17,7 +17,7 @@ Content-Type: application/json
   "aadhaarIdNumber": "112255445566778899009"
 }
 
-### [VerhoeffCheckDigit(ErrorMessage =...)] Valid Verhoeff Card Number - Should return 200 OK
+### [VerhoeffCheckDigit(ErrorMessage =...)] Valid Verhoeff Aadhaar ID Number - Should return 200 OK
 POST {{AnnotationsDemoApi_HostAddress}}/verhoeffmessage
 Content-Type: application/json
 
@@ -26,7 +26,7 @@ Content-Type: application/json
 }
 
 
-### [VerhoeffCheckDigit(ErrorMessage =...)] Invalid Verhoeff Card Number - Should return 400 Bad Request
+### [VerhoeffCheckDigit(ErrorMessage =...)] Invalid Verhoeff Aadhaar ID Number - Should return 400 Bad Request
 POST {{AnnotationsDemoApi_HostAddress}}/verhoeffmessage
 Content-Type: application/json
 
@@ -35,7 +35,7 @@ Content-Type: application/json
 }
 
 
-### [VerhoeffCheckDigit(ErrorMessageResourceName =...)] Valid Verhoeff Card Number - Should return 200 OK
+### [VerhoeffCheckDigit(ErrorMessageResourceName =...)] Valid Verhoeff Aadhaar ID Number - Should return 200 OK
 POST {{AnnotationsDemoApi_HostAddress}}/verhoeffglobal
 Content-Type: application/json
 Accept-Language: es-ES
@@ -45,7 +45,7 @@ Accept-Language: es-ES
 }
 
 
-### [VerhoeffCheckDigit(ErrorMessageResourceName =...)] Invalid Verhoeff Card Number - Should return 400 Bad Request and localized message
+### [VerhoeffCheckDigit(ErrorMessageResourceName =...)] Invalid Verhoeff Aadhaar ID Number - Should return 400 Bad Request and localized message
 POST {{AnnotationsDemoApi_HostAddress}}/verhoeffglobal
 Content-Type: application/json
 Accept-Language: es-ES

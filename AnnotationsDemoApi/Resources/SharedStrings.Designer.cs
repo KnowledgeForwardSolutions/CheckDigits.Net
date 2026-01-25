@@ -88,6 +88,15 @@ namespace AnnotationsDemoApi.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid Legal Entity Identifier.
+        /// </summary>
+        public static string InvalidLegalEntityIdentifier {
+            get {
+                return ResourceManager.GetString("InvalidLegalEntityIdentifier", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Invalid Submission Identifier.
         /// </summary>
         public static string InvalidSubmissionIdentifier {

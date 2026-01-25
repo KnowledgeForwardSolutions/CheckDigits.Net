@@ -1,6 +1,6 @@
 @AnnotationsDemoApi_HostAddress = http://localhost:5079
 
-### [DammCheckDigit] Valid Damm Card Number - Should return 200 OK
+### [DammCheckDigit] Valid Damm Submission Identifier - Should return 200 OK
 POST {{AnnotationsDemoApi_HostAddress}}/damm
 Content-Type: application/json
 
@@ -9,7 +9,7 @@ Content-Type: application/json
 }
 
 
-### [DammCheckDigit] Invalid Damm Card Number - Should return 400 Bad Request
+### [DammCheckDigit] Invalid Damm Submission Identifier - Should return 400 Bad Request
 POST {{AnnotationsDemoApi_HostAddress}}/damm
 Content-Type: application/json
 
@@ -17,7 +17,7 @@ Content-Type: application/json
   "submissionIdentifier": "1236547890123450"
 }
 
-### [DammCheckDigit(ErrorMessage =...)] Valid Damm Card Number - Should return 200 OK
+### [DammCheckDigit(ErrorMessage =...)] Valid Damm Submission Identifier - Should return 200 OK
 POST {{AnnotationsDemoApi_HostAddress}}/dammmessage
 Content-Type: application/json
 
@@ -26,7 +26,7 @@ Content-Type: application/json
 }
 
 
-### [DammCheckDigit(ErrorMessage =...)] Invalid Damm Card Number - Should return 400 Bad Request
+### [DammCheckDigit(ErrorMessage =...)] Invalid Damm Submission Identifier - Should return 400 Bad Request
 POST {{AnnotationsDemoApi_HostAddress}}/dammmessage
 Content-Type: application/json
 
@@ -35,7 +35,7 @@ Content-Type: application/json
 }
 
 
-### [DammCheckDigit(ErrorMessageResourceName =...)] Valid Damm Card Number - Should return 200 OK
+### [DammCheckDigit(ErrorMessageResourceName =...)] Valid Damm Submission Identifier - Should return 200 OK
 POST {{AnnotationsDemoApi_HostAddress}}/dammglobal
 Content-Type: application/json
 Accept-Language: de-DE
@@ -45,7 +45,7 @@ Accept-Language: de-DE
 }
 
 
-### [DammCheckDigit(ErrorMessageResourceName =...)] Invalid Damm Card Number - Should return 400 Bad Request and localized message
+### [DammCheckDigit(ErrorMessageResourceName =...)] Invalid Damm Submission Identifier - Should return 400 Bad Request and localized message
 POST {{AnnotationsDemoApi_HostAddress}}/dammglobal
 Content-Type: application/json
 Accept-Language: de-DE
