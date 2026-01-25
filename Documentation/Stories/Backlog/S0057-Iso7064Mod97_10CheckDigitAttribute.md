@@ -1,8 +1,8 @@
-# S0046: AlphanumericMod97_10 Check Digit Data Annotation
+# S0057: Iso7064Mod97_10 Check Digit Data Annotation
 
 ## Story
 **As a** .NET developer  
-**I want** a reusable C# data annotation that validates values using the AlphanumericMod97_10 check digit algorithm via **CheckDigits.Net**  
+**I want** a reusable C# data annotation that validates values using the Iso7064Mod97_10 check digit algorithm via **CheckDigits.Net**  
 **So that** I can declaratively enforce check digit validation on my model properties without duplicating validation logic.
 
 ## Background
@@ -10,15 +10,15 @@ Identifiers often include a check digit to ensure data integrity. Implementing c
 
 ## Acceptance Criteria
 - The annotation is implemented as a custom attribute derived from `System.ComponentModel.DataAnnotations.ValidationAttribute`.
-- The annotation uses **CheckDigits.Net** to validate values according to the AlphanumericMod97_10 algorithm.
+- The annotation uses **CheckDigits.Net** to validate values according to the Ncd algorithm.
 - The annotation can be applied to `string` model properties.
-- Validation succeeds when the value is valid per the AlphanumericMod97_10 algorithm.
-- Validation fails when the value does not pass the AlphanumericMod97_10 check.
+- Validation succeeds when the value is valid per the Iso7064Mod97_10 algorithm.
+- Validation fails when the value does not pass the Iso7064Mod97_10 check.
 - Validation succeeds when the value is `null` or empty and the field is not marked as required.
-- A default error message is provided (e.g., *“The field {0} has invalid AlphanumericMod97_10 check digits*).
+- A default error message is provided (e.g., *“The field {0} has invalid Iso7064Mod97_10 check digit*).
 - The error message can be customized using the `ErrorMessage` property.
 - New annotation to exist in CheckDigits.Net.DataAnnotations namespace.
-- New annotation named AlphanumericMod97_10CheckDigit
+- New annotation named Iso7064Mod97_10CheckDigit
 
 ## Definition of Done
 - The annotation is usable in standard .NET model validation (e.g., ASP.NET Core MVC / Web API).
@@ -29,13 +29,13 @@ Identifiers often include a check digit to ensure data integrity. Implementing c
 
 ## Out of Scope
 - Client-side validation.
-- Generating or calculating AlphanumericMod97_10 check digits (validation only).
-- Support for non-AlphanumericMod97_10 check digit algorithms.
+- Generating or calculating Iso7064Mod97_10 check digits (validation only).
+- Support for non-Iso7064Mod97_10 check digit algorithms.
 
 ## Example Usage
 ```csharp
 public class Foo
 {
-    [AlphanumericMod97_10CheckDigit]
+    [Iso7064Mod97_10CheckDigit]
     public string Bar { get; set; }
 }
