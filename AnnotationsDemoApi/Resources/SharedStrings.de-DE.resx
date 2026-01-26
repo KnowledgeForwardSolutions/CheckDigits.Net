@@ -120,6 +120,9 @@
   <data name="InvalidAadhaarNumber" xml:space="preserve">
     <value>UngültigeAadhaar-Nummer</value>
   </data>
+  <data name="InvalidArkIdentifier" xml:space="preserve">
+    <value>Ungültige Ark Identifier</value>
+  </data>
   <data name="InvalidCardNumber" xml:space="preserve">
     <value>Ungültige Kartennummer</value>
   </data>

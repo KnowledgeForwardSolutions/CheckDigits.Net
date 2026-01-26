@@ -102,6 +102,17 @@ app.MapPost("/modulus11global",
    (Modulus11RequestGlobalizedErrorMessage request, IStringLocalizer<SharedStrings> localizer)
    => Results.Ok(localizer["ValidRequest"].ToString()));
 
+// NOID Check Digit Endpoints
+app.MapPost("/noid",
+   (NoidRequest request) => Results.Ok("ARK Identifier is valid"));
+
+app.MapPost("/noidmessage",
+   (NoidRequestCustomErrorMessage request) => Results.Ok("ARK Identifier number is valid"));
+
+app.MapPost("/noidglobal",
+   (NoidRequestGlobalizedErrorMessage request, IStringLocalizer<SharedStrings> localizer)
+      => Results.Ok(localizer["ValidRequest"].ToString()));
+
 // Verhoeff Check Digit Endpoints
 app.MapPost("/verhoeff",
    (VerhoeffRequest request) => Results.Ok("Aadhaar ID number is valid"));
