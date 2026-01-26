@@ -80,6 +80,17 @@ app.MapPost("/modulus101global",
    (Modulus10_1RequestGlobalizedErrorMessage request, IStringLocalizer<SharedStrings> localizer)
       => Results.Ok(localizer["ValidRequest"].ToString()));
 
+// Modulus 10_2 Check Digit Endpoints
+app.MapPost("/modulus102",
+   (Modulus10_2Request request) => Results.Ok("IMO Number is valid"));
+
+app.MapPost("/modulus102message",
+   (Modulus10_2RequestCustomErrorMessage request) => Results.Ok("IMO Number is valid"));
+
+app.MapPost("/modulus102global",
+   (Modulus10_2RequestGlobalizedErrorMessage request, IStringLocalizer<SharedStrings> localizer)
+      => Results.Ok(localizer["ValidRequest"].ToString()));
+
 // Modulus 11 Check Digit Endpoints
 app.MapPost("/modulus11",
    (Modulus11Request request) => Results.Ok("ISBN is valid"));
