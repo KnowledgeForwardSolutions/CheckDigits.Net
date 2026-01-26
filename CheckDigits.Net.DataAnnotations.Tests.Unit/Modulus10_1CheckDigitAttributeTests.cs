@@ -8,25 +8,25 @@ public class Modulus10_1CheckDigitAttributeTests
 
    public class Modulus10_1Request
    {
-      [Modulus10_1CheckDigitAttribute]
+      [Modulus10_1CheckDigit]
       public String CasNumber { get; set; } = null!;
    }
 
    public class Modulus10_1RequestCustomMessage
    {
-      [Modulus10_1CheckDigitAttribute(ErrorMessage = _customErrorMessage)]
+      [Modulus10_1CheckDigit(ErrorMessage = _customErrorMessage)]
       public String CasNumber { get; set; } = null!;
    }
 
    public class Modulus10_1RequestRequiredField
    {
-      [Required, Modulus10_1CheckDigitAttribute]
+      [Required, Modulus10_1CheckDigit]
       public String CasNumber { get; set; } = null!;
    }
 
    public class Modulus10_1RequestInvalidType
    {
-      [Modulus10_1CheckDigitAttribute]
+      [Modulus10_1CheckDigit]
       public Int32 CasNumber { get; set; }
    }
 

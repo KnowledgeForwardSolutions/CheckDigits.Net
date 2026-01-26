@@ -10,10 +10,10 @@
 /// <remarks>
 ///   <para>
 ///      Use this attribute to enforce that a value, such as a GTIN code, EAN 
-///      code UPC code or other identifier has a valid Modulus 10 (weights 1 and 
-///      3) check digit. The validation passes if the value is null or an empty 
-///      string or if the value contains a valid check digit in the right-most 
-///      character position.
+///      code UPC code or other identifier has a valid Modulus10_13 check digit.
+///      The validation passes if the value is null or an empty string or if the
+///      value contains a valid check digit in the right-most character 
+///      position.
 ///   </para>
 ///   <para>
 ///      If applied to a non-empty string property, validation will fail under 
