@@ -19,6 +19,7 @@ to the CheckDigits.Net [README file]( https://github.com/KnowledgeForwardSolutio
     * [Modulus10_1CheckDigitAttribute](#modulus10_1checkdigitattribute)
     * [Modulus10_2CheckDigitAttribute](#modulus10_2checkdigitattribute)
     * [Modulus11CheckDigitAttribute](#modulus11checkdigitattribute)
+    * [NoidCheckDigitAttribute](#noidcheckdigitattribute)
     * [VerhoeffCheckDigitAttribute](#verhoeffcheckdigitattribute)
 
 
@@ -187,6 +188,28 @@ The `Modulus11CheckDigitAttribute` will return validation errors for the followi
 - The value contains characters other than ASCII digits or 'X'.
 - The value is shorter than two characters (i.e., it cannot contain a check digit).
 - The value is longer than 10 characters (the maximum length supported by the Modulus11 algorithm).
+- The value being validated is not of type `string`.
+
+### NoidCheckDigitAttribute
+
+The `NoidCheckDigitAttribute` validates that a string property conforms to the
+Nice Opaque Identifier (NOID) check digit algorithm, used by systems that deal
+with persistent identifiers (for example, ARK (Archival Resource Key) 
+identifiers). The NOID algorithm calculates check digits for lowercase 
+betanumeric identifiers (0-9 and a-z, excluding vowels and the letters l and y).
+
+Note that unlike most other check digit algorithms, a non-betanumeric character
+will not cause validation to fail; such characters are simply ignored and
+contribute nothing to the check digit calculation.
+
+In CheckDigits.Net, the NOID algorithm is implemented by the `NcdAlgorithm`
+class where "Ncd" stands for "NOID Check Digit". The name "NoidCheckDigitAttribute"
+is used here because "NcdCheckDigitAttribute" would be effectively redundant
+(i.e. NOID Check Digit Check Digit Attribute).
+
+The `NoidCheckDigitAttribute` will return validation errors for the following conditions:
+- The value does not contain a valid NOID check digit.
+- The value is shorter than two characters (i.e., it cannot contain a check digit).
 - The value being validated is not of type `string`.
 
 ### VerhoeffCheckDigitAttribute
