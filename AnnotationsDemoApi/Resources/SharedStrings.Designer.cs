@@ -79,6 +79,15 @@ namespace AnnotationsDemoApi.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid CAS Registry Number.
+        /// </summary>
+        public static string InvalidCasNumber {
+            get {
+                return ResourceManager.GetString("InvalidCasNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Invalid ISBN-10.
         /// </summary>
         public static string InvalidIsbn10 {

@@ -1,0 +1,55 @@
+@AnnotationsDemoApi_HostAddress = http://localhost:5079
+
+### [Modulus10_1CheckDigit] Valid CAS Registry Number - Should return 200 OK
+POST {{AnnotationsDemoApi_HostAddress}}/modulus101
+Content-Type: application/json
+
+{
+  "casNumber": "7732185"
+}
+
+
+### [Modulus10_1CheckDigit] Invalid CAS Registry Number - Should return 400 Bad Request
+POST {{AnnotationsDemoApi_HostAddress}}/modulus101
+Content-Type: application/json
+
+{
+  "casNumber": "28827554"
+}
+
+### [Modulus10_1CheckDigit(ErrorMessage =...)] Valid CAS Registry Number - Should return 200 OK
+POST {{AnnotationsDemoApi_HostAddress}}/modulus101message
+Content-Type: application/json
+
+{
+  "casNumber": "7732185"
+}
+
+
+### [Modulus10_1CheckDigit(ErrorMessage =...)] Invalid CAS Registry Number - Should return 400 Bad Request
+POST {{AnnotationsDemoApi_HostAddress}}/modulus101message
+Content-Type: application/json
+
+{
+  "casNumber": "28827554"
+}
+
+
+### [Modulus10_1CheckDigit(ErrorMessageResourceName =...)] Valid CAS Registry Number - Should return 200 OK
+POST {{AnnotationsDemoApi_HostAddress}}/modulus101global
+Content-Type: application/json
+Accept-Language: de-DE
+
+{
+  "casNumber": "7732185"
+}
+
+
+### [Modulus10_1CheckDigit(ErrorMessageResourceName =...)] Invalid CAS Registry Number - Should return 400 Bad Request and localized message
+POST {{AnnotationsDemoApi_HostAddress}}/modulus101global
+Content-Type: application/json
+Accept-Language: de-DE
+
+{
+  "casNumber": "28827554"
+}
