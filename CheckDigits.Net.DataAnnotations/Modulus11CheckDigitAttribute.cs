@@ -9,9 +9,9 @@
 /// <remarks>
 ///   <para>
 ///      Use this attribute to enforce that a value, such as an ISBN-10 or ISSN
-///      conforms to the Modulus 11 algorithm. The validation passes if the 
+///      conforms to the Modulus11 algorithm. The validation passes if the 
 ///      value is null or an empty string or if the value contains a valid 
-///      Modulus 11 check digit in the right-most character position.
+///      Modulus11 check digit in the right-most character position.
 ///   </para>
 ///   <para>
 ///      If applied to a non-empty string property, validation will fail under 

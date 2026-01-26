@@ -16,6 +16,6 @@ public class Modulus10_1RequestCustomErrorMessage
 
 public class Modulus10_1RequestGlobalizedErrorMessage
 {
-   [Modulus10_1CheckDigit(ErrorMessageResourceName = "InvalidIsbn10", ErrorMessageResourceType = typeof(Resources.SharedStrings))]
+   [Modulus10_1CheckDigit(ErrorMessageResourceName = "InvalidCasNumber", ErrorMessageResourceType = typeof(Resources.SharedStrings))]
    public String CasNumber { get; set; } = null!;
 }

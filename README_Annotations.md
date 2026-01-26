@@ -16,7 +16,8 @@ to the CheckDigits.Net [README file]( https://github.com/KnowledgeForwardSolutio
     * [DammCheckDigitAttribute](#dammcheckdigitattribute)
     * [LuhnCheckDigitAttribute](#luhncheckdigitattribute)
     * [Modulus10_13CheckDigitAttribute](#modulus10_13checkdigitattribute)
-    * [Modulus1_1CheckDigitAttribute](#modulus10_1checkdigitattribute)
+    * [Modulus10_1CheckDigitAttribute](#modulus10_1checkdigitattribute)
+    * [Modulus10_2CheckDigitAttribute](#modulus10_2checkdigitattribute)
     * [Modulus11CheckDigitAttribute](#modulus11checkdigitattribute)
     * [VerhoeffCheckDigitAttribute](#verhoeffcheckdigitattribute)
 
@@ -153,6 +154,20 @@ The `Modulus10_1CheckDigitAttribute` will return validation errors for the follo
 - The value contains non-ASCII digit characters.
 - The value is shorter than two characters (i.e., it cannot contain a check digit).
 - The value is longer than 10 characters (the maximum length supported by the Modulus10_1 algorithm).
+- The value being validated is not of type `string`.
+
+### Modulus10_2CheckDigitAttribute
+
+The `Modulus10_2CheckDigitAttribute` validates that a string property contains a 
+valid modulus 10 check digit computed using progressive weights starting with 2. 
+This algorithm is commonly used for International Maritime Organization (IMO) 
+numbers.
+
+The `Modulus10_2CheckDigitAttribute` will return validation errors for the following conditions:
+- The value does not contain a valid Modulus10_2 check digit.
+- The value contains non-ASCII digit characters.
+- The value is shorter than two characters (i.e., it cannot contain a check digit).
+- The value is longer than 10 characters (the maximum length supported by the Modulus10_2 algorithm).
 - The value being validated is not of type `string`.
 
 ### Modulus11CheckDigitAttribute

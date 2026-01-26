@@ -126,6 +126,9 @@
   <data name="InvalidCasNumber" xml:space="preserve">
     <value>CAS Number no válido</value>
   </data>
+  <data name="InvalidImoNumber" xml:space="preserve">
+    <value>IMO Number no válido</value>
+  </data>
   <data name="InvalidIsbn10" xml:space="preserve">
     <value>USBN-10 no válido</value>
   </data>

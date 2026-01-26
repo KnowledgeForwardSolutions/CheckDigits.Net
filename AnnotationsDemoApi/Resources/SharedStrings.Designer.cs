@@ -88,6 +88,15 @@ namespace AnnotationsDemoApi.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid International Maritime Organization (IMO) Number.
+        /// </summary>
+        public static string InvalidImoNumber {
+            get {
+                return ResourceManager.GetString("InvalidImoNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Invalid ISBN-10.
         /// </summary>
         public static string InvalidIsbn10 {
