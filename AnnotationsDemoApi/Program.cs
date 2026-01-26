@@ -69,6 +69,17 @@ app.MapPost("/modulus1013global",
    (Modulus10_13RequestGlobalizedErrorMessage request, IStringLocalizer<SharedStrings> localizer)
    => Results.Ok(localizer["ValidRequest"].ToString()));
 
+// Modulus 10_1 Check Digit Endpoints
+app.MapPost("/modulus101",
+   (Modulus10_1Request request) => Results.Ok("CAS Registry Number is valid"));
+
+app.MapPost("/modulus101message",
+   (Modulus10_1RequestCustomErrorMessage request) => Results.Ok("CAS Registry Number is valid"));
+
+app.MapPost("/modulus101global",
+   (Modulus10_1RequestGlobalizedErrorMessage request, IStringLocalizer<SharedStrings> localizer)
+      => Results.Ok(localizer["ValidRequest"].ToString()));
+
 // Modulus 11 Check Digit Endpoints
 app.MapPost("/modulus11",
    (Modulus11Request request) => Results.Ok("ISBN is valid"));

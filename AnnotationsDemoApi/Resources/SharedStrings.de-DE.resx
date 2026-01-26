@@ -123,6 +123,9 @@
   <data name="InvalidCardNumber" xml:space="preserve">
     <value>Ungültige Kartennummer</value>
   </data>
+  <data name="InvalidCasNumber" xml:space="preserve">
+    <value>Ungültige CAS-Nummer</value>
+  </data>
   <data name="InvalidIsbn10" xml:space="preserve">
     <value>Ungültige ISBN-10-Nummer</value>
   </data>
