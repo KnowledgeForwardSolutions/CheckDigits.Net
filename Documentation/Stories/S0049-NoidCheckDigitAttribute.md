@@ -1,4 +1,4 @@
-# S0048: Ncd Check Digit Data Annotation
+# S0048: NOID Check Digit Data Annotation
 
 ## Story
 **As a** .NET developer  
