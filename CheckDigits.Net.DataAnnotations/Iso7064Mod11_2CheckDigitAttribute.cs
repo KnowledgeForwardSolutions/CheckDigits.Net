@@ -2,17 +2,18 @@
 
 /// <summary>
 ///   Specifies that a string property or parameter must contain a valid 
-///   ISO/IEC 7064 MOD 11,10 check digit sequence for validation to succeed. 
+///   ISO/IEC 7064 MOD 11-2 check digit sequence for validation to succeed. 
 ///   Successful validation means that the value does not contain any 
 ///   transcription errors capable of being detected by the 
-///   ISO/IEC 7064 MOD 11,10 algorithm.
+///   ISO/IEC 7064 MOD 11-2 algorithm.
 /// </summary>
 /// <remarks>
 ///   <para>
 ///      Use this attribute to enforce that a value conforms to the 
-///      ISO/IEC 7064 MOD 11,10 algorithm. The validation passes if the value is 
+///      ISO/IEC 7064 MOD 11-2 algorithm. The validation passes if the value is 
 ///      null or an empty string or if the value contains a valid 
-///      ISO/IEC 7064 MOD 11,10 check digit in the right-most character position.
+///      ISO/IEC 7064 MOD 11-2 check character in the right-most character 
+///      position.
 ///   </para>
 ///   <para>
 ///      If applied to a non-empty string property, validation will fail under 
@@ -20,15 +21,17 @@
 ///      <list type="bullet">
 ///         <item>
 ///            The value is less than two characters in length, which is the 
-///            minimum required for a valid ISO/IEC 7064 MOD 11,10 check digit 
+///            minimum required for a valid ISO/IEC 7064 MOD 11-2 check digit 
 ///            sequence.
 ///         </item>
 ///         <item>
-///            The value contains non-numeric characters, as the 
-///            ISO/IEC 7064 MOD 11,10 algorithm only processes numeric digits.
+///            The value contains non-numeric characters in any position other
+///            than the right-most check digit position or the value contains a
+///            character other than '0'-'9' or 'X' in the right-most check digit
+///            position.
 ///         </item>
 ///         <item>
-///            The value does not contain a valid ISO/IEC 7064 MOD 11,10 check 
+///            The value does not contain a valid ISO/IEC 7064 MOD 11-2 check 
 ///            digit in the right-most character position.
 ///         </item>
 ///      </list> 
@@ -38,7 +41,7 @@
 ///      property.
 ///   </para>
 /// </remarks>
-public class Iso7064Mod11_10CheckDigitAttribute()
-   : BaseCheckDigitAttribute(Algorithms.Iso7064Mod11_10, Messages.SingleCheckDigitFailure)
+public class Iso7064Mod11_2CheckDigitAttribute()
+   : BaseCheckDigitAttribute(Algorithms.Iso7064Mod11_2, Messages.SingleCheckDigitFailure)
 {
 }
