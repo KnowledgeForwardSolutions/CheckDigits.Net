@@ -14,6 +14,7 @@ to the CheckDigits.Net [README file]( https://github.com/KnowledgeForwardSolutio
 - **[Supported Attributes](#supported-attributes)**
     * [AlphanumericMod97_10DigitAttribute](#alphanumericmod97_10checkdigitattribute)
     * [DammCheckDigitAttribute](#dammcheckdigitattribute)
+	* [Iso7064Mod11_10Attribute](#iso7064mod11_10attribute)
     * [LuhnCheckDigitAttribute](#luhncheckdigitattribute)
     * [Modulus10_13CheckDigitAttribute](#modulus10_13checkdigitattribute)
     * [Modulus10_1CheckDigitAttribute](#modulus10_1checkdigitattribute)
@@ -113,6 +114,18 @@ transcription errors and is used in a range of applications.
 
 The `DammCheckDigitAttribute` will return validation errors for the following conditions:
 - The value does not contain a valid Damm check digit.
+- The value contains non-ASCII digit characters.
+- The value is shorter than two characters (i.e., it cannot contain a check digit).
+- The value being validated is not of type `string`.
+
+### Iso7064Mod11_10Attribute
+
+The `Iso7064Mod11_10Attribute` validates that a string property conforms to the
+ISO/IEC 7064 MOD 11,10 check digit algorithm. The ISO/IEC 7064 MOD 11,10
+algorithm is designed for numeric values and uses a single numeric check digit.
+
+The `Iso7064Mod11_10Attribute` will return validation errors for the following conditions:
+- The value does not contain a valid ISO/IEC 7064 MOD 11,10 check digit.
 - The value contains non-ASCII digit characters.
 - The value is shorter than two characters (i.e., it cannot contain a check digit).
 - The value being validated is not of type `string`.
