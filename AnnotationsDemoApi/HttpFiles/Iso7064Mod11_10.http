@@ -1,0 +1,55 @@
+@AnnotationsDemoApi_HostAddress = http://localhost:5079
+
+### [Iso7064Mod11_10CheckDigit] Valid ISO/IEC 7064 MOD 11,10 value - Should return 200 OK
+POST {{AnnotationsDemoApi_HostAddress}}/iso7064mod1110
+Content-Type: application/json
+
+{
+  "itemIdentifier": "123456789012345678901234565"
+}
+
+
+### [Iso7064Mod11_10CheckDigit] Invalid ISO/IEC 7064 MOD 11,10 value - Should return 400 Bad Request
+POST {{AnnotationsDemoApi_HostAddress}}/iso7064mod1110
+Content-Type: application/json
+
+{
+  "itemIdentifier": "123556788"
+}
+
+### [Iso7064Mod11_10CheckDigit(ErrorMessage =...)] Valid ISO/IEC 7064 MOD 11,10 value - Should return 200 OK
+POST {{AnnotationsDemoApi_HostAddress}}/iso7064mod1110message
+Content-Type: application/json
+
+{
+  "itemIdentifier": "123456789012345678901234565"
+}
+
+
+### [Iso7064Mod11_10CheckDigit(ErrorMessage =...)] Invalid ISO/IEC 7064 MOD 11,10 value - Should return 400 Bad Request
+POST {{AnnotationsDemoApi_HostAddress}}/iso7064mod1110message
+Content-Type: application/json
+
+{
+  "itemIdentifier": "123556788"
+}
+
+
+### [Iso7064Mod11_10CheckDigit(ErrorMessageResourceName =...)] Valid ISO/IEC 7064 MOD 11,10 value - Should return 200 OK
+POST {{AnnotationsDemoApi_HostAddress}}/iso7064mod1110global
+Content-Type: application/json
+Accept-Language: es-ES
+
+{
+  "itemIdentifier": "123456789012345678901234565"
+}
+
+
+### [Iso7064Mod11_10CheckDigit(ErrorMessageResourceName =...)] Invalid ISO/IEC 7064 MOD 11,10 value - Should return 400 Bad Request and localized message
+POST {{AnnotationsDemoApi_HostAddress}}/iso7064mod1110global
+Content-Type: application/json
+Accept-Language: es-ES
+
+{
+  "itemIdentifier": "123556788"
+}

@@ -135,6 +135,9 @@
   <data name="InvalidIsbn10" xml:space="preserve">
     <value>Invalid ISBN-10</value>
   </data>
+  <data name="InvalidItemIdentifier" xml:space="preserve">
+    <value>Invalid Item Identifier</value>
+  </data>
   <data name="InvalidLegalEntityIdentifier" xml:space="preserve">
     <value>Invalid Legal Entity Identifier</value>
   </data>

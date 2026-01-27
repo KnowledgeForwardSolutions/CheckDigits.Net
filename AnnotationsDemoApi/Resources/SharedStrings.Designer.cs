@@ -115,6 +115,15 @@ namespace AnnotationsDemoApi.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid Item Identifier.
+        /// </summary>
+        public static string InvalidItemIdentifier {
+            get {
+                return ResourceManager.GetString("InvalidItemIdentifier", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Invalid Legal Entity Identifier.
         /// </summary>
         public static string InvalidLegalEntityIdentifier {
