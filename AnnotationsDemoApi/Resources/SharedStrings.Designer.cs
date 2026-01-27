@@ -70,6 +70,15 @@ namespace AnnotationsDemoApi.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid ARK Identifier.
+        /// </summary>
+        public static string InvalidArkIdentifier {
+            get {
+                return ResourceManager.GetString("InvalidArkIdentifier", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Invalid card number.
         /// </summary>
         public static string InvalidCardNumber {
