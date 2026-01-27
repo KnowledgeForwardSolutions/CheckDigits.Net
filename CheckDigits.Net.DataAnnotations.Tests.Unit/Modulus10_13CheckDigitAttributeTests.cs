@@ -32,13 +32,17 @@ public class Modulus10_13CheckDigitAttributeTests
    // ==========================================================================
    // ==========================================================================
 
-   [Fact]
-   public void Modulus10_13CheckDigitAttribute_Validate_ShouldReturnSuccess_WhenValueHasValidModulus10_13CheckDigit()
+   [Theory]
+   [InlineData("036000291452")]        // Worked UPC-A example from Wikipedia (https://en.wikipedia.org/wiki/Universal_Product_Code#Check_digit_calculation)
+   [InlineData("425261")]              // UPC-E example
+   [InlineData("4006381333931")]       // Worked EAN-13 example from Wikipedia (https://en.wikipedia.org/wiki/International_Article_Number)
+   [InlineData("73513537")]            // Worked EAN-8 example from Wikipedia
+   public void Modulus10_13CheckDigitAttribute_Validate_ShouldReturnSuccess_WhenValueHasValidModulus10_13CheckDigit(String upcCode)
    {
       // Arrange.
       var request = new Modulus10_13Request
       {
-         UpcCode = "036000291452" // Valid UPC-A code
+         UpcCode = upcCode
       };
 
       // Act.
@@ -129,13 +133,16 @@ public class Modulus10_13CheckDigitAttributeTests
       results[0].ErrorMessage.Should().Be(expectedMessage);
    }
 
-   [Fact]
-   public void Modulus10_13CheckDigitAttribute_Validate_ShouldReturnFailure_WhenValueHasInvalidModulus10_13CheckDigit()
+   [Theory]
+   [InlineData("036000391452")]        // UPC-A with single digit transcription error (2 -> 3)
+   [InlineData("427261")]              // UPC-E with single digit transcription error (5 -> 7)
+   [InlineData("4006383133931")]       // EAN-13 with two digit transposition error (13 -> 31)
+   public void Modulus10_13CheckDigitAttribute_Validate_ShouldReturnFailure_WhenValueHasInvalidModulus10_13CheckDigit(String upcCode)
    {
       // Arrange.
       var request = new Modulus10_13Request
       {
-         UpcCode = "036000291455"
+         UpcCode = upcCode
       };
       var expectedMessage = String.Format(Messages.SingleCheckDigitFailure, nameof(request.UpcCode));
 
@@ -147,13 +154,16 @@ public class Modulus10_13CheckDigitAttributeTests
       results[0].ErrorMessage.Should().Be(expectedMessage);
    }
 
-   [Fact]
-   public void Modulus10_13CheckDigitAttribute_Validate_ShouldReturnFailure_WhenValueHasInvalidModulus10_13CheckDigitAndCustomErrorMessageIsSupplied()
+   [Theory]
+   [InlineData("036000391452")]        // UPC-A with single digit transcription error (2 -> 3)
+   [InlineData("427261")]              // UPC-E with single digit transcription error (5 -> 7)
+   [InlineData("4006383133931")]       // EAN-13 with two digit transposition error (13 -> 31)
+   public void Modulus10_13CheckDigitAttribute_Validate_ShouldReturnFailure_WhenValueHasInvalidModulus10_13CheckDigitAndCustomErrorMessageIsSupplied(String upcCode)
    {
       // Arrange.
       var request = new Modulus10_13RequestCustomMessage
       {
-         UpcCode = "036000291455"
+         UpcCode = upcCode
       };
       var expectedMessage = _customErrorMessage;
 
