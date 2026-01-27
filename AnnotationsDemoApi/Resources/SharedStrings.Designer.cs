@@ -133,6 +133,15 @@ namespace AnnotationsDemoApi.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid ISNI (Internationl Standard Name Identifier).
+        /// </summary>
+        public static string InvalidStandardNameIdentifier {
+            get {
+                return ResourceManager.GetString("InvalidStandardNameIdentifier", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Invalid Submission Identifier.
         /// </summary>
         public static string InvalidSubmissionIdentifier {

@@ -58,6 +58,17 @@ app.MapPost("/iso7064mod1110global",
    (Iso7064Mod11_10RequestGlobalizedErrorMessage request, IStringLocalizer<SharedStrings> localizer)
       => Results.Ok(localizer["ValidRequest"].ToString()));
 
+// ISO/IEC 7064 MOD 11-2 Check Digit Endpoints
+app.MapPost("/iso7064mod112",
+   (Iso7064Mod11_2Request request) => Results.Ok("Name identifier is valid"));
+
+app.MapPost("/iso7064mod112message",
+   (Iso7064Mod11_2RequestCustomErrorMessage request) => Results.Ok("Name identifier is valid"));
+
+app.MapPost("/iso7064mod112global",
+   (Iso7064Mod11_2RequestGlobalizedErrorMessage request, IStringLocalizer<SharedStrings> localizer)
+      => Results.Ok(localizer["ValidRequest"].ToString()));
+
 // Luhn Check Digit Endpoints
 app.MapPost("/luhn",
    (LuhnRequest request) => Results.Ok("Credit card number is valid"));
