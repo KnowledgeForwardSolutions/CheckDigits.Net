@@ -163,12 +163,12 @@ The `Iso7064Mod1271_36CheckDigitAttribute` will return validation errors for the
 
 The `Iso7064Mod27_26CheckDigitAttribute` validates that a string property 
 conforms to the ISO/IEC 7064 MOD 27,26 check digit algorithm. The ISO/IEC 7064 MOD 27,26
-algorithm is designed for alphanumeric values and uses a single alphanumeric check 
+algorithm is designed for alphabetic values and uses a single alphabetic check 
 character.
 
 The `Iso7064Mod27_26CheckDigitAttribute` will return validation errors for the following conditions:
 - The value does not contain a valid ISO/IEC 7064 MOD 27,26 check character.
-- The value contains characters other than uppercase alphanumeric characters (0-9, A-Z).
+- The value contains characters other than uppercase alphabetic characters (A-Z).
 - The value is shorter than two characters (i.e., it cannot contain a check character).
 - The value being validated is not of type `string`.
 

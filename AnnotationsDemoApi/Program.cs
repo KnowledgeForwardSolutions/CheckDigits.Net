@@ -69,15 +69,26 @@ app.MapPost("/iso7064mod112global",
    (Iso7064Mod11_2RequestGlobalizedErrorMessage request, IStringLocalizer<SharedStrings> localizer)
       => Results.Ok(localizer["ValidRequest"].ToString()));
 
-// ISO/IEC 7064 MOD 1271036 Check Digit Endpoints
+// ISO/IEC 7064 MOD 1271-36 Check Digit Endpoints
 app.MapPost("/iso7064mod127136",
-   (Iso7064Mod1271_36Request request) => Results.Ok("ISO 7065 MOD 1271-63 Identifier is valid"));
+   (Iso7064Mod1271_36Request request) => Results.Ok("ISO 7065 MOD 1271-36 Identifier is valid"));
 
 app.MapPost("/iso7064mod127136message",
-   (Iso7064Mod1271_36RequestCustomErrorMessage request) => Results.Ok("ISO 7065 MOD 1271-63 Identifier is valid"));
+   (Iso7064Mod1271_36RequestCustomErrorMessage request) => Results.Ok("ISO 7065 MOD 1271-36 Identifier is valid"));
 
 app.MapPost("/iso7064mod127136global",
    (Iso7064Mod1271_36RequestGlobalizedErrorMessage request, IStringLocalizer<SharedStrings> localizer)
+      => Results.Ok(localizer["ValidRequest"].ToString()));
+
+// ISO/IEC 7064 MOD 27,26 Check Digit Endpoints
+app.MapPost("/iso7064mod2726",
+   (Iso7064Mod27_26Request request) => Results.Ok("ISO 7065 MOD 27,26 Identifier is valid"));
+
+app.MapPost("/iso7064mod2726message",
+   (Iso7064Mod27_26RequestCustomErrorMessage request) => Results.Ok("ISO 7065 MOD 27,26 Identifier is valid"));
+
+app.MapPost("/iso7064mod2726global",
+   (Iso7064Mod27_26RequestGlobalizedErrorMessage request, IStringLocalizer<SharedStrings> localizer)
       => Results.Ok(localizer["ValidRequest"].ToString()));
 
 // Luhn Check Digit Endpoints

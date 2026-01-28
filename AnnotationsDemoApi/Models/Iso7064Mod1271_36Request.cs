@@ -14,7 +14,7 @@ public class Iso7064Mod1271_36RequestCustomErrorMessage
 
 public class Iso7064Mod1271_36RequestGlobalizedErrorMessage
 {
-   [Required, Iso7064Mod1271_36CheckDigit(ErrorMessageResourceName = "InvalidMod1271_36IdentifierIdentifier", ErrorMessageResourceType = typeof(Resources.SharedStrings))]
+   [Required, Iso7064Mod1271_36CheckDigit(ErrorMessageResourceName = "InvalidMod1271_36Identifier", ErrorMessageResourceType = typeof(Resources.SharedStrings))]
    public String Mod1271_36Identifier { get; set; } = null!;
 }
 

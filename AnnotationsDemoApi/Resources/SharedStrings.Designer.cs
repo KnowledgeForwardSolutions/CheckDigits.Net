@@ -133,11 +133,20 @@ namespace AnnotationsDemoApi.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Invalid ISO 7065 MOD 1271-63 Identifier.
+        ///   Looks up a localized string similar to Invalid ISO 7065 MOD 1271-36 Identifier.
         /// </summary>
-        public static string InvalidMod1271_36IdentifierIdentifier {
+        public static string InvalidMod1271_36Identifier {
             get {
-                return ResourceManager.GetString("InvalidMod1271_36IdentifierIdentifier", resourceCulture);
+                return ResourceManager.GetString("InvalidMod1271_36Identifier", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid ISO 7065 MOD 27,26 Identifier.
+        /// </summary>
+        public static string InvalidMod27_26Identifier {
+            get {
+                return ResourceManager.GetString("InvalidMod27_26Identifier", resourceCulture);
             }
         }
         

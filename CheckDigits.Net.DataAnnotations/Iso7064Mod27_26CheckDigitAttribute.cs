@@ -25,7 +25,8 @@
 ///            sequence.
 ///         </item>
 ///         <item>
-///            The value contains characters other than 0-9, A-Z.
+///            The value contains characters other than uppercase alphabetic
+///            characters (A-Z).
 ///         </item>
 ///         <item>
 ///            The value does not contain a valid ISO/IEC 7064 MOD 27,26 

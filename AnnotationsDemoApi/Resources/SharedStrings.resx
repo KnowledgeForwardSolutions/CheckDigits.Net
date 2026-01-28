@@ -141,8 +141,11 @@
   <data name="InvalidLegalEntityIdentifier" xml:space="preserve">
     <value>Invalid Legal Entity Identifier</value>
   </data>
-  <data name="InvalidMod1271_36IdentifierIdentifier" xml:space="preserve">
-    <value>Invalid ISO 7065 MOD 1271-63 Identifier</value>
+  <data name="InvalidMod27_26Identifier" xml:space="preserve">
+    <value>Invalid ISO 7065 MOD 27,26 Identifier</value>
+  </data>
+  <data name="InvalidMod1271_36Identifier" xml:space="preserve">
+    <value>Invalid ISO 7065 MOD 1271-36 Identifier</value>
   </data>
   <data name="InvalidStandardNameIdentifier" xml:space="preserve">
     <value>Invalid ISNI (Internationl Standard Name Identifier)</value>
