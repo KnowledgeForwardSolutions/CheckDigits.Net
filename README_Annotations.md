@@ -19,6 +19,7 @@ to the CheckDigits.Net [README file]( https://github.com/KnowledgeForwardSolutio
 	* [Iso7064Mod1271_36CheckDigitAttribute](#iso7064mod1271_36checkdigitattribute)
 	* [Iso7064Mod27_26CheckDigitAttribute](#iso7064mod27_26checkdigitattribute)
 	* [Iso7064Mod37_2CheckDigitAttribute](#iso7064mod37_2checkdigitattribute)
+	* [Iso7064Mod37_36CheckDigitAttribute](#iso7064mod37_36checkdigitattribute)
     * [LuhnCheckDigitAttribute](#luhncheckdigitattribute)
     * [Modulus10_13CheckDigitAttribute](#modulus10_13checkdigitattribute)
     * [Modulus10_1CheckDigitAttribute](#modulus10_1checkdigitattribute)
@@ -181,8 +182,21 @@ algorithm is designed for alphanumeric values and uses a single check character
 that can be either an alphanumeric character (0-9, A-Z) or the asterisk character (*).
 
 The `Iso7064Mod37_2CheckDigitAttribute` will return validation errors for the following conditions:
-- The value does not contain valid ISO/IEC 7064 MOD 37-2 check characters.
+- The value does not contain a valid ISO/IEC 7064 MOD 37-2 check character.
 - The value contains characters other than uppercase alphanumeric characters (0-9, A-Z) or the asterisk character (*).
+- The value is shorter than two characters (i.e., it cannot contain a of check character).
+- The value being validated is not of type `string`.
+
+### Iso7064Mod37_36CheckDigitAttribute
+
+The `Iso7064Mod37_36CheckDigitAttribute` validates that a string property 
+conforms to the ISO/IEC 7064 MOD 37,36 check digit algorithm. The ISO/IEC 7064 MOD 37,36
+algorithm is designed for alphanumeric values and uses a single alphanumeric 
+check character (0-9, A-Z).
+
+The `Iso7064Mod37_36CheckDigitAttribute` will return validation errors for the following conditions:
+- The value does not contain a valid ISO/IEC 7064 MOD 37,36 check character.
+- The value contains characters other than uppercase alphanumeric characters (0-9, A-Z).
 - The value is shorter than two characters (i.e., it cannot contain a of check character).
 - The value being validated is not of type `string`.
 
