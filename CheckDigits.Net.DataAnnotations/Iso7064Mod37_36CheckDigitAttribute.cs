@@ -2,17 +2,17 @@
 
 /// <summary>
 ///   Specifies that a string property or parameter must contain a valid 
-///   ISO/IEC 7064 MOD 37-2 check digit sequence for validation to succeed. 
+///   ISO/IEC 7064 MOD 37,36 check digit sequence for validation to succeed. 
 ///   Successful validation means that the value does not contain any 
 ///   transcription errors capable of being detected by the 
-///   ISO/IEC 7064 MOD 37-2 algorithm.
+///   ISO/IEC 7064 MOD 37,36 algorithm.
 /// </summary>
 /// <remarks>
 ///   <para>
 ///      Use this attribute to enforce that a value conforms to the 
-///      ISO/IEC 7064 MOD 37-2 algorithm. The validation passes if the value is 
+///      ISO/IEC 7064 MOD 37,36 algorithm. The validation passes if the value is 
 ///      null or an empty string or if the value contains a valid 
-///      ISO/IEC 7064 MOD 37-2 check digit character in the right-most 
+///      ISO/IEC 7064 MOD 37,36 check digit character in the right-most 
 ///      character position.
 ///   </para>
 ///   <para>
@@ -21,17 +21,14 @@
 ///      <list type="bullet">
 ///         <item>
 ///            The value is less than two characters in length, which is the 
-///            minimum required for a valid ISO/IEC 7064 MOD 37-2 check digit 
+///            minimum required for a valid ISO/IEC 7064 MOD 37,36 check digit 
 ///            sequence.
 ///         </item>
 ///         <item>
-///            The value contains non-uppercase alphanumeric characters in any 
-///            position other than the right-most check digit position or the 
-///            value contains a character other than '0'-'9' or 'A'-'Z' or '*'
-///            in the right-most check digit position.
+///            The value contains non-uppercase alphanumeric characters.
 ///         </item>
 ///         <item>
-///            The value does not contain a valid ISO/IEC 7064 MOD 37-2 
+///            The value does not contain a valid ISO/IEC 7064 MOD 37,36 
 ///            check digit character in the right-most character position.
 ///         </item>
 ///      </list> 
@@ -41,7 +38,7 @@
 ///      property.
 ///   </para>
 /// </remarks>
-public class Iso7064Mod37_2CheckDigitAttribute()
-   : BaseCheckDigitAttribute(Algorithms.Iso7064Mod37_2, Messages.SingleCheckDigitFailure)
+public class Iso7064Mod37_36CheckDigitAttribute()
+   : BaseCheckDigitAttribute(Algorithms.Iso7064Mod37_36, Messages.SingleCheckDigitFailure)
 {
 }
