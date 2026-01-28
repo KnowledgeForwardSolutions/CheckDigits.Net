@@ -133,7 +133,7 @@ namespace AnnotationsDemoApi.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Invalid ISO 7065 MOD 1271-36 Identifier.
+        ///   Looks up a localized string similar to Invalid ISO 7064 MOD 1271-36 Identifier.
         /// </summary>
         public static string InvalidMod1271_36Identifier {
             get {
@@ -142,7 +142,7 @@ namespace AnnotationsDemoApi.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Invalid ISO 7065 MOD 27,26 Identifier.
+        ///   Looks up a localized string similar to Invalid ISO 7064 MOD 27,26 Identifier.
         /// </summary>
         public static string InvalidMod27_26Identifier {
             get {
@@ -151,7 +151,7 @@ namespace AnnotationsDemoApi.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Invalid ISNI (Internationl Standard Name Identifier).
+        ///   Looks up a localized string similar to Invalid ISNI (International Standard Name Identifier).
         /// </summary>
         public static string InvalidStandardNameIdentifier {
             get {

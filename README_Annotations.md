@@ -17,7 +17,7 @@ to the CheckDigits.Net [README file]( https://github.com/KnowledgeForwardSolutio
 	* [Iso7064Mod11_10CheckDigitAttribute](#iso7064mod11_10checkdigitattribute)
 	* [Iso7064Mod11_2CheckDigitAttribute](#iso7064mod11_2checkdigitattribute)
 	* [Iso7064Mod1271_36CheckDigitAttribute](#iso7064mod1271_36checkdigitattribute)
-	* [Iso7064Mod27_6CheckDigitAttribute](#iso7064mod27_26checkdigitattribute)
+	* [Iso7064Mod27_26CheckDigitAttribute](#iso7064mod27_26checkdigitattribute)
     * [LuhnCheckDigitAttribute](#luhncheckdigitattribute)
     * [Modulus10_13CheckDigitAttribute](#modulus10_13checkdigitattribute)
     * [Modulus10_1CheckDigitAttribute](#modulus10_1checkdigitattribute)
@@ -138,7 +138,7 @@ The `Iso7064Mod11_10CheckDigitAttribute` will return validation errors for the f
 The `Iso7064Mod11_2CheckDigitAttribute` validates that a string property 
 conforms to the ISO/IEC 7064 MOD 11-2 check digit algorithm. The ISO/IEC 7064 MOD 11-2
 algorithm is designed for numeric values and uses a single numeric check 
-character that can be either an numeric digit (0-9) or the letter 'X'.
+character that can be either a numeric digit (0-9) or the letter 'X'.
 
 The `Iso7064Mod11_2CheckDigitAttribute` will return validation errors for the following conditions:
 - The value does not contain a valid ISO/IEC 7064 MOD 11-2 check digit.

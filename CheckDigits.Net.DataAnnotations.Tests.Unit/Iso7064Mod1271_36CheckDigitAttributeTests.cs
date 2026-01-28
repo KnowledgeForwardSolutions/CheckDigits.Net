@@ -145,7 +145,7 @@ public class Iso7064Mod1271_36CheckDigitAttributeTests
       {
          ItemIdentifier = itemIdentifier
       };
-      var expectedMessage = String.Format(Messages.SingleCheckDigitFailure, nameof(request.ItemIdentifier));
+      var expectedMessage = String.Format(Messages.MultiCheckDigitFailure, nameof(request.ItemIdentifier));
 
       // Act.
       var results = Utility.ValidateModel(request);

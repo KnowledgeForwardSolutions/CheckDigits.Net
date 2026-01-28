@@ -39,6 +39,6 @@
 ///   </para>
 /// </remarks>
 public class Iso7064Mod1271_36CheckDigitAttribute()
-   : BaseCheckDigitAttribute(Algorithms.Iso7064Mod1271_36, Messages.SingleCheckDigitFailure)
+   : BaseCheckDigitAttribute(Algorithms.Iso7064Mod1271_36, Messages.MultiCheckDigitFailure)
 {
 }

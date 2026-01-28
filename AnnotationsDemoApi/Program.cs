@@ -82,10 +82,10 @@ app.MapPost("/iso7064mod127136global",
 
 // ISO/IEC 7064 MOD 27,26 Check Digit Endpoints
 app.MapPost("/iso7064mod2726",
-   (Iso7064Mod27_26Request request) => Results.Ok("ISO 7065 MOD 27,26 Identifier is valid"));
+   (Iso7064Mod27_26Request request) => Results.Ok("ISO 7064 MOD 27,26 Identifier is valid"));
 
 app.MapPost("/iso7064mod2726message",
-   (Iso7064Mod27_26RequestCustomErrorMessage request) => Results.Ok("ISO 7065 MOD 27,26 Identifier is valid"));
+   (Iso7064Mod27_26RequestCustomErrorMessage request) => Results.Ok("ISO 7064 MOD 27,26 Identifier is valid"));
 
 app.MapPost("/iso7064mod2726global",
    (Iso7064Mod27_26RequestGlobalizedErrorMessage request, IStringLocalizer<SharedStrings> localizer)
