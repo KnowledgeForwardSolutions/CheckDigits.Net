@@ -20,6 +20,7 @@ to the CheckDigits.Net [README file]( https://github.com/KnowledgeForwardSolutio
 	* [Iso7064Mod27_26CheckDigitAttribute](#iso7064mod27_26checkdigitattribute)
 	* [Iso7064Mod37_2CheckDigitAttribute](#iso7064mod37_2checkdigitattribute)
 	* [Iso7064Mod37_36CheckDigitAttribute](#iso7064mod37_36checkdigitattribute)
+	* [Iso7064Mod661_26CheckDigitAttribute](#iso7064mod661_26checkdigitattribute)
     * [LuhnCheckDigitAttribute](#luhncheckdigitattribute)
     * [Modulus10_13CheckDigitAttribute](#modulus10_13checkdigitattribute)
     * [Modulus10_1CheckDigitAttribute](#modulus10_1checkdigitattribute)
@@ -198,6 +199,19 @@ The `Iso7064Mod37_36CheckDigitAttribute` will return validation errors for the f
 - The value does not contain a valid ISO/IEC 7064 MOD 37,36 check character.
 - The value contains characters other than uppercase alphanumeric characters (0-9, A-Z).
 - The value is shorter than two characters (i.e., it cannot contain a of check character).
+- The value being validated is not of type `string`.
+
+### Iso7064Mod661_26CheckDigitAttribute
+
+The `Iso7064Mod661_26CheckDigitAttribute` validates that a string property 
+conforms to the ISO/IEC 7064 MOD 661-26 check digit algorithm. The ISO/IEC 7064 MOD 661-26
+algorithm is designed for alphabetic values and uses two alphabetic check 
+characters.
+
+The `Iso7064Mod661_26CheckDigitAttribute` will return validation errors for the following conditions:
+- The value does not contain valid ISO/IEC 7064 MOD 661-26 check characters.
+- The value contains characters other than uppercase alphabetic characters (A-Z).
+- The value is shorter than three characters (i.e., it cannot contain a pair of check characters).
 - The value being validated is not of type `string`.
 
 ### LuhnCheckDigitAttribute
