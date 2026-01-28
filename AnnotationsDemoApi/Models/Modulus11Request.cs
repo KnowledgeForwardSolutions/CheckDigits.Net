@@ -2,18 +2,18 @@
 
 public class Modulus11Request
 {
-   [Modulus11CheckDigit]
+   [Required, Modulus11CheckDigit]
    public String Isbn { get; set; } = null!;
 }
 
 public class Modulus11RequestCustomErrorMessage
 {
-   [Modulus11CheckDigit(ErrorMessage = "ISBN check digit error")]
+   [Required, Modulus11CheckDigit(ErrorMessage = "ISBN check digit error")]
    public String Isbn { get; set; } = null!;
 }
 
 public class Modulus11RequestGlobalizedErrorMessage
 {
-   [Modulus11CheckDigit(ErrorMessageResourceName = "InvalidIsbn10", ErrorMessageResourceType = typeof(Resources.SharedStrings))]
+   [Required, Modulus11CheckDigit(ErrorMessageResourceName = "InvalidIsbn10", ErrorMessageResourceType = typeof(Resources.SharedStrings))]
    public String Isbn { get; set; } = null!;
 }

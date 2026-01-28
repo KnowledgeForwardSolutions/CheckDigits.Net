@@ -4,19 +4,19 @@ namespace AnnotationsDemoApi.Models;
 
 public class LuhnRequest
 {
-   [LuhnCheckDigit]
+   [Required, LuhnCheckDigit]
    public String CardNumber { get; set; } = null!;
 }
 
 public class LuhnRequestCustomErrorMessage
 {
-   [LuhnCheckDigit(ErrorMessage = "CardNumber check digit error")]
+   [Required, LuhnCheckDigit(ErrorMessage = "CardNumber check digit error")]
    public String CardNumber { get; set; } = null!;
 }
 
 public class LuhnRequestGlobalizedErrorMessage
 {
-   [LuhnCheckDigit(ErrorMessageResourceName = "InvalidCardNumber", ErrorMessageResourceType = typeof(Resources.SharedStrings))]
+   [Required, LuhnCheckDigit(ErrorMessageResourceName = "InvalidCardNumber", ErrorMessageResourceType = typeof(Resources.SharedStrings))]
    public String CardNumber { get; set; } = null!;
 }
 

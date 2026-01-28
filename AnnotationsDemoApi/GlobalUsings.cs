@@ -1,4 +1,6 @@
-﻿global using AnnotationsDemoApi.Models;
+﻿global using System.ComponentModel.DataAnnotations;
+
+global using AnnotationsDemoApi.Models;
 
 global using CheckDigits.Net.DataAnnotations;
 
