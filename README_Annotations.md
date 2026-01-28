@@ -177,12 +177,12 @@ The `Iso7064Mod27_26CheckDigitAttribute` will return validation errors for the f
 
 The `Iso7064Mod37_2CheckDigitAttribute` validates that a string property 
 conforms to the ISO/IEC 7064 MOD 37-2 check digit algorithm. The ISO/IEC 7064 MOD 37-2
-algorithm is designed for alphanumeric values and uses a single alphanumeric check 
-character.
+algorithm is designed for alphanumeric values and uses a single check character
+that can be either an alphanumeric character (0-9, A-Z) or the asterisk character (*).
 
 The `Iso7064Mod37_2CheckDigitAttribute` will return validation errors for the following conditions:
 - The value does not contain valid ISO/IEC 7064 MOD 37-2 check characters.
-- The value contains characters other than uppercase alphanumeric characters (0-9, A-Z).
+- The value contains characters other than uppercase alphanumeric characters (0-9, A-Z) or the asterisk character (*).
 - The value is shorter than two characters (i.e., it cannot contain a of check character).
 - The value being validated is not of type `string`.
 

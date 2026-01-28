@@ -25,8 +25,10 @@
 ///            sequence.
 ///         </item>
 ///         <item>
-///            The value contains characters other than uppercase alphanumeric
-///            characters (0-9, A-Z).
+///            The value contains non-uppercase alphanumeric characters in any 
+///            position other than the right-most check digit position or the 
+///            value contains a character other than '0'-'9' or 'A'-'Z' or '*'
+///            in the right-most check digit position.
 ///         </item>
 ///         <item>
 ///            The value does not contain a valid ISO/IEC 7064 MOD 37-2 
