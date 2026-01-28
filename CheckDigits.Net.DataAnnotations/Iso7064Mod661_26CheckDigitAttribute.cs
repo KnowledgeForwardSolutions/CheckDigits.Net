@@ -2,17 +2,17 @@
 
 /// <summary>
 ///   Specifies that a string property or parameter must contain a valid 
-///   ISO/IEC 7064 MOD 1271-36 check digit sequence for validation to succeed. 
+///   ISO/IEC 7064 MOD 661-26 check digit sequence for validation to succeed. 
 ///   Successful validation means that the value does not contain any 
 ///   transcription errors capable of being detected by the 
-///   ISO/IEC 7064 MOD 1271-36 algorithm.
+///   ISO/IEC 7064 MOD 661-26 algorithm.
 /// </summary>
 /// <remarks>
 ///   <para>
 ///      Use this attribute to enforce that a value conforms to the 
-///      ISO/IEC 7064 MOD 1271-36 algorithm. The validation passes if the value is 
+///      ISO/IEC 7064 MOD 661-26 algorithm. The validation passes if the value is 
 ///      null or an empty string or if the value contains valid 
-///      ISO/IEC 7064 MOD 1271-36 check digit characters in the two right-most 
+///      ISO/IEC 7064 MOD 661-26 check digit characters in the two right-most 
 ///      character positions.
 ///   </para>
 ///   <para>
@@ -21,14 +21,14 @@
 ///      <list type="bullet">
 ///         <item>
 ///            The value is less than three characters in length, which is the 
-///            minimum required for a valid ISO/IEC 7064 MOD 1271-36 check digit 
+///            minimum required for a valid ISO/IEC 7064 MOD 661-26 check digit 
 ///            sequence.
 ///         </item>
 ///         <item>
-///            The value contains characters other than 0-9, A-Z.
+///            The value contains characters other than uppercase alphabetic characters (A-Z).
 ///         </item>
 ///         <item>
-///            The value does not contain two valid ISO/IEC 7064 MOD 1271-36 
+///            The value does not contain two valid ISO/IEC 7064 MOD 661-26 
 ///            check digit characters in the right-most character positions.
 ///         </item>
 ///      </list> 
@@ -38,7 +38,7 @@
 ///      property.
 ///   </para>
 /// </remarks>
-public class Iso7064Mod1271_36CheckDigitAttribute()
-   : BaseCheckDigitAttribute(Algorithms.Iso7064Mod1271_36, Messages.MultiCheckDigitFailure)
+public class Iso7064Mod661_26CheckDigitAttribute()
+   : BaseCheckDigitAttribute(Algorithms.Iso7064Mod661_26, Messages.MultiCheckDigitFailure)
 {
 }
