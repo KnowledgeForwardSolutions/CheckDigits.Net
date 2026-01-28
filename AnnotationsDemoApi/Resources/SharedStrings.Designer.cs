@@ -97,6 +97,15 @@ namespace AnnotationsDemoApi.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid Donation Identifier.
+        /// </summary>
+        public static string InvalidDonationIdentifier {
+            get {
+                return ResourceManager.GetString("InvalidDonationIdentifier", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Invalid International Maritime Organization (IMO) Number.
         /// </summary>
         public static string InvalidImoNumber {

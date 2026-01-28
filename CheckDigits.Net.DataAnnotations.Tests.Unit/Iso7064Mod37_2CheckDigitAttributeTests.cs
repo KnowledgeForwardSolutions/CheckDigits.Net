@@ -140,6 +140,7 @@ public class Iso7064Mod37_2CheckDigitAttributeTests
    [InlineData("G123468954321H")]      // G123498654321H with jump transposition error 986 -> 689
    [InlineData("6C000307001466")]      // C0003070014666 with circular shift error
    [InlineData("B999922123469H")]      // A999922123459H with two single transcription errors A -> B, 5 -> 6
+   [InlineData("a999922012346*")]      // Lowercase variant of valid value
    public void Iso7064Mod37_2CheckDigitAttribute_Validate_ShouldReturnFailure_WhenValueHasInvalidIso7064Mod37_2CheckDigit(String donation)
    {
       // Arrange.
@@ -165,6 +166,7 @@ public class Iso7064Mod37_2CheckDigitAttributeTests
    [InlineData("G123468954321H")]      // G123498654321H with jump transposition error 986 -> 689
    [InlineData("6C000307001466")]      // C0003070014666 with circular shift error
    [InlineData("B999922123469H")]      // A999922123459H with two single transcription errors A -> B, 5 -> 6
+   [InlineData("a999922012346*")]      // Lowercase variant of valid value
    public void Iso7064Mod37_2CheckDigitAttribute_Validate_ShouldReturnFailure_WhenValueHasInvalidIso7064Mod37_2CheckDigitAndCustomErrorMessageIsSupplied(String donation)
    {
       // Arrange.

@@ -129,6 +129,9 @@
   <data name="InvalidCasNumber" xml:space="preserve">
     <value>Invalid CAS Registry Number</value>
   </data>
+  <data name="InvalidDonationIdentifier" xml:space="preserve">
+    <value>Invalid ISBT Donation Identifier</value>
+  </data>
   <data name="InvalidImoNumber" xml:space="preserve">
     <value>Invalid International Maritime Organization (IMO) Number</value>
   </data>
