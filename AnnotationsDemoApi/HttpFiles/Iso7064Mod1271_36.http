@@ -1,0 +1,55 @@
+@AnnotationsDemoApi_HostAddress = http://localhost:5079
+
+### [Iso7064Mod1271_36CheckDigit] Valid ISO/IEC 7064 MOD 1271-36 value - Should return 200 OK
+POST {{AnnotationsDemoApi_HostAddress}}/iso7064mod127136
+Content-Type: application/json
+
+{
+  "mod1271_36Identifier": "XS868977863229AU"
+}
+
+
+### [Iso7064Mod1271_36CheckDigit] Invalid ISO/IEC 7064 MOD 1271-36 value - Should return 400 Bad Request
+POST {{AnnotationsDemoApi_HostAddress}}/iso7064mod127136
+Content-Type: application/json
+
+{
+  "mod1271_36Identifier": "123456987ABCDEH2"
+}
+
+### [Iso7064Mod1271_36CheckDigit(ErrorMessage =...)] Valid ISO/IEC 7064 MOD 1271-36 value - Should return 200 OK
+POST {{AnnotationsDemoApi_HostAddress}}/iso7064mod127136message
+Content-Type: application/json
+
+{
+  "mod1271_36Identifier": "XS868977863229AU"
+}
+
+
+### [Iso7064Mod1271_36CheckDigit(ErrorMessage =...)] Invalid ISO/IEC 7064 MOD 1271-36 value - Should return 400 Bad Request
+POST {{AnnotationsDemoApi_HostAddress}}/iso7064mod127136message
+Content-Type: application/json
+
+{
+  "mod1271_36Identifier": "123456987ABCDEH2"
+}
+
+
+### [Iso7064Mod1271_36CheckDigit(ErrorMessageResourceName =...)] Valid ISO/IEC 7064 MOD 1271-36 value - Should return 200 OK
+POST {{AnnotationsDemoApi_HostAddress}}/iso7064mod127136global
+Content-Type: application/json
+Accept-Language: de-DE
+
+{
+  "mod1271_36Identifier": "XS868977863229AU"
+}
+
+
+### [Iso7064Mod1271_36CheckDigit(ErrorMessageResourceName =...)] Invalid ISO/IEC 7064 MOD 1271-36 value - Should return 400 Bad Request and localized message
+POST {{AnnotationsDemoApi_HostAddress}}/iso7064mod127136global
+Content-Type: application/json
+Accept-Language: de-DE
+
+{
+  "mod1271_36Identifier": "123456987ABCDEH2"
+}

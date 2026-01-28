@@ -14,6 +14,10 @@ to the CheckDigits.Net [README file]( https://github.com/KnowledgeForwardSolutio
 - **[Supported Attributes](#supported-attributes)**
     * [AlphanumericMod97_10DigitAttribute](#alphanumericmod97_10checkdigitattribute)
     * [DammCheckDigitAttribute](#dammcheckdigitattribute)
+	* [Iso7064Mod11_10CheckDigitAttribute](#iso7064mod11_10checkdigitattribute)
+	* [Iso7064Mod11_2CheckDigitAttribute](#iso7064mod11_2checkdigitattribute)
+	* [Iso7064Mod1271_36CheckDigitAttribute](#iso7064mod1271_36checkdigitattribute)
+	* [Iso7064Mod27_6CheckDigitAttribute](#iso7064mod27_26checkdigitattribute)
     * [LuhnCheckDigitAttribute](#luhncheckdigitattribute)
     * [Modulus10_13CheckDigitAttribute](#modulus10_13checkdigitattribute)
     * [Modulus10_1CheckDigitAttribute](#modulus10_1checkdigitattribute)
@@ -115,6 +119,57 @@ The `DammCheckDigitAttribute` will return validation errors for the following co
 - The value does not contain a valid Damm check digit.
 - The value contains non-ASCII digit characters.
 - The value is shorter than two characters (i.e., it cannot contain a check digit).
+- The value being validated is not of type `string`.
+
+### Iso7064Mod11_10CheckDigitAttribute
+
+The `Iso7064Mod11_10CheckDigitAttribute` validates that a string property 
+conforms to the ISO/IEC 7064 MOD 11,10 check digit algorithm. The ISO/IEC 7064 MOD 11,10
+algorithm is designed for numeric values and uses a single numeric check digit.
+
+The `Iso7064Mod11_10CheckDigitAttribute` will return validation errors for the following conditions:
+- The value does not contain a valid ISO/IEC 7064 MOD 11,10 check digit.
+- The value contains non-ASCII digit characters.
+- The value is shorter than two characters (i.e., it cannot contain a check digit).
+- The value being validated is not of type `string`.
+
+### Iso7064Mod11_2CheckDigitAttribute
+
+The `Iso7064Mod11_2CheckDigitAttribute` validates that a string property 
+conforms to the ISO/IEC 7064 MOD 11-2 check digit algorithm. The ISO/IEC 7064 MOD 11-2
+algorithm is designed for numeric values and uses a single numeric check 
+character that can be either an numeric digit (0-9) or the letter 'X'.
+
+The `Iso7064Mod11_2CheckDigitAttribute` will return validation errors for the following conditions:
+- The value does not contain a valid ISO/IEC 7064 MOD 11-2 check digit.
+- The value contains characters other than ASCII digits or 'X'.
+- The value is shorter than two characters (i.e., it cannot contain a check digit).
+- The value being validated is not of type `string`.
+
+### Iso7064Mod1271_36CheckDigitAttribute
+
+The `Iso7064Mod1271_36CheckDigitAttribute` validates that a string property 
+conforms to the ISO/IEC 7064 MOD 1271-36 check digit algorithm. The ISO/IEC 7064 MOD 1271-36
+algorithm is designed for alphanumeric values and uses two alphanumeric check 
+characters.
+
+The `Iso7064Mod1271_36CheckDigitAttribute` will return validation errors for the following conditions:
+- The value does not contain valid ISO/IEC 7064 MOD 1271-36 check characters.
+- The value contains characters other than uppercase alphanumeric characters (0-9, A-Z).
+- The value is shorter than three characters (i.e., it cannot contain a pair of check characters).
+- The value being validated is not of type `string`.
+
+### Iso7064Mod27_26CheckDigitAttribute
+
+The `Iso7064Mod27_26CheckDigitAttribute` validates that a string property 
+conforms to the ISO/IEC 7064 MOD 27,26 check digit algorithm. The ISO/IEC 7064 MOD 27,26
+algorithm is designed for alphabetic values and uses a single alphabetic check 
+character.
+
+The `Iso7064Mod27_26CheckDigitAttribute` will return validation errors for the following conditions:
+- The value does not contain a valid ISO/IEC 7064 MOD 27,26 check character.
+- The value contains characters other than uppercase alphabetic characters (A-Z).
+- The value is shorter than two characters (i.e., it cannot contain a check character).
 - The value being validated is not of type `string`.
 
 ### LuhnCheckDigitAttribute

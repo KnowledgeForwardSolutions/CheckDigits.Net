@@ -1,0 +1,55 @@
+@AnnotationsDemoApi_HostAddress = http://localhost:5079
+
+### [Iso7064Mod27_26CheckDigit] Valid ISO/IEC 7064 MOD 27,26 value - Should return 200 OK
+POST {{AnnotationsDemoApi_HostAddress}}/iso7064mod2726
+Content-Type: application/json
+
+{
+  "mod27_26Identifier": "QWERTYDVORAKY"
+}
+
+
+### [Iso7064Mod27_26CheckDigit] Invalid ISO/IEC 7064 MOD 27,26 value - Should return 400 Bad Request
+POST {{AnnotationsDemoApi_HostAddress}}/iso7064mod2726
+Content-Type: application/json
+
+{
+  "mod27_26Identifier": "aeiouI"
+}
+
+### [Iso7064Mod27_26CheckDigit(ErrorMessage =...)] Valid ISO/IEC 7064 MOD 27,26 value - Should return 200 OK
+POST {{AnnotationsDemoApi_HostAddress}}/iso7064mod2726message
+Content-Type: application/json
+
+{
+  "mod27_26Identifier": "QWERTYDVORAKY"
+}
+
+
+### [Iso7064Mod27_26CheckDigit(ErrorMessage =...)] Invalid ISO/IEC 7064 MOD 27,26 value - Should return 400 Bad Request
+POST {{AnnotationsDemoApi_HostAddress}}/iso7064mod2726message
+Content-Type: application/json
+
+{
+  "mod27_26Identifier": "aeiouI"
+}
+
+
+### [Iso7064Mod27_26CheckDigit(ErrorMessageResourceName =...)] Valid ISO/IEC 7064 MOD 27,26 value - Should return 200 OK
+POST {{AnnotationsDemoApi_HostAddress}}/iso7064mod2726global
+Content-Type: application/json
+Accept-Language: es-ES
+
+{
+  "mod27_26Identifier": "QWERTYDVORAKY"
+}
+
+
+### [Iso7064Mod27_26CheckDigit(ErrorMessageResourceName =...)] Invalid ISO/IEC 7064 MOD 27,26 value - Should return 400 Bad Request and localized message
+POST {{AnnotationsDemoApi_HostAddress}}/iso7064mod2726global
+Content-Type: application/json
+Accept-Language: es-ES
+
+{
+  "mod27_26Identifier": "aeiouI"
+}

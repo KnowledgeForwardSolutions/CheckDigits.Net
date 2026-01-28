@@ -47,6 +47,50 @@ app.MapPost("/dammglobal",
    (DammRequestGlobalizedErrorMessage request, IStringLocalizer<SharedStrings> localizer)
       => Results.Ok(localizer["ValidRequest"].ToString()));
 
+// ISO/IEC 7064 MOD 11,10 Check Digit Endpoints
+app.MapPost("/iso7064mod1110",
+   (Iso7064Mod11_10Request request) => Results.Ok("Item identifier is valid"));
+
+app.MapPost("/iso7064mod1110message",
+   (Iso7064Mod11_10RequestCustomErrorMessage request) => Results.Ok("Item identifier is valid"));
+
+app.MapPost("/iso7064mod1110global",
+   (Iso7064Mod11_10RequestGlobalizedErrorMessage request, IStringLocalizer<SharedStrings> localizer)
+      => Results.Ok(localizer["ValidRequest"].ToString()));
+
+// ISO/IEC 7064 MOD 11-2 Check Digit Endpoints
+app.MapPost("/iso7064mod112",
+   (Iso7064Mod11_2Request request) => Results.Ok("Name identifier is valid"));
+
+app.MapPost("/iso7064mod112message",
+   (Iso7064Mod11_2RequestCustomErrorMessage request) => Results.Ok("Name identifier is valid"));
+
+app.MapPost("/iso7064mod112global",
+   (Iso7064Mod11_2RequestGlobalizedErrorMessage request, IStringLocalizer<SharedStrings> localizer)
+      => Results.Ok(localizer["ValidRequest"].ToString()));
+
+// ISO/IEC 7064 MOD 1271-36 Check Digit Endpoints
+app.MapPost("/iso7064mod127136",
+   (Iso7064Mod1271_36Request request) => Results.Ok("ISO 7065 MOD 1271-36 Identifier is valid"));
+
+app.MapPost("/iso7064mod127136message",
+   (Iso7064Mod1271_36RequestCustomErrorMessage request) => Results.Ok("ISO 7065 MOD 1271-36 Identifier is valid"));
+
+app.MapPost("/iso7064mod127136global",
+   (Iso7064Mod1271_36RequestGlobalizedErrorMessage request, IStringLocalizer<SharedStrings> localizer)
+      => Results.Ok(localizer["ValidRequest"].ToString()));
+
+// ISO/IEC 7064 MOD 27,26 Check Digit Endpoints
+app.MapPost("/iso7064mod2726",
+   (Iso7064Mod27_26Request request) => Results.Ok("ISO 7065 MOD 27,26 Identifier is valid"));
+
+app.MapPost("/iso7064mod2726message",
+   (Iso7064Mod27_26RequestCustomErrorMessage request) => Results.Ok("ISO 7065 MOD 27,26 Identifier is valid"));
+
+app.MapPost("/iso7064mod2726global",
+   (Iso7064Mod27_26RequestGlobalizedErrorMessage request, IStringLocalizer<SharedStrings> localizer)
+      => Results.Ok(localizer["ValidRequest"].ToString()));
+
 // Luhn Check Digit Endpoints
 app.MapPost("/luhn",
    (LuhnRequest request) => Results.Ok("Credit card number is valid"));

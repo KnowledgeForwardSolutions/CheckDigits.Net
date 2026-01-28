@@ -135,8 +135,20 @@
   <data name="InvalidIsbn10" xml:space="preserve">
     <value>Ungültige ISBN-10-Nummer</value>
   </data>
+  <data name="InvalidItemIdentifier" xml:space="preserve">
+    <value>Ungültiger Item Identifier</value>
+  </data>
   <data name="InvalidLegalEntityIdentifier" xml:space="preserve">
     <value>Ungültiger Legal Entity Identifier</value>
+  </data>
+  <data name="InvalidMod27_26Identifier" xml:space="preserve">
+    <value>Ungültiger SO 7065 MOD 27,266 Identifier</value>
+  </data>
+  <data name="InvalidMod1271_36Identifier" xml:space="preserve">
+    <value>Ungültiger SO 7065 MOD 1271-36 Identifier</value>
+  </data>
+  <data name="InvalidStandardNameIdentifier" xml:space="preserve">
+    <value>Ungültiger ISNI</value>
   </data>
   <data name="InvalidSubmissionIdentifier" xml:space="preserve">
     <value>Ungültiger Submission Identifier</value>

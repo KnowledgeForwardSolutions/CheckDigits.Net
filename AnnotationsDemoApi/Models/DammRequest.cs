@@ -4,18 +4,18 @@ namespace AnnotationsDemoApi.Models;
 
 public class DammRequest
 {
-   [DammCheckDigit]
+   [Required, DammCheckDigit]
    public String SubmissionIdentifier { get; set; } = null!;
 }
 
 public class DammRequestCustomErrorMessage
 {
-   [DammCheckDigit(ErrorMessage = "Submission Identifier check digit error")]
+   [Required, DammCheckDigit(ErrorMessage = "Submission Identifier check digit error")]
    public String SubmissionIdentifier { get; set; } = null!;
 }
 
 public class DammRequestGlobalizedErrorMessage
 {
-   [DammCheckDigit(ErrorMessageResourceName = "InvalidSubmissionIdentifier", ErrorMessageResourceType = typeof(Resources.SharedStrings))]
+   [Required, DammCheckDigit(ErrorMessageResourceName = "InvalidSubmissionIdentifier", ErrorMessageResourceType = typeof(Resources.SharedStrings))]
    public String SubmissionIdentifier { get; set; } = null!;
 }

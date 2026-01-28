@@ -27,20 +27,26 @@ public class LuhnCheckDigitAttributeTests
    public class LuhnRequestInvalidType
    {
       [LuhnCheckDigit]
-      public Int32 ItemCode { get; set; }
+      public Int32 CardNumber { get; set; }
    }
 
    #region Validate Tests
    // ==========================================================================
    // ==========================================================================
 
-   [Fact]
-   public void LuhnCheckDigitAttribute_Validate_ShouldReturnSuccess_WhenValueHasValidLuhnCheckDigit()
+   [Theory]
+   [InlineData("5555555555554444")]    // MasterCard test credit card number
+   [InlineData("4012888888881881")]    // Visa test credit card number
+   [InlineData("3056930009020004")]    // Diners Club test credit card number
+   [InlineData("808401234567893")]     // NPI (National Provider Identifier), including 80840 prefix
+   [InlineData("490154203237518")]     // IMEI (International Mobile Equipment Identity)
+   [InlineData("293443438")]           // Canadian Social Insurance Number from https://www.ibm.com/docs/en/sga?topic=patterns-canada-social-insurance-number
+   public void LuhnCheckDigitAttribute_Validate_ShouldReturnSuccess_WhenValueHasValidLuhnCheckDigit(String cardNumber)
    {
       // Arrange.
       var request = new LuhnRequest
       {
-         CardNumber = "4539148803436467" // Valid Luhn number
+         CardNumber = cardNumber
       };
 
       // Act.
@@ -86,9 +92,9 @@ public class LuhnCheckDigitAttributeTests
       // Arrange.
       var item = new LuhnRequestInvalidType
       {
-         ItemCode = 123456
+         CardNumber = 123456
       };
-      var expectedMessage = String.Format(Messages.InvalidPropertyType, nameof(item.ItemCode));
+      var expectedMessage = String.Format(Messages.InvalidPropertyType, nameof(item.CardNumber));
 
       // Act.
       var results = Utility.ValidateModel(item);
@@ -131,13 +137,16 @@ public class LuhnCheckDigitAttributeTests
       results[0].ErrorMessage.Should().Be(expectedMessage);
    }
 
-   [Fact]
-   public void LuhnCheckDigitAttribute_Validate_ShouldReturnFailure_WhenValueHasInvalidLuhnCheckDigit()
+   [Theory]
+   [InlineData("5558555555554444")]    // MasterCard test card number with single digit transcription error 5 -> 8
+   [InlineData("3059630009020004")]    // Diners Club test card number with two digit transposition error 69 -> 96 
+   [InlineData("5559955555554444")]    // MasterCard test card number with two digit twin error 55 -> 99
+   public void LuhnCheckDigitAttribute_Validate_ShouldReturnFailure_WhenValueHasInvalidLuhnCheckDigit(String cardNumber)
    {
       // Arrange.
       var request = new LuhnRequest
       {
-         CardNumber = "4539148803436468"
+         CardNumber = cardNumber
       };
       var expectedMessage = String.Format(Messages.SingleCheckDigitFailure, nameof(request.CardNumber));
 
@@ -149,13 +158,16 @@ public class LuhnCheckDigitAttributeTests
       results[0].ErrorMessage.Should().Be(expectedMessage);
    }
 
-   [Fact]
-   public void LuhnCheckDigitAttribute_Validate_ShouldReturnFailure_WhenValueHasInvalidLuhnCheckDigitAndCustomErrorMessageIsSupplied()
+   [Theory]
+   [InlineData("5558555555554444")]    // MasterCard test card number with single digit transcription error 5 -> 8
+   [InlineData("3059630009020004")]    // Diners Club test card number with two digit transposition error 69 -> 96 
+   [InlineData("5559955555554444")]    // MasterCard test card number with two digit twin error 55 -> 99
+   public void LuhnCheckDigitAttribute_Validate_ShouldReturnFailure_WhenValueHasInvalidLuhnCheckDigitAndCustomErrorMessageIsSupplied(String cardNumber)
    {
       // Arrange.
       var request = new LuhnRequestCustomMessage
       {
-         CardNumber = "4539148803436468"
+         CardNumber = cardNumber
       };
       var expectedMessage = _customErrorMessage;
 
