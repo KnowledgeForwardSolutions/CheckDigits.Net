@@ -132,6 +132,9 @@
   <data name="InvalidDonationIdentifier" xml:space="preserve">
     <value>Ungültige ISBT Donation Identifier</value>
   </data>
+  <data name="InvalidGlobalReleaseIdentifier" xml:space="preserve">
+    <value>Ungültige Global Release Identifier</value>
+  </data>
   <data name="InvalidImoNumber" xml:space="preserve">
     <value>Ungültige IMO-Nummer</value>
   </data>

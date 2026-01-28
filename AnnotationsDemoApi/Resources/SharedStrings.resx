@@ -132,6 +132,9 @@
   <data name="InvalidDonationIdentifier" xml:space="preserve">
     <value>Invalid Donation Identifier</value>
   </data>
+  <data name="InvalidGlobalReleaseIdentifier" xml:space="preserve">
+    <value>Invalid Global Release Identifier</value>
+  </data>
   <data name="InvalidImoNumber" xml:space="preserve">
     <value>Invalid International Maritime Organization (IMO) Number</value>
   </data>

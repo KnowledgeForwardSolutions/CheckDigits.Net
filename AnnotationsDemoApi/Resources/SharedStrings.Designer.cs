@@ -106,6 +106,15 @@ namespace AnnotationsDemoApi.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid Global Release Identifier.
+        /// </summary>
+        public static string InvalidGlobalReleaseIdentifier {
+            get {
+                return ResourceManager.GetString("InvalidGlobalReleaseIdentifier", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Invalid International Maritime Organization (IMO) Number.
         /// </summary>
         public static string InvalidImoNumber {
