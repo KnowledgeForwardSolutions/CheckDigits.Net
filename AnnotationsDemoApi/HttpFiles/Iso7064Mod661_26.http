@@ -1,6 +1,6 @@
 @AnnotationsDemoApi_HostAddress = http://localhost:5079
 
-### [Iso7064Mod661_26CheckDigit] Valid ISO/IEC 7064 MOD 661_26 value - Should return 200 OK
+### [Iso7064Mod661_26CheckDigit] Valid ISO/IEC 7064 MOD 661-26 value - Should return 200 OK
 POST {{AnnotationsDemoApi_HostAddress}}/iso7064mod66126
 Content-Type: application/json
 
@@ -9,7 +9,7 @@ Content-Type: application/json
 }
 
 
-### [Iso7064Mod661_26CheckDigit] Invalid ISO/IEC 7064 MOD 661_26 value - Should return 400 Bad Request
+### [Iso7064Mod661_26CheckDigit] Invalid ISO/IEC 7064 MOD 661-26 value - Should return 400 Bad Request
 POST {{AnnotationsDemoApi_HostAddress}}/iso7064mod66126
 Content-Type: application/json
 
@@ -17,16 +17,15 @@ Content-Type: application/json
   "mod661_26Identifier": "AAAEEEIIIOPPUUUBCDEFJY"
 }
 
-### [Iso7064Mod661_26CheckDigit(ErrorMessage =...)] Valid ISO/IEC 7064 MOD 661_26 value - Should return 200 OK
+### [Iso7064Mod661_26CheckDigit(ErrorMessage =...)] Valid ISO/IEC 7064 MOD 661-26 value - Should return 200 OK
 POST {{AnnotationsDemoApi_HostAddress}}/iso7064mod66126message
 Content-Type: application/json
 
 {
   "mod661_26Identifier": "ABCDEFGHIJKLMNJF"
 }
-
-
-### [Iso7064Mod661_26CheckDigit(ErrorMessage =...)] Invalid ISO/IEC 7064 MOD 661_26 value - Should return 400 Bad Request
+-
+### [Iso7064Mod661_26CheckDigit(ErrorMessage =...)] Invalid ISO/IEC 7064 MOD 661-26 value - Should return 400 Bad Request
 POST {{AnnotationsDemoApi_HostAddress}}/iso7064mod66126message
 Content-Type: application/json
 
@@ -35,7 +34,7 @@ Content-Type: application/json
 }
 
 
-### [Iso7064Mod661_26CheckDigit(ErrorMessageResourceName =...)] Valid ISO/IEC 7064 MOD 661_26 value - Should return 200 OK
+### [Iso7064Mod661_26CheckDigit(ErrorMessageResourceName =...)] Valid ISO/IEC 7064 MOD 661-26 value - Should return 200 OK
 POST {{AnnotationsDemoApi_HostAddress}}/iso7064mod66126global
 Content-Type: application/json
 Accept-Language: es-ES
@@ -45,7 +44,7 @@ Accept-Language: es-ES
 }
 
 
-### [Iso7064Mod661_26CheckDigit(ErrorMessageResourceName =...)] Invalid ISO/IEC 7064 MOD 661_26 value - Should return 400 Bad Request and localized message
+### [Iso7064Mod661_26CheckDigit(ErrorMessageResourceName =...)] Invalid ISO/IEC 7064 MOD 661-26 value - Should return 400 Bad Request and localized message
 POST {{AnnotationsDemoApi_HostAddress}}/iso7064mod66126global
 Content-Type: application/json
 Accept-Language: es-ES
