@@ -21,6 +21,7 @@ to the CheckDigits.Net [README file]( https://github.com/KnowledgeForwardSolutio
 	* [Iso7064Mod37_2CheckDigitAttribute](#iso7064mod37_2checkdigitattribute)
 	* [Iso7064Mod37_36CheckDigitAttribute](#iso7064mod37_36checkdigitattribute)
 	* [Iso7064Mod661_26CheckDigitAttribute](#iso7064mod661_26checkdigitattribute)
+	* [Iso7064Mod97_10CheckDigitAttribute](#iso7064mod97_10checkdigitattribute)
     * [LuhnCheckDigitAttribute](#luhncheckdigitattribute)
     * [Modulus10_13CheckDigitAttribute](#modulus10_13checkdigitattribute)
     * [Modulus10_1CheckDigitAttribute](#modulus10_1checkdigitattribute)
@@ -212,6 +213,18 @@ The `Iso7064Mod661_26CheckDigitAttribute` will return validation errors for the 
 - The value does not contain valid ISO/IEC 7064 MOD 661-26 check characters.
 - The value contains characters other than uppercase alphabetic characters (A-Z).
 - The value is shorter than three characters (i.e., it cannot contain a pair of check characters).
+- The value being validated is not of type `string`.
+
+### Iso7064Mod97_10CheckDigitAttribute
+
+The `Iso7064Mod97_10CheckDigitAttribute` validates that a string property 
+conforms to the ISO/IEC 7064 MOD 97-10 check digit algorithm. The ISO/IEC 7064 MOD 97-10
+algorithm is designed for numeric values and uses two numeric check digits.
+
+The `Iso7064Mod97_10CheckDigitAttribute` will return validation errors for the following conditions:
+- The value does not contain valid ISO/IEC 7064 MOD 97-10 check digits.
+- The value contains characters other than ASCII digits (0-9).
+- The value is shorter than three characters (i.e., it cannot contain a pair of check digits).
 - The value being validated is not of type `string`.
 
 ### LuhnCheckDigitAttribute
