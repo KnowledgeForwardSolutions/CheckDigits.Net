@@ -150,6 +150,9 @@
   <data name="InvalidMod27_26Identifier" xml:space="preserve">
     <value>ISO 7045 MOD 27,26 Identifier no válido</value>
   </data>
+  <data name="InvalidMod661_26Identifier" xml:space="preserve">
+    <value>ISO 7045 MOD 66126 Identifier no válido</value>
+  </data>
   <data name="InvalidMod1271_36Identifier" xml:space="preserve">
     <value>ISO 7064 MOD 1271-36 Identifier no válido</value>
   </data>

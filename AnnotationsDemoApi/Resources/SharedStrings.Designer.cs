@@ -169,6 +169,15 @@ namespace AnnotationsDemoApi.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid ISO 7064 MOD 661-26 Identifier.
+        /// </summary>
+        public static string InvalidMod661_26Identifier {
+            get {
+                return ResourceManager.GetString("InvalidMod661_26Identifier", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Invalid ISNI (International Standard Name Identifier).
         /// </summary>
         public static string InvalidStandardNameIdentifier {
