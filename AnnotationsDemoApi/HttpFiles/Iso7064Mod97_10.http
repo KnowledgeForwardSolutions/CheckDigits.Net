@@ -1,0 +1,55 @@
+@AnnotationsDemoApi_HostAddress = http://localhost:5079
+
+### [Iso7064Mod97_10CheckDigit] Valid ISO/IEC 7064 MOD 97-10 value - Should return 200 OK
+POST {{AnnotationsDemoApi_HostAddress}}/iso7064mod9710
+Content-Type: application/json
+
+{
+  "mod97_10Identifier": "1011339391255432926101144229991433338"
+}
+
+
+### [Iso7064Mod97_10CheckDigit] Invalid ISO/IEC 7064 MOD 97-10 value - Should return 400 Bad Request
+POST {{AnnotationsDemoApi_HostAddress}}/iso7064mod9710
+Content-Type: application/json
+
+{
+  "mod97_10Identifier": "163217541835191038"
+}
+
+### [Iso7064Mod97_10CheckDigit(ErrorMessage =...)] Valid ISO/IEC 7064 MOD 97-10 value - Should return 200 OK
+POST {{AnnotationsDemoApi_HostAddress}}/iso7064mod9710message
+Content-Type: application/json
+
+{
+  "mod97_10Identifier": "1011339391255432926101144229991433338"
+}
+
+
+### [Iso7064Mod97_10CheckDigit(ErrorMessage =...)] Invalid ISO/IEC 7064 MOD 97-10 value - Should return 400 Bad Request
+POST {{AnnotationsDemoApi_HostAddress}}/iso7064mod9710message
+Content-Type: application/json
+
+{
+  "mod97_10Identifier": "163217541835191038"
+}
+
+
+### [Iso7064Mod97_10CheckDigit(ErrorMessageResourceName =...)] Valid ISO/IEC 7064 MOD 97-10 value - Should return 200 OK
+POST {{AnnotationsDemoApi_HostAddress}}/iso7064mod9710global
+Content-Type: application/json
+Accept-Language: de-DE
+
+{
+  "mod97_10Identifier": "1011339391255432926101144229991433338"
+}
+
+
+### [Iso7064Mod97_10CheckDigit(ErrorMessageResourceName =...)] Invalid ISO/IEC 7064 MOD 97-10 value - Should return 400 Bad Request and localized message
+POST {{AnnotationsDemoApi_HostAddress}}/iso7064mod9710global
+Content-Type: application/json
+Accept-Language: de-DE
+
+{
+  "mod97_10Identifier": "163217541835191038"
+}

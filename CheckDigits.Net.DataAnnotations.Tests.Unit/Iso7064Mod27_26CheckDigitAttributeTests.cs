@@ -2,7 +2,7 @@
 
 public class Iso7064Mod27_26CheckDigitAttributeTests
 {
-   private const String _customErrorMessage = "Need a valid ISO 7064 MOD 27,266 value";
+   private const String _customErrorMessage = "Need a valid ISO 7064 MOD 27,26 value";
 
    public class Iso7064Mod27_26Request
    {

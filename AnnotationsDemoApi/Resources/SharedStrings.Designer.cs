@@ -97,6 +97,24 @@ namespace AnnotationsDemoApi.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid Donation Identifier.
+        /// </summary>
+        public static string InvalidDonationIdentifier {
+            get {
+                return ResourceManager.GetString("InvalidDonationIdentifier", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid Global Release Identifier.
+        /// </summary>
+        public static string InvalidGlobalReleaseIdentifier {
+            get {
+                return ResourceManager.GetString("InvalidGlobalReleaseIdentifier", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Invalid International Maritime Organization (IMO) Number.
         /// </summary>
         public static string InvalidImoNumber {
@@ -133,7 +151,7 @@ namespace AnnotationsDemoApi.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Invalid ISO 7065 MOD 1271-36 Identifier.
+        ///   Looks up a localized string similar to Invalid ISO 7064 MOD 1271-36 Identifier.
         /// </summary>
         public static string InvalidMod1271_36Identifier {
             get {
@@ -142,7 +160,7 @@ namespace AnnotationsDemoApi.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Invalid ISO 7065 MOD 27,26 Identifier.
+        ///   Looks up a localized string similar to Invalid ISO 7064 MOD 27,26 Identifier.
         /// </summary>
         public static string InvalidMod27_26Identifier {
             get {
@@ -151,7 +169,25 @@ namespace AnnotationsDemoApi.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Invalid ISNI (Internationl Standard Name Identifier).
+        ///   Looks up a localized string similar to Invalid ISO 7064 MOD 661-26 Identifier.
+        /// </summary>
+        public static string InvalidMod661_26Identifier {
+            get {
+                return ResourceManager.GetString("InvalidMod661_26Identifier", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid ISO 7064 MOD 97-10 Identifier.
+        /// </summary>
+        public static string InvalidMod97_10Identifier {
+            get {
+                return ResourceManager.GetString("InvalidMod97_10Identifier", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid ISNI (International Standard Name Identifier).
         /// </summary>
         public static string InvalidStandardNameIdentifier {
             get {

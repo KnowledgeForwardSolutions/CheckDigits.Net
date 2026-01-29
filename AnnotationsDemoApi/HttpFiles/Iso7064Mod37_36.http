@@ -1,0 +1,55 @@
+@AnnotationsDemoApi_HostAddress = http://localhost:5079
+
+### [Iso7064Mod37_36CheckDigit] Valid ISO/IEC 7064 MOD 37,36 value - Should return 200 OK
+POST {{AnnotationsDemoApi_HostAddress}}/iso7064mod3736
+Content-Type: application/json
+
+{
+  "globalReleaseIdentifier": "00000000C36D002B00000000E"
+}
+
+
+### [Iso7064Mod37_36CheckDigit] Invalid ISO/IEC 7064 MOD 37,36 value - Should return 400 Bad Request
+POST {{AnnotationsDemoApi_HostAddress}}/iso7064mod3736
+Content-Type: application/json
+
+{
+  "globalReleaseIdentifier": "QWERTUDVORAK1"
+}
+
+### [Iso7064Mod37_36CheckDigit(ErrorMessage =...)] Valid ISO/IEC 7064 MOD 37,36 value - Should return 200 OK
+POST {{AnnotationsDemoApi_HostAddress}}/iso7064mod3736message
+Content-Type: application/json
+
+{
+  "globalReleaseIdentifier": "00000000C36D002B00000000E"
+}
+
+
+### [Iso7064Mod37_36CheckDigit(ErrorMessage =...)] Invalid ISO/IEC 7064 MOD 37,36 value - Should return 400 Bad Request
+POST {{AnnotationsDemoApi_HostAddress}}/iso7064mod3736message
+Content-Type: application/json
+
+{
+  "globalReleaseIdentifier": "QWERTUDVORAK1"
+}
+
+
+### [Iso7064Mod37_36CheckDigit(ErrorMessageResourceName =...)] Valid ISO/IEC 7064 MOD 37,36 value - Should return 200 OK
+POST {{AnnotationsDemoApi_HostAddress}}/iso7064mod3736global
+Content-Type: application/json
+Accept-Language: es-ES
+
+{
+  "globalReleaseIdentifier": "00000000C36D002B00000000E"
+}
+
+
+### [Iso7064Mod37_36CheckDigit(ErrorMessageResourceName =...)] Invalid ISO/IEC 7064 MOD 37,36 value - Should return 400 Bad Request and localized message
+POST {{AnnotationsDemoApi_HostAddress}}/iso7064mod3736global
+Content-Type: application/json
+Accept-Language: es-ES
+
+{
+  "globalReleaseIdentifier": "QWERTUDVORAK1"
+}

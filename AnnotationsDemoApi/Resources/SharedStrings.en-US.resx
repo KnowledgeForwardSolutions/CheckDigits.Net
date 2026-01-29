@@ -129,6 +129,12 @@
   <data name="InvalidCasNumber" xml:space="preserve">
     <value>Invalid CAS Registry Number</value>
   </data>
+  <data name="InvalidDonationIdentifier" xml:space="preserve">
+    <value>Invalid ISBT Donation Identifier</value>
+  </data>
+  <data name="InvalidGlobalReleaseIdentifier" xml:space="preserve">
+    <value>Invalid Global Release Identifier</value>
+  </data>
   <data name="InvalidImoNumber" xml:space="preserve">
     <value>Invalid International Maritime Organization (IMO) Number</value>
   </data>
@@ -142,13 +148,19 @@
     <value>Invalid Legal Entity Identifier</value>
   </data>
   <data name="InvalidMod27_26Identifier" xml:space="preserve">
-    <value>Invalid ISO 7065 MOD 27,26 Identifier</value>
+    <value>Invalid ISO 7064 MOD 27,26 Identifier</value>
+  </data>
+  <data name="InvalidMod661_26Identifier" xml:space="preserve">
+    <value>Invalid ISO 7064 MOD 661-26 Identifier</value>
+  </data>
+  <data name="InvalidMod97_10Identifier" xml:space="preserve">
+    <value>Invalid ISO 7064 MOD 97-10 Identifier</value>
   </data>
   <data name="InvalidMod1271_36Identifier" xml:space="preserve">
-    <value>Invalid ISO 7065 MOD 1271-36 Identifier</value>
+    <value>Invalid ISO 7064 MOD 1271-36 Identifier</value>
   </data>
   <data name="InvalidStandardNameIdentifier" xml:space="preserve">
-    <value>Invalid ISNI (Internationl Standard Name Identifier)</value>
+    <value>Invalid ISNI (International Standard Name Identifier)</value>
   </data>
   <data name="InvalidSubmissionIdentifier" xml:space="preserve">
     <value>Invalid Submission Identifier</value>

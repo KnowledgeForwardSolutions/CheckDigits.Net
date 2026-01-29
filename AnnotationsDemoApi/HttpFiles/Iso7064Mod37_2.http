@@ -1,0 +1,55 @@
+@AnnotationsDemoApi_HostAddress = http://localhost:5079
+
+### [Iso7064Mod37_2CheckDigit] Valid ISO/IEC 7064 MOD 37-2 value - Should return 200 OK
+POST {{AnnotationsDemoApi_HostAddress}}/iso7064mod372
+Content-Type: application/json
+
+{
+  "donationIdentifier": "A999922012346*"
+}
+
+
+### [Iso7064Mod37_2CheckDigit] Invalid ISO/IEC 7064 MOD 37-2 value - Should return 400 Bad Request
+POST {{AnnotationsDemoApi_HostAddress}}/iso7064mod372
+Content-Type: application/json
+
+{
+  "donationIdentifier": "F123498654321H"
+}
+
+### [Iso7064Mod37_2CheckDigit(ErrorMessage =...)] Valid ISO/IEC 7064 MOD 37-2 value - Should return 200 OK
+POST {{AnnotationsDemoApi_HostAddress}}/iso7064mod372message
+Content-Type: application/json
+
+{
+  "donationIdentifier": "A999922012346*"
+}
+
+
+### [Iso7064Mod37_2CheckDigit(ErrorMessage =...)] Invalid ISO/IEC 7064 MOD 37-2 value - Should return 400 Bad Request
+POST {{AnnotationsDemoApi_HostAddress}}/iso7064mod372message
+Content-Type: application/json
+
+{
+  "donationIdentifier": "F123498654321H"
+}
+
+
+### [Iso7064Mod37_2CheckDigit(ErrorMessageResourceName =...)] Valid ISO/IEC 7064 MOD 37-2 value - Should return 200 OK
+POST {{AnnotationsDemoApi_HostAddress}}/iso7064mod372global
+Content-Type: application/json
+Accept-Language: es-ES
+
+{
+  "donationIdentifier": "A999922012346*"
+}
+
+
+### [Iso7064Mod37_2CheckDigit(ErrorMessageResourceName =...)] Invalid ISO/IEC 7064 MOD 37-2 value - Should return 400 Bad Request and localized message
+POST {{AnnotationsDemoApi_HostAddress}}/iso7064mod372global
+Content-Type: application/json
+Accept-Language: es-ES
+
+{
+  "donationIdentifier": "F123498654321H"
+}
