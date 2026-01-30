@@ -26,7 +26,6 @@ Initial release</PackageReleaseNotes>
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>
-    <None Include="MaskedLuhnCheckDigitAttribute.cs" />
   </ItemGroup>
 
   <ItemGroup>
