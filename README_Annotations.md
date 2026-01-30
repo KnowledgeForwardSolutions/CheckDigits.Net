@@ -277,7 +277,7 @@ The `MaskedLuhnCheckDigitAttribute` performs the same validation as `LuhnCheckDi
 but uses an `ICheckDigitMask` to exclude characters that should not be included in the
 check digit calculation. 
 
-Note that the check digit mask is not used to determine that check digit location. 
+Note that the check digit mask is not used to determine the check digit location. 
 The right-most character in the value is always assumed to be the check digit.
 
 The `MaskedLuhnCheckDigitAttribute` will return validation errors for the following conditions:

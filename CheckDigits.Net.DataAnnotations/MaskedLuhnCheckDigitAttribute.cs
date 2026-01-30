@@ -45,7 +45,7 @@ namespace CheckDigits.Net.DataAnnotations;
 ///      property.
 ///   </para>
 ///   <para>
-///      Note that the check digit mask is not used to determine that check 
+///      Note that the check digit mask is not used to determine the check 
 ///      digit location. The right-most character in the value is always assumed
 ///      to be the check digit.
 ///   </para>
