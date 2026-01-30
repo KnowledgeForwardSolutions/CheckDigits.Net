@@ -2,6 +2,7 @@
 
 global using AnnotationsDemoApi.Models;
 
+global using CheckDigits.Net;
 global using CheckDigits.Net.DataAnnotations;
 
 global using Microsoft.AspNetCore.Localization;
