@@ -22,13 +22,15 @@ to the CheckDigits.Net [README file]( https://github.com/KnowledgeForwardSolutio
 	* [Iso7064Mod37_36CheckDigitAttribute](#iso7064mod37_36checkdigitattribute)
 	* [Iso7064Mod661_26CheckDigitAttribute](#iso7064mod661_26checkdigitattribute)
 	* [Iso7064Mod97_10CheckDigitAttribute](#iso7064mod97_10checkdigitattribute)
-    * [LuhnCheckDigitAttribute](#luhncheckdigitattribute)
+    * [LuhnCheckDigitAttribute and MaskedLuhnCheckDigitAttribute](#luhncheckdigitattribute-and-maskedluhncheckdigitattribute)
     * [Modulus10_13CheckDigitAttribute](#modulus10_13checkdigitattribute)
     * [Modulus10_1CheckDigitAttribute](#modulus10_1checkdigitattribute)
     * [Modulus10_2CheckDigitAttribute](#modulus10_2checkdigitattribute)
     * [Modulus11CheckDigitAttribute](#modulus11checkdigitattribute)
     * [NoidCheckDigitAttribute](#noidcheckdigitattribute)
     * [VerhoeffCheckDigitAttribute](#verhoeffcheckdigitattribute)
+
+    * [MaskedLuhnCheckDigitAttribute](#maskedluhncheckdigitattribute)
 
 
 ## Using CheckDigits.Net.Annotations
@@ -97,6 +99,42 @@ public class PaymentDetails
 Note the use of the `Required` attribute to ensure that the property is not null 
 or empty. The check digit attributes do not perform null or empty checks by default
 and should be used in conjunction with the `Required` attribute when necessary.
+
+### Check Digit Attributes with Masks
+
+Some, but not all, check digit algorithms support the use of an `ICheckDigitMask`
+to validate values that have been formatted with additional characters to increase 
+human readability. For example, a credit card number that has been formatted with
+spaces, '1234 5678 9012 3456'. The `ICheckDigitMask` is used to specify which characters
+should be ignored when performing the check digit validation. Currently, the only
+algorithm that supports check digit masks is the Luhn algorithm, but additional
+algorithms will be added in the future.
+
+To use a check digit mask, create a class that implements the `ICheckDigitMask`
+interface (defined in the CheckDigits.Net namespace) and then include that class
+name as a type parameter to the masked check digit attribute. Note that the class
+that implements `ICheckDigitMask` must have a parameterless constructor. For example:
+
+```csharp
+// Excludes every 5th character, allowing for spaces or dashes in credit card numbers.
+public class CreditCardMask : ICheckDigitMask
+{
+   public Boolean ExcludeCharacter(Int32 index) => (index + 1) % 5 == 0;
+
+   public Boolean IncludeCharacter(Int32 index) => (index + 1) % 5 != 0;
+}
+
+public class PaymentDetails
+{
+	[Required]
+	[MaskedLuhnCheckDigit<CreditCardMask>(ErrorMessage = "The card number is invalid.")]
+	public string CardNumber { get; set; }
+	
+	// Other properties...
+}
+
+
+```
 
 ## Supported Attributes
 
@@ -227,7 +265,7 @@ The `Iso7064Mod97_10CheckDigitAttribute` will return validation errors for the f
 - The value is shorter than three characters (i.e., it cannot contain a pair of check digits).
 - The value being validated is not of type `string`.
 
-### LuhnCheckDigitAttribute
+### LuhnCheckDigitAttribute and MaskedLuhnCheckDigitAttribute
 
 The `LuhnCheckDigitAttribute` validates that a string property conforms to the
 Luhn check digit algorithm. This is commonly used for credit card numbers and other
@@ -238,6 +276,19 @@ The `LuhnCheckDigitAttribute` will return validation errors for the following co
 - The value does not contain a valid Luhn check digit.
 - The value contains non-ASCII digit characters.
 - The value is shorter than two characters (i.e., it cannot contain a check digit).
+- The value being validated is not of type `string`.
+
+The `MaskedLuhnCheckDigitAttribute` performs the same validation as `LuhnCheckDigitAttribute`
+but uses an `ICheckDigitMask` to exclude characters that should not be included in the
+check digit calculation. 
+
+Note that the check digit mask is not used to determine that check digit location. 
+The right-most character in the value is always assumed to be the check digit.
+
+The `MaskedLuhnCheckDigitAttribute` will return validation errors for the following conditions:
+- The value does not contain a valid Luhn check digit.
+- The value contains non-ASCII digit characters that are not excluded by the check digit mask.
+- The value has no non-check digit characters that are allowed by the check digit mask.
 - The value being validated is not of type `string`.
 
 ### Modulus10_13CheckDigitAttribute
@@ -335,4 +386,3 @@ The `VerhoeffCheckDigitAttribute` will return validation errors for the followin
 - The value contains non-ASCII digit characters.
 - The value is shorter than two characters (i.e., it cannot contain a check digit).
 - The value being validated is not of type `string`.
-
