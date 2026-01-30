@@ -31,8 +31,8 @@ namespace CheckDigits.Net.DataAnnotations;
 ///            required for a valid Luhn check digit sequence.
 ///         </item>
 ///         <item>
-///            The value contains non-numeric characters, as the Luhn algorithm 
-///            only processes numeric digits.
+///            The value contains non-ASCII digit characters that are not 
+///            excluded by the check digit mask.
 ///         </item>
 ///         <item>
 ///            The value does not contain a valid Luhn check digit in the 

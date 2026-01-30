@@ -18,11 +18,12 @@
 /// </exception>
 public abstract class BaseMaskedCheckDigitAttribute<TMask>(
    IMaskedCheckDigitAlgorithm checkDigitAlgorithm,
-   String errorMessage) : BaseCheckDigitAttribute(checkDigitAlgorithm, errorMessage)
+   String errorMessage) : ValidationAttribute(errorMessage)
    where TMask : ICheckDigitMask, new()
 {
    private readonly IMaskedCheckDigitAlgorithm _checkDigitAlgorithm = checkDigitAlgorithm ?? throw new ArgumentNullException(nameof(checkDigitAlgorithm));
    private readonly ICheckDigitMask _mask = new TMask();
+
    protected override ValidationResult? IsValid(
       Object? value,
       ValidationContext validationContext)

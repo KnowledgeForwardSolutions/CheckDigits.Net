@@ -22,14 +22,11 @@ Initial release</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="MaskedLuhnCheckDigitAttributecs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Include="..\README_Annotations.md">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>
+    <None Include="MaskedLuhnCheckDigitAttribute.cs" />
   </ItemGroup>
 
   <ItemGroup>

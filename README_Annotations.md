@@ -30,9 +30,6 @@ to the CheckDigits.Net [README file]( https://github.com/KnowledgeForwardSolutio
     * [NoidCheckDigitAttribute](#noidcheckdigitattribute)
     * [VerhoeffCheckDigitAttribute](#verhoeffcheckdigitattribute)
 
-    * [MaskedLuhnCheckDigitAttribute](#maskedluhncheckdigitattribute)
-
-
 ## Using CheckDigits.Net.Annotations
 
 Install the CheckDigits.Net.Annotations package via command line:
