@@ -24,7 +24,7 @@ Content-Type: application/json
 {
   "mod661_26Identifier": "ABCDEFGHIJKLMNJF"
 }
--
+
 ### [Iso7064Mod661_26CheckDigit(ErrorMessage =...)] Invalid ISO/IEC 7064 MOD 661-26 value - Should return 400 Bad Request
 POST {{AnnotationsDemoApi_HostAddress}}/iso7064mod66126message
 Content-Type: application/json

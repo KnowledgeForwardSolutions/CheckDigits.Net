@@ -148,13 +148,13 @@
     <value>Legal Entity Identifier no válido</value>
   </data>
   <data name="InvalidMod27_26Identifier" xml:space="preserve">
-    <value>ISO 7045 MOD 27,26 Identifier no válido</value>
+    <value>ISO 7064 MOD 27,26 Identifier no válido</value>
   </data>
   <data name="InvalidMod661_26Identifier" xml:space="preserve">
-    <value>ISO 7045 MOD 661-26 Identifier no válido</value>
+    <value>ISO 7064 MOD 661-26 Identifier no válido</value>
   </data>
   <data name="InvalidMod97_10Identifier" xml:space="preserve">
-    <value>ISO 7045 MOD 97-10 Identifier no válido</value>
+    <value>ISO 7064 MOD 97-10 Identifier no válido</value>
   </data>
   <data name="InvalidMod1271_36Identifier" xml:space="preserve">
     <value>ISO 7064 MOD 1271-36 Identifier no válido</value>
