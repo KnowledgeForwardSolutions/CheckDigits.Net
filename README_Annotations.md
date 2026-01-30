@@ -132,8 +132,6 @@ public class PaymentDetails
 	
 	// Other properties...
 }
-
-
 ```
 
 ## Supported Attributes
@@ -288,7 +286,7 @@ The right-most character in the value is always assumed to be the check digit.
 The `MaskedLuhnCheckDigitAttribute` will return validation errors for the following conditions:
 - The value does not contain a valid Luhn check digit.
 - The value contains non-ASCII digit characters that are not excluded by the check digit mask.
-- The value has no non-check digit characters that are allowed by the check digit mask.
+- The check digit mask excludes all characters except the check digit.
 - The value being validated is not of type `string`.
 
 ### Modulus10_13CheckDigitAttribute

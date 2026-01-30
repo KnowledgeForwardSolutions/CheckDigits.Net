@@ -144,7 +144,17 @@ app.MapPost("/luhnmessage",
 
 app.MapPost("/luhnglobal",
    (LuhnRequestGlobalizedErrorMessage request, IStringLocalizer<SharedStrings> localizer)
-   => Results.Ok(localizer["ValidRequest"].ToString()));
+      => Results.Ok(localizer["ValidRequest"].ToString()));
+
+app.MapPost("/maskedluhn",
+   (MaskedLuhnRequest request) => Results.Ok("Credit card number is valid"));
+
+app.MapPost("/maskedluhnmessage",
+   (MaskedLuhnRequestCustomErrorMessage request) => Results.Ok("Credit card number is valid"));
+
+app.MapPost("/maskedluhnglobal",
+   (MaskedLuhnRequestGlobalizedErrorMessage request, IStringLocalizer<SharedStrings> localizer)
+      => Results.Ok(localizer["ValidRequest"].ToString()));
 
 // Modulus 10_13 Check Digit Endpoints
 app.MapPost("/modulus1013",
