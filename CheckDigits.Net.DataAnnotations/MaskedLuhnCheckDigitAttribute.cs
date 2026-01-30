@@ -54,4 +54,5 @@ public class MaskedLuhnCheckDigitAttribute<TMask>()
    : BaseMaskedCheckDigitAttribute<TMask>((IMaskedCheckDigitAlgorithm)Algorithms.Luhn, Messages.SingleCheckDigitFailure)
    where TMask : ICheckDigitMask, new()
 {
+   // TODO: Cast to IMaskedCheckDigitAlgorithm is valid, but could be improved. Next release of CheckDigits.Net should add a static MaskedAlgorithms class and once that is available, this code should be updated to use it.
 }
