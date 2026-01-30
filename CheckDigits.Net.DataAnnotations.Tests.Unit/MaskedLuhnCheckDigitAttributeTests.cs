@@ -194,8 +194,10 @@ public class MaskedLuhnCheckDigitAttributeTests
          CardNumber = "3782 8224 6310 005"
       };
       var expectedMessage = String.Format(Messages.SingleCheckDigitFailure, nameof(item.CardNumber));
+
       // Act.
       var results = Utility.ValidateModel(item);
+
       // Assert.
       results.Should().HaveCount(1);
       results[0].ErrorMessage.Should().Be(expectedMessage);
