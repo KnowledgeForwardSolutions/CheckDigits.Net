@@ -2,18 +2,18 @@
 
 public class Modulus10_13Request
 {
-   [Required, Modulus10_13CheckDigit]
+   [Required, CheckDigit<Modulus10_13Algorithm>]
    public String UpcCode { get; set; } = null!;
 }
 
 public class Modulus10_13RequestCustomErrorMessage
 {
-   [Required, Modulus10_13CheckDigit(ErrorMessage = "Invalid UPC Code")]
+   [Required, CheckDigit<Modulus10_13Algorithm>(ErrorMessage = "Invalid UPC Code")]
    public String UpcCode { get; set; } = null!;
 }
 
 public class Modulus10_13RequestGlobalizedErrorMessage
 {
-   [Required, Modulus10_13CheckDigit(ErrorMessageResourceName = "InvalidUpcCode", ErrorMessageResourceType = typeof(Resources.SharedStrings))]
+   [Required, CheckDigit<Modulus10_13Algorithm>(ErrorMessageResourceName = "InvalidUpcCode", ErrorMessageResourceType = typeof(Resources.SharedStrings))]
    public String UpcCode { get; set; } = null!;
 }
