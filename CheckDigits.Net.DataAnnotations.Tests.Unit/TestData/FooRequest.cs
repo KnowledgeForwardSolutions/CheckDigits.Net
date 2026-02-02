@@ -148,6 +148,12 @@ public class FooLuhn : IFooRequest
    public String BarValue { get; set; } = null!;
 }
 
+public class FooMaskedLuhn : IFooRequest
+{
+   [MaskedCheckDigit<LuhnAlgorithm, CreditCardMask>]
+   public String BarValue { get; set; } = null!;
+}
+
 public class FooModulus10_13 : IFooRequest
 {
    [CheckDigit<Modulus10_13Algorithm>]

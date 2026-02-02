@@ -80,6 +80,13 @@ public static class TestDataExtensions
          _ => throw new ArgumentOutOfRangeException(nameof(algorithmName), algorithmName, "Unrecognized algorithm name")
       };
 
+   public static String ToInvalidMaskedRequestValue(this String algorithmName)
+      => algorithmName switch
+      {
+         nameof(LuhnAlgorithm) => "3059 6300 0902 0004",                               // Diners Club test card number with two digit transposition error 69 -> 96 
+         _ => throw new ArgumentOutOfRangeException(nameof(algorithmName), algorithmName, "Unrecognized algorithm name")
+      };
+
    public static String ToInvalidRequestValue(this String algorithmName)
       => algorithmName switch
       {
@@ -117,6 +124,27 @@ public static class TestDataExtensions
          nameof(SedolAlgorithm) => "3174865",                                          // 3134865 with single digit transcription error 3 -> 7
          nameof(VerhoeffAlgorithm) => "84736430459837284567892",                       // Jump transposition error using "84736430954837284567892" as a valid value (954 -> 459)
          nameof(VinAlgorithm) => "1G8ZG217XWZ157259",                                  // Two character transposition 12 -> 21
+         _ => throw new ArgumentOutOfRangeException(nameof(algorithmName), algorithmName, "Unrecognized algorithm name")
+      };
+
+   public static ValidationAttribute ToMaskedCheckDigitAttribute(this String algorithmName)
+      => algorithmName switch
+      {
+         nameof(LuhnAlgorithm) => new MaskedCheckDigitAttribute<LuhnAlgorithm, CreditCardMask>(),
+         _ => throw new ArgumentOutOfRangeException(nameof(algorithmName), algorithmName, "Unrecognized algorithm name")
+      };
+
+   public static IFooRequest ToMaskedFooRequest(this String algorithmName)
+      => algorithmName switch
+      {
+         nameof(LuhnAlgorithm) => new FooMaskedLuhn(),
+         _ => throw new ArgumentOutOfRangeException(nameof(algorithmName), algorithmName, "Unrecognized algorithm name")
+      };
+
+   public static String ToValidMaskedRequestValue(this String algorithmName)
+      => algorithmName switch
+      {
+         nameof(LuhnAlgorithm) => "4012 8888 8888 1881",                               // Visa test credit card number
          _ => throw new ArgumentOutOfRangeException(nameof(algorithmName), algorithmName, "Unrecognized algorithm name")
       };
 
