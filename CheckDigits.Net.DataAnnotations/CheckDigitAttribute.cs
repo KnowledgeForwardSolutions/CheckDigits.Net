@@ -23,6 +23,7 @@
 ///      algorithm.
 ///   </para>
 /// </remarks>
+[AttributeUsage(AttributeTargets.Property | AttributeTargets.Field , AllowMultiple = false)] 
 public class CheckDigitAttribute<TAlgorithm> : ValidationAttribute
    where TAlgorithm : ICheckDigitAlgorithm, new()
 {

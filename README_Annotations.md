@@ -8,28 +8,6 @@ specific check digit algorithms.
 For full documentation of the various check digit algorithms supported, please refer 
 to the CheckDigits.Net [README file]( https://github.com/KnowledgeForwardSolutions/CheckDigits.Net/blob/main/README.md ).
 
-## Table of Contents
-
-- **[Using CheckDigits.Net.Annotations](#using-checkdigits.net.annotations)**
-- **[Supported Attributes](#supported-attributes)**
-    * [AlphanumericMod97_10DigitAttribute](#alphanumericmod97_10checkdigitattribute)
-    * [DammCheckDigitAttribute](#dammcheckdigitattribute)
-	* [Iso7064Mod11_10CheckDigitAttribute](#iso7064mod11_10checkdigitattribute)
-	* [Iso7064Mod11_2CheckDigitAttribute](#iso7064mod11_2checkdigitattribute)
-	* [Iso7064Mod1271_36CheckDigitAttribute](#iso7064mod1271_36checkdigitattribute)
-	* [Iso7064Mod27_26CheckDigitAttribute](#iso7064mod27_26checkdigitattribute)
-	* [Iso7064Mod37_2CheckDigitAttribute](#iso7064mod37_2checkdigitattribute)
-	* [Iso7064Mod37_36CheckDigitAttribute](#iso7064mod37_36checkdigitattribute)
-	* [Iso7064Mod661_26CheckDigitAttribute](#iso7064mod661_26checkdigitattribute)
-	* [Iso7064Mod97_10CheckDigitAttribute](#iso7064mod97_10checkdigitattribute)
-    * [LuhnCheckDigitAttribute and MaskedLuhnCheckDigitAttribute](#luhncheckdigitattribute-and-maskedluhncheckdigitattribute)
-    * [Modulus10_13CheckDigitAttribute](#modulus10_13checkdigitattribute)
-    * [Modulus10_1CheckDigitAttribute](#modulus10_1checkdigitattribute)
-    * [Modulus10_2CheckDigitAttribute](#modulus10_2checkdigitattribute)
-    * [Modulus11CheckDigitAttribute](#modulus11checkdigitattribute)
-    * [NoidCheckDigitAttribute](#noidcheckdigitattribute)
-    * [VerhoeffCheckDigitAttribute](#verhoeffcheckdigitattribute)
-
 ## Using CheckDigits.Net.Annotations
 
 Install the CheckDigits.Net.Annotations package via command line:
@@ -37,18 +15,26 @@ Install the CheckDigits.Net.Annotations package via command line:
 dotnet add package CheckDigits.Net.Annotations --version 1.0.0
 ```
 or by searching for "CheckDigits.Net.Annotations" in your IDE's Package Manager.
-Once installed, you can use the provided data annotation attributes in your model 
-classes.
+
+Once installed, you can decorate a model property with the [CheckDigit<TAlgorithm>] 
+to validate that the value conforms to the specified check digit algorithm.
+TAlgorithm is the name of a class that implements `ICheckDigitAlgorithm`, including
+any of the algorithms provided in the CheckDigits.Net package or your own custom implementations.
+TAlgorithm must have a parameterless constructor and must be stateless and thread-safe.
+
+For example, to validate that a credit card number conforms to the Luhn algorithm
+included in CheckDigits.Net, you would do the following:
 
 ```csharp
 using System.ComponentModel.DataAnnotations;
 
+using CheckDigits.Net.GeneralAlgorithms;
 using CheckDigits.Net.Annotations;
 
 public class PaymentDetails
 {
 	[Required]
-	[LuhnCheckDigit]
+	[CheckDigit<LuhnAlgorithm>]
 	public string CardNumber { get; set; }
 	
 	// Other properties...
@@ -70,7 +56,7 @@ You can customize the error message by providing a custom message to the attribu
 public class PaymentDetails
 {
 	[Required]
-	[LuhnCheckDigit(ErrorMessage = "The card number is invalid.")]
+	[CheckDigit<LuhnAlgorithm>(ErrorMessage = "The card number is invalid.")]
 	public string CardNumber { get; set; }
 	
 	// Other properties...
@@ -85,7 +71,7 @@ and `ErrorMessageResourceName` properties:
 public class PaymentDetails
 {
 	[Required]
-	[LuhnCheckDigit(
+	[CheckDigit<LuhnAlgorithm>(
 		ErrorMessageResourceType = typeof(Resources.ValidationMessages),
 		ErrorMessageResourceName = "InvalidCardNumber")]
 	public string CardNumber { get; set; }
@@ -99,18 +85,22 @@ and should be used in conjunction with the `Required` attribute when necessary.
 
 ### Check Digit Attributes with Masks
 
-Some, but not all, check digit algorithms support the use of an `ICheckDigitMask`
-to validate values that have been formatted with additional characters to increase 
-human readability. For example, a credit card number that has been formatted with
-spaces, '1234 5678 9012 3456'. The `ICheckDigitMask` is used to specify which characters
-should be ignored when performing the check digit validation. Currently, the only
-algorithm that supports check digit masks is the Luhn algorithm, but additional
-algorithms will be added in the future.
+There are cases where values being validated may include formatting characters
+that should be ignored when performing check digit validation (for example, a 
+credit card number that has been formatted with spaces, '1234 5678 9012 3456'). 
+CheckDigits.Net supports this scenario through the use of check digit masks. An 
+algorithm that supports check digit masks implements the `ICheckDigitMaskableAlgorithm` 
+interface which extends `ICheckDigitAlgorithm` to indicate that it can work with 
+masks (currently, only the Luhn algorithm does so, but additional algorithms will 
+be added in the future).
 
 To use a check digit mask, create a class that implements the `ICheckDigitMask`
-interface (defined in the CheckDigits.Net namespace) and then include that class
-name as a type parameter to the masked check digit attribute. Note that the class
-that implements `ICheckDigitMask` must have a parameterless constructor. For example:
+interface (defined in the CheckDigits.Net namespace). As with the algorithm class,
+the class that implements `ICheckDigitMask` must have a parameterless constructor
+and must be stateless and thread-safe.
+
+Then, use the [MaskedCheckDigit<TAlgorithm, TMask>] attribute to decorate a model
+property. For example:
 
 ```csharp
 // Excludes every 5th character, allowing for spaces or dashes in credit card numbers.
@@ -124,260 +114,10 @@ public class CreditCardMask : ICheckDigitMask
 public class PaymentDetails
 {
 	[Required]
-	[MaskedLuhnCheckDigit<CreditCardMask>(ErrorMessage = "The card number is invalid.")]
+	[MaskedCheckDigit<LuhnAlgorithm, CreditCardMask>(ErrorMessage = "The card number is invalid.")]
 	public string CardNumber { get; set; }
 	
 	// Other properties...
 }
 ```
 
-## Supported Attributes
-
-### AlphanumericMod97_10DigitAttribute
-
-The `AlphanumericMod97_10DigitAttribute` validates that a string property conforms to the
-AlphanumericMod97_10 check digit algorithm, a variation of the ISO/IEC 7064 MOD 97-10 algorithm. 
-The algorithm is supports alphanumeric characters by mapping letters A-Z to the values 10-35.
-The algorithm is case-insensitive and lower case letters are treated as their uppercase equivalents.
-
-The `AlphanumericMod97_10DigitAttribute` will return validation errors for the following conditions:
-- The value does not contain a valid AlphanumericMod97_10 check digit.
-- The value contains characters other than 0-9, A-Z and a-z.
-- The value is shorter than 3 characters (i.e., it cannot contain the two check digit characters required by the algorithm).
-- The value being validated is not of type `string`.
-
-### DammCheckDigitAttribute
-
-The `DammCheckDigitAttribute` validates that a string property conforms to the
-Damm check digit algorithm. The Damm algorithm is quite capable of detecting
-transcription errors and is used in a range of applications.
-
-The `DammCheckDigitAttribute` will return validation errors for the following conditions:
-- The value does not contain a valid Damm check digit.
-- The value contains non-ASCII digit characters.
-- The value is shorter than two characters (i.e., it cannot contain a check digit).
-- The value being validated is not of type `string`.
-
-### Iso7064Mod11_10CheckDigitAttribute
-
-The `Iso7064Mod11_10CheckDigitAttribute` validates that a string property 
-conforms to the ISO/IEC 7064 MOD 11,10 check digit algorithm. The ISO/IEC 7064 MOD 11,10
-algorithm is designed for numeric values and uses a single numeric check digit.
-
-The `Iso7064Mod11_10CheckDigitAttribute` will return validation errors for the following conditions:
-- The value does not contain a valid ISO/IEC 7064 MOD 11,10 check digit.
-- The value contains non-ASCII digit characters.
-- The value is shorter than two characters (i.e., it cannot contain a check digit).
-- The value being validated is not of type `string`.
-
-### Iso7064Mod11_2CheckDigitAttribute
-
-The `Iso7064Mod11_2CheckDigitAttribute` validates that a string property 
-conforms to the ISO/IEC 7064 MOD 11-2 check digit algorithm. The ISO/IEC 7064 MOD 11-2
-algorithm is designed for numeric values and uses a single numeric check 
-character that can be either a numeric digit (0-9) or the letter 'X'.
-
-The `Iso7064Mod11_2CheckDigitAttribute` will return validation errors for the following conditions:
-- The value does not contain a valid ISO/IEC 7064 MOD 11-2 check digit.
-- The value contains characters other than ASCII digits or 'X'.
-- The value is shorter than two characters (i.e., it cannot contain a check digit).
-- The value being validated is not of type `string`.
-
-### Iso7064Mod1271_36CheckDigitAttribute
-
-The `Iso7064Mod1271_36CheckDigitAttribute` validates that a string property 
-conforms to the ISO/IEC 7064 MOD 1271-36 check digit algorithm. The ISO/IEC 7064 MOD 1271-36
-algorithm is designed for alphanumeric values and uses two alphanumeric check 
-characters.
-
-The `Iso7064Mod1271_36CheckDigitAttribute` will return validation errors for the following conditions:
-- The value does not contain valid ISO/IEC 7064 MOD 1271-36 check characters.
-- The value contains characters other than uppercase alphanumeric characters (0-9, A-Z).
-- The value is shorter than three characters (i.e., it cannot contain a pair of check characters).
-- The value being validated is not of type `string`.
-
-### Iso7064Mod27_26CheckDigitAttribute
-
-The `Iso7064Mod27_26CheckDigitAttribute` validates that a string property 
-conforms to the ISO/IEC 7064 MOD 27,26 check digit algorithm. The ISO/IEC 7064 MOD 27,26
-algorithm is designed for alphabetic values and uses a single alphabetic check 
-character.
-
-The `Iso7064Mod27_26CheckDigitAttribute` will return validation errors for the following conditions:
-- The value does not contain a valid ISO/IEC 7064 MOD 27,26 check character.
-- The value contains characters other than uppercase alphabetic characters (A-Z).
-- The value is shorter than two characters (i.e., it cannot contain a check character).
-- The value being validated is not of type `string`.
-
-### Iso7064Mod37_2CheckDigitAttribute
-
-The `Iso7064Mod37_2CheckDigitAttribute` validates that a string property 
-conforms to the ISO/IEC 7064 MOD 37-2 check digit algorithm. The ISO/IEC 7064 MOD 37-2
-algorithm is designed for alphanumeric values and uses a single check character
-that can be either an alphanumeric character (0-9, A-Z) or the asterisk character (*).
-
-The `Iso7064Mod37_2CheckDigitAttribute` will return validation errors for the following conditions:
-- The value does not contain a valid ISO/IEC 7064 MOD 37-2 check character.
-- The value contains characters other than uppercase alphanumeric characters (0-9, A-Z) or the asterisk character (*).
-- The value is shorter than two characters (i.e., it cannot contain a check character).
-- The value being validated is not of type `string`.
-
-### Iso7064Mod37_36CheckDigitAttribute
-
-The `Iso7064Mod37_36CheckDigitAttribute` validates that a string property 
-conforms to the ISO/IEC 7064 MOD 37,36 check digit algorithm. The ISO/IEC 7064 MOD 37,36
-algorithm is designed for alphanumeric values and uses a single alphanumeric 
-check character (0-9, A-Z).
-
-The `Iso7064Mod37_36CheckDigitAttribute` will return validation errors for the following conditions:
-- The value does not contain a valid ISO/IEC 7064 MOD 37,36 check character.
-- The value contains characters other than uppercase alphanumeric characters (0-9, A-Z).
-- The value is shorter than two characters (i.e., it cannot contain a check character).
-- The value being validated is not of type `string`.
-
-### Iso7064Mod661_26CheckDigitAttribute
-
-The `Iso7064Mod661_26CheckDigitAttribute` validates that a string property 
-conforms to the ISO/IEC 7064 MOD 661-26 check digit algorithm. The ISO/IEC 7064 MOD 661-26
-algorithm is designed for alphabetic values and uses two alphabetic check 
-characters.
-
-The `Iso7064Mod661_26CheckDigitAttribute` will return validation errors for the following conditions:
-- The value does not contain valid ISO/IEC 7064 MOD 661-26 check characters.
-- The value contains characters other than uppercase alphabetic characters (A-Z).
-- The value is shorter than three characters (i.e., it cannot contain a pair of check characters).
-- The value being validated is not of type `string`.
-
-### Iso7064Mod97_10CheckDigitAttribute
-
-The `Iso7064Mod97_10CheckDigitAttribute` validates that a string property 
-conforms to the ISO/IEC 7064 MOD 97-10 check digit algorithm. The ISO/IEC 7064 MOD 97-10
-algorithm is designed for numeric values and uses two numeric check digits.
-
-The `Iso7064Mod97_10CheckDigitAttribute` will return validation errors for the following conditions:
-- The value does not contain valid ISO/IEC 7064 MOD 97-10 check digits.
-- The value contains characters other than ASCII digits (0-9).
-- The value is shorter than three characters (i.e., it cannot contain a pair of check digits).
-- The value being validated is not of type `string`.
-
-### LuhnCheckDigitAttribute and MaskedLuhnCheckDigitAttribute
-
-The `LuhnCheckDigitAttribute` validates that a string property conforms to the
-Luhn check digit algorithm. This is commonly used for credit card numbers and other
-identification numbers such as IMEI numbers and national identifiers like the
-Canadian Social Insurance Number (SIN).
-
-The `LuhnCheckDigitAttribute` will return validation errors for the following conditions:
-- The value does not contain a valid Luhn check digit.
-- The value contains non-ASCII digit characters.
-- The value is shorter than two characters (i.e., it cannot contain a check digit).
-- The value being validated is not of type `string`.
-
-The `MaskedLuhnCheckDigitAttribute` performs the same validation as `LuhnCheckDigitAttribute`
-but uses an `ICheckDigitMask` to exclude characters that should not be included in the
-check digit calculation. 
-
-Note that the check digit mask is not used to determine the check digit location. 
-The right-most character in the value is always assumed to be the check digit.
-
-The `MaskedLuhnCheckDigitAttribute` will return validation errors for the following conditions:
-- The value does not contain a valid Luhn check digit.
-- The value contains non-ASCII digit characters that are not excluded by the check digit mask.
-- The check digit mask excludes all characters except the check digit.
-- The value being validated is not of type `string`.
-
-### Modulus10_13CheckDigitAttribute
-
-The `Modulus10_13CheckDigitAttribute` validates that a string property contains 
-a valid modulus 10 check digit computed using alternating weights of 1 and 3. 
-This algorithm is commonly used for global item numbers such as GTIN, EAN and 
-UPC codes.
-
-The `Modulus10_13CheckDigitAttribute` will return validation errors for the following conditions:
-- The value does not contain a valid Modulus10_13 check digit.
-- The value contains non-ASCII digit characters.
-- The value is shorter than two characters (i.e., it cannot contain a check digit).
-- The value being validated is not of type `string`.
-
-### Modulus10_1CheckDigitAttribute
-
-The `Modulus10_1CheckDigitAttribute` validates that a string property contains a 
-valid modulus 10 check digit computed using progressive weights starting with 1. 
-One prominent use of this algorithm is by the Chemical Abstracts Service (CAS) 
-Registry Number.
-
-The `Modulus10_1CheckDigitAttribute` will return validation errors for the following conditions:
-- The value does not contain a valid Modulus10_1 check digit.
-- The value contains non-ASCII digit characters.
-- The value is shorter than two characters (i.e., it cannot contain a check digit).
-- The value is longer than 10 characters (the maximum length supported by the Modulus10_1 algorithm).
-- The value being validated is not of type `string`.
-
-### Modulus10_2CheckDigitAttribute
-
-The `Modulus10_2CheckDigitAttribute` validates that a string property contains a 
-valid modulus 10 check digit computed using progressive weights starting with 2. 
-This algorithm is commonly used for International Maritime Organization (IMO) 
-numbers.
-
-The `Modulus10_2CheckDigitAttribute` will return validation errors for the following conditions:
-- The value does not contain a valid Modulus10_2 check digit.
-- The value contains non-ASCII digit characters.
-- The value is shorter than two characters (i.e., it cannot contain a check digit).
-- The value is longer than 10 characters (the maximum length supported by the Modulus10_2 algorithm).
-- The value being validated is not of type `string`.
-
-### Modulus11CheckDigitAttribute
-
-The `Modulus11CheckDigitAttribute` validates that a string property conforms 
-to the Modulus11 check digit algorithm. Two common uses of the Modulus11
-algorithm are ISBN-10 (International Standard Book Number, 10 character format,
-in use prior to January 1, 2007) and ISSN (International Standard Serial Number).
-
-Because the algorithm uses modulus 11, the calculated check digit can be the 
-value 10. In order to represent this in a single character, the letter 'X' is 
-used to represent the value 10. This is only valid in the trailing check digit
-position.
-
-The `Modulus11CheckDigitAttribute` will return validation errors for the following conditions:
-- The value does not contain a valid Modulus11 check digit.
-- The value contains characters other than ASCII digits or 'X'.
-- The value is shorter than two characters (i.e., it cannot contain a check digit).
-- The value is longer than 10 characters (the maximum length supported by the Modulus11 algorithm).
-- The value being validated is not of type `string`.
-
-### NoidCheckDigitAttribute
-
-The `NoidCheckDigitAttribute` validates that a string property conforms to the
-Nice Opaque Identifier (NOID) check digit algorithm, used by systems that deal
-with persistent identifiers (for example, ARK (Archival Resource Key) 
-identifiers). The NOID algorithm calculates check digits for lowercase 
-betanumeric identifiers (0-9 and a-z, excluding vowels and the letters l and y).
-
-Note that unlike most other check digit algorithms, a non-betanumeric character
-will not cause validation to fail; such characters are simply ignored and
-contribute nothing to the check digit calculation.
-
-In CheckDigits.Net, the NOID algorithm is implemented by the `NcdAlgorithm`
-class where "Ncd" stands for "NOID Check Digit". The name "NoidCheckDigitAttribute"
-is used here because "NcdCheckDigitAttribute" would be effectively redundant
-(i.e. NOID Check Digit Check Digit Attribute).
-
-The `NoidCheckDigitAttribute` will return validation errors for the following conditions:
-- The value does not contain a valid NOID check digit.
-- The value is shorter than two characters (i.e., it cannot contain a check digit).
-- The value being validated is not of type `string`.
-
-### VerhoeffCheckDigitAttribute
-
-The `VerhoeffCheckDigitAttribute` validates that a string property conforms to the
-Verhoeff check digit algorithm. The Verhoeff algorithm was the first algorithm using 
-a single decimal check digit that was capable of detecting all single digit 
-transcription errors and all two digit transposition errors. It is used in a 
-variety of applications including the Aadhaar identification number in India.
-
-The `VerhoeffCheckDigitAttribute` will return validation errors for the following conditions:
-- The value does not contain a valid Verhoeff check digit.
-- The value contains non-ASCII digit characters.
-- The value is shorter than two characters (i.e., it cannot contain a check digit).
-- The value being validated is not of type `string`.
