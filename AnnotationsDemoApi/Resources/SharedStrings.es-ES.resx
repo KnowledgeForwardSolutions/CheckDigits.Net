@@ -117,54 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="InvalidAadhaarNumber" xml:space="preserve">
-    <value>Aadhaar no válido</value>
-  </data>
-  <data name="InvalidArkIdentifier" xml:space="preserve">
-    <value>ARK Identifier no válido</value>
-  </data>
-  <data name="InvalidCardNumber" xml:space="preserve">
-    <value>Número de tarjeta inválido</value>
-  </data>
-  <data name="InvalidCasNumber" xml:space="preserve">
-    <value>CAS Number no válido</value>
-  </data>
-  <data name="InvalidDonationIdentifier" xml:space="preserve">
-    <value>ISBT Donation Identifier no válido</value>
-  </data>
-  <data name="InvalidGlobalReleaseIdentifier" xml:space="preserve">
-    <value>Global Release Identifier no válido</value>
-  </data>
-  <data name="InvalidImoNumber" xml:space="preserve">
-    <value>IMO Number no válido</value>
-  </data>
-  <data name="InvalidIsbn10" xml:space="preserve">
-    <value>USBN-10 no válido</value>
-  </data>
-  <data name="InvalidItemIdentifier" xml:space="preserve">
-    <value>Item Identifier no válido</value>
-  </data>
-  <data name="InvalidLegalEntityIdentifier" xml:space="preserve">
-    <value>Legal Entity Identifier no válido</value>
-  </data>
-  <data name="InvalidMod27_26Identifier" xml:space="preserve">
-    <value>ISO 7064 MOD 27,26 Identifier no válido</value>
-  </data>
-  <data name="InvalidMod661_26Identifier" xml:space="preserve">
-    <value>ISO 7064 MOD 661-26 Identifier no válido</value>
-  </data>
-  <data name="InvalidMod97_10Identifier" xml:space="preserve">
-    <value>ISO 7064 MOD 97-10 Identifier no válido</value>
-  </data>
-  <data name="InvalidMod1271_36Identifier" xml:space="preserve">
-    <value>ISO 7064 MOD 1271-36 Identifier no válido</value>
-  </data>
-  <data name="InvalidStandardNameIdentifier" xml:space="preserve">
-    <value>ISNI no válido</value>
-  </data>
-  <data name="InvalidSubmissionIdentifier" xml:space="preserve">
-    <value>Submission Identifier no válido</value>
-  </data>
   <data name="InvalidUpcCode" xml:space="preserve">
     <value>Código UPC no válido</value>
   </data>
