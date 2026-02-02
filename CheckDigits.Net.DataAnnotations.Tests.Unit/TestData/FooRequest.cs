@@ -142,12 +142,6 @@ public class FooIso7064Mod97_10 : IFooRequest
    public String BarValue { get; set; } = null!;
 }
 
-public class FooIso7064Mod27_2 : IFooRequest
-{
-   [CheckDigit<Iso7064Mod37_36Algorithm>]
-   public String BarValue { get; set; } = null!;
-}
-
 public class FooLuhn : IFooRequest
 {
    [CheckDigit<LuhnAlgorithm>]

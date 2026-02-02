@@ -1,7 +1,7 @@
 ﻿namespace CheckDigits.Net.DataAnnotations;
 
 /// <summary>
-///   Specifies that a string property or parameter must contain a valid check
+///   Specifies that a string property or field must contain a valid check
 ///   digit sequence as defined by the specified 
 ///   <typeparamref name="TAlgorithm"/>.
 /// </summary>
@@ -22,6 +22,9 @@
 ///      contain a valid check digit sequence according to the specified
 ///      algorithm.
 ///   </para>
+///   <para>
+///      Validation fails if the value is not of type <see cref="String"/>.
+///   </para>
 /// </remarks>
 [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field , AllowMultiple = false)] 
 public class CheckDigitAttribute<TAlgorithm> : ValidationAttribute
@@ -38,12 +41,12 @@ public class CheckDigitAttribute<TAlgorithm> : ValidationAttribute
 
       if (value is not String str)
       {
-         return new ValidationResult(String.Format(Messages.InvalidPropertyType, validationContext.DisplayName));
+         return new ValidationResult(String.Format(Messages.InvalidPropertyType, validationContext?.DisplayName ?? String.Empty));
       }
 
       return String.IsNullOrEmpty(str) || _algorithm.Validate(str)
          ? ValidationResult.Success
-         : new ValidationResult(FormatErrorMessage(validationContext.DisplayName),
-            [validationContext.MemberName!]);
+         : new ValidationResult(FormatErrorMessage(validationContext?.DisplayName ?? String.Empty),
+            [validationContext?.MemberName ?? String.Empty]);
    }
 }

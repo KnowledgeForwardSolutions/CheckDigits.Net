@@ -2,16 +2,16 @@
 
 ## Story
 **As a** .NET developer  
-**I want** to unseal the Icao9303TD1Algorithm, Icao9303TD2Algorithm and Icao9303TD2Algorithm classes provided by **CheckDigits.Net**
+**I want** to unseal the Icao9303TD1Algorithm, Icao9303TD2Algorithm and Icao9303TD3Algorithm classes provided by **CheckDigits.Net**
 **So that** I can use these algorithms in data annotations with line separators other than the default line separator (i.e. LineSeparator.None).
 
 ## Background
-**CheckDigits.Net.Annotations** implements CheckDigitAttribute<TAlgorithm> which requires TAlgorithm to have a parameterless constructor. This means that to CheckDigitAttribute<Icao9303TD1Algorithm> will only use the default line separator as there is no opportunity to set a different separator. The preferred solution would be to derive a custom algorithm and set the line separator in the constructor, for example
+**CheckDigits.Net.Annotations** implements CheckDigitAttribute<TAlgorithm> which requires TAlgorithm to have a parameterless constructor. This means that  CheckDigitAttribute<Icao9303TD1Algorithm> will only use the default line separator as there is no opportunity to set a different separator. The preferred solution would be to derive a custom algorithm and set the line separator in the constructor, for example
 
 ```csharp
 public class Icao9303TD1AlgorithmCrLf : Icao9303TD1Algorithm
 {
-    public Icao9303TD1AlgorithmCrlf()
+    public Icao9303TD1AlgorithmCrLf()
     {
         LineSeparator = LineSeparator.CrLf
     }

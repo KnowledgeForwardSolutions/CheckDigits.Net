@@ -99,6 +99,42 @@ public class CheckDigitAttributeTests
 
    #endregion
 
+   #region IsValid Tests
+   // ==========================================================================
+   // ==========================================================================
+
+   [Theory]
+   [MemberData(nameof(AllAlgorithms))]
+   public void CheckDigitAttribute_IsValid_ShouldReturnTrue_WhenValueHasValidCheckDigit(String algorithmName)
+   {
+      // Arrange.
+      var sut = algorithmName.ToCheckDigitAttribute();
+      var value = algorithmName.ToValidRequestValue();
+
+      // Act.
+      var result = sut.IsValid(value);
+
+      // Assert.
+      result.Should().BeTrue();
+   }
+
+   [Theory]
+   [MemberData(nameof(AllAlgorithms))]
+   public void CheckDigitAttribute_IsValid_ShouldReturnFalse_WhenValueHasInvalidCheckDigit(String algorithmName)
+   {
+      // Arrange.
+      var sut = algorithmName.ToCheckDigitAttribute();
+      var value = algorithmName.ToInvalidRequestValue();
+
+      // Act.
+      var result = sut.IsValid(value);
+
+      // Assert.
+      result.Should().BeFalse();
+   }
+
+   #endregion
+
 #if NET8_0_OR_GREATER
    // Using Validator.TryValidateObject (via Utility.ValidateModel) does not seem
    // to work as expected in .Net Framework 4.8, so these tests are limited to .Net 8.0 and later.
