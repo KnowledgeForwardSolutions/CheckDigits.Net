@@ -1,67 +1,36 @@
-﻿// Ignore Spelling: Luhn
+﻿namespace CheckDigits.Net.DataAnnotations.Tests.Unit;
 
-namespace CheckDigits.Net.DataAnnotations.Tests.Unit;
-
-public class CheckDigitAttributeTests
+public class MaskedCheckDigitAttributeTests
 {
    private const String _customErrorMessage = "Check digit validation failed";
 
    public class CustomMessageRequest
    {
-      [CheckDigit<LuhnAlgorithm>(ErrorMessage = _customErrorMessage)]
+      [MaskedCheckDigit<LuhnAlgorithm, CreditCardMask>(ErrorMessage = _customErrorMessage)]
       public String CardNumber { get; set; } = null!;
    }
 
    public class RequiredFieldRequest
    {
-      [Required, CheckDigit<Modulus10_13Algorithm>]
-      public String Upc { get; set; } = null!;
+      [Required, MaskedCheckDigit<LuhnAlgorithm, CreditCardMask>]
+      public String CardNumber { get; set; } = null!;
    }
 
    public class IntegerTypeRequest
    {
-      [CheckDigit<LuhnAlgorithm>]
+      [MaskedCheckDigit<LuhnAlgorithm, CreditCardMask>]
       public Int32 ItemNumber { get; set; }
+   }
+
+   public class RejectAllRequest
+   {
+      [MaskedCheckDigit<LuhnAlgorithm, RejectAllMask>]
+      public String CardNumber { get; set; } = null!;
    }
 
    public static TheoryData<String> AllAlgorithms => new()
    {
-      { nameof(AlphanumericMod97_10Algorithm) },
-      { nameof(AbaRtnAlgorithm) },
-      { nameof(CusipAlgorithm) },
-      { nameof(DammAlgorithm) },
-      { nameof(FigiAlgorithm) },
-      { nameof(IbanAlgorithm) },
-      { nameof(Icao9303Algorithm) },
-      { nameof(Icao9303MachineReadableVisaAlgorithm) },
-      { nameof(Icao9303SizeTD1Algorithm) },
-      { nameof(Icao9303SizeTD2Algorithm) },
-      { nameof(Icao9303SizeTD3Algorithm) },
-      { nameof(IsanAlgorithm) },
-      { nameof(IsinAlgorithm) },
-      { nameof(Iso6346Algorithm) },
-      { nameof(Iso7064CustomDanishAlgorithm) },
-      { nameof(Iso7064CustomLettersAlgorithm) },
-      { nameof(Iso7064CustomNumericSupplementalAlgorithm) },
-      { nameof(Iso7064Mod11_10Algorithm) },
-      { nameof(Iso7064Mod11_2Algorithm) },
-      { nameof(Iso7064Mod1271_36Algorithm) },
-      { nameof(Iso7064Mod27_26Algorithm) },
-      { nameof(Iso7064Mod37_2Algorithm) },
-      { nameof(Iso7064Mod37_36Algorithm) },
-      { nameof(Iso7064Mod661_26Algorithm) },
-      { nameof(Iso7064Mod97_10Algorithm) },
       { nameof(LuhnAlgorithm) },
-      { nameof(Modulus10_13Algorithm) },
-      { nameof(Modulus10_1Algorithm) },
-      { nameof(Modulus10_2Algorithm) },
-      { nameof(Modulus11Algorithm) },
-      { nameof(NcdAlgorithm) },
-      { nameof(NhsAlgorithm) },
-      { nameof(NpiAlgorithm) },
-      { nameof(SedolAlgorithm) },
-      { nameof(VerhoeffAlgorithm) },
-      { nameof(VinAlgorithm) },
    };
 
    #region GetValidationResult Tests
@@ -70,11 +39,11 @@ public class CheckDigitAttributeTests
 
    [Theory]
    [MemberData(nameof(AllAlgorithms))]
-   public void CheckDigitAttribute_GetValidationResult_ShouldReturnNull_WhenValueHasValidCheckDigit(String algorithmName)
+   public void MaskedCheckDigitAttribute_GetValidationResult_ShouldReturnNull_WhenValueHasValidCheckDigit(String algorithmName)
    {
       // Arrange.
-      var sut = algorithmName.ToCheckDigitAttribute();
-      var value = algorithmName.ToValidRequestValue();
+      var sut = algorithmName.ToMaskedCheckDigitAttribute();
+      var value = algorithmName.ToValidMaskedRequestValue();
       var validationContext = new ValidationContext(new Object());
 
       // Act.
@@ -86,11 +55,26 @@ public class CheckDigitAttributeTests
 
    [Theory]
    [MemberData(nameof(AllAlgorithms))]
-   public void CheckDigitAttribute_GetValidationResult_ShouldReturnFailure_WhenValueHasInvalidCheckDigit(String algorithmName)
+   public void MaskedCheckDigitAttribute_GetValidationResult_ShouldReturnFailure_WhenValueHasInvalidCheckDigit(String algorithmName)
    {
       // Arrange.
-      var sut = algorithmName.ToCheckDigitAttribute();
-      var value = algorithmName.ToInvalidRequestValue();
+      var sut = algorithmName.ToMaskedCheckDigitAttribute();
+      var value = algorithmName.ToInvalidMaskedRequestValue();
+      var validationContext = new ValidationContext(new Object());
+
+      // Act.
+      var result = sut.GetValidationResult(value, validationContext);
+
+      // Assert.
+      result.Should().NotBe(ValidationResult.Success);
+   }
+
+   [Fact]
+   public void MaskedCheckDigitAttribute_GetValidationResult_ShouldReturnFailure_WhenMaskRejectsAllInput()
+   {
+      // Arrange.
+      var sut = new MaskedCheckDigitAttribute<LuhnAlgorithm, RejectAllMask>();
+      var value = "5558 5555 5555 4444";                // MasterCard test card number
       var validationContext = new ValidationContext(new Object());
 
       // Act.
@@ -108,11 +92,11 @@ public class CheckDigitAttributeTests
 
    [Theory]
    [MemberData(nameof(AllAlgorithms))]
-   public void CheckDigitAttribute_IsValid_ShouldReturnTrue_WhenValueHasValidCheckDigit(String algorithmName)
+   public void MaskedCheckDigitAttribute_IsValid_ShouldReturnTrue_WhenValueHasValidCheckDigit(String algorithmName)
    {
       // Arrange.
-      var sut = algorithmName.ToCheckDigitAttribute();
-      var value = algorithmName.ToValidRequestValue();
+      var sut = algorithmName.ToMaskedCheckDigitAttribute();
+      var value = algorithmName.ToValidMaskedRequestValue();
 
       // Act.
       var result = sut.IsValid(value);
@@ -123,11 +107,25 @@ public class CheckDigitAttributeTests
 
    [Theory]
    [MemberData(nameof(AllAlgorithms))]
-   public void CheckDigitAttribute_IsValid_ShouldReturnFalse_WhenValueHasInvalidCheckDigit(String algorithmName)
+   public void MaskedCheckDigitAttribute_IsValid_ShouldReturnFalse_WhenValueHasInvalidCheckDigit(String algorithmName)
    {
       // Arrange.
-      var sut = algorithmName.ToCheckDigitAttribute();
-      var value = algorithmName.ToInvalidRequestValue();
+      var sut = algorithmName.ToMaskedCheckDigitAttribute();
+      var value = algorithmName.ToInvalidMaskedRequestValue();
+
+      // Act.
+      var result = sut.IsValid(value);
+
+      // Assert.
+      result.Should().BeFalse();
+   }
+
+   [Fact]
+   public void MaskedCheckDigitAttribute_IsValid_ShouldReturnFalse_WhenMaskRejectsAllInput()
+   {
+      // Arrange.
+      var sut = new MaskedCheckDigitAttribute<LuhnAlgorithm, RejectAllMask>();
+      var value = "5558 5555 5555 4444";                // MasterCard test card number
 
       // Act.
       var result = sut.IsValid(value);
@@ -148,11 +146,11 @@ public class CheckDigitAttributeTests
 
    [Theory]
    [MemberData(nameof(AllAlgorithms))]
-   public void CheckDigitAttribute_Validate_ShouldReturnSuccess_WhenValueHasValidCheckDigit(String algorithmName)
+   public void MaskedCheckDigitAttribute_Validate_ShouldReturnSuccess_WhenValueHasValidCheckDigit(String algorithmName)
    {
       // Arrange.
-      var request = algorithmName.ToFooRequest();
-      request.BarValue = algorithmName.ToValidRequestValue();
+      var request = algorithmName.ToMaskedFooRequest();
+      request.BarValue = algorithmName.ToValidMaskedRequestValue();
 
       // Act.
       var results = Utility.ValidateModel(request);
@@ -163,10 +161,10 @@ public class CheckDigitAttributeTests
 
    [Theory]
    [MemberData(nameof(AllAlgorithms))]
-   public void CheckDigitAttribute_Validate_ShouldReturnSuccess_WhenNonRequiredValueIsNull(String algorithmName)
+   public void MaskedCheckDigitAttribute_Validate_ShouldReturnSuccess_WhenNonRequiredValueIsNull(String algorithmName)
    {
       // Arrange.
-      var request = algorithmName.ToFooRequest();
+      var request = algorithmName.ToMaskedFooRequest();
 
       // Act.
       var results = Utility.ValidateModel(request);
@@ -177,10 +175,10 @@ public class CheckDigitAttributeTests
 
    [Theory]
    [MemberData(nameof(AllAlgorithms))]
-   public void CheckDigitAttribute_Validate_ShouldReturnSuccess_WhenNonRequiredValueIsEmpty(String algorithmName)
+   public void MaskedCheckDigitAttribute_Validate_ShouldReturnSuccess_WhenNonRequiredValueIsEmpty(String algorithmName)
    {
       // Arrange.
-      var request = algorithmName.ToFooRequest();
+      var request = algorithmName.ToMaskedFooRequest();
       request.BarValue = String.Empty;
 
       // Act.
@@ -191,7 +189,7 @@ public class CheckDigitAttributeTests
    }
 
    [Fact]
-   public void CheckDigitAttribute_Validate_ShouldReturnFailure_WhenValueIsNotTypeString()
+   public void MaskedCheckDigitAttribute_Validate_ShouldReturnFailure_WhenValueIsNotTypeString()
    {
       // Arrange.
       var item = new IntegerTypeRequest
@@ -209,11 +207,11 @@ public class CheckDigitAttributeTests
    }
 
    [Fact]
-   public void CheckDigitAttribute_Validate_ShouldReturnFailure_WhenRequiredValueIsNull()
+   public void MaskedCheckDigitAttribute_Validate_ShouldReturnFailure_WhenRequiredValueIsNull()
    {
       // Arrange.
       var request = new RequiredFieldRequest();
-      var expectedMessage = "The Upc field is required.";
+      var expectedMessage = "The CardNumber field is required.";
 
       // Act.
       var results = Utility.ValidateModel(request);
@@ -227,14 +225,14 @@ public class CheckDigitAttributeTests
    [InlineData("")]
    [InlineData("  ")]
    [InlineData("\t")]
-   public void CheckDigitAttribute_Validate_ShouldReturnFailure_WhenRequiredValueIsEmptyOrWhitespace(String upc)
+   public void MaskedCheckDigitAttribute_Validate_ShouldReturnFailure_WhenRequiredValueIsEmptyOrWhitespace(String cardNumber)
    {
       // Arrange.
       var request = new RequiredFieldRequest
       {
-         Upc = upc
+         CardNumber = cardNumber
       };
-      var expectedMessage = "The Upc field is required.";
+      var expectedMessage = "The CardNumber field is required.";
 
       // Act.
       var results = Utility.ValidateModel(request);
@@ -261,7 +259,7 @@ public class CheckDigitAttributeTests
    }
 
    [Fact]
-   public void CheckDigitAttribute_Validate_ShouldReturnFailure_WhenValueHasInvalidCheckDigitAndCustomErrorMessageIsSupplied()
+   public void MaskedCheckDigitAttribute_Validate_ShouldReturnFailure_WhenValueHasInvalidCheckDigitAndCustomErrorMessageIsSupplied()
    {
       // Arrange.
       var request = new CustomMessageRequest
@@ -269,6 +267,24 @@ public class CheckDigitAttributeTests
          CardNumber = "5558555555554444"           // MasterCard test card number with single digit transcription error 5 -> 8
       };
       var expectedMessage = _customErrorMessage;
+
+      // Act.
+      var results = Utility.ValidateModel(request);
+
+      // Assert.
+      results.Should().HaveCount(1);
+      results[0].ErrorMessage.Should().Be(expectedMessage);
+   }
+
+   [Fact]
+   public void MaskedCheckDigitAttribute_Validate_ShouldReturnFailure_WhenMaskRejectsAllInput()
+   {
+      // Arrange.
+      var request = new RejectAllRequest
+      {
+         CardNumber = "5558 5555 5555 4444"           // MasterCard test card number with single digit transcription error 5 -> 8
+      };
+      var expectedMessage = "The field CardNumber is invalid.";
 
       // Act.
       var results = Utility.ValidateModel(request);

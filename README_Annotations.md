@@ -83,6 +83,39 @@ Note the use of the `Required` attribute to ensure that the property is not null
 or empty. The check digit attributes do not perform null or empty checks by default
 and should be used in conjunction with the `Required` attribute when necessary.
 
+### ISO/IEC 7064 Algorithms with custom alphabets
+
+CheckDigits.Net includes support for ISO/IEC 7064 check digit algorithms that 
+use custom alphabets with the classes `Iso7064HybridSystemAlgorithm`,
+`Iso7064PureSystemDoubleCharacterAlgorithm` and `Iso7064PureSystemSingleCharacterAlgorithm`.
+Refer to the CheckDigits.Net [README file]( https://github.com/KnowledgeForwardSolutions/CheckDigits.Net/blob/main/README.md ),
+in particular the section **Custom Alphabets for ISO 7064** for more information
+on these algorithms and how to create custom alphabets.
+
+You can not use `Iso7064HybridSystemAlgorithm`, `Iso7064PureSystemDoubleCharacterAlgorithm`
+or `Iso7064PureSystemSingleCharacterAlgorithm` directly with CheckDigitAttribute<TAlgorithm>
+as they do not have parameterless constructors. Instead, you must create a custom algorithm class 
+that derives from one of these classes and provides a parameterless constructor
+that initializes the base class with your custom alphabet and other values. This
+is an example that uses the `DanishAlphabet` and `Iso7064PureSystemDoubleCharacterAlgorithm`
+described in the CheckDigits.Net README:
+
+```csharp
+public class Iso7064CustomDanishAlgorithm : 
+   Iso7064PureSystemDoubleCharacterAlgorithm
+{
+   public Iso7064CustomDanishAlgorithm()
+      : base("Danish", "Danish, modulus = 29, radix = 2", 29, 2, new DanishAlphabet())
+   { }
+}
+
+public class Foo
+{
+   [CheckDigit<Iso7064CustomDanishAlgorithm>]
+   public String BarValue { get; set; } = null!;
+}
+```
+
 ### Check Digit Attributes with Masks
 
 There are cases where values being validated may include formatting characters
