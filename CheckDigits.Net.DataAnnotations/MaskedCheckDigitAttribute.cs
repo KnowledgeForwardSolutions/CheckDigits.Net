@@ -8,8 +8,8 @@
 /// </summary>
 /// <typeparam name="TAlgorithm">
 ///   The algorithm used to validate the check digit sequence. TAlgorithm must
-///   implement <see cref="ICheckDigitAlgorithm"/> and have a parameterless
-///   constructor. The <see cref="ICheckDigitAlgorithm.Validate(String)"/>
+///   implement <see cref="IMaskedCheckDigitAlgorithm"/> and have a parameterless
+///   constructor. The <see cref="IMaskedCheckDigitAlgorithm.Validate(String, ICheckDigitMask)"/>
 ///   method must be stateless and thread-safe.
 /// </typeparam>
 /// <typeparam name="TMask">
