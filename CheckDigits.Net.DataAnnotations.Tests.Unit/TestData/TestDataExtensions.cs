@@ -19,6 +19,9 @@ public static class TestDataExtensions
          nameof(IsanAlgorithm) => new CheckDigitAttribute<IsanAlgorithm>(),
          nameof(IsinAlgorithm) => new CheckDigitAttribute<IsinAlgorithm>(),
          nameof(Iso6346Algorithm) => new CheckDigitAttribute<Iso6346Algorithm>(),
+         nameof(Iso7064CustomDanishAlgorithm) => new CheckDigitAttribute<Iso7064CustomDanishAlgorithm>(),
+         nameof(Iso7064CustomLettersAlgorithm) => new CheckDigitAttribute<Iso7064CustomLettersAlgorithm>(),
+         nameof(Iso7064CustomNumericSupplementalAlgorithm) => new CheckDigitAttribute<Iso7064CustomNumericSupplementalAlgorithm>(),
          nameof(Iso7064Mod11_10Algorithm) => new CheckDigitAttribute<Iso7064Mod11_10Algorithm>(),
          nameof(Iso7064Mod11_2Algorithm) => new CheckDigitAttribute<Iso7064Mod11_2Algorithm>(),
          nameof(Iso7064Mod1271_36Algorithm) => new CheckDigitAttribute<Iso7064Mod1271_36Algorithm>(),
@@ -58,6 +61,9 @@ public static class TestDataExtensions
          nameof(IsanAlgorithm) => new FooIsan(),
          nameof(IsinAlgorithm) => new FooIsin(),
          nameof(Iso6346Algorithm) => new FooIso6346(),
+         nameof(Iso7064CustomDanishAlgorithm) => new FooIso7064CustomDanishAlphabet(),
+         nameof(Iso7064CustomLettersAlgorithm) => new FooIso7064CustomLettersAlphabet(),
+         nameof(Iso7064CustomNumericSupplementalAlgorithm) => new FooIso7064CustomNumericSupplementalAlphabet(),
          nameof(Iso7064Mod11_10Algorithm) => new FooIso7064Mod11_10(),
          nameof(Iso7064Mod11_2Algorithm) => new FooIso7064Mod11_2(),
          nameof(Iso7064Mod1271_36Algorithm) => new FooIso7064Mod1271_36(),
@@ -105,6 +111,9 @@ public static class TestDataExtensions
          nameof(IsanAlgorithm) => "0000ABCD1234FEDC72112AABB6",                        // 0000ABCD1234FEDC71122AABB6 with jump transposition error 112 -> 211
          nameof(IsinAlgorithm) => "US02079J1079",                                      // US02079K1079 with single character transcription error K -> J
          nameof(Iso6346Algorithm) => "MEDU7807688",                                    // MEDU8707688 with two digit transposition error 87 -> 78 
+         nameof(Iso7064CustomDanishAlgorithm) => "SØSTESDA",                           // Danish word for sister "SØSTER" with single char transcription error R -> S
+         nameof(Iso7064CustomLettersAlgorithm) => "QWERTUDVORAKY",                     // QWERTYDVORAKY with single char transcription error Y -> U
+         nameof(Iso7064CustomNumericSupplementalAlgorithm) => "0000000444767411",
          nameof(Iso7064Mod11_10Algorithm) => "114433446",                              // // 112233446 with two digit twin error 22 -> 44
          nameof(Iso7064Mod11_2Algorithm) => "0000000736691440",                        // 0000000073669144 with circular shift error
          nameof(Iso7064Mod1271_36Algorithm) => "XT868977863229AU",                     // XS868977863229AU with single char transcription error S -> T
@@ -166,6 +175,9 @@ public static class TestDataExtensions
          nameof(IsanAlgorithm) => "00000000D0A90011C000000001",                        // Full ISAN for Star Trek Next Gen episode "Yesterday's Enterprise"
          nameof(IsinAlgorithm) => "GB0031348658",                                      // Barclays
          nameof(Iso6346Algorithm) => "CSQU3054383",                                    // Worked example from Wikipedia
+         nameof(Iso7064CustomDanishAlgorithm) => "SØSTERDA",                           // Danish word for sister "SØSTER"
+         nameof(Iso7064CustomLettersAlgorithm) => "QWERTYDVORAKY",
+         nameof(Iso7064CustomNumericSupplementalAlgorithm) => "07940",
          nameof(Iso7064Mod11_10Algorithm) => "07945",                                  // Example from ISO 7064 specification
          nameof(Iso7064Mod11_2Algorithm) => "0000000073669144",                        // ISNI for Richard, Zachary from https://isni.org/page/search-database/  
          nameof(Iso7064Mod1271_36Algorithm) => "ISO793W",                              // Example from ISO/IEC 7064 specification

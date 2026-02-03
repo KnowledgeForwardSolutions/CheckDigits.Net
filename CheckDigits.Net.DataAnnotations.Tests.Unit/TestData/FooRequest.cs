@@ -82,15 +82,33 @@ public class FooIsan : IFooRequest
    public String BarValue { get; set; } = null!;
 }
 
+public class FooIsin : IFooRequest
+{
+   [CheckDigit<IsinAlgorithm>]
+   public String BarValue { get; set; } = null!;
+}
+
 public class FooIso6346 : IFooRequest
 {
    [CheckDigit<Iso6346Algorithm>]
    public String BarValue { get; set; } = null!;
 }
 
-public class FooIsin : IFooRequest
+public class FooIso7064CustomDanishAlphabet : IFooRequest
 {
-   [CheckDigit<IsinAlgorithm>]
+   [CheckDigit<Iso7064CustomDanishAlgorithm>]
+   public String BarValue { get; set; } = null!;
+}
+
+public class FooIso7064CustomLettersAlphabet : IFooRequest
+{
+   [CheckDigit<Iso7064CustomLettersAlgorithm>]
+   public String BarValue { get; set; } = null!;
+}
+
+public class FooIso7064CustomNumericSupplementalAlphabet : IFooRequest
+{
+   [CheckDigit<Iso7064CustomNumericSupplementalAlgorithm>]
    public String BarValue { get; set; } = null!;
 }
 
