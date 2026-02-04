@@ -1,95 +1,48 @@
-﻿namespace CheckDigits.Net.DataAnnotations.Tests.Unit.TestData;
+﻿// Ignore Spelling: Validator
+
+namespace CheckDigits.Net.FluentValidation.Tests.Unit.TestData;
 
 public static class TestDataExtensions
 {
-   public static ValidationAttribute ToCheckDigitAttribute(this String algorithmName)
+   public static AbstractValidator<FooRequest> ToFooValidator(this String algorithmName)
       => algorithmName switch
       {
-         nameof(AbaRtnAlgorithm) => new CheckDigitAttribute<AbaRtnAlgorithm>(),
-         nameof(AlphanumericMod97_10Algorithm) => new CheckDigitAttribute<AlphanumericMod97_10Algorithm>(),
-         nameof(CusipAlgorithm) => new CheckDigitAttribute<CusipAlgorithm>(),
-         nameof(DammAlgorithm) => new CheckDigitAttribute<DammAlgorithm>(),
-         nameof(FigiAlgorithm) => new CheckDigitAttribute<FigiAlgorithm>(),
-         nameof(IbanAlgorithm) => new CheckDigitAttribute<IbanAlgorithm>(),
-         nameof(Icao9303Algorithm) => new CheckDigitAttribute<Icao9303Algorithm>(),
-         nameof(Icao9303MachineReadableVisaAlgorithm) => new CheckDigitAttribute<Icao9303MachineReadableVisaAlgorithm>(),
-         nameof(Icao9303SizeTD1Algorithm) => new CheckDigitAttribute<Icao9303SizeTD1Algorithm>(),
-         nameof(Icao9303SizeTD2Algorithm) => new CheckDigitAttribute<Icao9303SizeTD2Algorithm>(),
-         nameof(Icao9303SizeTD3Algorithm) => new CheckDigitAttribute<Icao9303SizeTD3Algorithm>(),
-         nameof(IsanAlgorithm) => new CheckDigitAttribute<IsanAlgorithm>(),
-         nameof(IsinAlgorithm) => new CheckDigitAttribute<IsinAlgorithm>(),
-         nameof(Iso6346Algorithm) => new CheckDigitAttribute<Iso6346Algorithm>(),
-         nameof(Iso7064CustomDanishAlgorithm) => new CheckDigitAttribute<Iso7064CustomDanishAlgorithm>(),
-         nameof(Iso7064CustomLettersAlgorithm) => new CheckDigitAttribute<Iso7064CustomLettersAlgorithm>(),
-         nameof(Iso7064CustomNumericSupplementalAlgorithm) => new CheckDigitAttribute<Iso7064CustomNumericSupplementalAlgorithm>(),
-         nameof(Iso7064Mod11_10Algorithm) => new CheckDigitAttribute<Iso7064Mod11_10Algorithm>(),
-         nameof(Iso7064Mod11_2Algorithm) => new CheckDigitAttribute<Iso7064Mod11_2Algorithm>(),
-         nameof(Iso7064Mod1271_36Algorithm) => new CheckDigitAttribute<Iso7064Mod1271_36Algorithm>(),
-         nameof(Iso7064Mod27_26Algorithm) => new CheckDigitAttribute<Iso7064Mod27_26Algorithm>(),
-         nameof(Iso7064Mod37_2Algorithm) => new CheckDigitAttribute<Iso7064Mod37_2Algorithm>(),
-         nameof(Iso7064Mod37_36Algorithm) => new CheckDigitAttribute<Iso7064Mod37_36Algorithm>(),
-         nameof(Iso7064Mod661_26Algorithm) => new CheckDigitAttribute<Iso7064Mod661_26Algorithm>(),
-         nameof(Iso7064Mod97_10Algorithm) => new CheckDigitAttribute<Iso7064Mod97_10Algorithm>(),
-         nameof(LuhnAlgorithm) => new CheckDigitAttribute<LuhnAlgorithm>(),
-         nameof(Modulus10_13Algorithm) => new CheckDigitAttribute<Modulus10_13Algorithm>(),
-         nameof(Modulus10_1Algorithm) => new CheckDigitAttribute<Modulus10_1Algorithm>(),
-         nameof(Modulus10_2Algorithm) => new CheckDigitAttribute<Modulus10_2Algorithm>(),
-         nameof(Modulus11Algorithm) => new CheckDigitAttribute<Modulus11Algorithm>(),
-         nameof(NcdAlgorithm) => new CheckDigitAttribute<NcdAlgorithm>(),
-         nameof(NhsAlgorithm) => new CheckDigitAttribute<NhsAlgorithm>(),
-         nameof(NpiAlgorithm) => new CheckDigitAttribute<NpiAlgorithm>(),
-         nameof(SedolAlgorithm) => new CheckDigitAttribute<SedolAlgorithm>(),
-         nameof(VerhoeffAlgorithm) => new CheckDigitAttribute<VerhoeffAlgorithm>(),
-         nameof(VinAlgorithm) => new CheckDigitAttribute<VinAlgorithm>(),
-         _ => throw new ArgumentOutOfRangeException(nameof(algorithmName), algorithmName, "Unrecognized algorithm name")
-      };
-
-   public static IFooRequest ToFooRequest(this String algorithmName)
-      => algorithmName switch
-      {
-         nameof(AbaRtnAlgorithm) => new FooAbaRtn(),
-         nameof(AlphanumericMod97_10Algorithm) => new FooAlphanumericMod97_10(),
-         nameof(CusipAlgorithm) => new FooCusip(),
-         nameof(DammAlgorithm) => new FooDamm(),
-         nameof(FigiAlgorithm) => new FooFigi(),
-         nameof(IbanAlgorithm) => new FooIban(),
-         nameof(Icao9303Algorithm) => new FooIcao9303(),
-         nameof(Icao9303MachineReadableVisaAlgorithm) => new FooIcao9303MachineReadableVisa(),
-         nameof(Icao9303SizeTD1Algorithm) => new FooIcao9303SizeTD1(),
-         nameof(Icao9303SizeTD2Algorithm) => new FooIcao9303SizeTD2(),
-         nameof(Icao9303SizeTD3Algorithm) => new FooIcao9303SizeTD3(),
-         nameof(IsanAlgorithm) => new FooIsan(),
-         nameof(IsinAlgorithm) => new FooIsin(),
-         nameof(Iso6346Algorithm) => new FooIso6346(),
-         nameof(Iso7064CustomDanishAlgorithm) => new FooIso7064CustomDanishAlphabet(),
-         nameof(Iso7064CustomLettersAlgorithm) => new FooIso7064CustomLettersAlphabet(),
-         nameof(Iso7064CustomNumericSupplementalAlgorithm) => new FooIso7064CustomNumericSupplementalAlphabet(),
-         nameof(Iso7064Mod11_10Algorithm) => new FooIso7064Mod11_10(),
-         nameof(Iso7064Mod11_2Algorithm) => new FooIso7064Mod11_2(),
-         nameof(Iso7064Mod1271_36Algorithm) => new FooIso7064Mod1271_36(),
-         nameof(Iso7064Mod27_26Algorithm) => new FooIso7064Mod27_26(),
-         nameof(Iso7064Mod37_2Algorithm) => new FooIso7064Mod37_2(),
-         nameof(Iso7064Mod37_36Algorithm) => new FooIso7064Mod37_36(),
-         nameof(Iso7064Mod661_26Algorithm) => new FooIso7064Mod661_26(),
-         nameof(Iso7064Mod97_10Algorithm) => new FooIso7064Mod97_10(),
-         nameof(LuhnAlgorithm) => new FooLuhn(),
-         nameof(Modulus10_13Algorithm) => new FooModulus10_13(),
-         nameof(Modulus10_1Algorithm) => new FooModulus10_1(),
-         nameof(Modulus10_2Algorithm) => new FooModulus10_2(),
-         nameof(Modulus11Algorithm) => new FooModulus11(),
-         nameof(NcdAlgorithm) => new FooNcd(),
-         nameof(NhsAlgorithm) => new FooNhs(),
-         nameof(NpiAlgorithm) => new FooNpi(),
-         nameof(SedolAlgorithm) => new FooSedol(),
-         nameof(VerhoeffAlgorithm) => new FooVerhoeff(),
-         nameof(VinAlgorithm) => new FooVin(),
-         _ => throw new ArgumentOutOfRangeException(nameof(algorithmName), algorithmName, "Unrecognized algorithm name")
-      };
-
-   public static String ToInvalidMaskedRequestValue(this String algorithmName)
-      => algorithmName switch
-      {
-         nameof(LuhnAlgorithm) => "3059 6300 0902 0004",                               // Diners Club test card number with two digit transposition error 69 -> 96 
+         nameof(AbaRtnAlgorithm) => new FooAbaRtnValidator(),
+         nameof(AlphanumericMod97_10Algorithm) => new FooAlphanumericMod97_10Validator(),
+         nameof(CusipAlgorithm) => new FooCusipValidator(),
+         nameof(DammAlgorithm) => new FooDammValidator(),
+         nameof(FigiAlgorithm) => new FooFigiValidator(),
+         nameof(IbanAlgorithm) => new FooIbanValidator(),
+         nameof(Icao9303Algorithm) => new FooIcao9303Validator(),
+         nameof(Icao9303MachineReadableVisaAlgorithm) => new FooIcao9303MachineReadableVisaValidator(),
+         nameof(Icao9303SizeTD1Algorithm) => new FooIcao9303SizeTD1Validator(),
+         nameof(Icao9303SizeTD2Algorithm) => new FooIcao9303SizeTD2Validator(),
+         nameof(Icao9303SizeTD3Algorithm) => new FooIcao9303SizeTD3Validator(),
+         nameof(IsanAlgorithm) => new FooIsanValidator(),
+         nameof(IsinAlgorithm) => new FooIsinValidator(),
+         nameof(Iso6346Algorithm) => new FooIso6346Validator(),
+         nameof(Iso7064CustomDanishAlgorithm) => new FooIso7064CustomDanishAlphabetValidator(),
+         nameof(Iso7064CustomLettersAlgorithm) => new FooIso7064CustomLettersAlphabetValidator(),
+         nameof(Iso7064CustomNumericSupplementalAlgorithm) => new FooIso7064CustomNumericSupplementalAlphabetValidator(),
+         nameof(Iso7064Mod11_10Algorithm) => new FooIso7064Mod11_10Validator(),
+         nameof(Iso7064Mod11_2Algorithm) => new FooIso7064Mod11_2Validator(),
+         nameof(Iso7064Mod1271_36Algorithm) => new FooIso7064Mod1271_36Validator(),
+         nameof(Iso7064Mod27_26Algorithm) => new FooIso7064Mod27_26Validator(),
+         nameof(Iso7064Mod37_2Algorithm) => new FooIso7064Mod37_2Validator(),
+         nameof(Iso7064Mod37_36Algorithm) => new FooIso7064Mod37_36Validator(),
+         nameof(Iso7064Mod661_26Algorithm) => new FooIso7064Mod661_26Validator(),
+         nameof(Iso7064Mod97_10Algorithm) => new FooIso7064Mod97_10Validator(),
+         nameof(LuhnAlgorithm) => new FooLuhnValidator(),
+         nameof(Modulus10_13Algorithm) => new FooModulus10_13Validator(),
+         nameof(Modulus10_1Algorithm) => new FooModulus10_1Validator(),
+         nameof(Modulus10_2Algorithm) => new FooModulus10_2Validator(),
+         nameof(Modulus11Algorithm) => new FooModulus11Validator(),
+         nameof(NcdAlgorithm) => new FooNcdValidator(),
+         nameof(NhsAlgorithm) => new FooNhsValidator(),
+         nameof(NpiAlgorithm) => new FooNpiValidator(),
+         nameof(SedolAlgorithm) => new FooSedolValidator(),
+         nameof(VerhoeffAlgorithm) => new FooVerhoeffValidator(),
+         nameof(VinAlgorithm) => new FooVinValidator(),
          _ => throw new ArgumentOutOfRangeException(nameof(algorithmName), algorithmName, "Unrecognized algorithm name")
       };
 
@@ -133,27 +86,6 @@ public static class TestDataExtensions
          nameof(SedolAlgorithm) => "3174865",                                          // 3134865 with single digit transcription error 3 -> 7
          nameof(VerhoeffAlgorithm) => "84736430459837284567892",                       // Jump transposition error using "84736430954837284567892" as a valid value (954 -> 459)
          nameof(VinAlgorithm) => "1G8ZG217XWZ157259",                                  // Two character transposition 12 -> 21
-         _ => throw new ArgumentOutOfRangeException(nameof(algorithmName), algorithmName, "Unrecognized algorithm name")
-      };
-
-   public static ValidationAttribute ToMaskedCheckDigitAttribute(this String algorithmName)
-      => algorithmName switch
-      {
-         nameof(LuhnAlgorithm) => new MaskedCheckDigitAttribute<LuhnAlgorithm, CreditCardMask>(),
-         _ => throw new ArgumentOutOfRangeException(nameof(algorithmName), algorithmName, "Unrecognized algorithm name")
-      };
-
-   public static IFooRequest ToMaskedFooRequest(this String algorithmName)
-      => algorithmName switch
-      {
-         nameof(LuhnAlgorithm) => new FooMaskedLuhn(),
-         _ => throw new ArgumentOutOfRangeException(nameof(algorithmName), algorithmName, "Unrecognized algorithm name")
-      };
-
-   public static String ToValidMaskedRequestValue(this String algorithmName)
-      => algorithmName switch
-      {
-         nameof(LuhnAlgorithm) => "4012 8888 8888 1881",                               // Visa test credit card number
          _ => throw new ArgumentOutOfRangeException(nameof(algorithmName), algorithmName, "Unrecognized algorithm name")
       };
 

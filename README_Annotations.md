@@ -154,3 +154,9 @@ public class PaymentDetails
 }
 ```
 
+# Release History/Release Notes
+
+## v1.0.0
+
+Initial release. Supports [CheckDigit<TAlgorithm>] and [MaskedCheckDigit<TAlgorithm, TMask>] attributes
+for validating check digits using data annotations.
