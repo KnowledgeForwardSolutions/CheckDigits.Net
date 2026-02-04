@@ -8,13 +8,16 @@
     <File Path="LICENSE.txt" />
     <File Path="README.md" />
     <File Path="README_Annotations.md" />
+    <File Path="README_FluentValidation.md" />
   </Folder>
   <Folder Name="/source/">
     <Project Path="CheckDigits.Net.DataAnnotations/CheckDigits.Net.DataAnnotations.csproj" Id="6d8db8af-2ad0-42a0-854e-d386ba2461b2" />
+    <Project Path="CheckDigits.Net.FluentValidation/CheckDigits.Net.FluentValidation.csproj" Id="18bdd2be-496c-4e60-a9b9-19d583cb1417" />
     <Project Path="CheckDigits.Net/CheckDigits.Net.csproj" />
   </Folder>
   <Folder Name="/tests/">
     <Project Path="CheckDigits.Net.DataAnnotations.Tests.Unit/CheckDigits.Net.DataAnnotations.Tests.Unit.csproj" Id="36175270-f9e4-4221-b388-a10b304bad8a" />
+    <Project Path="CheckDigits.Net.FluentValidation.Tests.Unit/CheckDigits.Net.FluentValidation.Tests.Unit.csproj" Id="8c0d4c28-7bc6-4c2b-953e-a0a3d67af38e" />
     <Project Path="CheckDigits.Net.Tests.Benchmarks.Comparisons/CheckDigits.Net.Tests.Benchmarks.Comparisons.csproj" />
     <Project Path="CheckDigits.Net.Tests.Benchmarks/CheckDigits.Net.Tests.Benchmarks.csproj" />
     <Project Path="CheckDigits.Net.Tests.Unit/CheckDigits.Net.Tests.Unit.csproj" />

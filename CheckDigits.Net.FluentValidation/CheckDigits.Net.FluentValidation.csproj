@@ -1,0 +1,37 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+	<TargetFrameworks>netstandard2.0;net8.0;net10.0</TargetFrameworks>
+	<LangVersion>latestMajor</LangVersion>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <Title>CheckDigits.Net.FluentValidation</Title>
+    <Version>1.0.0</Version>
+    <Authors>Knowledge Forward Solutions</Authors>
+    <Company>Knowledge Forward Solutions</Company>
+    <Description>CheckDigits.Net.FluentValidation integrates CheckDigits.Net with FluentValidation and supports adding check digit validation in your validation classes.</Description>
+    <Copyright>Copyright 2026, Knowledge Forward Solutions</Copyright>
+    <PackageReadmeFile>README_FluentValidation.md</PackageReadmeFile>
+    <RepositoryUrl>https://github.com/KnowledgeForwardSolutions/CheckDigits.Net</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>FluentValidation;Luhn;Verhoeff;Damm;UPC;UPC-A;UPC-E;EAN;EAN-8;EAN-13;GTIN;GTIN-8;GTIN-12;GTIN-13;GTIN-14;ISBN;ISBN-10;ISBN-13;ISO7064;NPI;NHS_Number;VIN;IBAN;ISAN;ULI;LEI;NOID;SEDOL;CUSIP;ISO6346;FIGI;ICAO9303</PackageTags>
+    <PackageReleaseNotes>## 1.0.0
+
+Initial release</PackageReleaseNotes>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\README_FluentValidation.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CheckDigits.Net" Version="3.0.0" />
+	<PackageReference Include="FluentValidation" Version="11.12.0" Condition="'$(TargetFramework)' == 'netstandard2.0'" />
+    <PackageReference Include="FluentValidation" Version="12.1.1" Condition="'$(TargetFramework)' != 'netstandard2.0'" />
+  </ItemGroup>
+
+</Project>

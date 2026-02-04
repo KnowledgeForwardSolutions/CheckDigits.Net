@@ -1,10 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net48;net8.0;net10.0</TargetFrameworks>
+	<TargetFrameworks>net48;net8.0;net10.0</TargetFrameworks>
     <ImplicitUsings>enable</ImplicitUsings>
     <IsPackable>false</IsPackable>
-	<LangVersion>latestMajor</LangVersion>
+    <LangVersion>latestMajor</LangVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(TargetFramework)' != 'net48' ">
@@ -23,7 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CheckDigits.Net.DataAnnotations\CheckDigits.Net.DataAnnotations.csproj" />
+    <ProjectReference Include="..\CheckDigits.Net.FluentValidation\CheckDigits.Net.FluentValidation.csproj" />
   </ItemGroup>
 
   <ItemGroup>
