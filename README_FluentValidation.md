@@ -1,10 +1,10 @@
-# CheckDigits.Net.Annotations
+# CheckDigits.Net.FluentValidation
 
 CheckDigits.Net.FluentValidation integrates the CheckDigits.Net library with 
 FluentValidation, providing validators for check digit algorithms in .NET applications.
 
 For full documentation of the various check digit algorithms supported, please refer 
-to the CheckDigits.Net [README file]( https://github.com/KnowledgeForwardSolutions/CheckDigits.Net/blob/main/README.md ).
+to the CheckDigits.Net [README file](https://github.com/KnowledgeForwardSolutions/CheckDigits.Net/blob/main/README.md).
 
 ## Using CheckDigits.Net.FluentValidation
 
@@ -19,7 +19,7 @@ to include check digit validation in your FluentValidation validators. You can
 use any of the algorithms provided in the CheckDigits.Net package or your own
 custom implementations. The supplied algorithm must be stateless and thread-safe.
 
-For example, to validate that a UPC code conforms to the Modulus11_13 algorithm
+For example, to validate that a UPC code conforms to the Modulus10_13 algorithm
 included in CheckDigits.Net (the algorithm used by EAC, GTIN, ISBN-13, UPC and
 other international standard identifiers), you would do the following:
 
@@ -40,7 +40,7 @@ public class ProductDetailsValidator : AbstractValidator<ProductDetails>
 	{
 		RuleFor(x => x.UpcCode)
 			.NotEmpty()
-			.CheckDigit(Algorithms.Modulus11_13);		// Using a predefined, lazy created instance of the Modulus11_13 algorithm
+			.CheckDigit(Algorithms.Modulus10_13);		// Using a predefined, lazy created instance of the Modulus10_13 algorithm
 	}
 }
 ```
@@ -49,7 +49,7 @@ By default, the error message for an invalid check digit will be:
 the FluentValidation mechanisms to customize the error message as needed.
 
 Note the use of the `NotEmpty()` method to ensure that the property is not null, 
-empty or whitespace. The check digit validator do not perform null, empty or
+empty or whitespace. The check digit validator does not perform null, empty or
 whitespace checks by default and should be used in conjunction with `NotEmpty()` 
 when necessary.
 
@@ -64,7 +64,7 @@ public class ProductDetailsValidator : AbstractValidator<ProductDetails>
 	{
 		RuleFor(x => x.UpcCode)
 			.NotEmpty()
-			.CheckDigit(new Modulus11_13Algorithm());		// Instantiate the Modulus11_13 algorithm directly
+			.CheckDigit(new Modulus10_13Algorithm());		// Instantiate the Modulus10_13 algorithm directly
 	}
 }
 ```

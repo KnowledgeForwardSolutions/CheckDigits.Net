@@ -147,7 +147,7 @@ public class CheckDigitValidatorTests
 
    [Theory]
    [MemberData(nameof(AllAlgorithms))]
-   public void CheckDigitValidator_Validate_ShouldFail_WhenValueHasValidCheckDigit(
+   public void CheckDigitValidator_Validate_ShouldFail_WhenValueHasInvalidCheckDigit(
       String algorithmClass,
       String algorithmName)
    {

@@ -6,7 +6,7 @@ used to decorate properties in your data models to ensure that the values confor
 specific check digit algorithms.
 
 For full documentation of the various check digit algorithms supported, please refer 
-to the CheckDigits.Net [README file]( https://github.com/KnowledgeForwardSolutions/CheckDigits.Net/blob/main/README.md ).
+to the CheckDigits.Net [README file](https://github.com/KnowledgeForwardSolutions/CheckDigits.Net/blob/main/README.md).
 
 ## Using CheckDigits.Net.Annotations
 
@@ -88,7 +88,7 @@ and should be used in conjunction with the `Required` attribute when necessary.
 CheckDigits.Net includes support for ISO/IEC 7064 check digit algorithms that 
 use custom alphabets with the classes `Iso7064HybridSystemAlgorithm`,
 `Iso7064PureSystemDoubleCharacterAlgorithm` and `Iso7064PureSystemSingleCharacterAlgorithm`.
-Refer to the CheckDigits.Net [README file]( https://github.com/KnowledgeForwardSolutions/CheckDigits.Net/blob/main/README.md ),
+Refer to the CheckDigits.Net [README file](https://github.com/KnowledgeForwardSolutions/CheckDigits.Net/blob/main/README.md),
 in particular the section **Custom Alphabets for ISO 7064** for more information
 on these algorithms and how to create custom alphabets.
 
