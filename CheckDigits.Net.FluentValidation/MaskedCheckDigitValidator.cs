@@ -43,7 +43,7 @@ public class MaskedCheckDigitValidator<T>(
    public override Boolean IsValid(ValidationContext<T> context, String value)
    {
       // Consider null/empty as valid. Use NotNull validator to enforce non-null/non-empty.
-      if (String.IsNullOrWhiteSpace(value) || _algorithm.Validate(value, mask))
+      if (String.IsNullOrWhiteSpace(value) || _algorithm.Validate(value, _mask))
       {
          return true;
       }
