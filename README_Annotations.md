@@ -116,13 +116,13 @@ public class Foo
 }
 ```
 
-### Check Digit Attributes with Masks
+## Check Digit Attributes with Masks
 
 There are cases where values being validated may include formatting characters
 that should be ignored when performing check digit validation (for example, a 
 credit card number that has been formatted with spaces, '1234 5678 9012 3456'). 
 CheckDigits.Net supports this scenario through the use of check digit masks. An 
-algorithm that supports check digit masks implements the `ICheckDigitMaskableAlgorithm` 
+algorithm that supports check digit masks implements the `IMaskedCheckDigitAlgorithm` 
 interface which extends `ICheckDigitAlgorithm` to indicate that it can work with 
 masks (currently, only the Luhn algorithm does so, but additional algorithms will 
 be added in the future).

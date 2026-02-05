@@ -73,8 +73,55 @@ A common use case for custom implementations is when you need to use the
 or `Iso7064PureSystemSingleCharacterAlgorithm` classes to validate check digits
 that use custom character sets.
 
+## Masked Check Digit Algorithms
+
+There are cases where values being validated may include formatting characters
+that should be ignored when performing check digit validation (for example, a 
+credit card number that has been formatted with spaces, '1234 5678 9012 3456'). 
+CheckDigits.Net supports this scenario through the use of check digit masks. An 
+algorithm that supports check digit masks implements the `IMaskedCheckDigitAlgorithm` 
+interface which extends `ICheckDigitAlgorithm` to indicate that it can work with 
+masks (currently, only the Luhn algorithm does so, but additional algorithms will 
+be added in the future).
+
+To use a check digit mask, create a class that implements the `ICheckDigitMask`
+interface (defined in the CheckDigits.Net namespace). The check digit mask class
+must be stateless and thread-safe.
+
+Then, use the MaskedCheckDigit(IMaskedCheckDigitAlgorithm, ICheckDigitMask) 
+extension method to add the masked check digit validator to the property rules.
+For example:
+
+```csharp
+// Excludes every 5th character, allowing for spaces or dashes in credit card numbers.
+public class CreditCardMask : ICheckDigitMask
+{
+   public Boolean ExcludeCharacter(Int32 index) => (index + 1) % 5 == 0;
+
+   public Boolean IncludeCharacter(Int32 index) => (index + 1) % 5 != 0;
+}
+
+public class PaymentDetails
+{
+	public string CardNumber { get; set; }
+	
+	// Other properties...
+}
+
+public class PaymentDetailsValidator : AbstractValidator<PaymentDetails>
+{
+	public PaymentDetailsValidator()
+	{
+		RuleFor(x => x.CardNumber)
+			.NotEmpty()
+			.MaskedCheckDigit(new LuhnAlgorithm(), new CreditCardMask());
+	}
+}
+
+```
+
 # Release History/Release Notes
 
 ## v1.0.0
 
-Initial release. 
+Initial release. Supports CheckDigit and MaskedCheckDigit validators for FluentValidation.
