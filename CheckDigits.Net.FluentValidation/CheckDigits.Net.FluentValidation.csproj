@@ -17,7 +17,7 @@
     <PackageTags>FluentValidation;Luhn;Verhoeff;Damm;UPC;UPC-A;UPC-E;EAN;EAN-8;EAN-13;GTIN;GTIN-8;GTIN-12;GTIN-13;GTIN-14;ISBN;ISBN-10;ISBN-13;ISO7064;NPI;NHS_Number;VIN;IBAN;ISAN;ULI;LEI;NOID;SEDOL;CUSIP;ISO6346;FIGI;ICAO9303</PackageTags>
     <PackageReleaseNotes>## 1.0.0
 
-Initial release</PackageReleaseNotes>
+Initial release. Supports CheckDigit and MaskedCheckDigit validators for FluentValidation.</PackageReleaseNotes>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 

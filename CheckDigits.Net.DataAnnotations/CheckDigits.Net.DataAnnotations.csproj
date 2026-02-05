@@ -9,7 +9,7 @@
     <Version>1.0.0</Version>
     <Authors>Knowledge Forward Solutions</Authors>
     <Company>Knowledge Forward Solutions</Company>
-    <Description>CheckDigits.Net.Annotations extends CheckDigits.Net and provides custom DataAnnotation classes for validating that a string property includes a valid check digit for a specified check digit algorithm.</Description>
+    <Description>CheckDigits.Net.Annotations extends CheckDigits.Net and provides custom DataAnnotation classes for validating that a string property includes a valid check digit according to a wide variety of check digit algorithms.</Description>
     <Copyright>Copyright 2026, Knowledge Forward Solutions</Copyright>
     <PackageReadmeFile>README_Annotations.md</PackageReadmeFile>
     <RepositoryUrl>https://github.com/KnowledgeForwardSolutions/CheckDigits.Net</RepositoryUrl>
@@ -17,7 +17,8 @@
     <PackageTags>DataAnnotations;Luhn;Verhoeff;Damm;UPC;UPC-A;UPC-E;EAN;EAN-8;EAN-13;GTIN;GTIN-8;GTIN-12;GTIN-13;GTIN-14;ISBN;ISBN-10;ISBN-13;ISO7064;NPI;NHS_Number;VIN;IBAN;ISAN;ULI;LEI;NOID;SEDOL;CUSIP;ISO6346;FIGI;ICAO9303</PackageTags>
     <PackageReleaseNotes>## 1.0.0
 
-Initial release</PackageReleaseNotes>
+Initial release. Supports [CheckDigit&lt;TAlgorithm&gt;] and [MaskedCheckDigit&lt;TAlgorithm, TMask&gt;] attributes
+for validating check digits using data annotations.</PackageReleaseNotes>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
