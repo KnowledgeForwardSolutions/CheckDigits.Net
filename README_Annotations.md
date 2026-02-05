@@ -16,9 +16,9 @@ dotnet add package CheckDigits.Net.Annotations --version 1.0.0
 ```
 or by searching for "CheckDigits.Net.Annotations" in your IDE's Package Manager.
 
-Once installed, you can decorate a model property with the [CheckDigit<TAlgorithm>] 
-to validate that the value conforms to the specified check digit algorithm.
-TAlgorithm is the name of a class that implements `ICheckDigitAlgorithm`, including
+Once installed, you can decorate a model property with the generic `[CheckDigit<TAlgorithm>]`
+attribute to validate that the value conforms to the specified check digit algorithm.
+TAlgorithm must be a class that implements `ICheckDigitAlgorithm`, including
 any of the algorithms provided in the CheckDigits.Net package or your own custom implementations.
 TAlgorithm must have a parameterless constructor and must be stateless and thread-safe.
 
@@ -46,11 +46,8 @@ that does not pass the Luhn check digit validation to an API endpoint with valid
 enabled will result in a 400 Bad Request response.
 
 By default, the error message for an invalid check digit will be:
-`{0} has an invalid check digit.` (or `{0} has invalid check digits.` for check
-digit algorithms that use two check digits) where `{0}` is replaced with the name 
-of the property being validated.
-
-You can customize the error message by providing a custom message to the attribute:
+"The field {PropertyName} is invalid." You can customize the error message by 
+providing a custom message to the attribute:
 ```csharp
 
 public class PaymentDetails
@@ -132,7 +129,7 @@ interface (defined in the CheckDigits.Net namespace). As with the algorithm clas
 the class that implements `ICheckDigitMask` must have a parameterless constructor
 and must be stateless and thread-safe.
 
-Then, use the [MaskedCheckDigit<TAlgorithm, TMask>] attribute to decorate a model
+Then, use the generic `[MaskedCheckDigit<TAlgorithm, TMask>]` attribute to decorate a model
 property. For example:
 
 ```csharp
@@ -158,5 +155,5 @@ public class PaymentDetails
 
 ## v1.0.0
 
-Initial release. Supports [CheckDigit<TAlgorithm>] and [MaskedCheckDigit<TAlgorithm, TMask>] attributes
+Initial release. Supports `[CheckDigit<TAlgorithm>]` and `[MaskedCheckDigit<TAlgorithm, TMask>]` attributes
 for validating check digits using data annotations.
