@@ -2,7 +2,11 @@
 
 using CheckDigits.Net.Tests.Benchmarks.Comparisons;
 
-BenchmarkRunner.Run<LuhnComparisons>(); 
+BenchmarkRunner.Run<CheckDigitAttributeComparisons>();
+
+//BenchmarkRunner.Run<FluentValidationComparisons>();
+
+//BenchmarkRunner.Run<LuhnComparisons>(); 
 
 //BenchmarkRunner.Run<DammComparison>();
 
