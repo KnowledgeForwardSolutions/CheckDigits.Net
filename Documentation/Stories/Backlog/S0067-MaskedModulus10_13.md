@@ -1,4 +1,4 @@
-# S0066: MaskedModulus10_13
+# S0067: MaskedModulus10_13
 
 ## Story
 **As a** .NET developer  
