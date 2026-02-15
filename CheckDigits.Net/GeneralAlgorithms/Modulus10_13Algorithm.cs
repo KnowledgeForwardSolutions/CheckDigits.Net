@@ -22,7 +22,7 @@
 ///   detect two digit jump transpositions (i.e. 123 -> 424).
 ///   </para>
 /// </remarks>
-public sealed class Modulus10_13Algorithm : ISingleCheckDigitAlgorithm
+public sealed class Modulus10_13Algorithm : ISingleCheckDigitAlgorithm, IMaskedCheckDigitAlgorithm
 {
    private const Int32 _validateMinLength = 2;
 
@@ -78,6 +78,42 @@ public sealed class Modulus10_13Algorithm : ISingleCheckDigitAlgorithm
          }
          sum += oddPosition ? digit * 3 : digit;
          oddPosition = !oddPosition;
+      }
+      var checkDigit = (10 - (sum % 10)) % 10;
+
+      return value[^1].ToIntegerDigit() == checkDigit;
+   }
+
+   /// <inheritdoc/>
+   public Boolean Validate(String value, ICheckDigitMask mask)
+   {
+      if (String.IsNullOrEmpty(value))
+      {
+         return false;
+      }
+
+      var sum = 0;
+      var oddPosition = true;
+      var processedDigits = 0;
+      for (var index = value.Length - 2; index >= 0; index--)
+      {
+         if (mask.ExcludeCharacter(index))
+         {
+            continue;
+         }
+
+         var digit = value[index].ToIntegerDigit();
+         if (digit is < 0 or > 9)
+         {
+            return false;
+         }
+         sum += oddPosition ? digit * 3 : digit;
+         oddPosition = !oddPosition;
+         processedDigits++;
+      }
+      if (processedDigits == 0)
+      {
+         return false;
       }
       var checkDigit = (10 - (sum % 10)) % 10;
 
