@@ -30,5 +30,6 @@ public static class ExtensionMethods
    ///   If <paramref name="ch"/> is not an ASCII digit char (0-9) then this 
    ///   method will return a value that is not between 0-9.
    /// </remarks>
+   [MethodImpl(MethodImplOptions.AggressiveInlining)]
    public static Int32 ToIntegerDigit(this Char ch) => ch - Chars.DigitZero;
 }

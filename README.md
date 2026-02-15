@@ -123,9 +123,9 @@ alphabet which includes three additional characters.
 
 CheckDigits.Net includes three classes to support custom alphabets:
 
-* ```Iso7064PureSystemSingleCharacterAlgorithm``` (generates a single check character, including a supplementary character)
-* ```Iso7064PureSystemDoubleCharacterAlgorithm``` (generates two check characters)
-* ```Iso7064HybridSystemAlgorithm``` (generates a single check character)
+* `Iso7064PureSystemSingleCharacterAlgorithm` (generates a single check character, including a supplementary character)
+* `Iso7064PureSystemDoubleCharacterAlgorithm` (generates two check characters)
+* `Iso7064HybridSystemAlgorithm` (generates a single check character)
 
 Refer to [Using CheckDigits.Net](#using-checkdigits.net) for more information
 about using these classes.
@@ -217,7 +217,7 @@ The ISO/IEC 7064:2003 standard is available at https://www.iso.org/standard/3153
 Add a reference to CheckDigits.Net to your project.
 
 Obtain an instance of the desired check digit algorithm. Either create an instance
-by using ```new AlgorithmXyz()``` or using the static ```Algorithms``` class to
+by using `new AlgorithmXyz()` or using the static `Algorithms` class to
 get a lazily instantiated singleton instance of the desired algorithm.
 
 Calculate a check digit for a value by invoking the TryCalculateCheckDigit method.
@@ -248,12 +248,12 @@ var isValid = lazy.Validate(toValidate);    // Returns true
 
 The three classes that allow the use of custom alphabets are:
 
-* ```Iso7064PureSystemSingleCharacterAlgorithm``` (generates a single check character, including a supplementary character)
-* ```Iso7064PureSystemDoubleCharacterAlgorithm``` (generates two check characters)
-* ```Iso7064HybridSystemAlgorithm``` (generates a single check character)
+* `Iso7064PureSystemSingleCharacterAlgorithm` (generates a single check character, including a supplementary character)
+* `Iso7064PureSystemDoubleCharacterAlgorithm` (generates two check characters)
+* `Iso7064HybridSystemAlgorithm` (generates a single check character)
 
 To use one of these classes you must first create an instance of a class that 
-implements ```IAlphabet``` or ```ISupplementalCharacterAlphabet```. Then you 
+implements `IAlphabet` or `ISupplementalCharacterAlphabet`. Then you 
 create an instance of the desired generic ISO 7064 class, supplying the algorithm 
 details (including the alphabet) to the class constructor.
 
@@ -304,7 +304,7 @@ var isValid = checkAlgorithm.Validate("S\u00D8STERDA");     // Returns true
 ## Interfaces
 
 A check digit algorithm is a class that implements two different interfaces. Every
-algorithm implements ```ICheckDigitAlgorithm``` which has properties for getting
+algorithm implements `ICheckDigitAlgorithm` which has properties for getting
 the algorithm name and algorithm description and a Validate method that accepts 
 a string and returns a boolean value that indicates if the string contains a valid
 check digit. Mal-formed input such as a null value, an empty string,
@@ -312,7 +312,7 @@ a string of incorrect length or a string that contains characters that are not
 valid for the algorithm will return false instead of throwing an exception.
 
 Check digit algorithms that use a single character also implement 
-```ISingleCheckDigitAlgorithm``` which has a TryCalculateCheckDigit method that
+`ISingleCheckDigitAlgorithm` which has a TryCalculateCheckDigit method that
 accepts a string value and an out parameter which will contain the calculated 
 check digit or '\0' if it was not possible to calculate the check digit.
 TryCalculateCheckDigit also returns a boolean value that indicates if the check
@@ -322,33 +322,34 @@ contains characters that are not valid for the algorithm will return false inste
 of throwing an exception.
 
 Check digit algorithms that use two character check digits also implement
-```IDoubleCheckDigitAlgorithm```. This interface has a TryCalculateCheckDigits
+`IDoubleCheckDigitAlgorithm`. This interface has a TryCalculateCheckDigits
 method that has two output parameters, one for each check digit.
 
-Note that ```ISingleCheckDigitAlgorithm``` and ```IDoubleCheckDigitAlgorithm```
+Note that `ISingleCheckDigitAlgorithm` and `IDoubleCheckDigitAlgorithm`
 are not implemented for algorithms for government issued identifiers (for example,
 UK NHS numbers and US NPI numbers) or values issued by a single authority (such
 as ABA Routing Transit Numbers).
 
-The ```IAlphabet``` and ```ISupplementalCharacterAlphabet``` interfaces are used 
-for ISO/IEC 7064 algorithms with custom alphabets. ```IAlphabet``` has two 
+The `IAlphabet` and `ISupplementalCharacterAlphabet` interfaces are used 
+for ISO/IEC 7064 algorithms with custom alphabets. `IAlphabet` has two 
 methods: CharacterToInteger, which maps a character in the value being processed 
 to its integer equivalent and IntegerToCheckCharacter which maps a calculated 
-check digit to its character equivalent. ```ISupplementalCharacterAlphabet``` 
-extends ```IAlphabet``` by adding the CheckCharacterToInteger method which maps 
-a check character to its integer equivalent. ```ISupplementalCharacterAlphabet```
-is only used by ```Iso7064PureSystemSingleCharacterAlgorithm```.
+check digit to its character equivalent. `ISupplementalCharacterAlphabet` 
+extends `IAlphabet` by adding the CheckCharacterToInteger method which maps 
+a check character to its integer equivalent. `ISupplementalCharacterAlphabet`
+is only used by `Iso7064PureSystemSingleCharacterAlgorithm`.
 
-The ```ICheckDigitMask``` interface is used to define a mask that filters out 
-characters from the value being checked. ```ICheckDigitMask``` defines 
+The `ICheckDigitMask` interface is used to define a mask that filters out 
+characters from the value being checked. `ICheckDigitMask` defines 
 IncludeCharacter and ExcludeCharacter methods that return true/false to indicate
 if a character at a particular zero based index should be included or excluded
 when calculating the check digit.
 
-The ```IMaskedCheckDigitAlgorithm``` is derived from ```ICheckDigitAlgorithm```
-and defines an overload for the Validate method that accepts an ```ICheckDigitMask``` 
+The `IMaskedCheckDigitAlgorithm` is derived from `ICheckDigitAlgorithm`
+and defines an overload for the Validate method that accepts an `ICheckDigitMask` 
 instance that is used to filter characters from the value being checked. Currently
-only the [Luhn Algorithm](#luhn-algorithm) implements ```IMaskedCheckDigitAlgorithm```.
+only the [Luhn Algorithm](#luhn-algorithm) and the [Modulus10_13 Algorithm](#modulus10_13-algorithm)
+implement `IMaskedCheckDigitAlgorithm`.
 
 **ICheckDigitMask Example:**
 ```C#
@@ -392,7 +393,7 @@ support calculation of check digits.
 * Check digit value - decimal digit ('0' - '9')
 * Check digit location - ninth digit
 * Value length - 9 characters
-* Class name - ```AbaRtnAlgorithm```
+* Class name - `AbaRtnAlgorithm`
 
 #### Links
 
@@ -413,7 +414,7 @@ letters are mapped to their uppercase equivalent before conversion to integers.
 * Check digit size - two characters
 * Check digit value - decimal digits ('0' - '9')
 * Check digit location - assumed to be the trailing (right-most) characters when validating
-* Class name - ```AlphanumericMod97_10Algorithm```
+* Class name - `AlphanumericMod97_10Algorithm`
 
 #### Common Applications
 
@@ -444,7 +445,7 @@ support calculation of check digits.
 * Check digit size - one character
 * Check digit value - decimal digit ('0' - '9')
 * Check digit location - assumed to be the trailing (right-most) character when validating
-* Class name - ```CusipAlgorithm```
+* Class name - `CusipAlgorithm`
 
 #### Links
 
@@ -469,7 +470,7 @@ on page 111 of Damm's doctoral dissertation.
 * Check digit size - one character
 * Check digit value - decimal digit ('0' - '9')
 * Check digit location - assumed to be the trailing (right-most) character when validating
-* Class name - ```DammAlgorithm```
+* Class name - `DammAlgorithm`
 
 #### Links
 
@@ -502,7 +503,7 @@ calculation of check digits.
 * Check digit value - decimal digits ('0' - '9')
 * Check digit location - character position 12 (1-based)
 * Value length - 12
-* Class name - ```FigiAlgorithm```
+* Class name - `FigiAlgorithm`
 
 #### Links
 
@@ -533,7 +534,7 @@ contained in account number, etc.) are left to the application developer.
 * Check digit value - decimal digits ('0' - '9')
 * Check digit location - character positions 3 & 4 (1-based) when validating
 * Value minimum length - 5
-* Class name - ```IbanAlgorithm```
+* Class name - `IbanAlgorithm`
 
 #### Links
 
@@ -560,7 +561,7 @@ where the difference between the transposed characters is a multiple of 5, i.e.
 * Check digit size - one character
 * Check digit value - decimal digit ('0' - '9')
 * Check digit location - assumed to be the trailing (right-most) character when validating
-* Class name - ```Icao9303Algorithm```
+* Class name - `Icao9303Algorithm`
 
 #### Links
 
@@ -576,7 +577,7 @@ zone contains a field for the document number (including a possible extended
 document number) and associated check digit. The second line of the machine 
 readable zone contains fields for date of birth, date of expiry and associated 
 check digits for each field. The individual field check digits and the composite
-check digit are all calculated using the[ICAO 9303 Algorithm](#icao-9303-algorithm).
+check digit are all calculated using the [ICAO 9303 Algorithm](#icao-9303-algorithm).
 
 The machine readable zone of a Size TD1 document consists of three lines of 30
 characters. The value passed to the Validate method should contain all lines of
@@ -591,7 +592,7 @@ LineSeparator is None.
 The ICAO 9303 Document Size TD1 Algorithm will validate the check digits of the
 three fields (document number, date of birth and date of expiry) as well as the 
 composite check digit. If any of the check digits fail validation then the 
-Validate method will return ```false```.
+Validate method will return `false`.
 
 The ICAO 9303 Document Size TD1 algorithm only supports validation of check 
 digits and does not support calculation of check digits.
@@ -603,7 +604,7 @@ digits and does not support calculation of check digits.
 * Check digit value - decimal digit ('0' - '9')
 * Check digit location - trailing (right-most) character of individual fields, trailing character of second line for composite check digit
 * Value length - three lines of 30 characters plus additional line separator characters as specified by the LineSeparator property
-* Class name - ```Icao9303SizeTD1Algorithm```
+* Class name - `Icao9303SizeTD1Algorithm`
 
 #### Links
 
@@ -619,7 +620,7 @@ machine readable zone of the document. The second line of the machine readable
 zone contains fields for document number (including a possible extended document
 number), date of birth and date of expiry and associated check digits for each 
 field. The individual field check digits and the composite check digit are all 
-calculated using the[ICAO 9303 Algorithm](#icao-9303-algorithm).
+calculated using the [ICAO 9303 Algorithm](#icao-9303-algorithm).
 
 The machine readable zone of a Size TD2 document consists of two lines of 36
 characters. The value passed to the Validate method should contain all lines of
@@ -634,7 +635,7 @@ LineSeparator is None.
 The ICAO 9303 Document Size TD2 Algorithm will validate the check digits of the
 three fields (document number, date of birth and date of expiry) as well as the 
 composite check digit. If any of the check digits fail validation then the 
-Validate method will return ```false```.
+Validate method will return `false`.
 
 The ICAO 9303 Document Size TD2 algorithm only supports validation of check 
 digits and does not support calculation of check digits.
@@ -646,7 +647,7 @@ digits and does not support calculation of check digits.
 * Check digit value - decimal digit ('0' - '9')
 * Check digit location - trailing (right-most) character of individual fields, trailing character of second line for composite check digit
 * Value length - two lines of 36 characters plus additional line separator characters as specified by the LineSeparator property
-* Class name - ```Icao9303SizeTD2Algorithm```
+* Class name - `Icao9303SizeTD2Algorithm`
 
 #### Links
 
@@ -679,7 +680,7 @@ LineSeparator is None.
 The ICAO 9303 Document Size TD3 Algorithm will validate the check digits of the
 four fields (passport number, date of birth, date of expiry and optional personal
 number) as well as the composite check digit. If any of the check digits fail 
-validation then the Validate method will return ```false```.
+validation then the Validate method will return `false`.
 
 The ICAO 9303 Document Size TD3 algorithm only supports validation of check 
 digits and does not support calculation of check digits.
@@ -691,7 +692,7 @@ digits and does not support calculation of check digits.
 * Check digit value - decimal digit ('0' - '9')
 * Check digit location - trailing (right-most) character of individual fields, trailing character of entire string for composite check digit
 * Value length - two lines of 44 characters plus additional line separator characters as specified by the LineSeparator property
-* Class name - ```Icao9303SizeTD3Algorithm```
+* Class name - `Icao9303SizeTD3Algorithm`
 
 #### Links
 
@@ -707,13 +708,13 @@ of the document. The second line of the machine readable zone contains fields
 for document number, date of birth and date of expiry and associated check 
 digits for each field. (Unlike other ICAO 9303 TD1, TD2 or TD3 documents, no 
 composite check digit is used.) The individual field check digits are all 
-calculated using the[ICAO 9303 Algorithm](#icao-9303-algorithm).
+calculated using the [ICAO 9303 Algorithm](#icao-9303-algorithm).
 
 Machine Readable Visas have two formats: MRV-A and MRV-B. The MRV-A format uses
 two lines of 44 characters while the MRV-B format uses two lines of 36 characters.
 The individual fields in the second line of the machine readable zone are located
 in the same character positions regardless of the format. The Validate method
-can validate either format
+can validate either format.
 
 The machine readable zone of a Machine Readable Visa consists of two lines of 36
 characters. The value passed to the Validate method should contain all lines of
@@ -727,7 +728,7 @@ LineSeparator is None.
 
 The ICAO 9303 Machine Readable Visa Algorithm will validate the check digits of 
 the three fields (document number, date of birth and date of expiry). If any of 
-the check digits fail validation then the Validate method will return ```false```.
+the check digits fail validation then the Validate method will return `false`.
 In addition, if the value is not the correct length (two lines of either 44 or 
 36 characters, plus line separator characters matching the LineSeparator 
 property) then the method will return false.
@@ -742,7 +743,7 @@ digits and does not support calculation of check digits.
 * Check digit value - decimal digit ('0' - '9')
 * Check digit location - trailing (right-most) character of individual fields
 * Value length - two lines of either 44 characters (MRV-A) or 36 characters (MRV-B), plus additional line separator characters as specified by the LineSeparator property
-* Class name - ```Icao9303MachineReadableVisaAlgorithm```
+* Class name - `Icao9303MachineReadableVisaAlgorithm`
 
 #### Links
 
@@ -785,7 +786,7 @@ example formatted root/episode/version ISAN value is ISAN 0000-0000-C36D-002B-K-
 * Check digit size - one character
 * Check digit value - alphanumeric characters ('0' - '9', 'A' - 'Z')
 * Check digit location - the 17th non-format character (**and** the 26th non-format character for root+version values)
-* Class name - ```IsanAlgorithm```
+* Class name - `IsanAlgorithm`
 
 #### Links
 
@@ -816,7 +817,7 @@ algorithm cannot detect).
 * Check digit value - decimal digit ('0' - '9')
 * Check digit location - assumed to be the trailing (right-most) character when validating
 * Value length - 12
-* Class name - ```IsinAlgorithm```
+* Class name - `IsinAlgorithm`
 
 #### Links
 
@@ -833,7 +834,7 @@ The ISO 6346 algorithm is used for eleven character shipping container numbers.
 * Check digit value - decimal digit ('0' - '9')
 * Check digit location - assumed to be the trailing (right-most) character when validating
 * Value length - 11
-* Class name - ```Iso6346Algorithm```
+* Class name - `Iso6346Algorithm`
 
 #### Links
 
@@ -851,7 +852,7 @@ single check character that is a decimal digit.
 * Check digit size - one character
 * Check digit value - decimal digit ('0' - '9')
 * Check digit location - assumed to be the trailing (right-most) character when validating
-* Class name - ```Iso7064Mod11_10Algorithm```
+* Class name - `Iso7064Mod11_10Algorithm`
 
 ### ISO/IEC 7064 MOD 11-2 Algorithm
 
@@ -866,7 +867,7 @@ character.
 * Check digit size - one character
 * Check digit value - either decimal digit ('0' - '9') or an uppercase 'X'
 * Check digit location - assumed to be the trailing (right-most) character when validating
-* Class name - ```Iso7064Mod11_2Algorithm```
+* Class name - `Iso7064Mod11_2Algorithm`
 
 #### Common Applications
 
@@ -884,7 +885,7 @@ generates two check alphanumeric characters.
 * Check digit size - two characters
 * Check digit value - alphanumeric characters ('0' - '9', 'A' - 'Z')
 * Check digit location - assumed to be the trailing (right-most) characters when validating
-* Class name - ```Iso7064Mod1271_36Algorithm```
+* Class name - `Iso7064Mod1271_36Algorithm`
 
 ### ISO/IEC 7064 MOD 27,26 Algorithm
 
@@ -903,7 +904,7 @@ single check character that is an alphabetic character.
 ### ISO/IEC 7064 MOD 37-2 Algorithm
 
 The ISO/IEC 7064 MOD 37-2 algorithm is a pure system algorithm (with modulus 37
-and radix 2) that suitable for use with alphanumeric strings. It generates a 
+and radix 2) that is suitable for use with alphanumeric strings. It generates a 
 single check character that is either an alphanumeric character or a 
 supplementary '*' character.
 
@@ -913,7 +914,7 @@ supplementary '*' character.
 * Check digit size - one character
 * Check digit value - either decimal digit ('0' - '9', 'A' - 'Z') or an asterisk '*'
 * Check digit location - assumed to be the trailing (right-most) character when validating
-* Class name - ```Iso7064Mod37_2Algorithm```
+* Class name - `Iso7064Mod37_2Algorithm`
 
 #### Common Applications
 
@@ -931,7 +932,7 @@ single check character that is an alphanumeric character.
 * Check digit size - one character
 * Check digit value - alphanumeric characters ('0' - '9', 'A' - 'Z')
 * Check digit location - assumed to be the trailing (right-most) character when validating
-* Class name - ```Iso7064Mod37_36Algorithm```
+* Class name - `Iso7064Mod37_36Algorithm`
 
 #### Common Applications
 
@@ -949,12 +950,12 @@ two check alphabetic characters.
 * Check digit size - two characters
 * Check digit value - alphabetic characters ('A' - 'Z')
 * Check digit location - assumed to be the trailing (right-most) characters when validating
-* Class name - ```Iso7064Mod661_26Algorithm```
+* Class name - `Iso7064Mod661_26Algorithm`
 
 ### ISO/IEC 7064 MOD 97-10 Algorithm
 
 The ISO/IEC 7064 MOD 97-10 algorithm is a pure system algorithm (with modulus 97
-and radix 210) that is suitable for use with numeric strings. It generates a two 
+and radix 210) that is suitable for use with numeric strings. It generates two 
 numeric check digits.
 
 Note: the ISO/IEC 7064 MOD 97-10 algorithm is the basis of a number of check digit 
@@ -970,7 +971,7 @@ perform the mapping of alphabetic characters internally.
 * Check digit size - two characters
 * Check digit value - decimal digits ('0' - '9')
 * Check digit location - assumed to be the trailing (right-most) characters when validating
-* Class name - ```Iso7064Mod97_10Algorithm```
+* Class name - `Iso7064Mod97_10Algorithm`
 
 ### Luhn Algorithm
 
@@ -981,7 +982,7 @@ Peter Luhn. It can detect all single digit transcription errors and most two dig
 transposition errors except *09 -> 90* and vice versa. It can also detect most
 twin errors (i.e. *11 <-> 44*) except *22 <-> 55*,  *33 <-> 66* and *44 <-> 77*.
 
-```LuhnAlgorithm``` implements ```IMaskedCheckDigitAlgorithm``` and can be used 
+`LuhnAlgorithm` implements `IMaskedCheckDigitAlgorithm` and can be used 
 to validate values that are formatted with non-check digit characters (for example,
 a credit card number formatted with spaces or dashes).
 
@@ -991,7 +992,7 @@ a credit card number formatted with spaces or dashes).
 * Check digit size - one character
 * Check digit value - decimal digit ('0' - '9')
 * Check digit location - assumed to be the trailing (right-most) character when validating
-* Class name - ```LuhnAlgorithm```
+* Class name - `LuhnAlgorithm`
 
 #### Common Applications
 
@@ -1015,7 +1016,7 @@ in the value, starting with weight 1 for the right-most non-check digit characte
 * Check digit value - either decimal digit ('0' - '9')
 * Check digit location - assumed to be the trailing (right-most) character when validating
 * Max length - 9 characters when generating a check digit; 10 characters when validating
-* Class name - ```Modulus10_1Algorithm```
+* Class name - `Modulus10_1Algorithm`
 
 #### Common Applications
 
@@ -1037,7 +1038,7 @@ in the value, starting with weight 2 for the right-most non-check digit characte
 * Check digit value - either decimal digit ('0' - '9')
 * Check digit location - assumed to be the trailing (right-most) character when validating
 * Max length - 9 characters when generating a check digit; 10 characters when validating
-* Class name - ```Modulus10_2Algorithm```
+* Class name - `Modulus10_2Algorithm`
 
 #### Common Applications
 
@@ -1053,9 +1054,13 @@ Wikipedia: https://en.wikipedia.org/wiki/IMO_number
 
 The Modulus10_13 algorithm is a widely used modulus 10 algorithm that uses weights
 1 and 3 (odd positions have weight 3, even positions have weight 1). It can detect
-all single digit transcription errors and ~80% of two digit transposition errors
+all single digit transcription errors and ~89% of two digit transposition errors
 (except where the transposed digits have a difference of 5, i.e. *1 <-> 6*, *2 <-> 7*,
 etc.). The algorithm cannot detect two digit jump transpositions.
+
+`Modulus10_13Algorithm` implements `IMaskedCheckDigitAlgorithm` and can be used 
+to validate values that are formatted with non-check digit characters (for example,
+a value formatted with spaces or dashes for human readability).
 
 #### Details
 
@@ -1063,7 +1068,7 @@ etc.). The algorithm cannot detect two digit jump transpositions.
 * Check digit size - one character
 * Check digit value - decimal digit ('0' - '9')
 * Check digit location - assumed to be the trailing (right-most) character when validating
-* Class name - ```Modulus10_13Algorithm```
+* Class name - `Modulus10_13Algorithm`
 
 #### Common Applications
 
@@ -1100,7 +1105,7 @@ stored as numbers and instead must be strings.
 * Check digit value - either decimal digit ('0' - '9') or an uppercase 'X'
 * Check digit location - assumed to be the trailing (right-most) character when validating
 * Max length - 9 characters when generating a check digit; 10 characters when validating
-* Class name - ```Modulus11Algorithm```
+* Class name - `Modulus11Algorithm`
 
 #### Common Applications
 
@@ -1136,7 +1141,7 @@ calculation of check digits.
 * Check digit value - decimal digit ('0' - '9')
 * Check digit location - assumed to be the trailing (right-most) character when validating
 * Value length - 10 characters
-* Class name - ```NhsAlgorithm```
+* Class name - `NhsAlgorithm`
 
 #### Links
 
@@ -1165,7 +1170,7 @@ confused for the letters 'o' or 'l'.
 * Check digit size - one character
 * Check digit value - betanumeric characters ('0123456789bcdfghjkmnpqrstvwxz')
 * Check digit location - assumed to be the trailing (right-most) character when validating
-* Class name - NcdAlgorithm
+* Class name - `NcdAlgorithm`
 
 #### Links
 
@@ -1199,7 +1204,7 @@ calculation of check digits.
 * Check digit value - decimal digit ('0' - '9')
 * Check digit location - assumed to be the trailing (right-most) character when validating
 * Value length - 10 characters
-* Class name - ```NpiAlgorithm```
+* Class name - `NpiAlgorithm`
 
 #### Links
 
@@ -1223,7 +1228,7 @@ support calculation of check digits.
 * Check digit value - decimal digit ('0' - '9')
 * Check digit location - assumed to be the trailing (right-most) character when validating
 * Value length - 7 characters
-* Class name - SedolAlgorithm
+* Class name - `SedolAlgorithm`
 
 #### Links
 
@@ -1250,7 +1255,7 @@ twin errors.
 * Check digit size - one character
 * Check digit value - decimal digit ('0' - '9')
 * Check digit location - assumed to be the trailing (right-most) character when validating
-* Class name - ```VerhoeffAlgorithm```
+* Class name - `VerhoeffAlgorithm`
 
 #### Links
 
@@ -1273,7 +1278,7 @@ weighting, summing and calculating sum modulus 11.
 * Check digit value - either decimal digit ('0' - '9') or an uppercase 'X'
 * Check digit location - 9th character of 17
 * Length - 17 characters
-* Class name - ```VinAlgorithm```
+* Class name - `VinAlgorithm`
 
 #### Links
 
@@ -1827,7 +1832,7 @@ Performance increases for:
 * ISIN algorithm, ~9% improvement for Validate and TryCalculateCheckDigit methods
 * ISO/IEC 7064 MOD 1271-36, TryCalculateCheckDigits method ~8% improvement
 * NcdAlgorithm (NOID Check Digit), minimum 10% improvement for Validate method, improvement increases with length of value.
-* NpiAlgorithm, Validate method ~8 improvement
+* NpiAlgorithm, Validate method ~8% improvement
 
 ## v2.3.1
 
@@ -1844,3 +1849,4 @@ Detailed benchmark results for .Net 8 vs .Net 10 located at https://github.com/K
 
 Added masked validation support for algorithms via ICheckDigitMask and IMaskedCheckDigitAlgorithm interfaces. Algorithms that implement IMaskedCheckDigitAlgorithm:
 * Luhn Algorithm
+* Modulus10_13 Algorithm
