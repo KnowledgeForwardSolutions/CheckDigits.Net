@@ -53,8 +53,7 @@ public sealed class Modulus10_13Algorithm : ISingleCheckDigitAlgorithm, IMaskedC
          sum += oddPosition ? digit * 3 : digit;
          oddPosition = !oddPosition;
       }
-      var mod = 10 - (sum % 10);
-      checkDigit = mod == 10 ? Chars.DigitZero : mod.ToDigitChar();
+      checkDigit = ((10 - (sum % 10)) % 10).ToDigitChar();
 
       return true;
    }

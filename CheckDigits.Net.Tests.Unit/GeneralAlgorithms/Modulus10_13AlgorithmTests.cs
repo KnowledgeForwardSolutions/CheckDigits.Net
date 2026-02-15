@@ -186,6 +186,10 @@ public class Modulus10_13AlgorithmTests
    public void Modulus10_13Algorithm_Validate_ShouldReturnFalse_WhenInputContainsNonDigitCharacter(String value)
       => _sut.Validate(value).Should().BeFalse();
 
+   [Fact]
+   public void Modulus10_13Algorithm_Validate_ShouldReturnFalse_WhenCheckDigitCharacterIsNonDigit()
+      => _sut.Validate("03600029145A").Should().BeFalse();
+
    #endregion
 
    #region Validate (ICheckDigitMask Overload) Tests
@@ -229,6 +233,15 @@ public class Modulus10_13AlgorithmTests
       => _sut.Validate(value, _groupsOfThreeMask).Should().BeTrue();
 
    [Theory]
+   [InlineData("036000291452")]        // Worked UPC-A example from Wikipedia (https://en.wikipedia.org/wiki/Universal_Product_Code#Check_digit_calculation)
+   [InlineData("425261")]              // UPC-E example
+   [InlineData("4006381333931")]       // Worked EAN-13 example from Wikipedia (https://en.wikipedia.org/wiki/International_Article_Number)
+   [InlineData("73513537")]            // Worked EAN-8 example from Wikipedia
+   [InlineData("9780500516959")]       // ISBN-13, Islamic Geometric Design, Eric Broug
+   [InlineData("012345678000045678")]  // Example SSCC number
+   public void Modulus10_13Algorithm_ValidateMasked_ShouldReturnTrue_WhenValueContainsValidCheckDigitAndMaskAcceptsAllCharacters(String value)
+      => _sut.Validate(value, _acceptAllMask).Should().BeTrue();
+   [Theory]
    [InlineData("400 683 133 393 1")]         // EAN-13 with two digit transposition error (38 -> 83) where difference between digits is 5 
    [InlineData("978 500 051 695 9")]         // ISBN-13 with two digit transposition error (05 -> 50) where difference between digits is 5 
    [InlineData("733 155 37")]                // EAN-8 with jump transposition error (515 -> 315)
@@ -258,6 +271,10 @@ public class Modulus10_13AlgorithmTests
    [InlineData("0 3 600 0 2 914 5 2")]  // UPC-A example with extranious spaces
    public void Modulus10_13Algorithm_ValidateMasked_ShouldReturnFalse_WhenInputContainsNonDigitCharacter(String value)
       => _sut.Validate(value, _groupsOfThreeMask).Should().BeFalse();
+
+   [Fact]
+   public void Modulus10_13Algorithm_ValidateMasked_ShouldReturnFalse_WhenCheckDigitCharacterIsNonDigit()
+      => _sut.Validate("036 000 291 45A").Should().BeFalse();
 
    #endregion
 }
