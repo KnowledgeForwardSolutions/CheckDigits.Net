@@ -71,9 +71,9 @@ public sealed class Modulus10_13Algorithm : ISingleCheckDigitAlgorithm, IMaskedC
       for (var index = value.Length - 2; index >= 0; index--)
       {
          var digit = value[index].ToIntegerDigit();
-         if (digit < 0 || digit > 9)
+         if (digit is < 0 or > 9)
          {
-               return false;
+            return false;
          }
          sum += oddPosition ? digit * 3 : digit;
          oddPosition = !oddPosition;
