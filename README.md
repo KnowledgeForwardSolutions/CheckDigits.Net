@@ -348,7 +348,8 @@ when calculating the check digit.
 The `IMaskedCheckDigitAlgorithm` is derived from `ICheckDigitAlgorithm`
 and defines an overload for the Validate method that accepts an `ICheckDigitMask` 
 instance that is used to filter characters from the value being checked. Currently
-only the [Luhn Algorithm](#luhn-algorithm) implements `IMaskedCheckDigitAlgorithm`.
+only the [Luhn Algorithm](#luhn-algorithm) and the [Modulus10_13 Algorithm](#modulus10_13-algorithm)
+implement `IMaskedCheckDigitAlgorithm`.
 
 **ICheckDigitMask Example:**
 ```C#
@@ -576,7 +577,7 @@ zone contains a field for the document number (including a possible extended
 document number) and associated check digit. The second line of the machine 
 readable zone contains fields for date of birth, date of expiry and associated 
 check digits for each field. The individual field check digits and the composite
-check digit are all calculated using the[ICAO 9303 Algorithm](#icao-9303-algorithm).
+check digit are all calculated using the [ICAO 9303 Algorithm](#icao-9303-algorithm).
 
 The machine readable zone of a Size TD1 document consists of three lines of 30
 characters. The value passed to the Validate method should contain all lines of
@@ -619,7 +620,7 @@ machine readable zone of the document. The second line of the machine readable
 zone contains fields for document number (including a possible extended document
 number), date of birth and date of expiry and associated check digits for each 
 field. The individual field check digits and the composite check digit are all 
-calculated using the[ICAO 9303 Algorithm](#icao-9303-algorithm).
+calculated using the [ICAO 9303 Algorithm](#icao-9303-algorithm).
 
 The machine readable zone of a Size TD2 document consists of two lines of 36
 characters. The value passed to the Validate method should contain all lines of
@@ -707,13 +708,13 @@ of the document. The second line of the machine readable zone contains fields
 for document number, date of birth and date of expiry and associated check 
 digits for each field. (Unlike other ICAO 9303 TD1, TD2 or TD3 documents, no 
 composite check digit is used.) The individual field check digits are all 
-calculated using the[ICAO 9303 Algorithm](#icao-9303-algorithm).
+calculated using the [ICAO 9303 Algorithm](#icao-9303-algorithm).
 
 Machine Readable Visas have two formats: MRV-A and MRV-B. The MRV-A format uses
 two lines of 44 characters while the MRV-B format uses two lines of 36 characters.
 The individual fields in the second line of the machine readable zone are located
 in the same character positions regardless of the format. The Validate method
-can validate either format
+can validate either format.
 
 The machine readable zone of a Machine Readable Visa consists of two lines of 36
 characters. The value passed to the Validate method should contain all lines of
@@ -903,7 +904,7 @@ single check character that is an alphabetic character.
 ### ISO/IEC 7064 MOD 37-2 Algorithm
 
 The ISO/IEC 7064 MOD 37-2 algorithm is a pure system algorithm (with modulus 37
-and radix 2) that suitable for use with alphanumeric strings. It generates a 
+and radix 2) that is suitable for use with alphanumeric strings. It generates a 
 single check character that is either an alphanumeric character or a 
 supplementary '*' character.
 
@@ -954,7 +955,7 @@ two check alphabetic characters.
 ### ISO/IEC 7064 MOD 97-10 Algorithm
 
 The ISO/IEC 7064 MOD 97-10 algorithm is a pure system algorithm (with modulus 97
-and radix 210) that is suitable for use with numeric strings. It generates a two 
+and radix 210) that is suitable for use with numeric strings. It generates two 
 numeric check digits.
 
 Note: the ISO/IEC 7064 MOD 97-10 algorithm is the basis of a number of check digit 
@@ -1053,7 +1054,7 @@ Wikipedia: https://en.wikipedia.org/wiki/IMO_number
 
 The Modulus10_13 algorithm is a widely used modulus 10 algorithm that uses weights
 1 and 3 (odd positions have weight 3, even positions have weight 1). It can detect
-all single digit transcription errors and ~80% of two digit transposition errors
+all single digit transcription errors and ~89% of two digit transposition errors
 (except where the transposed digits have a difference of 5, i.e. *1 <-> 6*, *2 <-> 7*,
 etc.). The algorithm cannot detect two digit jump transpositions.
 
@@ -1169,7 +1170,7 @@ confused for the letters 'o' or 'l'.
 * Check digit size - one character
 * Check digit value - betanumeric characters ('0123456789bcdfghjkmnpqrstvwxz')
 * Check digit location - assumed to be the trailing (right-most) character when validating
-* Class name - NcdAlgorithm
+* Class name - `NcdAlgorithm`
 
 #### Links
 
@@ -1227,7 +1228,7 @@ support calculation of check digits.
 * Check digit value - decimal digit ('0' - '9')
 * Check digit location - assumed to be the trailing (right-most) character when validating
 * Value length - 7 characters
-* Class name - SedolAlgorithm
+* Class name - `SedolAlgorithm`
 
 #### Links
 
@@ -1831,7 +1832,7 @@ Performance increases for:
 * ISIN algorithm, ~9% improvement for Validate and TryCalculateCheckDigit methods
 * ISO/IEC 7064 MOD 1271-36, TryCalculateCheckDigits method ~8% improvement
 * NcdAlgorithm (NOID Check Digit), minimum 10% improvement for Validate method, improvement increases with length of value.
-* NpiAlgorithm, Validate method ~8 improvement
+* NpiAlgorithm, Validate method ~8% improvement
 
 ## v2.3.1
 
@@ -1848,3 +1849,4 @@ Detailed benchmark results for .Net 8 vs .Net 10 located at https://github.com/K
 
 Added masked validation support for algorithms via ICheckDigitMask and IMaskedCheckDigitAlgorithm interfaces. Algorithms that implement IMaskedCheckDigitAlgorithm:
 * Luhn Algorithm
+* Modulus10_13 Algorithm
