@@ -83,10 +83,10 @@ public class Modulus10_13AlgorithmTests
    public void Modulus10_13Algorithm_TryCalculateCheckDigit_ShouldCalculateExpectedCheckDigit(
       String value,
       Char expectedCheckDigit)
-{
-   // Act/assert.
-   _sut.TryCalculateCheckDigit(value, out var checkDigit).Should().BeTrue();
-      checkDigit.Should().Be(expectedCheckDigit);
+   {
+      // Act/assert.
+      _sut.TryCalculateCheckDigit(value, out var checkDigit).Should().BeTrue();
+         checkDigit.Should().Be(expectedCheckDigit);
    }
 
    [Fact]
@@ -241,6 +241,7 @@ public class Modulus10_13AlgorithmTests
    [InlineData("012345678000045678")]  // Example SSCC number
    public void Modulus10_13Algorithm_ValidateMasked_ShouldReturnTrue_WhenValueContainsValidCheckDigitAndMaskAcceptsAllCharacters(String value)
       => _sut.Validate(value, _acceptAllMask).Should().BeTrue();
+
    [Theory]
    [InlineData("400 683 133 393 1")]         // EAN-13 with two digit transposition error (38 -> 83) where difference between digits is 5 
    [InlineData("978 500 051 695 9")]         // ISBN-13 with two digit transposition error (05 -> 50) where difference between digits is 5 
@@ -268,7 +269,7 @@ public class Modulus10_13AlgorithmTests
    [Theory]
    [InlineData("42+ 261")]              // UPC-E example with 5 replaced with character 10 positions before in ASCII table
    [InlineData("42I 261")]              // UPC-E example with 5 replaced with character 20 positions later in ASCII table
-   [InlineData("0 3 600 0 2 914 5 2")]  // UPC-A example with extranious spaces
+   [InlineData("0 3 600 0 2 914 5 2")]  // UPC-A example with extraneous spaces
    public void Modulus10_13Algorithm_ValidateMasked_ShouldReturnFalse_WhenInputContainsNonDigitCharacter(String value)
       => _sut.Validate(value, _groupsOfThreeMask).Should().BeFalse();
 

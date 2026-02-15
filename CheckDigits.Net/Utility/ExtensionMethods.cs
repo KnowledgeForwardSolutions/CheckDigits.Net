@@ -1,6 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-
-namespace CheckDigits.Net.Utility;
+﻿namespace CheckDigits.Net.Utility;
 
 public static class ExtensionMethods
 {
