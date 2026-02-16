@@ -5,6 +5,7 @@
 ///   position in the value, starting from the right-most position, and the 
 ///   check digit being the modulus 11 of the sum of weighted values.
 /// </summary>
+/// <remarks>
 ///   <para>
 ///   Calculating modulus 11 of the sum of weighted values results in a check
 ///   value from 0 to 10 (11 distinct values). Since it is not possible to 
@@ -14,7 +15,11 @@
 ///   a check value of 10. This eliminates approximately 9.09% of possible 
 ///   numbers from consideration.
 ///   </para>
-/// <remarks>
+///   <para>
+///   See <see cref="Modulus11ExtendedAlgorithm"/> for a related modulus 11
+///   algorithm that allows check values of 10, but at the cost of using a 
+///   non-decimal digit character for the check digit.
+///   </para>
 ///   <para>
 ///   Valid characters are decimal digits (0-9).
 ///   </para>
@@ -49,18 +54,110 @@ public class Modulus11DecimalAlgorithm : ISingleCheckDigitAlgorithm, IMaskedChec
    /// <inheritdoc/>
    public Boolean TryCalculateCheckDigit(String value, out Char checkDigit)
    {
-      throw new NotImplementedException();
+      checkDigit = Chars.NUL;
+      if (String.IsNullOrEmpty(value) || value.Length > _tryCalculateMaxLength)
+      {
+         return false;
+      }
+
+      var s = 0;
+      var t = 0;
+      for (var index = 0; index < value.Length; index++)
+      {
+         var currentDigit = value![index].ToIntegerDigit();
+         if (currentDigit is < 0 or > 9)
+         {
+            return false;
+         }
+         t += currentDigit;
+         s += t;
+      }
+      s += t;
+
+      var mod = (11 - (s % 11)) % 11;
+      if (mod == 10)
+      {
+         return false;
+      }
+
+      checkDigit = mod.ToDigitChar();
+
+      return true;
    }
 
    /// <inheritdoc/>
    public Boolean Validate(String value)
    {
-      throw new NotImplementedException();
+      if (String.IsNullOrEmpty(value)
+          || value.Length < _validateMinLength
+          || value.Length > _validateMaxLength)
+      {
+         return false;
+      }
+
+      // See https://en.wikipedia.org/wiki/ISBN#ISBN-10_check_digit_calculation
+      // for use of accumulators s and t instead of multiplying by weights.
+      var s = 0;
+      var t = 0;
+      for (var index = 0; index < value.Length; index++)
+      {
+         var currentDigit = value![index].ToIntegerDigit();
+         if (currentDigit is < 0 or > 9)
+         {
+            return false;
+         }
+         t += currentDigit;
+         s += t;
+      }
+
+      return (s % 11) == 0;
    }
 
    /// <inheritdoc/>
    public Boolean Validate(String value, ICheckDigitMask mask)
    {
-      throw new NotImplementedException();
+      if (String.IsNullOrEmpty(value))
+      {
+         return false;
+      }
+
+      // Process all characters except the check digit character inside loop
+      // that handles masked characters.
+      var s = 0;
+      var t = 0;
+      var processedDigits = 0;
+      for (var index = 0; index < value.Length - 1; index++)
+      {
+         if (mask.ExcludeCharacter(index))
+         {
+            continue;
+         }
+         var currentDigit = value![index].ToIntegerDigit();
+         if (currentDigit is < 0 or > 9)
+         {
+            return false;
+         }
+         t += currentDigit;
+         s += t;
+         processedDigits++;
+      }
+      if (processedDigits is 0 or >= _validateMaxLength)
+      {
+         return false;
+      }
+
+      // Perform final weight accumulation that would not be necessary if entire
+      // value was processed inside the loop.
+      s += t;
+
+      // Check digit is never masked so handle separately.
+      var checkDigit = value![^1].ToIntegerDigit();
+      if (checkDigit is < 0 or > 9)
+      {
+         return false;
+      }
+      s += checkDigit;
+
+      return (s % 11) == 0;
    }
 }

@@ -275,7 +275,7 @@ public class Modulus10_13AlgorithmTests
 
    [Fact]
    public void Modulus10_13Algorithm_ValidateMasked_ShouldReturnFalse_WhenCheckDigitCharacterIsNonDigit()
-      => _sut.Validate("036 000 291 45A").Should().BeFalse();
+      => _sut.Validate("036 000 291 45A", _groupsOfThreeMask).Should().BeFalse();
 
    #endregion
 }
