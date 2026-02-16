@@ -1384,6 +1384,10 @@ benchmarks do not cover lengths greater than 10.
 | Modulus11             | 140662                | 3.323 ns  | 0.0300 ns | 0.0280 ns | -         |
 | Modulus11             | 140662538             | 4.341 ns  | 0.0301 ns | 0.0281 ns | -         |
 |                       |                       |           |           |           |           |
+| Modulus11Decimal      | 140                   | 2.322 ns  | 0.0348 ns | 0.0325 ns | -         |
+| Modulus11Decimal      | 140662                | 3.220 ns  | 0.0485 ns | 0.0453 ns | -         |
+| Modulus11Decimal      | 140662538             | 4.239 ns  | 0.0544 ns | 0.0509 ns | -         |
+|                       |                       |           |           |           |           |
 | Verhoeff              | 140                   | 4.250 ns  | 0.0312 ns | 0.0277 ns | -         |
 | Verhoeff              | 140662                | 6.399 ns  | 0.0542 ns | 0.0452 ns | -         |
 | Verhoeff              | 140662538             | 9.977 ns  | 0.0363 ns | 0.0340 ns | -         |
@@ -1561,6 +1565,10 @@ benchmarks do not cover lengths greater than 10.
 | Modulus11             | 1406                          | 2.948 ns  | 0.0241 ns | 0.0214 ns | -         |
 | Modulus11             | 1406625                       | 4.062 ns  | 0.0213 ns | 0.0200 ns | -         |
 | Modulus11             | 1406625388                    | 4.506 ns  | 0.0278 ns | 0.0247 ns | -         |
+|                       |                               |           |           |           |           |
+| Modulus11Decimal      | 1406                          | 1.892 ns  | 0.0528 ns | 0.0791 ns | -         |
+| Modulus11Decimal      | 1406625                       | 3.126 ns  | 0.0801 ns | 0.1403 ns | -         |
+| Modulus11Decimal      | 1406625388                    | 4.123 ns  | 0.0335 ns | 0.0313 ns | -         |
 |                       |                               |           |           |           |           |
 | Verhoeff              | 1401                          | 4.827 ns  | 0.0255 ns | 0.0239 ns | -         |
 | Verhoeff              | 1406625                       | 6.848 ns  | 0.0410 ns | 0.0383 ns | -         |
@@ -1744,6 +1752,18 @@ public class GroupsOfThreeCheckDigitMask : ICheckDigitMask
 | Luhn                  | 140 662 538 042 551 4         | 11.272 ns | 0.0564 ns | 0.0528 ns | -         |
 | Luhn                  | 140 662 538 042 551 028 5     | 13.034 ns | 0.0692 ns | 0.0613 ns | -         |
 | Luhn                  | 140 662 538 042 551 028 265 1 | 14.754 ns | 0.1212 ns | 0.1075 ns | -         |
+|                       |                               |           |           |           |           |
+| Modulus10_13          | 140 3                         |  4.536 ns | 0.0544 ns | 0.0509 ns | -         |
+| Modulus10_13          | 140 662 7                     |  5.908 ns | 0.1229 ns | 0.1090 ns | -         |
+| Modulus10_13          | 140 662 538 5                 |  7.526 ns | 0.0957 ns | 0.0895 ns | -         |
+| Modulus10_13          | 140 662 538 042 5             |  9.083 ns | 0.1075 ns | 0.0898 ns | -         |
+| Modulus10_13          | 140 662 538 042 551 8         | 10.977 ns | 0.1084 ns | 0.1014 ns | -         |
+| Modulus10_13          | 140 662 538 042 551 028 8     | 12.475 ns | 0.1031 ns | 0.0965 ns | -         |
+| Modulus10_13          | 140 662 538 042 551 028 265 7 | 14.315 ns | 0.1808 ns | 0.1691 ns | -         |
+|                       |                               |           |           |           |           |
+| Modulus11Decimal      | 140 6                         |  4.200 ns | 0.0472 ns | 0.0442 ns | -         |
+| Modulus11Decimal      | 140 662 5                     |  5.134 ns | 0.0596 ns | 0.0529 ns | -         |
+| Modulus11Decimal      | 140 662 538 8                 |  6.342 ns | 0.0429 ns | 0.0401 ns | -         |
 
 # Release History/Release Notes
 
@@ -1765,7 +1785,7 @@ Initial limited release. Included algorithms:
 
 ## v1.0.0
 
-Initial release. Additional included algorithms
+Initial release. Additional included algorithms:
 * ISO/IEC 7064 MOD 11,10
 * ISO/IEC 7064 MOD 11-2
 * ISO/IEC 7064 MOD 1271-36
@@ -1777,7 +1797,7 @@ Initial release. Additional included algorithms
 
 ## v1.1.0
 
-Additional included algorithms
+Additional included algorithms:
 * AlphanumericMod97_10Algorithm
 * IbanAlgorithm
 * IsanAlgorithm (including ValidateFormatted method)
@@ -1799,7 +1819,7 @@ Detailed benchmark results for .Net 7 vs .Net 8 located at https://github.com/Kn
 
 ## v2.1.0
 
-Additional included algorithms
+Additional included algorithms:
 * CUSIP Algorithm
 * ISO 6346 Algorithm
 * SEDOL Algorithm
@@ -1818,7 +1838,7 @@ Thanks to Steff Beckers for this addition
 
 ## v2.3.0
 
-Additional included algorithms
+Additional included algorithms:
 * FIGI Algorithm
 * ICAO Algorithm
 * ICAO 9303 Document Size TD1 Algorithm
@@ -1849,4 +1869,12 @@ Detailed benchmark results for .Net 8 vs .Net 10 located at https://github.com/K
 
 Added masked validation support for algorithms via ICheckDigitMask and IMaskedCheckDigitAlgorithm interfaces. Algorithms that implement IMaskedCheckDigitAlgorithm:
 * Luhn Algorithm
+* Modulus10_13 Algorithm
+
+## v3.1.0
+
+Additional included algorithms:
+* Modulus11Decimal
+
+Added masked validation support to the following algorithms:
 * Modulus10_13 Algorithm

@@ -46,7 +46,7 @@ public sealed class Modulus10_13Algorithm : ISingleCheckDigitAlgorithm, IMaskedC
       for (var index = value.Length - 1; index >= 0; index--)
       {
          var digit = value[index].ToIntegerDigit();
-         if (digit < 0 || digit > 9)
+         if (digit.IsInvalidDigit())
          {
                return false;
          }
@@ -71,7 +71,7 @@ public sealed class Modulus10_13Algorithm : ISingleCheckDigitAlgorithm, IMaskedC
       for (var index = value.Length - 2; index >= 0; index--)
       {
          var digit = value[index].ToIntegerDigit();
-         if (digit is < 0 or > 9)
+         if (digit.IsInvalidDigit())
          {
             return false;
          }
@@ -102,7 +102,7 @@ public sealed class Modulus10_13Algorithm : ISingleCheckDigitAlgorithm, IMaskedC
          }
 
          var digit = value[index].ToIntegerDigit();
-         if (digit is < 0 or > 9)
+         if (digit.IsInvalidDigit())
          {
             return false;
          }

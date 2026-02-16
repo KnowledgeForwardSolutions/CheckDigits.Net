@@ -62,10 +62,11 @@ public class Modulus11DecimalAlgorithm : ISingleCheckDigitAlgorithm, IMaskedChec
 
       var s = 0;
       var t = 0;
-      for (var index = 0; index < value.Length; index++)
+      var processLength = value.Length;
+      for (var index = 0; index < processLength; index++)
       {
-         var currentDigit = value![index].ToIntegerDigit();
-         if (currentDigit is < 0 or > 9)
+         var currentDigit = value[index].ToIntegerDigit();
+         if (currentDigit.IsInvalidDigit())
          {
             return false;
          }
@@ -99,10 +100,11 @@ public class Modulus11DecimalAlgorithm : ISingleCheckDigitAlgorithm, IMaskedChec
       // for use of accumulators s and t instead of multiplying by weights.
       var s = 0;
       var t = 0;
-      for (var index = 0; index < value.Length; index++)
+      var processLength = value.Length;
+      for (var index = 0; index < processLength; index++)
       {
-         var currentDigit = value![index].ToIntegerDigit();
-         if (currentDigit is < 0 or > 9)
+         var currentDigit = value[index].ToIntegerDigit();
+         if (currentDigit.IsInvalidDigit())
          {
             return false;
          }
@@ -126,14 +128,15 @@ public class Modulus11DecimalAlgorithm : ISingleCheckDigitAlgorithm, IMaskedChec
       var s = 0;
       var t = 0;
       var processedDigits = 0;
-      for (var index = 0; index < value.Length - 1; index++)
+      var processLength = value.Length - 1;
+      for (var index = 0; index < processLength; index++)
       {
          if (mask.ExcludeCharacter(index))
          {
             continue;
          }
-         var currentDigit = value![index].ToIntegerDigit();
-         if (currentDigit is < 0 or > 9)
+         var currentDigit = value[index].ToIntegerDigit();
+         if (currentDigit.IsInvalidDigit())
          {
             return false;
          }
@@ -141,7 +144,7 @@ public class Modulus11DecimalAlgorithm : ISingleCheckDigitAlgorithm, IMaskedChec
          s += t;
          processedDigits++;
       }
-      if (processedDigits is 0 or >= _validateMaxLength)
+      if (processedDigits == 0 || processedDigits >= _validateMaxLength)
       {
          return false;
       }
@@ -152,7 +155,7 @@ public class Modulus11DecimalAlgorithm : ISingleCheckDigitAlgorithm, IMaskedChec
 
       // Check digit is never masked so handle separately.
       var checkDigit = value![^1].ToIntegerDigit();
-      if (checkDigit is < 0 or > 9)
+      if (checkDigit.IsInvalidDigit())
       {
          return false;
       }

@@ -3,6 +3,28 @@
 public static class ExtensionMethods
 {
    /// <summary>
+   ///   Determines if the specified integer value (generally returned by 
+   ///   <see cref="ToIntegerDigit(Char)"/>) is not a valid single digit integer.
+   /// </summary>
+   /// <remarks>
+   ///   <see cref="ToIntegerDigit(Char)"/> converts a single character to an
+   ///   integer by subtracting the character zero ('0') from the character to 
+   ///   convert. If the character to convert is not '0' - '9', then the result
+   ///   will be less than 0 or greater than 9.
+   /// </remarks>
+   /// <param name="digit">
+   ///   The integer to evaluate for validity. Must be in the range 0 to 9 to be 
+   ///   considered valid.
+   /// </param>
+   /// <returns>
+   ///   <see langword="true"/> if the digit is less than 0 or greater than 9; 
+   ///   otherwise, <see langword="false"/>.
+   /// </returns>
+   [MethodImpl(MethodImplOptions.AggressiveInlining)]
+   public static Boolean IsInvalidDigit(this Int32 digit)
+      => digit < 0 || digit > 9;
+
+   /// <summary>
    ///   Get the equivalent ASCII digit character for an integer between 0-9;
    /// </summary>
    /// <param name="num">

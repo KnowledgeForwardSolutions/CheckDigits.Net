@@ -87,7 +87,10 @@ public static class Algorithms
      new(() => new Modulus10_13Algorithm());
 
    private static readonly Lazy<ISingleCheckDigitAlgorithm> _modulus11 =
-     new(() => new Modulus11Algorithm());
+      new(() => new Modulus11Algorithm());
+
+   private static readonly Lazy<ISingleCheckDigitAlgorithm> _modulus11Decimal =
+      new(() => new Modulus11DecimalAlgorithm());
 
    private static readonly Lazy<ISingleCheckDigitAlgorithm> _ncd =
      new(() => new NcdAlgorithm());
@@ -247,6 +250,11 @@ public static class Algorithms
    ///   Modulus11 algorithm.
    /// </summary>
    public static ISingleCheckDigitAlgorithm Modulus11 => _modulus11.Value;
+
+   /// <summary>
+   ///   Modulus11Decimal algorithm.
+   /// </summary>
+   public static ISingleCheckDigitAlgorithm Modulus11Decimal => _modulus11Decimal.Value;
 
    /// <summary>
    ///   NOID (Nice Opaque Identifier) Check Digit algorithm.
