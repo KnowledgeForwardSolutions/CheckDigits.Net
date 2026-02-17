@@ -50,6 +50,7 @@ let us know. Or contribute to the CheckDigits.Net repository: https://github.com
     * [Modulus10_2 Algorithm](#modulus10_2-algorithm)
     * [Modulus10_13 Algorithm (UPC/EAN/ISBN-13/etc.)](#modulus10_13-algorithm)
     * [Modulus11 Algorithm (ISBN-10/ISSN/etc.)](#modulus11-algorithm)
+    * [Modulus11Decimal Algorithm (NHS Number/etc.)](#modulus11decimal-algorithm)
     * [NHS (UK National Health Service) Algorithm](#nhs-algorithm)
     * [NOID Check Digit Algorithm](#noid-check-digit-algorithm)
     * [NPI (US National Provider Identifier) Algorithm](#npi-algorithm)
@@ -161,6 +162,7 @@ The ISO/IEC 7064:2003 standard is available at https://www.iso.org/standard/3153
 * [Modulus10_2 Algorithm](#modulus10_2-algorithm)
 * [Modulus10_13 Algorithm (UPC/EAN/ISBN-13/etc.)](#modulus10_13-algorithm)
 * [Modulus11 Algorithm (ISBN-10/ISSN/etc.)](#modulus11-algorithm)
+* [Modulus11Decimal Algorithm (NHS Number/etc.)](#modulus11decimal-algorithm)
 * [NHS (UK National Health Service) Algorithm](#nhs-algorithm)
 * [NOID Check Digit Algorithm](#noid-check-digit-algorithm)
 * [NPI (US National Provider Identifier) Algorithm](#npi-algorithm)
@@ -202,6 +204,7 @@ The ISO/IEC 7064:2003 standard is available at https://www.iso.org/standard/3153
 | ISNI                                                   | [ISO/IEC 7064 MOD 11-2 Algorithm](#isoiec-7064-mod-11-2-algorithm) |
 | ISSN   				                                 | [Modulus11 Algorithm](#modulus11-algorithm) |
 | Legal Entity Identifier                                | [Alphanumeric MOD 97-10 Algorithm](#alphanumeric-mod-97-10-algorithm) |
+| NHS Number                                             | [Modulus11Decimal Algorithm](#modulus11decimal-algorithm) or [NHS (UK National Health Service) Algorithm](#nhs-algorithm) |
 | SEDOL					                                 | [SEDOL Algorithm](#sedol-algorithm) |
 | Shipping Container Number                              | [ISO 6346 Algorithm](#iso-6346-algorithm) |
 | SSCC					                                 | [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
@@ -1118,9 +1121,55 @@ Wikipedia:
   https://en.wikipedia.org/wiki/ISBN#ISBN-10_check_digits
   https://en.wikipedia.org/wiki/ISSN
 
+### Modulus11Decimal Algorithm
+
+#### Description
+
+The Modulus11Decimal algorithm uses modulus 11 and each digit is weighted by its 
+position in the value, starting from the right-most digit. Prior to the existence 
+of the Verhoeff algorithm and the Damm algorithm, modulus 11 algorithms were 
+popular because they were very capable of detecting two digit transposition errors 
+while using only a single check character. However, because it used modulus 11, 
+the check character could not be a single decimal digit. 
+
+There are two common solutions to this problem: use a non-digit character to 
+represent the 11th possible check value or reject any value that would require a
+non-digit check character. Using a non-digit check character (commonly 'X') means
+that the value is not an integer and must be stored as a string. Rejecting any
+value that could require a non-digit check character means that one out of eleven 
+possible values must be rejected, or approximately 9.09% of all values.
+
+The Modulus11Decimal algorithm takes the later approach and the `TryCalculateCheckDigit`
+and `Validate` methods return false if the value would require a non-digit check
+character.
+
+Modulus11Decimal is a generalized version of the NhsAlgorithm which drops the
+fixed 10 character length required by NhsAlgorithm.
+
+#### Details
+
+* Valid characters - decimal digits ('0' - '9')
+* Check digit size - one character
+* Check digit value - either decimal digit ('0' - '9')
+* Check digit location - assumed to be the trailing (right-most) character when validating
+* Max length - 9 characters when generating a check digit; 10 characters when validating
+* Class name - `Modulus11DecimalAlgorithm`
+
+#### Common Applications
+
+* UK National Health Service Number
+
+#### Links
+
+Wikipedia: 
+	https://en.wikipedia.org/wiki/NHS_number#Format,_number_ranges,_and_check_characters
+
 ### NHS Algorithm
 
 #### Description
+
+NOTE: This algorithm has been depreciated in favor of using the Modulus11Decimal 
+algorithm.
 
 UK National Health Service (NHS) identifiers use a variation of the Modulus 11 
 algorithm. However, instead of generating 11 possible values for the check digit,

@@ -1,33 +1,29 @@
 ﻿namespace CheckDigits.Net.GeneralAlgorithms;
 
 /// <summary>
-///   Modulus 11 (Decimal) algorithm where every digit is weighted by its 
+///   Modulus 11 (Extended) algorithm where every digit is weighted by its 
 ///   position in the value, starting from the right-most position, and the 
-///   check digit being the modulus 11 of the sum of weighted values.
+///   check digit being the modulus 11 of the sum of weighted values. Modulus 11
+///   allows for 11 possible check "digits" and this algorithm extends the
+///   possible check digit characters to include '0'-'9' and 'X' (represents a
+///   check value of 10, which is not possible to represent with a single digit
+///   character).
 /// </summary>
 /// <remarks>
 ///   <para>
-///   Calculating modulus 11 of the sum of weighted values results in a check
-///   value from 0 to 10 (11 distinct values). Since it is not possible to 
-///   represent 10 with a single decimal digit, any value with a check value of
-///   10 is rejected by this algorithm. Both the Validate and 
-///   TryCalculateCheckDigit methods will return false if the value results in
-///   a check value of 10. This eliminates approximately 9.09% of possible 
-///   numbers from consideration.
+///   This algorithm replaces the depreciated <see cref="Modulus11Algorithm"/>.
 ///   </para>
 ///   <para>
-///   This algorithm replaces the depreciated <see cref="NhsAlgorithm"/>.
-///   </para>
-///   <para>
-///   See <see cref="Modulus11ExtendedAlgorithm"/> for a related modulus 11
-///   algorithm that allows check values of 10, but at the cost of using a 
-///   non-decimal digit character for the check digit.
+///   See <see cref="Modulus11DecimalAlgorithm"/> for a related modulus 11
+///   algorithm that restricts check characters to '0'-'9', but at the cost of 
+///   rejecting one out of every 11 values, or approximately 9.09%.
 ///   </para>
 ///   <para>
 ///   Valid characters are decimal digits (0-9).
 ///   </para>
 ///   <para>
-///   Check digit calculated by the algorithm is a decimal digit (0-9).
+///   Check digit calculated by the algorithm is a decimal digit (0-9) or an 
+///   uppercase 'X'.
 ///   </para>
 ///   <para>
 ///   Assumes that the check digit (if present) is the right-most digit in the
@@ -42,17 +38,17 @@
 ///   and 10 characters for validating a value that contains a check digit.
 ///   </para>
 /// </remarks>
-public class Modulus11DecimalAlgorithm : ISingleCheckDigitAlgorithm, IMaskedCheckDigitAlgorithm
+public class Modulus11ExtendedAlgorithm : ISingleCheckDigitAlgorithm, IMaskedCheckDigitAlgorithm
 {
    private const Int32 _tryCalculateMaxLength = 9;
    private const Int32 _validateMinLength = 2;
    private const Int32 _validateMaxLength = 10;
 
    /// <inheritdoc/>
-   public String AlgorithmDescription => Resources.Modulus11DecimalAlgorithmDescription;
+   public String AlgorithmDescription => Resources.Modulus11ExtendedAlgorithmDescription;
 
    /// <inheritdoc/>
-   public String AlgorithmName => Resources.Modulus11DecimalAlgorithmName;
+   public String AlgorithmName => Resources.Modulus11ExtendedAlgorithmName;
 
    /// <inheritdoc/>
    public Boolean TryCalculateCheckDigit(String value, out Char checkDigit)
@@ -68,7 +64,7 @@ public class Modulus11DecimalAlgorithm : ISingleCheckDigitAlgorithm, IMaskedChec
       var processLength = value.Length;
       for (var index = 0; index < processLength; index++)
       {
-         var currentDigit = value[index].ToIntegerDigit();
+         var currentDigit = value![index].ToIntegerDigit();
          if (currentDigit.IsInvalidDigit())
          {
             return false;
@@ -79,12 +75,7 @@ public class Modulus11DecimalAlgorithm : ISingleCheckDigitAlgorithm, IMaskedChec
       s += t;
 
       var mod = (11 - (s % 11)) % 11;
-      if (mod == 10)
-      {
-         return false;
-      }
-
-      checkDigit = mod.ToDigitChar();
+      checkDigit = mod < 10 ? mod.ToDigitChar() : Chars.UpperCaseX;
 
       return true;
    }
@@ -99,14 +90,12 @@ public class Modulus11DecimalAlgorithm : ISingleCheckDigitAlgorithm, IMaskedChec
          return false;
       }
 
-      // See https://en.wikipedia.org/wiki/ISBN#ISBN-10_check_digit_calculation
-      // for use of accumulators s and t instead of multiplying by weights.
       var s = 0;
       var t = 0;
-      var processLength = value.Length;
+      var processLength = value.Length - 1;
       for (var index = 0; index < processLength; index++)
       {
-         var currentDigit = value[index].ToIntegerDigit();
+         var currentDigit = value![index].ToIntegerDigit();
          if (currentDigit.IsInvalidDigit())
          {
             return false;
@@ -114,6 +103,15 @@ public class Modulus11DecimalAlgorithm : ISingleCheckDigitAlgorithm, IMaskedChec
          t += currentDigit;
          s += t;
       }
+      s += t;
+
+      var checkDigit = value[^1].ToExtendedDecimalCheckDigit();
+      if (checkDigit.IsInvalidExtendedDecimalCheckDigit())
+      {
+         return false;
+      }
+
+      s += checkDigit;
 
       return (s % 11) == 0;
    }
@@ -126,8 +124,6 @@ public class Modulus11DecimalAlgorithm : ISingleCheckDigitAlgorithm, IMaskedChec
          return false;
       }
 
-      // Process all characters except the check digit character inside loop
-      // that handles masked characters.
       var s = 0;
       var t = 0;
       var processedDigits = 0;
@@ -138,7 +134,7 @@ public class Modulus11DecimalAlgorithm : ISingleCheckDigitAlgorithm, IMaskedChec
          {
             continue;
          }
-         var currentDigit = value[index].ToIntegerDigit();
+         var currentDigit = value![index].ToIntegerDigit();
          if (currentDigit.IsInvalidDigit())
          {
             return false;
@@ -151,17 +147,14 @@ public class Modulus11DecimalAlgorithm : ISingleCheckDigitAlgorithm, IMaskedChec
       {
          return false;
       }
-
-      // Perform final weight accumulation that would not be necessary if entire
-      // value was processed inside the loop.
       s += t;
 
-      // Check digit is never masked so handle separately.
-      var checkDigit = value![^1].ToIntegerDigit();
-      if (checkDigit.IsInvalidDigit())
+      var checkDigit = value[^1].ToExtendedDecimalCheckDigit();
+      if (checkDigit.IsInvalidExtendedDecimalCheckDigit())
       {
          return false;
       }
+
       s += checkDigit;
 
       return (s % 11) == 0;

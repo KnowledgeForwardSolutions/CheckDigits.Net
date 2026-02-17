@@ -628,6 +628,24 @@ namespace CheckDigits.Net {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Modulus 11 algorithm where every character is weighted by its position, starting from the right-most character. Generated check digit will be 0-9 or X.
+        /// </summary>
+        internal static string Modulus11ExtendedAlgorithmDescription {
+            get {
+                return ResourceManager.GetString("Modulus11ExtendedAlgorithmDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Modulus11Extended.
+        /// </summary>
+        internal static string Modulus11ExtendedAlgorithmName {
+            get {
+                return ResourceManager.GetString("Modulus11ExtendedAlgorithmName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Modulus must be &gt;= 2.
         /// </summary>
         internal static string ModulusIntModulusOutOfRangeMessage {

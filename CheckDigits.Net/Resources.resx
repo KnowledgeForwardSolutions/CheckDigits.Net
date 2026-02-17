@@ -351,4 +351,10 @@
   <data name="Modulus11DecimalAlgorithmName" xml:space="preserve">
     <value>Modulus11Decimal</value>
   </data>
+  <data name="Modulus11ExtendedAlgorithmDescription" xml:space="preserve">
+    <value>Modulus 11 algorithm where every character is weighted by its position, starting from the right-most character. Generated check digit will be 0-9 or X</value>
+  </data>
+  <data name="Modulus11ExtendedAlgorithmName" xml:space="preserve">
+    <value>Modulus11Extended</value>
+  </data>
 </root>

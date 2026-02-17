@@ -210,7 +210,7 @@ public class Modulus11DecimalAlgorithmTests
 
    [Fact]
    public void Modulus11DecimalAlgorithm_Validate_ShouldReturnFalse_WhenCheckDigitIsNonDigitCharacter()
-      => _sut.Validate("100030000X").Should().BeFalse();    // Actual check digit would be 5
+      => _sut.Validate("100030000?").Should().BeFalse();    // Actual check digit would be 5
 
    #endregion
 
@@ -265,9 +265,8 @@ public class Modulus11DecimalAlgorithmTests
    [InlineData("943 476 591 9")]    // Worked example from Wikipedia https://en.wikipedia.org/wiki/NHS_number#Format,_number_ranges,_and_check_characters
    [InlineData("450 557 710 4")]    // Example from https://www.clatterbridgecc.nhs.uk/patients/general-information/nhs-number#:~:text=Your%20NHS%20Number%20is%20printed,is%20an%20example%20number%20only).
    [InlineData("530 119 491 7")]    // Random NHS number from http://danielbayley.uk/nhs-number/
-   public void Modulus11Algorithm_ValidateMasked_ShouldReturnTrue_WhenValueContainsValidCheckDigit(String value)
+   public void Modulus11DecimalAlgorithm_ValidateMasked_ShouldReturnTrue_WhenValueContainsValidCheckDigit(String value)
       => _sut.Validate(value, _groupsOfThreeMask).Should().BeTrue();
-
 
    [Theory]
    [InlineData("1568656521")]    // ISBN-10 Island in the Stream of Time, S. M. Sterling
@@ -281,7 +280,7 @@ public class Modulus11DecimalAlgorithmTests
    [InlineData("9434765919")]    // Worked example from Wikipedia https://en.wikipedia.org/wiki/NHS_number#Format,_number_ranges,_and_check_characters
    [InlineData("4505577104")]    // Example from https://www.clatterbridgecc.nhs.uk/patients/general-information/nhs-number#:~:text=Your%20NHS%20Number%20is%20printed,is%20an%20example%20number%20only).
    [InlineData("5301194917")]    // Random NHS number from http://danielbayley.uk/nhs-number/
-   public void Modulus11Algorithm_ValidateMasked_ShouldReturnTrue_WhenValueContainsValidCheckDigitAndMaskAcceptsAllCharacters(String value)
+   public void Modulus11DecimalAlgorithm_ValidateMasked_ShouldReturnTrue_WhenValueContainsValidCheckDigitAndMaskAcceptsAllCharacters(String value)
       => _sut.Validate(value, _acceptAllMask).Should().BeTrue();
 
    [Theory]
