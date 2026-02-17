@@ -237,8 +237,8 @@ public class Modulus11DecimalAlgorithmTests
       => _sut.Validate(value, _acceptAllMask).Should().BeFalse();
 
    [Fact]
-   public void Modulus11DecimalAlgorithm_ValidateMasked_ShouldReturnFalse_WhenInputHasLengthGreaterThan10()
-      => _sut.Validate("000 000 000 00", _groupsOfThreeMask).Should().BeFalse();
+   public void Modulus11DecimalAlgorithm_ValidateMasked_ShouldReturnFalse_WhenInputHasMoreThan9UnmaskedDigits()
+      => _sut.Validate("00000000019", _acceptAllMask).Should().BeFalse();
 
    [Theory]
    [InlineData("000 000 001 9")]

@@ -56,6 +56,27 @@ public class Modulus11ExtendedAlgorithmTests
    }
 
    [Theory]
+   [InlineData("0", '0')]        // Sum = 0, mod = (11-(0%11))%11=0
+   [InlineData("1", '9')]        // Sum = 2, mod = (11-(1%11))%11=9
+   [InlineData("2", '7')]        // Sum = 4, mod = (11-(4%11))%11=7
+   [InlineData("3", '5')]        // Sum = 6, mod = (11-(6%11))%11=5
+   [InlineData("4", '3')]        // Sum = 8, mod = (11-(8%11))%11=3
+   [InlineData("5", '1')]        // Sum = 10, mod = (11-(10%11))%11=1
+   [InlineData("6", 'X')]        // Sum = 12, mod = (11-(12%11))%11=X
+   [InlineData("7", '8')]        // Sum = 14, mod = (11-(14%11))%11=8
+   [InlineData("8", '6')]        // Sum = 16, mod = (11-(16%11))%11=6
+   [InlineData("9", '4')]        // Sum = 18, mod = (11-(18%11))%11=4
+   [InlineData("61", '2')]        // Sum = 20, mod = (11-(20%11))%11=2
+   public void Modulus11ExtendedAlgorithm_TryCalculateCheckDigit_ShouldReturnAllPossibleValidCheckDigits(
+      String value,
+      Char expectedCheckDigit)
+   {
+      // Act/assert.
+      _sut.TryCalculateCheckDigit(value, out var checkDigit).Should().BeTrue();
+      checkDigit.Should().Be(expectedCheckDigit);
+   }
+
+   [Theory]
    [InlineData("000000001", '9')]
    [InlineData("000000010", '8')]
    [InlineData("000000100", '7')]
@@ -121,10 +142,36 @@ public class Modulus11ExtendedAlgorithmTests
    //
    [InlineData("2434561")]          // Example ISSN from Wikipedia
    [InlineData("1050124")]          // Example ISSN from https://www.issn.org/understanding-the-issn/what-is-an-issn/
-   public void Modulus11DecimalAlgorithm_TryCalculateCheckDigit_ShouldReturnTrue_WhenModulus11HasRemainderOf10(String value)
+   public void Modulus11ExtendedAlgorithm_TryCalculateCheckDigit_ShouldReturnTrue_WhenModulus11HasRemainderOf10(String value)
    {
       _sut.TryCalculateCheckDigit(value, out var checkDigit).Should().BeTrue();
       checkDigit.Should().Be(Chars.UpperCaseX);
+   }
+
+   [Theory]
+   [InlineData("156865652")]    // ISBN-10 Island in the Stream of Time, S. M. Sterling
+   [InlineData("044100560")]    // ISBN-10 The Warlock in Spite of Himself, Christopher Stasheff
+   [InlineData("071410544")]    // ISBN-10 The Sutton Hoo Ship Burial, Angela Care Evans
+   [InlineData("050027293")]    // ISBN-10 Roman London, Peter Marsden
+   //
+   [InlineData("030640615")]    // Worked example of ISBN-10 from Wikipedia https://en.wikipedia.org/wiki/ISBN#ISBN-10_check_digits
+   [InlineData("0378595")]      // Worked example of ISSN from Wikipedia https://en.wikipedia.org/wiki/ISSN
+   [InlineData("2434561")]      // Example ISSN from Wikipedia
+   [InlineData("0317847")]      // Example ISSN from https://www.issn.org/understanding-the-issn/what-is-an-issn/
+   [InlineData("1050124")]      // "
+   public void Modulus11ExtendedAlgorithm_TryCalculateCheckDigit_ShouldProduceSameResultAsDepreciatedModulus11Algorithm(String value)
+   {
+      // Arrange.
+      var deprecatedAlgorithm = new Modulus11Algorithm();
+      var extendedAlgorithm = new Modulus11ExtendedAlgorithm();
+
+      // Act.
+      var deprecatedResult = deprecatedAlgorithm.TryCalculateCheckDigit(value, out var depreciatedCheckDigit);
+      var extendedResult = extendedAlgorithm.TryCalculateCheckDigit(value, out var extendedCheckDigit);
+
+      // Assert.
+      extendedResult.Should().Be(deprecatedResult);
+      extendedCheckDigit.Should().Be(extendedCheckDigit);
    }
 
    #endregion
@@ -208,6 +255,44 @@ public class Modulus11ExtendedAlgorithmTests
    public void Modulus11ExtendedAlgorithm_Validate_ShouldReturnFalse_WhenCheckDigitIsNonDigitCharacter()
       => _sut.Validate("100030000?").Should().BeFalse();    // Actual check digit would be 5
 
+   [Fact]
+   public void Modulus11ExtendedAlgorithm_Validate_ShouldReturnFalse_WhenCheckDigitIsLowerCaseXInsteadOfUpperCase()
+      => _sut.Validate("050027293x").Should().BeFalse();    // SBN-10 Roman London, Peter Marsden
+
+   [Theory]
+   [InlineData("1568656521")]    // ISBN-10 Island in the Stream of Time, S. M. Sterling
+   [InlineData("0441005608")]    // ISBN-10 The Warlock in Spite of Himself, Christopher Stasheff
+   [InlineData("0714105449")]    // ISBN-10 The Sutton Hoo Ship Burial, Angela Care Evans
+   [InlineData("050027293X")]    // ISBN-10 Roman London, Peter Marsden
+   //
+   [InlineData("0306406152")]    // Worked example of ISBN-10 from Wikipedia https://en.wikipedia.org/wiki/ISBN#ISBN-10_check_digits
+   [InlineData("03785955")]      // Worked example of ISSN from Wikipedia https://en.wikipedia.org/wiki/ISSN
+   [InlineData("2434561X")]      // Example ISSN from Wikipedia
+   [InlineData("03178471")]      // Example ISSN from https://www.issn.org/understanding-the-issn/what-is-an-issn/
+   [InlineData("1050124X")]      // "
+   //
+   [InlineData("9434765919")]    // Worked example from Wikipedia https://en.wikipedia.org/wiki/NHS_number#Format,_number_ranges,_and_check_characters
+   [InlineData("4505577104")]    // Example from https://www.clatterbridgecc.nhs.uk/patients/general-information/nhs-number#:~:text=Your%20NHS%20Number%20is%20printed,is%20an%20example%20number%20only).
+   [InlineData("5301194917")]    // Random NHS number from http://danielbayley.uk/nhs-number/
+   //
+   [InlineData("1568646521")]    // ISBN-10 with single digit transcription error 5 -> 4
+   [InlineData("0441050608")]    // ISBN-10 with two digit transposition error 05 -> 50
+   [InlineData("050029273X")]    // ISBN-10 with jump transposition 729 -> 927
+   [InlineData("0551005608")]    // ISBN-10 with twin error 44 -> 55
+   public void Modulus11ExtendedAlgorithm_Validate_ShouldProduceSameResultAsDepreciatedModulus11Algorithm(String value)
+   {
+      // Arrange.
+      var deprecatedAlgorithm = new Modulus11Algorithm();
+      var extendedAlgorithm = new Modulus11ExtendedAlgorithm();
+
+      // Act.
+      var deprecatedResult = deprecatedAlgorithm.Validate(value);
+      var extendedResult = extendedAlgorithm.Validate(value);
+
+      // Assert.
+      extendedResult.Should().Be(deprecatedResult);
+   }
+
    #endregion
 
    #region Validate (ICheckDigitMask Overload) Tests
@@ -233,8 +318,8 @@ public class Modulus11ExtendedAlgorithmTests
       => _sut.Validate(value, _acceptAllMask).Should().BeFalse();
 
    [Fact]
-   public void Modulus11ExtendedAlgorithm_ValidateMasked_ShouldReturnFalse_WhenInputHasLengthGreaterThan10()
-      => _sut.Validate("000 000 000 00", _groupsOfThreeMask).Should().BeFalse();
+   public void Modulus11ExtendedAlgorithm_ValidateMasked_ShouldReturnFalse_WhenInputHasMoreThan9UnmaskedDigits()
+      => _sut.Validate("00000000019", _acceptAllMask).Should().BeFalse();
 
    [Theory]
    [InlineData("000 000 001 9")]
@@ -310,6 +395,10 @@ public class Modulus11ExtendedAlgorithmTests
    [Fact]
    public void Modulus11ExtendedAlgorithm_ValidateMasked_ShouldReturnFalse_WhenCheckDigitIsNonDigitCharacter()
       => _sut.Validate("100 030 000 ?", _groupsOfThreeMask).Should().BeFalse();    // Actual check digit would be 5
+
+   [Fact]
+   public void Modulus11ExtendedAlgorithm_ValidateMasked_ShouldReturnFalse_WhenCheckDigitIsLowerCaseXInsteadOfUpperCase()
+      => _sut.Validate("050 027 293 x", _groupsOfThreeMask).Should().BeFalse();    // SBN-10 Roman London, Peter Marsden
 
    #endregion
 }
