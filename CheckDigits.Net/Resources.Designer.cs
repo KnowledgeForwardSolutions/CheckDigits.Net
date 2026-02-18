@@ -19,7 +19,7 @@ namespace CheckDigits.Net {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "18.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
@@ -606,6 +606,42 @@ namespace CheckDigits.Net {
         internal static string Modulus11AlgorithmName {
             get {
                 return ResourceManager.GetString("Modulus11AlgorithmName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Modulus 11 algorithm where every character is weighted by its position, starting from the right-most character. Generated check digit will be 0-9. Values that result in a check value of 10 are rejected.
+        /// </summary>
+        internal static string Modulus11DecimalAlgorithmDescription {
+            get {
+                return ResourceManager.GetString("Modulus11DecimalAlgorithmDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Modulus11Decimal.
+        /// </summary>
+        internal static string Modulus11DecimalAlgorithmName {
+            get {
+                return ResourceManager.GetString("Modulus11DecimalAlgorithmName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Modulus 11 algorithm where every character is weighted by its position, starting from the right-most character. Generated check digit will be 0-9 or X.
+        /// </summary>
+        internal static string Modulus11ExtendedAlgorithmDescription {
+            get {
+                return ResourceManager.GetString("Modulus11ExtendedAlgorithmDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Modulus11Extended.
+        /// </summary>
+        internal static string Modulus11ExtendedAlgorithmName {
+            get {
+                return ResourceManager.GetString("Modulus11ExtendedAlgorithmName", resourceCulture);
             }
         }
         

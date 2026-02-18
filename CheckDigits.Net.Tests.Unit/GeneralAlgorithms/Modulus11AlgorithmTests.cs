@@ -1,4 +1,6 @@
-﻿namespace CheckDigits.Net.Tests.Unit.GeneralAlgorithms;
+﻿#pragma warning disable CS0618 // Type or member is obsolete
+
+namespace CheckDigits.Net.Tests.Unit.GeneralAlgorithms;
 
 public class Modulus11AlgorithmTests
 {

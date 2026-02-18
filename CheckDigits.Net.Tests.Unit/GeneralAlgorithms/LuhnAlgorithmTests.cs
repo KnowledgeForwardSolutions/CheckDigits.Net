@@ -140,6 +140,17 @@ public class LuhnAlgorithmTests
       checkDigit.Should().Be('\0');
    }
 
+   [Theory]
+   [InlineData("140")]
+   [InlineData("140662")]
+   [InlineData("140662538")]
+   [InlineData("140662538042")]
+   [InlineData("140662538042551")]
+   [InlineData("140662538042551028")]
+   [InlineData("140662538042551028265")]
+   public void LuhnAlgorithm_TryCalculateValue_ShouldReturnTrue_ForBenchmarkValues(String value)
+      => _sut.TryCalculateCheckDigit(value, out _).Should().BeTrue();
+
    #endregion
 
    #region Validate Tests
@@ -206,17 +217,6 @@ public class LuhnAlgorithmTests
       => _sut.Validate(value).Should().BeTrue();
 
    [Theory]
-   [InlineData("1404")]
-   [InlineData("1406628")]
-   [InlineData("1406625382")]
-   [InlineData("1406625380421")]
-   [InlineData("1406625380425514")]
-   [InlineData("1406625380425510285")]
-   [InlineData("1406625380425510282651")]
-   public void LuhnAlgorithm_Validate_ShouldReturnTrue_ForBenchmarkValues(String value)
-      => _sut.Validate(value).Should().BeTrue();
-
-   [Theory]
    [InlineData("3056930090020004")]    // Diners Club test card number with two digit transposition 09 -> 90
    [InlineData("3056930000920004")]    // Diners Club test card number with two digit transposition 90 -> 09
    [InlineData("5555555225554444")]    // MasterCard test card number with two digit twin error 55 -> 22
@@ -252,6 +252,17 @@ public class LuhnAlgorithmTests
    [Fact]
    public void LuhnAlgorithm_Validate_ShouldReturnFalse_WhenCheckDigitCharacterIsNonDigit()
       => _sut.Validate("12345A").Should().BeFalse();
+
+   [Theory]
+   [InlineData("1404")]
+   [InlineData("1406628")]
+   [InlineData("1406625382")]
+   [InlineData("1406625380421")]
+   [InlineData("1406625380425514")]
+   [InlineData("1406625380425510285")]
+   [InlineData("1406625380425510282651")]
+   public void LuhnAlgorithm_Validate_ShouldReturnTrue_ForBenchmarkValues(String value)
+      => _sut.Validate(value).Should().BeTrue();
 
    #endregion
 
@@ -317,17 +328,6 @@ public class LuhnAlgorithmTests
       => _sut.Validate(value, _creditCardMask).Should().BeTrue();
 
    [Theory]
-   [InlineData("140 4")]
-   [InlineData("140 662 8")]
-   [InlineData("140 662 538 2")]
-   [InlineData("140 662 538 042 1")]
-   [InlineData("140 662 538 042 551 4")]
-   [InlineData("140 662 538 042 551 028 5")]
-   [InlineData("140 662 538 042 551 028 265 1")]
-   public void LuhnAlgorithm_ValidateMasked_ShouldReturnTrue_ForBenchmarkValues(String value)
-      => _sut.Validate(value, _groupsOfThreeMask).Should().BeTrue();
-
-   [Theory]
    [InlineData("3056 9300 9002 0004")]    // Diners Club test card number with two digit transposition 09 -> 90
    [InlineData("3056 9300 0092 0004")]    // Diners Club test card number with two digit transposition 90 -> 09
    [InlineData("5555 5552 2555 4444")]    // MasterCard test card number with two digit twin error 55 -> 22
@@ -363,6 +363,17 @@ public class LuhnAlgorithmTests
    [Fact]
    public void LuhnAlgorithm_ValidateMasked_ShouldReturnFalse_WhenCheckDigitCharacterIsNonDigit()
       => _sut.Validate("1234 5A", _creditCardMask).Should().BeFalse();
+
+   [Theory]
+   [InlineData("140 4")]
+   [InlineData("140 662 8")]
+   [InlineData("140 662 538 2")]
+   [InlineData("140 662 538 042 1")]
+   [InlineData("140 662 538 042 551 4")]
+   [InlineData("140 662 538 042 551 028 5")]
+   [InlineData("140 662 538 042 551 028 265 1")]
+   public void LuhnAlgorithm_ValidateMasked_ShouldReturnTrue_ForBenchmarkValues(String value)
+      => _sut.Validate(value, _groupsOfThreeMask).Should().BeTrue();
 
    #endregion
 }
