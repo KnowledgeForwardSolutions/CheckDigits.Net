@@ -357,4 +357,10 @@
   <data name="Modulus11ExtendedAlgorithmName" xml:space="preserve">
     <value>Modulus11Extended</value>
   </data>
+  <data name="Modulus11_27DecimalAlgorithmName" xml:space="preserve">
+    <value>Modulus11_27Decimal</value>
+  </data>
+  <data name="Modulus11_27DecimalAlgorithmDescription" xml:space="preserve">
+    <value>Modulus 11 algorithm uses repeating sequence of weights 2, 3, 4, 5, 6 and 7, starting from the right-most non-check digit character. Generated check digit will be 0-9. Values that result in a check value of 10 are rejected</value>
+  </data>
 </root>
