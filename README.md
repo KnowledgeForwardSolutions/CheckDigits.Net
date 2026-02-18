@@ -1094,6 +1094,9 @@ Wikipedia:
 
 #### Description
 
+NOTE: This algorithm has been depreciated in favor of using the Modulus11Extended 
+algorithm.
+
 The Modulus11 algorithm uses modulus 11 and each digit is weighted by its position
 in the value, starting from the right-most digit. Prior to the existence of the
 Verhoeff algorithm and the Damm algorithm it was popular because it was able to
