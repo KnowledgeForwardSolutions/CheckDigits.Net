@@ -1,4 +1,6 @@
-﻿namespace CheckDigits.Net.Tests.Unit.GeneralAlgorithms;
+﻿// Ignore Spelling: Nhs
+
+namespace CheckDigits.Net.Tests.Unit.GeneralAlgorithms;
 
 public class Modulus11DecimalAlgorithmTests
 {
@@ -53,6 +55,27 @@ public class Modulus11DecimalAlgorithmTests
       // Act/assert.
       _sut.TryCalculateCheckDigit("1234567890", out var checkDigit).Should().BeFalse();
       checkDigit.Should().Be('\0');
+   }
+
+   [Theory]
+   [InlineData("0", '0')]        // Sum = 0, mod = (11-(0%11))%11=0
+   [InlineData("1", '9')]        // Sum = 2, mod = (11-(1%11))%11=9
+   [InlineData("2", '7')]        // Sum = 4, mod = (11-(4%11))%11=7
+   [InlineData("3", '5')]        // Sum = 6, mod = (11-(6%11))%11=5
+   [InlineData("4", '3')]        // Sum = 8, mod = (11-(8%11))%11=3
+   [InlineData("5", '1')]        // Sum = 10, mod = (11-(10%11))%11=1
+   //[InlineData("6", 'X')]        // Sum = 12, mod = (11-(12%11))%11=X, X is not a valid check digit for this algorithm so test case commented out and would be expected to return false if included
+   [InlineData("7", '8')]        // Sum = 14, mod = (11-(14%11))%11=8
+   [InlineData("8", '6')]        // Sum = 16, mod = (11-(16%11))%11=6
+   [InlineData("9", '4')]        // Sum = 18, mod = (11-(18%11))%11=4
+   [InlineData("61", '2')]        // Sum = 20, mod = (11-(20%11))%11=2
+   public void Modulus11DecimalAlgorithm_TryCalculateCheckDigit_ShouldReturnAllPossibleValidCheckDigits(
+      String value,
+      Char expectedCheckDigit)
+   {
+      // Act/assert.
+      _sut.TryCalculateCheckDigit(value, out var checkDigit).Should().BeTrue();
+      checkDigit.Should().Be(expectedCheckDigit);
    }
 
    [Theory]
@@ -129,6 +152,13 @@ public class Modulus11DecimalAlgorithmTests
       checkDigit.Should().Be('\0');
    }
 
+   [Theory]
+   [InlineData("140")]
+   [InlineData("140662")]
+   [InlineData("140662538")]
+   public void Modulus11DecimalAlgorithm_TryCalculateCheckDigit_ShouldReturnTrue_ForBenchmarkValues(String value)
+      => _sut.TryCalculateCheckDigit(value, out _).Should().BeTrue();
+
    #endregion
 
    #region Validate Tests
@@ -199,7 +229,7 @@ public class Modulus11DecimalAlgorithmTests
    //
    [InlineData("24345610")]          // Example ISSN from Wikipedia
    [InlineData("10501240")]          // Example ISSN from https://www.issn.org/understanding-the-issn/what-is-an-issn/
-   public void Modulus11DecimalAlgorithm_Validate_ShouldReturnTrue_WhenModulus11HasRemainderOf10(String value)
+   public void Modulus11DecimalAlgorithm_Validate_ShouldReturnFalse_WhenModulus11HasRemainderOf10(String value)
       => _sut.Validate(value).Should().BeFalse();
 
    [Theory]
@@ -211,6 +241,38 @@ public class Modulus11DecimalAlgorithmTests
    [Fact]
    public void Modulus11DecimalAlgorithm_Validate_ShouldReturnFalse_WhenCheckDigitIsNonDigitCharacter()
       => _sut.Validate("100030000?").Should().BeFalse();    // Actual check digit would be 5
+
+   [Theory]
+   [InlineData("1406")]
+   [InlineData("1406620")]
+   [InlineData("1406625388")]
+   public void Modulus10DecimalAlgorithm_Validate_ShouldReturnTrue_ForBenchmarkValues(String value)
+      => _sut.Validate(value).Should().BeTrue();
+
+   [Theory]
+   [InlineData("9434765919")]    // Worked example from Wikipedia https://en.wikipedia.org/wiki/NHS_number#Format,_number_ranges,_and_check_characters
+   [InlineData("4505577104")]    // Example from https://www.clatterbridgecc.nhs.uk/patients/general-information/nhs-number#:~:text=Your%20NHS%20Number%20is%20printed,is%20an%20example%20number%20only).
+   [InlineData("5301194917")]    // Random NHS number from http://danielbayley.uk/nhs-number/
+   //
+   [InlineData("9434764919")]    // Valid NHS number (9434765919) with single digit transcription error 5 -> 4
+   [InlineData("4550577104")]    // Valid NHS number (4505577104) with two digit transposition error 05 -> 50
+   [InlineData("3946787881")]    // Valid NHS number (9876544321) with jump transposition 674 -> 467
+   [InlineData("8515568243")]    // Valid NHS number (8514468243) with twin error 44 -> 55
+   public void Modulus11ExtendedAlgorithm_Validate_ShouldProduceSameResultAsDepreciatedNhsAlgorithm(String value)
+   {
+      // Arrange.
+#pragma warning disable CS0618 // Type or member is obsolete
+      var deprecatedAlgorithm = new NhsAlgorithm();
+#pragma warning restore CS0618 // Type or member is obsolete
+      var extendedAlgorithm = new Modulus11ExtendedAlgorithm();
+
+      // Act.
+      var deprecatedResult = deprecatedAlgorithm.Validate(value);
+      var extendedResult = extendedAlgorithm.Validate(value);
+
+      // Assert.
+      extendedResult.Should().Be(deprecatedResult);
+   }
 
    #endregion
 
@@ -314,6 +376,13 @@ public class Modulus11DecimalAlgorithmTests
    [Fact]
    public void Modulus11DecimalAlgorithm_ValidateMasked_ShouldReturnFalse_WhenCheckDigitIsNonDigitCharacter()
       => _sut.Validate("100 030 000 X", _groupsOfThreeMask).Should().BeFalse();    // Actual check digit would be 5
+
+   [Theory]
+   [InlineData("140 6")]
+   [InlineData("140 662 0")]
+   [InlineData("140 662 538 8")]
+   public void Modulus10DecimalAlgorithm_ValidateMasked_ShouldReturnTrue_ForBenchmarkValues(String value)
+      => _sut.Validate(value, _groupsOfThreeMask).Should().BeTrue();
 
    #endregion
 }

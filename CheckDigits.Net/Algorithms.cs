@@ -1,4 +1,4 @@
-﻿// Ignore Spelling: Aba Cusip Damm Figi Iban Icao Isan Isin Luhn Ncd Nhs Npi Rtn Sedol Verhoeff
+﻿// Ignore Spelling: Aba Cusip Damm Figi Iban Icao Isan Isin Luhn Ncd Nhs Npi Rtn Sedol Verhoeff Vin
 
 namespace CheckDigits.Net;
 
@@ -87,16 +87,23 @@ public static class Algorithms
      new(() => new Modulus10_13Algorithm());
 
    private static readonly Lazy<ISingleCheckDigitAlgorithm> _modulus11 =
+#pragma warning disable CS0618 // Type or member is obsolete
       new(() => new Modulus11Algorithm());
+#pragma warning restore CS0618 // Type or member is obsolete
 
    private static readonly Lazy<ISingleCheckDigitAlgorithm> _modulus11Decimal =
       new(() => new Modulus11DecimalAlgorithm());
+
+   private static readonly Lazy<ISingleCheckDigitAlgorithm> _modulus11Extended =
+      new(() => new Modulus11ExtendedAlgorithm());
 
    private static readonly Lazy<ISingleCheckDigitAlgorithm> _ncd =
      new(() => new NcdAlgorithm());
 
    private static readonly Lazy<ICheckDigitAlgorithm> _nhs =
+#pragma warning disable CS0618 // Type or member is obsolete
      new(() => new NhsAlgorithm());
+#pragma warning restore CS0618 // Type or member is obsolete
 
    private static readonly Lazy<ICheckDigitAlgorithm> _npi =
      new(() => new NpiAlgorithm());
@@ -249,12 +256,18 @@ public static class Algorithms
    /// <summary>
    ///   Modulus11 algorithm.
    /// </summary>
+   [Obsolete("Modulus11 algorithm is depreciated in favor of Modulus11Extended algorithm.")]
    public static ISingleCheckDigitAlgorithm Modulus11 => _modulus11.Value;
 
    /// <summary>
    ///   Modulus11Decimal algorithm.
    /// </summary>
    public static ISingleCheckDigitAlgorithm Modulus11Decimal => _modulus11Decimal.Value;
+
+   /// <summary>
+   ///   Modulus11Extended algorithm.
+   /// </summary>
+   public static ISingleCheckDigitAlgorithm Modulus11Extended => _modulus11Extended.Value;
 
    /// <summary>
    ///   NOID (Nice Opaque Identifier) Check Digit algorithm.
@@ -264,6 +277,7 @@ public static class Algorithms
    /// <summary>
    ///   UK National Health Service (NHS) algorithm.
    /// </summary>
+   [Obsolete("Nhs algorithm is depreciated in favor of Modulus11Decimal algorithm.")]
    public static ICheckDigitAlgorithm Nhs => _nhs.Value;
 
    /// <summary>

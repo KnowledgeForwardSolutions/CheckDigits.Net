@@ -1,4 +1,6 @@
-﻿namespace CheckDigits.Net.Tests.Benchmarks;
+﻿#pragma warning disable CS0618 // Type or member is obsolete
+
+namespace CheckDigits.Net.Tests.Benchmarks;
 
 [MemoryDiagnoser]
 public class OptimizeBenchmarks
@@ -6,7 +8,9 @@ public class OptimizeBenchmarks
    //private static readonly Iso7064Mod1271_36Algorithm _algorithm = new();
 
    private static readonly NhsAlgorithm _nhsAlgorithm = new();
+   private static readonly Modulus11Algorithm _modulus11Algorithm = new();
    private static readonly Modulus11DecimalAlgorithm _modulus11DecimalAlgorithm = new();
+   private static readonly Modulus11ExtendedAlgorithm _modulus11ExtendedAlgorithm = new();
 
    private static readonly ICheckDigitMask _groupsOfThreeMask = new GroupsOfThreeCheckDigitMask();
 
@@ -40,23 +44,45 @@ public class OptimizeBenchmarks
    //[Benchmark]
    //public void TryCalculate3() => _ = _algorithm.TryCalculateCheckDigits3(TryValue, out var ch, out var ch2);
 
-   [Benchmark(Baseline = true)]
-   [Arguments("9434765919")]
-   [Arguments("4505577104")]
-   [Arguments("5301194917")]
+   //[Benchmark(Baseline = true)]
+   //[Arguments("1406")]
+   //[Arguments("1406620")]
+   //[Arguments("1406625388")]
+   //public void Modulus11Validate(String value) => _ = _modulus11Algorithm.Validate(value);
+
+   //[Benchmark(Baseline = true)]
+   //[Arguments("1406")]
+   //[Arguments("1406620")]
+   //[Arguments("1406625388")]
+   //public void Modulus11ExtendedValidate0(String value) => _ = _modulus11ExtendedAlgorithm.Validate0(value);
+
+   [Benchmark()]
+   [Arguments("1406")]
+   [Arguments("1406620")]
+   [Arguments("1406625388")]
+   public void Modulus11ExtendedValidate(String value) => _ = _modulus11ExtendedAlgorithm.Validate(value);
+
+   //[Benchmark()]
+   //[Arguments("1406")]
+   //[Arguments("1406620")]
+   //[Arguments("1406625388")]
+   //public void Modulus11ExtendedValidate1(String value) => _ = _modulus11ExtendedAlgorithm.Validate1(value);
+
+   [Benchmark()]
+   [Arguments("1406625388")]
    public void NhsValidate(String value) => _ = _nhsAlgorithm.Validate(value);
 
    [Benchmark()]
-   [Arguments("9434765919")]
-   [Arguments("4505577104")]
-   [Arguments("5301194917")]
+   [Arguments("1406")]
+   [Arguments("1406620")]
+   [Arguments("1406625388")]
    public void Modulus11DecimalValidate(String value) => _ = _modulus11DecimalAlgorithm.Validate(value);
 
-   [Benchmark()]
-   [Arguments("943 476 591 9")]
-   [Arguments("450 557 710 4")]
-   [Arguments("530 119 491 7")]
-   public void Modulus11DecimalValidateMasked(String value) 
-      => _ = _modulus11DecimalAlgorithm.Validate(value, _groupsOfThreeMask);
+   //[Benchmark()]
+   //[Arguments("140 6")]
+   //[Arguments("140 662 0")]
+   //[Arguments("140 662 538 8")]
+   //public void Modulus11ExtendedValidateMasked(String value) 
+   //   => _ = _modulus11ExtendedAlgorithm.Validate(value, _groupsOfThreeMask);
 
 }

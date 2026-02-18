@@ -149,6 +149,13 @@ public class Modulus11ExtendedAlgorithmTests
    }
 
    [Theory]
+   [InlineData("140")]
+   [InlineData("140662")]
+   [InlineData("140662538")]
+   public void Modulus11ExtendedAlgorithm_TryCalculateCheckDigit_ShouldReturnTrue_ForBenchmarkValues(String value)
+      => _sut.TryCalculateCheckDigit(value, out _).Should().BeTrue();
+
+   [Theory]
    [InlineData("156865652")]    // ISBN-10 Island in the Stream of Time, S. M. Sterling
    [InlineData("044100560")]    // ISBN-10 The Warlock in Spite of Himself, Christopher Stasheff
    [InlineData("071410544")]    // ISBN-10 The Sutton Hoo Ship Burial, Angela Care Evans
@@ -162,7 +169,9 @@ public class Modulus11ExtendedAlgorithmTests
    public void Modulus11ExtendedAlgorithm_TryCalculateCheckDigit_ShouldProduceSameResultAsDepreciatedModulus11Algorithm(String value)
    {
       // Arrange.
+#pragma warning disable CS0618 // Type or member is obsolete
       var deprecatedAlgorithm = new Modulus11Algorithm();
+#pragma warning restore CS0618 // Type or member is obsolete
       var extendedAlgorithm = new Modulus11ExtendedAlgorithm();
 
       // Act.
@@ -171,7 +180,7 @@ public class Modulus11ExtendedAlgorithmTests
 
       // Assert.
       extendedResult.Should().Be(deprecatedResult);
-      extendedCheckDigit.Should().Be(extendedCheckDigit);
+      extendedCheckDigit.Should().Be(depreciatedCheckDigit);
    }
 
    #endregion
@@ -212,6 +221,9 @@ public class Modulus11ExtendedAlgorithmTests
       => _sut.Validate(value).Should().BeTrue();
 
    [Theory]
+   [InlineData("1406")]
+   [InlineData("1406620")]
+   [InlineData("1406625388")]
    [InlineData("1568656521")]    // ISBN-10 Island in the Stream of Time, S. M. Sterling
    [InlineData("0441005608")]    // ISBN-10 The Warlock in Spite of Himself, Christopher Stasheff
    [InlineData("0714105449")]    // ISBN-10 The Sutton Hoo Ship Burial, Angela Care Evans
@@ -260,6 +272,13 @@ public class Modulus11ExtendedAlgorithmTests
       => _sut.Validate("050027293x").Should().BeFalse();    // SBN-10 Roman London, Peter Marsden
 
    [Theory]
+   [InlineData("1406")]
+   [InlineData("1406620")]
+   [InlineData("1406625388")]
+   public void Modulus10ExtendedAlgorithm_Validate_ShouldReturnTrue_ForBenchmarkValues(String value)
+      => _sut.Validate(value).Should().BeTrue();
+
+   [Theory]
    [InlineData("1568656521")]    // ISBN-10 Island in the Stream of Time, S. M. Sterling
    [InlineData("0441005608")]    // ISBN-10 The Warlock in Spite of Himself, Christopher Stasheff
    [InlineData("0714105449")]    // ISBN-10 The Sutton Hoo Ship Burial, Angela Care Evans
@@ -282,7 +301,9 @@ public class Modulus11ExtendedAlgorithmTests
    public void Modulus11ExtendedAlgorithm_Validate_ShouldProduceSameResultAsDepreciatedModulus11Algorithm(String value)
    {
       // Arrange.
+#pragma warning disable CS0618 // Type or member is obsolete
       var deprecatedAlgorithm = new Modulus11Algorithm();
+#pragma warning restore CS0618 // Type or member is obsolete
       var extendedAlgorithm = new Modulus11ExtendedAlgorithm();
 
       // Act.
@@ -399,6 +420,13 @@ public class Modulus11ExtendedAlgorithmTests
    [Fact]
    public void Modulus11ExtendedAlgorithm_ValidateMasked_ShouldReturnFalse_WhenCheckDigitIsLowerCaseXInsteadOfUpperCase()
       => _sut.Validate("050 027 293 x", _groupsOfThreeMask).Should().BeFalse();    // SBN-10 Roman London, Peter Marsden
+
+   [Theory]
+   [InlineData("140 6")]
+   [InlineData("140 662 0")]
+   [InlineData("140 662 538 8")]
+   public void Modulus10DecimalAlgorithm_ValidateMasked_ShouldReturnTrue_ForBenchmarkValues(String value)
+      => _sut.Validate(value, _groupsOfThreeMask).Should().BeTrue();
 
    #endregion
 }

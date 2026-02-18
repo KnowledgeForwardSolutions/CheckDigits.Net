@@ -1,4 +1,4 @@
-﻿// Ignore Spelling: Aba Cusip Damm Figi Iban Icao Isan Isin Luhn Ncd Nhs Npi Rtn Sedol Verhoeff
+﻿// Ignore Spelling: Aba Cusip Damm Figi Iban Icao Isan Isin Luhn Ncd Nhs Npi Rtn Sedol Verhoeff Vin
 
 namespace CheckDigits.Net.Tests.Unit;
 
@@ -372,6 +372,7 @@ public class AlgorithmsTests
    // ==========================================================================
    // ==========================================================================
 
+#pragma warning disable CS0618 // Type or member is obsolete
    [Fact]
    public void Algorithms_Modulus11_ShouldNotBeNull()
       => Algorithms.Modulus11.Should().NotBeNull();
@@ -379,6 +380,35 @@ public class AlgorithmsTests
    [Fact]
    public void Algorithms_Modulus11_ShouldBeExpectedType()
       => Algorithms.Modulus11.Should().BeOfType<Modulus11Algorithm>();
+#pragma warning restore CS0618 // Type or member is obsolete
+
+   #endregion
+
+   #region Modulus11Decimal Property Tests
+   // ==========================================================================
+   // ==========================================================================
+
+   [Fact]
+   public void Algorithms_Modulus11Decimal_ShouldNotBeNull()
+      => Algorithms.Modulus11Decimal.Should().NotBeNull();
+
+   [Fact]
+   public void Algorithms_Modulus11Decimal_ShouldBeExpectedType()
+      => Algorithms.Modulus11Decimal.Should().BeOfType<Modulus11DecimalAlgorithm>();
+
+   #endregion
+
+   #region Modulus11Extended Property Tests
+   // ==========================================================================
+   // ==========================================================================
+
+   [Fact]
+   public void Algorithms_Modulus11Extended_ShouldNotBeNull()
+      => Algorithms.Modulus11Extended.Should().NotBeNull();
+
+   [Fact]
+   public void Algorithms_Modulus11Extended_ShouldBeExpectedType()
+      => Algorithms.Modulus11Extended.Should().BeOfType<Modulus11ExtendedAlgorithm>();
 
    #endregion
 
@@ -400,6 +430,7 @@ public class AlgorithmsTests
    // ==========================================================================
    // ==========================================================================
 
+#pragma warning disable CS0618 // Type or member is obsolete
    [Fact]
    public void Algorithms_Nhs_ShouldNotBeNull()
       => Algorithms.Nhs.Should().NotBeNull();
@@ -407,6 +438,7 @@ public class AlgorithmsTests
    [Fact]
    public void Algorithms_Nhs_ShouldBeExpectedType()
       => Algorithms.Nhs.Should().BeOfType<NhsAlgorithm>();
+#pragma warning restore CS0618 // Type or member is obsolete
 
    #endregion
 

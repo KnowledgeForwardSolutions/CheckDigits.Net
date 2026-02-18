@@ -31,4 +31,32 @@ public class MaskedAlgorithmsTests
       => MaskedAlgorithms.Modulus10_13.Should().BeOfType<Modulus10_13Algorithm>();
 
    #endregion
+
+   #region Modulus11Decimal Property Tests
+   // ==========================================================================
+   // ==========================================================================
+
+   [Fact]
+   public void Algorithms_Modulus11Decimal_ShouldNotBeNull()
+      => Algorithms.Modulus11Decimal.Should().NotBeNull();
+
+   [Fact]
+   public void Algorithms_Modulus11Decimal_ShouldBeExpectedType()
+      => Algorithms.Modulus11Decimal.Should().BeOfType<Modulus11DecimalAlgorithm>();
+
+   #endregion
+
+   #region Modulus11Extended Property Tests
+   // ==========================================================================
+   // ==========================================================================
+
+   [Fact]
+   public void Algorithms_Modulus11Extended_ShouldNotBeNull()
+      => Algorithms.Modulus11Extended.Should().NotBeNull();
+
+   [Fact]
+   public void Algorithms_Modulus11Extended_ShouldBeExpectedType()
+      => Algorithms.Modulus11Extended.Should().BeOfType<Modulus11ExtendedAlgorithm>();
+
+   #endregion
 }

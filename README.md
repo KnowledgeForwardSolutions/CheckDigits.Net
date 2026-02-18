@@ -1657,12 +1657,16 @@ benchmarks do not cover lengths greater than 10.
 | Modulus10_2           | 1406625389                    | 4.048 ns  | 0.0270 ns | 0.0253 ns | -         |
 |                       |                               |           |           |           |           |
 | Modulus11             | 1406                          | 2.948 ns  | 0.0241 ns | 0.0214 ns | -         |
-| Modulus11             | 1406625                       | 4.062 ns  | 0.0213 ns | 0.0200 ns | -         |
+| Modulus11             | 1406620                       | 4.062 ns  | 0.0213 ns | 0.0200 ns | -         |
 | Modulus11             | 1406625388                    | 4.506 ns  | 0.0278 ns | 0.0247 ns | -         |
 |                       |                               |           |           |           |           |
 | Modulus11Decimal      | 1406                          | 1.892 ns  | 0.0528 ns | 0.0791 ns | -         |
-| Modulus11Decimal      | 1406625                       | 3.126 ns  | 0.0801 ns | 0.1403 ns | -         |
+| Modulus11Decimal      | 1406620                       | 3.126 ns  | 0.0801 ns | 0.1403 ns | -         |
 | Modulus11Decimal      | 1406625388                    | 4.123 ns  | 0.0335 ns | 0.0313 ns | -         |
+|                       |                               |           |           |           |           |
+| Modulus11Extended     | 1406                          | 2.316 ns  | 0.0099 ns | 0.0093 ns | -         |
+| Modulus11Extended     | 1406620                       | 3.931 ns  | 0.0054 ns | 0.0051 ns | -         |
+| Modulus11Extended     | 1406625388                    | 4.563 ns  | 0.0169 ns | 0.0158 ns | -         |
 |                       |                               |           |           |           |           |
 | Verhoeff              | 1401                          | 4.827 ns  | 0.0255 ns | 0.0239 ns | -         |
 | Verhoeff              | 1406625                       | 6.848 ns  | 0.0410 ns | 0.0383 ns | -         |
@@ -1856,8 +1860,12 @@ public class GroupsOfThreeCheckDigitMask : ICheckDigitMask
 | Modulus10_13          | 140 662 538 042 551 028 265 7 | 14.315 ns | 0.1808 ns | 0.1691 ns | -         |
 |                       |                               |           |           |           |           |
 | Modulus11Decimal      | 140 6                         |  4.200 ns | 0.0472 ns | 0.0442 ns | -         |
-| Modulus11Decimal      | 140 662 5                     |  5.134 ns | 0.0596 ns | 0.0529 ns | -         |
+| Modulus11Decimal      | 140 662 0                     |  5.134 ns | 0.0596 ns | 0.0529 ns | -         |
 | Modulus11Decimal      | 140 662 538 8                 |  6.342 ns | 0.0429 ns | 0.0401 ns | -         |
+|                       |                               |           |           |           |           |
+| Modulus11Extended     | 140 6                         |  4.317 ns | 0.0073 ns | 0.0068 ns | -         |
+| Modulus11Extended     | 140 662 0                     |  5.268 ns | 0.0358 ns | 0.0335 ns | -         |
+| Modulus11Extended     | 140 662 538 8                 |  6.603 ns | 0.0696 ns | 0.0651 ns | -         |
 
 # Release History/Release Notes
 

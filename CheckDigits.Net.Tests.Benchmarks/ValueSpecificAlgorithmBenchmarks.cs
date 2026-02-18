@@ -93,9 +93,11 @@ public class ValueSpecificAlgorithmBenchmarks
       yield return [Algorithms.Isin, Algorithms.Isin.AlgorithmName, "AU0000XVGZA3"];
       yield return [Algorithms.Isin, Algorithms.Isin.AlgorithmName, "GB0002634946"];
 
+#pragma warning disable CS0618 // Type or member is obsolete
       yield return [Algorithms.Nhs, Algorithms.Nhs.AlgorithmName, "9434765919"];
       yield return [Algorithms.Nhs, Algorithms.Nhs.AlgorithmName, "4505577104"];
       yield return [Algorithms.Nhs, Algorithms.Nhs.AlgorithmName, "5301194917"];
+#pragma warning restore CS0618 // Type or member is obsolete
 
       yield return [Algorithms.Npi, Algorithms.Npi.AlgorithmName, "1234567893"];
       yield return [Algorithms.Npi, Algorithms.Npi.AlgorithmName, "1245319599"];
