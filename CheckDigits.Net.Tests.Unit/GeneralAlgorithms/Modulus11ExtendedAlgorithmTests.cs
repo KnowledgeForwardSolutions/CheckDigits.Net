@@ -275,7 +275,7 @@ public class Modulus11ExtendedAlgorithmTests
    [InlineData("1406")]
    [InlineData("1406620")]
    [InlineData("1406625388")]
-   public void Modulus10ExtendedAlgorithm_Validate_ShouldReturnTrue_ForBenchmarkValues(String value)
+   public void Modulus11ExtendedAlgorithm_Validate_ShouldReturnTrue_ForBenchmarkValues(String value)
       => _sut.Validate(value).Should().BeTrue();
 
    [Theory]
@@ -425,7 +425,7 @@ public class Modulus11ExtendedAlgorithmTests
    [InlineData("140 6")]
    [InlineData("140 662 0")]
    [InlineData("140 662 538 8")]
-   public void Modulus10DecimalAlgorithm_ValidateMasked_ShouldReturnTrue_ForBenchmarkValues(String value)
+   public void Modulus11ExtendedAlgorithm_ValidateMasked_ShouldReturnTrue_ForBenchmarkValues(String value)
       => _sut.Validate(value, _groupsOfThreeMask).Should().BeTrue();
 
    #endregion

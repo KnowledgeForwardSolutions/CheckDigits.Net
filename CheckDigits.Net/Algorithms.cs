@@ -256,7 +256,7 @@ public static class Algorithms
    /// <summary>
    ///   Modulus11 algorithm.
    /// </summary>
-   [Obsolete("Modulus11 algorithm is depreciated in favor of Modulus11Extended algorithm.")]
+   [Obsolete("Modulus11 algorithm is deprecated in favor of Modulus11Extended algorithm.")]
    public static ISingleCheckDigitAlgorithm Modulus11 => _modulus11.Value;
 
    /// <summary>
@@ -277,7 +277,7 @@ public static class Algorithms
    /// <summary>
    ///   UK National Health Service (NHS) algorithm.
    /// </summary>
-   [Obsolete("Nhs algorithm is depreciated in favor of Modulus11Decimal algorithm.")]
+   [Obsolete("Nhs algorithm is deprecated in favor of Modulus11Decimal algorithm.")]
    public static ICheckDigitAlgorithm Nhs => _nhs.Value;
 
    /// <summary>

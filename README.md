@@ -51,7 +51,7 @@ let us know. Or contribute to the CheckDigits.Net repository: https://github.com
     * [Modulus10_13 Algorithm (UPC/EAN/ISBN-13/etc.)](#modulus10_13-algorithm)
     * [Modulus11 Algorithm (ISBN-10/ISSN/etc.)](#modulus11-algorithm)
     * [Modulus11Decimal Algorithm (NHS Number/etc.)](#modulus11decimal-algorithm)
-    * [Modulus11Extended Algorithm (ISBN-10/ISSN/etc.)](#modulus11Extended-algorithm)
+    * [Modulus11Extended Algorithm (ISBN-10/ISSN/etc.)](#modulus11extended-algorithm)
     * [NHS (UK National Health Service) Algorithm](#nhs-algorithm)
     * [NOID Check Digit Algorithm](#noid-check-digit-algorithm)
     * [NPI (US National Provider Identifier) Algorithm](#npi-algorithm)
@@ -164,7 +164,7 @@ The ISO/IEC 7064:2003 standard is available at https://www.iso.org/standard/3153
 * [Modulus10_13 Algorithm (UPC/EAN/ISBN-13/etc.)](#modulus10_13-algorithm)
 * [Modulus11 Algorithm (ISBN-10/ISSN/etc.)](#modulus11-algorithm)
 * [Modulus11Decimal Algorithm (NHS Number/etc.)](#modulus11decimal-algorithm)
-* [Modulus11Extended Algorithm (ISBN-10/ISSN/etc.)](#modulus11Extended-algorithm)
+* [Modulus11Extended Algorithm (ISBN-10/ISSN/etc.)](#modulus11extended-algorithm)
 * [NHS (UK National Health Service) Algorithm](#nhs-algorithm)
 * [NOID Check Digit Algorithm](#noid-check-digit-algorithm)
 * [NPI (US National Provider Identifier) Algorithm](#npi-algorithm)
@@ -198,7 +198,7 @@ The ISO/IEC 7064:2003 standard is available at https://www.iso.org/standard/3153
 | IMEI				                                     | [Luhn Algorithm](#luhn-algorithm) |
 | IMO Number                                             | [Modulus10_2 Algorithm](#modulus10_2-algorithm) |
 | ISAN                                                   | [ISAN Algorithm](#isan-algorithm) |
-| ISBN-10				                                 | [Modulus11Extended Algorithm](#modulus11Extended-algorithm) or [Modulus11 Algorithm](#modulus11-algorithm) |
+| ISBN-10				                                 | [Modulus11Extended Algorithm](#modulus11extended-algorithm) or [Modulus11 Algorithm](#modulus11-algorithm) |
 | ISBN-13				                                 | [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
 | ISBT Donation Identification Number                    | [ISO/IEC 7064 MOD 37-2 Algorithm](#isoiec-7064-mod-37-2-algorithm) |
 | ISIN                                                   | [ISIN Algorithm](#isin-algorithm) |
@@ -1094,7 +1094,7 @@ Wikipedia:
 
 #### Description
 
-NOTE: This algorithm has been depreciated in favor of using the Modulus11Extended 
+NOTE: This algorithm has been deprecated in favor of using the Modulus11Extended 
 algorithm.
 
 The Modulus11 algorithm uses modulus 11 and each digit is weighted by its position
@@ -1190,7 +1190,7 @@ possible values must be rejected, or approximately 9.09% of all values.
 The Modulus11Extended algorithm takes the former approach and the `TryCalculateCheckDigit`
 and `Validate` allow values that 'X' as an extended check character.
 
-Modulus11Extended replaces the depreciated Modulus11 algorithm.
+Modulus11Extended replaces the deprecated Modulus11 algorithm.
 
 #### Details
 
@@ -1216,7 +1216,7 @@ Wikipedia:
 
 #### Description
 
-NOTE: This algorithm has been depreciated in favor of using the Modulus11Decimal 
+NOTE: This algorithm has been deprecated in favor of using the Modulus11Decimal 
 algorithm.
 
 UK National Health Service (NHS) identifiers use a variation of the Modulus 11 

@@ -6,7 +6,7 @@
 /// </summary>
 /// <remarks>
 ///   <para>
-///   This algorithm is depreciated in favor of the 
+///   This algorithm is deprecated in favor of the 
 ///   <see cref="Modulus11ExtendedAlgorithm"/> algorithm. Modulus11Extended 
 ///   produces the same results as this algorithm but is slightly more efficient 
 ///   and follows the naming convention (Decimal/Extended) used for other
@@ -32,7 +32,7 @@
 ///   and 10 characters for validating a value that contains a check digit.
 ///   </para>
 /// </remarks>
-[Obsolete("Modulus11Algorithm is depreciated in favor of Modulus11ExtendedAlgorithm.")]
+[Obsolete("Modulus11Algorithm is deprecated in favor of Modulus11ExtendedAlgorithm.")]
 public sealed class Modulus11Algorithm : ISingleCheckDigitAlgorithm
 {
    private const Int32 _tryCalculateMaxLength = 9;

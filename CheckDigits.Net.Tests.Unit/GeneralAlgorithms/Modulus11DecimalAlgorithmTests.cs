@@ -246,7 +246,7 @@ public class Modulus11DecimalAlgorithmTests
    [InlineData("1406")]
    [InlineData("1406620")]
    [InlineData("1406625388")]
-   public void Modulus10DecimalAlgorithm_Validate_ShouldReturnTrue_ForBenchmarkValues(String value)
+   public void Modulus11DecimalAlgorithm_Validate_ShouldReturnTrue_ForBenchmarkValues(String value)
       => _sut.Validate(value).Should().BeTrue();
 
    [Theory]
@@ -351,7 +351,7 @@ public class Modulus11DecimalAlgorithmTests
    [InlineData("394 678 788 1")]    // Valid NHS number (9876544321) with jump transposition 674 -> 467
    [InlineData("851 556 824 3")]    // Valid NHS number (8514468243) with twin error 44 -> 55
    public void Modulus11DecimalAlgorithm_ValidateMasked_ShouldReturnFalse_WhenInputContainsDetectableError(String value)
-      => _sut.Validate(value).Should().BeFalse();
+      => _sut.Validate(value, _groupsOfThreeMask).Should().BeFalse();
 
    [Fact]
    public void Modulus11DecimalAlgorithm_ValidateMasked_ShouldReturnTrue_WhenInputIsAllZeros()
@@ -363,7 +363,7 @@ public class Modulus11DecimalAlgorithmTests
    //
    [InlineData("243 456 10")]       // Example ISSN from Wikipedia
    [InlineData("105 012 40")]       // Example ISSN from https://www.issn.org/understanding-the-issn/what-is-an-issn/
-   public void Modulus11DecimalAlgorithm_ValidateMasked_ShouldReturnTrue_WhenModulus11HasRemainderOf10(String value)
+   public void Modulus11DecimalAlgorithm_ValidateMasked_ShouldReturnFalse_WhenModulus11HasRemainderOf10(String value)
       => _sut.Validate(value, _groupsOfThreeMask).Should().BeFalse();
 
    [Theory]
@@ -381,7 +381,7 @@ public class Modulus11DecimalAlgorithmTests
    [InlineData("140 6")]
    [InlineData("140 662 0")]
    [InlineData("140 662 538 8")]
-   public void Modulus10DecimalAlgorithm_ValidateMasked_ShouldReturnTrue_ForBenchmarkValues(String value)
+   public void Modulus11DecimalAlgorithm_ValidateMasked_ShouldReturnTrue_ForBenchmarkValues(String value)
       => _sut.Validate(value, _groupsOfThreeMask).Should().BeTrue();
 
    #endregion

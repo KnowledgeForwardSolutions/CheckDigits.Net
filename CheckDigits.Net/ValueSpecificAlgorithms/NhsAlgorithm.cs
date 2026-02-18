@@ -9,13 +9,13 @@ namespace CheckDigits.Net.ValueSpecificAlgorithms;
 /// </summary>
 /// <remarks>
 ///   <para>
-///   This algorithm is depreciated in favor of the 
+///   This algorithm is deprecated in favor of the 
 ///   <see cref="Modulus11DecimalAlgorithm"/> algorithm. Modulus11DecimalAlgorithm
-///   is slightly more efficient and more flexibe than this algorithm and follows 
+///   is slightly more efficient and more flexible than this algorithm and follows 
 ///   the naming convention (Decimal/Extended) used for other modulus 11 
 ///   algorithms in this library. Modulus11DecimalAlgorithm removes the fixed 10 
 ///   character length requirement of NhsAlgorithm and instead allows values of
-///   length 2 to 10 characters for validation. To completly replicate the 
+///   length 2 to 10 characters for validation. To completely replicate the 
 ///   behavior of NhsAlgorithm you will need to add your own length check to 
 ///   ensure that the value being validated is exactly 10 characters long.
 ///   </para>
@@ -41,7 +41,7 @@ namespace CheckDigits.Net.ValueSpecificAlgorithms;
 ///   Value length is 10 characters.
 ///   </para>
 /// </remarks>
-[Obsolete("NhsAlgorithm is depreciated in favor of Modulus11DecimalAlgorithm.")]
+[Obsolete("NhsAlgorithm is deprecated in favor of Modulus11DecimalAlgorithm.")]
 public sealed class NhsAlgorithm : ICheckDigitAlgorithm
 {
    private const Int32 _expectedLength = 10;
