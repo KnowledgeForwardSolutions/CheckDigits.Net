@@ -1525,6 +1525,14 @@ benchmarks do not cover lengths greater than 10.
 | Modulus11             | 140662                | 3.323 ns  | 0.0300 ns | 0.0280 ns | -         |
 | Modulus11             | 140662538             | 4.341 ns  | 0.0301 ns | 0.0281 ns | -         |
 |                       |                       |           |           |           |           |
+| Modulus11_27Decimal   | 140                   | 3.292 ns  | 0.0590 ns | 0.0523 ns | -         |
+| Modulus11_27Decimal   | 140662                | 4.785 ns  | 0.0273 ns | 0.0255 ns | -         |
+| Modulus11_27Decimal   | 140662538             | 5.915 ns  | 0.0624 ns | 0.0583 ns | -         |
+| Modulus11_27Decimal   | 140662538042          | 7.329 ns  | 0.0601 ns | 0.0502 ns | -         |
+| Modulus11_27Decimal   | 140662538042551       | 8.629 ns  | 0.0962 ns | 0.0900 ns | -         |
+| Modulus11_27Decimal   | 140662538042551028    | 9.721 ns  | 0.1167 ns | 0.1035 ns | -         |
+| Modulus11_27Decimal   | 140662538042551028265 | 11.694 ns | 0.1306 ns | 0.1090 ns | -         |
+|                       |                       |           |           |           |           |
 | Modulus11Decimal      | 140                   | 2.322 ns  | 0.0348 ns | 0.0325 ns | -         |
 | Modulus11Decimal      | 140662                | 3.220 ns  | 0.0485 ns | 0.0453 ns | -         |
 | Modulus11Decimal      | 140662538             | 4.239 ns  | 0.0544 ns | 0.0509 ns | -         |
@@ -1706,6 +1714,14 @@ benchmarks do not cover lengths greater than 10.
 | Modulus11             | 1406                          | 2.948 ns  | 0.0241 ns | 0.0214 ns | -         |
 | Modulus11             | 1406620                       | 4.062 ns  | 0.0213 ns | 0.0200 ns | -         |
 | Modulus11             | 1406625388                    | 4.506 ns  | 0.0278 ns | 0.0247 ns | -         |
+|                       |                               |           |           |           |           |
+| Modulus11_27Decimal   | 1406                          | 2.978 ns  | 0.0309 ns | 0.0274 ns | -         |
+| Modulus11_27Decimal   | 1406620                       | 4.800 ns  | 0.0882 ns | 0.0825 ns | -         |
+| Modulus11_27Decimal   | 1406625385                    | 5.773 ns  | 0.0791 ns | 0.0740 ns | -         |
+| Modulus11_27Decimal   | 1406625380421                 | 6.889 ns  | 0.0383 ns | 0.0340 ns | -         |
+| Modulus11_27Decimal   | 1406625380425510              | 8.146 ns  | 0.0545 ns | 0.0483 ns | -         |
+| Modulus11_27Decimal   | 1406625380425510288           | 9.203 ns  | 0.0955 ns | 0.0846 ns | -         |
+| Modulus11_27Decimal   | 1406625380425510282650        | 10.384 ns | 0.0623 ns | 0.0521 ns | -         |
 |                       |                               |           |           |           |           |
 | Modulus11Decimal      | 1406                          | 1.892 ns  | 0.0528 ns | 0.0791 ns | -         |
 | Modulus11Decimal      | 1406620                       | 3.126 ns  | 0.0801 ns | 0.1403 ns | -         |
@@ -1905,6 +1921,14 @@ public class GroupsOfThreeCheckDigitMask : ICheckDigitMask
 | Modulus10_13          | 140 662 538 042 551 8         | 10.977 ns | 0.1084 ns | 0.1014 ns | -         |
 | Modulus10_13          | 140 662 538 042 551 028 8     | 12.475 ns | 0.1031 ns | 0.0965 ns | -         |
 | Modulus10_13          | 140 662 538 042 551 028 265 7 | 14.315 ns | 0.1808 ns | 0.1691 ns | -         |
+|                       |                               |           |           |           |           |
+| Modulus11_27Decimal   | 140 6                         |  4.353 ns | 0.0255 ns | 0.0213 ns | -         |
+| Modulus11_27Decimal   | 140 662 0                     |  6.006 ns | 0.0760 ns | 0.0711 ns | -         |
+| Modulus11_27Decimal   | 140 662 538 5                 |  7.363 ns | 0.0624 ns | 0.0521 ns | -         |
+| Modulus11_27Decimal   | 140 662 538 042 1             |  9.900 ns | 0.2009 ns | 0.1880 ns | -         |
+| Modulus11_27Decimal   | 140 662 538 042 551 0         | 11.595 ns | 0.0500 ns | 0.0417 ns | -         |
+| Modulus11_27Decimal   | 140 662 538 042 551 028 8     | 12.468 ns | 0.1190 ns | 0.1055 ns | -         |
+| Modulus11_27Decimal   | 140 662 538 042 551 028 265 0 | 14.361 ns | 0.0864 ns | 0.0808 ns | -         |
 |                       |                               |           |           |           |           |
 | Modulus11Decimal      | 140 6                         |  4.200 ns | 0.0472 ns | 0.0442 ns | -         |
 | Modulus11Decimal      | 140 662 0                     |  5.134 ns | 0.0596 ns | 0.0529 ns | -         |
