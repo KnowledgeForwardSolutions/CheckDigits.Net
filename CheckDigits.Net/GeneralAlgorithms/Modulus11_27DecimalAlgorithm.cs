@@ -93,6 +93,42 @@ public class Modulus11_27DecimalAlgorithm : ISingleCheckDigitAlgorithm, IMaskedC
    /// <inheritdoc/>
    public Boolean Validate(String value, ICheckDigitMask mask)
    {
-      throw new NotImplementedException();
+      if (String.IsNullOrEmpty(value))
+      {
+         return false;
+      }
+
+      var sum = 0;
+      var weightIndex = new ModulusInt32(_weights.Length);
+      var processedDigits = 0;
+      for (var charIndex = value.Length - 2; charIndex >= 0; charIndex--)
+      {
+         if (mask.ExcludeCharacter(charIndex))
+         {
+            continue;
+         }
+         var currentDigit = value[charIndex].ToIntegerDigit();
+         if (currentDigit.IsInvalidDigit())
+         {
+            return false;
+         }
+
+         sum += currentDigit * _weights[weightIndex];
+         weightIndex++;
+         processedDigits++;
+      }
+      if (processedDigits == 0)
+      {
+         return false;
+      }
+
+      var checkValue = value[^1].ToIntegerDigit();
+      if (checkValue.IsInvalidDigit())
+      {
+         return false;
+      }
+      sum += checkValue;
+
+      return (sum % 11) == 0;
    }
 }
