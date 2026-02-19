@@ -1130,10 +1130,10 @@ Wikipedia:
 
 ### Modulus11_27Decimal Algorithm
 
-The Modulus11_27Decimal algorithm uses modulus 11 and each digit is weighted by 
-the repeating sequence of weights 2, 3, 4, 5, 6, 7 starting with weight 2 for the 
-right-most non-check digit character. The sequence of weights is repeated as 
-necessary for values longer than 6 characters.
+The Modulus11_27Decimal algorithm uses modulus 11 and the IBM modulus 11 weighting
+scheme where each digit is weighted by the repeating sequence of weights 2, 3, 4, 
+5, 6, 7 starting with weight 2 for the right-most non-check digit character. The 
+sequence of weights is repeated as necessary for values longer than 6 characters.
 
 Prior to the existence of the Verhoeff algorithm and the Damm algorithm, modulus 
 11 algorithms were popular because they were very capable of detecting two digit 

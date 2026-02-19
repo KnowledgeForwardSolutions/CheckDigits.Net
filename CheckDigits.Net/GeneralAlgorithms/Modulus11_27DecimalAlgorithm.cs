@@ -43,6 +43,9 @@
 /// </remarks>
 public class Modulus11_27DecimalAlgorithm : ISingleCheckDigitAlgorithm, IMaskedCheckDigitAlgorithm
 {
+   private const Int32 _validateMinLength = 2;
+   private static readonly Int32[] _weights = [2, 3, 4, 5, 6, 7];
+
    /// <inheritdoc/>
    public String AlgorithmDescription => Resources.Modulus11_27DecimalAlgorithmDescription;
 
@@ -58,7 +61,33 @@ public class Modulus11_27DecimalAlgorithm : ISingleCheckDigitAlgorithm, IMaskedC
    /// <inheritdoc/>
    public Boolean Validate(String value)
    {
-      throw new NotImplementedException();
+      if (String.IsNullOrEmpty(value) || value.Length < _validateMinLength)
+      {
+         return false;
+      }
+
+      var sum = 0;
+      var weightIndex = new ModulusInt32(_weights.Length);
+      for (var charIndex = value.Length - 2; charIndex >= 0; charIndex--)
+      {
+         var currentDigit = value[charIndex].ToIntegerDigit();
+         if (currentDigit.IsInvalidDigit())
+         {
+            return false;
+         }
+
+         sum += currentDigit * _weights[weightIndex];
+         weightIndex++;
+      }
+
+      var checkValue = value[^1].ToIntegerDigit();
+      if (checkValue.IsInvalidDigit())
+      {
+         return false;
+      }
+      sum += checkValue;
+
+      return (sum % 11) == 0;
    }
 
    /// <inheritdoc/>
