@@ -187,7 +187,7 @@ public class Modulus11_27DecimalAlgorithmTests
    [InlineData("101722325")]     // ""
    [InlineData("0365327")]       //http://www.pgrocer.net/Cis51/mod11.html
    [InlineData("1111111111111111117")]    // Weights 2-7 repeated 3x
-   public void Modulus11Algorithm_Validate_ShouldReturnTrue_WhenValueContainsValidCheckDigit(String value)
+   public void Modulus11_27DecimalAlgorithm_Validate_ShouldReturnTrue_WhenValueContainsValidCheckDigit(String value)
       => _sut.Validate(value).Should().BeTrue();
 
    [Theory]

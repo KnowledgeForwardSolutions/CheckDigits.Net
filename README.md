@@ -1147,7 +1147,7 @@ that the value is not an integer and must be stored as a string. Rejecting any
 value that could require a non-digit check character means that one out of eleven 
 possible values must be rejected, or approximately 9.09% of all values.
 
-The Modulus11_27Decimal algorithm takes the later approach and the `TryCalculateCheckDigit`
+The Modulus11_27Decimal algorithm takes the latter approach and the `TryCalculateCheckDigit`
 and `Validate` methods return false if the value would require a non-digit check
 character.
 
@@ -1188,7 +1188,7 @@ that the value is not an integer and must be stored as a string. Rejecting any
 value that could require a non-digit check character means that one out of eleven 
 possible values must be rejected, or approximately 9.09% of all values.
 
-The Modulus11Decimal algorithm takes the later approach and the `TryCalculateCheckDigit`
+The Modulus11Decimal algorithm takes the latter approach and the `TryCalculateCheckDigit`
 and `Validate` methods return false if the value would require a non-digit check
 character.
 
