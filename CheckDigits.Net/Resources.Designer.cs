@@ -610,6 +610,24 @@ namespace CheckDigits.Net {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Modulus 11 algorithm uses repeating sequence of weights 2, 3, 4, 5, 6 and 7, starting from the right-most non-check digit character. Generated check digit will be 0-9 or X.
+        /// </summary>
+        internal static string Modulus11_27ExtendedAlgorithmDescription {
+            get {
+                return ResourceManager.GetString("Modulus11_27ExtendedAlgorithmDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Modulus11_27Extended.
+        /// </summary>
+        internal static string Modulus11_27ExtendedAlgorithmName {
+            get {
+                return ResourceManager.GetString("Modulus11_27ExtendedAlgorithmName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Modulus 11 algorithm where every character is weighted by its position, starting from the right-most character. Generated check digit will be 0-9 or X.
         /// </summary>
         internal static string Modulus11AlgorithmDescription {

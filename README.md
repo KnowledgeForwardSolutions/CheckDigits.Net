@@ -51,6 +51,7 @@ let us know. Or contribute to the CheckDigits.Net repository: https://github.com
     * [Modulus10_13 Algorithm (UPC/EAN/ISBN-13/etc.)](#modulus10_13-algorithm)
     * [Modulus11 Algorithm (ISBN-10/ISSN/etc.)](#modulus11-algorithm)
     * [Modulus11_27Decimal Algorithm](#modulus11_27decimal-algorithm)
+    * [Modulus11_27Extended Algorithm](#modulus11_27extended-algorithm)
     * [Modulus11Decimal Algorithm (NHS Number/etc.)](#modulus11decimal-algorithm)
     * [Modulus11Extended Algorithm (ISBN-10/ISSN/etc.)](#modulus11extended-algorithm)
     * [NHS (UK National Health Service) Algorithm](#nhs-algorithm)
@@ -165,6 +166,7 @@ The ISO/IEC 7064:2003 standard is available at https://www.iso.org/standard/3153
 * [Modulus10_13 Algorithm (UPC/EAN/ISBN-13/etc.)](#modulus10_13-algorithm)
 * [Modulus11 Algorithm (ISBN-10/ISSN/etc.)](#modulus11-algorithm)
 * [Modulus11_27Decimal Algorithm](#modulus11_27decimal-algorithm)
+* [Modulus11_27Extended Algorithm](#modulus11_27extended-algorithm)
 * [Modulus11Decimal Algorithm (NHS Number/etc.)](#modulus11decimal-algorithm)
 * [Modulus11Extended Algorithm (ISBN-10/ISSN/etc.)](#modulus11extended-algorithm)
 * [NHS (UK National Health Service) Algorithm](#nhs-algorithm)
@@ -1170,6 +1172,36 @@ Wikipedia:
 
 https://www.ibm.com/docs/en/rbd/9.6.0?topic=syslib-calculatechkdigitmod11
 
+### Modulus11_27Extended Algorithm
+
+The Modulus11_27Extended algorithm uses modulus 11 and the IBM modulus 11 weighting
+scheme where each digit is weighted by the repeating sequence of weights 2, 3, 4, 
+5, 6, 7 starting with weight 2 for the right-most non-check digit character. The 
+sequence of weights is repeated as necessary for values longer than 6 characters.
+
+Prior to the existence of the Verhoeff algorithm and the Damm algorithm, modulus 
+11 algorithms were popular because they were very capable of detecting two digit 
+transposition errors while using only a single check character. However, because 
+it used modulus 11, the check character could not be a single decimal digit. 
+
+There are two common solutions to this problem: use a non-digit character to 
+represent the 11th possible check value or reject any value that would require a
+non-digit check character. Using a non-digit check character (commonly 'X') means
+that the value is not an integer and must be stored as a string. Rejecting any
+value that could require a non-digit check character means that one out of eleven 
+possible values must be rejected, or approximately 9.09% of all values.
+
+The Modulus11_27Extended algorithm takes the former approach and the `TryCalculateCheckDigit`
+and `Validate` allow values that include 'X' as an extended check character.
+
+#### Details
+
+* Valid characters - decimal digits ('0' - '9')
+* Check digit size - one character
+* Check digit value - either decimal digit ('0' - '9') or an uppercase 'X'
+* Check digit location - assumed to be the trailing (right-most) character when validating
+* Class name - `Modulus11_27ExtendedAlgorithm`
+
 ### Modulus11Decimal Algorithm
 
 #### Description
@@ -1232,7 +1264,7 @@ value that could require a non-digit check character means that one out of eleve
 possible values must be rejected, or approximately 9.09% of all values.
 
 The Modulus11Extended algorithm takes the former approach and the `TryCalculateCheckDigit`
-and `Validate` allow values that 'X' as an extended check character.
+and `Validate` allow values that include 'X' as an extended check character.
 
 Modulus11Extended replaces the deprecated Modulus11 algorithm.
 
