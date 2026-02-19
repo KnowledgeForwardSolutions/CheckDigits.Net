@@ -50,6 +50,7 @@ let us know. Or contribute to the CheckDigits.Net repository: https://github.com
     * [Modulus10_2 Algorithm](#modulus10_2-algorithm)
     * [Modulus10_13 Algorithm (UPC/EAN/ISBN-13/etc.)](#modulus10_13-algorithm)
     * [Modulus11 Algorithm (ISBN-10/ISSN/etc.)](#modulus11-algorithm)
+    * [Modulus11_27Decimal Algorithm](#modulus11_27decimal-algorithm)
     * [Modulus11Decimal Algorithm (NHS Number/etc.)](#modulus11decimal-algorithm)
     * [Modulus11Extended Algorithm (ISBN-10/ISSN/etc.)](#modulus11extended-algorithm)
     * [NHS (UK National Health Service) Algorithm](#nhs-algorithm)
@@ -163,6 +164,7 @@ The ISO/IEC 7064:2003 standard is available at https://www.iso.org/standard/3153
 * [Modulus10_2 Algorithm](#modulus10_2-algorithm)
 * [Modulus10_13 Algorithm (UPC/EAN/ISBN-13/etc.)](#modulus10_13-algorithm)
 * [Modulus11 Algorithm (ISBN-10/ISSN/etc.)](#modulus11-algorithm)
+* [Modulus11_27Decimal Algorithm](#modulus11_27decimal-algorithm)
 * [Modulus11Decimal Algorithm (NHS Number/etc.)](#modulus11decimal-algorithm)
 * [Modulus11Extended Algorithm (ISBN-10/ISSN/etc.)](#modulus11extended-algorithm)
 * [NHS (UK National Health Service) Algorithm](#nhs-algorithm)
@@ -1126,6 +1128,48 @@ Wikipedia:
   https://en.wikipedia.org/wiki/ISBN#ISBN-10_check_digits
   https://en.wikipedia.org/wiki/ISSN
 
+### Modulus11_27Decimal Algorithm
+
+The Modulus11_27Decimal algorithm uses modulus 11 and the IBM modulus 11 weighting
+scheme where each digit is weighted by the repeating sequence of weights 2, 3, 4, 
+5, 6, 7 starting with weight 2 for the right-most non-check digit character. The 
+sequence of weights is repeated as necessary for values longer than 6 characters.
+
+Prior to the existence of the Verhoeff algorithm and the Damm algorithm, modulus 
+11 algorithms were popular because they were very capable of detecting two digit 
+transposition errors while using only a single check character. However, because 
+it used modulus 11, the check character could not be a single decimal digit. 
+
+There are two common solutions to this problem: use a non-digit character to 
+represent the 11th possible check value or reject any value that would require a
+non-digit check character. Using a non-digit check character (commonly 'X') means
+that the value is not an integer and must be stored as a string. Rejecting any
+value that could require a non-digit check character means that one out of eleven 
+possible values must be rejected, or approximately 9.09% of all values.
+
+The Modulus11_27Decimal algorithm takes the latter approach and the `TryCalculateCheckDigit`
+and `Validate` methods return false if the value would require a non-digit check
+character.
+
+#### Details
+
+* Valid characters - decimal digits ('0' - '9')
+* Check digit size - one character
+* Check digit value - either decimal digit ('0' - '9')
+* Check digit location - assumed to be the trailing (right-most) character when validating
+* Class name - `Modulus11_27DecimalAlgorithm`
+
+#### Common Applications
+
+* Norwegian fødselsnummer (Norwegian National Identity Number), second of two included check digits
+
+#### Links
+
+Wikipedia: 
+	https://en.wikipedia.org/wiki/National_identity_number_(Norway)
+
+https://www.ibm.com/docs/en/rbd/9.6.0?topic=syslib-calculatechkdigitmod11
+
 ### Modulus11Decimal Algorithm
 
 #### Description
@@ -1144,7 +1188,7 @@ that the value is not an integer and must be stored as a string. Rejecting any
 value that could require a non-digit check character means that one out of eleven 
 possible values must be rejected, or approximately 9.09% of all values.
 
-The Modulus11Decimal algorithm takes the later approach and the `TryCalculateCheckDigit`
+The Modulus11Decimal algorithm takes the latter approach and the `TryCalculateCheckDigit`
 and `Validate` methods return false if the value would require a non-digit check
 character.
 
@@ -1481,6 +1525,14 @@ benchmarks do not cover lengths greater than 10.
 | Modulus11             | 140662                | 3.323 ns  | 0.0300 ns | 0.0280 ns | -         |
 | Modulus11             | 140662538             | 4.341 ns  | 0.0301 ns | 0.0281 ns | -         |
 |                       |                       |           |           |           |           |
+| Modulus11_27Decimal   | 140                   | 3.292 ns  | 0.0590 ns | 0.0523 ns | -         |
+| Modulus11_27Decimal   | 140662                | 4.785 ns  | 0.0273 ns | 0.0255 ns | -         |
+| Modulus11_27Decimal   | 140662538             | 5.915 ns  | 0.0624 ns | 0.0583 ns | -         |
+| Modulus11_27Decimal   | 140662538042          | 7.329 ns  | 0.0601 ns | 0.0502 ns | -         |
+| Modulus11_27Decimal   | 140662538042551       | 8.629 ns  | 0.0962 ns | 0.0900 ns | -         |
+| Modulus11_27Decimal   | 140662538042551028    | 9.721 ns  | 0.1167 ns | 0.1035 ns | -         |
+| Modulus11_27Decimal   | 140662538042551028265 | 11.694 ns | 0.1306 ns | 0.1090 ns | -         |
+|                       |                       |           |           |           |           |
 | Modulus11Decimal      | 140                   | 2.322 ns  | 0.0348 ns | 0.0325 ns | -         |
 | Modulus11Decimal      | 140662                | 3.220 ns  | 0.0485 ns | 0.0453 ns | -         |
 | Modulus11Decimal      | 140662538             | 4.239 ns  | 0.0544 ns | 0.0509 ns | -         |
@@ -1662,6 +1714,14 @@ benchmarks do not cover lengths greater than 10.
 | Modulus11             | 1406                          | 2.948 ns  | 0.0241 ns | 0.0214 ns | -         |
 | Modulus11             | 1406620                       | 4.062 ns  | 0.0213 ns | 0.0200 ns | -         |
 | Modulus11             | 1406625388                    | 4.506 ns  | 0.0278 ns | 0.0247 ns | -         |
+|                       |                               |           |           |           |           |
+| Modulus11_27Decimal   | 1406                          | 2.978 ns  | 0.0309 ns | 0.0274 ns | -         |
+| Modulus11_27Decimal   | 1406620                       | 4.800 ns  | 0.0882 ns | 0.0825 ns | -         |
+| Modulus11_27Decimal   | 1406625385                    | 5.773 ns  | 0.0791 ns | 0.0740 ns | -         |
+| Modulus11_27Decimal   | 1406625380421                 | 6.889 ns  | 0.0383 ns | 0.0340 ns | -         |
+| Modulus11_27Decimal   | 1406625380425510              | 8.146 ns  | 0.0545 ns | 0.0483 ns | -         |
+| Modulus11_27Decimal   | 1406625380425510288           | 9.203 ns  | 0.0955 ns | 0.0846 ns | -         |
+| Modulus11_27Decimal   | 1406625380425510282650        | 10.384 ns | 0.0623 ns | 0.0521 ns | -         |
 |                       |                               |           |           |           |           |
 | Modulus11Decimal      | 1406                          | 1.892 ns  | 0.0528 ns | 0.0791 ns | -         |
 | Modulus11Decimal      | 1406620                       | 3.126 ns  | 0.0801 ns | 0.1403 ns | -         |
@@ -1861,6 +1921,14 @@ public class GroupsOfThreeCheckDigitMask : ICheckDigitMask
 | Modulus10_13          | 140 662 538 042 551 8         | 10.977 ns | 0.1084 ns | 0.1014 ns | -         |
 | Modulus10_13          | 140 662 538 042 551 028 8     | 12.475 ns | 0.1031 ns | 0.0965 ns | -         |
 | Modulus10_13          | 140 662 538 042 551 028 265 7 | 14.315 ns | 0.1808 ns | 0.1691 ns | -         |
+|                       |                               |           |           |           |           |
+| Modulus11_27Decimal   | 140 6                         |  4.353 ns | 0.0255 ns | 0.0213 ns | -         |
+| Modulus11_27Decimal   | 140 662 0                     |  6.006 ns | 0.0760 ns | 0.0711 ns | -         |
+| Modulus11_27Decimal   | 140 662 538 5                 |  7.363 ns | 0.0624 ns | 0.0521 ns | -         |
+| Modulus11_27Decimal   | 140 662 538 042 1             |  9.900 ns | 0.2009 ns | 0.1880 ns | -         |
+| Modulus11_27Decimal   | 140 662 538 042 551 0         | 11.595 ns | 0.0500 ns | 0.0417 ns | -         |
+| Modulus11_27Decimal   | 140 662 538 042 551 028 8     | 12.468 ns | 0.1190 ns | 0.1055 ns | -         |
+| Modulus11_27Decimal   | 140 662 538 042 551 028 265 0 | 14.361 ns | 0.0864 ns | 0.0808 ns | -         |
 |                       |                               |           |           |           |           |
 | Modulus11Decimal      | 140 6                         |  4.200 ns | 0.0472 ns | 0.0442 ns | -         |
 | Modulus11Decimal      | 140 662 0                     |  5.134 ns | 0.0596 ns | 0.0529 ns | -         |

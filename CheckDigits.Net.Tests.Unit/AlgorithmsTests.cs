@@ -384,6 +384,20 @@ public class AlgorithmsTests
 
    #endregion
 
+   #region Modulus11_27Decimal Property Tests
+   // ==========================================================================
+   // ==========================================================================
+
+   [Fact]
+   public void Algorithms_Modulus11_27Decimal_ShouldNotBeNull()
+      => Algorithms.Modulus11_27Decimal.Should().NotBeNull();
+
+   [Fact]
+   public void Algorithms_Modulus11_27Decimal_ShouldBeExpectedType()
+      => Algorithms.Modulus11_27Decimal.Should().BeOfType<Modulus11_27DecimalAlgorithm>();
+
+   #endregion
+
    #region Modulus11Decimal Property Tests
    // ==========================================================================
    // ==========================================================================
