@@ -36,12 +36,8 @@
 ///   Will detect all single-digit transcription errors and all two digit 
 ///   transposition errors.
 ///   </para>
-///   <para>
-///   Maximum length allowed is 9 characters for calculating a new check digit 
-///   and 10 characters for validating a value that contains a check digit.
-///   </para>
 /// </remarks>
-public class Modulus11_27DecimalAlgorithm : ISingleCheckDigitAlgorithm, IMaskedCheckDigitAlgorithm
+public sealed class Modulus11_27DecimalAlgorithm : ISingleCheckDigitAlgorithm, IMaskedCheckDigitAlgorithm
 {
    private const Int32 _validateMinLength = 2;
    private static readonly Int32[] _weights = [2, 3, 4, 5, 6, 7];
