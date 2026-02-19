@@ -31,6 +31,120 @@ public class Modulus11_27DecimalAlgorithmTests
    // ==========================================================================
    // ==========================================================================
 
+   [Fact]
+   public void Modulus11_27DecimalAlgorithm_TryCalculateCheckDigit_ShouldReturnFalse_WhenInputIsNull()
+   {
+      // Act/assert.
+      _sut.TryCalculateCheckDigit(null!, out var checkDigit).Should().BeFalse();
+      checkDigit.Should().Be('\0');
+   }
+
+   [Fact]
+   public void Modulus11_27DecimalAlgorithm_TryCalculateCheckDigit_ShouldReturnFalse_WhenInputIsEmpty()
+   {
+      // Act/assert.
+      _sut.TryCalculateCheckDigit(String.Empty, out var checkDigit).Should().BeFalse();
+      checkDigit.Should().Be('\0');
+   }
+
+   [Theory]
+   [InlineData("0", '0')]        // Sum = 0, mod = (11-(0%11))%11=0
+   [InlineData("1", '9')]        // Sum = 2, mod = (11-(1%11))%11=9
+   [InlineData("2", '7')]        // Sum = 4, mod = (11-(4%11))%11=7
+   [InlineData("3", '5')]        // Sum = 6, mod = (11-(6%11))%11=5
+   [InlineData("4", '3')]        // Sum = 8, mod = (11-(8%11))%11=3
+   [InlineData("5", '1')]        // Sum = 10, mod = (11-(10%11))%11=1
+   //[InlineData("6", 'X')]        // Sum = 12, mod = (11-(12%11))%11=X, X is not a valid check digit for this algorithm so test case commented out and would be expected to return false if included
+   [InlineData("7", '8')]        // Sum = 14, mod = (11-(14%11))%11=8
+   [InlineData("8", '6')]        // Sum = 16, mod = (11-(16%11))%11=6
+   [InlineData("9", '4')]        // Sum = 18, mod = (11-(18%11))%11=4
+   [InlineData("61", '2')]        // Sum = 20, mod = (11-(20%11))%11=2
+   public void Modulus11_27DecimalAlgorithm_TryCalculateCheckDigit_ShouldReturnAllPossibleValidCheckDigits(
+      String value,
+      Char expectedCheckDigit)
+   {
+      // Act/assert.
+      _sut.TryCalculateCheckDigit(value, out var checkDigit).Should().BeTrue();
+      checkDigit.Should().Be(expectedCheckDigit);
+   }
+
+   [Theory]
+   [InlineData("000000001", '9')]
+   [InlineData("000000010", '8')]
+   [InlineData("000000100", '7')]
+   [InlineData("000001000", '6')]
+   [InlineData("000010000", '5')]
+   [InlineData("000100000", '4')]
+   [InlineData("001000000", '9')]
+   [InlineData("010000000", '8')]
+   [InlineData("100000000", '7')]
+   public void Modulus11_27DecimalAlgorithm_TryCalculateCheckDigit_ShouldCorrectlyWeightCharactersByPosition(
+      String value,
+      Char expectedCheckDigit)
+   {
+      // Act/assert.
+      _sut.TryCalculateCheckDigit(value, out var checkDigit).Should().BeTrue();
+      checkDigit.Should().Be(expectedCheckDigit);
+   }
+
+   [Theory]
+   [InlineData("1510869508", '8')]   // https://arthurdejong.org/python-stdnum/doc/1.19/stdnum.no.fodselsnummer
+   [InlineData("5662186", '5')]      // https://www.ibm.com/docs/en/rbd/9.6.0?topic=syslib-calculatechkdigitmod11
+   [InlineData("13739", '1')]        // https://studylib.net/doc/5880755/ibm-mod-10-and-11-check-digits
+   [InlineData("198932145", '1')]    // https://secure.fidelityifs.com/bookshelf/beta/doc/11080.htm
+   [InlineData("10172232", '5')]     // ""
+   [InlineData("036532", '7')]       //http://www.pgrocer.net/Cis51/mod11.html
+   [InlineData("111111111111111111", '7')]    // Weights 2-7 repeated 3x
+   public void Modulus11_27DecimalAlgorithm_TryCalculateCheckDigit_ShouldCalculateExpectedCheckDigit(
+      String value,
+      Char expectedCheckDigit)
+   {
+      // Act/assert.
+      _sut.TryCalculateCheckDigit(value, out var checkDigit).Should().BeTrue();
+      checkDigit.Should().Be(expectedCheckDigit);
+   }
+
+   [Fact]
+   public void Modulus11_27DecimalAlgorithm_TryCalculateCheckDigit_ShouldCalculateExpectedCheckDigit_WhenInputIsAllZeros()
+   {
+      // Arrange.
+      var value = "00000";
+      var expectedCheckDigit = Chars.DigitZero;
+
+      // Act/assert.
+      _sut.TryCalculateCheckDigit(value, out var checkDigit).Should().BeTrue();
+      checkDigit.Should().Be(expectedCheckDigit);
+   }
+
+   [Theory]
+   [InlineData("100G00001")]
+   [InlineData("100+00001")]
+   public void Modulus11_27DecimalAlgorithm_TryCalculateCheckDigit_ShouldReturnFalse_WhenInputContainsNonDigitCharacter(String value)
+   {
+      _sut.TryCalculateCheckDigit(value, out var checkDigit).Should().BeFalse();
+      checkDigit.Should().Be('\0');
+   }
+
+   [Theory]
+   [InlineData("000040")]
+   [InlineData("110111111")]
+   public void Modulus11_27DecimalAlgorithm_TryCalculateCheckDigit_ShouldReturnFalse_WhenModulus11HasRemainderOf10(String value)
+   {
+      _sut.TryCalculateCheckDigit(value, out var checkDigit).Should().BeFalse();
+      checkDigit.Should().Be('\0');
+   }
+
+   [Theory]
+   [InlineData("140")]
+   [InlineData("140662")]
+   [InlineData("140662538")]
+   [InlineData("140662538042")]
+   [InlineData("140662538042551")]
+   [InlineData("140662538042551028")]
+   [InlineData("140662538042551028265")]
+   public void Modulus11_27DecimalAlgorithm_TryCalculateCheckDigit_ShouldReturnTrue_ForBenchmarkValues(String value)
+      => _sut.TryCalculateCheckDigit(value, out _).Should().BeTrue();
+
    #endregion
 
    #region Validate Tests

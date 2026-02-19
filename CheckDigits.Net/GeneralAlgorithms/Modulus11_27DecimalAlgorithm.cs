@@ -55,7 +55,35 @@ public class Modulus11_27DecimalAlgorithm : ISingleCheckDigitAlgorithm, IMaskedC
    /// <inheritdoc/>
    public Boolean TryCalculateCheckDigit(String value, out Char checkDigit)
    {
-      throw new NotImplementedException();
+      checkDigit = Chars.NUL;
+      if (String.IsNullOrEmpty(value))
+      {
+         return false;
+      }
+
+      var sum = 0;
+      var weightIndex = new ModulusInt32(_weights.Length);
+      for (var charIndex = value.Length - 1; charIndex >= 0; charIndex--)
+      {
+         var currentDigit = value[charIndex].ToIntegerDigit();
+         if (currentDigit.IsInvalidDigit())
+         {
+            return false;
+         }
+
+         sum += currentDigit * _weights[weightIndex];
+         weightIndex++;
+      }
+
+      var mod = (11 - (sum % 11)) % 11;
+      if (mod == 10)
+      {
+         return false;
+      }
+
+      checkDigit = mod.ToDigitChar();
+
+      return true;
    }
 
    /// <inheritdoc/>
