@@ -127,6 +127,7 @@ public class Modulus11_27DecimalAlgorithmTests
 
    [Theory]
    [InlineData("000040")]
+   [InlineData("0068")]
    [InlineData("110111111")]
    public void Modulus11_27DecimalAlgorithm_TryCalculateCheckDigit_ShouldReturnFalse_WhenModulus11HasRemainderOf10(String value)
    {
@@ -203,6 +204,8 @@ public class Modulus11_27DecimalAlgorithmTests
 
    [Theory]
    [InlineData("400")]           // 4 with weight 3 = 12, 12 % 11 = 1, 11 - 1 = 10
+   [InlineData("00680")]
+   [InlineData("1101111110")]
    public void Modulus11_27DecimalAlgorithm_Validate_ShouldReturnFalse_WhenModulus11HasRemainderOf10(String value)
       => _sut.Validate(value).Should().BeFalse();
 
@@ -300,6 +303,8 @@ public class Modulus11_27DecimalAlgorithmTests
 
    [Theory]
    [InlineData("400")]           // 4 with weight 3 = 12, 12 % 11 = 1, 11 - 1 = 10
+   [InlineData("006 80")]
+   [InlineData("110 111 111 0")]
    public void Modulus11_27DecimalAlgorithm_ValidateMasked_ShouldReturnFalse_WhenModulus11HasRemainderOf10(String value)
       => _sut.Validate(value, _acceptAllMask).Should().BeFalse();
 
