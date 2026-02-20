@@ -357,8 +357,13 @@ when calculating the check digit.
 The `IMaskedCheckDigitAlgorithm` is derived from `ICheckDigitAlgorithm`
 and defines an overload for the Validate method that accepts an `ICheckDigitMask` 
 instance that is used to filter characters from the value being checked. Currently
-only the [Luhn Algorithm](#luhn-algorithm) and the [Modulus10_13 Algorithm](#modulus10_13-algorithm)
-implement `IMaskedCheckDigitAlgorithm`.
+the following algorithms implement `IMaskedCheckDigitAlgorithm`:
+* [Luhn Algorithm](#luhn-algorithm)
+* [Modulus10_13 Algorithm](#modulus10_13-algorithm)
+* [Modulus11_27Decimal Algorithm](#modulus11_27decimal-algorithm)
+* [Modulus11_27Extended Algorithm](#modulus11_27extended-algorithm)
+* [Modulus11Decimal Algorithm](#modulus11decimal-algorithm)
+* [Modulus11Extended Algorithm](#modulus11extended-algorithm)
 
 **ICheckDigitMask Example:**
 ```C#

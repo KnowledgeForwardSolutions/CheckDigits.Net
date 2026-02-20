@@ -46,6 +46,20 @@ public class MaskedAlgorithmsTests
 
    #endregion
 
+   #region Modulus11_27Extended Property Tests
+   // ==========================================================================
+   // ==========================================================================
+
+   [Fact]
+   public void MaskedAlgorithms_Modulus11_27Extended_ShouldNotBeNull()
+      => MaskedAlgorithms.Modulus11_27Extended.Should().NotBeNull();
+
+   [Fact]
+   public void MaskedAlgorithms_Modulus11_27Extended_ShouldBeExpectedType()
+      => MaskedAlgorithms.Modulus11_27Extended.Should().BeOfType<Modulus11_27ExtendedAlgorithm>();
+
+   #endregion
+
    #region Modulus11Decimal Property Tests
    // ==========================================================================
    // ==========================================================================

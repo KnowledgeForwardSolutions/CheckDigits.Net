@@ -50,18 +50,103 @@ public class Modulus11_27ExtendedAlgorithm : ISingleCheckDigitAlgorithm, IMasked
    /// <inheritdoc/>
    public Boolean TryCalculateCheckDigit(String value, out Char checkDigit)
    {
-      throw new NotImplementedException();
+      checkDigit = Chars.NUL;
+      if (String.IsNullOrEmpty(value))
+      {
+         return false;
+      }
+
+      var sum = 0;
+      var weightIndex = new ModulusInt32(_weights.Length);
+      for (var charIndex = value.Length - 1; charIndex >= 0; charIndex--)
+      {
+         var currentDigit = value[charIndex].ToIntegerDigit();
+         if (currentDigit.IsInvalidDigit())
+         {
+            return false;
+         }
+
+         sum += currentDigit * _weights[weightIndex];
+         weightIndex++;
+      }
+
+      var mod = (11 - (sum % 11)) % 11;
+      checkDigit = mod < 10 ? mod.ToDigitChar() : Chars.UpperCaseX;
+
+      return true;
    }
 
    /// <inheritdoc/>
    public Boolean Validate(String value)
    {
-      throw new NotImplementedException();
+      if (String.IsNullOrEmpty(value) || value.Length < _validateMinLength)
+      {
+         return false;
+      }
+
+      var sum = 0;
+      var weightIndex = new ModulusInt32(_weights.Length);
+      for (var charIndex = value.Length - 2; charIndex >= 0; charIndex--)
+      {
+         var currentDigit = value[charIndex].ToIntegerDigit();
+         if (currentDigit.IsInvalidDigit())
+         {
+            return false;
+         }
+
+         sum += currentDigit * _weights[weightIndex];
+         weightIndex++;
+      }
+
+      var checkDigit = value[^1].ToExtendedDecimalCheckDigit();
+      if (checkDigit.IsInvalidExtendedDecimalCheckDigit())
+      {
+         return false;
+      }
+      sum += checkDigit;
+
+      return (sum % 11) == 0;
    }
 
    /// <inheritdoc/>
    public Boolean Validate(String value, ICheckDigitMask mask)
    {
-      throw new NotImplementedException();
+      if (String.IsNullOrEmpty(value))
+      {
+         return false;
+      }
+
+      var sum = 0;
+      var weightIndex = new ModulusInt32(_weights.Length);
+      var processedDigits = 0;
+      for (var charIndex = value.Length - 2; charIndex >= 0; charIndex--)
+      {
+         if (mask.ExcludeCharacter(charIndex))
+         {
+            continue;
+         }
+         var currentDigit = value[charIndex].ToIntegerDigit();
+         if (currentDigit.IsInvalidDigit())
+         {
+            return false;
+         }
+
+         sum += currentDigit * _weights[weightIndex];
+         weightIndex++;
+         processedDigits++;
+      }
+      if (processedDigits == 0)
+      {
+         return false;
+      }
+
+      var checkDigit = value[^1].ToExtendedDecimalCheckDigit();
+      if (checkDigit.IsInvalidExtendedDecimalCheckDigit())
+      {
+         return false;
+      }
+      sum += checkDigit;
+
+      return (sum % 11) == 0;
    }
 }
