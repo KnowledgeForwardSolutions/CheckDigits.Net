@@ -1570,6 +1570,14 @@ benchmarks do not cover lengths greater than 10.
 | Modulus11_27Decimal   | 140662538042551028    | 9.721 ns  | 0.1167 ns | 0.1035 ns | -         |
 | Modulus11_27Decimal   | 140662538042551028265 | 11.694 ns | 0.1306 ns | 0.1090 ns | -         |
 |                       |                       |           |           |           |           |
+| Modulus11_27Extended  | 140                   | 3.353 ns  | 0.0221 ns | 0.0207 ns | -         |
+| Modulus11_27Extended  | 140662                | 4.813 ns  | 0.0994 ns | 0.0976 ns | -         |
+| Modulus11_27Extended  | 140662538             | 6.043 ns  | 0.0908 ns | 0.0849 ns | -         |
+| Modulus11_27Extended  | 140662538042          | 7.206 ns  | 0.0460 ns | 0.0407 ns | -         |
+| Modulus11_27Extended  | 140662538042551       | 8.581 ns  | 0.0666 ns | 0.0623 ns | -         |
+| Modulus11_27Extended  | 140662538042551028    | 9.427 ns  | 0.0393 ns | 0.0329 ns | -         |
+| Modulus11_27Extended  | 140662538042551028265 | 11.830 ns | 0.1384 ns | 0.1295 ns | -         |
+|                       |                       |           |           |           |           |
 | Modulus11Decimal      | 140                   | 2.322 ns  | 0.0348 ns | 0.0325 ns | -         |
 | Modulus11Decimal      | 140662                | 3.220 ns  | 0.0485 ns | 0.0453 ns | -         |
 | Modulus11Decimal      | 140662538             | 4.239 ns  | 0.0544 ns | 0.0509 ns | -         |
@@ -1759,6 +1767,14 @@ benchmarks do not cover lengths greater than 10.
 | Modulus11_27Decimal   | 1406625380425510              | 8.146 ns  | 0.0545 ns | 0.0483 ns | -         |
 | Modulus11_27Decimal   | 1406625380425510288           | 9.203 ns  | 0.0955 ns | 0.0846 ns | -         |
 | Modulus11_27Decimal   | 1406625380425510282650        | 10.384 ns | 0.0623 ns | 0.0521 ns | -         |
+|                       |                               |           |           |           |           |
+| Modulus11_27Extended  | 1406                          | 3.252 ns  | 0.0207 ns | 0.0193 ns | -         |
+| Modulus11_27Extended  | 1406620                       | 4.646 ns  | 0.0365 ns | 0.0324 ns | -         |
+| Modulus11_27Extended  | 1406625385                    | 5.760 ns  | 0.0251 ns | 0.0235 ns | -         |
+| Modulus11_27Extended  | 1406625380421                 | 7.035 ns  | 0.0508 ns | 0.0476 ns | -         |
+| Modulus11_27Extended  | 1406625380425510              | 8.416 ns  | 0.0916 ns | 0.0812 ns | -         |
+| Modulus11_27Extended  | 1406625380425510288           | 9.086 ns  | 0.0228 ns | 0.0190 ns | -         |
+| Modulus11_27Extended  | 1406625380425510282650        | 10.344 ns | 0.0773 ns | 0.0645 ns | -         |
 |                       |                               |           |           |           |           |
 | Modulus11Decimal      | 1406                          | 1.892 ns  | 0.0528 ns | 0.0791 ns | -         |
 | Modulus11Decimal      | 1406620                       | 3.126 ns  | 0.0801 ns | 0.1403 ns | -         |
@@ -1967,6 +1983,14 @@ public class GroupsOfThreeCheckDigitMask : ICheckDigitMask
 | Modulus11_27Decimal   | 140 662 538 042 551 028 8     | 12.468 ns | 0.1190 ns | 0.1055 ns | -         |
 | Modulus11_27Decimal   | 140 662 538 042 551 028 265 0 | 14.361 ns | 0.0864 ns | 0.0808 ns | -         |
 |                       |                               |           |           |           |           |
+| Modulus11_27Extended  | 140 6                         |  4.445 ns | 0.0202 ns | 0.0179 ns | -         |
+| Modulus11_27Extended  | 140 662 0                     |  5.954 ns | 0.0248 ns | 0.0220 ns | -         |
+| Modulus11_27Extended  | 140 662 538 5                 |  7.632 ns | 0.0815 ns | 0.0723 ns | -         |
+| Modulus11_27Extended  | 140 662 538 042 1             |  9.070 ns | 0.0376 ns | 0.0352 ns | -         |
+| Modulus11_27Extended  | 140 662 538 042 551 0         | 10.724 ns | 0.0461 ns | 0.0385 ns | -         |
+| Modulus11_27Extended  | 140 662 538 042 551 028 8     | 12.649 ns | 0.2177 ns | 0.2036 ns | -         |
+| Modulus11_27Extended  | 140 662 538 042 551 028 265 0 | 14.339 ns | 0.2057 ns | 0.1824 ns | -         |
+|                       |                               |           |           |           |           |
 | Modulus11Decimal      | 140 6                         |  4.200 ns | 0.0472 ns | 0.0442 ns | -         |
 | Modulus11Decimal      | 140 662 0                     |  5.134 ns | 0.0596 ns | 0.0529 ns | -         |
 | Modulus11Decimal      | 140 662 538 8                 |  6.342 ns | 0.0429 ns | 0.0401 ns | -         |
@@ -2079,12 +2103,14 @@ Detailed benchmark results for .Net 8 vs .Net 10 located at https://github.com/K
 
 Added masked validation support for algorithms via ICheckDigitMask and IMaskedCheckDigitAlgorithm interfaces. Algorithms that implement IMaskedCheckDigitAlgorithm:
 * Luhn Algorithm
-* Modulus10_13 Algorithm
 
 ## v3.1.0
 
 Additional included algorithms:
-* Modulus11Decimal
+* Modulus11Decimal Algorithm
+* Modulus11Extended Algorithm
+* Modulus11_27Decimal Algorithm
+* Modulus11_27Extended Algorithm
 
 Added masked validation support to the following algorithms:
 * Modulus10_13 Algorithm
