@@ -36,7 +36,7 @@
 ///   transposition errors.
 ///   </para>
 /// </remarks>
-public class Modulus11_27ExtendedAlgorithm : ISingleCheckDigitAlgorithm, IMaskedCheckDigitAlgorithm
+public sealed class Modulus11_27ExtendedAlgorithm : ISingleCheckDigitAlgorithm, IMaskedCheckDigitAlgorithm
 {
    private const Int32 _validateMinLength = 2;
    private static readonly Int32[] _weights = [2, 3, 4, 5, 6, 7];
