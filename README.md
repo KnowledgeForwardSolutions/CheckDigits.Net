@@ -51,6 +51,7 @@ let us know. Or contribute to the CheckDigits.Net repository: https://github.com
     * [Modulus10_13 Algorithm (UPC/EAN/ISBN-13/etc.)](#modulus10_13-algorithm)
     * [Modulus11 Algorithm (ISBN-10/ISSN/etc.)](#modulus11-algorithm)
     * [Modulus11_27Decimal Algorithm](#modulus11_27decimal-algorithm)
+    * [Modulus11_27Extended Algorithm](#modulus11_27extended-algorithm)
     * [Modulus11Decimal Algorithm (NHS Number/etc.)](#modulus11decimal-algorithm)
     * [Modulus11Extended Algorithm (ISBN-10/ISSN/etc.)](#modulus11extended-algorithm)
     * [NHS (UK National Health Service) Algorithm](#nhs-algorithm)
@@ -165,6 +166,7 @@ The ISO/IEC 7064:2003 standard is available at https://www.iso.org/standard/3153
 * [Modulus10_13 Algorithm (UPC/EAN/ISBN-13/etc.)](#modulus10_13-algorithm)
 * [Modulus11 Algorithm (ISBN-10/ISSN/etc.)](#modulus11-algorithm)
 * [Modulus11_27Decimal Algorithm](#modulus11_27decimal-algorithm)
+* [Modulus11_27Extended Algorithm](#modulus11_27extended-algorithm)
 * [Modulus11Decimal Algorithm (NHS Number/etc.)](#modulus11decimal-algorithm)
 * [Modulus11Extended Algorithm (ISBN-10/ISSN/etc.)](#modulus11extended-algorithm)
 * [NHS (UK National Health Service) Algorithm](#nhs-algorithm)
@@ -355,8 +357,13 @@ when calculating the check digit.
 The `IMaskedCheckDigitAlgorithm` is derived from `ICheckDigitAlgorithm`
 and defines an overload for the Validate method that accepts an `ICheckDigitMask` 
 instance that is used to filter characters from the value being checked. Currently
-only the [Luhn Algorithm](#luhn-algorithm) and the [Modulus10_13 Algorithm](#modulus10_13-algorithm)
-implement `IMaskedCheckDigitAlgorithm`.
+the following algorithms implement `IMaskedCheckDigitAlgorithm`:
+* [Luhn Algorithm](#luhn-algorithm)
+* [Modulus10_13 Algorithm](#modulus10_13-algorithm)
+* [Modulus11_27Decimal Algorithm](#modulus11_27decimal-algorithm)
+* [Modulus11_27Extended Algorithm](#modulus11_27extended-algorithm)
+* [Modulus11Decimal Algorithm](#modulus11decimal-algorithm)
+* [Modulus11Extended Algorithm](#modulus11extended-algorithm)
 
 **ICheckDigitMask Example:**
 ```C#
@@ -1170,6 +1177,36 @@ Wikipedia:
 
 https://www.ibm.com/docs/en/rbd/9.6.0?topic=syslib-calculatechkdigitmod11
 
+### Modulus11_27Extended Algorithm
+
+The Modulus11_27Extended algorithm uses modulus 11 and the IBM modulus 11 weighting
+scheme where each digit is weighted by the repeating sequence of weights 2, 3, 4, 
+5, 6, 7 starting with weight 2 for the right-most non-check digit character. The 
+sequence of weights is repeated as necessary for values longer than 6 characters.
+
+Prior to the existence of the Verhoeff algorithm and the Damm algorithm, modulus 
+11 algorithms were popular because they were very capable of detecting two digit 
+transposition errors while using only a single check character. However, because 
+it used modulus 11, the check character could not be a single decimal digit. 
+
+There are two common solutions to this problem: use a non-digit character to 
+represent the 11th possible check value or reject any value that would require a
+non-digit check character. Using a non-digit check character (commonly 'X') means
+that the value is not an integer and must be stored as a string. Rejecting any
+value that could require a non-digit check character means that one out of eleven 
+possible values must be rejected, or approximately 9.09% of all values.
+
+The Modulus11_27Extended algorithm takes the former approach and the `TryCalculateCheckDigit`
+and `Validate` allow values that include 'X' as an extended check character.
+
+#### Details
+
+* Valid characters - decimal digits ('0' - '9')
+* Check digit size - one character
+* Check digit value - either decimal digit ('0' - '9') or an uppercase 'X'
+* Check digit location - assumed to be the trailing (right-most) character when validating
+* Class name - `Modulus11_27ExtendedAlgorithm`
+
 ### Modulus11Decimal Algorithm
 
 #### Description
@@ -1232,7 +1269,7 @@ value that could require a non-digit check character means that one out of eleve
 possible values must be rejected, or approximately 9.09% of all values.
 
 The Modulus11Extended algorithm takes the former approach and the `TryCalculateCheckDigit`
-and `Validate` allow values that 'X' as an extended check character.
+and `Validate` allow values that include 'X' as an extended check character.
 
 Modulus11Extended replaces the deprecated Modulus11 algorithm.
 
@@ -1533,6 +1570,14 @@ benchmarks do not cover lengths greater than 10.
 | Modulus11_27Decimal   | 140662538042551028    | 9.721 ns  | 0.1167 ns | 0.1035 ns | -         |
 | Modulus11_27Decimal   | 140662538042551028265 | 11.694 ns | 0.1306 ns | 0.1090 ns | -         |
 |                       |                       |           |           |           |           |
+| Modulus11_27Extended  | 140                   | 3.353 ns  | 0.0221 ns | 0.0207 ns | -         |
+| Modulus11_27Extended  | 140662                | 4.813 ns  | 0.0994 ns | 0.0976 ns | -         |
+| Modulus11_27Extended  | 140662538             | 6.043 ns  | 0.0908 ns | 0.0849 ns | -         |
+| Modulus11_27Extended  | 140662538042          | 7.206 ns  | 0.0460 ns | 0.0407 ns | -         |
+| Modulus11_27Extended  | 140662538042551       | 8.581 ns  | 0.0666 ns | 0.0623 ns | -         |
+| Modulus11_27Extended  | 140662538042551028    | 9.427 ns  | 0.0393 ns | 0.0329 ns | -         |
+| Modulus11_27Extended  | 140662538042551028265 | 11.830 ns | 0.1384 ns | 0.1295 ns | -         |
+|                       |                       |           |           |           |           |
 | Modulus11Decimal      | 140                   | 2.322 ns  | 0.0348 ns | 0.0325 ns | -         |
 | Modulus11Decimal      | 140662                | 3.220 ns  | 0.0485 ns | 0.0453 ns | -         |
 | Modulus11Decimal      | 140662538             | 4.239 ns  | 0.0544 ns | 0.0509 ns | -         |
@@ -1722,6 +1767,14 @@ benchmarks do not cover lengths greater than 10.
 | Modulus11_27Decimal   | 1406625380425510              | 8.146 ns  | 0.0545 ns | 0.0483 ns | -         |
 | Modulus11_27Decimal   | 1406625380425510288           | 9.203 ns  | 0.0955 ns | 0.0846 ns | -         |
 | Modulus11_27Decimal   | 1406625380425510282650        | 10.384 ns | 0.0623 ns | 0.0521 ns | -         |
+|                       |                               |           |           |           |           |
+| Modulus11_27Extended  | 1406                          | 3.252 ns  | 0.0207 ns | 0.0193 ns | -         |
+| Modulus11_27Extended  | 1406620                       | 4.646 ns  | 0.0365 ns | 0.0324 ns | -         |
+| Modulus11_27Extended  | 1406625385                    | 5.760 ns  | 0.0251 ns | 0.0235 ns | -         |
+| Modulus11_27Extended  | 1406625380421                 | 7.035 ns  | 0.0508 ns | 0.0476 ns | -         |
+| Modulus11_27Extended  | 1406625380425510              | 8.416 ns  | 0.0916 ns | 0.0812 ns | -         |
+| Modulus11_27Extended  | 1406625380425510288           | 9.086 ns  | 0.0228 ns | 0.0190 ns | -         |
+| Modulus11_27Extended  | 1406625380425510282650        | 10.344 ns | 0.0773 ns | 0.0645 ns | -         |
 |                       |                               |           |           |           |           |
 | Modulus11Decimal      | 1406                          | 1.892 ns  | 0.0528 ns | 0.0791 ns | -         |
 | Modulus11Decimal      | 1406620                       | 3.126 ns  | 0.0801 ns | 0.1403 ns | -         |
@@ -1930,6 +1983,14 @@ public class GroupsOfThreeCheckDigitMask : ICheckDigitMask
 | Modulus11_27Decimal   | 140 662 538 042 551 028 8     | 12.468 ns | 0.1190 ns | 0.1055 ns | -         |
 | Modulus11_27Decimal   | 140 662 538 042 551 028 265 0 | 14.361 ns | 0.0864 ns | 0.0808 ns | -         |
 |                       |                               |           |           |           |           |
+| Modulus11_27Extended  | 140 6                         |  4.445 ns | 0.0202 ns | 0.0179 ns | -         |
+| Modulus11_27Extended  | 140 662 0                     |  5.954 ns | 0.0248 ns | 0.0220 ns | -         |
+| Modulus11_27Extended  | 140 662 538 5                 |  7.632 ns | 0.0815 ns | 0.0723 ns | -         |
+| Modulus11_27Extended  | 140 662 538 042 1             |  9.070 ns | 0.0376 ns | 0.0352 ns | -         |
+| Modulus11_27Extended  | 140 662 538 042 551 0         | 10.724 ns | 0.0461 ns | 0.0385 ns | -         |
+| Modulus11_27Extended  | 140 662 538 042 551 028 8     | 12.649 ns | 0.2177 ns | 0.2036 ns | -         |
+| Modulus11_27Extended  | 140 662 538 042 551 028 265 0 | 14.339 ns | 0.2057 ns | 0.1824 ns | -         |
+|                       |                               |           |           |           |           |
 | Modulus11Decimal      | 140 6                         |  4.200 ns | 0.0472 ns | 0.0442 ns | -         |
 | Modulus11Decimal      | 140 662 0                     |  5.134 ns | 0.0596 ns | 0.0529 ns | -         |
 | Modulus11Decimal      | 140 662 538 8                 |  6.342 ns | 0.0429 ns | 0.0401 ns | -         |
@@ -2042,12 +2103,14 @@ Detailed benchmark results for .Net 8 vs .Net 10 located at https://github.com/K
 
 Added masked validation support for algorithms via ICheckDigitMask and IMaskedCheckDigitAlgorithm interfaces. Algorithms that implement IMaskedCheckDigitAlgorithm:
 * Luhn Algorithm
-* Modulus10_13 Algorithm
 
 ## v3.1.0
 
 Additional included algorithms:
-* Modulus11Decimal
+* Modulus11Decimal Algorithm
+* Modulus11Extended Algorithm
+* Modulus11_27Decimal Algorithm
+* Modulus11_27Extended Algorithm
 
 Added masked validation support to the following algorithms:
 * Modulus10_13 Algorithm

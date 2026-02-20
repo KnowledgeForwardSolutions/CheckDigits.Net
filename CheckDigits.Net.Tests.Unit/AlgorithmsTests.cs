@@ -398,6 +398,20 @@ public class AlgorithmsTests
 
    #endregion
 
+   #region Modulus11_27Extended Property Tests
+   // ==========================================================================
+   // ==========================================================================
+
+   [Fact]
+   public void Algorithms_Modulus11_27Extended_ShouldNotBeNull()
+      => Algorithms.Modulus11_27Extended.Should().NotBeNull();
+
+   [Fact]
+   public void Algorithms_Modulus11_27Extended_ShouldBeExpectedType()
+      => Algorithms.Modulus11_27Extended.Should().BeOfType<Modulus11_27ExtendedAlgorithm>();
+
+   #endregion
+
    #region Modulus11Decimal Property Tests
    // ==========================================================================
    // ==========================================================================

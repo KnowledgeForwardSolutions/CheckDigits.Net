@@ -94,6 +94,9 @@ public static class Algorithms
    private static readonly Lazy<ISingleCheckDigitAlgorithm> _modulus11_27Decimal =
       new(() => new Modulus11_27DecimalAlgorithm());
 
+   private static readonly Lazy<ISingleCheckDigitAlgorithm> _modulus11_27Extended =
+      new(() => new Modulus11_27ExtendedAlgorithm());
+
    private static readonly Lazy<ISingleCheckDigitAlgorithm> _modulus11Decimal =
       new(() => new Modulus11DecimalAlgorithm());
 
@@ -266,6 +269,11 @@ public static class Algorithms
    ///   Modulus11_27Decimal algorithm.
    /// </summary>
    public static ISingleCheckDigitAlgorithm Modulus11_27Decimal => _modulus11_27Decimal.Value;
+
+   /// <summary>
+   ///   Modulus11_27Extended algorithm.
+   /// </summary>
+   public static ISingleCheckDigitAlgorithm Modulus11_27Extended => _modulus11_27Extended.Value;
 
    /// <summary>
    ///   Modulus11Decimal algorithm.
