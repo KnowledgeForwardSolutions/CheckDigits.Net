@@ -3,13 +3,13 @@
 namespace CheckDigits.Net.ValueSpecificAlgorithms;
 
 /// <summary>
-///   Algorithm used to validate the check digits contained in the machine readable
+///   Algorithm used to validate the check digits contained in the machine-readable
 ///   zone of ICAO (International Civil Aviation Organization) Machine Readable 
 ///   Travel Visas (both format MRV-A and format MRV-B).
 /// </summary>
 /// <remarks>
 ///   <para>
-///   Validates the following fields in the machine readable zone:
+///   Validates the following fields in the machine-readable zone:
 ///   <list type="bullet">
 ///      <item>Document number, line 2, characters 1-9, check digit in character 10</item>
 ///      <item>Date of birth, line 2, characters 14-19, check digit in character 20</item>
@@ -27,6 +27,7 @@ namespace CheckDigits.Net.ValueSpecificAlgorithms;
 ///   Uses the same Modulus 10 algorithm as the <see cref="Icao9303Algorithm"/>
 ///   and has the same weaknesses as that algorithm.
 ///   </para>
+/// </remarks>
 public sealed class Icao9303MachineReadableVisaAlgorithm : ICheckDigitAlgorithm
 {
    private static readonly Int32[] _weights = [7, 3, 1];
@@ -39,8 +40,7 @@ public sealed class Icao9303MachineReadableVisaAlgorithm : ICheckDigitAlgorithm
    private const Int32 _numFields = 3;
    private const Int32 _formatALineLength = 44;
    private const Int32 _formatBLineLength = 36;
-   private LineSeparator _lineSeparator = LineSeparator.None;
-   private Int32 _lineSeparatorLength = 0;
+   private readonly LineSeparator _lineSeparator = LineSeparator.None;
 
    /// <inheritdoc/>
    public String AlgorithmDescription => Resources.Icao9303MachineReadableVisaAlgorithmDescription;
@@ -56,6 +56,8 @@ public sealed class Icao9303MachineReadableVisaAlgorithm : ICheckDigitAlgorithm
    ///   The value used to set the <see cref="LineSeparator"/> property is not
    ///   a defined member of the <see cref="LineSeparator"/> enumeration.
    /// </exception>
+   [Obsolete("The LineSeparator property is deprecated and will be removed in a future version. " +
+      "The algorithm will automatically detect the line separator used in the value being validated.")]
    public LineSeparator LineSeparator
    {
       get => _lineSeparator;
@@ -65,9 +67,6 @@ public sealed class Icao9303MachineReadableVisaAlgorithm : ICheckDigitAlgorithm
          {
             throw new ArgumentOutOfRangeException(nameof(value), value, Resources.LineSeparatorInvalidValueMessage);
          }
-
-         _lineSeparator = value;
-         _lineSeparatorLength = value.CharacterLength();
       }
    }
 
@@ -78,16 +77,7 @@ public sealed class Icao9303MachineReadableVisaAlgorithm : ICheckDigitAlgorithm
       {
          return false;
       }
-      Int32 lineLength;
-      if (value.Length == (_formatALineLength * 2) + _lineSeparatorLength)
-      {
-         lineLength = _formatALineLength;
-      }
-      else if (value.Length == (_formatBLineLength * 2) + _lineSeparatorLength)
-      {
-         lineLength = _formatBLineLength;
-      }
-      else
+      if (!TryValidateLength(value, out var lineLength, out var lineSeparatorLength))
       {
          return false;
       }
@@ -98,7 +88,7 @@ public sealed class Icao9303MachineReadableVisaAlgorithm : ICheckDigitAlgorithm
       {
          var fieldSum = 0;
          var fieldWeightIndex = new ModulusInt32(3);
-         var start = _fieldStartPositions[fieldIndex] + lineLength + _lineSeparatorLength;
+         var start = _fieldStartPositions[fieldIndex] + lineLength + lineSeparatorLength;
          var end = start + _fieldSLengths[fieldIndex];
          for (var charIndex = start; charIndex < end; charIndex++)
          {
@@ -132,5 +122,35 @@ public sealed class Icao9303MachineReadableVisaAlgorithm : ICheckDigitAlgorithm
       }
 
       return true;
+   }
+
+   private static Boolean TryValidateLength(
+      String value, 
+      out Int32 lineLength,
+      out Int32 lineSeparatorLength)
+   {
+      lineSeparatorLength = 0;
+      if (value.Contains(Chars.CarriageReturn))
+      {
+         lineSeparatorLength = 2;
+      }
+      else if (value.Contains(Chars.LineFeed))
+      {
+         lineSeparatorLength = 1;
+      }
+
+      if (value.Length == _formatALineLength + lineSeparatorLength + _formatALineLength)
+      {
+         lineLength = _formatALineLength;
+         return true;
+      }
+      else if (value.Length == _formatBLineLength + lineSeparatorLength + _formatBLineLength)
+      {
+         lineLength = _formatBLineLength;
+         return true;
+      }
+
+      lineLength = 0;
+      return false;
    }
 }

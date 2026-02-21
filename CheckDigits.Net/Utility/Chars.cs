@@ -8,6 +8,8 @@ namespace CheckDigits.Net.Utility;
 public static class Chars
 {
    public const Char NUL = '\0';
+   public const Char CarriageReturn = '\r';
+   public const Char LineFeed = '\n';
 
    public const Char HashMark = '#';
    public const Char Asterisk = '*';
