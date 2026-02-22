@@ -21,7 +21,7 @@ namespace CheckDigits.Net.ValueSpecificAlgorithms;
 ///   Valid characters are decimal digits (0-9), uppercase alphabetic characters 
 ///   (A-Z) and a filler character ('<'). Note that characters in positions
 ///   other than the document number, date of birth and date of expiry fields 
-///   (and line separator charactors) are not validated.
+///   (and line separator characters) are not validated.
 ///   </para>
 ///   <para>
 ///   Check digit calculated by the algorithm is a decimal digit (0-9).
