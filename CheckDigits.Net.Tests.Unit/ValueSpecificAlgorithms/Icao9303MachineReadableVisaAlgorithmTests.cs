@@ -1,4 +1,4 @@
-﻿// Ignore Spelling: Icao Mrz
+﻿// Ignore Spelling: Icao Mrz Crlf
 
 namespace CheckDigits.Net.Tests.Unit.ValueSpecificAlgorithms;
 
@@ -81,14 +81,7 @@ public class Icao9303MachineReadableVisaAlgorithmTests
    public static TheoryData<MrzFormat, String, String, String> InvalidLengthData => new()
    {
       { MrzFormat.A, _emptySeparator, _fmtAMrzFirstLine[..35], _fmtBMrzSecondLine },
-      { MrzFormat.A, _crlf,           _fmtAMrzFirstLine[..35], _fmtBMrzSecondLine },
-      { MrzFormat.A, _lf,             _fmtAMrzFirstLine[..35], _fmtBMrzSecondLine },
-      { MrzFormat.A, _emptySeparator, _fmtAMrzFirstLine[..35], _fmtBMrzSecondLine },
-      { MrzFormat.A, _crlf,           _fmtAMrzFirstLine[..35], _fmtBMrzSecondLine },
-      { MrzFormat.A, _lf,             _fmtAMrzFirstLine[..35], _fmtBMrzSecondLine },
-      { MrzFormat.B, _emptySeparator, _fmtBMrzFirstLine + "<<", _fmtBMrzSecondLine },
-      { MrzFormat.B, _crlf,           _fmtBMrzFirstLine + "<<", _fmtBMrzSecondLine },
-      { MrzFormat.B, _lf,             _fmtBMrzFirstLine + "<<", _fmtBMrzSecondLine },
+      { MrzFormat.A, _crlf,           _fmtAMrzFirstLine[..35], "<" + _fmtBMrzSecondLine },
       { MrzFormat.B, _emptySeparator, _fmtBMrzFirstLine + "<<", _fmtBMrzSecondLine },
       { MrzFormat.B, _crlf,           _fmtBMrzFirstLine + "<<", _fmtBMrzSecondLine },
       { MrzFormat.B, _lf,             _fmtBMrzFirstLine + "<<", _fmtBMrzSecondLine },
@@ -107,6 +100,55 @@ public class Icao9303MachineReadableVisaAlgorithmTests
 
       // Act/assert.
       _sut.Validate(value).Should().BeFalse();
+   }
+
+   [Theory]
+   [InlineData(_fmtAMrzFirstLine + "X\n" + _fmtAMrzSecondLine)]  // 'X' instead of \r
+   [InlineData(_fmtBMrzFirstLine + " \n" + _fmtBMrzSecondLine)]  // Space instead of \r
+   [InlineData(_fmtAMrzFirstLine + "\r " + _fmtAMrzSecondLine)]  // Space instead of \n
+   [InlineData(_fmtBMrzFirstLine + "\n\r" + _fmtBMrzSecondLine)] // \n\r instead of \r\n
+   public void Icao9303MachineReadableVisaAlgorithm_Validate_ShouldReturnFalse_WhenSeparatorCharactersAreInvalid(String value)
+      => _sut.Validate(value).Should().BeFalse();
+
+   /// <summary>
+   ///   Test data for edge cases where separator validation cannot detect certain 
+   ///   issues due to length ambiguity. For example, when the first line is 
+   ///   shortened by exactly one character, a CRLF separator's LF character falls 
+   ///   at the position where an LF-only separator would be expected, making the 
+   ///   error undetectable by length validation alone.
+   /// </summary>
+   public static TheoryData<MrzFormat, String, String, String> UndetectableSeparatorIssuesData => new()
+   {
+      { MrzFormat.A, _crlf,           _fmtAMrzFirstLine[..44], _fmtAMrzSecondLine },      // Length indicates Lf only and Lf falls in correct position
+      { MrzFormat.A, _lf,             _fmtAMrzFirstLine[..44], _fmtAMrzSecondLine },      // Length indicates no separator so separator chars not checked
+      { MrzFormat.A, _crlf,           _fmtBMrzFirstLine[..35], _fmtBMrzSecondLine },      // Length indicates Lf only and Lf falls in correct position
+      { MrzFormat.B, _lf,             _fmtBMrzFirstLine[..35], _fmtBMrzSecondLine },      // Length indicates no separator so separator chars not checked
+   };
+
+   [Theory]
+   [InlineData(71)]  // One character short of MRV-B with no separator
+   [InlineData(73)]  // One character over MRV-B with no separator
+   [InlineData(87)]  // One character short of MRV-A with no separator
+   [InlineData(89)]  // One character over MRV-A with no separator
+   public void Icao9303MachineReadableVisaAlgorithm_Validate_ShouldReturnFalse_WhenLengthIsNearButInvalid(Int32 length)
+   {
+      var value = new String('0', length);
+      _sut.Validate(value).Should().BeFalse();
+   }
+
+   [Theory]
+   [MemberData(nameof(UndetectableSeparatorIssuesData))]
+   public void Icao9303MachineReadableVisaAlgorithm_Validate_ShouldReturnTrue_WhenUndetectableInvalidSeparator(
+      MrzFormat format,
+      String lineSeparator,
+      String firstLine,
+      String secondLine)
+   {
+      // Arrange.
+      var value = GetTestValue(format, lineSeparator, firstLine, secondLine);
+
+      // Act/assert.
+      _sut.Validate(value).Should().BeTrue();
    }
 
    [Theory]
@@ -248,6 +290,20 @@ public class Icao9303MachineReadableVisaAlgorithmTests
    {
       // Arrange.
       var value = GetTestValue(format, lineSeparator, null, mrzSecondLine);
+
+      // Act/assert.
+      _sut.Validate(value).Should().BeFalse();
+   }
+
+   [Fact]
+   public void Icao9303MachineReadableVisaAlgorithm_Validate_ShouldReturnFalse_WhenMultipleFieldsContainInvalidCharacters()
+   {
+      // Arrange.
+      var value = GetTestValue(
+         MrzFormat.A,
+         _emptySeparator,
+         null,
+         "D23145890!UTO740812@F120415#<<<<<<<<<<<<<<<<");
 
       // Act/assert.
       _sut.Validate(value).Should().BeFalse();

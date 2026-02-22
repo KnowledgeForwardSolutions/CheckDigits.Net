@@ -14,11 +14,14 @@ namespace CheckDigits.Net.ValueSpecificAlgorithms;
 ///      <item>Document number, line 2, characters 1-9, check digit in character 10</item>
 ///      <item>Date of birth, line 2, characters 14-19, check digit in character 20</item>
 ///      <item>Date of expiry, line 2, characters 22-27, check digit in character 28</item>
+///      <item>Line separator characters in expected location, if length of the value indicates that a line separator was used</item>
 ///   </list>
 ///   </para>
 ///   <para>
 ///   Valid characters are decimal digits (0-9), uppercase alphabetic characters 
-///   (A-Z) and a filler character ('<').
+///   (A-Z) and a filler character ('<'). Note that characters in positions
+///   other than the document number, date of birth and date of expiry fields 
+///   (and line separator charactors) are not validated.
 ///   </para>
 ///   <para>
 ///   Check digit calculated by the algorithm is a decimal digit (0-9).
@@ -32,7 +35,7 @@ public sealed class Icao9303MachineReadableVisaAlgorithm : ICheckDigitAlgorithm
 {
    private static readonly Int32[] _weights = [7, 3, 1];
    private static readonly Int32[] _fieldStartPositions = [0, 13, 21];
-   private static readonly Int32[] _fieldSLengths = [9, 6, 6];
+   private static readonly Int32[] _fieldLengths = [9, 6, 6];
    private static readonly Int32[] _charMap = Chars.Range(Chars.DigitZero, Chars.UpperCaseZ)
       .Select(x => Icao9303Algorithm.MapCharacter(x))
       .ToArray();
@@ -40,7 +43,17 @@ public sealed class Icao9303MachineReadableVisaAlgorithm : ICheckDigitAlgorithm
    private const Int32 _numFields = 3;
    private const Int32 _formatALineLength = 44;
    private const Int32 _formatBLineLength = 36;
-   private readonly LineSeparator _lineSeparator = LineSeparator.None;
+
+   private const Int32 _formatANullLength = _formatALineLength * 2;
+   private const Int32 _formatACrlfLength = _formatANullLength + 2;
+   private const Int32 _formatALfLength = _formatANullLength + 1;
+
+   private const Int32 _formatBNullLength = _formatBLineLength * 2;
+   private const Int32 _formatBCrlfLength = _formatBNullLength + 2;
+   private const Int32 _formatBLfLength = _formatBNullLength + 1;
+
+   // Only retained for obsolete LineSeparator property.
+   private LineSeparator _lineSeparator = LineSeparator.None;
 
    /// <inheritdoc/>
    public String AlgorithmDescription => Resources.Icao9303MachineReadableVisaAlgorithmDescription;
@@ -67,6 +80,7 @@ public sealed class Icao9303MachineReadableVisaAlgorithm : ICheckDigitAlgorithm
          {
             throw new ArgumentOutOfRangeException(nameof(value), value, Resources.LineSeparatorInvalidValueMessage);
          }
+         _lineSeparator = value;
       }
    }
 
@@ -89,7 +103,7 @@ public sealed class Icao9303MachineReadableVisaAlgorithm : ICheckDigitAlgorithm
          var fieldSum = 0;
          var fieldWeightIndex = new ModulusInt32(3);
          var start = _fieldStartPositions[fieldIndex] + lineLength + lineSeparatorLength;
-         var end = start + _fieldSLengths[fieldIndex];
+         var end = start + _fieldLengths[fieldIndex];
          for (var charIndex = start; charIndex < end; charIndex++)
          {
             ch = value[charIndex];
@@ -106,16 +120,8 @@ public sealed class Icao9303MachineReadableVisaAlgorithm : ICheckDigitAlgorithm
          }
 
          // Field check digit.
-         ch = value[end];
-         if (ch >= Chars.DigitZero && ch <= Chars.DigitNine)
-         {
-            num = ch.ToIntegerDigit();
-         }
-         else
-         {
-            return false;
-         }
-         if (num != fieldSum % 10)
+         num = value[end].ToIntegerDigit();
+         if (num.IsInvalidDigit() || num != fieldSum % 10)
          {
             return false;
          }
@@ -124,33 +130,44 @@ public sealed class Icao9303MachineReadableVisaAlgorithm : ICheckDigitAlgorithm
       return true;
    }
 
+   /// <summary>
+   ///   Validates that the length of the input <paramref name="value"/> is
+   ///   valid, including the separator between lines in the value. If the
+   ///   length of the value indicates that a line separator other than an empty
+   ///   string is used, then the line separator characters are validated to be
+   ///   correct for the value length.
+   /// </summary>
    private static Boolean TryValidateLength(
-      String value, 
+      String value,
       out Int32 lineLength,
       out Int32 lineSeparatorLength)
    {
       lineSeparatorLength = 0;
-      if (value.Contains(Chars.CarriageReturn))
-      {
-         lineSeparatorLength = 2;
-      }
-      else if (value.Contains(Chars.LineFeed))
-      {
-         lineSeparatorLength = 1;
-      }
-
-      if (value.Length == _formatALineLength + lineSeparatorLength + _formatALineLength)
+      var valueLength = value.Length;
+      if (valueLength >= _formatANullLength && valueLength <= _formatACrlfLength)
       {
          lineLength = _formatALineLength;
-         return true;
+         lineSeparatorLength = valueLength - _formatANullLength;
+         return valueLength == _formatANullLength
+                || (valueLength == _formatACrlfLength
+                    && value[_formatALineLength] == Chars.CarriageReturn
+                    && value[_formatALineLength + 1] == Chars.LineFeed)
+                || (valueLength == _formatALfLength
+                    && value[_formatALineLength] == Chars.LineFeed);
       }
-      else if (value.Length == _formatBLineLength + lineSeparatorLength + _formatBLineLength)
+      else if (valueLength >= _formatBNullLength && valueLength <= _formatBCrlfLength)
       {
          lineLength = _formatBLineLength;
-         return true;
+         lineSeparatorLength = valueLength - _formatBNullLength;
+         return valueLength == _formatBNullLength
+                || (valueLength == _formatBCrlfLength
+                    && value[_formatBLineLength] == Chars.CarriageReturn
+                    && value[_formatBLineLength + 1] == Chars.LineFeed)
+                || (valueLength == _formatBLfLength
+                    && value[_formatBLineLength] == Chars.LineFeed);
       }
-
       lineLength = 0;
+
       return false;
    }
 }
