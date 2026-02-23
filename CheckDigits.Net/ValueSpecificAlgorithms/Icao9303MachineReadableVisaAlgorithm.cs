@@ -3,13 +3,13 @@
 namespace CheckDigits.Net.ValueSpecificAlgorithms;
 
 /// <summary>
-///   Algorithm used to validate the check digits contained in the machine-readable
-///   zone of ICAO (International Civil Aviation Organization) Machine Readable 
-///   Travel Visas (both format MRV-A and format MRV-B).
+///   Algorithm used to validate the check digits contained in the MRZ (Machine
+///   Readable Zone) of ICAO (International Civil Aviation Organization) Machine 
+///   Readable Travel Visas (both format MRV-A and format MRV-B).
 /// </summary>
 /// <remarks>
 ///   <para>
-///   Validates the following fields in the machine-readable zone:
+///   Validates the following fields in the MRZ:
 ///   <list type="bullet">
 ///      <item>Document number, line 2, characters 1-9, check digit in character 10</item>
 ///      <item>Date of birth, line 2, characters 14-19, check digit in character 20</item>
@@ -36,9 +36,8 @@ public sealed class Icao9303MachineReadableVisaAlgorithm : ICheckDigitAlgorithm
    private static readonly Int32[] _weights = [7, 3, 1];
    private static readonly Int32[] _fieldStartPositions = [0, 13, 21];
    private static readonly Int32[] _fieldLengths = [9, 6, 6];
-   private static readonly Int32[] _charMap = Chars.Range(Chars.DigitZero, Chars.UpperCaseZ)
-      .Select(x => Icao9303Algorithm.MapCharacter(x))
-      .ToArray();
+   private static readonly Int32[] _charMap = 
+      [.. Chars.Range(Chars.DigitZero, Chars.UpperCaseZ).Select(x => Icao9303Algorithm.MapCharacter(x))];
 
    private const Int32 _numFields = 3;
    private const Int32 _formatALineLength = 44;

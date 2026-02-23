@@ -1,17 +1,15 @@
 ﻿// Ignore Spelling: Icao
 
-using System.Diagnostics.Contracts;
-
 namespace CheckDigits.Net.ValueSpecificAlgorithms;
 
 /// <summary>
-///   Algorithm used to validate the check digits contained in the machine readable
-///   zone of ICAO (International Civil Aviation Organization) Machine Readable 
-///   Travel Document Size TD1.
+///   Algorithm used to validate the check digits contained in the MRZ (Machine
+///   Readable Zone) of ICAO (International Civil Aviation Organization) Machine 
+///   Readable Travel Document Size TD1.
 /// </summary>
 /// <remarks>
 ///   <para>
-///   Validates the following fields in the machine readable zone:
+///   Validates the following fields in the MRZ:
 ///   <list type="bullet">
 ///      <item>Document number, line 1, characters 6-14, check digit in character 15</item>
 ///      <item>Optional document number extension, line 1, characters 16-28, check digit in final non-filler character</item>
@@ -47,9 +45,8 @@ public sealed class Icao9303SizeTD1Algorithm : ICheckDigitAlgorithm
    private const Int32 _numFields = 3;
    private const Int32 _lineLength = 30;
    private const Int32 _compositeCheckDigitPosition = 59;
-   private static readonly Int32[] _charMap = Chars.Range(Chars.DigitZero, Chars.UpperCaseZ)
-      .Select(x => Icao9303Algorithm.MapCharacter(x))
-      .ToArray();
+   private static readonly Int32[] _charMap = 
+      [.. Chars.Range(Chars.DigitZero, Chars.UpperCaseZ).Select(x => Icao9303Algorithm.MapCharacter(x))];
 
    private const Int32 _nullSeparatorLength = _lineLength * 3;
    private const Int32 _crLfSeparatorLength = _nullSeparatorLength + 4;    //  "\r\n" * 2
@@ -108,9 +105,7 @@ public sealed class Icao9303SizeTD1Algorithm : ICheckDigitAlgorithm
          for (var charIndex = start; charIndex < end; charIndex++)
          {
             ch = value[charIndex];
-            num = (ch >= Chars.DigitZero && ch <= Chars.UpperCaseZ)
-               ? _charMap[ch - Chars.DigitZero]
-               : -1;
+            num = ToIcao9303IntegerValue(ch);
             if (num == -1)
             {
                return false;
@@ -132,11 +127,11 @@ public sealed class Icao9303SizeTD1Algorithm : ICheckDigitAlgorithm
             for (var charIndex = start; charIndex < end; charIndex++)
             {
                // Stop processing if we've reached the check digit character
-               // before reaching the end of the field.  This is signaled by the
-               // next character after the check digit character being a filler
-               // character ('<'). This means we test by looking ahead by one
-               // character. (The definition of _extendedDocumentNumber ensures
-               // that the one character look ahead will always be in bounds.)
+               // early (i.e. before reaching the end of the field).  This is
+               // signaled by the next character after the check digit character
+               // being a filler character ('<'). This means we test by looking
+               // ahead by one character. (The definition of _extendedDocumentNumber
+               // ensures that the one character look ahead will always be in bounds.)
                if (value[charIndex + 1] == Chars.LeftAngleBracket)
                {
                   end = charIndex;
@@ -144,9 +139,7 @@ public sealed class Icao9303SizeTD1Algorithm : ICheckDigitAlgorithm
                }
 
                ch = value[charIndex];
-               num = (ch >= Chars.DigitZero && ch <= Chars.UpperCaseZ)
-                  ? _charMap[ch - Chars.DigitZero]
-                  : -1;
+               num = ToIcao9303IntegerValue(ch);
                if (num == -1)
                {
                   return false;
@@ -179,6 +172,12 @@ public sealed class Icao9303SizeTD1Algorithm : ICheckDigitAlgorithm
       return value[_compositeCheckDigitPosition + lineSeparatorLength].ToIntegerDigit() == compositeCheckDigit;
    }
 
+   [MethodImpl(MethodImplOptions.AggressiveInlining)]
+   private static Int32 ToIcao9303IntegerValue(Char ch)
+      => (ch >= Chars.DigitZero && ch <= Chars.UpperCaseZ)
+         ? _charMap[ch - Chars.DigitZero]
+         : -1;
+
    private static Boolean TryValidateLength(String value, out Int32 lineSeparatorLength)
    {
       lineSeparatorLength = value.Length switch
@@ -200,14 +199,14 @@ public sealed class Icao9303SizeTD1Algorithm : ICheckDigitAlgorithm
          // Should have \r\n at positions 30 and 61
          return value[_lineLength] == Chars.CarriageReturn
                 && value[_lineLength + 1] == Chars.LineFeed
-                && value[_lineLength * 2 + 2] == Chars.CarriageReturn
-                && value[_lineLength * 2 + 3] == Chars.LineFeed;
+                && value[(_lineLength * 2) + 2] == Chars.CarriageReturn
+                && value[(_lineLength * 2) + 3] == Chars.LineFeed;
       }
       else if (lineSeparatorLength == 1)
       {
          // Should have \n at positions 30 and 61
          return value[_lineLength] == Chars.LineFeed
-                && value[_lineLength * 2 + 1] == Chars.LineFeed;
+                && value[(_lineLength * 2) + 1] == Chars.LineFeed;
       }
 
       return true;  // No separator to validate
@@ -216,7 +215,7 @@ public sealed class Icao9303SizeTD1Algorithm : ICheckDigitAlgorithm
    private record struct FieldDetails(Int32 Line, Int32 CharPosition, Int32 Length)
    {
       [Pure]
-      public (Int32 start, Int32 end) GetFieldBounds(Int32 lineSeparatorLength)
+      public readonly (Int32 start, Int32 end) GetFieldBounds(Int32 lineSeparatorLength)
       {
          var start = (Line * (_lineLength + lineSeparatorLength)) + CharPosition;
          var end = start + Length;

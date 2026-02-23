@@ -119,10 +119,10 @@ public class Icao9303MachineReadableVisaAlgorithmTests
    /// </summary>
    public static TheoryData<MrzFormat, String, String, String> UndetectableSeparatorIssuesData => new()
    {
-      { MrzFormat.A, _crlf,           _fmtAMrzFirstLine[..44], _fmtAMrzSecondLine },      // Length indicates Lf only and Lf falls in correct position
-      { MrzFormat.A, _lf,             _fmtAMrzFirstLine[..44], _fmtAMrzSecondLine },      // Length indicates no separator so separator chars not checked
-      { MrzFormat.A, _crlf,           _fmtBMrzFirstLine[..35], _fmtBMrzSecondLine },      // Length indicates Lf only and Lf falls in correct position
-      { MrzFormat.B, _lf,             _fmtBMrzFirstLine[..35], _fmtBMrzSecondLine },      // Length indicates no separator so separator chars not checked
+      { MrzFormat.A, _crlf, _fmtAMrzFirstLine[..44], _fmtAMrzSecondLine },      // Length indicates Lf only and Lf falls in correct position
+      { MrzFormat.A, _lf,   _fmtAMrzFirstLine[..44], _fmtAMrzSecondLine },      // Length indicates no separator so separator chars not checked
+      { MrzFormat.A, _crlf, _fmtBMrzFirstLine[..35], _fmtBMrzSecondLine },      // Length indicates Lf only and Lf falls in correct position
+      { MrzFormat.B, _lf,   _fmtBMrzFirstLine[..35], _fmtBMrzSecondLine },      // Length indicates no separator so separator chars not checked
    };
 
    [Theory]
@@ -199,6 +199,45 @@ public class Icao9303MachineReadableVisaAlgorithmTests
 
       // Act/assert.
       _sut.Validate(value).Should().BeTrue();
+   }
+
+   [Theory]
+   [InlineData(MrzFormat.B, _crlf, "00a0000000UTO0000000F0000000<<<<<<<<")]
+   [InlineData(MrzFormat.B, _crlf, "00b0000001UTO0000000F0000000<<<<<<<<")]
+   [InlineData(MrzFormat.B, _crlf, "00c0000002UTO0000000F0000000<<<<<<<<")]
+   [InlineData(MrzFormat.B, _crlf, "00d0000003UTO0000000F0000000<<<<<<<<")]
+   [InlineData(MrzFormat.B, _crlf, "00e0000004UTO0000000F0000000<<<<<<<<")]
+   [InlineData(MrzFormat.B, _crlf, "00f0000005UTO0000000F0000000<<<<<<<<")]
+   [InlineData(MrzFormat.B, _crlf, "00g0000006UTO0000000F0000000<<<<<<<<")]
+   [InlineData(MrzFormat.B, _crlf, "00h0000007UTO0000000F0000000<<<<<<<<")]
+   [InlineData(MrzFormat.B, _crlf, "00i0000008UTO0000000F0000000<<<<<<<<")]
+   [InlineData(MrzFormat.B, _crlf, "00j0000009UTO0000000F0000000<<<<<<<<")]
+   [InlineData(MrzFormat.B, _lf, "00k0000000UTO0000000F0000000<<<<<<<<")]
+   [InlineData(MrzFormat.B, _lf, "00l0000001UTO0000000F0000000<<<<<<<<")]
+   [InlineData(MrzFormat.B, _lf, "00m0000002UTO0000000F0000000<<<<<<<<")]
+   [InlineData(MrzFormat.B, _lf, "00n0000003UTO0000000F0000000<<<<<<<<")]
+   [InlineData(MrzFormat.B, _lf, "00o0000004UTO0000000F0000000<<<<<<<<")]
+   [InlineData(MrzFormat.B, _lf, "00p0000005UTO0000000F0000000<<<<<<<<")]
+   [InlineData(MrzFormat.B, _lf, "00q0000006UTO0000000F0000000<<<<<<<<")]
+   [InlineData(MrzFormat.B, _lf, "00r0000007UTO0000000F0000000<<<<<<<<")]
+   [InlineData(MrzFormat.B, _lf, "00s0000008UTO0000000F0000000<<<<<<<<")]
+   [InlineData(MrzFormat.B, _lf, "00t0000009UTO0000000F0000000<<<<<<<<")]
+   [InlineData(MrzFormat.A, _emptySeparator, "00u0000000UTO0000000F0000000<<<<<<<<<<<<<<<<")]
+   [InlineData(MrzFormat.A, _emptySeparator, "00v0000001UTO0000000F0000000<<<<<<<<<<<<<<<<")]
+   [InlineData(MrzFormat.A, _emptySeparator, "00w0000002UTO0000000F0000000<<<<<<<<<<<<<<<<")]
+   [InlineData(MrzFormat.A, _emptySeparator, "00x0000003UTO0000000F0000000<<<<<<<<<<<<<<<<")]
+   [InlineData(MrzFormat.A, _emptySeparator, "00y0000004UTO0000000F0000000<<<<<<<<<<<<<<<<")]
+   [InlineData(MrzFormat.A, _emptySeparator, "00z0000005UTO0000000F0000000<<<<<<<<<<<<<<<<")]
+   public void Icao9303MachineReadableVisaAlgorithm_Validate_ShouldReturnFalse_WhenLowerCaseAlphabeticCharacterEncountered(
+      MrzFormat format,
+      String lineSeparator,
+      String mrzSecondLine)
+   {
+      // Arrange.
+      var value = GetTestValue(format, lineSeparator, null, mrzSecondLine);
+
+      // Act/assert.
+      _sut.Validate(value).Should().BeFalse();
    }
 
    [Theory]
