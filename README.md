@@ -2114,3 +2114,20 @@ Additional included algorithms:
 
 Added masked validation support to the following algorithms:
 * Modulus10_13 Algorithm
+
+Minor updates to the following algorithms:
+* ICAO 9303 Document Size TD1 Algorithm
+* ICAO 9303 Document Size TD2 Algorithm
+* ICAO 9303 Document Size TD3 Algorithm
+* ICAO 9303 Machine Readable Visa Algorithm
+
+The original implementation of the above algorithms allowed alphabetic characters in the date of birth/expiration date fields
+as long as the check digit(s) were valid for the characters used. The updated implementation only allows numeric characters 
+in those fields, which is consistent with the ICAO 9303 specification. 
+
+Additionally, the LineSeparator property of the above algorithms was marked Obsolete and will be removed in a future release.
+Instead, the separator used between lines in the MRZ is inferred from the length of the value being validated. 
+
+Algorithms marked as Obsolete:
+* Modulus11 Algorithm (ISBN-10/ISSN/etc.) - Replaced by the Modulus11Extended algorithm.
+* NHS (UK National Health Service) Algorithm - Replaced by the Modulus11_27Decimal algorithm.
