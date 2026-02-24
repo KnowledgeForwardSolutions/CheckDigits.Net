@@ -94,7 +94,7 @@ public class Icao9303SizeTD2AlgorithmTests
    [InlineData(" \n")]     // Space instead of \r
    [InlineData("\r ")]     // Space instead of \n
    [InlineData("\n\r")]    // \n\r instead of \r\n
-   public void Icao9303SizeTD2Algorithm_Validate_ShouldReturnFalse_WhenLineSeparatorIsValid(String lineSeparator)
+   public void Icao9303SizeTD2Algorithm_Validate_ShouldReturnFalse_WhenLineSeparatorIsInvalid(String lineSeparator)
    {
       // Arrange.
       var value = GetTestValue(lineSeparator: lineSeparator);
@@ -297,6 +297,28 @@ public class Icao9303SizeTD2AlgorithmTests
    }
 
    [Theory]
+   [InlineData("D23145890<", "000007<", "0")]
+   [InlineData("D23145890<", "00007<<", "8")]
+   [InlineData("D23145890<", "0007<<<", "6")]
+   [InlineData("D23145890<", "007<<<<", "0")]
+   [InlineData("D23145890<", "07<<<<<", "8")]
+   public void Icao9303SizeTD2Algorithm_Validate_ShouldReturnTrue_WhenValueContainsExtendedDocumentNumberWithValidCheckDigits(
+      String documentNumber,
+      String optionalData,
+      String compositeCheckDigit)
+   {
+      // Arrange.
+      var value = GetTestValue(
+         lineSeparator: _lineSeparatorCrlf,
+         documentNumber: documentNumber,
+         optionalData: optionalData,
+         compositeCheckDigit: compositeCheckDigit);
+
+      // Act/assert.
+      _sut.Validate(value).Should().BeTrue();
+   }
+
+   [Theory]
    [InlineData("D2314589A7", "7408122", "1204159", "<<<<<<<", "6")]   // Document number D231458907 with single char transcription error (0 -> A) with delta 10   
    [InlineData("N231458907", "7408122", "1204159", "<<<<<<<", "6")]   // Document number D231458907 with single char transcription error (D -> N) with delta 10
    [InlineData("L89890C236", "7408122", "1204159", "<<<<<<<", "8")]   // Document number L898902C36 with two char transposition error (2C -> C2) with delta 10
@@ -348,6 +370,16 @@ public class Icao9303SizeTD2AlgorithmTests
          dateOfExpiry: dateOfExpiry,
          optionalData: optionalData,
          compositeCheckDigit: compositeCheckDigit);
+
+      // Act/assert.
+      _sut.Validate(value).Should().BeFalse();
+   }
+
+   [Fact]
+   public void Icao9303SizeTD2Algorithm_Validate_ShouldReturnFalse_WhenValueContainsContainsInvalidCompositeCheckDigit()
+   {
+      // Arrange.
+      var value = GetTestValue(compositeCheckDigit: "7");   // Composite check digit should be '6' for the default test value
 
       // Act/assert.
       _sut.Validate(value).Should().BeFalse();
