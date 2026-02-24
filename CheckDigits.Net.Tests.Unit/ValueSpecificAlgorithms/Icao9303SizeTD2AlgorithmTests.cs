@@ -158,7 +158,7 @@ public class Icao9303SizeTD2AlgorithmTests
    }
 
    [Theory]
-   // Third posiition has weight = 1, so easier to calculate field check digit and composite check digit
+   // Check digits are accurate, if equivalent uppercase character
    [InlineData("00a0000000", "0")]
    [InlineData("00b0000001", "8")]
    [InlineData("00c0000002", "6")]
@@ -376,7 +376,7 @@ public class Icao9303SizeTD2AlgorithmTests
    }
 
    [Fact]
-   public void Icao9303SizeTD2Algorithm_Validate_ShouldReturnFalse_WhenValueContainsContainsInvalidCompositeCheckDigit()
+   public void Icao9303SizeTD2Algorithm_Validate_ShouldReturnFalse_WhenFieldCheckDigitsAreValidButCompositeCheckDigitIsNotValid()
    {
       // Arrange.
       var value = GetTestValue(compositeCheckDigit: "7");   // Composite check digit should be '6' for the default test value

@@ -37,11 +37,11 @@ namespace CheckDigits.Net.ValueSpecificAlgorithms;
 public sealed class Icao9303SizeTD1Algorithm : ICheckDigitAlgorithm
 {
    private static readonly Int32[] _weights = [7, 3, 1];
-   private static readonly FieldDetails[] _fields = [  // line #, starting position, field length
-      new (0, 5, 9),    // Document number field
-      new (1, 0, 6),    // Date of birth field
-      new (1, 8, 6)];   // Date of expiry field
-   private static readonly FieldDetails _extendedDocumentNumber = new (0, 15, 13);
+   private static readonly FieldDetails[] _fields = [  // line #, starting position, field length, valid num upper bound
+      new (0, 5, 9, 35),    // Document number field
+      new (1, 0, 6, 9),     // Date of birth field
+      new (1, 8, 6, 9)];    // Date of expiry field
+   private static readonly FieldDetails _extendedDocumentNumber = new (0, 15, 13, 35);
    private const Int32 _numFields = 3;
    private const Int32 _lineLength = 30;
    private const Int32 _compositeCheckDigitPosition = 59;
@@ -101,10 +101,11 @@ public sealed class Icao9303SizeTD1Algorithm : ICheckDigitAlgorithm
          var fieldSum = 0;
          var fieldWeightIndex = new ModulusInt32(3);
          var (start, end) = _fields[fieldIndex].GetFieldBounds(lineSeparatorLength);
+         var numUpperBound = _fields[fieldIndex].NumUpperBound;
          for (var charIndex = start; charIndex < end; charIndex++)
          {
             num = ToIcao9303IntegerValue(value[charIndex]);
-            if (num == -1)
+            if (IsInvalidValueForField(num, numUpperBound))
             {
                return false;
             }
@@ -122,6 +123,7 @@ public sealed class Icao9303SizeTD1Algorithm : ICheckDigitAlgorithm
          if (fieldIndex == 0 && value[end] == Chars.LeftAngleBracket)
          {
             (start, end) = _extendedDocumentNumber.GetFieldBounds(lineSeparatorLength);
+            numUpperBound = _extendedDocumentNumber.NumUpperBound;
             for (var charIndex = start; charIndex < end; charIndex++)
             {
                // Stop processing if we've reached the check digit character
@@ -137,7 +139,7 @@ public sealed class Icao9303SizeTD1Algorithm : ICheckDigitAlgorithm
                }
 
                num = ToIcao9303IntegerValue(value[charIndex]);
-               if (num == -1)
+               if (IsInvalidValueForField(num, numUpperBound))
                {
                   return false;
                }
@@ -175,6 +177,10 @@ public sealed class Icao9303SizeTD1Algorithm : ICheckDigitAlgorithm
          ? _charMap[ch - Chars.DigitZero]
          : -1;
 
+   [MethodImpl(MethodImplOptions.AggressiveInlining)]
+   private static Boolean IsInvalidValueForField(Int32 value, Int32 numUpperBound)
+      => value < 0 || value > numUpperBound;
+
    private static Boolean TryValidateLength(String value, out Int32 lineSeparatorLength)
    {
       lineSeparatorLength = value.Length switch
@@ -209,7 +215,31 @@ public sealed class Icao9303SizeTD1Algorithm : ICheckDigitAlgorithm
       return true;  // No separator to validate
    }
 
-   private record struct FieldDetails(Int32 Line, Int32 CharPosition, Int32 Length)
+   /// <summary>
+   ///   Represents the positional and size information for a field within a 
+   ///   text document, including its line, character position, length, and the 
+   ///   upper bound of a field character when converted to an integer.
+   /// </summary>
+   /// <param name="Line">
+   ///   The zero-based line number indicating where the field is located within 
+   ///   the text document.
+   /// </param>
+   /// <param name="CharPosition">
+   ///   The zero-based character position within the specified line where the 
+   ///   field starts.
+   /// </param>
+   /// <param name="Length">
+   ///   The number of characters that the field spans, starting from the 
+   ///   specified character position.
+   /// </param>
+   /// <param name="NumUpperBound">
+   ///   The upper bound of a field character when converted to an integer.
+   /// </param>
+   private record struct FieldDetails(
+      Int32 Line, 
+      Int32 CharPosition, 
+      Int32 Length, 
+      Int32 NumUpperBound)
    {
       [Pure]
       public readonly (Int32 start, Int32 end) GetFieldBounds(Int32 lineSeparatorLength)

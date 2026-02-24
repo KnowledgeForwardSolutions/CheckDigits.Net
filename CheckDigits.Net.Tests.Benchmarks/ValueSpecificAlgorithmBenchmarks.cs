@@ -70,12 +70,12 @@ public class ValueSpecificAlgorithmBenchmarks
       yield return [Algorithms.Icao9303MachineReadableVisa, Algorithms.Icao9303MachineReadableVisa.AlgorithmName, "I<UTOSKYWALKER<<LUKE<<<<<<<<<<<<<<<<STARWARS45UTO7705256M2405252<<<<<<B<"];
 
       yield return [Algorithms.Icao9303SizeTD1, Algorithms.Icao9303SizeTD1.AlgorithmName, "I<UTOD231458907<<<<<<<<<<<<<<<7408122F1204159UTO<<<<<<<<<<<6ERIKSSON<<ANNA<MARIA<<<<<<<<A<"];
-      yield return [Algorithms.Icao9303SizeTD1, Algorithms.Icao9303SizeTD1.AlgorithmName, "I<UTOD23145890<AB112234566<<<<7408122F1204159UTO<<<<<<<<<<<4ERIKSSON<<ANNA<MARIA<<<<<<<<B<"];
-      yield return [Algorithms.Icao9303SizeTD1, Algorithms.Icao9303SizeTD1.AlgorithmName, "I<UTOSTARWARS45<<<<<<<<<<<<<<<7705256M2405252UTO<<<<<<<<<<<4SKYWALKER<<LUKE<<<<<<<<<<<<<C<"];
+      yield return [Algorithms.Icao9303SizeTD1, Algorithms.Icao9303SizeTD1.AlgorithmName, "I<UTOD23145890<AB112234566<<<<\r\n7408122F1204159UTO<<<<<<<<<<<4\r\nERIKSSON<<ANNA<MARIA<<<<<<<<B<"];
+      yield return [Algorithms.Icao9303SizeTD1, Algorithms.Icao9303SizeTD1.AlgorithmName, "I<UTOSTARWARS45<<<<<<<<<<<<<<<\n7705256M2405252UTO<<<<<<<<<<<4\nSKYWALKER<<LUKE<<<<<<<<<<<<<C<"];
 
       yield return [Algorithms.Icao9303SizeTD2, Algorithms.Icao9303SizeTD2.AlgorithmName, "I<UTOERIKSSON<<ANNA<MARIA<<<<<<<<<<<D231458907UTO7408122F1204159<<<<<<<6"];
-      yield return [Algorithms.Icao9303SizeTD2, Algorithms.Icao9303SizeTD2.AlgorithmName, "I<UTOQWERTY<<ASDF<<<<<<<<<<<<<<<<<<<D23145890<UTO7408122F1204159AB1124<4"];
-      yield return [Algorithms.Icao9303SizeTD2, Algorithms.Icao9303SizeTD2.AlgorithmName, "I<UTOSKYWALKER<<LUKE<<<<<<<<<<<<<<<<STARWARS45UTO7705256M2405252<<<<<<<8"];
+      yield return [Algorithms.Icao9303SizeTD2, Algorithms.Icao9303SizeTD2.AlgorithmName, "I<UTOQWERTY<<ASDF<<<<<<<<<<<<<<<<<<<\r\nD23145890<UTO7408122F1204159AB1124<4"];
+      yield return [Algorithms.Icao9303SizeTD2, Algorithms.Icao9303SizeTD2.AlgorithmName, "I<UTOSKYWALKER<<LUKE<<<<<<<<<<<<<<<<\nSTARWARS45UTO7705256M2405252<<<<<<<4"];
 
       yield return [Algorithms.Icao9303SizeTD3, Algorithms.Icao9303SizeTD3.AlgorithmName, "P<UTOERIKSSON<<ANNA<MARIA<<<<<<<<<<<<<<<<<<<L898902C36UTO7408122F1204159ZE184226B<<<<<10"];
       yield return [Algorithms.Icao9303SizeTD3, Algorithms.Icao9303SizeTD3.AlgorithmName, "P<UTOQWERTY<<ASDF<<<<<<<<<<<<<<<<<<<<<<<<<<<Q123987655UTO3311226F2010201<<<<<<<<<<<<<<06"];
