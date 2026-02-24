@@ -93,19 +93,17 @@ public sealed class Icao9303SizeTD1Algorithm : ICheckDigitAlgorithm
          return false;
       }
 
-      Char ch;
-      Int32 num;
       var compositeSum = 0;
       var compositeWeightIndex = new ModulusInt32(3);
       for (var fieldIndex = 0; fieldIndex < _numFields; fieldIndex++)
       {
+         Int32 num;
          var fieldSum = 0;
          var fieldWeightIndex = new ModulusInt32(3);
          var (start, end) = _fields[fieldIndex].GetFieldBounds(lineSeparatorLength);
          for (var charIndex = start; charIndex < end; charIndex++)
          {
-            ch = value[charIndex];
-            num = ToIcao9303IntegerValue(ch);
+            num = ToIcao9303IntegerValue(value[charIndex]);
             if (num == -1)
             {
                return false;
@@ -138,8 +136,7 @@ public sealed class Icao9303SizeTD1Algorithm : ICheckDigitAlgorithm
                   break;
                }
 
-               ch = value[charIndex];
-               num = ToIcao9303IntegerValue(ch);
+               num = ToIcao9303IntegerValue(value[charIndex]);
                if (num == -1)
                {
                   return false;

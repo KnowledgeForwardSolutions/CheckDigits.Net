@@ -95,17 +95,16 @@ public sealed class Icao9303MachineReadableVisaAlgorithm : ICheckDigitAlgorithm
          return false;
       }
 
-      Char ch;
-      Int32 num;
       for (var fieldIndex = 0; fieldIndex < _numFields; fieldIndex++)
       {
+         Int32 num;
          var fieldSum = 0;
          var fieldWeightIndex = new ModulusInt32(3);
          var start = _fieldStartPositions[fieldIndex] + lineLength + lineSeparatorLength;
          var end = start + _fieldLengths[fieldIndex];
          for (var charIndex = start; charIndex < end; charIndex++)
          {
-            ch = value[charIndex];
+            var ch = value[charIndex];
             num = (ch >= Chars.DigitZero && ch <= Chars.UpperCaseZ)
                ? _charMap[ch - Chars.DigitZero]
                : -1;
