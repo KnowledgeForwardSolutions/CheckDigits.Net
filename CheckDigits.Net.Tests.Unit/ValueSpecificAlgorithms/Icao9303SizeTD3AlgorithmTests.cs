@@ -187,7 +187,7 @@ public class Icao9303SizeTD3AlgorithmTests
    [InlineData("00x0000003", "4")]
    [InlineData("00y0000004", "2")]
    [InlineData("00z0000005", "0")]
-   public void Icao9303SizeTD2Algorithm_Validate_ShouldReturnFalse_WhenLowerCaseAlphabeticCharacterEncountered(
+   public void Icao9303SizeTD3Algorithm_Validate_ShouldReturnFalse_WhenLowerCaseAlphabeticCharacterEncountered(
       String passportNumber,
       String compositeCheckDigit)
    {
@@ -197,6 +197,29 @@ public class Icao9303SizeTD3AlgorithmTests
          passportNumber: passportNumber,
          dateOfBirth: "0000000",
          dateOfExpiry: "0000000",
+         personalNumber: "<<<<<<<<<<<<<<<",
+         compositeCheckDigit: compositeCheckDigit);
+
+      // Act/assert.
+      _sut.Validate(value).Should().BeFalse();
+   }
+
+   [Theory]
+   // Check digits would be correct if alpha characters allowed
+   [InlineData("00A0000", "0000000", "0")]
+   [InlineData("00a0000", "0000000", "0")]
+   [InlineData("0000000", "00A0000", "0")]
+   [InlineData("0000000", "00a0000", "0")]
+   public void Icao9303SizeTD3Algorithm_Validate_ShouldReturnFalse_NumericFieldContainsAlphabeticCharacter(
+      String dateOfBirth,
+      String dateOfExpiry,
+      String compositeCheckDigit)
+   {
+      // Arrange.
+      var value = GetTestValue(
+         passportNumber: "0000000000",
+         dateOfBirth: dateOfBirth,
+         dateOfExpiry: dateOfExpiry,
          personalNumber: "<<<<<<<<<<<<<<<",
          compositeCheckDigit: compositeCheckDigit);
 
@@ -333,6 +356,16 @@ public class Icao9303SizeTD3AlgorithmTests
          dateOfExpiry: dateOfExpiry,
          personalNumber: personalNumber,
          compositeCheckDigit: compositeCheckDigit);
+
+      // Act/assert.
+      _sut.Validate(value).Should().BeFalse();
+   }
+
+   [Fact]
+   public void Icao9303SizeTD3Algorithm_Validate_ShouldReturnFalse_WhenFieldCheckDigitsAreValidButCompositeCheckDigitIsNotValid()
+   {
+      // Arrange.
+      var value = GetTestValue(compositeCheckDigit: "7");   // Composite check digit should be '0' for the default test value
 
       // Act/assert.
       _sut.Validate(value).Should().BeFalse();
