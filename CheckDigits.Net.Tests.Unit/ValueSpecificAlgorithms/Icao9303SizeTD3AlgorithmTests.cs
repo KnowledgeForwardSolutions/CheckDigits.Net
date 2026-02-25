@@ -9,31 +9,30 @@ public class Icao9303SizeTD3AlgorithmTests
    // Example MRZ from https://www.icao.int/publications/Documents/9303_p4_cons_en.pdf
    private const String _mrzFirstLine = "P<UTOERIKSSON<<ANNA<MARIA<<<<<<<<<<<<<<<<<<<";
    private const String _mrzSecondLine = "L898902C36UTO7408122F1204159ZE184226B<<<<<10";
-   private const String _mrzLineSeparatorNone = "P<UTOERIKSSON<<ANNA<MARIA<<<<<<<<<<<<<<<<<<<L898902C36UTO7408122F1204159ZE184226B<<<<<10";
-   private const String _mrzLineSeparatorCrlf = "P<UTOERIKSSON<<ANNA<MARIA<<<<<<<<<<<<<<<<<<<\r\nL898902C36UTO7408122F1204159ZE184226B<<<<<10";
-   private const String _mrzLineSeparatorLf = "P<UTOERIKSSON<<ANNA<MARIA<<<<<<<<<<<<<<<<<<<\nL898902C36UTO7408122F1204159ZE184226B<<<<<10";
+
+   private const String _lineSeparatorNone = "";
+   private const String _lineSeparatorCrlf = "\r\n";
+   private const String _lineSeparatorLf = "\n";
 
    private static String GetTestValue(
-      LineSeparator lineSeparator = LineSeparator.None,
-      #if !NET48
-      String? secondLineValue = null)
-#else
-      String secondLineValue = null)
-      #endif
-   {
-      var separatorChars = lineSeparator switch
-      {
-         LineSeparator.Crlf => "\r\n",
-         LineSeparator.Lf => "\n",
-         _ => String.Empty,
-      };
-
-      return _mrzFirstLine + separatorChars + (secondLineValue ?? _mrzSecondLine);
-   }
+      String documentCode = "P<",
+      String issuingState = "UTO",
+      String name = "ERIKSSON<<ANNA<MARIA<<<<<<<<<<<<<<<<<<<",
+      String lineSeparator = _lineSeparatorNone,
+      String passportNumber = "L898902C36",              // 9 alphanumeric characters + 1 check digit
+      String nationality = "UTO",
+      String dateOfBirth = "7408122",                    // 6 digit characters + 1 check digit
+      String sex = "F",
+      String dateOfExpiry = "1204159",                   // 6 digit characters + 1 check digit
+      String personalNumber = "ZE184226B<<<<<1",         // 14 alphanumeric characters + 1 check digit
+      String compositeCheckDigit = "0")
+   => $"{documentCode}{issuingState}{name}" +
+      lineSeparator +
+      $"{passportNumber}{nationality}{dateOfBirth}{sex}{dateOfExpiry}{personalNumber}{compositeCheckDigit}";
 
    #region AlgorithmDescription Property Tests
-      // ==========================================================================
-      // ==========================================================================
+   // ==========================================================================
+   // ==========================================================================
 
    [Fact]
    public void Icao9303SizeTD3Algorithm_AlgorithmDescription_ShouldReturnExpectedValue()
@@ -51,63 +50,6 @@ public class Icao9303SizeTD3AlgorithmTests
 
    #endregion
 
-   #region LineSeparator Property Tests
-   // ==========================================================================
-   // ==========================================================================
-
-   public static TheoryData<LineSeparator> LineSeparatorValues
-   {
-      get
-      {
-         var data = new TheoryData<LineSeparator>();
-         foreach (var value in Enum.GetValues(typeof(LineSeparator)))
-         {
-            data.Add((LineSeparator)value);
-         }
-
-         return data;
-      }
-   }
-
-   [Theory]
-   [MemberData(nameof(LineSeparatorValues))]
-   public void Icao9302SizeTD3Algorithm_LineSeparator_ShouldNotThrow_ValueIsValid(LineSeparator lineSeparator)
-   {
-      // Arrange.
-      var act = () => _sut.LineSeparator = lineSeparator;
-
-      // Act/assert.
-      act.Should().NotThrow();
-   }
-
-   [Theory]
-   [MemberData(nameof(LineSeparatorValues))]
-   public void Icao9303SizeTD3Algorithm_LineSeparator_ShouldReturnExpectedValueAfterSetting(LineSeparator lineSeparator)
-   {
-      // Arrange.
-      var sut = new Icao9303SizeTD1Algorithm() { LineSeparator = lineSeparator };
-
-      // Act/assert.
-      sut.LineSeparator.Should().Be(lineSeparator);
-   }
-
-   [Fact]
-   public void Icao9302SizeTD3Algorithm_LineSeparator_ShouldThrowArgumentOutOfRangeException_ValueIsInvalid()
-   {
-      // Arrange.
-      var value = (LineSeparator)(-1);
-      var act = () => _sut.LineSeparator = value;
-      var expectedMessage = Resources.LineSeparatorInvalidValueMessage;
-
-      // Act/assert.
-      act.Should().ThrowExactly<ArgumentOutOfRangeException>()
-         .WithParameterName(nameof(value))
-         .WithMessage(expectedMessage + "*")
-         .And.ActualValue.Should().Be(value);   
-   }
-
-   #endregion
-
    #region Validate Tests
    // ==========================================================================
    // ==========================================================================
@@ -121,289 +63,448 @@ public class Icao9303SizeTD3AlgorithmTests
       => _sut.Validate(String.Empty).Should().BeFalse();
 
    [Theory]
-   [InlineData(LineSeparator.None, "P<UTOERIKSSON<<ANNA<MARIA<<<<<<<<<<<<<<<<<<L898902C36UTO7408122F1204159ZE184226B<<<<<10")]
-   [InlineData(LineSeparator.Crlf, "P<UTOERIKSSON<<ANNA<MARIA<<<<<<<<<<<<<<<<<<\r\nL898902C36UTO7408122F1204159ZE184226B<<<<<10")]
-   [InlineData(LineSeparator.Lf,   "P<UTOERIKSSON<<ANNA<MARIA<<<<<<<<<<<<<<<<<<\nL898902C36UTO7408122F1204159ZE184226B<<<<<10")]
-   [InlineData(LineSeparator.None, "P<UTOERIKSSON<<ANNA<MARIA<<<<<<<<<<<<<<<<<<<<L898902C36UTO7408122F1204159ZE184226B<<<<<10")]
-   [InlineData(LineSeparator.Crlf, "P<UTOERIKSSON<<ANNA<MARIA<<<<<<<<<<<<<<<<<<<<\r\nL898902C36UTO7408122F1204159ZE184226B<<<<<10")]
-   [InlineData(LineSeparator.Lf,   "P<UTOERIKSSON<<ANNA<MARIA<<<<<<<<<<<<<<<<<<<<\nL898902C36UTO7408122F1204159ZE184226B<<<<<10")]
+   [InlineData("ERIKSSON<<ANNA<MARIA<<<<<<<<<<<<<<<<<<", _lineSeparatorNone)]      // Name -1 char and default line separator = total length 87
+   [InlineData("ERIKSSON<<ANNA<MARIA<<<<<<<<<<<<<<<<<<<<", _lineSeparatorCrlf)]    // Name + 1 char and CRLF separator = total length 91
    public void Icao9303SizeTD3Algorithm_Validate_ShouldReturnFalse_WhenValueIsInvalidLength(
-      LineSeparator lineSeparator,
-      String value)
+      String name,
+      String lineSeparator)
    {
       // Arrange.
-      var sut = new Icao9303SizeTD3Algorithm()
-      {
-         LineSeparator = lineSeparator,
-      };
+      var value = GetTestValue(name: name, lineSeparator: lineSeparator);
 
       // Act/assert.
-      sut.Validate(value).Should().BeFalse();
+      _sut.Validate(value).Should().BeFalse();
    }
 
    [Theory]
-   [InlineData(LineSeparator.None, "0000000000UTO0000000F0000000<<<<<<<<<<<<<<<0")]
-   [InlineData(LineSeparator.None, "0010000001UTO0000000F0000000<<<<<<<<<<<<<<<8")]
-   [InlineData(LineSeparator.None, "0020000002UTO0000000F0000000<<<<<<<<<<<<<<<6")]
-   [InlineData(LineSeparator.None, "0030000003UTO0000000F0000000<<<<<<<<<<<<<<<4")]
-   [InlineData(LineSeparator.None, "0040000004UTO0000000F0000000<<<<<<<<<<<<<<<2")]
-   [InlineData(LineSeparator.None, "0050000005UTO0000000F0000000<<<<<<<<<<<<<<<0")]
-   [InlineData(LineSeparator.None, "0060000006UTO0000000F0000000<<<<<<<<<<<<<<<8")]
-   [InlineData(LineSeparator.None, "0070000007UTO0000000F0000000<<<<<<<<<<<<<<<6")]
-   [InlineData(LineSeparator.None, "0080000008UTO0000000F0000000<<<<<<<<<<<<<<<4")]
-   [InlineData(LineSeparator.None, "0090000009UTO0000000F0000000<<<<<<<<<<<<<<<2")]
-   [InlineData(LineSeparator.Crlf, "00A0000000UTO0000000F0000000<<<<<<<<<<<<<<<0")]
-   [InlineData(LineSeparator.Crlf, "00B0000001UTO0000000F0000000<<<<<<<<<<<<<<<8")]
-   [InlineData(LineSeparator.Crlf, "00C0000002UTO0000000F0000000<<<<<<<<<<<<<<<6")]
-   [InlineData(LineSeparator.Crlf, "00D0000003UTO0000000F0000000<<<<<<<<<<<<<<<4")]
-   [InlineData(LineSeparator.Crlf, "00E0000004UTO0000000F0000000<<<<<<<<<<<<<<<2")]
-   [InlineData(LineSeparator.Crlf, "00F0000005UTO0000000F0000000<<<<<<<<<<<<<<<0")]
-   [InlineData(LineSeparator.Crlf, "00G0000006UTO0000000F0000000<<<<<<<<<<<<<<<8")]
-   [InlineData(LineSeparator.Crlf, "00H0000007UTO0000000F0000000<<<<<<<<<<<<<<<6")]
-   [InlineData(LineSeparator.Crlf, "00I0000008UTO0000000F0000000<<<<<<<<<<<<<<<4")]
-   [InlineData(LineSeparator.Crlf, "00J0000009UTO0000000F0000000<<<<<<<<<<<<<<<2")]
-   [InlineData(LineSeparator.Lf,   "00K0000000UTO0000000F0000000<<<<<<<<<<<<<<<0")]
-   [InlineData(LineSeparator.Lf,   "00L0000001UTO0000000F0000000<<<<<<<<<<<<<<<8")]
-   [InlineData(LineSeparator.Lf,   "00M0000002UTO0000000F0000000<<<<<<<<<<<<<<<6")]
-   [InlineData(LineSeparator.Lf,   "00N0000003UTO0000000F0000000<<<<<<<<<<<<<<<4")]
-   [InlineData(LineSeparator.Lf,   "00O0000004UTO0000000F0000000<<<<<<<<<<<<<<<2")]
-   [InlineData(LineSeparator.Lf,   "00P0000005UTO0000000F0000000<<<<<<<<<<<<<<<0")]
-   [InlineData(LineSeparator.Lf,   "00Q0000006UTO0000000F0000000<<<<<<<<<<<<<<<8")]
-   [InlineData(LineSeparator.Lf,   "00R0000007UTO0000000F0000000<<<<<<<<<<<<<<<6")]
-   [InlineData(LineSeparator.Lf,   "00S0000008UTO0000000F0000000<<<<<<<<<<<<<<<4")]
-   [InlineData(LineSeparator.Lf,   "00T0000009UTO0000000F0000000<<<<<<<<<<<<<<<2")]
-   [InlineData(LineSeparator.None, "00U0000000UTO0000000F0000000<<<<<<<<<<<<<<<0")]
-   [InlineData(LineSeparator.None, "00V0000001UTO0000000F0000000<<<<<<<<<<<<<<<8")]
-   [InlineData(LineSeparator.None, "00W0000002UTO0000000F0000000<<<<<<<<<<<<<<<6")]
-   [InlineData(LineSeparator.None, "00X0000003UTO0000000F0000000<<<<<<<<<<<<<<<4")]
-   [InlineData(LineSeparator.None, "00Y0000004UTO0000000F0000000<<<<<<<<<<<<<<<2")]
-   [InlineData(LineSeparator.None, "00Z0000005UTO0000000F0000000<<<<<<<<<<<<<<<0")]
-   [InlineData(LineSeparator.None, "00<0000000UTO0000000F0000000<<<<<<<<<<<<<<<0")]
-   public void Icao9303SizeTD3Algorithm_Validate_ShouldCorrectlyMapFieldCharacterValues(
-      LineSeparator lineSeparator,
-      String mrzSecondLine)
+   [InlineData(_lineSeparatorNone)]
+   [InlineData(_lineSeparatorCrlf)]
+   [InlineData(_lineSeparatorLf)]
+   public void Icao9303SizeTD3Algorithm_Validate_ShouldReturnTrue_WhenLineSeparatorIsValid(String lineSeparator)
    {
       // Arrange.
-      var sut = new Icao9303SizeTD3Algorithm()
-      {
-         LineSeparator = lineSeparator,
-      };
-      var value = GetTestValue(lineSeparator, mrzSecondLine);
+      var value = GetTestValue(lineSeparator: lineSeparator);
 
       // Act/assert.
-      sut.Validate(value).Should().BeTrue();
+      _sut.Validate(value).Should().BeTrue();
+   }
+
+   [Theory]
+   [InlineData("X\n")]     // 'X' instead of \r
+   [InlineData(" \n")]     // Space instead of \r
+   [InlineData("\r ")]     // Space instead of \n
+   [InlineData("\n\r")]    // \n\r instead of \r\n
+   public void Icao9303SizeTD3Algorithm_Validate_ShouldReturnFalse_WhenLineSeparatorIsInvalid(String lineSeparator)
+   {
+      // Arrange.
+      var value = GetTestValue(lineSeparator: lineSeparator);
+
+      // Act/assert.
+      _sut.Validate(value).Should().BeFalse();
+   }
+
+   [Theory]
+   // Third posiition has weight = 1, so easier to calculate field check digit and composite check digit
+   [InlineData("0000000000", "0")]
+   [InlineData("0010000001", "8")]
+   [InlineData("0020000002", "6")]
+   [InlineData("0030000003", "4")]
+   [InlineData("0040000004", "2")]
+   [InlineData("0050000005", "0")]
+   [InlineData("0060000006", "8")]
+   [InlineData("0070000007", "6")]
+   [InlineData("0080000008", "4")]
+   [InlineData("0090000009", "2")]
+   [InlineData("00A0000000", "0")]
+   [InlineData("00B0000001", "8")]
+   [InlineData("00C0000002", "6")]
+   [InlineData("00D0000003", "4")]
+   [InlineData("00E0000004", "2")]
+   [InlineData("00F0000005", "0")]
+   [InlineData("00G0000006", "8")]
+   [InlineData("00H0000007", "6")]
+   [InlineData("00I0000008", "4")]
+   [InlineData("00J0000009", "2")]
+   [InlineData("00K0000000", "0")]
+   [InlineData("00L0000001", "8")]
+   [InlineData("00M0000002", "6")]
+   [InlineData("00N0000003", "4")]
+   [InlineData("00O0000004", "2")]
+   [InlineData("00P0000005", "0")]
+   [InlineData("00Q0000006", "8")]
+   [InlineData("00R0000007", "6")]
+   [InlineData("00S0000008", "4")]
+   [InlineData("00T0000009", "2")]
+   [InlineData("00U0000000", "0")]
+   [InlineData("00V0000001", "8")]
+   [InlineData("00W0000002", "6")]
+   [InlineData("00X0000003", "4")]
+   [InlineData("00Y0000004", "2")]
+   [InlineData("00Z0000005", "0")]
+   [InlineData("00<0000000", "0")]
+   public void Icao9303SizeTD3Algorithm_Validate_ShouldCorrectlyMapCharactersToIntegerEquivalents(
+      String passportNumber,
+      String compositeCheckDigit)
+   {
+      // Arrange.
+      var value = GetTestValue(
+         lineSeparator: _lineSeparatorNone,
+         passportNumber: passportNumber,
+         dateOfBirth: "0000000",
+         dateOfExpiry: "0000000",
+         personalNumber: "<<<<<<<<<<<<<<<",
+         compositeCheckDigit: compositeCheckDigit);
+
+      // Act/assert.
+      _sut.Validate(value).Should().BeTrue();
+   }
+
+   [Theory]
+   // Check digits are accurate, if equivalent uppercase character
+   [InlineData("00a0000000", "0")]
+   [InlineData("00b0000001", "8")]
+   [InlineData("00c0000002", "6")]
+   [InlineData("00d0000003", "4")]
+   [InlineData("00e0000004", "2")]
+   [InlineData("00f0000005", "0")]
+   [InlineData("00g0000006", "8")]
+   [InlineData("00h0000007", "6")]
+   [InlineData("00i0000008", "4")]
+   [InlineData("00j0000009", "2")]
+   [InlineData("00k0000000", "0")]
+   [InlineData("00l0000001", "8")]
+   [InlineData("00m0000002", "6")]
+   [InlineData("00n0000003", "4")]
+   [InlineData("00o0000004", "2")]
+   [InlineData("00p0000005", "0")]
+   [InlineData("00q0000006", "8")]
+   [InlineData("00r0000007", "6")]
+   [InlineData("00s0000008", "4")]
+   [InlineData("00t0000009", "2")]
+   [InlineData("00u0000000", "0")]
+   [InlineData("00v0000001", "8")]
+   [InlineData("00w0000002", "6")]
+   [InlineData("00x0000003", "4")]
+   [InlineData("00y0000004", "2")]
+   [InlineData("00z0000005", "0")]
+   public void Icao9303SizeTD2Algorithm_Validate_ShouldReturnFalse_WhenLowerCaseAlphabeticCharacterEncountered(
+      String passportNumber,
+      String compositeCheckDigit)
+   {
+      // Arrange.
+      var value = GetTestValue(
+         lineSeparator: _lineSeparatorCrlf,
+         passportNumber: passportNumber,
+         dateOfBirth: "0000000",
+         dateOfExpiry: "0000000",
+         personalNumber: "<<<<<<<<<<<<<<<",
+         compositeCheckDigit: compositeCheckDigit);
+
+      // Act/assert.
+      _sut.Validate(value).Should().BeFalse();
    }
 
    [Theory]
    // Passport number field
-   [InlineData(LineSeparator.None, "1000000007UTO0000000F0000000<<<<<<<<<<<<<<<6")]
-   [InlineData(LineSeparator.None, "0100000003UTO0000000F0000000<<<<<<<<<<<<<<<4")]
-   [InlineData(LineSeparator.None, "0010000001UTO0000000F0000000<<<<<<<<<<<<<<<8")]
-   [InlineData(LineSeparator.None, "0001000007UTO0000000F0000000<<<<<<<<<<<<<<<6")]
-   [InlineData(LineSeparator.None, "0000100003UTO0000000F0000000<<<<<<<<<<<<<<<4")]
-   [InlineData(LineSeparator.None, "0000010001UTO0000000F0000000<<<<<<<<<<<<<<<8")]
-   [InlineData(LineSeparator.None, "0000001007UTO0000000F0000000<<<<<<<<<<<<<<<6")]
-   [InlineData(LineSeparator.None, "0000000103UTO0000000F0000000<<<<<<<<<<<<<<<4")]
-   [InlineData(LineSeparator.None, "0000000011UTO0000000F0000000<<<<<<<<<<<<<<<8")]
+   [InlineData("1000000007", "0000000", "0000000", "<<<<<<<<<<<<<<<", "6")]
+   [InlineData("0100000003", "0000000", "0000000", "<<<<<<<<<<<<<<<", "4")]
+   [InlineData("0010000001", "0000000", "0000000", "<<<<<<<<<<<<<<<", "8")]
+   [InlineData("0001000007", "0000000", "0000000", "<<<<<<<<<<<<<<<", "6")]
+   [InlineData("0000100003", "0000000", "0000000", "<<<<<<<<<<<<<<<", "4")]
+   [InlineData("0000010001", "0000000", "0000000", "<<<<<<<<<<<<<<<", "8")]
+   [InlineData("0000001007", "0000000", "0000000", "<<<<<<<<<<<<<<<", "6")]
+   [InlineData("0000000103", "0000000", "0000000", "<<<<<<<<<<<<<<<", "4")]
+   [InlineData("0000000011", "0000000", "0000000", "<<<<<<<<<<<<<<<", "8")]
    // Date of birth field
-   [InlineData(LineSeparator.Crlf, "0000000000UTO1000007F0000000<<<<<<<<<<<<<<<4")]
-   [InlineData(LineSeparator.Crlf, "0000000000UTO0100003F0000000<<<<<<<<<<<<<<<0")]
-   [InlineData(LineSeparator.Crlf, "0000000000UTO0010001F0000000<<<<<<<<<<<<<<<0")]
-   [InlineData(LineSeparator.Crlf, "0000000000UTO0001007F0000000<<<<<<<<<<<<<<<4")]
-   [InlineData(LineSeparator.Crlf, "0000000000UTO0000103F0000000<<<<<<<<<<<<<<<0")]
-   [InlineData(LineSeparator.Crlf, "0000000000UTO0000011F0000000<<<<<<<<<<<<<<<0")]
+   [InlineData("0000000000", "1000007", "0000000", "<<<<<<<<<<<<<<<", "4")]
+   [InlineData("0000000000", "0100003", "0000000", "<<<<<<<<<<<<<<<", "0")]
+   [InlineData("0000000000", "0010001", "0000000", "<<<<<<<<<<<<<<<", "0")]
+   [InlineData("0000000000", "0001007", "0000000", "<<<<<<<<<<<<<<<", "4")]
+   [InlineData("0000000000", "0000103", "0000000", "<<<<<<<<<<<<<<<", "0")]
+   [InlineData("0000000000", "0000011", "0000000", "<<<<<<<<<<<<<<<", "0")]
    // Date of expiry field
-   [InlineData(LineSeparator.Lf, "0000000000UTO0000000F1000007<<<<<<<<<<<<<<<8")]
-   [InlineData(LineSeparator.Lf, "0000000000UTO0000000F0100003<<<<<<<<<<<<<<<0")]
-   [InlineData(LineSeparator.Lf, "0000000000UTO0000000F0010001<<<<<<<<<<<<<<<4")]
-   [InlineData(LineSeparator.Lf, "0000000000UTO0000000F0001007<<<<<<<<<<<<<<<8")]
-   [InlineData(LineSeparator.Lf, "0000000000UTO0000000F0000103<<<<<<<<<<<<<<<0")]
-   [InlineData(LineSeparator.Lf, "0000000000UTO0000000F0000011<<<<<<<<<<<<<<<4")]
-   // Optional data field
-   [InlineData(LineSeparator.None, "0000000000UTO0000000F00000001000000000000074")]
-   [InlineData(LineSeparator.None, "0000000000UTO0000000F00000000100000000000036")]
-   [InlineData(LineSeparator.None, "0000000000UTO0000000F00000000010000000000012")]
-   [InlineData(LineSeparator.None, "0000000000UTO0000000F00000000001000000000074")]
-   [InlineData(LineSeparator.None, "0000000000UTO0000000F00000000000100000000036")]
-   [InlineData(LineSeparator.None, "0000000000UTO0000000F00000000000010000000012")]
-   [InlineData(LineSeparator.None, "0000000000UTO0000000F00000000000001000000074")]
-   [InlineData(LineSeparator.None, "0000000000UTO0000000F00000000000000100000036")]
-   [InlineData(LineSeparator.None, "0000000000UTO0000000F00000000000000010000012")]
-   [InlineData(LineSeparator.None, "0000000000UTO0000000F00000000000000001000074")]
-   [InlineData(LineSeparator.None, "0000000000UTO0000000F00000000000000000100036")]
-   [InlineData(LineSeparator.None, "0000000000UTO0000000F00000000000000000010012")]
-   [InlineData(LineSeparator.None, "0000000000UTO0000000F00000000000000000001074")]
-   [InlineData(LineSeparator.None, "0000000000UTO0000000F00000000000000000000136")]
+   [InlineData("0000000000", "0000000", "1000007", "<<<<<<<<<<<<<<<", "8")]
+   [InlineData("0000000000", "0000000", "0100003", "<<<<<<<<<<<<<<<", "0")]
+   [InlineData("0000000000", "0000000", "0010001", "<<<<<<<<<<<<<<<", "4")]
+   [InlineData("0000000000", "0000000", "0001007", "<<<<<<<<<<<<<<<", "8")]
+   [InlineData("0000000000", "0000000", "0000103", "<<<<<<<<<<<<<<<", "0")]
+   [InlineData("0000000000", "0000000", "0000011", "<<<<<<<<<<<<<<<", "4")]
+   // Optional personal number field
+   [InlineData("0000000000", "0000000", "0000000", "100000000000007", "4")]
+   [InlineData("0000000000", "0000000", "0000000", "010000000000003", "6")]
+   [InlineData("0000000000", "0000000", "0000000", "001000000000001", "2")]
+   [InlineData("0000000000", "0000000", "0000000", "000100000000007", "4")]
+   [InlineData("0000000000", "0000000", "0000000", "000010000000003", "6")]
+   [InlineData("0000000000", "0000000", "0000000", "000001000000001", "2")]
+   [InlineData("0000000000", "0000000", "0000000", "000000100000007", "4")]
+   [InlineData("0000000000", "0000000", "0000000", "000000010000003", "6")]
+   [InlineData("0000000000", "0000000", "0000000", "000000001000001", "2")]
+   [InlineData("0000000000", "0000000", "0000000", "000000000100007", "4")]
+   [InlineData("0000000000", "0000000", "0000000", "000000000010003", "6")]
+   [InlineData("0000000000", "0000000", "0000000", "000000000001001", "2")]
+   [InlineData("0000000000", "0000000", "0000000", "000000000000107", "4")]
+   [InlineData("0000000000", "0000000", "0000000", "000000000000013", "6")]
    public void Icao9303SizeTD3Algorithm_Validate_ShouldCorrectlyWeightByCharacterPosition(
-      LineSeparator lineSeparator,
-      String mrzSecondLine)
+      String passportNumber,
+      String dateOfBirth,
+      String dateOfExpiry,
+      String personalNumber,
+      String compositeCheckDigit)
    {
       // Arrange.
-      var sut = new Icao9303SizeTD3Algorithm()
-      {
-         LineSeparator = lineSeparator,
-      };
-      var value = GetTestValue(lineSeparator, mrzSecondLine);
+      var value = GetTestValue(
+         lineSeparator: _lineSeparatorLf,
+         passportNumber: passportNumber,
+         dateOfBirth: dateOfBirth,
+         dateOfExpiry: dateOfExpiry,
+         personalNumber: personalNumber,
+         compositeCheckDigit: compositeCheckDigit);
 
       // Act/assert.
-      sut.Validate(value).Should().BeTrue();
+      _sut.Validate(value).Should().BeTrue();
    }
 
-   public static TheoryData<LineSeparator, String> ValidMrzData => new()
-   {
-      { LineSeparator.None, _mrzLineSeparatorNone },
-      { LineSeparator.Crlf, _mrzLineSeparatorCrlf },
-      { LineSeparator.Lf, _mrzLineSeparatorLf },
-   };
-
    [Theory]
-   [MemberData(nameof(ValidMrzData))]
+   [InlineData("L898902C36", "7408122", "1204159", "ZE184226B<<<<<1", "0")]
+   [InlineData("1000000007", "0000000", "0000000", "<<<<<<<<<<<<<<<", "6")]
+   [InlineData("0000000000", "1000007", "0000000", "<<<<<<<<<<<<<<<", "4")]
+   [InlineData("0000000000", "0000000", "1000007", "<<<<<<<<<<<<<<<", "8")]
+   [InlineData("0000000000", "0000000", "0000000", "100000000000007", "4")]
    public void Icao9303SizeTD3Algorithm_Validate_ShouldReturnTrue_WhenValueContainsValidCheckDigits(
-      LineSeparator lineSeparator,
-      String value)
+      String passportNumber,
+      String dateOfBirth,
+      String dateOfExpiry,
+      String personalNumber,
+      String compositeCheckDigit)
    {
       // Arrange.
-      var sut = new Icao9303SizeTD3Algorithm()
-      {
-         LineSeparator = lineSeparator,
-      };
+      var value = GetTestValue(
+         passportNumber: passportNumber,
+         dateOfBirth: dateOfBirth,
+         dateOfExpiry: dateOfExpiry,
+         personalNumber: personalNumber,
+         compositeCheckDigit: compositeCheckDigit);
 
       // Act/assert.
-      sut.Validate(value).Should().BeTrue();
+      _sut.Validate(value).Should().BeTrue();
    }
 
    [Theory]
-   [InlineData(LineSeparator.None, "L8989A2C36UTO7408122F1204159ZE184226B<<<<<10")]    // L898902C36 with single char transcription error (0 -> A) with delta 10
-   [InlineData(LineSeparator.Crlf, "L89890C236UTO7408122F1204159ZE184226B<<<<<10")]    // L898902C36 with two char transposition error (2C -> C2) with delta 10
-   [InlineData(LineSeparator.Lf,   "0000000000UTO8812728F0000000<<<<<<<<<<<<<<<0")]    // 8812278 with two char transposition error (27 -> 72) with delta 5
-   [InlineData(LineSeparator.None, "0000000000UTO0000000F8812728<<<<<<<<<<<<<<<2")]    // 8812278 with two char transposition error (27 -> 72) with delta 5
-   [InlineData(LineSeparator.Crlf, "0000000000UTO0000000F0000000123456789A123450")]    // 123456789012345 with single char transcription error (0 -> A) with delta 10
+   [InlineData("L8989A2C36", "7408122", "1204159", "ZE184226B<<<<<1", "0")]    // Passport number L898902C36 with single char transcription error (0 -> A) with delta 10
+   [InlineData("L89890C236", "7408122", "1204159", "ZE184226B<<<<<1", "0")]    // Passport number L898902C36 with two char transposition error (2C -> C2) with delta 10
+   [InlineData("0000000000", "8812728", "0000000", "<<<<<<<<<<<<<<<", "0")]    // Date of birth 8812278 with two char transposition error (27 -> 72) with delta 5
+   [InlineData("0000000000", "0000000", "8812728", "<<<<<<<<<<<<<<<", "2")]    // Date of expiry 8812278 with two char transposition error (27 -> 72) with delta 5
+   [InlineData("0000000000", "0000000", "0000000", "123456789A12345", "0")]    // Personal number 123456789012345 with single char transcription error (0 -> A) with delta 10
    public void Icao9303SizeTD3Algorithm_Validate_ShouldReturnTrue_WhenValueContainsUndetectableError(
-      LineSeparator lineSeparator,
-      String mrzSecondLine)
+      String passportNumber,
+      String dateOfBirth,
+      String dateOfExpiry,
+      String personalNumber,
+      String compositeCheckDigit)
    {
       // Arrange.
-      var sut = new Icao9303SizeTD3Algorithm()
-      {
-         LineSeparator = lineSeparator,
-      };
-      var value = GetTestValue(lineSeparator, mrzSecondLine);
+      var value = GetTestValue(
+         passportNumber: passportNumber,
+         dateOfBirth: dateOfBirth,
+         dateOfExpiry: dateOfExpiry,
+         personalNumber: personalNumber,
+         compositeCheckDigit: compositeCheckDigit);
 
       // Act/assert.
-      sut.Validate(value).Should().BeTrue();
+      _sut.Validate(value).Should().BeTrue();
    }
 
    [Theory]
-   [InlineData(LineSeparator.None, "L898902D36UTO7408122F1204159ZE184226B<<<<<13")]    // L898902C36 with single char transcription error (C -> D)
-   [InlineData(LineSeparator.Crlf, "L898902C36UTO7438122F1204159ZE184226B<<<<<11")]    // 7408122 with single digit transcription error (0 -> 3)
-   [InlineData(LineSeparator.Lf,   "L898902C36UTO7408122F1201459ZE184226B<<<<<19")]    // 1204159 with two digit transposition error (41 -> 14)
-   [InlineData(LineSeparator.None, "L898902C36UTO7408122F1204159ZE184226B<<<<<17")]    // ZE184226B<<<<<1 with two char transposition error (ZE -> EZ)
+   [InlineData("L898902D36", "7408122", "1204159", "ZE184226B<<<<<1", "3")]    // Passport number L898902C36 with single char transcription error (C -> D)
+   [InlineData("L898902C36", "7438122", "1204159", "ZE184226B<<<<<1", "1")]    // Date of birth 7408122 with single digit transcription error (0 -> 3)
+   [InlineData("L898902C36", "7408122", "1201459", "ZE184226B<<<<<1", "9")]    // Date of expiry 1204159 with two digit transposition error (41 -> 14)
+   [InlineData("L898902C36", "7408122", "1204159", "ZE184226B<<<<<1", "7")]    // Personal number ZE184226B<<<<<1 with two char transposition error (ZE -> EZ)
    public void Icao9303SizeTD3Algorithm_Validate_ShouldReturnFalse_WhenValueContainsDetectableError(
-      LineSeparator lineSeparator,
-      String mrzSecondLine)
+      String passportNumber,
+      String dateOfBirth,
+      String dateOfExpiry,
+      String personalNumber,
+      String compositeCheckDigit)
    {
       // Arrange.
-      var sut = new Icao9303SizeTD3Algorithm()
-      {
-         LineSeparator = lineSeparator,
-      };
-      var value = GetTestValue(lineSeparator, mrzSecondLine);
+      var value = GetTestValue(
+         passportNumber: passportNumber,
+         dateOfBirth: dateOfBirth,
+         dateOfExpiry: dateOfExpiry,
+         personalNumber: personalNumber,
+         compositeCheckDigit: compositeCheckDigit);
 
       // Act/assert.
-      sut.Validate(value).Should().BeFalse();
+      _sut.Validate(value).Should().BeFalse();
    }
 
    [Fact]
    public void Icao9303SizeTD3Algorithm_Validate_ShouldReturnTrue_WhenFieldsAreAllZeros()
-      => _sut.Validate("P<UTOERIKSSON<<ANNA<MARIA<<<<<<<<<<<<<<<<<<<0000000000UTO0000000F0000000<<<<<<<<<<<<<<<0").Should().BeTrue();
+   {
+      // Arrange.
+      var value = GetTestValue(
+         passportNumber: "0000000000",
+         dateOfBirth: "0000000",
+         dateOfExpiry: "0000000",
+         personalNumber: "<<<<<<<<<<<<<<<",
+         compositeCheckDigit: "0");
+
+      // Act/assert.
+      _sut.Validate(value).Should().BeTrue();
+   }
 
    [Fact]
    public void Icao9303SizeTD3Algorithm_Validate_ShouldReturnTrue_WhenFieldsAreAllFillerCharacters()
-      => _sut.Validate("P<UTOERIKSSON<<ANNA<MARIA<<<<<<<<<<<<<<<<<<<<<<<<<<<<0UTO<<<<<<0F<<<<<<0<<<<<<<<<<<<<<<0").Should().BeTrue();
+   {
+      // Arrange.
+      var value = GetTestValue(
+         passportNumber: "<<<<<<<<<0",
+         dateOfBirth: "<<<<<<0",
+         dateOfExpiry: "<<<<<<0",
+         personalNumber: "<<<<<<<<<<<<<<<",
+         compositeCheckDigit: "0");
+
+      // Act/assert.
+      _sut.Validate(value).Should().BeTrue();
+   }
 
    [Theory]
-   [InlineData(LineSeparator.Crlf, "`898902C36UTO7408122F1204159ZE184226B<<<<<10")]    // L898902C36 with L replaced with character 20 positions later in ASCII table
-   [InlineData(LineSeparator.Lf,   "L898902C36UTO74&8122F1204159ZE184226B<<<<<10")]    // 7408122 with 0 replaced with character 10 positions before in ASCII table
-   [InlineData(LineSeparator.None, "L898902C36UTO7408122F12:4159ZE184226B<<<<<10")]    // 1204159 with 0 replaced with character 10 positions later in ASCII table
-   [InlineData(LineSeparator.Crlf, "L898902C36UTO7408122F1204159ZE18>226B<<<<<10")]    // ZE184226B<<<<<1 with 4 replaced with character 10 positions later in ASCII table
+   [InlineData("<<<<<<<<<<<<<<<")]
+   [InlineData("<<<<<<<<<<<<<<0")]
+   public void Icao9303SizeTD3Algorithm_Validate_ShouldReturnTrue_WhenEmptyPersonalNumberUsesZeroOrFillerCharacterForCheckDigit(
+      String personalNumber)
+   {
+      // Arrange.
+      var value = GetTestValue(
+         passportNumber: "0000000000",
+         dateOfBirth: "0000000",
+         dateOfExpiry: "0000000",
+         personalNumber: personalNumber,
+         compositeCheckDigit: "0");
+
+      // Act/assert.
+      _sut.Validate(value).Should().BeTrue();
+   }
+
+   [Fact]
+   public void Icao9303SizeTD3Algorithm_Validate_ShouldReturnFalse_WhenAllZerosPersonalNumberUsesFillerCharacterForCheckDigit()
+   {
+      // Arrange.
+      var value = GetTestValue(
+         passportNumber: "0000000000",
+         dateOfBirth: "0000000",
+         dateOfExpiry: "0000000",
+         personalNumber: "00000000000000<",
+         compositeCheckDigit: "0");
+
+      // Act/assert.
+      _sut.Validate(value).Should().BeFalse();
+   }
+
+   [Theory]
+   [InlineData("`898902C36", "7408122", "1204159", "ZE184226B<<<<<1", "0")]    // Passport number L898902C36 with L replaced with character 20 positions later in ASCII table
+   [InlineData("l898902C36", "7408122", "1204159", "ZE184226B<<<<<1", "0")]    // Passport number L898902C36 with L replaced with lowercase l
+   [InlineData("L898902C36", "74A8122", "1204159", "ZE184226B<<<<<1", "0")]    // Date of birth 7408122 with 0 replaced with character A
+   [InlineData("L898902C36", "74a8122", "1204159", "ZE184226B<<<<<1", "0")]    // Date of birth 7408122 with 0 replaced with character a
+   [InlineData("L898902C36", "74&8122", "1204159", "ZE184226B<<<<<1", "0")]    // Date of birth 7408122 with 0 replaced with character 10 positions before in ASCII table
+   [InlineData("L898902C36", "7408122", "12A4159", "ZE184226B<<<<<1", "0")]    // Date of expiry 1204159 with 0 replaced with character A
+   [InlineData("L898902C36", "7408122", "12a4159", "ZE184226B<<<<<1", "0")]    // Date of expiry 1204159 with 0 replaced with character a
+   [InlineData("L898902C36", "7408122", "12:4159", "ZE184226B<<<<<1", "0")]    // Date of expiry 1204159 with 0 replaced with character 10 positions later in ASCII table
+   [InlineData("L898902C36", "7408122", "1204159", "ZE18>226B<<<<<1", "0")]    // Personal number ZE184226B<<<<<1 with 4 replaced with character 10 positions later in ASCII table
+   [InlineData("L898902C36", "7408122", "1204159", "ZE184226b<<<<<1", "0")]    // Personal number ZE184226B<<<<<1 with B replaced with lowercase b
    public void Icao9303SizeTD3Algorithm_Validate_ShouldReturnFalse_WhenFieldContainsInvalidCharacter(
-      LineSeparator lineSeparator,
-      String mrzSecondLine)
+      String passportNumber,
+      String dateOfBirth,
+      String dateOfExpiry,
+      String personalNumber,
+      String compositeCheckDigit)
    {
       // Arrange.
-      var sut = new Icao9303SizeTD3Algorithm()
-      {
-         LineSeparator = lineSeparator,
-      };
-      var value = GetTestValue(lineSeparator, mrzSecondLine);
+      var value = GetTestValue(
+         passportNumber: passportNumber,
+         dateOfBirth: dateOfBirth,
+         dateOfExpiry: dateOfExpiry,
+         personalNumber: personalNumber,
+         compositeCheckDigit: compositeCheckDigit);
 
       // Act/assert.
-      sut.Validate(value).Should().BeFalse();
+      _sut.Validate(value).Should().BeFalse();
    }
 
    [Theory]
-   [InlineData(LineSeparator.None, "L898902C3AUTO7408122F1204159ZE184226B<<<<<10")]    // Document number check digit is invalid character
-   [InlineData(LineSeparator.Crlf, "L898902C3&UTO7408122F1204159ZE184226B<<<<<10")]    // Document number check digit is invalid character
-   [InlineData(LineSeparator.Crlf, "L898902C3<UTO7408122F1204159ZE184226B<<<<<10")]    // Document number check digit is invalid character
-   [InlineData(LineSeparator.Lf,   "L898902C3[UTO7408122F1204159ZE184226B<<<<<10")]    // Document number check digit is invalid character
-   [InlineData(LineSeparator.None, "L898902C36UTO740812AF1204159ZE184226B<<<<<10")]    // Date of birth check digit is invalid character
-   [InlineData(LineSeparator.Crlf, "L898902C36UTO740812&F1204159ZE184226B<<<<<10")]    // Date of birth check digit is invalid character
-   [InlineData(LineSeparator.Crlf, "L898902C36UTO740812<F1204159ZE184226B<<<<<10")]    // Date of birth check digit is invalid character
-   [InlineData(LineSeparator.Lf,   "L898902C36UTO740812[F1204159ZE184226B<<<<<10")]    // Date of birth check digit is invalid character
-   [InlineData(LineSeparator.None, "L898902C36UTO7408122F120415AZE184226B<<<<<10")]    // Date of expiry check digit is invalid character
-   [InlineData(LineSeparator.Crlf, "L898902C36UTO7408122F120415&ZE184226B<<<<<10")]    // Date of expiry check digit is invalid character
-   [InlineData(LineSeparator.Crlf, "L898902C36UTO7408122F120415<ZE184226B<<<<<10")]    // Date of expiry check digit is invalid character
-   [InlineData(LineSeparator.Lf,   "L898902C36UTO7408122F120415[ZE184226B<<<<<10")]    // Date of expiry check digit is invalid character
+   [InlineData("L898902C3A", "7408122", "1204159", "ZE184226B<<<<<1", "0")]    // Document number check digit is invalid character
+   [InlineData("L898902C3&", "7408122", "1204159", "ZE184226B<<<<<1", "0")]    // Document number check digit is invalid character
+   [InlineData("L898902C3<", "7408122", "1204159", "ZE184226B<<<<<1", "0")]    // Document number check digit is invalid character
+   [InlineData("L898902C3[", "7408122", "1204159", "ZE184226B<<<<<1", "0")]    // Document number check digit is invalid character
+   [InlineData("L898902C36", "740812A", "1204159", "ZE184226B<<<<<1", "0")]    // Date of birth check digit is invalid character
+   [InlineData("L898902C36", "740812&", "1204159", "ZE184226B<<<<<1", "0")]    // Date of birth check digit is invalid character
+   [InlineData("L898902C36", "740812<", "1204159", "ZE184226B<<<<<1", "0")]    // Date of birth check digit is invalid character
+   [InlineData("L898902C36", "740812[", "1204159", "ZE184226B<<<<<1", "0")]    // Date of birth check digit is invalid character
+   [InlineData("L898902C36", "7408122", "120415A", "ZE184226B<<<<<1", "0")]    // Date of expiry check digit is invalid character
+   [InlineData("L898902C36", "7408122", "120415&", "ZE184226B<<<<<1", "0")]    // Date of expiry check digit is invalid character
+   [InlineData("L898902C36", "7408122", "120415<", "ZE184226B<<<<<1", "0")]    // Date of expiry check digit is invalid character
+   [InlineData("L898902C36", "7408122", "120415[", "ZE184226B<<<<<1", "0")]    // Date of expiry check digit is invalid character
    public void Icao9303SizeTD3Algorithm_Validate_ShouldReturnFalse_WhenRequiredFieldCheckDigitContainsNonDigitCharacter(
-      LineSeparator lineSeparator,
-      String mrzSecondLine)
+      String passportNumber,
+      String dateOfBirth,
+      String dateOfExpiry,
+      String personalNumber,
+      String compositeCheckDigit)
    {
       // Arrange.
-      var sut = new Icao9303SizeTD3Algorithm()
-      {
-         LineSeparator = lineSeparator,
-      };
-      var value = GetTestValue(lineSeparator, mrzSecondLine);
+      var value = GetTestValue(
+         passportNumber: passportNumber,
+         dateOfBirth: dateOfBirth,
+         dateOfExpiry: dateOfExpiry,
+         personalNumber: personalNumber,
+         compositeCheckDigit: compositeCheckDigit);
 
       // Act/assert.
-      sut.Validate(value).Should().BeFalse();
+      _sut.Validate(value).Should().BeFalse();
    }
 
    [Theory]
-   [InlineData(LineSeparator.Crlf, "L898902C36UTO7408122F1204159ZE184226B<<<<<A0")]    // Optional data check digit is invalid character
-   [InlineData(LineSeparator.Lf,   "L898902C36UTO7408122F1204159ZE184226B<<<<<:0")]    // Optional data check digit is invalid character
+   [InlineData("L898902C36", "7408122", "1204159", "ZE184226B<<<<<A", "0")]    // Personal number check digit is invalid character
+   [InlineData("L898902C36", "7408122", "1204159", "ZE184226B<<<<<:", "0")]    // Personal number check digit is invalid character
    public void Icao9303SizeTD3Algorithm_Validate_ShouldReturnFalse_WhenOptionalFieldCheckDigitContainsInvalidCharacter(
-      LineSeparator lineSeparator,
-      String mrzSecondLine)
+      String passportNumber,
+      String dateOfBirth,
+      String dateOfExpiry,
+      String personalNumber,
+      String compositeCheckDigit)
    {
       // Arrange.
-      var sut = new Icao9303SizeTD3Algorithm()
-      {
-         LineSeparator = lineSeparator,
-      };
-      var value = GetTestValue(lineSeparator, mrzSecondLine);
+      var value = GetTestValue(
+         passportNumber: passportNumber,
+         dateOfBirth: dateOfBirth,
+         dateOfExpiry: dateOfExpiry,
+         personalNumber: personalNumber,
+         compositeCheckDigit: compositeCheckDigit);
 
       // Act/assert.
-      sut.Validate(value).Should().BeFalse();
+      _sut.Validate(value).Should().BeFalse();
    }
 
    [Theory]
-   [InlineData(LineSeparator.Crlf, "0000000000UTO0000000F0000000<<<<<<<<<<<<<<00")]
-   [InlineData(LineSeparator.Lf,   "0000000000UTO0000000F0000000<<<<<<<<<<<<<<<0")]
-   public void Icao9303SizeTD3Algorithm_Validate_ShouldReturnTrue_WhenEmptyOptionalFieldCheckDigitIsZeroOrFillerCharacter(
-      LineSeparator lineSeparator,
-      String mrzSecondLine)
+   [InlineData("A")]
+   [InlineData("a")]
+   [InlineData("&")]
+   [InlineData(":")]
+   public void Icao9303SizeTD3Algorithm_Validate_ShouldReturnFalse_WhenCompositeCheckDigitContainsNonDigitCharacter(String compositeCheckDigit)
    {
       // Arrange.
-      var sut = new Icao9303SizeTD3Algorithm()
-      {
-         LineSeparator = lineSeparator,
-      };
-      var value = GetTestValue(lineSeparator, mrzSecondLine);
+      var value = GetTestValue(compositeCheckDigit: compositeCheckDigit);
 
       // Act/assert.
-      sut.Validate(value).Should().BeTrue();
+      _sut.Validate(value).Should().BeFalse();
    }
+
+   [Theory]
+   [InlineData("P<UTOERIKSSON<<ANNA<MARIA<<<<<<<<<<<<<<<<<<<L898902C36UTO7408122F1204159ZE184226B<<<<<10")]
+   [InlineData("P<UTOQWERTY<<ASDF<<<<<<<<<<<<<<<<<<<<<<<<<<<\r\nQ123987655UTO3311226F2010201<<<<<<<<<<<<<<06")]
+   [InlineData("P<UTOSKYWALKER<<LUKE<<<<<<<<<<<<<<<<<<<<<<<<\nSTARWARS45UTO7705256M2405252HAN<SHOT<FIRST78")]
+   public void Icao9303SizeTD3Algorithm_Validate_ShouldReturnTrue_ForBenchmarkValues(String value)
+      => _sut.Validate(value).Should().BeTrue();
 
    #endregion
 }

@@ -595,13 +595,14 @@ check digit are all calculated using the [ICAO 9303 Algorithm](#icao-9303-algori
 
 The machine readable zone of a Size TD1 document consists of three lines of 30
 characters. The value passed to the Validate method should contain all lines of
-data concatenated together. You can specify how the lines are separated in the
-concatenated value by setting the LineSeparator property of the algorithm class.
-The three values are None (no line separator is used and the 31st character of the
-value is the first character of the second line), Crlf (the Windows line separator,
-i.e. a carriage return character followed by a line feed character - '\r\n') and 
-Lf (the Unix line separator, i.e a line feed character - '\n').The default 
-LineSeparator is None.
+data concatenated together. You may optionally use line separator characters in 
+the concatenated value, either the Windows line separator (a carriage return 
+character followed by a line feed character - '\r\n') or the Unix line separator 
+(a line feed character - '\n'). The ICAO 9303 Document Size TD1 algorithm will
+determine the line separator used from the length the value passed to the Validate 
+method - 90 characters for no line separators, 94 characters for Windows line 
+separators and 92 characters for Unix line separators. If the length of the value 
+does not match one of these lengths then the Validate method will return `false`.
 
 The ICAO 9303 Document Size TD1 Algorithm will validate the check digits of the
 three fields (document number, date of birth and date of expiry) as well as the 
@@ -613,7 +614,9 @@ digits and does not support calculation of check digits.
 
 #### Details
 
-* Valid characters - decimal digits ('0' - '9'), upper case letters ('A' - 'Z') and a filler character ('<').
+* Valid characters - 
+  * decimal digits ('0' - '9'), upper case letters ('A' - 'Z') and a filler character ('<') for document number/extended document number field
+  * decimal digits ('0' - '9') and a filler character ('<') for date of birth and date of expiry fields
 * Check digit size - one character
 * Check digit value - decimal digit ('0' - '9')
 * Check digit location - trailing (right-most) character of individual fields, trailing character of second line for composite check digit
@@ -638,13 +641,14 @@ calculated using the [ICAO 9303 Algorithm](#icao-9303-algorithm).
 
 The machine readable zone of a Size TD2 document consists of two lines of 36
 characters. The value passed to the Validate method should contain all lines of
-data concatenated together. You can specify how the lines are separated in the
-concatenated value by setting the LineSeparator property of the algorithm class.
-The three values are None (no line separator is used and the 37th character of the
-value is the first character of the second line), Crlf (the Windows line separator,
-i.e. a carriage return character followed by a line feed character - '\r\n') and 
-Lf (the Unix line separator, i.e a line feed character - '\n').The default 
-LineSeparator is None.
+data concatenated together. You may optionally use line separator characters in 
+the concatenated value, either the Windows line separator (a carriage return 
+character followed by a line feed character - '\r\n') or the Unix line separator 
+(a line feed character - '\n'). The ICAO 9303 Document Size TD2 algorithm will
+determine the line separator used from the length the value passed to the Validate 
+method - 72 characters for no line separators, 74 characters for Windows line 
+separators and 73 characters for Unix line separators. If the length of the value 
+does not match one of these lengths then the Validate method will return `false`.
 
 The ICAO 9303 Document Size TD2 Algorithm will validate the check digits of the
 three fields (document number, date of birth and date of expiry) as well as the 
@@ -656,7 +660,9 @@ digits and does not support calculation of check digits.
 
 #### Details
 
-* Valid characters - decimal digits ('0' - '9'), upper case letters ('A' - 'Z') and a filler character ('<').
+* Valid characters - 
+  * decimal digits ('0' - '9'), upper case letters ('A' - 'Z') and a filler character ('<') for document number/extended document number field
+  * decimal digits ('0' - '9') and a filler character ('<') for date of birth and date of expiry fields
 * Check digit size - one character
 * Check digit value - decimal digit ('0' - '9')
 * Check digit location - trailing (right-most) character of individual fields, trailing character of second line for composite check digit
@@ -683,13 +689,14 @@ is also calculated using the [ICAO 9303 Algorithm](#icao-9303-algorithm).
 
 The machine readable zone of a Size TD3 document consists of two lines of 44
 characters. The value passed to the Validate method should contain both lines of
-data concatenated together. You can specify how the lines are separated in the
-concatenated value by setting the LineSeparator property of the algorithm class.
-The three values are None (no line separator is used and the 45th character of the
-value is the first character of the second line), Crlf (the Windows line separator,
-i.e. a carriage return character followed by a line feed character - '\r\n') and 
-Lf (the Unix line separator, i.e a line feed character - '\n').The default 
-LineSeparator is None.
+data concatenated together. You may optionally use line separator characters in 
+the concatenated value, either the Windows line separator (a carriage return 
+character followed by a line feed character - '\r\n') or the Unix line separator 
+(a line feed character - '\n'). The ICAO 9303 Document Size TD3 algorithm will
+determine the line separator used from the length the value passed to the Validate 
+method - 88 characters for no line separators, 90 characters for Windows line 
+separators and 89 characters for Unix line separators. If the length of the value 
+does not match one of these lengths then the Validate method will return `false`.
 
 The ICAO 9303 Document Size TD3 Algorithm will validate the check digits of the
 four fields (passport number, date of birth, date of expiry and optional personal
@@ -701,7 +708,9 @@ digits and does not support calculation of check digits.
 
 #### Details
 
-* Valid characters - decimal digits ('0' - '9'), upper case letters ('A' - 'Z') and a filler character ('<').
+* Valid characters - 
+  * decimal digits ('0' - '9'), upper case letters ('A' - 'Z') and a filler character ('<') for document number/extended document number field
+  * decimal digits ('0' - '9') and a filler character ('<') for date of birth and date of expiry fields
 * Check digit size - one character
 * Check digit value - decimal digit ('0' - '9')
 * Check digit location - trailing (right-most) character of individual fields, trailing character of entire string for composite check digit
@@ -728,17 +737,21 @@ Machine Readable Visas have two formats: MRV-A and MRV-B. The MRV-A format uses
 two lines of 44 characters while the MRV-B format uses two lines of 36 characters.
 The individual fields in the second line of the machine readable zone are located
 in the same character positions regardless of the format. The Validate method
-can validate either format.
+can validate either format and the algorithm will determine the format from the 
+length of the value passed to the Validate method.
 
 The machine readable zone of a Machine Readable Visa consists of two lines of 36
 characters. The value passed to the Validate method should contain all lines of
-data concatenated together. You can specify how the lines are separated in the
-concatenated value by setting the LineSeparator property of the algorithm class.
-The three values are None (no line separator is used and the 37th character of the
-value is the first character of the second line), Crlf (the Windows line separator,
-i.e. a carriage return character followed by a line feed character - '\r\n') and 
-Lf (the Unix line separator, i.e a line feed character - '\n').The default 
-LineSeparator is None.
+data concatenated together. You may optionally use line separator characters in 
+the concatenated value, either the Windows line separator (a carriage return 
+character followed by a line feed character - '\r\n') or the Unix line separator 
+(a line feed character - '\n'). The ICAO 9303 Machine Readable Visa algorithm will
+determine the line separator used from the length the value passed to the Validate 
+method - 88 characters (MRV-A) or 72 characters (MRV-B) for no line separators, 
+90 characters (MRV-A) or 74 characters (MRV-B) for Windows line separators and 
+89 characters (MRV-A) or 73 characters (MRV-B) for Unix line separators. If the 
+length of the value does not match one of these lengths then the Validate method 
+will return `false`.
 
 The ICAO 9303 Machine Readable Visa Algorithm will validate the check digits of 
 the three fields (document number, date of birth and date of expiry). If any of 
@@ -752,7 +765,9 @@ digits and does not support calculation of check digits.
 
 #### Details
 
-* Valid characters - decimal digits ('0' - '9'), upper case letters ('A' - 'Z') and a filler character ('<').
+* Valid characters - 
+  * decimal digits ('0' - '9'), upper case letters ('A' - 'Z') and a filler character ('<') for document number/extended document number field
+  * decimal digits ('0' - '9') and a filler character ('<') for date of birth and date of expiry fields
 * Check digit size - one character
 * Check digit value - decimal digit ('0' - '9')
 * Check digit location - trailing (right-most) character of individual fields

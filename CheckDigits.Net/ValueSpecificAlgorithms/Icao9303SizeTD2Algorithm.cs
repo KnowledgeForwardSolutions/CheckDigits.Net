@@ -20,10 +20,12 @@ namespace CheckDigits.Net.ValueSpecificAlgorithms;
 ///   </para>
 ///   <para>
 ///   Valid characters are decimal digits (0-9), uppercase alphabetic characters 
-///   (A-Z) and a filler character ('<'). Note that characters in positions
-///   other than the document number, date of birth and date of expiry fields 
-///   plus the composite check digit (and line separator characters) are not 
-///   validated.
+///   (A-Z) and a filler character ('<') for the document number/document number
+///   extension fields and decimal digits (0-9) and filler character ('<') for
+///   date of birth and date of expiry fields. Valid characters for check digits
+///   are decimal digits (0-9). Note that characters in positions other than the 
+///   document number, date of birth and date of expiry fields plus the 
+///   composite check digit (and line separator characters) are not validated.
 ///   </para>
 ///   <para>
 ///   Check digit calculated by the algorithm is a decimal digit (0-9).
@@ -41,9 +43,8 @@ public sealed class Icao9303SizeTD2Algorithm : ICheckDigitAlgorithm
       new (13, 6, 9),    // Date of birth field
       new (21, 6, 9)];   // Date of expiry field
    private static readonly FieldDetails _extendedDocumentNumber = new(28, 5, 35);
-   private static readonly Int32[] _charMap = Chars.Range(Chars.DigitZero, Chars.UpperCaseZ)
-      .Select(x => Icao9303Algorithm.MapCharacter(x))
-      .ToArray();
+   private static readonly Int32[] _charMap = 
+      [.. Chars.Range(Chars.DigitZero, Chars.UpperCaseZ).Select(x => Icao9303Algorithm.MapCharacter(x))];
 
    private const Int32 _numFields = 3;
    private const Int32 _lineLength = 36;
