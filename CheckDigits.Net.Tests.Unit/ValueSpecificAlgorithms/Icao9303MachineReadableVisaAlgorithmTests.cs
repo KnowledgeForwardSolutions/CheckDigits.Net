@@ -106,7 +106,7 @@ public class Icao9303MachineReadableVisaAlgorithmTests
    [InlineData("ERIKSSON<<ANNA<MARIA<<<<<<<<<<<<<<<<<<<<", _lineSeparatorNone, _fmtAOptionalDataField)]    // Name -1 char and default line separator = total length 91
    [InlineData("ERIKSSON<<ANNA<MARIA<<<<<<<<<<", _lineSeparatorNone, _fmtBOptionalDataField)]              // Name -1 char and default line separator = total length 71
    [InlineData("ERIKSSON<<ANNA<MARIA<<<<<<<<<<<<", _lineSeparatorNone, _fmtBOptionalDataField)]            // Name -1 char and default line separator = total length 95
-   public void Icao93033MachineReadableVisaAlgorithm_Validate_ShouldReturnFalse_WhenValueIsInvalidLength(
+   public void Icao9303MachineReadableVisaAlgorithm_Validate_ShouldReturnFalse_WhenValueIsInvalidLength(
       String name,
       String lineSeparator,
       String optionalData)
@@ -279,7 +279,7 @@ public class Icao9303MachineReadableVisaAlgorithmTests
    [InlineData("00a0000", "0000000")]
    [InlineData("0000000", "00A0000")]
    [InlineData("0000000", "00a0000")]
-   public void Icao93033MachineReadableVisaAlgorithm_Validate_ShouldReturnFalse_NumericFieldContainsAlphabeticCharacter(
+   public void Icao9303MachineReadableVisaAlgorithm_Validate_ShouldReturnFalse_NumericFieldContainsAlphabeticCharacter(
       String dateOfBirth,
       String dateOfExpiry)
    {

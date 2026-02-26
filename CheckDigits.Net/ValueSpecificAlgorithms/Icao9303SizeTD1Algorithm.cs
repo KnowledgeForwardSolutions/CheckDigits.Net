@@ -185,9 +185,9 @@ public sealed class Icao9303SizeTD1Algorithm : ICheckDigitAlgorithm
       return lineSeparatorLength switch
       {
          0 => true,
-         2 => value[_lineLength] == Chars.CarriageReturn && value[_lineLength + 1] == Chars.LineFeed &&    // Expect CRLF at positions 31-32 and 62-63
+         2 => value[_lineLength] == Chars.CarriageReturn && value[_lineLength + 1] == Chars.LineFeed &&    // Expect CRLF at positions 30-31 and 62-63 (zero based)
               value[(_lineLength * 2) + 2] == Chars.CarriageReturn && value[(_lineLength * 2) + 3] == Chars.LineFeed,
-         1 => value[_lineLength] == Chars.LineFeed && value[(_lineLength * 2) + 1] == Chars.LineFeed,      // Expect LF at position 31 and 62
+         1 => value[_lineLength] == Chars.LineFeed && value[(_lineLength * 2) + 1] == Chars.LineFeed,      // Expect LF at position 30 and 61 (zero based)
          - 1 => false
       };
 #pragma warning restore CS8509 // The switch expression does not handle all possible values of its input type (it is not exhaustive).
