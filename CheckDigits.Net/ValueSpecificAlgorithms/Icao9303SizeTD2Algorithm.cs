@@ -38,13 +38,11 @@ namespace CheckDigits.Net.ValueSpecificAlgorithms;
 public sealed class Icao9303SizeTD2Algorithm : ICheckDigitAlgorithm
 {
    private static readonly Int32[] _weights = [7, 3, 1];
-   private static readonly FieldDetails[] _fields = [  // starting position, field length, valid num upper bound
-      new (0, 9, 35),    // Document number field
-      new (13, 6, 9),    // Date of birth field
-      new (21, 6, 9)];   // Date of expiry field
-   private static readonly FieldDetails _extendedDocumentNumber = new(28, 5, 35);
-   private static readonly Int32[] _charMap = 
-      [.. Chars.Range(Chars.DigitZero, Chars.UpperCaseZ).Select(x => Icao9303Algorithm.MapCharacter(x))];
+   private static readonly FieldDetails[] _fields = [       // starting position, field length, valid num upper bound
+      new (0, 9, Icao9303Helpers.AlphanumericUpperBound),   // Document number field
+      new (13, 6, Icao9303Helpers.NumericUpperBound),       // Date of birth field
+      new (21, 6, Icao9303Helpers.NumericUpperBound)];      // Date of expiry field
+   private static readonly FieldDetails _extendedDocumentNumber = new(28, 5, Icao9303Helpers.AlphanumericUpperBound);
 
    private const Int32 _numFields = 3;
    private const Int32 _lineLength = 36;
@@ -105,8 +103,8 @@ public sealed class Icao9303SizeTD2Algorithm : ICheckDigitAlgorithm
          var numUpperBound = _fields[fieldIndex].NumUpperBound;
          for (var charIndex = start; charIndex < end; charIndex++)
          {
-            num = ToIcao9303IntegerValue(value[charIndex]);
-            if (IsInvalidValueForField(num, numUpperBound))
+            num = Icao9303Helpers.ToIcao9303IntegerValue(value[charIndex]);
+            if (Icao9303Helpers.IsInvalidValueForField(num, numUpperBound))
             {
                return false;
             }
@@ -139,8 +137,8 @@ public sealed class Icao9303SizeTD2Algorithm : ICheckDigitAlgorithm
                   break;
                }
 
-               num = ToIcao9303IntegerValue(value[charIndex]);
-               if (IsInvalidValueForField(num, numUpperBound))
+               num = Icao9303Helpers.ToIcao9303IntegerValue(value[charIndex]);
+               if (Icao9303Helpers.IsInvalidValueForField(num, numUpperBound))
                {
                   return false;
                }
@@ -173,16 +171,6 @@ public sealed class Icao9303SizeTD2Algorithm : ICheckDigitAlgorithm
       return value[^1].ToIntegerDigit() == compositeCheckDigit;
    }
 
-   [MethodImpl(MethodImplOptions.AggressiveInlining)]
-   private static Int32 ToIcao9303IntegerValue(Char ch)
-      => (ch >= Chars.DigitZero && ch <= Chars.UpperCaseZ)
-         ? _charMap[ch - Chars.DigitZero]
-         : -1;
-
-   [MethodImpl(MethodImplOptions.AggressiveInlining)]
-   private static Boolean IsInvalidValueForField(Int32 value, Int32 numUpperBound)
-      => value < 0 || value > numUpperBound;
-
    private static Boolean TryValidateLength(String value, out Int32 lineSeparatorLength)
    {
       lineSeparatorLength = value.Length switch
@@ -193,25 +181,15 @@ public sealed class Icao9303SizeTD2Algorithm : ICheckDigitAlgorithm
          _ => -1
       };
 
-      if (lineSeparatorLength == -1)
+#pragma warning disable CS8509 // The switch expression does not handle all possible values of its input type (it is not exhaustive).
+      return lineSeparatorLength switch
       {
-         return false;
-      }
-
-      // Validate separator characters if present
-      if (lineSeparatorLength == 2)
-      {
-         // Should have \r\n at positions 37
-         return value[_lineLength] == Chars.CarriageReturn
-                && value[_lineLength + 1] == Chars.LineFeed;
-      }
-      else if (lineSeparatorLength == 1)
-      {
-         // Should have \n at positions 37
-         return value[_lineLength] == Chars.LineFeed;
-      }
-
-      return true;  // No separator to validate
+         0 => true,
+         2 => value[_lineLength] == Chars.CarriageReturn && value[_lineLength + 1] == Chars.LineFeed,    // Expect CRLF at positions 37 and 38
+         1 => value[_lineLength] == Chars.LineFeed,                                                      // Expect LF at position 37
+         -1 => false
+      };
+#pragma warning restore CS8509 // The switch expression does not handle all possible values of its input type (it is not exhaustive).
    }
 
    /// <summary>

@@ -1682,13 +1682,13 @@ only validation of values containing check digits.
 | IBAN           | GB00WEST12345698765432          | 22.264 ns | 0.2030 ns | 0.1695 ns | -         |
 | IBAN           | SC00MCBL01031234567890123456USD | 33.121 ns | 0.1529 ns | 0.1355 ns | -         |
 |                |                                 |           |           |           |           |
-| ICAO 9303      | U7Y                             | 4.193 ns  | 0.0450 ns | 0.0421 ns | -         |
-| ICAO 9303      | U7Y8SX                          | 5.840 ns  | 0.0395 ns | 0.0370 ns | -         |
-| ICAO 9303      | U7Y8SXRC0                       | 7.757 ns  | 0.1317 ns | 0.1293 ns | -         |
-| ICAO 9303      | U7Y8SXRC0O3S                    | 9.235 ns  | 0.0897 ns | 0.0839 ns | -         |
-| ICAO 9303      | U7Y8SXRC0O3SC4I                 | 11.032 ns | 0.2064 ns | 0.1723 ns | -         |
-| ICAO 9303      | U7Y8SXRC0O3SC4IHYQ              | 12.823 ns | 0.0541 ns | 0.0452 ns | -         |
-| ICAO 9303      | U7Y8SXRC0O3SC4IHYQF4M           | 14.776 ns | 0.1006 ns | 0.0941 ns | -         |
+| ICAO 9303      | U7Y                             | 4.275 ns  | 0.0977 ns | 0.0960 ns | -         |
+| ICAO 9303      | U7Y8SX                          | 5.637 ns  | 0.0558 ns | 0.0436 ns | -         |
+| ICAO 9303      | U7Y8SXRC0                       | 7.426 ns  | 0.0747 ns | 0.0699 ns | -         |
+| ICAO 9303      | U7Y8SXRC0O3S                    | 9.916 ns  | 0.0626 ns | 0.0555 ns | -         |
+| ICAO 9303      | U7Y8SXRC0O3SC4I                 | 12.295 ns | 0.0660 ns | 0.0551 ns | -         |
+| ICAO 9303      | U7Y8SXRC0O3SC4IHYQ              | 14.716 ns | 0.1333 ns | 0.1247 ns | -         |
+| ICAO 9303      | U7Y8SXRC0O3SC4IHYQF4M           | 16.864 ns | 0.1193 ns | 0.1116 ns | -         |
 |                |                                 |           |           |           |           |
 | ISIN           | AU0000XVGZA                     | 7.917 ns  | 0.0690 ns | 0.0645 ns | -         |
 | ISIN           | GB000263494                     | 7.118 ns  | 0.0536 ns | 0.0475 ns | -         |
@@ -1899,29 +1899,29 @@ Note also that the values used for the NOID Check Digit algorithm do not include
 | IBAN                            | GB82WEST12345698765432                 | 21.263 ns | 0.2220 ns | 0.2076 ns | -         |
 | IBAN                            | SC74MCBL01031234567890123456USD        | 32.737 ns | 0.3820 ns | 0.3190 ns | -         |
 |                                 |                                        |           |           |           |           |
-| ICAO 9303                       | U7Y5                                   | 4.321 ns  | 0.0208 ns | 0.0195 ns | -         |
-| ICAO 9303                       | U7Y8SX8                                | 6.020 ns  | 0.0632 ns | 0.0591 ns | -         |
-| ICAO 9303                       | U7Y8SXRC03                             | 7.693 ns  | 0.0856 ns | 0.0801 ns | -         |
-| ICAO 9303                       | U7Y8SXRC0O3S8                          | 9.483 ns  | 0.2059 ns | 0.2749 ns | -         |
-| ICAO 9303                       | U7Y8SXRC0O3SC4I2                       | 10.983 ns | 0.0744 ns | 0.0696 ns | -         |
-| ICAO 9303                       | U7Y8SXRC0O3SC4IHYQ9                    | 12.690 ns | 0.0482 ns | 0.0427 ns | -         |
-| ICAO 9303                       | U7Y8SXRC0O3SC4IHYQF4M8                 | 14.541 ns | 0.0988 ns | 0.0876 ns | -         |
+| ICAO 9303                       | U7Y5                                   | 4.432 ns  | 0.0234 ns | 0.0182 ns | -         |
+| ICAO 9303                       | U7Y8SX8                                | 6.267 ns  | 0.0501 ns | 0.0418 ns | -         |
+| ICAO 9303                       | U7Y8SXRC03                             | 8.173 ns  | 0.0895 ns | 0.0794 ns | -         |
+| ICAO 9303                       | U7Y8SXRC0O3S8                          | 10.376 ns | 0.0802 ns | 0.0711 ns | -         |
+| ICAO 9303                       | U7Y8SXRC0O3SC4I2                       | 12.741 ns | 0.0879 ns | 0.0779 ns | -         |
+| ICAO 9303                       | U7Y8SXRC0O3SC4IHYQ9                    | 15.234 ns | 0.1390 ns | 0.1301 ns | -         |
+| ICAO 9303                       | U7Y8SXRC0O3SC4IHYQF4M8                 | 16.228 ns | 0.1301 ns | 0.1153 ns | -         |
 |                                 |                                        |           |           |           |           |
-| ICAO 9303 Machine Readable Visa | I<UTOERIKSSON<<ANNA<MARIA<<<<<<<<<<<<br>D231458907UTO7408122F1204159<<<<<<<<                 | 19.684 ns | 0.1291 ns | 0.1207 ns | -         |
-| ICAO 9303 Machine Readable Visa | I<UTOSKYWALKER<<LUKE<<<<<<<<<<<<<<<<<br>STARWARS45UTO7705256M2405252<<<<<<<<                 | 19.651 ns | 0.1502 ns | 0.1405 ns | -         |
-| ICAO 9303 Machine Readable Visa | V<UTOERIKSSON<<ANNA<MARIA<<<<<<<<<<<<<<<<<<<<br>L898902C<3UTO6908061F9406236ZE184226B<<<<<<< | 18.538 ns | 0.2393 ns | 0.1998 ns | -         |
+| ICAO 9303 Machine Readable Visa | I<UTOERIKSSON<<ANNA<MARIA<<<<<<<<<<<<br>D231458907UTO7408122F1204159<<<<<<<<                 | 19.925 ns | 0.0992 ns | 0.0928 ns | -         |
+| ICAO 9303 Machine Readable Visa | I<UTOSKYWALKER<<LUKE<<<<<<<<<<<<<<<<<br>STARWARS45UTO7705256M2405252<<<<<<<<                 | 20.552 ns | 0.1990 ns | 0.1862 ns | -         |
+| ICAO 9303 Machine Readable Visa | V<UTOERIKSSON<<ANNA<MARIA<<<<<<<<<<<<<<<<<<<<br>L898902C<3UTO6908061F9406236ZE184226B<<<<<<< | 20.633 ns | 0.1249 ns | 0.1107 ns | -         |
 |                                 |                                        |           |           |           |           |
-| ICAO 9303 Size TD1              | I<UTOD231458907<<<<<<<<<<<<<<<<br>7408122F1204159UTO<<<<<<<<<<<6<br>ERIKSSON<<ANNA<MARIA<<<<<<<<<< | 33.773 ns | 0.1454 ns | 0.1289 ns | -         |
-| ICAO 9303 Size TD1              | I<UTOSTARWARS45<<<<<<<<<<<<<<<<br>7705256M2405252UTO<<<<<<<<<<<4<br>SKYWALKER<<LUKE<<<<<<<<<<<<<<< | 38.206 ns | 0.1840 ns | 0.1631 ns | -         |
-| ICAO 9303 Size TD1              | I<UTOD23145890<AB112234566<<<<<br>7408122F1204159UTO<<<<<<<<<<<4<br>ERIKSSON<<ANNA<MARIA<<<<<<<<<< | 34.386 ns | 0.2079 ns | 0.1945 ns | -         |
+| ICAO 9303 Size TD1              | I<UTOD231458907<<<<<<<<<<<<<<<<br>7408122F1204159UTO<<<<<<<<<<<6<br>ERIKSSON<<ANNA<MARIA<<<<<<<<<< | 33.010 ns | 0.1887 ns | 0.1673 ns | -         |
+| ICAO 9303 Size TD1              | I<UTOSTARWARS45<<<<<<<<<<<<<<<<br>7705256M2405252UTO<<<<<<<<<<<4<br>SKYWALKER<<LUKE<<<<<<<<<<<<<<< | 39.914 ns | 0.3377 ns | 0.2994 ns | -         |
+| ICAO 9303 Size TD1              | I<UTOD23145890<AB112234566<<<<<br>7408122F1204159UTO<<<<<<<<<<<4<br>ERIKSSON<<ANNA<MARIA<<<<<<<<<< | 32.857 ns | 0.2455 ns | 0.2297 ns | -         |
 |                                 |                                        |           |           |           |           |
-| ICAO 9303 Size TD2              | I<UTOERIKSSON<<ANNA<MARIA<<<<<<<<<<<<br>D231458907UTO7408122F1204159<<<<<<<6 | 31.622 ns | 0.2665 ns | 0.2492 ns | -         |
-| ICAO 9303 Size TD2              | I<UTOQWERTY<<ASDF<<<<<<<<<<<<<<<<<<<<br>D23145890<UTO7408122F1204159AB1124<4 | 31.700 ns | 0.2532 ns | 0.2368 ns | -         |
-| ICAO 9303 Size TD2              | I<UTOSKYWALKER<<LUKE<<<<<<<<<<<<<<<<<br>STARWARS45UTO7705256M2405252<<<<<<<8 | 31.443 ns | 0.1810 ns | 0.1604 ns | -         |
+| ICAO 9303 Size TD2              | I<UTOERIKSSON<<ANNA<MARIA<<<<<<<<<<<<br>D231458907UTO7408122F1204159<<<<<<<6 | 32.312 ns | 0.2888 ns | 0.2702 ns | -         |
+| ICAO 9303 Size TD2              | I<UTOQWERTY<<ASDF<<<<<<<<<<<<<<<<<<<<br>D23145890<UTO7408122F1204159AB1124<4 | 33.326 ns | 0.2760 ns | 0.2581 ns | -         |
+| ICAO 9303 Size TD2              | I<UTOSKYWALKER<<LUKE<<<<<<<<<<<<<<<<<br>STARWARS45UTO7705256M2405252<<<<<<<8 | 32.079 ns | 0.3153 ns | 0.2950 ns | -         |
 |                                 |                                        |           |           |           |           |
-| ICAO 9303 Size TD3              | P<UTOERIKSSON<<ANNA<MARIA<<<<<<<<<<<<<<<<<<<<br>L898902C36UTO7408122F1204159ZE184226B<<<<<10 | 41.579 ns | 0.2136 ns | 0.1998 ns | -         |
-| ICAO 9303 Size TD3              | P<UTOQWERTY<<ASDF<<<<<<<<<<<<<<<<<<<<<<<<<<<<br>Q123987655UTO3311226F2010201<<<<<<<<<<<<<<06 | 44.731 ns | 0.1975 ns | 0.1847 ns | -         |
-| ICAO 9303 Size TD3              | P<UTOSKYWALKER<<LUKE<<<<<<<<<<<<<<<<<<<<<<<<<br>STARWARS45UTO7705256M2405252HAN<SHOT<FIRST78 | 44.764 ns | 0.2196 ns | 0.1947 ns | -         |
+| ICAO 9303 Size TD3              | P<UTOERIKSSON<<ANNA<MARIA<<<<<<<<<<<<<<<<<<<<br>L898902C36UTO7408122F1204159ZE184226B<<<<<10 | 41.611 ns | 0.2497 ns | 0.2213 ns | -         |
+| ICAO 9303 Size TD3              | P<UTOQWERTY<<ASDF<<<<<<<<<<<<<<<<<<<<<<<<<<<<br>Q123987655UTO3311226F2010201<<<<<<<<<<<<<<06 | 41.648 ns | 0.3441 ns | 0.3219 ns | -         |
+| ICAO 9303 Size TD3              | P<UTOSKYWALKER<<LUKE<<<<<<<<<<<<<<<<<<<<<<<<<br>STARWARS45UTO7705256M2405252HAN<SHOT<FIRST78 | 41.434 ns | 0.3941 ns | 0.3686 ns | -         |
 |                                 |                                        |           |           |           |           |
 | ISAN                            | C594660A8B2E5D22X6DDA3272E             | 18.823 ns | 0.2636 ns | 0.2336 ns | -         |
 | ISAN                            | D02C42E954183EE2Q1291C8AEO             | 17.367 ns | 0.1634 ns | 0.1364 ns | -         |

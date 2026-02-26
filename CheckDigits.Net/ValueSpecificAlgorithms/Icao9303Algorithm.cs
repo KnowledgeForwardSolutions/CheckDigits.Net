@@ -29,35 +29,14 @@ namespace CheckDigits.Net.ValueSpecificAlgorithms;
 public sealed class Icao9303Algorithm : ISingleCheckDigitAlgorithm
 {
    private static readonly Int32[] _weights = [7, 3, 1];
-   private static readonly Int32[] _charMap = Chars.Range(Chars.DigitZero, Chars.UpperCaseZ)
-      .Select(x => MapCharacter(x))
-      .ToArray();
    private const Int32 _validateMinLength = 2;
+   private const Int32 _numUpperBound = Icao9303Helpers.AlphanumericUpperBound;  // Upper bound for valid character to integer conversion
 
    /// <inheritdoc/>
    public String AlgorithmDescription => Resources.Icao9303AlgorithmDescription;
 
    /// <inheritdoc/>
    public String AlgorithmName => Resources.Icao9303AlgorithmName;
-
-   /// <summary>
-   ///   Map a character to its integer equivalent in the 
-   ///   <see cref="Icao9303Algorithm"/>. Characters that are not valid for the 
-   ///   Icao9303Algorithm are mapped to -1.
-   /// </summary>
-   /// <param name="ch">
-   ///   The character to map.
-   /// </param>
-   /// <returns>
-   ///   The integer value associated with <paramref name="ch"/>.
-   /// </returns>
-   public static Int32 MapCharacter(Char ch) => ch switch
-   {
-      var d when ch >= Chars.DigitZero && ch <= Chars.DigitNine => d.ToIntegerDigit(),
-      var c when ch >= Chars.UpperCaseA && ch <= Chars.UpperCaseZ => c - Chars.UpperCaseA + 10,
-      Chars.LeftAngleBracket => 0,
-      _ => -1
-   };
 
    /// <inheritdoc/>
    public Boolean TryCalculateCheckDigit(String value, out Char checkDigit)
@@ -68,17 +47,13 @@ public sealed class Icao9303Algorithm : ISingleCheckDigitAlgorithm
          return false;
       }
 
-      Char ch;
-      Int32 num;
       var sum = 0;
       var weightIndex = new ModulusInt32(3);
-      for (var charIndex = 0; charIndex < value.Length; charIndex++)
+      var processLength = value.Length;
+      for (var charIndex = 0; charIndex < processLength; charIndex++)
       {
-         ch = value[charIndex];
-         num = (ch >= Chars.DigitZero && ch <= Chars.UpperCaseZ)
-            ? _charMap[ch - Chars.DigitZero]
-            : -1;
-         if (num == -1)
+         var num = Icao9303Helpers.ToIcao9303IntegerValue(value[charIndex]);
+         if (Icao9303Helpers.IsInvalidValueForField(num, _numUpperBound))
          {
             return false;
          }
@@ -99,17 +74,13 @@ public sealed class Icao9303Algorithm : ISingleCheckDigitAlgorithm
          return false;
       }
 
-      Char ch;
-      Int32 num;
       var sum = 0;
       var weightIndex = new ModulusInt32(3);
-      for (var charIndex = 0; charIndex < value.Length - 1; charIndex++)
+      var processLength = value.Length - 1;
+      for (var charIndex = 0; charIndex < processLength; charIndex++)
       {
-         ch = value[charIndex];
-         num = (ch >= Chars.DigitZero && ch <= Chars.UpperCaseZ)
-            ? _charMap[ch - Chars.DigitZero]
-            : -1;
-         if (num == -1)
+         var num = Icao9303Helpers.ToIcao9303IntegerValue(value[charIndex]);
+         if (Icao9303Helpers.IsInvalidValueForField(num, _numUpperBound))
          {
             return false;
          }

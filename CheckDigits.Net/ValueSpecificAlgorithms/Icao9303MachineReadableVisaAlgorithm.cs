@@ -34,10 +34,10 @@ namespace CheckDigits.Net.ValueSpecificAlgorithms;
 public sealed class Icao9303MachineReadableVisaAlgorithm : ICheckDigitAlgorithm
 {
    private static readonly Int32[] _weights = [7, 3, 1];
-   private static readonly Int32[] _fieldStartPositions = [0, 13, 21];
-   private static readonly Int32[] _fieldLengths = [9, 6, 6];
-   private static readonly Int32[] _charMap = 
-      [.. Chars.Range(Chars.DigitZero, Chars.UpperCaseZ).Select(x => Icao9303Algorithm.MapCharacter(x))];
+   private static readonly FieldDetails[] _fields = [       // starting position, field length, valid num upper bound
+      new (0, 9, Icao9303Helpers.AlphanumericUpperBound),   // Document number field
+      new (13, 6, Icao9303Helpers.NumericUpperBound),       // Date of birth field
+      new (21, 6, Icao9303Helpers.NumericUpperBound)];      // Date of expiry field
 
    private const Int32 _numFields = 3;
    private const Int32 _formatALineLength = 44;
@@ -100,15 +100,12 @@ public sealed class Icao9303MachineReadableVisaAlgorithm : ICheckDigitAlgorithm
          Int32 num;
          var fieldSum = 0;
          var fieldWeightIndex = new ModulusInt32(3);
-         var start = _fieldStartPositions[fieldIndex] + lineLength + lineSeparatorLength;
-         var end = start + _fieldLengths[fieldIndex];
+         var (start, end) = _fields[fieldIndex].GetFieldBounds(lineLength, lineSeparatorLength);
+         var numUpperBound = _fields[fieldIndex].NumUpperBound;
          for (var charIndex = start; charIndex < end; charIndex++)
          {
-            var ch = value[charIndex];
-            num = (ch >= Chars.DigitZero && ch <= Chars.UpperCaseZ)
-               ? _charMap[ch - Chars.DigitZero]
-               : -1;
-            if (num == -1)
+            num = Icao9303Helpers.ToIcao9303IntegerValue(value[charIndex]);
+            if (Icao9303Helpers.IsInvalidValueForField(num, numUpperBound))
             {
                return false;
             }
@@ -140,32 +137,59 @@ public sealed class Icao9303MachineReadableVisaAlgorithm : ICheckDigitAlgorithm
       out Int32 lineLength,
       out Int32 lineSeparatorLength)
    {
-      lineSeparatorLength = 0;
-      var valueLength = value.Length;
-      if (valueLength >= _formatANullLength && valueLength <= _formatACrlfLength)
+      // First switch: Determine format (A or B) and separator length based on total length
+      (lineLength, lineSeparatorLength) = value.Length switch
       {
-         lineLength = _formatALineLength;
-         lineSeparatorLength = valueLength - _formatANullLength;
-         return valueLength == _formatANullLength
-                || (valueLength == _formatACrlfLength
-                    && value[_formatALineLength] == Chars.CarriageReturn
-                    && value[_formatALineLength + 1] == Chars.LineFeed)
-                || (valueLength == _formatALfLength
-                    && value[_formatALineLength] == Chars.LineFeed);
-      }
-      else if (valueLength >= _formatBNullLength && valueLength <= _formatBCrlfLength)
-      {
-         lineLength = _formatBLineLength;
-         lineSeparatorLength = valueLength - _formatBNullLength;
-         return valueLength == _formatBNullLength
-                || (valueLength == _formatBCrlfLength
-                    && value[_formatBLineLength] == Chars.CarriageReturn
-                    && value[_formatBLineLength + 1] == Chars.LineFeed)
-                || (valueLength == _formatBLfLength
-                    && value[_formatBLineLength] == Chars.LineFeed);
-      }
-      lineLength = 0;
+         _formatANullLength => (_formatALineLength, 0),
+         _formatACrlfLength => (_formatALineLength, 2),
+         _formatALfLength => (_formatALineLength, 1),
+         _formatBNullLength => (_formatBLineLength, 0),
+         _formatBCrlfLength => (_formatBLineLength, 2),
+         _formatBLfLength => (_formatBLineLength, 1),
+         _ => (-1, 0)
+      };
 
-      return false;
+      // Second switch: Validate separator characters at expected positions
+      return (lineLength, lineSeparatorLength) switch
+      {
+         (_formatALineLength, 0) => true,
+         (_formatALineLength, 2) => value[_formatALineLength] == Chars.CarriageReturn
+                                    && value[_formatALineLength + 1] == Chars.LineFeed,
+         (_formatALineLength, 1) => value[_formatALineLength] == Chars.LineFeed,
+         (_formatBLineLength, 0) => true,
+         (_formatBLineLength, 2) => value[_formatBLineLength] == Chars.CarriageReturn
+                                    && value[_formatBLineLength + 1] == Chars.LineFeed,
+         (_formatBLineLength, 1) => value[_formatBLineLength] == Chars.LineFeed,
+         _ => false
+      };
+   }
+
+   /// <summary>
+   ///   Represents the positional and size information for a field within a 
+   ///   data line, including its starting character position, length, and the 
+   ///   upper bound of a field character when converted to an integer.
+   /// </summary>
+   /// <param name="CharPosition">
+   ///   The zero-based character position at which the field begins within the line.
+   /// </param>
+   /// <param name="Length">
+   ///   The number of characters that make up the field.
+   /// </param>
+   /// <param name="NumUpperBound">
+   ///   The upper bound of a field character when converted to an integer.
+   /// </param>
+   private record struct FieldDetails(Int32 CharPosition, Int32 Length, Int32 NumUpperBound)
+   {
+      [Pure]
+      public readonly (Int32 start, Int32 end) GetFieldBounds(
+         Int32 lineLength,
+         Int32 lineSeparatorLength)
+      {
+         // Always add _lineLength because all fields are on the second line of data.
+         var start = lineLength + lineSeparatorLength + CharPosition;
+         var end = start + Length;
+
+         return (start, end);
+      }
    }
 }

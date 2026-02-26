@@ -18,21 +18,6 @@ public class Icao9303SizeTD1AlgorithmTests
    private const String _lineSeparatorCrlf = "\r\n";
    private const String _lineSeparatorLf = "\n";
 
-   private static String GetTestValueOld(
-      String separatorChars = _emptySeparator,
-      #if !NET48
-      String? firstLine = null,
-      String? secondLine = null,
-      String? thirdLine = null)
-      #else
-      String firstLine = null,
-      String secondLine = null,
-      String thirdLine = null)
-#endif
-      => (firstLine ?? _mrzFirstLine) 
-         + separatorChars + (secondLine ?? _mrzSecondLine)
-         + separatorChars + (thirdLine ?? _mrzThirdLine);
-
    private static String GetTestValue(
       String documentCode = "I<",
       String issuingState = "UTO",
@@ -45,7 +30,11 @@ public class Icao9303SizeTD1AlgorithmTests
       String nationality = "UTO",
       String additionalOptionalData = "<<<<<<<<<<<",
       String compositeCheckDigit = "6",
+      #if NET8_0_OR_GREATER
       String? secondLineSeparator = null,
+      #else
+      String secondLineSeparator = null,
+      #endif
       String name = "ERIKSSON<<ANNA<MARIA<<<<<<<<<<")
       => $"{documentCode}{issuingState}{documentNumber}{optionalData}" +
          lineSeparator +
@@ -84,6 +73,7 @@ public class Icao9303SizeTD1AlgorithmTests
    [Fact]
    public void Icao9303SizeTD1Algorithm_Validate_ShouldReturnFalse_WhenInputIsEmpty()
       => _sut.Validate(String.Empty).Should().BeFalse();
+
    [Theory]
    [InlineData("<<<<<<<<<<<<<<", _lineSeparatorNone, "<<<<<<<<<<<", _lineSeparatorNone)]        // Optional data with 14 characters instead of 15 and empty line separator for total length of 59 instead of 60
    [InlineData("<<<<<<<<<<<<<<<<", _lineSeparatorCrlf, "<<<<<<<<<<<", _lineSeparatorCrlf)]      // Optional data with 16 characters instead of 15 and CRLF line separator for total length of 65 instead of 64
@@ -104,6 +94,30 @@ public class Icao9303SizeTD1AlgorithmTests
 
       // Act/assert.
       _sut.Validate(value).Should().BeFalse();
+   }
+
+   [Theory]
+   // Test data for edge cases where separator validation cannot detect certain 
+   // issues due to length ambiguity. For example, when the first line is 
+   // shortened by exactly one character, a CRLF separator's LF character falls 
+   // at the position where an LF-only separator would be expected, making the 
+   // error undetectable by length validation alone.
+   [InlineData("<<<<<<<<<<<<<<", _lineSeparatorCrlf, "<<<<<<<<<<<", _lineSeparatorLf)]       // Length indicates Lf only and Lf falls in correct position
+   public void Icao9303SizeTD1Algorithm_Validate_ShouldReturnTrue_WhenUndetectableInvalidSeparator(
+      String optionalData,
+      String lineSeparator,
+      String additionalOptionalData,
+      String secondLineSeparator)
+   {
+      // Arrange.
+      var value = GetTestValue(
+         optionalData: optionalData,
+         lineSeparator: lineSeparator,
+         additionalOptionalData: additionalOptionalData,
+         secondLineSeparator: secondLineSeparator);
+
+      // Act/assert.
+      _sut.Validate(value).Should().BeTrue();
    }
 
    [Theory]

@@ -63,7 +63,7 @@ public class Icao9303SizeTD2AlgorithmTests
       => _sut.Validate(String.Empty).Should().BeFalse();
 
    [Theory]
-   [InlineData("ERIKSSON<<ANNA<MARIA<<<<<<<<<<", _lineSeparatorNone)]      // Name -1 char and default line separator = total length 71
+   [InlineData("ERIKSSON<<ANNA<MARIA<<<<<<<<<<",   _lineSeparatorNone)]    // Name -1 char and default line separator = total length 71
    [InlineData("ERIKSSON<<ANNA<MARIA<<<<<<<<<<<<", _lineSeparatorCrlf)]    // Name + 1 char and CRLF separator = total length 75
    public void Icao9303SizeTD2Algorithm_Validate_ShouldReturnFalse_WhenValueIsInvalidLength(
       String name,
@@ -74,6 +74,25 @@ public class Icao9303SizeTD2AlgorithmTests
 
       // Act/assert.
       _sut.Validate(value).Should().BeFalse();
+   }
+
+   [Theory]
+   // Test data for edge cases where separator validation cannot detect certain 
+   // issues due to length ambiguity. For example, when the first line is 
+   // shortened by exactly one character, a CRLF separator's LF character falls 
+   // at the position where an LF-only separator would be expected, making the 
+   // error undetectable by length validation alone.
+   [InlineData("ERIKSSON<<ANNA<MARIA<<<<<<<<<<", _lineSeparatorCrlf)]         // Name length -1 so total length indicates Lf only and Lf falls in correct position
+   [InlineData("ERIKSSON<<ANNA<MARIA<<<<<<<<<<", _lineSeparatorLf)]           // Name length -1 so total length indicates no separator so separator chars not checked
+   public void Icao9303SizeTD2Algorithm_Validate_ShouldReturnTrue_WhenUndetectableInvalidSeparator(
+      String name,
+      String lineSeparator)
+   {
+      // Arrange.
+      var value = GetTestValue(name: name, lineSeparator: lineSeparator);
+
+      // Act/assert.
+      _sut.Validate(value).Should().BeTrue();
    }
 
    [Theory]
