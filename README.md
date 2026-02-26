@@ -595,13 +595,14 @@ check digit are all calculated using the [ICAO 9303 Algorithm](#icao-9303-algori
 
 The machine readable zone of a Size TD1 document consists of three lines of 30
 characters. The value passed to the Validate method should contain all lines of
-data concatenated together. You can specify how the lines are separated in the
-concatenated value by setting the LineSeparator property of the algorithm class.
-The three values are None (no line separator is used and the 31st character of the
-value is the first character of the second line), Crlf (the Windows line separator,
-i.e. a carriage return character followed by a line feed character - '\r\n') and 
-Lf (the Unix line separator, i.e a line feed character - '\n').The default 
-LineSeparator is None.
+data concatenated together. You may optionally use line separator characters in 
+the concatenated value, either the Windows line separator (a carriage return 
+character followed by a line feed character - '\r\n') or the Unix line separator 
+(a line feed character - '\n'). The ICAO 9303 Document Size TD1 algorithm will
+determine the line separator used from the length the value passed to the Validate 
+method - 90 characters for no line separators, 94 characters for Windows line 
+separators and 92 characters for Unix line separators. If the length of the value 
+does not match one of these lengths then the Validate method will return `false`.
 
 The ICAO 9303 Document Size TD1 Algorithm will validate the check digits of the
 three fields (document number, date of birth and date of expiry) as well as the 
@@ -613,7 +614,9 @@ digits and does not support calculation of check digits.
 
 #### Details
 
-* Valid characters - decimal digits ('0' - '9'), upper case letters ('A' - 'Z') and a filler character ('<').
+* Valid characters - 
+  * decimal digits ('0' - '9'), upper case letters ('A' - 'Z') and a filler character ('<') for document number/extended document number field
+  * decimal digits ('0' - '9') and a filler character ('<') for date of birth and date of expiry fields
 * Check digit size - one character
 * Check digit value - decimal digit ('0' - '9')
 * Check digit location - trailing (right-most) character of individual fields, trailing character of second line for composite check digit
@@ -638,13 +641,14 @@ calculated using the [ICAO 9303 Algorithm](#icao-9303-algorithm).
 
 The machine readable zone of a Size TD2 document consists of two lines of 36
 characters. The value passed to the Validate method should contain all lines of
-data concatenated together. You can specify how the lines are separated in the
-concatenated value by setting the LineSeparator property of the algorithm class.
-The three values are None (no line separator is used and the 37th character of the
-value is the first character of the second line), Crlf (the Windows line separator,
-i.e. a carriage return character followed by a line feed character - '\r\n') and 
-Lf (the Unix line separator, i.e a line feed character - '\n').The default 
-LineSeparator is None.
+data concatenated together. You may optionally use line separator characters in 
+the concatenated value, either the Windows line separator (a carriage return 
+character followed by a line feed character - '\r\n') or the Unix line separator 
+(a line feed character - '\n'). The ICAO 9303 Document Size TD2 algorithm will
+determine the line separator used from the length the value passed to the Validate 
+method - 72 characters for no line separators, 74 characters for Windows line 
+separators and 73 characters for Unix line separators. If the length of the value 
+does not match one of these lengths then the Validate method will return `false`.
 
 The ICAO 9303 Document Size TD2 Algorithm will validate the check digits of the
 three fields (document number, date of birth and date of expiry) as well as the 
@@ -656,7 +660,9 @@ digits and does not support calculation of check digits.
 
 #### Details
 
-* Valid characters - decimal digits ('0' - '9'), upper case letters ('A' - 'Z') and a filler character ('<').
+* Valid characters - 
+  * decimal digits ('0' - '9'), upper case letters ('A' - 'Z') and a filler character ('<') for document number/extended document number field
+  * decimal digits ('0' - '9') and a filler character ('<') for date of birth and date of expiry fields
 * Check digit size - one character
 * Check digit value - decimal digit ('0' - '9')
 * Check digit location - trailing (right-most) character of individual fields, trailing character of second line for composite check digit
@@ -683,13 +689,14 @@ is also calculated using the [ICAO 9303 Algorithm](#icao-9303-algorithm).
 
 The machine readable zone of a Size TD3 document consists of two lines of 44
 characters. The value passed to the Validate method should contain both lines of
-data concatenated together. You can specify how the lines are separated in the
-concatenated value by setting the LineSeparator property of the algorithm class.
-The three values are None (no line separator is used and the 45th character of the
-value is the first character of the second line), Crlf (the Windows line separator,
-i.e. a carriage return character followed by a line feed character - '\r\n') and 
-Lf (the Unix line separator, i.e a line feed character - '\n').The default 
-LineSeparator is None.
+data concatenated together. You may optionally use line separator characters in 
+the concatenated value, either the Windows line separator (a carriage return 
+character followed by a line feed character - '\r\n') or the Unix line separator 
+(a line feed character - '\n'). The ICAO 9303 Document Size TD3 algorithm will
+determine the line separator used from the length the value passed to the Validate 
+method - 88 characters for no line separators, 90 characters for Windows line 
+separators and 89 characters for Unix line separators. If the length of the value 
+does not match one of these lengths then the Validate method will return `false`.
 
 The ICAO 9303 Document Size TD3 Algorithm will validate the check digits of the
 four fields (passport number, date of birth, date of expiry and optional personal
@@ -701,7 +708,9 @@ digits and does not support calculation of check digits.
 
 #### Details
 
-* Valid characters - decimal digits ('0' - '9'), upper case letters ('A' - 'Z') and a filler character ('<').
+* Valid characters - 
+  * decimal digits ('0' - '9'), upper case letters ('A' - 'Z') and a filler character ('<') for document number/extended document number field
+  * decimal digits ('0' - '9') and a filler character ('<') for date of birth and date of expiry fields
 * Check digit size - one character
 * Check digit value - decimal digit ('0' - '9')
 * Check digit location - trailing (right-most) character of individual fields, trailing character of entire string for composite check digit
@@ -728,17 +737,21 @@ Machine Readable Visas have two formats: MRV-A and MRV-B. The MRV-A format uses
 two lines of 44 characters while the MRV-B format uses two lines of 36 characters.
 The individual fields in the second line of the machine readable zone are located
 in the same character positions regardless of the format. The Validate method
-can validate either format.
+can validate either format and the algorithm will determine the format from the 
+length of the value passed to the Validate method.
 
 The machine readable zone of a Machine Readable Visa consists of two lines of 36
 characters. The value passed to the Validate method should contain all lines of
-data concatenated together. You can specify how the lines are separated in the
-concatenated value by setting the LineSeparator property of the algorithm class.
-The three values are None (no line separator is used and the 37th character of the
-value is the first character of the second line), Crlf (the Windows line separator,
-i.e. a carriage return character followed by a line feed character - '\r\n') and 
-Lf (the Unix line separator, i.e a line feed character - '\n').The default 
-LineSeparator is None.
+data concatenated together. You may optionally use line separator characters in 
+the concatenated value, either the Windows line separator (a carriage return 
+character followed by a line feed character - '\r\n') or the Unix line separator 
+(a line feed character - '\n'). The ICAO 9303 Machine Readable Visa algorithm will
+determine the line separator used from the length the value passed to the Validate 
+method - 88 characters (MRV-A) or 72 characters (MRV-B) for no line separators, 
+90 characters (MRV-A) or 74 characters (MRV-B) for Windows line separators and 
+89 characters (MRV-A) or 73 characters (MRV-B) for Unix line separators. If the 
+length of the value does not match one of these lengths then the Validate method 
+will return `false`.
 
 The ICAO 9303 Machine Readable Visa Algorithm will validate the check digits of 
 the three fields (document number, date of birth and date of expiry). If any of 
@@ -752,7 +765,9 @@ digits and does not support calculation of check digits.
 
 #### Details
 
-* Valid characters - decimal digits ('0' - '9'), upper case letters ('A' - 'Z') and a filler character ('<').
+* Valid characters - 
+  * decimal digits ('0' - '9'), upper case letters ('A' - 'Z') and a filler character ('<') for document number/extended document number field
+  * decimal digits ('0' - '9') and a filler character ('<') for date of birth and date of expiry fields
 * Check digit size - one character
 * Check digit value - decimal digit ('0' - '9')
 * Check digit location - trailing (right-most) character of individual fields
@@ -1667,13 +1682,13 @@ only validation of values containing check digits.
 | IBAN           | GB00WEST12345698765432          | 22.264 ns | 0.2030 ns | 0.1695 ns | -         |
 | IBAN           | SC00MCBL01031234567890123456USD | 33.121 ns | 0.1529 ns | 0.1355 ns | -         |
 |                |                                 |           |           |           |           |
-| ICAO 9303      | U7Y                             | 4.193 ns  | 0.0450 ns | 0.0421 ns | -         |
-| ICAO 9303      | U7Y8SX                          | 5.840 ns  | 0.0395 ns | 0.0370 ns | -         |
-| ICAO 9303      | U7Y8SXRC0                       | 7.757 ns  | 0.1317 ns | 0.1293 ns | -         |
-| ICAO 9303      | U7Y8SXRC0O3S                    | 9.235 ns  | 0.0897 ns | 0.0839 ns | -         |
-| ICAO 9303      | U7Y8SXRC0O3SC4I                 | 11.032 ns | 0.2064 ns | 0.1723 ns | -         |
-| ICAO 9303      | U7Y8SXRC0O3SC4IHYQ              | 12.823 ns | 0.0541 ns | 0.0452 ns | -         |
-| ICAO 9303      | U7Y8SXRC0O3SC4IHYQF4M           | 14.776 ns | 0.1006 ns | 0.0941 ns | -         |
+| ICAO 9303      | U7Y                             | 4.275 ns  | 0.0977 ns | 0.0960 ns | -         |
+| ICAO 9303      | U7Y8SX                          | 5.637 ns  | 0.0558 ns | 0.0436 ns | -         |
+| ICAO 9303      | U7Y8SXRC0                       | 7.426 ns  | 0.0747 ns | 0.0699 ns | -         |
+| ICAO 9303      | U7Y8SXRC0O3S                    | 9.916 ns  | 0.0626 ns | 0.0555 ns | -         |
+| ICAO 9303      | U7Y8SXRC0O3SC4I                 | 12.295 ns | 0.0660 ns | 0.0551 ns | -         |
+| ICAO 9303      | U7Y8SXRC0O3SC4IHYQ              | 14.716 ns | 0.1333 ns | 0.1247 ns | -         |
+| ICAO 9303      | U7Y8SXRC0O3SC4IHYQF4M           | 16.864 ns | 0.1193 ns | 0.1116 ns | -         |
 |                |                                 |           |           |           |           |
 | ISIN           | AU0000XVGZA                     | 7.917 ns  | 0.0690 ns | 0.0645 ns | -         |
 | ISIN           | GB000263494                     | 7.118 ns  | 0.0536 ns | 0.0475 ns | -         |
@@ -1884,29 +1899,29 @@ Note also that the values used for the NOID Check Digit algorithm do not include
 | IBAN                            | GB82WEST12345698765432                 | 21.263 ns | 0.2220 ns | 0.2076 ns | -         |
 | IBAN                            | SC74MCBL01031234567890123456USD        | 32.737 ns | 0.3820 ns | 0.3190 ns | -         |
 |                                 |                                        |           |           |           |           |
-| ICAO 9303                       | U7Y5                                   | 4.321 ns  | 0.0208 ns | 0.0195 ns | -         |
-| ICAO 9303                       | U7Y8SX8                                | 6.020 ns  | 0.0632 ns | 0.0591 ns | -         |
-| ICAO 9303                       | U7Y8SXRC03                             | 7.693 ns  | 0.0856 ns | 0.0801 ns | -         |
-| ICAO 9303                       | U7Y8SXRC0O3S8                          | 9.483 ns  | 0.2059 ns | 0.2749 ns | -         |
-| ICAO 9303                       | U7Y8SXRC0O3SC4I2                       | 10.983 ns | 0.0744 ns | 0.0696 ns | -         |
-| ICAO 9303                       | U7Y8SXRC0O3SC4IHYQ9                    | 12.690 ns | 0.0482 ns | 0.0427 ns | -         |
-| ICAO 9303                       | U7Y8SXRC0O3SC4IHYQF4M8                 | 14.541 ns | 0.0988 ns | 0.0876 ns | -         |
+| ICAO 9303                       | U7Y5                                   | 4.432 ns  | 0.0234 ns | 0.0182 ns | -         |
+| ICAO 9303                       | U7Y8SX8                                | 6.267 ns  | 0.0501 ns | 0.0418 ns | -         |
+| ICAO 9303                       | U7Y8SXRC03                             | 8.173 ns  | 0.0895 ns | 0.0794 ns | -         |
+| ICAO 9303                       | U7Y8SXRC0O3S8                          | 10.376 ns | 0.0802 ns | 0.0711 ns | -         |
+| ICAO 9303                       | U7Y8SXRC0O3SC4I2                       | 12.741 ns | 0.0879 ns | 0.0779 ns | -         |
+| ICAO 9303                       | U7Y8SXRC0O3SC4IHYQ9                    | 15.234 ns | 0.1390 ns | 0.1301 ns | -         |
+| ICAO 9303                       | U7Y8SXRC0O3SC4IHYQF4M8                 | 16.228 ns | 0.1301 ns | 0.1153 ns | -         |
 |                                 |                                        |           |           |           |           |
-| ICAO 9303 Machine Readable Visa | I<UTOERIKSSON<<ANNA<MARIA<<<<<<<<<<<<br>D231458907UTO7408122F1204159<<<<<<<<                 | 19.684 ns | 0.1291 ns | 0.1207 ns | -         |
-| ICAO 9303 Machine Readable Visa | I<UTOSKYWALKER<<LUKE<<<<<<<<<<<<<<<<<br>STARWARS45UTO7705256M2405252<<<<<<<<                 | 19.651 ns | 0.1502 ns | 0.1405 ns | -         |
-| ICAO 9303 Machine Readable Visa | V<UTOERIKSSON<<ANNA<MARIA<<<<<<<<<<<<<<<<<<<<br>L898902C<3UTO6908061F9406236ZE184226B<<<<<<< | 18.538 ns | 0.2393 ns | 0.1998 ns | -         |
+| ICAO 9303 Machine Readable Visa | I<UTOERIKSSON<<ANNA<MARIA<<<<<<<<<<<<br>D231458907UTO7408122F1204159<<<<<<<<                 | 19.925 ns | 0.0992 ns | 0.0928 ns | -         |
+| ICAO 9303 Machine Readable Visa | I<UTOSKYWALKER<<LUKE<<<<<<<<<<<<<<<<<br>STARWARS45UTO7705256M2405252<<<<<<<<                 | 20.552 ns | 0.1990 ns | 0.1862 ns | -         |
+| ICAO 9303 Machine Readable Visa | V<UTOERIKSSON<<ANNA<MARIA<<<<<<<<<<<<<<<<<<<<br>L898902C<3UTO6908061F9406236ZE184226B<<<<<<< | 20.633 ns | 0.1249 ns | 0.1107 ns | -         |
 |                                 |                                        |           |           |           |           |
-| ICAO 9303 Size TD1              | I<UTOD231458907<<<<<<<<<<<<<<<<br>7408122F1204159UTO<<<<<<<<<<<6<br>ERIKSSON<<ANNA<MARIA<<<<<<<<<< | 33.773 ns | 0.1454 ns | 0.1289 ns | -         |
-| ICAO 9303 Size TD1              | I<UTOSTARWARS45<<<<<<<<<<<<<<<<br>7705256M2405252UTO<<<<<<<<<<<4<br>SKYWALKER<<LUKE<<<<<<<<<<<<<<< | 38.206 ns | 0.1840 ns | 0.1631 ns | -         |
-| ICAO 9303 Size TD1              | I<UTOD23145890<AB112234566<<<<<br>7408122F1204159UTO<<<<<<<<<<<4<br>ERIKSSON<<ANNA<MARIA<<<<<<<<<< | 34.386 ns | 0.2079 ns | 0.1945 ns | -         |
+| ICAO 9303 Size TD1              | I<UTOD231458907<<<<<<<<<<<<<<<<br>7408122F1204159UTO<<<<<<<<<<<6<br>ERIKSSON<<ANNA<MARIA<<<<<<<<<< | 33.010 ns | 0.1887 ns | 0.1673 ns | -         |
+| ICAO 9303 Size TD1              | I<UTOSTARWARS45<<<<<<<<<<<<<<<<br>7705256M2405252UTO<<<<<<<<<<<4<br>SKYWALKER<<LUKE<<<<<<<<<<<<<<< | 39.914 ns | 0.3377 ns | 0.2994 ns | -         |
+| ICAO 9303 Size TD1              | I<UTOD23145890<AB112234566<<<<<br>7408122F1204159UTO<<<<<<<<<<<4<br>ERIKSSON<<ANNA<MARIA<<<<<<<<<< | 32.857 ns | 0.2455 ns | 0.2297 ns | -         |
 |                                 |                                        |           |           |           |           |
-| ICAO 9303 Size TD2              | I<UTOERIKSSON<<ANNA<MARIA<<<<<<<<<<<<br>D231458907UTO7408122F1204159<<<<<<<6 | 31.622 ns | 0.2665 ns | 0.2492 ns | -         |
-| ICAO 9303 Size TD2              | I<UTOQWERTY<<ASDF<<<<<<<<<<<<<<<<<<<<br>D23145890<UTO7408122F1204159AB1124<4 | 31.700 ns | 0.2532 ns | 0.2368 ns | -         |
-| ICAO 9303 Size TD2              | I<UTOSKYWALKER<<LUKE<<<<<<<<<<<<<<<<<br>STARWARS45UTO7705256M2405252<<<<<<<8 | 31.443 ns | 0.1810 ns | 0.1604 ns | -         |
+| ICAO 9303 Size TD2              | I<UTOERIKSSON<<ANNA<MARIA<<<<<<<<<<<<br>D231458907UTO7408122F1204159<<<<<<<6 | 32.312 ns | 0.2888 ns | 0.2702 ns | -         |
+| ICAO 9303 Size TD2              | I<UTOQWERTY<<ASDF<<<<<<<<<<<<<<<<<<<<br>D23145890<UTO7408122F1204159AB1124<4 | 33.326 ns | 0.2760 ns | 0.2581 ns | -         |
+| ICAO 9303 Size TD2              | I<UTOSKYWALKER<<LUKE<<<<<<<<<<<<<<<<<br>STARWARS45UTO7705256M2405252<<<<<<<8 | 32.079 ns | 0.3153 ns | 0.2950 ns | -         |
 |                                 |                                        |           |           |           |           |
-| ICAO 9303 Size TD3              | P<UTOERIKSSON<<ANNA<MARIA<<<<<<<<<<<<<<<<<<<<br>L898902C36UTO7408122F1204159ZE184226B<<<<<10 | 41.579 ns | 0.2136 ns | 0.1998 ns | -         |
-| ICAO 9303 Size TD3              | P<UTOQWERTY<<ASDF<<<<<<<<<<<<<<<<<<<<<<<<<<<<br>Q123987655UTO3311226F2010201<<<<<<<<<<<<<<06 | 44.731 ns | 0.1975 ns | 0.1847 ns | -         |
-| ICAO 9303 Size TD3              | P<UTOSKYWALKER<<LUKE<<<<<<<<<<<<<<<<<<<<<<<<<br>STARWARS45UTO7705256M2405252HAN<SHOT<FIRST78 | 44.764 ns | 0.2196 ns | 0.1947 ns | -         |
+| ICAO 9303 Size TD3              | P<UTOERIKSSON<<ANNA<MARIA<<<<<<<<<<<<<<<<<<<<br>L898902C36UTO7408122F1204159ZE184226B<<<<<10 | 41.611 ns | 0.2497 ns | 0.2213 ns | -         |
+| ICAO 9303 Size TD3              | P<UTOQWERTY<<ASDF<<<<<<<<<<<<<<<<<<<<<<<<<<<<br>Q123987655UTO3311226F2010201<<<<<<<<<<<<<<06 | 41.648 ns | 0.3441 ns | 0.3219 ns | -         |
+| ICAO 9303 Size TD3              | P<UTOSKYWALKER<<LUKE<<<<<<<<<<<<<<<<<<<<<<<<<br>STARWARS45UTO7705256M2405252HAN<SHOT<FIRST78 | 41.434 ns | 0.3941 ns | 0.3686 ns | -         |
 |                                 |                                        |           |           |           |           |
 | ISAN                            | C594660A8B2E5D22X6DDA3272E             | 18.823 ns | 0.2636 ns | 0.2336 ns | -         |
 | ISAN                            | D02C42E954183EE2Q1291C8AEO             | 17.367 ns | 0.1634 ns | 0.1364 ns | -         |
@@ -2114,3 +2129,20 @@ Additional included algorithms:
 
 Added masked validation support to the following algorithms:
 * Modulus10_13 Algorithm
+
+Minor updates to the following algorithms:
+* ICAO 9303 Document Size TD1 Algorithm
+* ICAO 9303 Document Size TD2 Algorithm
+* ICAO 9303 Document Size TD3 Algorithm
+* ICAO 9303 Machine Readable Visa Algorithm
+
+The original implementation of the above algorithms allowed alphabetic characters in the date of birth/expiration date fields
+as long as the check digit(s) were valid for the characters used. The updated implementation only allows numeric characters 
+in those fields, which is consistent with the ICAO 9303 specification. 
+
+Additionally, the LineSeparator property of the above algorithms was marked Obsolete and will be removed in a future release.
+Instead, the separator used between lines in the MRZ is inferred from the length of the value being validated. 
+
+Algorithms marked as Obsolete:
+* Modulus11 Algorithm (ISBN-10/ISSN/etc.) - Replaced by the Modulus11Extended algorithm.
+* NHS (UK National Health Service) Algorithm - Replaced by the Modulus11_27Decimal algorithm.
