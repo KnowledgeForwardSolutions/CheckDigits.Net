@@ -22,7 +22,7 @@ namespace CheckDigits.Net.GeneralAlgorithms;
 ///   transpositions of adjacent digits
 ///   </para>
 /// </remarks>
-public sealed class DammAlgorithm : ISingleCheckDigitAlgorithm
+public sealed class DammAlgorithm : ISingleCheckDigitAlgorithm, IMaskedCheckDigitAlgorithm
 {
    private static readonly DammQuasigroupTable _quasigroupTable =
       DammQuasigroupTable.Instance;
@@ -44,10 +44,11 @@ public sealed class DammAlgorithm : ISingleCheckDigitAlgorithm
       }
 
       var interim = 0;
-      for (var index = 0; index < value.Length; index++)
+      var processLength = value.Length;
+      for (var index = 0; index < processLength; index++)
       {
-         var current = value![index].ToIntegerDigit();
-         if (current < 0 || current > 9)
+         var current = value[index].ToIntegerDigit();
+         if (current.IsInvalidDigit())
          {
                return false;
          }
@@ -67,16 +68,57 @@ public sealed class DammAlgorithm : ISingleCheckDigitAlgorithm
       }
 
       var interim = 0;
-      for (var index = 0; index < value.Length; index++)
+      var processLength = value.Length;
+      for (var index = 0; index < processLength; index++)
       {
-         var current = value![index].ToIntegerDigit();
-         if (current < 0 || current > 9)
+         var current = value[index].ToIntegerDigit();
+         if (current.IsInvalidDigit())
          {
             return false;
          }
          interim = _quasigroupTable[interim, current];
       }
 
+      return interim == 0;
+   }
+
+   /// <inheritdoc/>
+   public Boolean Validate(String value, ICheckDigitMask mask)
+   {
+      if (String.IsNullOrEmpty(value) || value.Length < _validateMinLength)
+      {
+         return false;
+      }
+
+      var interim = 0;
+      var processedDigits = 0;
+      var processLength = value.Length - 1;
+      for (var index = 0; index < processLength; index++)
+      {
+         if (mask.ExcludeCharacter(index))
+         {
+            continue;
+         }
+         var current = value[index].ToIntegerDigit();
+         if (current.IsInvalidDigit())
+         {
+            return false;
+         }
+         interim = _quasigroupTable[interim, current];
+         processedDigits++;
+      }
+      if (processedDigits == 0)
+      {
+         return false;
+      }
+
+      var checkDigit = value[^1].ToIntegerDigit();
+      if (checkDigit.IsInvalidDigit())
+      {
+         return false;
+      }
+      
+      interim = _quasigroupTable[interim, checkDigit];
       return interim == 0;
    }
 }

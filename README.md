@@ -478,6 +478,10 @@ of the multiple tables used by Verhoeff. The implementation of the Damm algorith
 provided by CheckDigits.Net uses the table generated from the quasigroup specified
 on page 111 of Damm's doctoral dissertation.
 
+`DammAlgorithm` implements `IMaskedCheckDigitAlgorithm` and can be used 
+to validate values that are formatted with non-check digit characters (for example,
+a value formatted with spaces or dashes for human readability).
+
 #### Details
 
 * Valid characters - decimal digits ('0' - '9')
@@ -2128,6 +2132,7 @@ Additional included algorithms:
 * Modulus11_27Extended Algorithm
 
 Added masked validation support to the following algorithms:
+* Damm Algorithm
 * Modulus10_13 Algorithm
 
 Minor updates to the following algorithms:

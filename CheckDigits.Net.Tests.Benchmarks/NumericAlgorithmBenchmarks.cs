@@ -14,13 +14,13 @@ public class NumericAlgorithmBenchmarks
 
    public IEnumerable<Object[]> TryCalculateCheckDigitArguments()
    {
-      //      yield return [Algorithms.Damm, Algorithms.Damm.AlgorithmName, "140"];
-      //      yield return [Algorithms.Damm, Algorithms.Damm.AlgorithmName, "140662"];
-      //      yield return [Algorithms.Damm, Algorithms.Damm.AlgorithmName, "140662538"];
-      //      yield return [Algorithms.Damm, Algorithms.Damm.AlgorithmName, "140662538042"];
-      //      yield return [Algorithms.Damm, Algorithms.Damm.AlgorithmName, "140662538042551"];
-      //      yield return [Algorithms.Damm, Algorithms.Damm.AlgorithmName, "140662538042551028"];
-      //      yield return [Algorithms.Damm, Algorithms.Damm.AlgorithmName, "140662538042551028265"];
+      yield return [Algorithms.Damm, Algorithms.Damm.AlgorithmName, "140"];
+      yield return [Algorithms.Damm, Algorithms.Damm.AlgorithmName, "140662"];
+      yield return [Algorithms.Damm, Algorithms.Damm.AlgorithmName, "140662538"];
+      yield return [Algorithms.Damm, Algorithms.Damm.AlgorithmName, "140662538042"];
+      yield return [Algorithms.Damm, Algorithms.Damm.AlgorithmName, "140662538042551"];
+      yield return [Algorithms.Damm, Algorithms.Damm.AlgorithmName, "140662538042551028"];
+      yield return [Algorithms.Damm, Algorithms.Damm.AlgorithmName, "140662538042551028265"];
 
       //      yield return [Algorithms.Iso7064Mod11_10, Algorithms.Iso7064Mod11_10.AlgorithmName, "140"];
       //      yield return [Algorithms.Iso7064Mod11_10, Algorithms.Iso7064Mod11_10.AlgorithmName, "140662"];
@@ -114,13 +114,13 @@ public class NumericAlgorithmBenchmarks
 
    public IEnumerable<Object[]> ValidateArguments()
    {
-      //      yield return [Algorithms.Damm, Algorithms.Damm.AlgorithmName, "1402"];
-      //      yield return [Algorithms.Damm, Algorithms.Damm.AlgorithmName, "1406622"];
-      //      yield return [Algorithms.Damm, Algorithms.Damm.AlgorithmName, "1406625388"];
-      //      yield return [Algorithms.Damm, Algorithms.Damm.AlgorithmName, "1406625380422"];
-      //      yield return [Algorithms.Damm, Algorithms.Damm.AlgorithmName, "1406625380425518"];
-      //      yield return [Algorithms.Damm, Algorithms.Damm.AlgorithmName, "1406625380425510280"];
-      //      yield return [Algorithms.Damm, Algorithms.Damm.AlgorithmName, "1406625380425510282654"];
+      yield return [Algorithms.Damm, Algorithms.Damm.AlgorithmName, "1402"];
+      yield return [Algorithms.Damm, Algorithms.Damm.AlgorithmName, "1406622"];
+      yield return [Algorithms.Damm, Algorithms.Damm.AlgorithmName, "1406625388"];
+      yield return [Algorithms.Damm, Algorithms.Damm.AlgorithmName, "1406625380422"];
+      yield return [Algorithms.Damm, Algorithms.Damm.AlgorithmName, "1406625380425518"];
+      yield return [Algorithms.Damm, Algorithms.Damm.AlgorithmName, "1406625380425510280"];
+      yield return [Algorithms.Damm, Algorithms.Damm.AlgorithmName, "1406625380425510282654"];
 
       //      yield return [Algorithms.Iso7064Mod11_10, Algorithms.Iso7064Mod11_10.AlgorithmName, "1409"];
       //      yield return [Algorithms.Iso7064Mod11_10, Algorithms.Iso7064Mod11_10.AlgorithmName, "1406623"];
