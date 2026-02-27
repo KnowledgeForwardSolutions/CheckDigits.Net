@@ -133,7 +133,7 @@ namespace CheckDigits.Net {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Damm&apos;s quasigroup algorithm.
+        ///   Looks up a localized string similar to Damm&apos;s quasigroup algorithm with Order 10 (decimal digits).
         /// </summary>
         internal static string DammAlgorithmDescription {
             get {
@@ -147,6 +147,24 @@ namespace CheckDigits.Net {
         internal static string DammAlgorithmName {
             get {
                 return ResourceManager.GetString("DammAlgorithmName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Damm algorithm using custom quasigroup.
+        /// </summary>
+        internal static string DammCustomQuasigroupAlgorithmDescription {
+            get {
+                return ResourceManager.GetString("DammCustomQuasigroupAlgorithmDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Damm (custom quasigroup).
+        /// </summary>
+        internal static string DammCustomQuasigroupAlgorithmName {
+            get {
+                return ResourceManager.GetString("DammCustomQuasigroupAlgorithmName", resourceCulture);
             }
         }
         
@@ -754,6 +772,15 @@ namespace CheckDigits.Net {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Parameter &apos;quasigroup&apos; may not be null.
+        /// </summary>
+        internal static string QuasigroupRequiredMessage {
+            get {
+                return ResourceManager.GetString("QuasigroupRequiredMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to SEDOL Algorithm.
         /// </summary>
         internal static string SedolAlgorithmDescription {
@@ -768,15 +795,6 @@ namespace CheckDigits.Net {
         internal static string SedolAlgorithmName {
             get {
                 return ResourceManager.GetString("SedolAlgorithmName", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to .
-        /// </summary>
-        internal static string String1 {
-            get {
-                return ResourceManager.GetString("String1", resourceCulture);
             }
         }
         

@@ -23,7 +23,7 @@ public interface IDammQuasigroup
    ///   Gets the next interim value from the quasigroup table based on the 
    ///   current interim value and the next input digit.
    /// </summary>
-   /// <param name="interm">
+   /// <param name="interim">
    ///   The current interm value, used as the zero-based x-coordinate in the 
    ///   quasigroup table. Must be a non-negative integer less than <see cref="Order"/>.
    /// </param>
@@ -37,7 +37,7 @@ public interface IDammQuasigroup
    ///   [interm, next] coordinates. Will be a non-negative integer less than
    ///   <see cref="Order"/>.
    /// </returns>
-   Int32 this[Int32 interm, Int32 next] { get; }
+   Int32 this[Int32 interim, Int32 next] { get; }
 
    /// <summary>
    ///   Maps the specified character to its corresponding integer value.
@@ -45,8 +45,9 @@ public interface IDammQuasigroup
    /// <param name="ch">
    ///   The character to be mapped to an integer value.</param>
    /// <returns>
-   ///   An integer representing the mapped value of the specified character or 
-   ///   -1 if the character is invalid for this quasigroup.
+   ///   An integer representing the mapped value of the specified character. A
+   ///   result less than zero or greater than or equal to <see cref="Order"/>
+   ///   indicates that the character is invalid for this quasigroup.
    /// </returns>
    Int32 MapCharacter(Char ch);
 

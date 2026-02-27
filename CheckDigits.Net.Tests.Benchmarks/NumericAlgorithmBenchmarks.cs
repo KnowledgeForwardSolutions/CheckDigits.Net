@@ -76,13 +76,13 @@ public class NumericAlgorithmBenchmarks
       //yield return [Algorithms.Modulus11_27Decimal, Algorithms.Modulus11_27Decimal.AlgorithmName, "140662538042551028"];
       //yield return [Algorithms.Modulus11_27Decimal, Algorithms.Modulus11_27Decimal.AlgorithmName, "140662538042551028265"];
 
-      yield return [Algorithms.Modulus11_27Extended, Algorithms.Modulus11_27Extended.AlgorithmName, "140"];
-      yield return [Algorithms.Modulus11_27Extended, Algorithms.Modulus11_27Extended.AlgorithmName, "140662"];
-      yield return [Algorithms.Modulus11_27Extended, Algorithms.Modulus11_27Extended.AlgorithmName, "140662538"];
-      yield return [Algorithms.Modulus11_27Extended, Algorithms.Modulus11_27Extended.AlgorithmName, "140662538042"];
-      yield return [Algorithms.Modulus11_27Extended, Algorithms.Modulus11_27Extended.AlgorithmName, "140662538042551"];
-      yield return [Algorithms.Modulus11_27Extended, Algorithms.Modulus11_27Extended.AlgorithmName, "140662538042551028"];
-      yield return [Algorithms.Modulus11_27Extended, Algorithms.Modulus11_27Extended.AlgorithmName, "140662538042551028265"];
+      //yield return [Algorithms.Modulus11_27Extended, Algorithms.Modulus11_27Extended.AlgorithmName, "140"];
+      //yield return [Algorithms.Modulus11_27Extended, Algorithms.Modulus11_27Extended.AlgorithmName, "140662"];
+      //yield return [Algorithms.Modulus11_27Extended, Algorithms.Modulus11_27Extended.AlgorithmName, "140662538"];
+      //yield return [Algorithms.Modulus11_27Extended, Algorithms.Modulus11_27Extended.AlgorithmName, "140662538042"];
+      //yield return [Algorithms.Modulus11_27Extended, Algorithms.Modulus11_27Extended.AlgorithmName, "140662538042551"];
+      //yield return [Algorithms.Modulus11_27Extended, Algorithms.Modulus11_27Extended.AlgorithmName, "140662538042551028"];
+      //yield return [Algorithms.Modulus11_27Extended, Algorithms.Modulus11_27Extended.AlgorithmName, "140662538042551028265"];
 
       //yield return [Algorithms.Modulus11Decimal, Algorithms.Modulus11Decimal.AlgorithmName, "140"];
       //yield return [Algorithms.Modulus11Decimal, Algorithms.Modulus11Decimal.AlgorithmName, "140662"];
@@ -184,13 +184,13 @@ public class NumericAlgorithmBenchmarks
       //yield return [Algorithms.Modulus11_27Decimal, Algorithms.Modulus11_27Decimal.AlgorithmName, "1406625380425510288"];
       //yield return [Algorithms.Modulus11_27Decimal, Algorithms.Modulus11_27Decimal.AlgorithmName, "1406625380425510282650"];
 
-      yield return [Algorithms.Modulus11_27Extended, Algorithms.Modulus11_27Extended.AlgorithmName, "1406"];
-      yield return [Algorithms.Modulus11_27Extended, Algorithms.Modulus11_27Extended.AlgorithmName, "1406620"];
-      yield return [Algorithms.Modulus11_27Extended, Algorithms.Modulus11_27Extended.AlgorithmName, "1406625385"];
-      yield return [Algorithms.Modulus11_27Extended, Algorithms.Modulus11_27Extended.AlgorithmName, "1406625380421"];
-      yield return [Algorithms.Modulus11_27Extended, Algorithms.Modulus11_27Extended.AlgorithmName, "1406625380425510"];
-      yield return [Algorithms.Modulus11_27Extended, Algorithms.Modulus11_27Extended.AlgorithmName, "1406625380425510288"];
-      yield return [Algorithms.Modulus11_27Extended, Algorithms.Modulus11_27Extended.AlgorithmName, "1406625380425510282650"];
+      //yield return [Algorithms.Modulus11_27Extended, Algorithms.Modulus11_27Extended.AlgorithmName, "1406"];
+      //yield return [Algorithms.Modulus11_27Extended, Algorithms.Modulus11_27Extended.AlgorithmName, "1406620"];
+      //yield return [Algorithms.Modulus11_27Extended, Algorithms.Modulus11_27Extended.AlgorithmName, "1406625385"];
+      //yield return [Algorithms.Modulus11_27Extended, Algorithms.Modulus11_27Extended.AlgorithmName, "1406625380421"];
+      //yield return [Algorithms.Modulus11_27Extended, Algorithms.Modulus11_27Extended.AlgorithmName, "1406625380425510"];
+      //yield return [Algorithms.Modulus11_27Extended, Algorithms.Modulus11_27Extended.AlgorithmName, "1406625380425510288"];
+      //yield return [Algorithms.Modulus11_27Extended, Algorithms.Modulus11_27Extended.AlgorithmName, "1406625380425510282650"];
 
       //yield return [Algorithms.Modulus11Decimal, Algorithms.Modulus11Decimal.AlgorithmName, "1406"];
       //yield return [Algorithms.Modulus11Decimal, Algorithms.Modulus11Decimal.AlgorithmName, "1406620"];
@@ -273,10 +273,10 @@ public class NumericAlgorithmBenchmarks
       algorithm.Validate(value);
    }
 
-   [Benchmark]
-   [ArgumentsSource(nameof(ValidateMaskedArguments))]
-   public void ValidateMasked(IMaskedCheckDigitAlgorithm algorithm, String name, String value)
-   {
-      algorithm.Validate(value, _groupsOfThreeMask);
-   }
+   //[Benchmark]
+   //[ArgumentsSource(nameof(ValidateMaskedArguments))]
+   //public void ValidateMasked(IMaskedCheckDigitAlgorithm algorithm, String name, String value)
+   //{
+   //   algorithm.Validate(value, _groupsOfThreeMask);
+   //}
 }
