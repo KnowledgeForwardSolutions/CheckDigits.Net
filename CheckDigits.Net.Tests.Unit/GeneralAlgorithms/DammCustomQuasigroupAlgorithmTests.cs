@@ -5,12 +5,15 @@ namespace CheckDigits.Net.Tests.Unit.GeneralAlgorithms;
 public class DammCustomQuasigroupAlgorithmTests
 {
    private static readonly IDammQuasigroup _quasigroupOrder10 = new DammQuasigroupOrder10();
+   private static readonly IDammQuasigroup _quasigroupOrder16 = DammQuasigroupOrder16.GetQuasigroup();
    private static readonly DammCustomQuasigroupAlgorithm _sutOrder10 = new(_quasigroupOrder10);
+   private static readonly DammCustomQuasigroupAlgorithm _sutOrder16 = new(_quasigroupOrder16);
 
    private static DammCustomQuasigroupAlgorithm GetAlgorithm(Int32 order)
       => order switch
       {
          10 => _sutOrder10,
+         16 => _sutOrder16,
          _ => throw new ArgumentOutOfRangeException(nameof(order), $"No Damm quasigroup of order {order} is available.")
       };
 
@@ -19,7 +22,7 @@ public class DammCustomQuasigroupAlgorithmTests
    // ==========================================================================
 
    [Fact]
-   public void DammAlgorithm_AlgorithmDescription_ShouldReturnExpectedValue()
+   public void DammCustomQuasigroupAlgorithm_AlgorithmDescription_ShouldReturnExpectedValue()
       => _sutOrder10.AlgorithmDescription.Should().Be(Resources.DammCustomQuasigroupAlgorithmDescription);
 
    #endregion
@@ -29,7 +32,7 @@ public class DammCustomQuasigroupAlgorithmTests
    // ==========================================================================
 
    [Fact]
-   public void DammAlgorithm_AlgorithmName_ShouldReturnExpectedValue()
+   public void DammCustomQuasigroupAlgorithm_AlgorithmName_ShouldReturnExpectedValue()
       => _sutOrder10.AlgorithmName.Should().Be(Resources.DammCustomQuasigroupAlgorithmName);
 
    #endregion
@@ -38,17 +41,27 @@ public class DammCustomQuasigroupAlgorithmTests
    // ==========================================================================
    // ==========================================================================
 
-   [Fact]
-   public void DammAlgorithm_TryCalculateCheckDigit_ShouldReturnFalse_WhenInputIsNull()
+   [Theory]
+   [InlineData(10)]
+   [InlineData(16)]
+   public void DammCustomQuasigroupAlgorithm_TryCalculateCheckDigit_ShouldReturnFalse_WhenInputIsNull(Int32 order)
    {
+      // Arrange.
+      var sut = GetAlgorithm(order);
+
       // Act/assert.
-      _sutOrder10.TryCalculateCheckDigit(null!, out var checkDigit).Should().BeFalse();
+      sut.TryCalculateCheckDigit(null!, out var checkDigit).Should().BeFalse();
       checkDigit.Should().Be('\0');
    }
 
-   [Fact]
-   public void DammAlgorithm_TryCalculateCheckDigit_ShouldReturnFalse_WhenInputIsEmpty()
+   [Theory]
+   [InlineData(10)]
+   [InlineData(16)]
+   public void DammCustomQuasigroupAlgorithm_TryCalculateCheckDigit_ShouldReturnFalse_WhenInputIsEmpty(Int32 order)
    {
+      // Arrange.
+      var sut = GetAlgorithm(order);
+
       // Act/assert.
       _sutOrder10.TryCalculateCheckDigit(String.Empty, out var checkDigit).Should().BeFalse();
       checkDigit.Should().Be('\0');
@@ -60,7 +73,16 @@ public class DammCustomQuasigroupAlgorithmTests
    [InlineData(10, "12345678901", '8')]              // Value calculated by https://jackanderson.me/2020/09/damm-algorithm-check-digit-tool/
    [InlineData(10, "123456789012345", '0')]          // "
    [InlineData(10, "11223344556677889900", '6')]     // "
-   public void DammAlgorithm_TryCalculateCheckDigit_ShouldCalculateExpectedCheckDigit(
+   [InlineData(16, "2ED", '1')]            
+   [InlineData(16, "2EDC15", '9')]         
+   [InlineData(16, "2EDC15B3C", 'D')]      
+   [InlineData(16, "2EDC15B3C1C3", '3')]   
+   [InlineData(16, "2EDC15B3C1C34F4", 'C')]
+   [InlineData(16, "2EDC15B3C1C34F4DA5", 'E')]
+   [InlineData(16, "2EDC15B3C1C34F4DA55F3", '7')]
+   [InlineData(16, "22446688AACCEE1155FF0", '0')]
+   [InlineData(16, "123456789ABCDEF012345", '1')]
+   public void DammCustomQuasigroupAlgorithm_TryCalculateCheckDigit_ShouldCalculateExpectedCheckDigit(
       Int32 order,
       String value,
       Char expectedCheckDigit)
@@ -73,22 +95,28 @@ public class DammCustomQuasigroupAlgorithmTests
       checkDigit.Should().Be(expectedCheckDigit);
    }
 
-   [Fact]
-   public void DamnAlgorithm_TryCalculateCheckDigit_ShouldCalculateExpectedCheckDigit_WhenInputIsAllZeros()
+   [Theory]
+   [InlineData(10, "00000")]
+   [InlineData(16, "00000")]
+   public void DamnCustomQuasigroupAlgorithm_TryCalculateCheckDigit_ShouldCalculateExpectedCheckDigit_WhenInputIsAllZeros(
+      Int32 order,
+      String value)
    {
       // Arrange.
-      var value = "00000";
+      var sut = GetAlgorithm(order);
       var expectedCheckDigit = Chars.DigitZero;
 
       // Act/assert.
-      _sutOrder10.TryCalculateCheckDigit(value, out var checkDigit).Should().BeTrue();
+      sut.TryCalculateCheckDigit(value, out var checkDigit).Should().BeTrue();
       checkDigit.Should().Be(expectedCheckDigit);
    }
 
    [Theory]
    [InlineData(10, "12G45")]
    [InlineData(10, "12)45")]
-   public void DammAlgorithm_TryCalculateCheckDigit_ShouldReturnFalse_WhenInputContainsInvalidCharacter(
+   [InlineData(16, "12G45")]
+   [InlineData(16, "12)45")]
+   public void DammCustomQuasigroupAlgorithm_TryCalculateCheckDigit_ShouldReturnFalse_WhenInputContainsInvalidCharacter(
       Int32 order,
       String value)
    {
@@ -108,7 +136,14 @@ public class DammCustomQuasigroupAlgorithmTests
    [InlineData(10, "140662538042551")]
    [InlineData(10, "140662538042551028")]
    [InlineData(10, "140662538042551028265")]
-   public void DammAlgorithm_TryCalculateValue_ShouldReturnTrue_ForBenchmarkValues(
+   [InlineData(16, "2ED")]            
+   [InlineData(16, "2EDC15")]         
+   [InlineData(16, "2EDC15B3C")]      
+   [InlineData(16, "2EDC15B3C1C3")]   
+   [InlineData(16, "2EDC15B3C1C34F4")]
+   [InlineData(16, "2EDC15B3C1C34F4DA5")]
+   [InlineData(16, "2EDC15B3C1C34F4DA55F3")]
+   public void DammCustomQuasigroupAlgorithm_TryCalculateValue_ShouldReturnTrue_ForBenchmarkValues(
       Int32 order, 
       String value)
    {
@@ -120,4 +155,174 @@ public class DammCustomQuasigroupAlgorithmTests
    }
 
    #endregion
+
+   #region Validate Tests
+   // ==========================================================================
+   // ==========================================================================
+
+   [Theory]
+   [InlineData(10)]
+   [InlineData(16)]
+   public void DammCustomQuasigroupAlgorithm_Validate_ShouldReturnFalse_WhenInputIsNull(Int32 order)
+   {
+      // Arrange.
+      var sut = GetAlgorithm(order);
+
+      // Act/assert.
+      sut.Validate(null!).Should().BeFalse();
+   }
+
+   [Theory]
+   [InlineData(10)]
+   [InlineData(16)]
+   public void DammCustomQuasigroupAlgorithm_Validate_ShouldReturnFalse_WhenInputIsEmpty(Int32 order)
+   {
+      // Arrange.
+      var sut = GetAlgorithm(order);
+
+      // Act/assert.
+      sut.Validate(null!).Should().BeFalse();
+   }
+
+   [Theory]
+   [InlineData(10, "0")]    // "0" is the only digit that would pass unless length is checked explicitly
+   [InlineData(10, "1")]
+   [InlineData(16, "0")]    // "0" is the only digit that would pass unless length is checked explicitly
+   [InlineData(16, "1")]
+   public void DammCustomQuasigroupAlgorithm_Validate_ShouldReturnFalse_WhenInputIsLengthOne(
+      Int32 order,
+      String value)
+   {
+      // Arrange.
+      var sut = GetAlgorithm(order);
+
+      // Act/assert.
+      sut.Validate(value).Should().BeFalse();
+   }
+
+   [Theory]
+   [InlineData(10, "5724")]                      // Worked example from Wikipedia
+   [InlineData(10, "112946")]                    // Test data from https://www.rosettacode.org/wiki/Damm_algorithm#C#
+   [InlineData(10, "123456789018")]              // Value calculated by https://jackanderson.me/2020/09/damm-algorithm-check-digit-tool/
+   [InlineData(10, "1234567890123450")]          // "
+   [InlineData(10, "112233445566778899006")]     // "
+   [InlineData(16, "2ED1")]            
+   [InlineData(16, "2EDC159")]         
+   [InlineData(16, "2EDC15B3CD")]      
+   [InlineData(16, "2EDC15B3C1C33")]   
+   [InlineData(16, "2EDC15B3C1C34F4C")]
+   [InlineData(16, "2EDC15B3C1C34F4DA5E")]
+   [InlineData(16, "2EDC15B3C1C34F4DA55F37")]
+   [InlineData(16, "22446688AACCEE1155FF00")]
+   [InlineData(16, "123456789ABCDEF0123451")]
+   public void DammCustomQuasigroupAlgorithm_Validate_ShouldReturnTrue_WhenInputContainsValidCheckDigit(
+      Int32 order,
+      String value)
+   {
+      // Arrange.
+      var sut = GetAlgorithm(order);
+
+      // Act/assert.
+      sut.Validate(value).Should().BeTrue();
+   }
+
+   [Theory]
+   [InlineData(10)]
+   [InlineData(16)]
+   public void DammCustomQuasigroupAlgorithm_Validate_ShouldReturnTrue_WhenInputIsAllZeros(Int32 order)
+   {
+      // Arrange.
+      var sut = GetAlgorithm(order);
+
+      // Act/assert.
+      sut.Validate("0000000000000000").Should().BeTrue();
+   }
+
+   [Theory]
+   [InlineData(10, "112233445566778899016")]    // Single digit errors (using "112233445566778899006" as a valid value)
+   [InlineData(10, "112233445566778892006")]    // "
+   [InlineData(10, "112233445566778399006")]    // "
+   [InlineData(10, "112233445566748899006")]    // "
+   [InlineData(10, "112233445565778899006")]    // "
+   [InlineData(10, "112233445666778899006")]    // "
+   [InlineData(10, "112233475566778899006")]    // "
+   [InlineData(10, "112238445566778899006")]    // "
+   [InlineData(10, "112933445566778899006")]    // "
+   [InlineData(10, "102233445566778899006")]    // "
+   [InlineData(10, "121233445566778899006")]    // Transposition errors (using "112233445566778899006" as a valid value)
+   [InlineData(10, "112323445566778899006")]    // "
+   [InlineData(10, "112234345566778899006")]    // "
+   [InlineData(10, "112233454566778899006")]    // "
+   [InlineData(10, "112233445656778899006")]    // "
+   [InlineData(10, "112233445567678899006")]    // "
+   [InlineData(10, "112233445566787899006")]    // "
+   [InlineData(10, "112233445566778989006")]    // "
+   [InlineData(10, "112233445566778890906")]    // "
+   [InlineData(10, "1236547890123450")]         // Jump transposition error using "1234567890123450" as a valid value (456 -> 654)
+   [InlineData(10, "112255445566778899006")]    // Twin error using "112233445566778899006" as a valid value (33 -> 55)
+   [InlineData(16, "23446688AACCEE1155FF00")]   // Single character errors (using "22446688AACCEE1155FF00" as a valid value)  
+   [InlineData(10, "22445688AACCEE1155FF00")]   // "
+   [InlineData(10, "22446680AACCEE1155FF00")]   // "
+   [InlineData(10, "22446688AABCEE1155FF00")]   // "
+   [InlineData(10, "22446688AACCEE11550F00")]   // "
+   [InlineData(10, "24246688AACCEE1155FF00")]   // Transposition errors (using "22446688AACCEE1155FF00" as a valid value)
+   [InlineData(10, "22464688AACCEE1155FF00")]   // "
+   [InlineData(10, "22446868AACCEE1155FF00")]   // "
+   [InlineData(10, "2244668A8ACCEE1155FF00")]   // "
+   [InlineData(10, "22446688ACACEE1155FF00")]   // "
+   [InlineData(10, "12345678BA9CDEF0123451")]   // Jump transposition error using "123456789ABCDEF0123451" as a valid value (9AB -> BA9)
+   [InlineData(10, "22446688DDCCEE1155FF00")]    // Twin error using "22446688AACCEE1155FF00" as a valid value (AA -> DD)
+   public void DammCustomQuasigroupAlgorithm_Validate_ShouldReturnFalse_WhenInputContainsDetectableError(
+      Int32 order,
+      String value)
+   {
+      // Arrange.
+      var sut = GetAlgorithm(order);
+
+      // Act/assert.
+      sut.Validate(value).Should().BeFalse();
+   }
+
+   [Theory]
+   [InlineData(10, "12G455")]
+   [InlineData(10, "12)455")]
+   public void DammCustomQuasigroupAlgorithm_Validate_ShouldReturnFalse_WhenInputContainsNonDigitCharacter(
+      Int32 order,
+      String value)
+   {
+      // Arrange.
+      var sut = GetAlgorithm(order);
+
+      // Act/assert.
+      sut.Validate(value).Should().BeFalse();
+   }
+
+   [Theory]
+   [InlineData(10, "1402")]
+   [InlineData(10, "1406622")]
+   [InlineData(10, "1406625388")]
+   [InlineData(10, "1406625380422")]
+   [InlineData(10, "1406625380425518")]
+   [InlineData(10, "1406625380425510280")]
+   [InlineData(10, "1406625380425510282654")]
+   [InlineData(16, "2ED1")]            
+   [InlineData(16, "2EDC159")]         
+   [InlineData(16, "2EDC15B3CD")]      
+   [InlineData(16, "2EDC15B3C1C33")]   
+   [InlineData(16, "2EDC15B3C1C34F4C")]
+   [InlineData(16, "2EDC15B3C1C34F4DA5E")]
+   [InlineData(16, "2EDC15B3C1C34F4DA55F37")]
+   public void DammCustomQuasigroupAlgorithm_Validate_ShouldReturnTrue_ForBenchmarkValues(
+      Int32 order, 
+      String value)
+   {
+      // Arrange.
+      var sut = GetAlgorithm(order);
+
+      // Act/assert.
+      sut.Validate(value).Should().BeTrue();
+   }
+
+   #endregion
+
 }

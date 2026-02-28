@@ -52,14 +52,16 @@ public interface IDammQuasigroup
    Int32 MapCharacter(Char ch);
 
    /// <summary>
-   ///   Calculates the check digit corresponding to the specified interim value.
+   ///   Calculates the check character corresponding to the specified interim 
+   ///   value.
    /// </summary>
    /// <param name="interim">
-   ///   The Damm algorithm interim value used to compute the check digit. Must 
-   ///   be a non-negative integer less than <see cref="Order"/>.
+   ///   The Damm algorithm interim value used to compute the check value. 
+   ///   Must be a non-negative integer less than <see cref="Order"/>.
    /// </param>
    /// <returns>
-   ///   The check digit as a character derived from the interim value.
+   ///   The character representation of the integer check value (which is the
+   ///   final interim value).
    /// </returns>
-   Char GetCheckDigit(Int32 interim);
+   Char GetCheckCharacter(Int32 interim);
 }

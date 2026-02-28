@@ -372,7 +372,28 @@
   <data name="DammCustomQuasigroupAlgorithmName" xml:space="preserve">
     <value>Damm (custom quasigroup)</value>
   </data>
-  <data name="QuasigroupRequiredMessage" xml:space="preserve">
-    <value>Parameter 'quasigroup' may not be null</value>
+  <data name="QuasigroupDefinitionRequiredMessage" xml:space="preserve">
+    <value>Quasigroup definition may not be null</value>
+  </data>
+  <data name="MapCharacterFunctionRequiredMessage" xml:space="preserve">
+    <value>DammCustomQuasigroup mapCharacter function is required</value>
+  </data>
+  <data name="GetCheckCharacterFunctionRequiredMessage" xml:space="preserve">
+    <value>DammCustomQuasigroup getCheckCharacter function is required</value>
+  </data>
+  <data name="SquareQuasigroupTableRequired" xml:space="preserve">
+    <value>DammCustomQuasigroup quasigroupTable must be square with # rows = # columns</value>
+  </data>
+  <data name="QuasigroupTableDiagonalElementsMustBeZero" xml:space="preserve">
+    <value>Invalid quasigroup - table diagonal elements must be zero</value>
+  </data>
+  <data name="QuasigroupTableValuesOutOfRange" xml:space="preserve">
+    <value>Quasigroup contains invalid entry (&lt; 0 or &gt;= order of table)</value>
+  </data>
+  <data name="QuasigroupTableRowContainsDuplicateValues" xml:space="preserve">
+    <value>Invalid quasigroup - row contains duplicate entries</value>
+  </data>
+  <data name="QuasigroupTableColumnContainsDuplicateValues" xml:space="preserve">
+    <value>Invalid quasigroup - column contains duplicate entries</value>
   </data>
 </root>

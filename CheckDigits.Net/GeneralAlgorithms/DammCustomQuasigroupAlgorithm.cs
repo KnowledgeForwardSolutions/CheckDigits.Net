@@ -7,7 +7,8 @@ public sealed class DammCustomQuasigroupAlgorithm(IDammQuasigroup quasigroup) : 
    private readonly Int32 _order = quasigroup.Order;
    private readonly IDammQuasigroup _quasigroup = quasigroup ?? throw new ArgumentNullException(
          nameof(quasigroup),
-         Resources.QuasigroupRequiredMessage);
+         Resources.QuasigroupDefinitionRequiredMessage);
+   private const Int32 _validateMinLength = 2;
 
    /// <inheritdoc/>
    public String AlgorithmDescription => Resources.DammCustomQuasigroupAlgorithmDescription;
@@ -36,13 +37,32 @@ public sealed class DammCustomQuasigroupAlgorithm(IDammQuasigroup quasigroup) : 
          interim = _quasigroup[interim, current];
       }
 
-      checkDigit = _quasigroup.GetCheckDigit(interim);
+      checkDigit = _quasigroup.GetCheckCharacter(interim);
       return true;
    }
 
    /// <inheritdoc/>
    public Boolean Validate(String value) 
-      => throw new NotImplementedException();
+   {
+      if (String.IsNullOrEmpty(value) || value.Length < _validateMinLength)
+      {
+         return false;
+      }
+
+      var interim = 0;
+      var processLength = value.Length;
+      for (var index = 0; index < processLength; index++)
+      {
+         var current = _quasigroup.MapCharacter(value[index]);
+         if (current < 0 || current >= _order)
+         {
+            return false;
+         }
+         interim = _quasigroup[interim, current];
+      }
+
+      return interim == 0;
+   }
 
    /// <inheritdoc/>
    public Boolean Validate(String value, ICheckDigitMask mask) 

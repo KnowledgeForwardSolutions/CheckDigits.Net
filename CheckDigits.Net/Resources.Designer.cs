@@ -187,6 +187,15 @@ namespace CheckDigits.Net {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to DammCustomQuasigroup getCheckCharacter function is required.
+        /// </summary>
+        internal static string GetCheckCharacterFunctionRequiredMessage {
+            get {
+                return ResourceManager.GetString("GetCheckCharacterFunctionRequiredMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Check digit value is out of range for the character domain.
         /// </summary>
         internal static string GetCheckCharacterValueOutOfRangeMessage {
@@ -556,6 +565,15 @@ namespace CheckDigits.Net {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to DammCustomQuasigroup mapCharacter function is required.
+        /// </summary>
+        internal static string MapCharacterFunctionRequiredMessage {
+            get {
+                return ResourceManager.GetString("MapCharacterFunctionRequiredMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Modulus10_13 - modulus 10 algorithm with weights 1 and 3.
         /// </summary>
         internal static string Modulus10_13AlgorithmDescription {
@@ -772,11 +790,47 @@ namespace CheckDigits.Net {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Parameter &apos;quasigroup&apos; may not be null.
+        ///   Looks up a localized string similar to Quasigroup definition may not be null.
         /// </summary>
-        internal static string QuasigroupRequiredMessage {
+        internal static string QuasigroupDefinitionRequiredMessage {
             get {
-                return ResourceManager.GetString("QuasigroupRequiredMessage", resourceCulture);
+                return ResourceManager.GetString("QuasigroupDefinitionRequiredMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid quasigroup - column contains duplicate entries.
+        /// </summary>
+        internal static string QuasigroupTableColumnContainsDuplicateValues {
+            get {
+                return ResourceManager.GetString("QuasigroupTableColumnContainsDuplicateValues", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid quasigroup - table diagonal elements must be zero.
+        /// </summary>
+        internal static string QuasigroupTableDiagonalElementsMustBeZero {
+            get {
+                return ResourceManager.GetString("QuasigroupTableDiagonalElementsMustBeZero", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid quasigroup - row contains duplicate entries.
+        /// </summary>
+        internal static string QuasigroupTableRowContainsDuplicateValues {
+            get {
+                return ResourceManager.GetString("QuasigroupTableRowContainsDuplicateValues", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Quasigroup contains invalid entry (&lt; 0 or &gt;= order of table).
+        /// </summary>
+        internal static string QuasigroupTableValuesOutOfRange {
+            get {
+                return ResourceManager.GetString("QuasigroupTableValuesOutOfRange", resourceCulture);
             }
         }
         
@@ -795,6 +849,15 @@ namespace CheckDigits.Net {
         internal static string SedolAlgorithmName {
             get {
                 return ResourceManager.GetString("SedolAlgorithmName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DammCustomQuasigroup quasigroupTable must be square with # rows = # columns.
+        /// </summary>
+        internal static string SquareQuasigroupTableRequired {
+            get {
+                return ResourceManager.GetString("SquareQuasigroupTableRequired", resourceCulture);
             }
         }
         

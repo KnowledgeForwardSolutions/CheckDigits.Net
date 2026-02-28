@@ -10,7 +10,7 @@ namespace CheckDigits.Net.Tests.Benchmarks;
 public class OptimizeBenchmarks
 {
    private static readonly DammAlgorithm _baselineAlgorithm = new();
-   private static readonly DammAlgorithm _quasigroupAlgorithm = new(new DefaultDammQuasigroupOrder10());
+   private static readonly DammAlgorithm _quasigroupAlgorithm = new(); //(new DefaultDammQuasigroupOrder10());
 
    [Benchmark(Baseline = true)]
    [Arguments("140")]
@@ -54,7 +54,7 @@ public class DammQuasigroupOrder10 : IDammQuasigroup
 
    public Int32 Order => 10;
 
-   public Char GetCheckDigit(Int32 interim) => interim.ToDigitChar();
+   public Char GetCheckCharacter(Int32 interim) => interim.ToDigitChar();
 
    public Int32 MapCharacter(Char ch) => ch.ToIntegerDigit();
 }
