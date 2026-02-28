@@ -65,6 +65,42 @@ public sealed class DammCustomQuasigroupAlgorithm(IDammQuasigroup quasigroup) : 
    }
 
    /// <inheritdoc/>
-   public Boolean Validate(String value, ICheckDigitMask mask) 
-      => throw new NotImplementedException();
+   public Boolean Validate(String value, ICheckDigitMask mask)
+   {
+      if (String.IsNullOrEmpty(value) || value.Length < _validateMinLength)
+      {
+         return false;
+      }
+
+      var interim = 0;
+      var processedDigits = 0;
+      var processLength = value.Length - 1;
+      for (var index = 0; index < processLength; index++)
+      {
+         if (mask.ExcludeCharacter(index))
+         {
+            continue;
+         }
+         var current = _quasigroup.MapCharacter(value[index]);
+         if (current < 0 || current >= _order)
+         {
+            return false;
+         }
+         interim = _quasigroup[interim, current];
+         processedDigits++;
+      }
+      if (processedDigits == 0)
+      {
+         return false;
+      }
+
+      var checkDigit = _quasigroup.MapCharacter(value[^1]);
+      if (checkDigit < 0 || checkDigit >= _order)
+      {
+         return false;
+      }
+      
+      interim = _quasigroup[interim, checkDigit];
+      return interim == 0;
+   }
 }
