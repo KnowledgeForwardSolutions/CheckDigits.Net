@@ -2,9 +2,36 @@
 
 namespace CheckDigits.Net.GeneralAlgorithms;
 
+/// <summary>
+///   Generalized version of the Damm algorithm which allows the consumer to 
+///   define a custom quasigroup instead of relying on the decimal quasigroup 
+///   used by <see cref="DammAlgorithm"/>.
+/// </summary>
+/// <param name="quasigroup">
+///   Custom quasigroup object to use in the check value calculations. The 
+///   quasigroup also defines the supported character set and handles mapping 
+///   characters to their integer equivalent and from calculated check values 
+///   back to a character value.
+/// </param>
+/// <remarks>
+///   <para>
+///   Valid characters depend on supplied quasigroup.
+///   </para>
+///   <para>
+///   Check character calculated by the algorithm will be one of the characters
+///   defined by the supplied quasigroup.
+///   </para>
+///   <para>
+///   Assumes that the check character (if present) is the right-most character 
+///   in the input value.
+///   </para>
+///   <para>
+///   Will detect all single-character transcription errors and all two 
+///   character transpositions of adjacent characters.
+///   </para>
+/// </remarks>
 public sealed class DammCustomQuasigroupAlgorithm(IDammQuasigroup quasigroup) : ISingleCheckDigitAlgorithm, IMaskedCheckDigitAlgorithm
 {
-   private readonly Int32 _order = quasigroup.Order;
    private readonly IDammQuasigroup _quasigroup = quasigroup ?? throw new ArgumentNullException(
          nameof(quasigroup),
          Resources.QuasigroupDefinitionRequiredMessage);
@@ -26,11 +53,12 @@ public sealed class DammCustomQuasigroupAlgorithm(IDammQuasigroup quasigroup) : 
       }
 
       var interim = 0;
+      var order = _quasigroup.Order;
       var processLength = value.Length;
       for (var index = 0; index < processLength; index++)
       {
          var current = _quasigroup.MapCharacter(value[index]);
-         if (current < 0 || current >= _order)
+         if (current < 0 || current >= order)
          {
             return false;
          }
@@ -50,11 +78,12 @@ public sealed class DammCustomQuasigroupAlgorithm(IDammQuasigroup quasigroup) : 
       }
 
       var interim = 0;
+      var order = _quasigroup.Order;
       var processLength = value.Length;
       for (var index = 0; index < processLength; index++)
       {
          var current = _quasigroup.MapCharacter(value[index]);
-         if (current < 0 || current >= _order)
+         if (current < 0 || current >= order)
          {
             return false;
          }
@@ -73,6 +102,7 @@ public sealed class DammCustomQuasigroupAlgorithm(IDammQuasigroup quasigroup) : 
       }
 
       var interim = 0;
+      var order = _quasigroup.Order;
       var processedDigits = 0;
       var processLength = value.Length - 1;
       for (var index = 0; index < processLength; index++)
@@ -82,7 +112,7 @@ public sealed class DammCustomQuasigroupAlgorithm(IDammQuasigroup quasigroup) : 
             continue;
          }
          var current = _quasigroup.MapCharacter(value[index]);
-         if (current < 0 || current >= _order)
+         if (current < 0 || current >= order)
          {
             return false;
          }
@@ -94,8 +124,10 @@ public sealed class DammCustomQuasigroupAlgorithm(IDammQuasigroup quasigroup) : 
          return false;
       }
 
+      // Handle check character outside of loop to ensure that the mask doesn't
+      // accidentally exclude it.
       var checkDigit = _quasigroup.MapCharacter(value[^1]);
-      if (checkDigit < 0 || checkDigit >= _order)
+      if (checkDigit < 0 || checkDigit >= order)
       {
          return false;
       }

@@ -19,7 +19,7 @@ namespace CheckDigits.Net.GeneralAlgorithms;
 ///   </para>
 ///   <para>
 ///   Will detect all single-digit transcription errors and all two digit 
-///   transpositions of adjacent digits
+///   transpositions of adjacent digits.
 ///   </para>
 /// </remarks>
 public sealed class DammAlgorithm : ISingleCheckDigitAlgorithm, IMaskedCheckDigitAlgorithm

@@ -18,7 +18,7 @@ public interface IMaskedCheckDigitAlgorithm : ICheckDigitAlgorithm
    ///   Mask used to include or exclude characters from the check digit
    ///   calculation. Note that check digit characters are generally located at
    ///   fixed locations (e.g., last character) and the mask is not consulted
-   ///   when considering the check digit character(s).
+   ///   when evaluating the check digit character(s).
    /// </param>
    /// <returns>
    ///   <see langword="true"/> if the check digit(s) contained in

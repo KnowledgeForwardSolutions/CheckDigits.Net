@@ -27,6 +27,7 @@ let us know. Or contribute to the CheckDigits.Net repository: https://github.com
     * [Alphanumeric MOD 97-10 Algorithm](#alphanumeric-mod-97-10-algorithm)
     * [CUSIP Algorithm](#cusip-algorithm)
     * [Damm Algorithm](#damm-algorithm)
+    * [Damm Custom Quasigroup Algorithm](#damm-custom-quasigroup-algorithm)
     * [FIGI (Financial Instrument Global Identifier) Algorithm](#figi-algorithm)
     * [IBAN (International Bank Account Number) Algorithm](#iban-algorithm)
     * [ICAO 9303 Algorithm](#icao-9303-algorithm)
@@ -142,6 +143,7 @@ The ISO/IEC 7064:2003 standard is available at https://www.iso.org/standard/3153
 * [Alphanumeric MOD 97-10 Algorithm](#alphanumeric-mod-97-10-algorithm)
 * [CUSIP Algorithm](#cusip-algorithm)
 * [Damm Algorithm](#damm-algorithm)
+* [Damm Custom Quasigroup Algorithm](#damm-custom-quasigroup-algorithm)
 * [FIGI (Financial Instrument Global Identifier) Algorithm](#figi-algorithm)
 * [IBAN (International Bank Account Number) Algorithm](#iban-algorithm)
 * [ICAO 9303 Algorithm](#icao-9303-algorithm)
@@ -367,7 +369,6 @@ the following algorithms implement `IMaskedCheckDigitAlgorithm`:
 
 **ICheckDigitMask Example:**
 ```C#
-
 // Excludes every 5th character, allowing for spaces or dashes in credit card numbers.
 public class CreditCardMask : ICheckDigitMask
 {
@@ -383,9 +384,108 @@ public class CaSocialInsuranceNumberMask : ICheckDigitMask
 
    public Boolean IncludeCharacter(Int32 index) => index != 3 && index != 7;
 }
-
 ```
+The `IDammQuasigroup` interface is used to define a custom quasigroup table for 
+the [Damm Custom Quasigroup Algorithm](#damm-custom-quasigroup-algorithm). The
+inteface defines methods for mapping a character to its equivalent integer value
+in the quasigroup, retrieving the check character for a particular integer value 
+and an indexer for retrieving the quasigroup value for a particular pair of 
+integer values. You may create your own class that implements `IDammQuasigroup` 
+or you can create an instance of the `DammCustomQuasigroup` class by supplying a 
+two dimensional array of integers that defines the quasigroup table and functions
+for mapping characters to integer values and mapping integer values to check characters.
+`DammCustomQuasigroup` optimizes the indexer for retrieving quasigroup values by 
+flattening the two dimensional array into a one dimensional array and calculating 
+the index for a particular pair of integer values. This takes advantage of .Net's 
+optimization for single dimensional arrays and provides for up to a 30% improvement 
+in performance for the indexer compared to a two dimensional array. `DammCustomQuasigroup`
+also overloads the constructor to allow for the use of a two dimensional array
+characters instead of integers so that you don't have to pre-map the characters 
+to integer values before creating the quasigroup instance. This is useful in cases
+where the character set for the quasigroup contains non-numeric characters.
 
+**IDammQuasigroup Example:**
+```C#
+// This is an implementation of the standard Damm quasigroup specified on page 
+// 111 of Damm's doctoral dissertation.
+
+// Note that the indexer performs no bounds checking because the DammCustomQuasigroupAlgorithm 
+// ensures that the values passed to the indexer are valid for the quasigroup.
+
+// For the MapCharacter function, a value less than zero or >= Order will be treated 
+// as an invalid character by the DammCustomQuasigroupAlgorithm and will cause the 
+// algorithm to return false when validating or calculating check digits.
+
+public class DammQuasigroupOrder10 : IDammQuasigroup
+{
+   private static readonly Int32[,] _quasigroupTable =
+   {
+      { 0, 3, 1, 7, 5, 9, 8, 6, 4, 2, }, 
+      { 7, 0, 9, 2, 1, 5, 4, 8, 6, 3, }, 
+      { 4, 2, 0, 6, 8, 7, 1, 3, 5, 9, }, 
+      { 1, 7, 5, 0, 9, 8, 3, 4, 2, 6, }, 
+      { 6, 1, 2, 3, 0, 4, 5, 9, 7, 8, }, 
+      { 3, 6, 7, 4, 2, 0, 9, 5, 8, 1, }, 
+      { 5, 8, 6, 9, 7, 2, 0, 1, 3, 4, }, 
+      { 8, 9, 4, 5, 3, 6, 2, 0, 1, 7, }, 
+      { 9, 4, 3, 8, 6, 1, 7, 2, 0, 5, }, 
+      { 2, 5, 8, 1, 4, 3, 6, 7, 9, 0, }, 
+   };
+
+   public Int32 this[Int32 interim, Int32 next] => _quasigroupTable[interim, next];
+
+   public Int32 Order => 10;
+
+   public Char GetCheckCharacter(Int32 interim) => (Char)('0' + interim);
+
+   public Int32 MapCharacter(Char ch) => ch - '0';
+```
+**DammCustomQuasigroup Example:**
+```C#
+// Hexadecimal quasigroup. The character set for the quasigroup is 0-9 and A-F 
+// where A=10, B=11, C=12, D=13, E=14 and F=15.
+
+public static Int32 MapCharacter(Char ch) => ch switch
+{
+    var d when ch >= '0' && ch <= '9' => d - '0',
+    var c when ch >= 'A' && ch <= 'F' => c - 'A' + 10,
+    _ => -1
+};
+
+public static Char GetCheckCharacter(Int32 interim) => interim switch
+{
+    var d when interim >= 0 && interim <= 9 => (Char)('0' + interim),
+    var c when interim >= 10 && interim <= 15 => (Char)('A' + c - 10),
+    _ => '\0'
+};
+
+// Note that the quasigroup table is defined as a two dimensional array of characters 
+// instead of integers. The DammCustomQuasigroup constructor will use the supplied 
+// MapCharacter function to create the internal integer quasigroup table from the 
+// supplied character quasigroup table.
+var hexQuasigroup = new DammCustomQuasigroup(
+    new Char[,]
+    {
+        { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' },
+        { 'F', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E' },
+        { 'E', 'F', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D' },
+        { 'D', 'E', 'F', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C' },
+        { 'C', 'D', 'E', 'F', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B' },
+        { 'B', 'C', 'D', 'E', 'F', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A' },
+        { 'A', 'B', 'C', 'D', 'E', 'F', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' },
+        { '9', 'A', 'B', 'C', 'D', 'E', 'F', '0', '1', '2', '3', '4', '5', '6', '7', '8' },
+        { '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', '0', '1', '2', '3', '4', '5', '6', '7' },
+        { '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', '0', '1', '2', '3', '4', '5', '6' },
+        { '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', '0', '1', '2', '3', '4', '5' },
+        { '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', '0', '1', '2', '3', '4' },
+        { '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', '0', '1', '2', '3' },
+        { '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', '0', '1', '2' },
+        { '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', '0', '1' },
+        { '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', '0' },
+    },
+    MapCharacter,
+    GetCheckCharacter);
+```
 ## Algorithm Descriptions
 
 ### ABA RTN Algorithm
@@ -489,6 +589,50 @@ a value formatted with spaces or dashes for human readability).
 * Check digit value - decimal digit ('0' - '9')
 * Check digit location - assumed to be the trailing (right-most) character when validating
 * Class name - `DammAlgorithm`
+
+### Damm Custom Quasigroup Algorithm
+
+#### Description
+
+The Damm Custom algorithm is a generalization of the Damm algorithm that allows 
+for the use of custom quasigroups of different orders, enabling the calculation 
+of check digits for a wider range of input values. To use the Damm Custom algorithm, 
+you must create an instance an object that implements the `IDammQuasigroup` 
+interface, providing a custom quasigroup table and then supply that instance to 
+the constructor of the `DammCustomQuasigroupAlgorithm` class. See [Interfaces](#interfaces) 
+for more information about the `IDammQuasigroup` interface.
+
+For values consisting of decimal digits, the standard `DammAlgorithm` is the 
+recommended option since the quasigroup used by the standard Damm algorithm has been
+shown to have good error detection capabilities for decimal digit strings and since
+the `DammAlgorithm` class is optimized for that particular quasigroup.
+
+Note that the error detection capabilities of the Damm Custom Quasigroup algorithm 
+will depend on the properties of the custom quasigroup provided. Generation of 
+quasigroups with good error detection capabilities is a non-trivial task, but 
+with the advent of AI tools it is easier than before. However it is important to 
+thoroughly test the error detection capabilities of any custom quasigroup used in 
+production.
+
+It is also important to note that there are many different quasigroups of any
+particular order that can be used with the Damm algorithm and that the particular
+quasigroup used to create a check character must also be used to validate that 
+check character. This means that you must clearly document the quasigroup used 
+for a particular value and ensure that the same quasigroup is used for validation,
+especially if the organization issuing the values is different from the organization 
+validating the values.
+
+`DammCustomQuasigroupAlgorithm` implements `IMaskedCheckDigitAlgorithm` and can be used 
+to validate values that are formatted with non-check digit characters (for example,
+a value formatted with spaces or dashes for human readability).
+
+#### Details
+
+* Valid characters - depends on the custom quasigroup
+* Check digit size - one character
+* Check digit value - depends on the custom quasigroup, but will be a character that is valid for the quasigroup
+* Check digit location - assumed to be the trailing (right-most) character when validating
+* Class name - `DammCustomQuasigroupAlgorithm`
 
 #### Links
 
