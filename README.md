@@ -390,19 +390,7 @@ the [Damm Custom Quasigroup Algorithm](#damm-custom-quasigroup-algorithm). The
 inteface defines methods for mapping a character to its equivalent integer value
 in the quasigroup, retrieving the check character for a particular integer value 
 and an indexer for retrieving the quasigroup value for a particular pair of 
-integer values. You may create your own class that implements `IDammQuasigroup` 
-or you can create an instance of the `DammCustomQuasigroup` class by supplying a 
-two dimensional array of integers that defines the quasigroup table and functions
-for mapping characters to integer values and mapping integer values to check characters.
-`DammCustomQuasigroup` optimizes the indexer for retrieving quasigroup values by 
-flattening the two dimensional array into a one dimensional array and calculating 
-the index for a particular pair of integer values. This takes advantage of .Net's 
-optimization for single dimensional arrays and provides for up to a 30% improvement 
-in performance for the indexer compared to a two dimensional array. `DammCustomQuasigroup`
-also overloads the constructor to allow for the use of a two dimensional array
-characters instead of integers so that you don't have to pre-map the characters 
-to integer values before creating the quasigroup instance. This is useful in cases
-where the character set for the quasigroup contains non-numeric characters.
+integer values. 
 
 **IDammQuasigroup Example:**
 ```C#
@@ -440,6 +428,29 @@ public class DammQuasigroupOrder10 : IDammQuasigroup
 
    public Int32 MapCharacter(Char ch) => ch - '0';
 ```
+
+CheckDigits.Net also includes the `DammCustomQuasigroup` class which allows you 
+to create a custom quasigroup by supplying a two dimensional array of integers or 
+characters and functions for mapping characters to integer values and mapping 
+integer values to check characters. The `DammCustomQuasigroup` class will flatten 
+the two dimensional array into a one dimensional array to optimize the indexer for 
+retrieving quasigroup values. This takes advantage of .Net's  optimization for 
+single dimensional arrays and provides for up to a 30% improvement in performance 
+for the indexer compared to a two dimensional array. 
+
+`DammCustomQuasigroup` has the following requirements for the supplied two 
+dimensional array of integers or characters:
+* The array may not be null and must have a length greater than zero.
+* The array must be order 2 (i.e. a minimum of 2 rows and 2 columns).
+* The array must be square (i.e. the number of rows must equal the number of columns).
+* The array must have a zero diagonal (i.e. all values where the row index equals the column index must have an integer value zero).
+* The integer values in the array must be greater than or equal to zero and less than the order of the quasigroup (i.e. the number of rows/columns)
+* The array must be a Latin square (i.e. each integer value must occur exactly once in each row and exactly once in each column).
+
+If using a two dimensional array of characters instead of integers, the constructor
+will use the supplied MapCharacter function to create the internal integer quasigroup 
+table from the supplied character quasigroup table.
+
 **DammCustomQuasigroup Example:**
 ```C#
 // Hexadecimal quasigroup. The character set for the quasigroup is 0-9 and A-F 
@@ -459,10 +470,10 @@ public static Char GetCheckCharacter(Int32 interim) => interim switch
     _ => '\0'
 };
 
-// Note that the quasigroup table is defined as a two dimensional array of characters 
-// instead of integers. The DammCustomQuasigroup constructor will use the supplied 
-// MapCharacter function to create the internal integer quasigroup table from the 
-// supplied character quasigroup table.
+// Note that this is a quasigroup which uses a simple shift pattern for the values. 
+// It is only being used as an example of how to create a custom quasigroup and 
+// you should not use this quasigroup for production purposes without first analyzing 
+// the error detection capabilities of the quasigroup for your particular use case.
 var hexQuasigroup = new DammCustomQuasigroup(
     new Char[,]
     {
@@ -594,15 +605,15 @@ a value formatted with spaces or dashes for human readability).
 
 #### Description
 
-The Damm Custom algorithm is a generalization of the Damm algorithm that allows 
+The Damm Custom Quasigroup algorithm is a generalization of the Damm algorithm that allows 
 for the use of custom quasigroups of different orders, enabling the calculation 
-of check digits for a wider range of input values. To use the Damm Custom algorithm, 
+of check digits for a wider range of input values. To use the Damm Custom Quasigroup algorithm, 
 you must create an instance an object that implements the `IDammQuasigroup` 
 interface, providing a custom quasigroup table and then supply that instance to 
 the constructor of the `DammCustomQuasigroupAlgorithm` class. See [Interfaces](#interfaces) 
 for more information about the `IDammQuasigroup` interface.
 
-For values consisting of decimal digits, the standard `DammAlgorithm` is the 
+**Note:** For values consisting of decimal digits, the standard `DammAlgorithm` is the 
 recommended option since the quasigroup used by the standard Damm algorithm has been
 shown to have good error detection capabilities for decimal digit strings and since
 the `DammAlgorithm` class is optimized for that particular quasigroup.
@@ -610,7 +621,7 @@ the `DammAlgorithm` class is optimized for that particular quasigroup.
 Note that the error detection capabilities of the Damm Custom Quasigroup algorithm 
 will depend on the properties of the custom quasigroup provided. Generation of 
 quasigroups with good error detection capabilities is a non-trivial task, but 
-with the advent of AI tools it is easier than before. However it is important to 
+with the advent of AI tools, it is easier than before. However it is important to 
 thoroughly test the error detection capabilities of any custom quasigroup used in 
 production.
 
@@ -637,6 +648,8 @@ a value formatted with spaces or dashes for human readability).
 #### Links
 
 Wikipedia: https://en.wikipedia.org/wiki/Damm_algorithm
+
+See also: [Damm Algorithm](#damm-algorithm) for the standard implementation for decimal digits
 
 ### FIGI Algorithm
 

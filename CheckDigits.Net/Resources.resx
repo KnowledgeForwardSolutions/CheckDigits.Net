@@ -396,4 +396,10 @@
   <data name="QuasigroupTableColumnContainsDuplicateValues" xml:space="preserve">
     <value>Invalid quasigroup - column contains duplicate entries</value>
   </data>
+  <data name="EmptyQuasigroupTableMessage" xml:space="preserve">
+    <value>Quasigroup may not be empty</value>
+  </data>
+  <data name="QuasigroupMinimumOrder2Message" xml:space="preserve">
+    <value>Quasigroup minimum order is 2 (i.e. 2x2 matrix)</value>
+  </data>
 </root>

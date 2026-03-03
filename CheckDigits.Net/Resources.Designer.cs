@@ -169,6 +169,15 @@ namespace CheckDigits.Net {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Quasigroup may not be empty.
+        /// </summary>
+        internal static string EmptyQuasigroupTableMessage {
+            get {
+                return ResourceManager.GetString("EmptyQuasigroupTableMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to FIGI Algorithm.
         /// </summary>
         internal static string FigiAlgorithmDescription {
@@ -795,6 +804,15 @@ namespace CheckDigits.Net {
         internal static string QuasigroupDefinitionRequiredMessage {
             get {
                 return ResourceManager.GetString("QuasigroupDefinitionRequiredMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Quasigroup minimum order is 2 (i.e. 2x2 matrix).
+        /// </summary>
+        internal static string QuasigroupMinimumOrder2Message {
+            get {
+                return ResourceManager.GetString("QuasigroupMinimumOrder2Message", resourceCulture);
             }
         }
         

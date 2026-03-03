@@ -44,8 +44,9 @@ public sealed class DammCustomQuasigroup : IDammQuasigroup
    /// </exception>
    /// <exception cref="ArgumentException">
    ///   <paramref name="quasigroupTable"/> is not a valid quasigroup table 
-   ///   (e.g., not square, contains duplicate values in rows/columns, or has 
-   ///   diagonal elements that are not zero).
+   ///   (e.g., is empty, has order less than 2 (2x2 matrix minimum), not square, 
+   ///   contains duplicate values in rows/columns, or has diagonal elements 
+   ///   that are not zero).
    /// </exception>
    public DammCustomQuasigroup(
       Int32[,] quasigroupTable,
@@ -68,7 +69,7 @@ public sealed class DammCustomQuasigroup : IDammQuasigroup
       if (getCheckCharacter == null)
       {
          throw new ArgumentNullException(nameof(getCheckCharacter));
-       }
+      }
       #endif
       ValidateQuasigroupTable(quasigroupTable);
 
@@ -122,11 +123,7 @@ public sealed class DammCustomQuasigroup : IDammQuasigroup
    public Int32 this[Int32 interim, Int32 next] => _quasigroupTable[(interim * Order) + next];
 
    /// <inheritdoc/>
-   #if NET8_0_OR_GREATER
-   public Int32 Order { get; private init; }
-   #else
    public Int32 Order { get; private set; }
-   #endif
 
    /// <inheritdoc/>
    public Char GetCheckCharacter(Int32 interim) => _getCheckCharacter(interim);
@@ -173,8 +170,14 @@ public sealed class DammCustomQuasigroup : IDammQuasigroup
       {
          throw new ArgumentNullException(nameof(mapCharacter));
       }
+      var rows = quasigroupTable.GetLength(0);
+      var columns = quasigroupTable.GetLength(1);
+      if (rows != columns)
+      {
+         throw new ArgumentException(Resources.SquareQuasigroupTableRequired, nameof(quasigroupTable));
+      }
 
-      var order = quasigroupTable.GetLength(0);
+      var order = rows;
       var intTable = new Int32[order, order];
       for (var row = 0; row < order; row++)
       {
@@ -197,12 +200,24 @@ public sealed class DammCustomQuasigroup : IDammQuasigroup
    /// </remarks>
    private static void ValidateQuasigroupTable(Int32[,] quasigroupTable)
    {
-      // Validate dimensions are same (square table).
+      // Check for empty table.
+      if (quasigroupTable.Length == 0 )
+      {
+         throw new ArgumentException(Resources.EmptyQuasigroupTableMessage, nameof(quasigroupTable));
+      }
+
+      // Validate dimensions nd are same (square table) and that the minimum
+      // order is 2 (since a quasigroup of order 1 is trivial and not useful for
+      // check digit calculations).
       var rows = quasigroupTable.GetLength(0);
       var columns = quasigroupTable.GetLength(1);
       if (rows != columns)
       {
          throw new ArgumentException(Resources.SquareQuasigroupTableRequired, nameof(quasigroupTable));
+      }
+      if (rows < 2)
+      {
+         throw new ArgumentException(Resources.QuasigroupMinimumOrder2Message, nameof(quasigroupTable));
       }
 
       // Validate diagonal elements are all zero.
