@@ -21,7 +21,20 @@ let us know. Or contribute to the CheckDigits.Net repository: https://github.com
 - **[Supported Algorithms](#supported-algorithms)**
 - **[Value/Identifier Types and Associated Algorithms](#valueidentifier-types-and-associated-algorithms)**
 - **[Using CheckDigits.Net](#using-checkdigits.net)**
-- **[Interfaces](#interfaces)**
+- **[Interfaces and Extension Points](#interfaces-and-extension-points)**
+    * [ICheckDigitAlgorithm](#icheckdigitalgorithm)
+    * [ISingleCheckDigitAlgorithm](#isinglecheckdigitalgorithm)
+    * [IDoubleCheckDigitAlgorithm](#idoublecheckdigitalgorithm)
+    * [IMaskedCheckDigitAlgorithm](#imaskedcheckdigitalgorithm)
+    * [ICheckDigitMask](#icheckdigitmask)
+    * [Iso7064PureSystemSingleCharacterAlgorithm](#iso7064puresystemsinglecharacteralgorithm)
+    * [Iso7064PureSystemDoubleCharacterAlgorithm](#iso7064puresystemdoublecharacteralgorithm)
+    * [Iso7064HybridSystemAlgorithm](#iso7064hybridsystemalgorithm)
+    * [IAlphabet](#ialphabet)
+    * [ISupplementalCharacterAlphabet](#isupplementalcharacteralphabet)
+    * [DammCustomQuasigroupAlgorithm](#dammcustomquasigroupalgorithm)
+    * [IDammQuasigroup](#idammquasigroup)
+    * [DammCustomQuasigroup](#dammcustomquasigroup)
 - **[Algorithm Descriptions](#algorithm-descriptions)**
     * [ABA RTN (Routing Transit Number) Algorithm](#aba-rtn-algorithm)
     * [Alphanumeric MOD 97-10 Algorithm](#alphanumeric-mod-97-10-algorithm)
@@ -124,16 +137,9 @@ While CheckDigits.Net provides optimized implementations of all of the algorithm
 defined in the ISO/IEC 7064 standard, the standard is flexible enough to support
 the creation of algorithms for custom alphabets. For example, Annex B of the 
 ISO/IEC 7064 standard demonstrates the creation of a system for the Danish 
-alphabet which includes three additional characters. 
-
-CheckDigits.Net includes three classes to support custom alphabets:
-
-* `Iso7064PureSystemSingleCharacterAlgorithm` (generates a single check character, including a supplementary character)
-* `Iso7064PureSystemDoubleCharacterAlgorithm` (generates two check characters)
-* `Iso7064HybridSystemAlgorithm` (generates a single check character)
-
-Refer to [Using CheckDigits.Net](#using-checkdigits.net) for more information
-about using these classes.
+alphabet which includes three additional characters. See the section on 
+[Interfaces and Extension Points](#interfaces-and-extension-points) for more 
+information about how to create custom algorithms for custom alphabets.
 
 The ISO/IEC 7064:2003 standard is available at https://www.iso.org/standard/31531.html
 
@@ -255,26 +261,174 @@ var toValidate = "1234567890123452";
 var isValid = lazy.Validate(toValidate);    // Returns true
 ```
 
-**Custom Alphabets for ISO 7064**
+## Interfaces and Extension Points
 
-The three classes that allow the use of custom alphabets are:
+### ICheckDigitAlgorithm
 
-* `Iso7064PureSystemSingleCharacterAlgorithm` (generates a single check character, including a supplementary character)
-* `Iso7064PureSystemDoubleCharacterAlgorithm` (generates two check characters)
-* `Iso7064HybridSystemAlgorithm` (generates a single check character)
+Every algorithm in CheckDigits.Net implements the `ICheckDigitAlgorithm` interface 
+which defines the following members:
 
-To use one of these classes you must first create an instance of a class that 
-implements `IAlphabet` or `ISupplementalCharacterAlphabet`. Then you 
-create an instance of the desired generic ISO 7064 class, supplying the algorithm 
-details (including the alphabet) to the class constructor.
+* `String AlgorithmDescription { get; }` - Gets a description of the algorithm.
+* `String AlgorithmName { get; }` - Gets the name of the algorithm.
+* `Boolean Validate(String value)` - Validates a value that contains a check digit.
 
-The custom Danish alphabet check algorithm covered in Annex B of the ISO/IEC 7064 
-standard, uses a pure system algorithm that generates two check characters and 
-has a modulus = 29 and radix = 2.
+The Validate method will return true if the value contains a valid check digit 
+according to the algorithm and false otherwise. Mal-formed input such as a null 
+value, an empty string, a string of incorrect length or a string that contains 
+characters that are not valid for the algorithm will return false instead of 
+throwing an exception.
 
-**Danish Alphabet Example**
+### ISingleCheckDigitAlgorithm
 
+Algorithms that use a single character check digit can also implement the 
+`ISingleCheckDigitAlgorithm` interface which defines the following member in 
+addition to those defined in `ICheckDigitAlgorithm`:
+
+* `Boolean TryCalculateCheckDigit(String value, out Char checkDigit)` - Calculates the check digit for a value that does not already contain a check digit.
+
+The TryCalculateCheckDigit method will return true if the check digit was 
+successfully calculated and false otherwise. If the method returns true, the out 
+parameter will contain the calculated check digit. If the method returns false, 
+the out parameter will contain '\0'. Mal-formed input such as a null value, an 
+empty string, a string of incorrect length or a string that contains characters 
+that are not valid for the algorithm will return false instead of throwing an 
+exception.
+
+`ISingleCheckDigitAlgorithm` is not implemented for algorithms for government 
+issued identifiers (for example, UK NHS numbers and US NPI numbers) or values 
+issued by a single authority (such as ABA Routing Transit Numbers).
+
+### IDoubleCheckDigitAlgorithm
+
+Algorithms that use two character check digits can also implement the 
+`IDoubleCheckDigitAlgorithm` interface which defines the following member in 
+addition to those defined in `ICheckDigitAlgorithm`:
+
+* `Boolean TryCalculateCheckDigits(String value, out Char firstCheckDigit, out Char secondCheckDigit)` - Calculates the two check digits for a value that does not already contain check digits.
+
+The TryCalculateCheckDigits method will return true if the check digit was 
+successfully calculated and false otherwise. If the method returns true, the out 
+parameters will contain the calculated check digits. If the method returns false, 
+the out parameters will contain '\0'. Mal-formed input such as a null value, an 
+empty string, a string of incorrect length or a string that contains characters 
+that are not valid for the algorithm will return false instead of throwing an 
+exception.
+
+`IDoubleCheckDigitAlgorithm` is not implemented for algorithms for government 
+issued identifiers (for example, UK NHS numbers and US NPI numbers) or values 
+issued by a single authority (such as ABA Routing Transit Numbers).
+
+### IMaskedCheckDigitAlgorithm
+
+Algorithms that implement the `IMaskedCheckDigitAlgorithm` interface support an 
+overload of the Validate method that accepts an [ICheckDigitMask](#icheckdigitmask) instance that 
+is used to filter characters from the value being checked. Currently the 
+following algorithms implement `IMaskedCheckDigitAlgorithm`:
+
+* [Damm Algorithm](#damm-algorithm)
+* [Damm Custom Quasigroup Algorithm](#damm-custom-quasigroup-algorithm)
+* [Luhn Algorithm](#luhn-algorithm)
+* [Modulus10_13 Algorithm (UPC/EAN/ISBN-13/etc.)](#modulus10_13-algorithm)
+* [Modulus11_27Decimal Algorithm](#modulus11_27decimal-algorithm)
+* [Modulus11_27Extended Algorithm](#modulus11_27extended-algorithm)
+* [Modulus11Decimal Algorithm (NHS Number/etc.)](#modulus11decimal-algorithm)
+* [Modulus11Extended Algorithm (ISBN-10/ISSN/etc.)](#modulus11extended-algorithm)
+
+### ICheckDigitMask
+
+To support filtering characters from the value being checked, CheckDigits.Net 
+defines the `ICheckDigitMask` interface which has the following members:
+
+* `Boolean IncludeCharacter(Int32 index)` - Returns true if the character at the specified zero based index should be included when calculating the check digit.
+* `Boolean ExcludeCharacter(Int32 index)` - Returns true if the character at the specified zero based index should be excluded when calculating the check digit.
+
+Here are example implementations of `ICheckDigitMask`:
+```C#
+// Excludes every 5th character, allowing for spaces or dashes in credit card numbers.
+public class CreditCardMask : ICheckDigitMask
+{
+   public Boolean ExcludeCharacter(Int32 index) => (index + 1) % 5 == 0;
+
+   public Boolean IncludeCharacter(Int32 index) => (index + 1) % 5 != 0;
+}
+
+// Excludes the 4th and 8th characters from Canadian Social Insurance Numbers which breaks the SIN into groups of three digits.
+public class CaSocialInsuranceNumberMask : ICheckDigitMask
+{
+   public Boolean ExcludeCharacter(Int32 index) => index == 3 || index == 7;
+
+   public Boolean IncludeCharacter(Int32 index) => index != 3 && index != 7;
+}
 ```
+### Iso7064PureSystemSingleCharacterAlgorithm
+
+If you want to use an ISO 7064 algorithm that uses a modulus and radix and a 
+single check digit, but you require a custom alphabet, then you can use the 
+`Iso7064PureSystemSingleCharacterAlgorithm` class. Note that ISO 7064 pure system 
+algorithms that generate a single check character can generate a check character 
+that is either one of the valid input characters or a single supplementary 
+character that is only valid as a check digit. To use `Iso7064PureSystemSingleCharacterAlgorithm`
+you must first create an instance of a class that implements 
+[ISupplementalCharacterAlphabet](#isupplementalcharacteralphabet) to define your
+custom alphabet. You then create an instance of 
+`Iso7064PureSystemSingleCharacterAlgorithm` by supplying the algorithm name, 
+algorithm description, modulus, radix and the custom alphabet instance to the 
+class constructor. `Iso7064PureSystemSingleCharacterAlgorithm` implements the
+[ISingleCheckDigitAlgorithm](#isinglecheckdigitalgorithm) interface so you can 
+use the TryCalculateCheckDigit method to calculate the check digit for values 
+that use the custom alphabet and the Validate method to validate values that 
+contain a check digit.
+
+### Iso7064PureSystemDoubleCharacterAlgorithm
+
+If you want to use an ISO 7064 algorithm that uses a modulus and radix and 
+generates two check characters, but you require a custom alphabet, then you can 
+use the `Iso7064PureSystemDoubleCharacterAlgorithm` class. Since ISO 7064 pure 
+system algorithms that generate two check characters will only generate check 
+characters that are valid input characters, so you only need to create an 
+instance of a class that implements [IAlphabet](#ialphabet) to define your custom 
+alphabet. You then create an instance of `Iso7064PureSystemDoubleCharacterAlgorithm` 
+by supplying the algorithm name, algorithm description, modulus, radix and the 
+custom alphabet instance to the class constructor. `Iso7064PureSystemDoubleCharacterAlgorithm` 
+implements the [IDoubleCheckDigitAlgorithm](#idoublecheckdigitalgorithm) interface 
+so you can use the TryCalculateCheckDigits method to calculate the check digits 
+for values that use the custom alphabet and the Validate method to validate values 
+that contain check digits.
+
+### Iso7064HybridSystemAlgorithm
+
+If you want to use an ISO 7064 algorithm that uses two modulus values (M and M+1) 
+and generates a single check digit, but you require a custom alphabet, then you 
+can use the `Iso7064HybridSystemAlgorithm` class. ISO 7064 hybrid system algorithms 
+that generate a single check character will only generate check characters that 
+are valid input characters, so you only need to create an instance of a class 
+that implements [IAlphabet](#ialphabet) to define your custom alphabet. You then 
+create an instance of `Iso7064HybridSystemAlgorithm` by supplying the algorithm 
+name, algorithm description, modulus M and the custom alphabet instance to the 
+class constructor. `Iso7064HybridSystemAlgorithm` implements the
+[ISingleCheckDigitAlgorithm](#isinglecheckdigitalgorithm) interface so you can 
+use the TryCalculateCheckDigit method to calculate the check digit for values 
+that use the custom alphabet and the Validate method to validate values that 
+contain a check digit.
+
+### IAlphabet
+
+Use the `IAlphabet` interface to define a custom alphabet for ISO 7064 algorithms
+that generate check characters that are valid input characters. `IAlphabet` defines
+the following methods for mapping characters to their integer equivalents and vice versa:
+
+* `Int32 CharacterToInteger(Char ch)` - Maps a character in the value being processed to its integer equivalent. A value less than zero indicates an invalid character.
+* `Char IntegerToCheckCharacter(Int32 value)` - Maps a calculated check digit to its character equivalent.
+
+The ISO/IEC 7064 standard includes an example of a custom alphabet for the 
+Danish alphabet which includes three additional characters in Annex B of the 
+standard. Here is an implementation of that example using the `IAlphabet` 
+interface to create an instance of 'Iso7064PureSystemDoubleCharacterAlgorithm' 
+with the custom Danish alphabet. The Annex B example uses modulus = 29 and 
+radix = 2, so the algorithm will generate two check characters and the valid 
+input characters will be mapped to the integer values 0-28.
+
+```C#
 public class DanishAlphabet : IAlphabet
 {
    // Additional characters:
@@ -311,92 +465,43 @@ var successful = checkAlgorithm.TryCalculateCheckDigits(str, out var firstChar, 
 // Validate a value containing check digit(s).
 var isValid = checkAlgorithm.Validate("S\u00D8STERDA");     // Returns true
 ```
+### ISupplementalCharacterAlphabet
 
-## Interfaces
+Use the `ISupplementalCharacterAlphabet` interface to define a custom alphabet 
+for ISO 7064 algorithms that generate a single check character that can be either 
+a valid input character or a single supplementary character that is only valid 
+as a check digit. `ISupplementalCharacterAlphabet` extends the `IAlphabet` 
+interface by adding the following method:
 
-A check digit algorithm is a class that implements two different interfaces. Every
-algorithm implements `ICheckDigitAlgorithm` which has properties for getting
-the algorithm name and algorithm description and a Validate method that accepts 
-a string and returns a boolean value that indicates if the string contains a valid
-check digit. Mal-formed input such as a null value, an empty string,
-a string of incorrect length or a string that contains characters that are not
-valid for the algorithm will return false instead of throwing an exception.
+* `Int32 CheckCharacterToInteger(Char ch)` - Maps a check character to its integer equivalent. A value less than zero indicates an invalid character.
 
-Check digit algorithms that use a single character also implement 
-`ISingleCheckDigitAlgorithm` which has a TryCalculateCheckDigit method that
-accepts a string value and an out parameter which will contain the calculated 
-check digit or '\0' if it was not possible to calculate the check digit.
-TryCalculateCheckDigit also returns a boolean value that indicates if the check
-digit was calculated or not. As with the Validate method, mal-formed input such 
-as a null value, an empty string, a string of incorrect length or a string that 
-contains characters that are not valid for the algorithm will return false instead 
-of throwing an exception.
+### DammCustomQuasigroupAlgorithm
 
-Check digit algorithms that use two character check digits also implement
-`IDoubleCheckDigitAlgorithm`. This interface has a TryCalculateCheckDigits
-method that has two output parameters, one for each check digit.
+To use the Damm algorithm for values other than numeric strings, you can use the
+`DammCustomQuasigroupAlgorithm` class. You define the set of valid characters 
+and the quasigroup required by the algorithm by implementing the [IDammQuasigroup](#idammquasigroup) 
+interface. You then create an instance of `DammCustomQuasigroupAlgorithm` by 
+supplying an instance of your [IDammQuasigroup](#idammquasigroup) implementation to the class 
+constructor. `DammCustomQuasigroupAlgorithm` implements the
+[ISingleCheckDigitAlgorithm](#isinglecheckdigitalgorithm) interface so you can 
+use the TryCalculateCheckDigit method to calculate the check digit for values 
+that use the custom alphabet and the Validate method to validate values that 
+contain a check digit.
 
-Note that `ISingleCheckDigitAlgorithm` and `IDoubleCheckDigitAlgorithm`
-are not implemented for algorithms for government issued identifiers (for example,
-UK NHS numbers and US NPI numbers) or values issued by a single authority (such
-as ABA Routing Transit Numbers).
+### IDammQuasigroup
 
-The `IAlphabet` and `ISupplementalCharacterAlphabet` interfaces are used 
-for ISO/IEC 7064 algorithms with custom alphabets. `IAlphabet` has two 
-methods: CharacterToInteger, which maps a character in the value being processed 
-to its integer equivalent and IntegerToCheckCharacter which maps a calculated 
-check digit to its character equivalent. `ISupplementalCharacterAlphabet` 
-extends `IAlphabet` by adding the CheckCharacterToInteger method which maps 
-a check character to its integer equivalent. `ISupplementalCharacterAlphabet`
-is only used by `Iso7064PureSystemSingleCharacterAlgorithm`.
-
-The `ICheckDigitMask` interface is used to define a mask that filters out 
-characters from the value being checked. `ICheckDigitMask` defines 
-IncludeCharacter and ExcludeCharacter methods that return true/false to indicate
-if a character at a particular zero based index should be included or excluded
-when calculating the check digit.
-
-The `IMaskedCheckDigitAlgorithm` is derived from `ICheckDigitAlgorithm`
-and defines an overload for the Validate method that accepts an `ICheckDigitMask` 
-instance that is used to filter characters from the value being checked. Currently
-the following algorithms implement `IMaskedCheckDigitAlgorithm`:
-* [Luhn Algorithm](#luhn-algorithm)
-* [Modulus10_13 Algorithm](#modulus10_13-algorithm)
-* [Modulus11_27Decimal Algorithm](#modulus11_27decimal-algorithm)
-* [Modulus11_27Extended Algorithm](#modulus11_27extended-algorithm)
-* [Modulus11Decimal Algorithm](#modulus11decimal-algorithm)
-* [Modulus11Extended Algorithm](#modulus11extended-algorithm)
-
-**ICheckDigitMask Example:**
-```C#
-// Excludes every 5th character, allowing for spaces or dashes in credit card numbers.
-public class CreditCardMask : ICheckDigitMask
-{
-   public Boolean ExcludeCharacter(Int32 index) => (index + 1) % 5 == 0;
-
-   public Boolean IncludeCharacter(Int32 index) => (index + 1) % 5 != 0;
-}
-
-// Excludes the 4th and 8th characters from Canadian Social Insurance Numbers which breaks the SIN into groups of three digits.
-public class CaSocialInsuranceNumberMask : ICheckDigitMask
-{
-   public Boolean ExcludeCharacter(Int32 index) => index == 3 || index == 7;
-
-   public Boolean IncludeCharacter(Int32 index) => index != 3 && index != 7;
-}
-```
-The `IDammQuasigroup` interface is used to define a custom quasigroup table for 
+The `IDammQuasigroup` interface is used to define a custom quasigroup table for
 the [Damm Custom Quasigroup Algorithm](#damm-custom-quasigroup-algorithm). The
-inteface defines methods for mapping a character to its equivalent integer value
-in the quasigroup, retrieving the check character for a particular integer value 
-and an indexer for retrieving the quasigroup value for a particular pair of 
-integer values. 
+interface defines the following members:
 
-**IDammQuasigroup Example:**
+* `Int32 MapCharacter(Char ch)` - Maps a character to its equivalent integer value in the quasigroup. A value less than zero or greater than or equal to the order of the quasigroup indicates an invalid character.
+* `Char GetCheckCharacter(Int32 value)` - Retrieves the check character for a particular integer value in the quasigroup.
+* `Int32 this[Int32 row, Int32 column] { get; }` - An indexer for retrieving the quasigroup value for a particular pair of integer values.
+* `Int32 Order { get; }` - Gets the order of the quasigroup, which is the number of valid characters in the quasigroup.
+
+This is an example implementation of `IDammQuasigroup`: which defines the standard 
+Damm quasigroup specified on page 111 of Damm's doctoral dissertation.
 ```C#
-// This is an implementation of the standard Damm quasigroup specified on page 
-// 111 of Damm's doctoral dissertation.
-
 // Note that the indexer performs no bounds checking because the DammCustomQuasigroupAlgorithm 
 // ensures that the values passed to the indexer are valid for the quasigroup.
 
@@ -428,10 +533,13 @@ public class DammQuasigroupOrder10 : IDammQuasigroup
 
    public Int32 MapCharacter(Char ch) => ch - '0';
 ```
+### DammCustomQuasigroup
 
-CheckDigits.Net also includes the `DammCustomQuasigroup` class which allows you 
-to create a custom quasigroup by supplying a two dimensional array of integers or 
-characters and functions for mapping characters to integer values and mapping 
+Instead of creating your own implementation of [IDammQuasigroup](#idammquasigroup), 
+you can create an instance of the `DammCustomQuasigroup` class which implements the 
+`IDammQuasigroup` interface. To create an instance of `DammCustomQuasigroup`, you 
+define the quasigroup table as a two dimensional array of integers or characters 
+and supply the appropriate mapping functions for characters to integer values and 
 integer values to check characters. The `DammCustomQuasigroup` class will flatten 
 the two dimensional array into a one dimensional array to optimize the indexer for 
 retrieving quasigroup values. This takes advantage of .Net's  optimization for 
@@ -448,10 +556,11 @@ dimensional array of integers or characters:
 * The array must be a Latin square (i.e. each integer value must occur exactly once in each row and exactly once in each column).
 
 If using a two dimensional array of characters instead of integers, the constructor
-will use the supplied MapCharacter function to create the internal integer quasigroup 
+will use the supplied `MapCharacter` function to create the internal integer quasigroup 
 table from the supplied character quasigroup table.
 
-**DammCustomQuasigroup Example:**
+Here is an example of creating a `DammCustomQuasigroup` using a two dimensional 
+array of characters and mapping functions for a hexadecimal quasigroup. 
 ```C#
 // Hexadecimal quasigroup. The character set for the quasigroup is 0-9 and A-F 
 // where A=10, B=11, C=12, D=13, E=14 and F=15.
@@ -470,7 +579,7 @@ public static Char GetCheckCharacter(Int32 interim) => interim switch
     _ => '\0'
 };
 
-// Note that this is a quasigroup which uses a simple shift pattern for the values. 
+// Note that this is quasigroup uses a simple shift pattern for the values. 
 // It is only being used as an example of how to create a custom quasigroup and 
 // you should not use this quasigroup for production purposes without first analyzing 
 // the error detection capabilities of the quasigroup for your particular use case.
@@ -589,7 +698,7 @@ of the multiple tables used by Verhoeff. The implementation of the Damm algorith
 provided by CheckDigits.Net uses the table generated from the quasigroup specified
 on page 111 of Damm's doctoral dissertation.
 
-`DammAlgorithm` implements `IMaskedCheckDigitAlgorithm` and can be used 
+`DammAlgorithm` implements [IMaskedCheckDigitAlgorithm](#idoublecheckdigitalgorithm) and can be used 
 to validate values that are formatted with non-check digit characters (for example,
 a value formatted with spaces or dashes for human readability).
 
@@ -608,10 +717,11 @@ a value formatted with spaces or dashes for human readability).
 The Damm Custom Quasigroup algorithm is a generalization of the Damm algorithm that allows 
 for the use of custom quasigroups of different orders, enabling the calculation 
 of check digits for a wider range of input values. To use the Damm Custom Quasigroup algorithm, 
-you must create an instance an object that implements the `IDammQuasigroup` 
-interface, providing a custom quasigroup table and then supply that instance to 
-the constructor of the `DammCustomQuasigroupAlgorithm` class. See [Interfaces](#interfaces) 
-for more information about the `IDammQuasigroup` interface.
+you must create an object that implements the [IDammQuasigroup](#idammquasigroup) 
+interface, providing a custom quasigroup table and then supply that object to 
+the constructor of the `DammCustomQuasigroupAlgorithm` class. You can also use the 
+helper [DammCustomQuasigroup](#dammcustomquasigroup) class to create an instance
+of `IDammQuasigroup`.
 
 **Note:** For values consisting of decimal digits, the standard `DammAlgorithm` is the 
 recommended option since the quasigroup used by the standard Damm algorithm has been
@@ -633,7 +743,7 @@ for a particular value and ensure that the same quasigroup is used for validatio
 especially if the organization issuing the values is different from the organization 
 validating the values.
 
-`DammCustomQuasigroupAlgorithm` implements `IMaskedCheckDigitAlgorithm` and can be used 
+`DammCustomQuasigroupAlgorithm` implements [IMaskedCheckDigitAlgorithm](#idoublecheckdigitalgorithm) and can be used 
 to validate values that are formatted with non-check digit characters (for example,
 a value formatted with spaces or dashes for human readability).
 
@@ -1172,7 +1282,7 @@ Peter Luhn. It can detect all single digit transcription errors and most two dig
 transposition errors except *09 -> 90* and vice versa. It can also detect most
 twin errors (i.e. *11 <-> 44*) except *22 <-> 55*,  *33 <-> 66* and *44 <-> 77*.
 
-`LuhnAlgorithm` implements `IMaskedCheckDigitAlgorithm` and can be used 
+`LuhnAlgorithm` implements [IMaskedCheckDigitAlgorithm](#idoublecheckdigitalgorithm) and can be used 
 to validate values that are formatted with non-check digit characters (for example,
 a credit card number formatted with spaces or dashes).
 
@@ -1248,7 +1358,7 @@ all single digit transcription errors and ~89% of two digit transposition errors
 (except where the transposed digits have a difference of 5, i.e. *1 <-> 6*, *2 <-> 7*,
 etc.). The algorithm cannot detect two digit jump transpositions.
 
-`Modulus10_13Algorithm` implements `IMaskedCheckDigitAlgorithm` and can be used 
+`Modulus10_13Algorithm` implements [IMaskedCheckDigitAlgorithm](#idoublecheckdigitalgorithm) and can be used 
 to validate values that are formatted with non-check digit characters (for example,
 a value formatted with spaces or dashes for human readability).
 
@@ -1334,6 +1444,10 @@ The Modulus11_27Decimal algorithm takes the latter approach and the `TryCalculat
 and `Validate` methods return false if the value would require a non-digit check
 character.
 
+`Modulus11_27DecimalAlgorithm` implements [IMaskedCheckDigitAlgorithm](#idoublecheckdigitalgorithm) and can be used 
+to validate values that are formatted with non-check digit characters (for example,
+a value formatted with spaces or dashes for human readability).
+
 #### Details
 
 * Valid characters - decimal digits ('0' - '9')
@@ -1375,6 +1489,10 @@ possible values must be rejected, or approximately 9.09% of all values.
 The Modulus11_27Extended algorithm takes the former approach and the `TryCalculateCheckDigit`
 and `Validate` allow values that include 'X' as an extended check character.
 
+`Modulus11_27ExtendedAlgorithm` implements [IMaskedCheckDigitAlgorithm](#idoublecheckdigitalgorithm) and can be used 
+to validate values that are formatted with non-check digit characters (for example,
+a value formatted with spaces or dashes for human readability).
+
 #### Details
 
 * Valid characters - decimal digits ('0' - '9')
@@ -1407,6 +1525,10 @@ character.
 
 Modulus11Decimal is a generalized version of the NhsAlgorithm which drops the
 fixed 10 character length required by NhsAlgorithm.
+
+`Modulus11DecimalAlgorithm` implements [IMaskedCheckDigitAlgorithm](#idoublecheckdigitalgorithm) and can be used 
+to validate values that are formatted with non-check digit characters (for example,
+a value formatted with spaces or dashes for human readability).
 
 #### Details
 
@@ -1447,6 +1569,10 @@ possible values must be rejected, or approximately 9.09% of all values.
 The Modulus11Extended algorithm takes the former approach and the `TryCalculateCheckDigit`
 and `Validate` allow values that include 'X' as an extended check character.
 
+`Modulus11ExtendedAlgorithmn` implements [IMaskedCheckDigitAlgorithm](#idoublecheckdigitalgorithm) and can be used 
+to validate values that are formatted with non-check digit characters (for example,
+a value formatted with spaces or dashes for human readability).
+
 Modulus11Extended replaces the deprecated Modulus11 algorithm.
 
 #### Details
@@ -1456,7 +1582,7 @@ Modulus11Extended replaces the deprecated Modulus11 algorithm.
 * Check digit value - either decimal digit ('0' - '9') or an uppercase 'X'
 * Check digit location - assumed to be the trailing (right-most) character when validating
 * Max length - 9 characters when generating a check digit; 10 characters when validating
-* Class name - `Modulus11Extended`
+* Class name - `Modulus11ExtendedAlgorithmn`
 
 #### Common Applications
 
@@ -2287,6 +2413,7 @@ Additional included algorithms:
 * Modulus11Extended Algorithm
 * Modulus11_27Decimal Algorithm
 * Modulus11_27Extended Algorithm
+* DammCustomQuasigroup Algorithm
 
 Added masked validation support to the following algorithms:
 * Damm Algorithm
