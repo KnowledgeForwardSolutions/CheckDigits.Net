@@ -21,7 +21,7 @@ let us know. Or contribute to the CheckDigits.Net repository: https://github.com
 - **[Supported Algorithms](#supported-algorithms)**
 - **[Value/Identifier Types and Associated Algorithms](#valueidentifier-types-and-associated-algorithms)**
 - **[Using CheckDigits.Net](#using-checkdigits.net)**
-- **[Interfaces and Extension Points](#interfaces-and-extension-points)**
+- **[Interfaces and Helper Classes](#interfaces-and-helper-classes)**
     * [ICheckDigitAlgorithm](#icheckdigitalgorithm)
     * [ISingleCheckDigitAlgorithm](#isinglecheckdigitalgorithm)
     * [IDoubleCheckDigitAlgorithm](#idoublecheckdigitalgorithm)
@@ -138,7 +138,7 @@ defined in the ISO/IEC 7064 standard, the standard is flexible enough to support
 the creation of algorithms for custom alphabets. For example, Annex B of the 
 ISO/IEC 7064 standard demonstrates the creation of a system for the Danish 
 alphabet which includes three additional characters. See the section on 
-[Interfaces and Extension Points](#interfaces-and-extension-points) for more 
+[Interfaces and Helper Classes](#interfaces-and-helper-classes) for more 
 information about how to create custom algorithms for custom alphabets.
 
 The ISO/IEC 7064:2003 standard is available at https://www.iso.org/standard/31531.html
@@ -261,7 +261,7 @@ var toValidate = "1234567890123452";
 var isValid = lazy.Validate(toValidate);    // Returns true
 ```
 
-## Interfaces and Extension Points
+## Interfaces and Helper Classes
 
 ### ICheckDigitAlgorithm
 
@@ -1989,6 +1989,30 @@ only validation of values containing check digits.
 | VIN            | 1HGEM212_2L047875               | 12.975 ns | 0.0850 ns | 0.0710 ns | -         |
 | VIN            | 1M8GDM9A_KP042788               | 13.377 ns | 0.1008 ns | 0.0942 ns | -         |
 
+#### Damm Custom Quasigroup Algorithm
+
+Note: The Order 10 quasigroup class used in the benchmarks is the one used as an example 
+for [IDammQuasigroup](#idammquasigroup). The Order 16 quasigroup class used in the benchmarks 
+is the one used as an example for [DammCustomQuasigroup](#dammcustomquasigroup).
+
+| Algorithm Name                      | Value                 | Mean      | Error     | StdDev    | Allocated |
+|-------------------------------------|-----------------------|----------:|-----------|-----------|-----------|
+| Damm Custom Quasigroup (Order = 10) | 140                   |  4.029 ns | 0.0847 ns | 0.0751 ns | -         |
+| Damm Custom Quasigroup (Order = 10) | 140662                |  5.350 ns | 0.0282 ns | 0.0250 ns | -         |
+| Damm Custom Quasigroup (Order = 10) | 140662538             |  7.117 ns | 0.0516 ns | 0.0457 ns | -         |
+| Damm Custom Quasigroup (Order = 10) | 140662538042          | 10.101 ns | 0.0883 ns | 0.0826 ns | -         |
+| Damm Custom Quasigroup (Order = 10) | 140662538042551       | 13.413 ns | 0.0617 ns | 0.0547 ns | -         |
+| Damm Custom Quasigroup (Order = 10) | 140662538042551028    | 16.592 ns | 0.2615 ns | 0.2446 ns | -         |
+| Damm Custom Quasigroup (Order = 10) | 140662538042551028265 | 19.340 ns | 0.0830 ns | 0.0736 ns | -         |
+|                                     |                       |           |           |           |           |
+| Damm Custom Quasigroup (Order = 16) | 2ED1                  |  7.908 ns | 0.1747 ns | 0.3323 ns | -         |
+| Damm Custom Quasigroup (Order = 16) | 2EDC15F               | 13.077 ns | 0.2627 ns | 0.2811 ns | -         |
+| Damm Custom Quasigroup (Order = 16) | 2EDC15B3C5            | 16.192 ns | 0.3371 ns | 0.3747 ns | -         |
+| Damm Custom Quasigroup (Order = 16) | 2EDC15B3C1C33         | 21.008 ns | 0.4251 ns | 0.6619 ns | -         |
+| Damm Custom Quasigroup (Order = 16) | 2EDC15B3C1C34F46      | 25.848 ns | 0.5336 ns | 0.9890 ns | -         |
+| Damm Custom Quasigroup (Order = 16) | 2EDC15B3C1C34F4DA52   | 29.608 ns | 0.6020 ns | 0.5631 ns | -         |
+| Damm Custom Quasigroup (Order = 16) | 2EDC15B3C1C34F4DA55F3 | 38.690 ns | 0.8004 ns | 1.6349 ns | -         |
+
 ### Validate Method
 
 #### General Numeric Algorithms
@@ -2245,6 +2269,30 @@ Note also that the values used for the NOID Check Digit algorithm do not include
 | VIN                             | 1HGEM21292L047875                      | 13.297 ns | 0.0520 ns | 0.0434 ns | -         |
 | VIN                             | 1M8GDM9AXKP042788                      | 12.869 ns | 0.0624 ns | 0.0521 ns | -         |
 
+#### Damm Custom Quasigroup Algorithm
+
+Note: The Order 10 quasigroup class used in the benchmarks is the one used as an example 
+for [IDammQuasigroup](#idammquasigroup). The Order 16 quasigroup class used in the benchmarks 
+is the one used as an example for [DammCustomQuasigroup](#dammcustomquasigroup).
+
+| Algorithm Name                      | Value                  | Mean      | Error     | StdDev    | Allocated |
+|-------------------------------------|------------------------|----------:|-----------|-----------|-----------|
+| Damm Custom Quasigroup (Order = 10) | 1402                   |  4.376 ns | 0.0415 ns | 0.0388 ns | -         |
+| Damm Custom Quasigroup (Order = 10) | 1406622                |  6.009 ns | 0.0477 ns | 0.0423 ns | -         |
+| Damm Custom Quasigroup (Order = 10) | 1406625388             |  8.883 ns | 0.0455 ns | 0.0380 ns | -         |
+| Damm Custom Quasigroup (Order = 10) | 1406625380422          | 12.916 ns | 0.0845 ns | 0.0705 ns | -         |
+| Damm Custom Quasigroup (Order = 10) | 1406625380425518       | 16.306 ns | 0.0612 ns | 0.0511 ns | -         |
+| Damm Custom Quasigroup (Order = 10) | 1406625380425510280    | 19.675 ns | 0.0967 ns | 0.0904 ns | -         |
+| Damm Custom Quasigroup (Order = 10) | 1406625380425510282654 | 23.083 ns | 0.1054 ns | 0.0934 ns | -         |
+|                                     |                        |           |           |           |           |
+| Damm Custom Quasigroup (Order = 16) | 2ED1                   |  7.643 ns | 0.0659 ns | 0.0551 ns | -         |
+| Damm Custom Quasigroup (Order = 16) | 2EDC15F                | 12.152 ns | 0.0961 ns | 0.0852 ns | -         |
+| Damm Custom Quasigroup (Order = 16) | 2EDC15B3C5             | 16.691 ns | 0.1784 ns | 0.1489 ns | -         |
+| Damm Custom Quasigroup (Order = 16) | 2EDC15B3C1C33          | 21.793 ns | 0.1751 ns | 0.1552 ns | -         |
+| Damm Custom Quasigroup (Order = 16) | 2EDC15B3C1C34F46       | 26.625 ns | 0.1694 ns | 0.1502 ns | -         |
+| Damm Custom Quasigroup (Order = 16) | 2EDC15B3C1C34F4DA52    | 31.997 ns | 0.3190 ns | 0.2828 ns | -         |
+| Damm Custom Quasigroup (Order = 16) | 2EDC15B3C1C34F4DA55F37 | 36.635 ns | 0.3529 ns | 0.3301 ns | -         |
+
 ### Validate Method (with ICheckDigitMask)
 
 The following implementation of ICheckDigitMask is used for the benchmarks:
@@ -2256,11 +2304,18 @@ public class GroupsOfThreeCheckDigitMask : ICheckDigitMask
    public Boolean IncludeCharacter(Int32 index) => (index + 1) % 4 != 0;
 }
 ```
-
 #### General Numeric Algorithms
 
 | Algorithm Name        | Value                         | Mean      | Error     | StdDev    | Allocated |
 |-----------------------|-------------------------------|----------:|-----------|-----------|-----------|
+| Damm                  | 140 2                         |  4.625 ns | 0.1064 ns | 0.0996 ns | -         |
+| Damm                  | 140 662 2                     |  6.415 ns | 0.1434 ns | 0.2056 ns | -         |
+| Damm                  | 140 662 538 8                 |  8.091 ns | 0.0660 ns | 0.0585 ns | -         |
+| Damm                  | 140 662 538 042 2             |  9.891 ns | 0.1324 ns | 0.1106 ns | -         |
+| Damm                  | 140 662 538 042 551 8         | 12.687 ns | 0.1039 ns | 0.0971 ns | -         |
+| Damm                  | 140 662 538 042 551 028 0     | 16.170 ns | 0.3044 ns | 0.2848 ns | -         |
+| Damm                  | 140 662 538 042 551 028 265 4 | 19.209 ns | 0.2492 ns | 0.2331 ns | -         |
+|                       |                               |           |           |           |           |
 | Luhn                  | 140 4                         | 4.647 ns  | 0.0278 ns | 0.0232 ns | -         |
 | Luhn                  | 140 662 8                     | 6.048 ns  | 0.0490 ns | 0.0458 ns | -         |
 | Luhn                  | 140 662 538 2                 | 8.229 ns  | 0.0595 ns | 0.0528 ns | -         |
@@ -2300,6 +2355,30 @@ public class GroupsOfThreeCheckDigitMask : ICheckDigitMask
 | Modulus11Extended     | 140 6                         |  4.317 ns | 0.0073 ns | 0.0068 ns | -         |
 | Modulus11Extended     | 140 662 0                     |  5.268 ns | 0.0358 ns | 0.0335 ns | -         |
 | Modulus11Extended     | 140 662 538 8                 |  6.603 ns | 0.0696 ns | 0.0651 ns | -         |
+
+#### Damm Custom Quasigroup Algorithm
+
+Note: The Order 10 quasigroup class used in the benchmarks is the one used as an example 
+for [IDammQuasigroup](#idammquasigroup). The Order 16 quasigroup class used in the benchmarks 
+is the one used as an example for [DammCustomQuasigroup](#dammcustomquasigroup).
+
+| Algorithm Name                      | Value                         | Mean      | Error     | StdDev    | Allocated |
+|-------------------------------------|-------------------------------|----------:|-----------|-----------|-----------|
+| Damm Custom Quasigroup (Order = 10) | 140 2                         |  5.523 ns | 0.1265 ns | 0.1600 ns | -         |
+| Damm Custom Quasigroup (Order = 10) | 140 662 2                     |  7.395 ns | 0.0553 ns | 0.0490 ns | -         |
+| Damm Custom Quasigroup (Order = 10) | 140 662 538 8                 |  9.303 ns | 0.0722 ns | 0.0640 ns | -         |
+| Damm Custom Quasigroup (Order = 10) | 140 662 538 042 2             | 11.906 ns | 0.0845 ns | 0.0791 ns | -         |
+| Damm Custom Quasigroup (Order = 10) | 140 662 538 042 551 8         | 15.443 ns | 0.1506 ns | 0.1409 ns | -         |
+| Damm Custom Quasigroup (Order = 10) | 140 662 538 042 551 028 0     | 18.744 ns | 0.1593 ns | 0.1490 ns | -         |
+| Damm Custom Quasigroup (Order = 10) | 140 662 538 042 551 028 265 4 | 21.765 ns | 0.1053 ns | 0.0985 ns | -         |
+|                                     |                               |           |           |           |           |
+| Damm Custom Quasigroup (Order = 16) | 2ED 1                         |  9.415 ns | 0.1854 ns | 0.2061 ns | -         |
+| Damm Custom Quasigroup (Order = 16) | 2ED C15 F                     | 14.429 ns | 0.1800 ns | 0.1684 ns | -         |
+| Damm Custom Quasigroup (Order = 16) | 2ED C15 B3C 5                 | 19.850 ns | 0.2397 ns | 0.2242 ns | -         |
+| Damm Custom Quasigroup (Order = 16) | 2ED C15 B3C 1C3 3             | 24.856 ns | 0.5198 ns | 0.5986 ns | -         |
+| Damm Custom Quasigroup (Order = 16) | 2ED C15 B3C 1C3 4F4 6         | 30.127 ns | 0.3615 ns | 0.3381 ns | -         |
+| Damm Custom Quasigroup (Order = 16) | 2ED C15 B3C 1C3 4F4 DA5 2     | 35.560 ns | 0.4475 ns | 0.3737 ns | -         |
+| Damm Custom Quasigroup (Order = 16) | 2ED C15 B3C 1C3 4F4 DA5 5F3 7 | 40.733 ns | 0.4758 ns | 0.4451 ns | -         |
 
 # Release History/Release Notes
 

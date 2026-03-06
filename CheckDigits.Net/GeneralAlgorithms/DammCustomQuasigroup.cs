@@ -3,8 +3,8 @@
 namespace CheckDigits.Net.GeneralAlgorithms;
 
 /// <summary>
-///   Provides a custom implementation of the Damm quasigroup algorithm for use 
-///   in check digit calculations.
+///   Helper class that implements the IDammQuasigroup interface, allowing 
+///   consumers to define a custom quasigroup for use with the Damm algorithm.
 /// </summary>
 /// <remarks>
 ///   This class implements the IDammQuasigroup interface, enabling the use of a 
