@@ -206,7 +206,7 @@ public sealed class DammCustomQuasigroup : IDammQuasigroup
          throw new ArgumentException(Resources.EmptyQuasigroupTableMessage, nameof(quasigroupTable));
       }
 
-      // Validate dimensions nd are same (square table) and that the minimum
+      // Validate dimensions are same (square table) and that the minimum
       // order is 2 (since a quasigroup of order 1 is trivial and not useful for
       // check digit calculations).
       var rows = quasigroupTable.GetLength(0);

@@ -579,7 +579,7 @@ public static Char GetCheckCharacter(Int32 interim) => interim switch
     _ => '\0'
 };
 
-// Note that this is quasigroup uses a simple shift pattern for the values. 
+// Note that this quasigroup uses a simple shift pattern for the values. 
 // It is only being used as an example of how to create a custom quasigroup and 
 // you should not use this quasigroup for production purposes without first analyzing 
 // the error detection capabilities of the quasigroup for your particular use case.
@@ -698,7 +698,7 @@ of the multiple tables used by Verhoeff. The implementation of the Damm algorith
 provided by CheckDigits.Net uses the table generated from the quasigroup specified
 on page 111 of Damm's doctoral dissertation.
 
-`DammAlgorithm` implements [IMaskedCheckDigitAlgorithm](#idoublecheckdigitalgorithm) and can be used 
+`DammAlgorithm` implements [IMaskedCheckDigitAlgorithm](#imaskedcheckdigitalgorithm) and can be used 
 to validate values that are formatted with non-check digit characters (for example,
 a value formatted with spaces or dashes for human readability).
 
@@ -743,7 +743,7 @@ for a particular value and ensure that the same quasigroup is used for validatio
 especially if the organization issuing the values is different from the organization 
 validating the values.
 
-`DammCustomQuasigroupAlgorithm` implements [IMaskedCheckDigitAlgorithm](#idoublecheckdigitalgorithm) and can be used 
+`DammCustomQuasigroupAlgorithm` implements [IMaskedCheckDigitAlgorithm](#imaskedcheckdigitalgorithm) and can be used 
 to validate values that are formatted with non-check digit characters (for example,
 a value formatted with spaces or dashes for human readability).
 
@@ -1282,7 +1282,7 @@ Peter Luhn. It can detect all single digit transcription errors and most two dig
 transposition errors except *09 -> 90* and vice versa. It can also detect most
 twin errors (i.e. *11 <-> 44*) except *22 <-> 55*,  *33 <-> 66* and *44 <-> 77*.
 
-`LuhnAlgorithm` implements [IMaskedCheckDigitAlgorithm](#idoublecheckdigitalgorithm) and can be used 
+`LuhnAlgorithm` implements [IMaskedCheckDigitAlgorithm](#imaskedcheckdigitalgorithm) and can be used 
 to validate values that are formatted with non-check digit characters (for example,
 a credit card number formatted with spaces or dashes).
 
@@ -1358,7 +1358,7 @@ all single digit transcription errors and ~89% of two digit transposition errors
 (except where the transposed digits have a difference of 5, i.e. *1 <-> 6*, *2 <-> 7*,
 etc.). The algorithm cannot detect two digit jump transpositions.
 
-`Modulus10_13Algorithm` implements [IMaskedCheckDigitAlgorithm](#idoublecheckdigitalgorithm) and can be used 
+`Modulus10_13Algorithm` implements [IMaskedCheckDigitAlgorithm](#imaskedcheckdigitalgorithm) and can be used 
 to validate values that are formatted with non-check digit characters (for example,
 a value formatted with spaces or dashes for human readability).
 
@@ -1444,7 +1444,7 @@ The Modulus11_27Decimal algorithm takes the latter approach and the `TryCalculat
 and `Validate` methods return false if the value would require a non-digit check
 character.
 
-`Modulus11_27DecimalAlgorithm` implements [IMaskedCheckDigitAlgorithm](#idoublecheckdigitalgorithm) and can be used 
+`Modulus11_27DecimalAlgorithm` implements [IMaskedCheckDigitAlgorithm](#imaskedcheckdigitalgorithm) and can be used 
 to validate values that are formatted with non-check digit characters (for example,
 a value formatted with spaces or dashes for human readability).
 
@@ -1489,7 +1489,7 @@ possible values must be rejected, or approximately 9.09% of all values.
 The Modulus11_27Extended algorithm takes the former approach and the `TryCalculateCheckDigit`
 and `Validate` allow values that include 'X' as an extended check character.
 
-`Modulus11_27ExtendedAlgorithm` implements [IMaskedCheckDigitAlgorithm](#idoublecheckdigitalgorithm) and can be used 
+`Modulus11_27ExtendedAlgorithm` implements [IMaskedCheckDigitAlgorithm](#imaskedcheckdigitalgorithm) and can be used 
 to validate values that are formatted with non-check digit characters (for example,
 a value formatted with spaces or dashes for human readability).
 
@@ -1526,7 +1526,7 @@ character.
 Modulus11Decimal is a generalized version of the NhsAlgorithm which drops the
 fixed 10 character length required by NhsAlgorithm.
 
-`Modulus11DecimalAlgorithm` implements [IMaskedCheckDigitAlgorithm](#idoublecheckdigitalgorithm) and can be used 
+`Modulus11DecimalAlgorithm` implements [IMaskedCheckDigitAlgorithm](#imaskedcheckdigitalgorithm) and can be used 
 to validate values that are formatted with non-check digit characters (for example,
 a value formatted with spaces or dashes for human readability).
 
@@ -1569,7 +1569,7 @@ possible values must be rejected, or approximately 9.09% of all values.
 The Modulus11Extended algorithm takes the former approach and the `TryCalculateCheckDigit`
 and `Validate` allow values that include 'X' as an extended check character.
 
-`Modulus11ExtendedAlgorithmn` implements [IMaskedCheckDigitAlgorithm](#idoublecheckdigitalgorithm) and can be used 
+`Modulus11ExtendedAlgorithm` implements [IMaskedCheckDigitAlgorithm](#imaskedcheckdigitalgorithm) and can be used 
 to validate values that are formatted with non-check digit characters (for example,
 a value formatted with spaces or dashes for human readability).
 
@@ -1582,7 +1582,7 @@ Modulus11Extended replaces the deprecated Modulus11 algorithm.
 * Check digit value - either decimal digit ('0' - '9') or an uppercase 'X'
 * Check digit location - assumed to be the trailing (right-most) character when validating
 * Max length - 9 characters when generating a check digit; 10 characters when validating
-* Class name - `Modulus11ExtendedAlgorithmn`
+* Class name - `Modulus11ExtendedAlgorithm`
 
 #### Common Applications
 

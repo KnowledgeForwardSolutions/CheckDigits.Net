@@ -24,7 +24,7 @@ public interface IDammQuasigroup
    ///   current interim value and the next input digit.
    /// </summary>
    /// <param name="interim">
-   ///   The current interm value, used as the zero-based x-coordinate in the 
+   ///   The current interim value, used as the zero-based x-coordinate in the 
    ///   quasigroup table. Must be a non-negative integer less than <see cref="Order"/>.
    /// </param>
    /// <param name="next">
@@ -34,7 +34,7 @@ public interface IDammQuasigroup
    /// </param>
    /// <returns>
    ///   The next interim value from the quasigroup table corresponding to the
-   ///   [interm, next] coordinates. Will be a non-negative integer less than
+   ///   [interim, next] coordinates. Will be a non-negative integer less than
    ///   <see cref="Order"/>.
    /// </returns>
    Int32 this[Int32 interim, Int32 next] { get; }
