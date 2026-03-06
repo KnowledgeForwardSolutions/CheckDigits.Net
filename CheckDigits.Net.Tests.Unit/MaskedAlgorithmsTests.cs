@@ -1,9 +1,23 @@
-﻿// Ignore Spelling: Luhn
+﻿// Ignore Spelling: Damm Luhn
 
 namespace CheckDigits.Net.Tests.Unit;
 
 public class MaskedAlgorithmsTests
 {
+   #region Damm Property Tests
+   // ==========================================================================
+   // ==========================================================================
+
+   [Fact]
+   public void MaskedAlgorithms_Damm_ShouldNotBeNull()
+      => MaskedAlgorithms.Damm.Should().NotBeNull();
+
+   [Fact]
+   public void MaskedAlgorithms_Damm_ShouldBeExpectedType()
+      => MaskedAlgorithms.Damm.Should().BeOfType<DammAlgorithm>();
+
+   #endregion
+
    #region Luhn Property Tests
    // ==========================================================================
    // ==========================================================================
