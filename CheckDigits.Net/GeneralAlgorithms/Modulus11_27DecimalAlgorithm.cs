@@ -117,6 +117,10 @@ public sealed class Modulus11_27DecimalAlgorithm : ISingleCheckDigitAlgorithm, I
    /// <inheritdoc/>
    public Boolean Validate(String value, ICheckDigitMask mask)
    {
+      if (mask is null)
+      {
+         throw new ArgumentNullException(nameof(mask), Resources.NullMaskMessage);
+      }
       if (String.IsNullOrEmpty(value))
       {
          return false;
