@@ -19,7 +19,7 @@ namespace CheckDigits.Net.GeneralAlgorithms;
 ///   </para>
 ///   <para>
 ///   Will detect all single-digit transcription errors and all two digit 
-///   transpositions of adjacent digits
+///   transpositions of adjacent digits.
 ///   </para>
 /// </remarks>
 public sealed class VerhoeffAlgorithm : ISingleCheckDigitAlgorithm, IMaskedCheckDigitAlgorithm
@@ -52,7 +52,7 @@ public sealed class VerhoeffAlgorithm : ISingleCheckDigitAlgorithm, IMaskedCheck
       for (var index = value.Length - 1; index >= 0; index--)
       {
          var n = value![index].ToIntegerDigit();
-         if (n < 0 || n > 9)
+         if (n.IsInvalidDigit())
          {
             return false;
          }
@@ -80,7 +80,7 @@ public sealed class VerhoeffAlgorithm : ISingleCheckDigitAlgorithm, IMaskedCheck
       for (var index = value.Length - 1; index >= 0; index--)
       {
          var n = value![index].ToIntegerDigit();
-         if (n < 0 || n > 9)
+         if (n.IsInvalidDigit())
          {
             return false;
          }
@@ -111,7 +111,7 @@ public sealed class VerhoeffAlgorithm : ISingleCheckDigitAlgorithm, IMaskedCheck
 
       // Handle check digit outside of loop to prevent the mask from excluding it.
       var n = value[^1].ToIntegerDigit();
-      if (n < 0 || n > 9)
+      if (n.IsInvalidDigit())
       {
          return false;
       }
@@ -120,15 +120,14 @@ public sealed class VerhoeffAlgorithm : ISingleCheckDigitAlgorithm, IMaskedCheck
       i++;
 
       var processedDigits = 0;
-      var processedLength = value.Length - 2;      // Minus 2 because check digit is handled outside
-      for (var index = processedLength; index >= 0; index--)
+      for (var index = value.Length - 2; index >= 0; index--)     // Minus 2 because check digit is handled outside of loop
       {
          if (mask.ExcludeCharacter(index))
          {
             continue;
          }
          n = value[index].ToIntegerDigit();
-         if (n < 0 || n > 9)
+         if (n.IsInvalidDigit())
          {
             return false;
          }
