@@ -108,7 +108,7 @@ public class DammCustomQuasigroupTests
    }
 
    [Fact]
-   public void DammCustomQuasigroup_Constructor_ShouldThrowArgumentNullException_WhenQuasigroupTableIsEmpty()
+   public void DammCustomQuasigroup_Constructor_ShouldThrowArgumentException_WhenQuasigroupTableIsEmpty()
    {
       // Arrange.
       var quasigroupTable = new Int32[0, 0];
@@ -127,7 +127,7 @@ public class DammCustomQuasigroupTests
    }
 
    [Fact]
-   public void DammCustomQuasigroup_Constructor_ShouldThrowArgumentNullException_WhenQuasigroupTableIsOrder1()
+   public void DammCustomQuasigroup_Constructor_ShouldThrowArgumentException_WhenQuasigroupTableIsOrder1()
    {
       // Arrange.
       var quasigroupTable = new Int32[,] { { 0 } };
@@ -351,7 +351,7 @@ public class DammCustomQuasigroupTests
    }
 
    [Fact]
-   public void DammCustomQuasigroup_ConstructorCharOverload_ShouldThrowArgumentNullException_WhenQuasigroupTableIsEmpty()
+   public void DammCustomQuasigroup_ConstructorCharOverload_ShouldThrowArgumentException_WhenQuasigroupTableIsEmpty()
    {
       // Arrange.
       var quasigroupTable = new Char[0, 0];
@@ -370,7 +370,7 @@ public class DammCustomQuasigroupTests
    }
 
    [Fact]
-   public void DammCustomQuasigroup_ConstructorCharOverload_ShouldThrowArgumentNullException_WhenQuasigroupTableIsOrder1()
+   public void DammCustomQuasigroup_ConstructorCharOverload_ShouldThrowArgumentException_WhenQuasigroupTableIsOrder1()
    {
       // Arrange.
       var quasigroupTable = new Char[,] { { 'A' } };

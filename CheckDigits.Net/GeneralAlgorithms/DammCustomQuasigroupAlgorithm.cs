@@ -26,8 +26,11 @@ namespace CheckDigits.Net.GeneralAlgorithms;
 ///   in the input value.
 ///   </para>
 ///   <para>
-///   Will detect all single-character transcription errors and all two 
-///   character transpositions of adjacent characters.
+///   Error-detection capabilities depend on the properties of the supplied
+///   quasigroup. When used with a quasigroup that satisfies the standard Damm
+///   algorithm constraints (such as the default decimal quasigroup), the
+///   algorithm will detect all single-character transcription errors and all
+///   two-character transpositions of adjacent characters.
 ///   </para>
 /// </remarks>
 public sealed class DammCustomQuasigroupAlgorithm(IDammQuasigroup quasigroup) : ISingleCheckDigitAlgorithm, IMaskedCheckDigitAlgorithm

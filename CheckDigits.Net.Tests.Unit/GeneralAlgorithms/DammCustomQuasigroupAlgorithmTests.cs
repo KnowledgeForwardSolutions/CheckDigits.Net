@@ -48,12 +48,6 @@ public class DammCustomQuasigroupAlgorithmTests
          .ThrowExactly<ArgumentNullException>()
          .WithParameterName(nameof(quasigroup))
          .WithMessage(expectedMessage);
-
-
-      var sut = new DammCustomQuasigroupAlgorithm(_quasigroupOrder10);
-
-      // Assert.
-      Assert.NotNull(sut);
    }
 
    #endregion
