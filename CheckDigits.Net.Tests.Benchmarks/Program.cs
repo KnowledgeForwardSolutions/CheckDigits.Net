@@ -1,10 +1,12 @@
 ﻿
-//BenchmarkRunner.Run<NumericAlgorithmBenchmarks>();
+BenchmarkRunner.Run<NumericAlgorithmBenchmarks>();
 
 //BenchmarkRunner.Run<AlphabeticAlgorithmsBenchmarks>();
 
 //BenchmarkRunner.Run<AlphanumericAlgorithmBenchmarks>();
 
-BenchmarkRunner.Run<ValueSpecificAlgorithmBenchmarks>();
+//BenchmarkRunner.Run<ValueSpecificAlgorithmBenchmarks>();
+
+//BenchmarkRunner.Run<CustomizableAlgorithmBenchmarks>();
 
 //BenchmarkRunner.Run<OptimizeBenchmarks>();
