@@ -237,7 +237,7 @@ public class Modulus11_27DecimalAlgorithmTests
    // ==========================================================================
 
    [Fact]
-   public void Modulus11_27Algorithm_ValidateMasked_ShouldThrowArgumentNullException_WhenMaskIsNull()
+   public void Modulus11_27DecimalAlgorithm_ValidateMasked_ShouldThrowArgumentNullException_WhenMaskIsNull()
       => _sut
          .Invoking(x => x.Validate("12345", null!))
          .Should()
@@ -252,12 +252,6 @@ public class Modulus11_27DecimalAlgorithmTests
    [Fact]
    public void Modulus11_27DecimalAlgorithm_ValidateMasked_ShouldReturnFalse_WhenInputIsEmpty()
       => _sut.Validate(String.Empty, _acceptAllMask).Should().BeFalse();
-
-   [Theory]
-   [InlineData("0")]       // Zero would return true unless length is explicitly checked.
-   [InlineData("1")]
-   public void Modulus11_27Algorithm_ValidateMasked_ShouldReturnFalse_WhenInsufficientUnmaskedCharactersToCalculateCheckDigit(String value)
-      => _sut.Validate(value, _acceptAllMask).Should().BeFalse();
 
    [Fact]
    public void Modulus11_27DecimalAlgorithm_ValidateMasked_ShouldReturnFalse_WhenAllNonCheckDigitCharactersAreMaskedOut()

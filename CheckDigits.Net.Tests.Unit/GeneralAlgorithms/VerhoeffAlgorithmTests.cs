@@ -186,11 +186,11 @@ public class VerhoeffAlgorithmTests
    [Fact]
    public void VerhoeffAlgorithm_ValidateMasked_ShouldThrowArgumentNullException_WhenMaskIsNull()
       => _sut
-      .Invoking(x => x.Validate("12345", null!))
-      .Should()
-      .ThrowExactly<ArgumentNullException>()
-      .WithParameterName("mask")
-      .WithMessage(Resources.NullMaskMessage + "*");
+         .Invoking(x => x.Validate("12345", null!))
+         .Should()
+         .ThrowExactly<ArgumentNullException>()
+         .WithParameterName("mask")
+         .WithMessage(Resources.NullMaskMessage + "*");
 
    [Fact]
    public void VerhoeffAlgorithm_ValidateMasked_ShouldReturnFalse_WhenInputIsNull()
