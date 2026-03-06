@@ -31,5 +31,8 @@ public interface IMaskedCheckDigitAlgorithm : ICheckDigitAlgorithm
    ///   <see cref="String.Empty"/> or a string that is of invalid length for 
    ///   this algorithm.
    /// </remarks>
+   /// <exception cref="ArgumentNullException">
+   ///   <paramref name="mask"/> is <see langword="null"/>.
+   /// </exception>
    Boolean Validate(String value, ICheckDigitMask mask);
 }

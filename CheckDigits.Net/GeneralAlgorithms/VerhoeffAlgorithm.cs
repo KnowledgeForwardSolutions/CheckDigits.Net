@@ -22,7 +22,7 @@ namespace CheckDigits.Net.GeneralAlgorithms;
 ///   transpositions of adjacent digits
 ///   </para>
 /// </remarks>
-public sealed class VerhoeffAlgorithm : ISingleCheckDigitAlgorithm
+public sealed class VerhoeffAlgorithm : ISingleCheckDigitAlgorithm, IMaskedCheckDigitAlgorithm
 {
    private static readonly VerhoeffInverseTable _inverseTable =
       VerhoeffInverseTable.Instance;
@@ -89,6 +89,59 @@ public sealed class VerhoeffAlgorithm : ISingleCheckDigitAlgorithm
          c = _multiplicationTable[c, p];
 
          i++;
+      }
+
+      return c == 0;
+   }
+ 
+   /// <inheritdoc/>
+   public Boolean Validate(String value, ICheckDigitMask mask)
+   {
+      if (mask is null)
+      {
+         throw new ArgumentNullException(nameof(mask), Resources.NullMaskMessage);
+      }
+      if (String.IsNullOrEmpty(value))
+      {
+         return false;
+      }
+
+      var c = 0;
+      var i = 0;
+
+      // Handle check digit outside of loop to prevent the mask from excluding it.
+      var n = value[^1].ToIntegerDigit();
+      if (n < 0 || n > 9)
+      {
+         return false;
+      }
+      var p = _permutationTable[i % 8, n];
+      c = _multiplicationTable[c, p];
+      i++;
+
+      var processedDigits = 0;
+      var processedLength = value.Length - 2;      // Minus 2 because check digit is handled outside
+      for (var index = processedLength; index >= 0; index--)
+      {
+         if (mask.ExcludeCharacter(index))
+         {
+            continue;
+         }
+         n = value[index].ToIntegerDigit();
+         if (n < 0 || n > 9)
+         {
+            return false;
+         }
+
+         p = _permutationTable[i % 8, n];
+         c = _multiplicationTable[c, p];
+
+         i++;
+         processedDigits ++;
+      }
+      if (processedDigits == 0)
+      {
+         return false;
       }
 
       return c == 0;

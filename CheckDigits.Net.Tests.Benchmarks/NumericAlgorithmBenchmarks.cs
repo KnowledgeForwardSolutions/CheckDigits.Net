@@ -201,7 +201,7 @@ public class NumericAlgorithmBenchmarks
       //yield return [Algorithms.Modulus11Extended, Algorithms.Modulus11Extended.AlgorithmName, "1406625388"];
 
       //yield return [Algorithms.Verhoeff, Algorithms.Verhoeff.AlgorithmName, "1401"];
-      //yield return [Algorithms.Verhoeff, Algorithms.Verhoeff.AlgorithmName, "1406620"];
+      //yield return [Algorithms.Verhoeff, Algorithms.Verhoeff.AlgorithmName, "1406625"];
       //yield return [Algorithms.Verhoeff, Algorithms.Verhoeff.AlgorithmName, "1406625388"];
       //yield return [Algorithms.Verhoeff, Algorithms.Verhoeff.AlgorithmName, "1406625380426"];
       //yield return [Algorithms.Verhoeff, Algorithms.Verhoeff.AlgorithmName, "1406625380425512"];
