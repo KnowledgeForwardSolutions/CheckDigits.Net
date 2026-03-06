@@ -328,11 +328,12 @@ following algorithms implement `IMaskedCheckDigitAlgorithm`:
 * [Damm Algorithm](#damm-algorithm)
 * [Damm Custom Quasigroup Algorithm](#damm-custom-quasigroup-algorithm)
 * [Luhn Algorithm](#luhn-algorithm)
-* [Modulus10_13 Algorithm (UPC/EAN/ISBN-13/etc.)](#modulus10_13-algorithm)
+* [Modulus10_13 Algorithm](#modulus10_13-algorithm)
 * [Modulus11_27Decimal Algorithm](#modulus11_27decimal-algorithm)
 * [Modulus11_27Extended Algorithm](#modulus11_27extended-algorithm)
-* [Modulus11Decimal Algorithm (NHS Number/etc.)](#modulus11decimal-algorithm)
-* [Modulus11Extended Algorithm (ISBN-10/ISSN/etc.)](#modulus11extended-algorithm)
+* [Modulus11Decimal Algorithm](#modulus11decimal-algorithm)
+* [Modulus11Extended Algorithm)](#modulus11extended-algorithm)
+* [Verhoeff Algorithm](#verhoeff-algorithm)
 
 ### ICheckDigitMask
 
@@ -1729,6 +1730,10 @@ implemented as a set of lookup tables). Additionally, Verhoeff's algorithm can
 detect many, though not all, twin errors, two digit jump transpositions and jump
 twin errors.
 
+`VerhoeffAlgorithm` implements [IMaskedCheckDigitAlgorithm](#imaskedcheckdigitalgorithm) and can be used 
+to validate values that are formatted with non-check digit characters (for example,
+a credit card number formatted with spaces or dashes).
+
 #### Details
 
 * Valid characters - decimal digits ('0' - '9')
@@ -2497,6 +2502,7 @@ Additional included algorithms:
 Added masked validation support to the following algorithms:
 * Damm Algorithm
 * Modulus10_13 Algorithm
+* Verhoeff Algorithm
 
 Minor updates to the following algorithms:
 * ICAO 9303 Document Size TD1 Algorithm

@@ -197,12 +197,27 @@ public class Modulus10_13AlgorithmTests
    // ==========================================================================
 
    [Fact]
+   public void Modulus10_13Algorithm_ValidateMasked_ShouldThrowArgumentNullException_WhenMaskIsNull()
+      => _sut
+         .Invoking(x => x.Validate("12345", null!))
+         .Should()
+         .ThrowExactly<ArgumentNullException>()
+         .WithParameterName("mask")
+         .WithMessage(Resources.NullMaskMessage + "*");
+
+   [Fact]
    public void Modulus10_13Algorithm_ValidateMasked_ShouldReturnFalse_WhenInputIsNull()
       => _sut.Validate(null!, _acceptAllMask).Should().BeFalse();
 
    [Fact]
    public void Modulus10_13Algorithm_ValidateMasked_ShouldReturnFalse_WhenInputIsEmpty()
       => _sut.Validate(String.Empty, _acceptAllMask).Should().BeFalse();
+
+   [Theory]
+   [InlineData("0")]
+   [InlineData("1")]
+   public void Modulus10_13Algorithm_ValidateMasked_ShouldReturnFalse_WhenInsufficientUnmaskedCharactersToCalculateCheckDigit(String value)
+      => _sut.Validate(value, _acceptAllMask).Should().BeFalse();
 
    [Fact]
    public void Modulus10_13Algorithm_ValidateMasked_ShouldReturnFalse_WhenAllNonCheckDigitCharactersAreMaskedOut()
