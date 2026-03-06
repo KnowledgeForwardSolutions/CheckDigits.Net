@@ -200,6 +200,12 @@ public class VerhoeffAlgorithmTests
    public void VerhoeffAlgorithm_ValidateMasked_ShouldReturnFalse_WhenInputIsEmpty()
       => _sut.Validate(String.Empty, _acceptAllMask).Should().BeFalse();
 
+   [Theory]
+   [InlineData("0")]    // "0" is the only digit that would pass unless length is checked explicitly
+   [InlineData("1")]
+   public void VerhoeffAlgorithm_ValidateMasked_ShouldReturnFalse_WhenInsufficientUnmaskedCharactersToCalculateCheckDigit(String value)
+      => _sut.Validate(value, _acceptAllMask).Should().BeFalse();
+
    [Fact]
    public void VerhoeffAlgorithm_ValidateMasked_ShouldReturnFalse_WhenAllNonCheckDigitCharactersAreMaskedOut()
       => _sut.Validate("000 000 0000 000 000", _rejectAllMask).Should().BeFalse();
