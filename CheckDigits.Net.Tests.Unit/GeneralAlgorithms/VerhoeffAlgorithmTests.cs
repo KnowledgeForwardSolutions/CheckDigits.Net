@@ -213,6 +213,15 @@ public class VerhoeffAlgorithmTests
    public void VerhoeffAlgorithm_ValidateMasked_ShouldReturnTrue_WhenValueContainsValidCheckDigit(String value)
       => _sut.Validate(value, _groupsOfThreeMask).Should().BeTrue();
 
+   [Theory]
+   [InlineData("2363")]                      // Worked example from Wikipedia
+   [InlineData("04")]
+   [InlineData("123451")]                    // Test data from https://rosettacode.org/wiki/Verhoeff_algorithm
+   [InlineData("758722")]                    // Test data from https://codereview.stackexchange.com/questions/221229/verhoeff-check-digit-algorithm
+   [InlineData("1428570")]                   // "
+   public void VerhoeffAlgorithm_ValidateMasked_ShouldReturnTrue_WhenValueContainsValidCheckDigitAndMaskAcceptsAllCharacters(String value)
+      => _sut.Validate(value, _acceptAllMask).Should().BeTrue();
+
    // NOTE: algorithm applies mod 8 to the index when indexing into the permutation table
    [Theory]
    [InlineData("123 456 789 012 0")]               // Test data from https://rosettacode.org/wiki/Verhoeff_algorithm
