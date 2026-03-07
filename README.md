@@ -85,6 +85,7 @@ let us know. Or contribute to the CheckDigits.Net repository: https://github.com
     - [v2.3.0](#v2.3.0)
     - [v2.3.1](#v2.3.1)
     - [v3.0.0](#v3.0.0)
+    - [v3.1.0](#v3.1.0)
 
 ## Check Digit Overview
 
@@ -332,7 +333,7 @@ following algorithms implement `IMaskedCheckDigitAlgorithm`:
 * [Modulus11_27Decimal Algorithm](#modulus11_27decimal-algorithm)
 * [Modulus11_27Extended Algorithm](#modulus11_27extended-algorithm)
 * [Modulus11Decimal Algorithm](#modulus11decimal-algorithm)
-* [Modulus11Extended Algorithm)](#modulus11extended-algorithm)
+* [Modulus11Extended Algorithm](#modulus11extended-algorithm)
 * [Verhoeff Algorithm](#verhoeff-algorithm)
 
 ### ICheckDigitMask
