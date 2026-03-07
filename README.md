@@ -2360,6 +2360,14 @@ public class GroupsOfThreeCheckDigitMask : ICheckDigitMask
 | Modulus11Extended     | 140 6                         |  4.317 ns | 0.0073 ns | 0.0068 ns | -         |
 | Modulus11Extended     | 140 662 0                     |  5.268 ns | 0.0358 ns | 0.0335 ns | -         |
 | Modulus11Extended     | 140 662 538 8                 |  6.603 ns | 0.0696 ns | 0.0651 ns | -         |
+|                       |                               |           |           |           |           |
+| Verhoeff              | 140 1                         |  5.549 ns | 0.0181 ns | 0.0151 ns | -         |
+| Verhoeff              | 140 662 5                     |  8.417 ns | 0.0464 ns | 0.0434 ns | -         |
+| Verhoeff              | 140 662 538 8                 | 11.810 ns | 0.0828 ns | 0.0734 ns | -         |
+| Verhoeff              | 140 662 538 042 6             | 15.582 ns | 0.0920 ns | 0.0768 ns | -         |
+| Verhoeff              | 140 662 538 042 551 2         | 19.340 ns | 0.0857 ns | 0.0760 ns | -         |
+| Verhoeff              | 140 662 538 042 551 028 5     | 23.305 ns | 0.1805 ns | 0.1600 ns | -         |
+| Verhoeff              | 140 662 538 042 551 028 265 5 | 27.167 ns | 0.0691 ns | 0.0647 ns | -         |
 
 #### Damm Custom Quasigroup Algorithm
 
