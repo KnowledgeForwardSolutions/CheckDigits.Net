@@ -99,7 +99,11 @@ public sealed class DammCustomQuasigroupAlgorithm(IDammQuasigroup quasigroup) : 
    /// <inheritdoc/>
    public Boolean Validate(String value, ICheckDigitMask mask)
    {
-      if (String.IsNullOrEmpty(value) || value.Length < _validateMinLength)
+      if (mask is null)
+      {
+         throw new ArgumentNullException(nameof(mask), Resources.NullMaskMessage);
+      }
+      if (String.IsNullOrEmpty(value))
       {
          return false;
       }

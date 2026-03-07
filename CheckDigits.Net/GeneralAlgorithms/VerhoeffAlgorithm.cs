@@ -136,7 +136,7 @@ public sealed class VerhoeffAlgorithm : ISingleCheckDigitAlgorithm, IMaskedCheck
          c = _multiplicationTable[c, p];
 
          i++;
-         processedDigits ++;
+         processedDigits++;
       }
       if (processedDigits == 0)
       {
