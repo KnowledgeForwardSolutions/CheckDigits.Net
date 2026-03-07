@@ -28,6 +28,14 @@ public class GroupsOfThreeCheckDigitMask : ICheckDigitMask
    public Boolean IncludeCharacter(Int32 index) => (index + 1) % 4 != 0;
 }
 
+// Excludes "IMO" prefix of 10 character IMO number.
+public class ImoNumberCheckDigitMask : ICheckDigitMask
+{
+   public Boolean ExcludeCharacter(Int32 index) => index < 3;
+
+   public Boolean IncludeCharacter(Int32 index) => index >= 3;
+}
+
 internal class RejectAllMask : ICheckDigitMask
 {
    public Boolean ExcludeCharacter(Int32 index) => true;
