@@ -330,6 +330,7 @@ following algorithms implement `IMaskedCheckDigitAlgorithm`:
 * [Damm Custom Quasigroup Algorithm](#damm-custom-quasigroup-algorithm)
 * [Luhn Algorithm](#luhn-algorithm)
 * [Modulus10_13 Algorithm](#modulus10_13-algorithm)
+* [Modulus10_2 Algorithm](#modulus10_2-algorithm)
 * [Modulus11_27Decimal Algorithm](#modulus11_27decimal-algorithm)
 * [Modulus11_27Extended Algorithm](#modulus11_27extended-algorithm)
 * [Modulus11Decimal Algorithm](#modulus11decimal-algorithm)
@@ -1332,6 +1333,10 @@ Wikipedia: https://en.wikipedia.org/wiki/CAS_Registry_Number
 
 The Modulus10 algorithm uses modulus 10 and each digit is weighted by its position
 in the value, starting with weight 2 for the right-most non-check digit character.
+
+`Modulus10_2Algorithm` implements [IMaskedCheckDigitAlgorithm](#imaskedcheckdigitalgorithm) and can be used 
+to validate values that are formatted with non-check digit characters (for example,
+a value formatted with spaces or dashes for human readability).
 
 #### Details
 
@@ -2511,6 +2516,7 @@ Additional included algorithms:
 Added masked validation support to the following algorithms:
 * Damm Algorithm
 * Modulus10_13 Algorithm
+* Modulus10_2 Algorithm
 * Verhoeff Algorithm
 
 Minor updates to the following algorithms:

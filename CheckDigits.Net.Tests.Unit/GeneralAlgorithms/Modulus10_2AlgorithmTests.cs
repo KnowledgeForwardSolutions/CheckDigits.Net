@@ -181,7 +181,7 @@ public class Modulus10_2AlgorithmTests
 
    [Fact]
    public void Modulus10_2Algorithm_Validate_ShouldReturnFalse_WhenCheckDigitIsNonDigitCharacter()
-      => _sut.Validate("000000001X", _groupsOfThreeMask).Should().BeFalse();    // Actual check digit would be 2
+      => _sut.Validate("000000001X").Should().BeFalse();    // Actual check digit would be 2
 
    [Theory]
    [InlineData("1406")]

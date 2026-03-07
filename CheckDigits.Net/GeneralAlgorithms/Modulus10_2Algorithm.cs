@@ -25,6 +25,7 @@ public sealed class Modulus10_2Algorithm : ISingleCheckDigitAlgorithm, IMaskedCh
    private const Int32 _tryCalculateMaxLength = 9;
    private const Int32 _validateMinLength = 2;
    private const Int32 _validateMaxLength = 10;
+   private const Int32 _validateMaskedMaxProcessed = 9;
 
    /// <inheritdoc/>
    public String AlgorithmDescription => Resources.Modulus10_2AlgorithmDescription;
@@ -126,7 +127,7 @@ public sealed class Modulus10_2Algorithm : ISingleCheckDigitAlgorithm, IMaskedCh
          processedDigits++;
       }
       s += t;
-      if (processedDigits == 0 || processedDigits >= _validateMaxLength)
+      if (processedDigits == 0 || processedDigits > _validateMaskedMaxProcessed)
       {
          return false;
       }
