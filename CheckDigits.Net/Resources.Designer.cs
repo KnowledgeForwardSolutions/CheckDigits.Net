@@ -799,6 +799,15 @@ namespace CheckDigits.Net {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Mask may not be null.
+        /// </summary>
+        internal static string NullMaskMessage {
+            get {
+                return ResourceManager.GetString("NullMaskMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Quasigroup definition may not be null.
         /// </summary>
         internal static string QuasigroupDefinitionRequiredMessage {

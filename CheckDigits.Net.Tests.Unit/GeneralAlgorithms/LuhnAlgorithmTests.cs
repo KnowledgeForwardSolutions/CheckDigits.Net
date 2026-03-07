@@ -271,12 +271,27 @@ public class LuhnAlgorithmTests
    // ==========================================================================
 
    [Fact]
+   public void LuhnAlgorithm_ValidateMasked_ShouldThrowArgumentNullException_WhenMaskIsNull()
+      => _sut
+         .Invoking(x => x.Validate("12345", null!))
+         .Should()
+         .ThrowExactly<ArgumentNullException>()
+         .WithParameterName("mask")
+         .WithMessage(Resources.NullMaskMessage + "*");
+
+   [Fact]
    public void LuhnAlgorithm_ValidateMasked_ShouldReturnFalse_WhenInputIsNull()
       => _sut.Validate(null!, _acceptAllMask).Should().BeFalse();
 
    [Fact]
    public void LuhnAlgorithm_ValidateMasked_ShouldReturnFalse_WhenInputIsEmpty()
       => _sut.Validate(String.Empty, _acceptAllMask).Should().BeFalse();
+
+   [Theory]
+   [InlineData("0")]    // "0" is the only digit that would pass unless length is checked explicitly
+   [InlineData("1")]
+   public void LuhnAlgorithm_ValidateMasked_ShouldReturnFalse_WhenInsufficientUnmaskedCharactersToCalculateCheckDigit(String value)
+      => _sut.Validate(value, _acceptAllMask).Should().BeFalse();
 
    [Fact]
    public void LuhnAlgorithm_ValidateMasked_ShouldReturnFalse_WhenAllNonCheckDigitCharactersAreMaskedOut()
@@ -326,6 +341,20 @@ public class LuhnAlgorithmTests
    [InlineData("5117 0095 7")]            // "   Note CSIN is normally formatted as XXX XXX XXX and the groups of four used here is to allow the same mask for all test cases 
    public void LuhnAlgorithm_ValidateMasked_ShouldReturnTrue_WhenValueContainsValidCheckDigit(String value)
       => _sut.Validate(value, _creditCardMask).Should().BeTrue();
+
+   [Theory]
+   [InlineData("378282246310005")]     // American Express test credit card number
+   [InlineData("6011111111111117")]    // Discover test credit card number
+   [InlineData("5555555555554444")]    // MasterCard test credit card number
+   [InlineData("4012888888881881")]    // Visa test credit card number
+   [InlineData("3056930009020004")]    // Diners Club test credit card number
+   [InlineData("3566111111111113")]    // JCB test credit card number
+   [InlineData("808401234567893")]     // NPI (National Provider Identifier), including 80840 prefix
+   [InlineData("490154203237518")]     // IMEI (International Mobile Equipment Identity)
+   [InlineData("293443438")]           // Canadian Social Insurance Number from https://www.ibm.com/docs/en/sga?topic=patterns-canada-social-insurance-number
+   [InlineData("511700957")]           // "
+   public void LuhnAlgorithm_ValidateMasked_ShouldReturnTrue_WhenValueContainsValidCheckDigitAndMaskAcceptsAllCharacters(String value)
+      => _sut.Validate(value, _acceptAllMask).Should().BeTrue();
 
    [Theory]
    [InlineData("3056 9300 9002 0004")]    // Diners Club test card number with two digit transposition 09 -> 90

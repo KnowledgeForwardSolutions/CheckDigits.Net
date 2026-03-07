@@ -1,9 +1,23 @@
-﻿// Ignore Spelling: Luhn
+﻿// Ignore Spelling: Damm Luhn Verhoeff
 
 namespace CheckDigits.Net.Tests.Unit;
 
 public class MaskedAlgorithmsTests
 {
+   #region Damm Property Tests
+   // ==========================================================================
+   // ==========================================================================
+
+   [Fact]
+   public void MaskedAlgorithms_Damm_ShouldNotBeNull()
+      => MaskedAlgorithms.Damm.Should().NotBeNull();
+
+   [Fact]
+   public void MaskedAlgorithms_Damm_ShouldBeExpectedType()
+      => MaskedAlgorithms.Damm.Should().BeOfType<DammAlgorithm>();
+
+   #endregion
+
    #region Luhn Property Tests
    // ==========================================================================
    // ==========================================================================
@@ -85,6 +99,20 @@ public class MaskedAlgorithmsTests
    [Fact]
    public void MaskedAlgorithms_Modulus11Extended_ShouldBeExpectedType()
       => MaskedAlgorithms.Modulus11Extended.Should().BeOfType<Modulus11ExtendedAlgorithm>();
+
+   #endregion
+
+   #region Verhoeff Property Tests
+   // ==========================================================================
+   // ==========================================================================
+
+   [Fact]
+   public void MaskedAlgorithms_Verhoeff_ShouldNotBeNull()
+      => MaskedAlgorithms.Verhoeff.Should().NotBeNull();
+
+   [Fact]
+   public void MaskedAlgorithms_Verhoeff_ShouldBeExpectedType()
+      => MaskedAlgorithms.Verhoeff.Should().BeOfType<VerhoeffAlgorithm>();
 
    #endregion
 }

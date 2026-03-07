@@ -178,6 +178,15 @@ public class DammAlgorithmTests
    // ==========================================================================
 
    [Fact]
+   public void DammAlgorithm_ValidateMasked_ShouldThrowArgumentNullException_WhenMaskIsNull()
+      => _sut
+         .Invoking(x => x.Validate("12345", null!))
+         .Should()
+         .ThrowExactly<ArgumentNullException>()
+         .WithParameterName("mask")
+         .WithMessage(Resources.NullMaskMessage + "*");
+
+   [Fact]
    public void DammAlgorithm_ValidateMasked_ShouldReturnFalse_WhenInputIsNull()
       => _sut.Validate(null!, _acceptAllMask).Should().BeFalse();
 

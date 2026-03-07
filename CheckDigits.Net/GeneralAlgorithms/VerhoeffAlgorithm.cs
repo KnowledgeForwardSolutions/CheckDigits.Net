@@ -19,10 +19,10 @@ namespace CheckDigits.Net.GeneralAlgorithms;
 ///   </para>
 ///   <para>
 ///   Will detect all single-digit transcription errors and all two digit 
-///   transpositions of adjacent digits
+///   transpositions of adjacent digits.
 ///   </para>
 /// </remarks>
-public sealed class VerhoeffAlgorithm : ISingleCheckDigitAlgorithm
+public sealed class VerhoeffAlgorithm : ISingleCheckDigitAlgorithm, IMaskedCheckDigitAlgorithm
 {
    private static readonly VerhoeffInverseTable _inverseTable =
       VerhoeffInverseTable.Instance;
@@ -52,7 +52,7 @@ public sealed class VerhoeffAlgorithm : ISingleCheckDigitAlgorithm
       for (var index = value.Length - 1; index >= 0; index--)
       {
          var n = value![index].ToIntegerDigit();
-         if (n < 0 || n > 9)
+         if (n.IsInvalidDigit())
          {
             return false;
          }
@@ -80,7 +80,7 @@ public sealed class VerhoeffAlgorithm : ISingleCheckDigitAlgorithm
       for (var index = value.Length - 1; index >= 0; index--)
       {
          var n = value![index].ToIntegerDigit();
-         if (n < 0 || n > 9)
+         if (n.IsInvalidDigit())
          {
             return false;
          }
@@ -89,6 +89,58 @@ public sealed class VerhoeffAlgorithm : ISingleCheckDigitAlgorithm
          c = _multiplicationTable[c, p];
 
          i++;
+      }
+
+      return c == 0;
+   }
+ 
+   /// <inheritdoc/>
+   public Boolean Validate(String value, ICheckDigitMask mask)
+   {
+      if (mask is null)
+      {
+         throw new ArgumentNullException(nameof(mask), Resources.NullMaskMessage);
+      }
+      if (String.IsNullOrEmpty(value))
+      {
+         return false;
+      }
+
+      var c = 0;
+      var i = 0;
+
+      // Handle check digit outside of loop to prevent the mask from excluding it.
+      var n = value[^1].ToIntegerDigit();
+      if (n.IsInvalidDigit())
+      {
+         return false;
+      }
+      var p = _permutationTable[i % 8, n];
+      c = _multiplicationTable[c, p];
+      i++;
+
+      var processedDigits = 0;
+      for (var index = value.Length - 2; index >= 0; index--)     // Minus 2 because check digit is handled outside of loop
+      {
+         if (mask.ExcludeCharacter(index))
+         {
+            continue;
+         }
+         n = value[index].ToIntegerDigit();
+         if (n.IsInvalidDigit())
+         {
+            return false;
+         }
+
+         p = _permutationTable[i % 8, n];
+         c = _multiplicationTable[c, p];
+
+         i++;
+         processedDigits++;
+      }
+      if (processedDigits == 0)
+      {
+         return false;
       }
 
       return c == 0;

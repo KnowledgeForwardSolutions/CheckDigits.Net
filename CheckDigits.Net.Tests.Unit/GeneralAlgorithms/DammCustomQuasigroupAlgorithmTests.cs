@@ -382,6 +382,22 @@ public class DammCustomQuasigroupAlgorithmTests
    [Theory]
    [InlineData(10)]
    [InlineData(16)]
+   public void DammAlgorithm_ValidateMasked_ShouldThrowArgumentNullException_WhenMaskIsNull(Int32 order)
+   {
+      // Arrange.
+      var sut = GetAlgorithm(order);
+
+      // Act/assert.
+      sut.Invoking(x => x.Validate("12345", null!))
+         .Should()
+         .ThrowExactly<ArgumentNullException>()
+         .WithParameterName("mask")
+         .WithMessage(Resources.NullMaskMessage + "*");
+   }
+
+   [Theory]
+   [InlineData(10)]
+   [InlineData(16)]
    public void DammCustomQuasigroupAlgorithm_ValidateMasked_ShouldReturnFalse_WhenInputIsNull(Int32 order)
    {
       // Arrange.

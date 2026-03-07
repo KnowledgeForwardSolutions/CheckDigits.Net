@@ -1,4 +1,4 @@
-﻿// Ignore Spelling: Luhn
+﻿// Ignore Spelling: Damm Luhn Verhoeff
 
 namespace CheckDigits.Net;
 
@@ -8,6 +8,9 @@ namespace CheckDigits.Net;
 /// </summary>
 public static class MaskedAlgorithms
 {
+   private static readonly Lazy<IMaskedCheckDigitAlgorithm> _damm =
+      new(() => new DammAlgorithm());
+
    private static readonly Lazy<IMaskedCheckDigitAlgorithm> _luhn =
       new(() => new LuhnAlgorithm());
 
@@ -25,6 +28,14 @@ public static class MaskedAlgorithms
 
    private static readonly Lazy<IMaskedCheckDigitAlgorithm> _modulus11Extended =
       new(() => new Modulus11ExtendedAlgorithm());
+
+   private static readonly Lazy<IMaskedCheckDigitAlgorithm> _verhoeff =
+      new(() => new VerhoeffAlgorithm());
+
+   /// <summary>
+   ///   Damm algorithm.
+   /// </summary>
+   public static IMaskedCheckDigitAlgorithm Damm => _damm.Value;
 
    /// <summary>
    ///   Luhn algorithm.
@@ -56,4 +67,8 @@ public static class MaskedAlgorithms
    /// </summary>
    public static IMaskedCheckDigitAlgorithm Modulus11Extended => _modulus11Extended.Value;
 
+   /// <summary>
+   ///   Verhoeff algorithm.
+   /// </summary>
+   public static IMaskedCheckDigitAlgorithm Verhoeff => _verhoeff.Value;
 }

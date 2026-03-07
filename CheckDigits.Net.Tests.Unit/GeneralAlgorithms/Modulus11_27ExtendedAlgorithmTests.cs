@@ -248,6 +248,15 @@ public class Modulus11_27ExtendedAlgorithmTests
    // ==========================================================================
 
    [Fact]
+   public void Modulus11_27ExtendedAlgorithm_ValidateMasked_ShouldThrowArgumentNullException_WhenMaskIsNull()
+      => _sut
+         .Invoking(x => x.Validate("12345", null!))
+         .Should()
+         .ThrowExactly<ArgumentNullException>()
+         .WithParameterName("mask")
+         .WithMessage(Resources.NullMaskMessage + "*");
+
+   [Fact]
    public void Modulus11_27ExtendedAlgorithm_ValidateMasked_ShouldReturnFalse_WhenInputIsNull()
       => _sut.Validate(null!, _acceptAllMask).Should().BeFalse();
 

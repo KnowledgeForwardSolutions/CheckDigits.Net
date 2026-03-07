@@ -111,6 +111,17 @@ public class Modulus10_13AlgorithmTests
       checkDigit.Should().Be('\0');
    }
 
+   [Theory]
+   [InlineData("140")]
+   [InlineData("140662")]
+   [InlineData("140662538")]
+   [InlineData("140662538042")]
+   [InlineData("140662538042551")]
+   [InlineData("140662538042551028")]
+   [InlineData("140662538042551028265")]
+   public void Modulus10_13Algorithm_TryCalculateValue_ShouldReturnTrue_ForBenchmarkValues(String value)
+      => _sut.TryCalculateCheckDigit(value, out _).Should().BeTrue();
+
    #endregion
 
    #region Validate Tests
@@ -190,11 +201,31 @@ public class Modulus10_13AlgorithmTests
    public void Modulus10_13Algorithm_Validate_ShouldReturnFalse_WhenCheckDigitCharacterIsNonDigit()
       => _sut.Validate("03600029145A").Should().BeFalse();
 
+   [Theory]
+   [InlineData("1403")]           
+   [InlineData("1406627")]        
+   [InlineData("1406625385")]     
+   [InlineData("1406625380425")]   
+   [InlineData("1406625380425518")]
+   [InlineData("1406625380425510288")]  
+   [InlineData("1406625380425510282657")]
+   public void Modulus10_13Algorithm_Validate_ShouldReturnTrue_ForBenchmarkValues(String value)
+      => _sut.Validate(value).Should().BeTrue();
+
    #endregion
 
    #region Validate (ICheckDigitMask Overload) Tests
    // ==========================================================================
    // ==========================================================================
+
+   [Fact]
+   public void Modulus10_13Algorithm_ValidateMasked_ShouldThrowArgumentNullException_WhenMaskIsNull()
+      => _sut
+         .Invoking(x => x.Validate("12345", null!))
+         .Should()
+         .ThrowExactly<ArgumentNullException>()
+         .WithParameterName("mask")
+         .WithMessage(Resources.NullMaskMessage + "*");
 
    [Fact]
    public void Modulus10_13Algorithm_ValidateMasked_ShouldReturnFalse_WhenInputIsNull()
@@ -203,6 +234,12 @@ public class Modulus10_13AlgorithmTests
    [Fact]
    public void Modulus10_13Algorithm_ValidateMasked_ShouldReturnFalse_WhenInputIsEmpty()
       => _sut.Validate(String.Empty, _acceptAllMask).Should().BeFalse();
+
+   [Theory]
+   [InlineData("0")]
+   [InlineData("1")]
+   public void Modulus10_13Algorithm_ValidateMasked_ShouldReturnFalse_WhenInsufficientUnmaskedCharactersToCalculateCheckDigit(String value)
+      => _sut.Validate(value, _acceptAllMask).Should().BeFalse();
 
    [Fact]
    public void Modulus10_13Algorithm_ValidateMasked_ShouldReturnFalse_WhenAllNonCheckDigitCharactersAreMaskedOut()
@@ -276,6 +313,17 @@ public class Modulus10_13AlgorithmTests
    [Fact]
    public void Modulus10_13Algorithm_ValidateMasked_ShouldReturnFalse_WhenCheckDigitCharacterIsNonDigit()
       => _sut.Validate("036 000 291 45A", _groupsOfThreeMask).Should().BeFalse();
+
+   [Theory]
+   [InlineData("140 3")]           
+   [InlineData("140 662 7")]        
+   [InlineData("140 662 538 5")]     
+   [InlineData("140 662 538 042 5")]   
+   [InlineData("140 662 538 042 551 8")]
+   [InlineData("140 662 538 042 551 028 8")]  
+   [InlineData("140 662 538 042 551 028 265 7")]
+   public void Modulus10_13Algorithm_ValidateMasked_ShouldReturnTrue_ForBenchmarkValues(String value)
+      => _sut.Validate(value, _groupsOfThreeMask).Should().BeTrue();
 
    #endregion
 }

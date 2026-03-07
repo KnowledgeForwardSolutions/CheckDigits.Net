@@ -85,6 +85,7 @@ let us know. Or contribute to the CheckDigits.Net repository: https://github.com
     - [v2.3.0](#v2.3.0)
     - [v2.3.1](#v2.3.1)
     - [v3.0.0](#v3.0.0)
+    - [v3.1.0](#v3.1.0)
 
 ## Check Digit Overview
 
@@ -328,11 +329,12 @@ following algorithms implement `IMaskedCheckDigitAlgorithm`:
 * [Damm Algorithm](#damm-algorithm)
 * [Damm Custom Quasigroup Algorithm](#damm-custom-quasigroup-algorithm)
 * [Luhn Algorithm](#luhn-algorithm)
-* [Modulus10_13 Algorithm (UPC/EAN/ISBN-13/etc.)](#modulus10_13-algorithm)
+* [Modulus10_13 Algorithm](#modulus10_13-algorithm)
 * [Modulus11_27Decimal Algorithm](#modulus11_27decimal-algorithm)
 * [Modulus11_27Extended Algorithm](#modulus11_27extended-algorithm)
-* [Modulus11Decimal Algorithm (NHS Number/etc.)](#modulus11decimal-algorithm)
-* [Modulus11Extended Algorithm (ISBN-10/ISSN/etc.)](#modulus11extended-algorithm)
+* [Modulus11Decimal Algorithm](#modulus11decimal-algorithm)
+* [Modulus11Extended Algorithm](#modulus11extended-algorithm)
+* [Verhoeff Algorithm](#verhoeff-algorithm)
 
 ### ICheckDigitMask
 
@@ -1729,6 +1731,10 @@ implemented as a set of lookup tables). Additionally, Verhoeff's algorithm can
 detect many, though not all, twin errors, two digit jump transpositions and jump
 twin errors.
 
+`VerhoeffAlgorithm` implements [IMaskedCheckDigitAlgorithm](#imaskedcheckdigitalgorithm) and can be used 
+to validate values that are formatted with non-check digit characters (for example,
+a credit card number formatted with spaces or dashes).
+
 #### Details
 
 * Valid characters - decimal digits ('0' - '9')
@@ -2355,6 +2361,14 @@ public class GroupsOfThreeCheckDigitMask : ICheckDigitMask
 | Modulus11Extended     | 140 6                         |  4.317 ns | 0.0073 ns | 0.0068 ns | -         |
 | Modulus11Extended     | 140 662 0                     |  5.268 ns | 0.0358 ns | 0.0335 ns | -         |
 | Modulus11Extended     | 140 662 538 8                 |  6.603 ns | 0.0696 ns | 0.0651 ns | -         |
+|                       |                               |           |           |           |           |
+| Verhoeff              | 140 1                         |  5.549 ns | 0.0181 ns | 0.0151 ns | -         |
+| Verhoeff              | 140 662 5                     |  8.417 ns | 0.0464 ns | 0.0434 ns | -         |
+| Verhoeff              | 140 662 538 8                 | 11.810 ns | 0.0828 ns | 0.0734 ns | -         |
+| Verhoeff              | 140 662 538 042 6             | 15.582 ns | 0.0920 ns | 0.0768 ns | -         |
+| Verhoeff              | 140 662 538 042 551 2         | 19.340 ns | 0.0857 ns | 0.0760 ns | -         |
+| Verhoeff              | 140 662 538 042 551 028 5     | 23.305 ns | 0.1805 ns | 0.1600 ns | -         |
+| Verhoeff              | 140 662 538 042 551 028 265 5 | 27.167 ns | 0.0691 ns | 0.0647 ns | -         |
 
 #### Damm Custom Quasigroup Algorithm
 
@@ -2497,6 +2511,7 @@ Additional included algorithms:
 Added masked validation support to the following algorithms:
 * Damm Algorithm
 * Modulus10_13 Algorithm
+* Verhoeff Algorithm
 
 Minor updates to the following algorithms:
 * ICAO 9303 Document Size TD1 Algorithm

@@ -281,6 +281,15 @@ public class Modulus11DecimalAlgorithmTests
    // ==========================================================================
 
    [Fact]
+   public void Modulus11DecimalAlgorithm_ValidateMasked_ShouldThrowArgumentNullException_WhenMaskIsNull()
+      => _sut
+         .Invoking(x => x.Validate("12345", null!))
+         .Should()
+         .ThrowExactly<ArgumentNullException>()
+         .WithParameterName("mask")
+         .WithMessage(Resources.NullMaskMessage + "*");
+
+   [Fact]
    public void Modulus11DecimalAlgorithm_ValidateMasked_ShouldReturnFalse_WhenInputIsNull()
       => _sut.Validate(null!, _acceptAllMask).Should().BeFalse();
 
