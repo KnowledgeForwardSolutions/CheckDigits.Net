@@ -20,7 +20,7 @@
 ///   and 10 characters for validating a value that contains a check digit.
 ///   </para>
 /// </remarks>
-public sealed class Modulus10_2Algorithm : ISingleCheckDigitAlgorithm
+public sealed class Modulus10_2Algorithm : ISingleCheckDigitAlgorithm, IMaskedCheckDigitAlgorithm
 {
    private const Int32 _tryCalculateMaxLength = 9;
    private const Int32 _validateMinLength = 2;
@@ -88,5 +88,11 @@ public sealed class Modulus10_2Algorithm : ISingleCheckDigitAlgorithm
       var checkDigit = s % 10;
 
       return value[^1].ToIntegerDigit() == checkDigit;
+   }
+
+   /// <inheritdoc/>
+   public Boolean Validate(String value, ICheckDigitMask mask)
+   {
+      throw new NotImplementedException();
    }
 }
