@@ -18,7 +18,7 @@
 ///   characters in the input value.
 ///   </para>
 /// </remarks>
-public class AlphanumericMod97_10Algorithm : IDoubleCheckDigitAlgorithm
+public class AlphanumericMod97_10Algorithm : IDoubleCheckDigitAlgorithm, IMaskedCheckDigitAlgorithm
 {
    private const Int32 _validateMinLength = 3;
    private const Int32 _modulus = 97;
@@ -143,5 +143,11 @@ public class AlphanumericMod97_10Algorithm : IDoubleCheckDigitAlgorithm
       sum += num;
 
       return sum % _modulus == 1;
+   }
+
+   /// <inheritdoc/>
+   public Boolean Validate(String value, ICheckDigitMask mask)
+   {
+      throw new NotImplementedException();
    }
 }
