@@ -101,9 +101,12 @@ public class Modulus10_2AlgorithmTests
       checkDigit.Should().Be(expectedCheckDigit);
    }
 
-   [Theory]
-   [InlineData("12G450")]
-   [InlineData("12)450")]
+   [Theory]                      // Modulus 10 means that non-digit characters that are a multiple of 10 positions away
+                                 // from a digit character in the ASCII table could result in the same check digit value
+                                 // unless non-digit characters are explicitly rejected by the code.
+   [InlineData("9D7472")]        // D is 20 positions later in ASCII table than 0
+   [InlineData("9&7472")]        // & is 10 positions earlier in ASCII table than 0
+   [InlineData("9#7472")]        // # is not a multiple of 10 positions away in ASCII table than 0, but is still a non-digit character that should be rejected
    public void Modulus10_2Algorithm_TryCalculateCheckDigit_ShouldReturnFalse_WhenInputContainsNonDigitCharacter(String value)
    {
       _sut.TryCalculateCheckDigit(value, out var checkDigit).Should().BeFalse();
@@ -173,9 +176,12 @@ public class Modulus10_2AlgorithmTests
    public void ModulusAlgorithm_Validate_ShouldReturnTrue_WhenCheckDigitIsCalculatesAsZero()
       => _sut.Validate("1010480").Should().BeTrue();
 
-   [Theory]
-   [InlineData("12G4505")]     // Value 12345 would have check digit = 0. G is 20 positions later in ASCII table than 3 and would also calculate check digit 5 unless code explicitly checks for non-digit
-   [InlineData("12)4505")]     // ) is 10 positions earlier in ASCII table than 3 and would also calculate check digit 0 unless code explicitly checks for non-digit
+   [Theory]                      // Modulus 10 means that non-digit characters that are a multiple of 10 positions away
+                                 // from a digit character in the ASCII table could result in the same check digit value
+                                 // unless non-digit characters are explicitly rejected by the code.
+   [InlineData("9D74729")]       // D is 20 positions later in ASCII table than 0
+   [InlineData("9&74729")]       // & is 10 positions earlier in ASCII table than 0
+   [InlineData("9#74729")]       // # is not a multiple of 10 positions away in ASCII table than 0, but is still a non-digit character that should be rejected
    public void Modulus10_2Algorithm_Validate_ShouldReturnFalse_WhenInputContainsNonDigitCharacter(String value)
       => _sut.Validate(value).Should().BeFalse();
 
@@ -221,11 +227,27 @@ public class Modulus10_2AlgorithmTests
    [InlineData("0")]       // Zero would return true unless length is explicitly checked.
    [InlineData("1")]
    public void Modulus10_2Algorithm_ValidateMasked_ShouldReturnFalse_WhenInsufficientUnmaskedCharactersToCalculateCheckDigit(String value)
-      => _sut.Validate(value, _acceptAllMask).Should().BeFalse();
+   {
+      // Requires at least one unmasked character plus the check digit character.
+      // This should be rejected even if check digit would otherwise be valid.
+      _sut.Validate(value, _acceptAllMask).Should().BeFalse();
+   }
+
+   [Fact]
+   public void Modulus10_2Algorithm_ValidateMasked_ShouldReturnTrue_WhenInputHasExactly9UnmaskedDigits()
+   {
+      // Nine unmasked digits plus check digit = 10 total, which is the maximum
+      // allowed for this algorithm. This should be accepted if check digit is valid.
+      _sut.Validate("0000000012", _acceptAllMask).Should().BeTrue();
+   }
 
    [Fact]
    public void Modulus10_2Algorithm_ValidateMasked_ShouldReturnFalse_WhenInputHasMoreThan9UnmaskedDigits()
-      => _sut.Validate("00000000012", _acceptAllMask).Should().BeFalse();
+   {
+      // Exceeds maximum: 10 unmasked digits + check digit = 11 total
+      // This should be rejected even if check digit would otherwise be valid
+      _sut.Validate("00000000012", _acceptAllMask).Should().BeFalse();
+   }
 
    [Theory]
    [InlineData("000 000 001 2")]
@@ -270,9 +292,12 @@ public class Modulus10_2AlgorithmTests
    public void ModulusAlgorithm_ValidateMasked_ShouldReturnTrue_WhenCheckDigitIsCalculatesAsZero()
       => _sut.Validate("101 048 0", _groupsOfThreeMask).Should().BeTrue();
 
-   [Theory]
-   [InlineData("12G 450 5")]     // Value 12345 would have check digit = 0. G is 20 positions later in ASCII table than 3 and would also calculate check digit 5 unless code explicitly checks for non-digit
-   [InlineData("12) 450 5")]     // ) is 10 positions earlier in ASCII table than 3 and would also calculate check digit 0 unless code explicitly checks for non-digit
+   [Theory]                      // Modulus 10 means that non-digit characters that are a multiple of 10 positions away
+                                 // from a digit character in the ASCII table could result in the same check digit value
+                                 // unless non-digit characters are explicitly rejected by the code.
+   [InlineData("9D7 472 9")]     // D is 20 positions later in ASCII table than 0
+   [InlineData("9&7 472 9")]     // & is 10 positions earlier in ASCII table than 0
+   [InlineData("9#7 472 9")]     // # is not a multiple of 10 positions away in ASCII table than 0, but is still a non-digit character that should be rejected
    public void Modulus10_2Algorithm_ValidateMasked_ShouldReturnFalse_WhenInputContainsNonDigitCharacter(String value)
       => _sut.Validate(value, _groupsOfThreeMask).Should().BeFalse();
 

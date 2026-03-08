@@ -81,7 +81,7 @@ public sealed class Modulus10_2Algorithm : ISingleCheckDigitAlgorithm, IMaskedCh
          var currentDigit = value![index].ToIntegerDigit();
          if (currentDigit.IsInvalidDigit())
          {
-               return false;
+            return false;
          }
          t += currentDigit;
          s += t;

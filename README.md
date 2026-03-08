@@ -2343,6 +2343,10 @@ public class GroupsOfThreeCheckDigitMask : ICheckDigitMask
 | Modulus10_13          | 140 662 538 042 551 028 8     | 12.475 ns | 0.1031 ns | 0.0965 ns | -         |
 | Modulus10_13          | 140 662 538 042 551 028 265 7 | 14.315 ns | 0.1808 ns | 0.1691 ns | -         |
 |                       |                               |           |           |           |           |
+| Modulus10_2           | 140 6                         |  4.208 ns | 0.0254 ns | 0.0225 ns | -         |
+| Modulus10_2           | 140 662 7                     |  5.323 ns | 0.0723 ns | 0.0676 ns | -         |
+| Modulus10_2           | 140 662 538 9                 |  7.141 ns | 0.0285 ns | 0.0267 ns | -         |
+|                       |                               |           |           |           |           |
 | Modulus11_27Decimal   | 140 6                         |  4.353 ns | 0.0255 ns | 0.0213 ns | -         |
 | Modulus11_27Decimal   | 140 662 0                     |  6.006 ns | 0.0760 ns | 0.0711 ns | -         |
 | Modulus11_27Decimal   | 140 662 538 5                 |  7.363 ns | 0.0624 ns | 0.0521 ns | -         |
