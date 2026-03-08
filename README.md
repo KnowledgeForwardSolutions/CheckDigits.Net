@@ -1313,7 +1313,7 @@ Wikipedia: https://en.wikipedia.org/wiki/Luhn_algorithm
 The Modulus10 algorithm uses modulus 10 and each digit is weighted by its position
 in the value, starting with weight 1 for the right-most non-check digit character.
 
-`Modulus10_1Algorithm` implements [IMaskedCheckDigitAlgorithm](#imaskedcheckdigitalgorithm) and can be used 
+`Modulus10_1Algorithm` implements [IMaskedCheckDigitAlgorithm](#imaskedcheckdigitalgorithm) and can be used
 to validate values that are formatted with non-check digit characters (for example,
 a value formatted with spaces or dashes for human readability).
 
