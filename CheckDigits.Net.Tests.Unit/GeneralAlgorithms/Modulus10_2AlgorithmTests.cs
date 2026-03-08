@@ -173,7 +173,7 @@ public class Modulus10_2AlgorithmTests
       => _sut.Validate("0000000000").Should().BeTrue();
 
    [Fact]
-   public void ModulusAlgorithm_Validate_ShouldReturnTrue_WhenCheckDigitIsCalculatesAsZero()
+   public void Modulus10_2Algorithm_Validate_ShouldReturnTrue_WhenCheckDigitIsCalculatesAsZero()
       => _sut.Validate("1010480").Should().BeTrue();
 
    [Theory]                      // Modulus 10 means that non-digit characters that are a multiple of 10 positions away
@@ -289,7 +289,7 @@ public class Modulus10_2AlgorithmTests
       => _sut.Validate("000 000 000 0", _groupsOfThreeMask).Should().BeTrue();
 
    [Fact]
-   public void ModulusAlgorithm_ValidateMasked_ShouldReturnTrue_WhenCheckDigitIsCalculatesAsZero()
+   public void Modulus10_2Algorithm_ValidateMasked_ShouldReturnTrue_WhenCheckDigitIsCalculatesAsZero()
       => _sut.Validate("101 048 0", _groupsOfThreeMask).Should().BeTrue();
 
    [Theory]                      // Modulus 10 means that non-digit characters that are a multiple of 10 positions away
