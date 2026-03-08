@@ -42,6 +42,8 @@ public sealed class Modulus10_2Algorithm : ISingleCheckDigitAlgorithm, IMaskedCh
          return false;
       }
 
+      // See https://en.wikipedia.org/wiki/ISBN#ISBN-10_check_digit_calculation
+      // for use of accumulators s and t instead of multiplying by weights.
       var s = 0;
       var t = 0;
       var processLength = value.Length;
