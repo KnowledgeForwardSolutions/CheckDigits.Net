@@ -17,6 +17,9 @@ public static class MaskedAlgorithms
    private static readonly Lazy<IMaskedCheckDigitAlgorithm> _modulus10_13 =
       new(() => new Modulus10_13Algorithm());
 
+   private static readonly Lazy<IMaskedCheckDigitAlgorithm> _modulus10_2 =
+      new(() => new Modulus10_2Algorithm());
+
    private static readonly Lazy<IMaskedCheckDigitAlgorithm> _modulus11_27Decimal =
       new(() => new Modulus11_27DecimalAlgorithm());
 
@@ -46,6 +49,11 @@ public static class MaskedAlgorithms
    ///   Modulus10_13 algorithm.
    /// </summary>
    public static IMaskedCheckDigitAlgorithm Modulus10_13 => _modulus10_13.Value;
+
+   /// <summary>
+   ///   Modulus10_2 algorithm.
+   /// </summary>
+   public static IMaskedCheckDigitAlgorithm Modulus10_2 => _modulus10_2.Value;
 
    /// <summary>
    ///   Modulus11_27Decimal algorithm.

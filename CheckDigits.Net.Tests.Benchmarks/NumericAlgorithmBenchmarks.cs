@@ -211,61 +211,65 @@ public class NumericAlgorithmBenchmarks
 
    public IEnumerable<Object[]> ValidateMaskedArguments()
    {
-      yield return [Algorithms.Damm, Algorithms.Damm.AlgorithmName, "140 2"];
-      yield return [Algorithms.Damm, Algorithms.Damm.AlgorithmName, "140 662 2"];
-      yield return [Algorithms.Damm, Algorithms.Damm.AlgorithmName, "140 662 538 8"];
-      yield return [Algorithms.Damm, Algorithms.Damm.AlgorithmName, "140 662 538 042 2"];
-      yield return [Algorithms.Damm, Algorithms.Damm.AlgorithmName, "140 662 538 042 551 8"];
-      yield return [Algorithms.Damm, Algorithms.Damm.AlgorithmName, "140 662 538 042 551 028 0"];
-      yield return [Algorithms.Damm, Algorithms.Damm.AlgorithmName, "140 662 538 042 551 028 265 4"];
+      //yield return [Algorithms.Damm, Algorithms.Damm.AlgorithmName, "140 2"];
+      //yield return [Algorithms.Damm, Algorithms.Damm.AlgorithmName, "140 662 2"];
+      //yield return [Algorithms.Damm, Algorithms.Damm.AlgorithmName, "140 662 538 8"];
+      //yield return [Algorithms.Damm, Algorithms.Damm.AlgorithmName, "140 662 538 042 2"];
+      //yield return [Algorithms.Damm, Algorithms.Damm.AlgorithmName, "140 662 538 042 551 8"];
+      //yield return [Algorithms.Damm, Algorithms.Damm.AlgorithmName, "140 662 538 042 551 028 0"];
+      //yield return [Algorithms.Damm, Algorithms.Damm.AlgorithmName, "140 662 538 042 551 028 265 4"];
 
-      yield return [Algorithms.Luhn, Algorithms.Luhn.AlgorithmName, "140 4"];
-      yield return [Algorithms.Luhn, Algorithms.Luhn.AlgorithmName, "140 662 8"];
-      yield return [Algorithms.Luhn, Algorithms.Luhn.AlgorithmName, "140 662 538 2"];
-      yield return [Algorithms.Luhn, Algorithms.Luhn.AlgorithmName, "140 662 538 042 1"];
-      yield return [Algorithms.Luhn, Algorithms.Luhn.AlgorithmName, "140 662 538 042 551 4"];
-      yield return [Algorithms.Luhn, Algorithms.Luhn.AlgorithmName, "140 662 538 042 551 028 5"];
-      yield return [Algorithms.Luhn, Algorithms.Luhn.AlgorithmName, "140 662 538 042 551 028 265 1"];
+      //yield return [Algorithms.Luhn, Algorithms.Luhn.AlgorithmName, "140 4"];
+      //yield return [Algorithms.Luhn, Algorithms.Luhn.AlgorithmName, "140 662 8"];
+      //yield return [Algorithms.Luhn, Algorithms.Luhn.AlgorithmName, "140 662 538 2"];
+      //yield return [Algorithms.Luhn, Algorithms.Luhn.AlgorithmName, "140 662 538 042 1"];
+      //yield return [Algorithms.Luhn, Algorithms.Luhn.AlgorithmName, "140 662 538 042 551 4"];
+      //yield return [Algorithms.Luhn, Algorithms.Luhn.AlgorithmName, "140 662 538 042 551 028 5"];
+      //yield return [Algorithms.Luhn, Algorithms.Luhn.AlgorithmName, "140 662 538 042 551 028 265 1"];
 
-      yield return [Algorithms.Modulus10_13, Algorithms.Modulus10_13.AlgorithmName, "140 3"];
-      yield return [Algorithms.Modulus10_13, Algorithms.Modulus10_13.AlgorithmName, "140 662 7"];
-      yield return [Algorithms.Modulus10_13, Algorithms.Modulus10_13.AlgorithmName, "140 662 538 5"];
-      yield return [Algorithms.Modulus10_13, Algorithms.Modulus10_13.AlgorithmName, "140 662 538 042 5"];
-      yield return [Algorithms.Modulus10_13, Algorithms.Modulus10_13.AlgorithmName, "140 662 538 042 551 8"];
-      yield return [Algorithms.Modulus10_13, Algorithms.Modulus10_13.AlgorithmName, "140 662 538 042 551 028 8"];
-      yield return [Algorithms.Modulus10_13, Algorithms.Modulus10_13.AlgorithmName, "140 662 538 042 551 028 265 7"];
+      //yield return [Algorithms.Modulus10_13, Algorithms.Modulus10_13.AlgorithmName, "140 3"];
+      //yield return [Algorithms.Modulus10_13, Algorithms.Modulus10_13.AlgorithmName, "140 662 7"];
+      //yield return [Algorithms.Modulus10_13, Algorithms.Modulus10_13.AlgorithmName, "140 662 538 5"];
+      //yield return [Algorithms.Modulus10_13, Algorithms.Modulus10_13.AlgorithmName, "140 662 538 042 5"];
+      //yield return [Algorithms.Modulus10_13, Algorithms.Modulus10_13.AlgorithmName, "140 662 538 042 551 8"];
+      //yield return [Algorithms.Modulus10_13, Algorithms.Modulus10_13.AlgorithmName, "140 662 538 042 551 028 8"];
+      //yield return [Algorithms.Modulus10_13, Algorithms.Modulus10_13.AlgorithmName, "140 662 538 042 551 028 265 7"];
 
-      yield return [Algorithms.Modulus11_27Decimal, Algorithms.Modulus11_27Decimal.AlgorithmName, "140 6"];
-      yield return [Algorithms.Modulus11_27Decimal, Algorithms.Modulus11_27Decimal.AlgorithmName, "140 662 0"];
-      yield return [Algorithms.Modulus11_27Decimal, Algorithms.Modulus11_27Decimal.AlgorithmName, "140 662 538 5"];
-      yield return [Algorithms.Modulus11_27Decimal, Algorithms.Modulus11_27Decimal.AlgorithmName, "140 662 538 042 1"];
-      yield return [Algorithms.Modulus11_27Decimal, Algorithms.Modulus11_27Decimal.AlgorithmName, "140 662 538 042 551 0"];
-      yield return [Algorithms.Modulus11_27Decimal, Algorithms.Modulus11_27Decimal.AlgorithmName, "140 662 538 042 551 028 8"];
-      yield return [Algorithms.Modulus11_27Decimal, Algorithms.Modulus11_27Decimal.AlgorithmName, "140 662 538 042 551 028 265 0"];
+      yield return [Algorithms.Modulus10_2, Algorithms.Modulus10_2.AlgorithmName, "140 6"];
+      yield return [Algorithms.Modulus10_2, Algorithms.Modulus10_2.AlgorithmName, "140 662 7"];
+      yield return [Algorithms.Modulus10_2, Algorithms.Modulus10_2.AlgorithmName, "140 662 538 9"];
 
-      yield return [Algorithms.Modulus11_27Extended, Algorithms.Modulus11_27Extended.AlgorithmName, "140 6"];
-      yield return [Algorithms.Modulus11_27Extended, Algorithms.Modulus11_27Extended.AlgorithmName, "140 662 0"];
-      yield return [Algorithms.Modulus11_27Extended, Algorithms.Modulus11_27Extended.AlgorithmName, "140 662 538 5"];
-      yield return [Algorithms.Modulus11_27Extended, Algorithms.Modulus11_27Extended.AlgorithmName, "140 662 538 042 1"];
-      yield return [Algorithms.Modulus11_27Extended, Algorithms.Modulus11_27Extended.AlgorithmName, "140 662 538 042 551 0"];
-      yield return [Algorithms.Modulus11_27Extended, Algorithms.Modulus11_27Extended.AlgorithmName, "140 662 538 042 551 028 8"];
-      yield return [Algorithms.Modulus11_27Extended, Algorithms.Modulus11_27Extended.AlgorithmName, "140 662 538 042 551 028 265 0"];
+      //yield return [Algorithms.Modulus11_27Decimal, Algorithms.Modulus11_27Decimal.AlgorithmName, "140 6"];
+      //yield return [Algorithms.Modulus11_27Decimal, Algorithms.Modulus11_27Decimal.AlgorithmName, "140 662 0"];
+      //yield return [Algorithms.Modulus11_27Decimal, Algorithms.Modulus11_27Decimal.AlgorithmName, "140 662 538 5"];
+      //yield return [Algorithms.Modulus11_27Decimal, Algorithms.Modulus11_27Decimal.AlgorithmName, "140 662 538 042 1"];
+      //yield return [Algorithms.Modulus11_27Decimal, Algorithms.Modulus11_27Decimal.AlgorithmName, "140 662 538 042 551 0"];
+      //yield return [Algorithms.Modulus11_27Decimal, Algorithms.Modulus11_27Decimal.AlgorithmName, "140 662 538 042 551 028 8"];
+      //yield return [Algorithms.Modulus11_27Decimal, Algorithms.Modulus11_27Decimal.AlgorithmName, "140 662 538 042 551 028 265 0"];
 
-      yield return [Algorithms.Modulus11Decimal, Algorithms.Modulus11Decimal.AlgorithmName, "140 6"];
-      yield return [Algorithms.Modulus11Decimal, Algorithms.Modulus11Decimal.AlgorithmName, "140 662 0"];
-      yield return [Algorithms.Modulus11Decimal, Algorithms.Modulus11Decimal.AlgorithmName, "140 662 538 8"];
+      //yield return [Algorithms.Modulus11_27Extended, Algorithms.Modulus11_27Extended.AlgorithmName, "140 6"];
+      //yield return [Algorithms.Modulus11_27Extended, Algorithms.Modulus11_27Extended.AlgorithmName, "140 662 0"];
+      //yield return [Algorithms.Modulus11_27Extended, Algorithms.Modulus11_27Extended.AlgorithmName, "140 662 538 5"];
+      //yield return [Algorithms.Modulus11_27Extended, Algorithms.Modulus11_27Extended.AlgorithmName, "140 662 538 042 1"];
+      //yield return [Algorithms.Modulus11_27Extended, Algorithms.Modulus11_27Extended.AlgorithmName, "140 662 538 042 551 0"];
+      //yield return [Algorithms.Modulus11_27Extended, Algorithms.Modulus11_27Extended.AlgorithmName, "140 662 538 042 551 028 8"];
+      //yield return [Algorithms.Modulus11_27Extended, Algorithms.Modulus11_27Extended.AlgorithmName, "140 662 538 042 551 028 265 0"];
 
-      yield return [Algorithms.Modulus11Extended, Algorithms.Modulus11Extended.AlgorithmName, "140 6"];
-      yield return [Algorithms.Modulus11Extended, Algorithms.Modulus11Extended.AlgorithmName, "140 662 0"];
-      yield return [Algorithms.Modulus11Extended, Algorithms.Modulus11Extended.AlgorithmName, "140 662 538 8"];
+      //yield return [Algorithms.Modulus11Decimal, Algorithms.Modulus11Decimal.AlgorithmName, "140 6"];
+      //yield return [Algorithms.Modulus11Decimal, Algorithms.Modulus11Decimal.AlgorithmName, "140 662 0"];
+      //yield return [Algorithms.Modulus11Decimal, Algorithms.Modulus11Decimal.AlgorithmName, "140 662 538 8"];
 
-      yield return [Algorithms.Verhoeff, Algorithms.Verhoeff.AlgorithmName, "140 1"];
-      yield return [Algorithms.Verhoeff, Algorithms.Verhoeff.AlgorithmName, "140 662 5"];
-      yield return [Algorithms.Verhoeff, Algorithms.Verhoeff.AlgorithmName, "140 662 538 8"];
-      yield return [Algorithms.Verhoeff, Algorithms.Verhoeff.AlgorithmName, "140 662 538 042 6"];
-      yield return [Algorithms.Verhoeff, Algorithms.Verhoeff.AlgorithmName, "140 662 538 042 551 2"];
-      yield return [Algorithms.Verhoeff, Algorithms.Verhoeff.AlgorithmName, "140 662 538 042 551 028 5"];
-      yield return [Algorithms.Verhoeff, Algorithms.Verhoeff.AlgorithmName, "140 662 538 042 551 028 265 5"];
+      //yield return [Algorithms.Modulus11Extended, Algorithms.Modulus11Extended.AlgorithmName, "140 6"];
+      //yield return [Algorithms.Modulus11Extended, Algorithms.Modulus11Extended.AlgorithmName, "140 662 0"];
+      //yield return [Algorithms.Modulus11Extended, Algorithms.Modulus11Extended.AlgorithmName, "140 662 538 8"];
+
+      //yield return [Algorithms.Verhoeff, Algorithms.Verhoeff.AlgorithmName, "140 1"];
+      //yield return [Algorithms.Verhoeff, Algorithms.Verhoeff.AlgorithmName, "140 662 5"];
+      //yield return [Algorithms.Verhoeff, Algorithms.Verhoeff.AlgorithmName, "140 662 538 8"];
+      //yield return [Algorithms.Verhoeff, Algorithms.Verhoeff.AlgorithmName, "140 662 538 042 6"];
+      //yield return [Algorithms.Verhoeff, Algorithms.Verhoeff.AlgorithmName, "140 662 538 042 551 2"];
+      //yield return [Algorithms.Verhoeff, Algorithms.Verhoeff.AlgorithmName, "140 662 538 042 551 028 5"];
+      //yield return [Algorithms.Verhoeff, Algorithms.Verhoeff.AlgorithmName, "140 662 538 042 551 028 265 5"];
    }
 
    //[Benchmark]
