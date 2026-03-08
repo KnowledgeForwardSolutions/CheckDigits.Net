@@ -14,6 +14,9 @@ public static class MaskedAlgorithms
    private static readonly Lazy<IMaskedCheckDigitAlgorithm> _luhn =
       new(() => new LuhnAlgorithm());
 
+   private static readonly Lazy<IMaskedCheckDigitAlgorithm> _modulus10_1 =
+      new(() => new Modulus10_1Algorithm());
+
    private static readonly Lazy<IMaskedCheckDigitAlgorithm> _modulus10_13 =
       new(() => new Modulus10_13Algorithm());
 
@@ -44,6 +47,11 @@ public static class MaskedAlgorithms
    ///   Luhn algorithm.
    /// </summary>
    public static IMaskedCheckDigitAlgorithm Luhn => _luhn.Value;
+
+   /// <summary>
+   ///   Modulus10_1 algorithm.
+   /// </summary>
+   public static IMaskedCheckDigitAlgorithm Modulus10_1 => _modulus10_1.Value;
 
    /// <summary>
    ///   Modulus10_13 algorithm.

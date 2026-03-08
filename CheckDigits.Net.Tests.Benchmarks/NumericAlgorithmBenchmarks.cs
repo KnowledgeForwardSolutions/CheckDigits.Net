@@ -235,9 +235,13 @@ public class NumericAlgorithmBenchmarks
       //yield return [Algorithms.Modulus10_13, Algorithms.Modulus10_13.AlgorithmName, "140 662 538 042 551 028 8"];
       //yield return [Algorithms.Modulus10_13, Algorithms.Modulus10_13.AlgorithmName, "140 662 538 042 551 028 265 7"];
 
-      yield return [Algorithms.Modulus10_2, Algorithms.Modulus10_2.AlgorithmName, "140 6"];
-      yield return [Algorithms.Modulus10_2, Algorithms.Modulus10_2.AlgorithmName, "140 662 7"];
-      yield return [Algorithms.Modulus10_2, Algorithms.Modulus10_2.AlgorithmName, "140 662 538 9"];
+      yield return [Algorithms.Modulus10_1, Algorithms.Modulus10_1.AlgorithmName, "140 1"];
+      yield return [Algorithms.Modulus10_1, Algorithms.Modulus10_1.AlgorithmName, "140 662 8"];
+      yield return [Algorithms.Modulus10_1, Algorithms.Modulus10_1.AlgorithmName, "140 662 538 4"];
+
+      //yield return [Algorithms.Modulus10_2, Algorithms.Modulus10_2.AlgorithmName, "140 6"];
+      //yield return [Algorithms.Modulus10_2, Algorithms.Modulus10_2.AlgorithmName, "140 662 7"];
+      //yield return [Algorithms.Modulus10_2, Algorithms.Modulus10_2.AlgorithmName, "140 662 538 9"];
 
       //yield return [Algorithms.Modulus11_27Decimal, Algorithms.Modulus11_27Decimal.AlgorithmName, "140 6"];
       //yield return [Algorithms.Modulus11_27Decimal, Algorithms.Modulus11_27Decimal.AlgorithmName, "140 662 0"];

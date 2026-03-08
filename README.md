@@ -329,6 +329,7 @@ following algorithms implement `IMaskedCheckDigitAlgorithm`:
 * [Damm Algorithm](#damm-algorithm)
 * [Damm Custom Quasigroup Algorithm](#damm-custom-quasigroup-algorithm)
 * [Luhn Algorithm](#luhn-algorithm)
+* [Modulus10_1 Algorithm](#modulus10_1-algorithm)
 * [Modulus10_13 Algorithm](#modulus10_13-algorithm)
 * [Modulus10_2 Algorithm](#modulus10_2-algorithm)
 * [Modulus11_27Decimal Algorithm](#modulus11_27decimal-algorithm)
@@ -1311,6 +1312,10 @@ Wikipedia: https://en.wikipedia.org/wiki/Luhn_algorithm
 
 The Modulus10 algorithm uses modulus 10 and each digit is weighted by its position
 in the value, starting with weight 1 for the right-most non-check digit character.
+
+`Modulus10_1Algorithm` implements [IMaskedCheckDigitAlgorithm](#imaskedcheckdigitalgorithm) and can be used
+to validate values that are formatted with non-check digit characters (for example,
+a value formatted with spaces or dashes for human readability).
 
 #### Details
 
@@ -2343,6 +2348,10 @@ public class GroupsOfThreeCheckDigitMask : ICheckDigitMask
 | Modulus10_13          | 140 662 538 042 551 028 8     | 12.475 ns | 0.1031 ns | 0.0965 ns | -         |
 | Modulus10_13          | 140 662 538 042 551 028 265 7 | 14.315 ns | 0.1808 ns | 0.1691 ns | -         |
 |                       |                               |           |           |           |           |
+| Modulus10_1           | 140 1                         |  4.231 ns | 0.0572 ns | 0.0535 ns | -         |
+| Modulus10_1           | 140 662 8                     |  5.225 ns | 0.0514 ns | 0.0481 ns | -         |
+| Modulus10_1           | 140 662 538 4                 |  6.567 ns | 0.0868 ns | 0.0812 ns | -         |
+|                       |                               |           |           |           |           |
 | Modulus10_2           | 140 6                         |  4.208 ns | 0.0254 ns | 0.0225 ns | -         |
 | Modulus10_2           | 140 662 7                     |  5.323 ns | 0.0723 ns | 0.0676 ns | -         |
 | Modulus10_2           | 140 662 538 9                 |  7.141 ns | 0.0285 ns | 0.0267 ns | -         |
@@ -2519,6 +2528,7 @@ Additional included algorithms:
 
 Added masked validation support to the following algorithms:
 * Damm Algorithm
+* Modulus10_1 Algorithm
 * Modulus10_13 Algorithm
 * Modulus10_2 Algorithm
 * Verhoeff Algorithm

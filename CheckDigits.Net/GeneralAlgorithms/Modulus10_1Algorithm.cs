@@ -20,11 +20,12 @@
 ///   and 10 characters for validating a value that contains a check digit.
 ///   </para>
 /// </remarks>
-public sealed class Modulus10_1Algorithm : ISingleCheckDigitAlgorithm
+public sealed class Modulus10_1Algorithm : ISingleCheckDigitAlgorithm, IMaskedCheckDigitAlgorithm
 {
    private const Int32 _tryCalculateMaxLength = 9;
    private const Int32 _validateMinLength = 2;
    private const Int32 _validateMaxLength = 10;
+   private const Int32 _validateMaskedMaxProcessed = 9;
 
    /// <inheritdoc/>
    public String AlgorithmDescription => Resources.Modulus10_1AlgorithmDescription;
@@ -46,9 +47,9 @@ public sealed class Modulus10_1Algorithm : ISingleCheckDigitAlgorithm
       for (var index = 0; index < value.Length; index++)
       {
          var currentDigit = value![index].ToIntegerDigit();
-         if (currentDigit < 0 || currentDigit > 9)
+         if (currentDigit.IsInvalidDigit())
          {
-               return false;
+            return false;
          }
          t += currentDigit;
          s += t;
@@ -70,14 +71,17 @@ public sealed class Modulus10_1Algorithm : ISingleCheckDigitAlgorithm
          return false;
       }
 
+      // See https://en.wikipedia.org/wiki/ISBN#ISBN-10_check_digit_calculation
+      // for use of accumulators s and t instead of multiplying by weights.
       var s = 0;
       var t = 0;
-      for (var index = 0; index < value.Length - 1; index++)
+      var processLength = value.Length - 1;
+      for (var index = 0; index < processLength; index++)
       {
          var currentDigit = value![index].ToIntegerDigit();
-         if (currentDigit < 0 || currentDigit > 9)
+         if (currentDigit.IsInvalidDigit())
          {
-               return false;
+            return false;
          }
          t += currentDigit;
          s += t;
@@ -85,6 +89,51 @@ public sealed class Modulus10_1Algorithm : ISingleCheckDigitAlgorithm
 
       var checkDigit = s % 10;
 
+      // No need to check for non-digit check digit character explicitly as it
+      // would calculate as < 0 or > 9 and return false in that case.
+      return value[^1].ToIntegerDigit() == checkDigit;
+   }
+
+   /// <inheritdoc/>
+   public Boolean Validate(String value, ICheckDigitMask mask)
+   {
+      if (mask is null)
+      {
+         throw new ArgumentNullException(nameof(mask), Resources.NullMaskMessage);
+      }
+      if (String.IsNullOrEmpty(value))
+      {
+         return false;
+      }
+
+      var s = 0;
+      var t = 0;
+      var processedDigits = 0;
+      var processLength = value.Length - 1;
+      for (var index = 0; index < processLength; index++)
+      {
+         if (mask.ExcludeCharacter(index))
+         {
+            continue;
+         }
+         var currentDigit = value![index].ToIntegerDigit();
+         if (currentDigit.IsInvalidDigit())
+         {
+            return false;
+         }
+         t += currentDigit;
+         s += t;
+         processedDigits++;
+      }
+      if (processedDigits == 0 || processedDigits > _validateMaskedMaxProcessed)
+      {
+         return false;
+      }
+
+      var checkDigit = s % 10;
+
+      // No need to check for non-digit check digit character explicitly as it
+      // would calculate as < 0 or > 9 and return false in that case.
       return value[^1].ToIntegerDigit() == checkDigit;
    }
 }

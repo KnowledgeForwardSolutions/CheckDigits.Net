@@ -6,7 +6,6 @@ public class Modulus10_2AlgorithmTests
    private readonly ICheckDigitMask _acceptAllMask = new AcceptAllMask();
    private readonly ICheckDigitMask _imoNumberMask = new ImoNumberCheckDigitMask();
    private readonly ICheckDigitMask _groupsOfThreeMask = new GroupsOfThreeCheckDigitMask();
-   
    private readonly ICheckDigitMask _rejectAllMask = new RejectAllMask();
 
    #region AlgorithmDescription Property Tests
@@ -47,6 +46,14 @@ public class Modulus10_2AlgorithmTests
       // Act/assert.
       _sut.TryCalculateCheckDigit(String.Empty, out var checkDigit).Should().BeFalse();
       checkDigit.Should().Be('\0');
+   }
+
+   [Fact]
+   public void Modulus10_2Algorithm_TryCalculateCheckDigit_ShouldReturnTrue_WhenInputHasLengthExactlyEqualNine()
+   {
+      // Act/assert.
+      _sut.TryCalculateCheckDigit("000000001", out var checkDigit).Should().BeTrue();
+      checkDigit.Should().Be('2');
    }
 
    [Fact]
