@@ -37,6 +37,13 @@
 ///   Maximum length allowed is 9 characters for calculating a new check digit 
 ///   and 10 characters for validating a value that contains a check digit.
 ///   </para>
+///   <para>
+///   This algorithm implements <see cref="IMaskedCheckDigitAlgorithm"/> 
+///   and can validate values that contain non-check digit characters (such as 
+///   spaces or dashes for human readability) when used with an 
+///   <see cref="ICheckDigitMask"/>. Note that the trailing check digit 
+///   character is never masked.
+///   </para>
 /// </remarks>
 public sealed class Modulus11ExtendedAlgorithm : ISingleCheckDigitAlgorithm, IMaskedCheckDigitAlgorithm
 {

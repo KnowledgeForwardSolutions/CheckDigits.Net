@@ -34,13 +34,15 @@ public class AlphanumericMod97_10Algorithm : IDoubleCheckDigitAlgorithm, IMasked
    // This value is used to ensure that even with the largest possible digit
    // value (9), (sum + digit) * radix will not overflow a 32-bit integer.
    private const Int32 _reduceThreshold = (Int32.MaxValue / _radix) - _radix;
+
+   // Precomputed first and second digits for letters 'A' to 'Z' to optimize processing.
    private static readonly Int32[] _letterFirstDigits = Chars.Range(Chars.UpperCaseA, Chars.UpperCaseZ)
       .Select(x => x - Chars.UpperCaseA + 10)
-      .Select(x => x / 10)
+      .Select(x => x / 10)       // Extract first digit (tens place)
       .ToArray();
    private static readonly Int32[] _letterSecondDigits = Chars.Range(Chars.UpperCaseA, Chars.UpperCaseZ)
       .Select(x => x - Chars.UpperCaseA + 10)
-      .Select(x => x % 10)
+      .Select(x => x % 10)       // Extract second digit (ones place)
       .ToArray();
 
    /// <inheritdoc/>
