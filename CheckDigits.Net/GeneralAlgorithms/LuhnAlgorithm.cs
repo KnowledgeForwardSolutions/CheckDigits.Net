@@ -19,8 +19,16 @@ namespace CheckDigits.Net.GeneralAlgorithms;
 ///   </para>
 ///   <para>
 ///   Will detect all single-digit transcription errors and most two digit 
-///   transpositions of adjacent digits (except 09 <-> 90). Will detect most
-///   twin errors (i.e. 11 <-> 44) except 22 <-> 55,  33 <-> 66 and 44 <-> 77.
+///   transpositions of adjacent digits (except 09 &lt;-&gt; 90). Will detect most
+///   twin errors (i.e. 11 &lt;-&gt; 44) except 22 &lt;-&gt; 55,  33 &lt;-&gt; 66 
+///   and 44 &lt;-&gt; 77.
+///   </para>
+///   <para>
+///   This algorithm implements <see cref="IMaskedCheckDigitAlgorithm"/> 
+///   and can validate values that contain non-check digit characters (such as 
+///   spaces or dashes for human readability) when used with an 
+///   <see cref="ICheckDigitMask"/>. Note that the trailing check digit 
+///   character is never masked.
 ///   </para>
 /// </remarks>
 public sealed class LuhnAlgorithm : ISingleCheckDigitAlgorithm, IMaskedCheckDigitAlgorithm

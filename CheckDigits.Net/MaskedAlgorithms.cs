@@ -8,6 +8,9 @@ namespace CheckDigits.Net;
 /// </summary>
 public static class MaskedAlgorithms
 {
+   private static readonly Lazy<IMaskedCheckDigitAlgorithm> _alphanumericMod97_10 =
+      new(() => new AlphanumericMod97_10Algorithm());
+
    private static readonly Lazy<IMaskedCheckDigitAlgorithm> _damm =
       new(() => new DammAlgorithm());
 
@@ -37,6 +40,11 @@ public static class MaskedAlgorithms
 
    private static readonly Lazy<IMaskedCheckDigitAlgorithm> _verhoeff =
       new(() => new VerhoeffAlgorithm());
+
+   /// <summary>
+   ///   AlphanumericMod97_10 algorithm.
+   /// </summary>
+   public static IMaskedCheckDigitAlgorithm AlphanumericMod97_10 => _alphanumericMod97_10.Value;
 
    /// <summary>
    ///   Damm algorithm.

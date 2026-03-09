@@ -32,6 +32,13 @@ namespace CheckDigits.Net.GeneralAlgorithms;
 ///   algorithm will detect all single-character transcription errors and all
 ///   two-character transpositions of adjacent characters.
 ///   </para>
+///   <para>
+///   This algorithm implements <see cref="IMaskedCheckDigitAlgorithm"/> 
+///   and can validate values that contain non-check digit characters (such as 
+///   spaces or dashes for human readability) when used with an 
+///   <see cref="ICheckDigitMask"/>. Note that the trailing check digit 
+///   character is never masked.
+///   </para>
 /// </remarks>
 public sealed class DammCustomQuasigroupAlgorithm(IDammQuasigroup quasigroup) : ISingleCheckDigitAlgorithm, IMaskedCheckDigitAlgorithm
 {

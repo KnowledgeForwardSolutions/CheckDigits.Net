@@ -27,8 +27,12 @@ public sealed class Iso7064Mod97_10Algorithm : IDoubleCheckDigitAlgorithm
 {
    private const Int32 _modulus = 97;
    private const Int32 _radix = 10;
-   private const Int32 _reduceThreshold = Int32.MaxValue / _radix;
    private const Int32 _validateMinLength = 3;
+
+   // Reduce threshold is calculated to ensure that (sum + digit) * radix will
+   // not overflow a 32-bit integer.
+   private const Int32 _digitMaxValue = 9;
+   private const Int32 _reduceThreshold = (Int32.MaxValue / _radix) - (_digitMaxValue + 1);
 
    /// <inheritdoc/>
    public String AlgorithmDescription => Resources.Iso7064Mod97_10AlgorithmDescription;

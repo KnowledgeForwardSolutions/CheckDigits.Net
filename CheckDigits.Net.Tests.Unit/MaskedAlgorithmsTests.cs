@@ -4,6 +4,20 @@ namespace CheckDigits.Net.Tests.Unit;
 
 public class MaskedAlgorithmsTests
 {
+   #region AlphanumericMod97_10 Property Tests
+   // ==========================================================================
+   // ==========================================================================
+
+   [Fact]
+   public void MaskedAlgorithms_AlphanumericMod97_10_ShouldNotBeNull()
+      => MaskedAlgorithms.AlphanumericMod97_10.Should().NotBeNull();
+
+   [Fact]
+   public void MaskedAlgorithms_AlphanumericMod97_10_ShouldBeExpectedType()
+      => MaskedAlgorithms.AlphanumericMod97_10.Should().BeOfType<AlphanumericMod97_10Algorithm>();
+
+   #endregion
+
    #region Damm Property Tests
    // ==========================================================================
    // ==========================================================================

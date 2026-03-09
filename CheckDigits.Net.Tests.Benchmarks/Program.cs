@@ -1,5 +1,5 @@
 ﻿
-BenchmarkRunner.Run<NumericAlgorithmBenchmarks>();
+//BenchmarkRunner.Run<NumericAlgorithmBenchmarks>();
 
 //BenchmarkRunner.Run<AlphabeticAlgorithmsBenchmarks>();
 
@@ -9,4 +9,4 @@ BenchmarkRunner.Run<NumericAlgorithmBenchmarks>();
 
 //BenchmarkRunner.Run<CustomizableAlgorithmBenchmarks>();
 
-//BenchmarkRunner.Run<OptimizeBenchmarks>();
+BenchmarkRunner.Run<OptimizeBenchmarks>();

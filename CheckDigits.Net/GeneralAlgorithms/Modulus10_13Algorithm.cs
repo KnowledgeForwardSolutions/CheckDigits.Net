@@ -21,6 +21,13 @@
 ///   between two transposed digits is 5 (i.e. 1 -> 6, 2 -> 6, etc.). Will not
 ///   detect two digit jump transpositions (i.e. 123 -> 424).
 ///   </para>
+///   <para>
+///   This algorithm implements <see cref="IMaskedCheckDigitAlgorithm"/> 
+///   and can validate values that contain non-check digit characters (such as 
+///   spaces or dashes for human readability) when used with an 
+///   <see cref="ICheckDigitMask"/>. Note that the trailing check digit 
+///   character is never masked.
+///   </para>
 /// </remarks>
 public sealed class Modulus10_13Algorithm : ISingleCheckDigitAlgorithm, IMaskedCheckDigitAlgorithm
 {
