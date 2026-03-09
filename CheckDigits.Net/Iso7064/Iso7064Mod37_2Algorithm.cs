@@ -28,9 +28,13 @@ public sealed class Iso7064Mod37_2Algorithm : ISingleCheckDigitAlgorithm
 {
    private const Int32 _modulus = 37;
    private const Int32 _radix = 2;
-   private const Int32 _reduceThreshold = Int32.MaxValue / _radix;
    private const String _checkCharacters = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ*";
    private const Int32 _validateMinLength = 2;
+
+   // Reduce threshold is calculated to ensure that (sum + charValue) * radix will
+   // not overflow a 32-bit integer.
+   private const Int32 _characterMaxValue = 35;
+   private const Int32 _reduceThreshold = (Int32.MaxValue / _radix) - (_characterMaxValue + 1);
 
    /// <inheritdoc/>
    public String AlgorithmDescription => Resources.Iso7064Mod37_2AlgorithmDescription;

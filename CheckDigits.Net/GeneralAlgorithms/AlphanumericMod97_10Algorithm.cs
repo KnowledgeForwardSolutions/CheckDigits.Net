@@ -27,13 +27,14 @@
 /// </remarks>
 public class AlphanumericMod97_10Algorithm : IDoubleCheckDigitAlgorithm, IMaskedCheckDigitAlgorithm
 {
-   private const Int32 _validateMinLength = 3;
    private const Int32 _modulus = 97;
    private const Int32 _radix = 10;
+   private const Int32 _validateMinLength = 3;
 
-   // This value is used to ensure that even with the largest possible digit
-   // value (9), (sum + digit) * radix will not overflow a 32-bit integer.
-   private const Int32 _reduceThreshold = (Int32.MaxValue / _radix) - _radix;
+   // Reduce threshold is calculated to ensure that (sum + digit) * radix will
+   // not overflow a 32-bit integer.
+   private const Int32 _digitMaxValue = 9;
+   private const Int32 _reduceThreshold = (Int32.MaxValue / _radix) - (_digitMaxValue + 1);
 
    // Precomputed first and second digits for letters 'A' to 'Z' to optimize processing.
    private static readonly Int32[] _letterFirstDigits = Chars.Range(Chars.UpperCaseA, Chars.UpperCaseZ)

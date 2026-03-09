@@ -28,8 +28,12 @@ public sealed class Iso7064Mod661_26Algorithm : IDoubleCheckDigitAlgorithm
 {
    private const Int32 _modulus = 661;
    private const Int32 _radix = 26;
-   private const Int32 _reduceThreshold = Int32.MaxValue / _radix;
    private const Int32 _validateMinLength = 3;
+
+   // Reduce threshold is calculated to ensure that (sum + charValue) * radix will
+   // not overflow a 32-bit integer.
+   private const Int32 _characterMaxValue = 25;
+   private const Int32 _reduceThreshold = (Int32.MaxValue / _radix) - (_characterMaxValue + 1);
 
    /// <inheritdoc/>
    public String AlgorithmDescription => Resources.Iso7064Mod661_26AlgorithmDescription;
