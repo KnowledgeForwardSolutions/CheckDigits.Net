@@ -326,6 +326,7 @@ overload of the Validate method that accepts an [ICheckDigitMask](#icheckdigitma
 is used to filter characters from the value being checked. Currently the 
 following algorithms implement `IMaskedCheckDigitAlgorithm`:
 
+* [Alphanumeric MOD 97-10 Algorithm](#alphanumeric-mod-97-10-algorithm)
 * [Damm Algorithm](#damm-algorithm)
 * [Damm Custom Quasigroup Algorithm](#damm-custom-quasigroup-algorithm)
 * [Luhn Algorithm](#luhn-algorithm)
@@ -645,6 +646,10 @@ The Alphanumeric MOD 97-10 algorithm uses a variation of the ISO/IEC 7064 MOD 97
 algorithm where alphabetic characters (A-Z) are mapped to integers (10-35) before 
 calculating the check digit. The algorithm is case insensitive and lowercase 
 letters are mapped to their uppercase equivalent before conversion to integers.
+
+`AlphanumericMod97_10Algorithm` implements [IMaskedCheckDigitAlgorithm](#imaskedcheckdigitalgorithm) and can be used 
+to validate values that are formatted with non-check digit characters (for example,
+a value formatted with spaces or dashes for human readability).
 
 #### Details
 
@@ -2527,6 +2532,7 @@ Additional included algorithms:
 * DammCustomQuasigroup Algorithm
 
 Added masked validation support to the following algorithms:
+* AlphanumericMod97_10 Algorithm
 * Damm Algorithm
 * Modulus10_1 Algorithm
 * Modulus10_13 Algorithm
