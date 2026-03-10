@@ -723,7 +723,8 @@ a value formatted with spaces or dashes for human readability).
 
 #### Description
 
-The Damm Custom Quasigroup algorithm is a generalization of the Damm algorithm that allows 
+The Damm Custom Quasigroup algorithm is a generalization of CheckDigits.Net's 
+basic Damm algorithm implementation. As the name suggests, it allows 
 for the use of custom quasigroups of different orders, enabling the calculation 
 of check digits for a wider range of input values. To use the Damm Custom Quasigroup algorithm, 
 you must create an object that implements the [IDammQuasigroup](#idammquasigroup) 
