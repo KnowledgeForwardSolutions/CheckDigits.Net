@@ -6,11 +6,11 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <Title>CheckDigits.Net</Title>
-    <Version>3.0.0</Version>
+    <Version>3.1.0</Version>
     <Authors>Knowledge Forward Solutions</Authors>
     <Company>Knowledge Forward Solutions</Company>
     <Description>An extensive collection of optimized check digit algorithms suitable for a wide range of applications</Description>
-    <Copyright>Copyright 2024, 2025, Knowledge Forward Solutions</Copyright>
+    <Copyright>Copyright 2024, 2025, 2026, Knowledge Forward Solutions</Copyright>
     <PackageProjectUrl></PackageProjectUrl>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <RepositoryUrl>https://github.com/KnowledgeForwardSolutions/CheckDigits.Net</RepositoryUrl>
@@ -116,6 +116,40 @@ Detailed benchmark results for .Net 8 vs .Net 10 located at https://github.com/K
 
 Added masked validation support for algorithms via ICheckDigitMask and IMaskedCheckDigitAlgorithm interfaces. Algorithms that implement IMaskedCheckDigitAlgorithm:
 * Luhn Algorithm
+
+## v3.1.0
+
+Additional included algorithms:
+* Modulus11Decimal Algorithm
+* Modulus11Extended Algorithm
+* Modulus11_27Decimal Algorithm
+* Modulus11_27Extended Algorithm
+* DammCustomQuasigroup Algorithm
+
+Added masked validation support to the following algorithms:
+* AlphanumericMod97_10 Algorithm
+* Damm Algorithm
+* Modulus10_1 Algorithm
+* Modulus10_13 Algorithm
+* Modulus10_2 Algorithm
+* Verhoeff Algorithm
+
+Minor updates to the following algorithms:
+* ICAO 9303 Document Size TD1 Algorithm
+* ICAO 9303 Document Size TD2 Algorithm
+* ICAO 9303 Document Size TD3 Algorithm
+* ICAO 9303 Machine Readable Visa Algorithm
+
+The original implementation of the above algorithms allowed alphabetic characters in the date of birth/expiration date fields
+as long as the check digit(s) were valid for the characters used. The updated implementation only allows numeric characters 
+in those fields, which is consistent with the ICAO 9303 specification. 
+
+Additionally, the LineSeparator property of the above algorithms was marked Obsolete and will be removed in a future release.
+Instead, the separator used between lines in the MRZ is inferred from the length of the value being validated. 
+
+Algorithms marked as Obsolete:
+* Modulus11 Algorithm (ISBN-10/ISSN/etc.) - Replaced by the Modulus11Extended algorithm.
+* NHS (UK National Health Service) Algorithm - Replaced by the Modulus11_27Decimal algorithm.
 </PackageReleaseNotes>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
