@@ -23,7 +23,7 @@
 ///   in the same value).
 ///   </para>
 /// </remarks>
-public sealed class Iso7064Mod11_10Algorithm : ISingleCheckDigitAlgorithm
+public sealed class Iso7064Mod11_10Algorithm : ISingleCheckDigitAlgorithm, IMaskedCheckDigitAlgorithm
 {
    private const Int32 _modulus = 10;
    private const Int32 _modulusPlus1 = 11;
@@ -101,6 +101,60 @@ public sealed class Iso7064Mod11_10Algorithm : ISingleCheckDigitAlgorithm
 
       num = value[^1].ToIntegerDigit();
       if (num < 0 || num > 9)
+      {
+         return false;
+      }
+
+      product += num;
+
+      return product % _modulus == 1;
+   }
+
+   /// <inheritdoc/>
+   public Boolean Validate(String value, ICheckDigitMask mask)
+   {
+      if (mask is null)
+      {
+         throw new ArgumentNullException(nameof(mask), Resources.NullMaskMessage);
+      }
+      if (String.IsNullOrEmpty(value))
+      {
+         return false;
+      }
+
+      var product = _modulus;
+      Int32 num;
+      var processedDigits = 0;
+      for (var index = 0; index < value.Length - 1; index++)
+      {
+         if (mask.ExcludeCharacter(index))
+         {
+            continue;
+         }
+         num = value[index].ToDecimalDigit();
+         if (!num.IsValidDigit())
+         {
+            return false;
+         }
+         product += num;
+         if (product > _modulus)
+         {
+            product -= _modulus;
+         }
+         product *= 2;
+         if (product >= _modulusPlus1)
+         {
+            product -= _modulusPlus1;
+         }
+         processedDigits++;
+      }
+      if (processedDigits == 0)
+      {
+         return false;
+      }
+
+      num = value[^1].ToDecimalDigit();
+      if (!num.IsValidDigit())
       {
          return false;
       }
