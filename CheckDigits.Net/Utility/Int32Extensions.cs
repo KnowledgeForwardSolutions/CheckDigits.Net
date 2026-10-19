@@ -65,5 +65,19 @@ internal static class Int32Extensions
       /// </returns>
       [MethodImpl(MethodImplOptions.AggressiveInlining)]
       public Boolean IsValidExtendedDecimalCheckDigit() => num is >= 0 and <= 10;
+
+      /// <summary>
+      ///   Converts an integer value between 0 and 9 to its corresponding ASCII 
+      ///   digit character.
+      /// </summary>
+      /// <remarks>
+      ///   If <paramref name="num"/> is not between 0-9 then this method will
+      ///   return an unexpected value.
+      /// </remarks>
+      /// <returns>
+      ///   The ASCII digit character in the range '0' through '9' that 
+      ///   represents the current value.
+      /// </returns>
+      public Char ToAsciiDigit() => (Char)(Chars.DigitZero + num);
    }
 }
