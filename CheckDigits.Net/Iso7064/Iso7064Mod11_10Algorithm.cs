@@ -80,7 +80,8 @@ public sealed class Iso7064Mod11_10Algorithm : ISingleCheckDigitAlgorithm, IMask
 
       var product = _modulus;
       Int32 num;
-      for (var index = 0; index < value.Length - 1; index++)
+      var processLength = value.Length - 1;
+      for (var index = 0; index < processLength; index++)
       {
          num = value[index].ToDecimalDigit();
          if (!num.IsValidDigit())
@@ -125,7 +126,8 @@ public sealed class Iso7064Mod11_10Algorithm : ISingleCheckDigitAlgorithm, IMask
       var product = _modulus;
       Int32 num;
       var processedDigits = 0;
-      for (var index = 0; index < value.Length - 1; index++)
+      var processLength = value.Length - 1;
+      for (var index = 0; index < processLength; index++)
       {
          if (mask.ExcludeCharacter(index))
          {

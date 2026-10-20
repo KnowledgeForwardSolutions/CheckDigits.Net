@@ -150,7 +150,7 @@ public class Iso7064Mod11_10AlgorithmTests
       => _sut.Validate(value).Should().BeFalse();
 
    [Fact]
-   public void Iso7064Mod11_10Algorithm_Validate_ShouldReturnTrue_WhenCheckDigitIsCalculatesAsZero()
+   public void Iso7064Mod11_10Algorithm_Validate_ShouldReturnTrue_WhenCheckDigitIsCalculatedAsZero()
       => _sut.Validate("60").Should().BeTrue();
 
    [Theory]
@@ -181,7 +181,7 @@ public class Iso7064Mod11_10AlgorithmTests
    // ==========================================================================
 
    [Fact]
-   public void so7064Mod11_10Algorithm_ValidateMasked_ShouldThrowArgumentNullException_WhenMaskIsNull()
+   public void Iso7064Mod11_10Algorithm_ValidateMasked_ShouldThrowArgumentNullException_WhenMaskIsNull()
       => _sut
          .Invoking(x => x.Validate("07945", null!))
          .Should()
@@ -240,7 +240,7 @@ public class Iso7064Mod11_10AlgorithmTests
       => _sut.Validate(value, _groupsOfThreeMask).Should().BeFalse();
 
    [Fact]
-   public void Iso7064Mod11_10Algorithm_ValidateMasked_ShouldReturnTrue_WhenCheckDigitIsCalculatesAsZero()
+   public void Iso7064Mod11_10Algorithm_ValidateMasked_ShouldReturnTrue_WhenCheckDigitIsCalculatedAsZero()
       => _sut.Validate("60", _acceptAllMask).Should().BeTrue();
 
    [Theory]
