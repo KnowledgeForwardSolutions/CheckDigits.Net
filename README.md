@@ -86,6 +86,7 @@ let us know. Or contribute to the CheckDigits.Net repository: https://github.com
     - [v2.3.1](#v2.3.1)
     - [v3.0.0](#v3.0.0)
     - [v3.1.0](#v3.1.0)
+    - [v4.0.0](#v4.0.0)
 
 ## Check Digit Overview
 
@@ -2556,3 +2557,17 @@ Instead, the separator used between lines in the MRZ is inferred from the length
 Algorithms marked as Obsolete:
 * Modulus11 Algorithm (ISBN-10/ISSN/etc.) - Replaced by the Modulus11Extended algorithm.
 * NHS (UK National Health Service) Algorithm - Replaced by the Modulus11_27Decimal algorithm.
+
+## v4.0.0
+
+Updated to .Net 11.0
+
+Removed .Net 8.0
+Removed Modulus 11 Algorithm previously marked as Obsolete
+
+Added masked validation support to the following algorithms:
+* Iso7064Mod11_10 Algorithm
+
+
+
+Classes/methods marked as Obsolete:
