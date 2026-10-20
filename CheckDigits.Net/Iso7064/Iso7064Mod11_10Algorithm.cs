@@ -6,21 +6,21 @@
 /// </summary>
 /// <remarks>
 ///   <para>
-///   Valid characters are decimal digits (0-9).
+///      Valid characters are decimal digits (0-9).
 ///   </para>
 ///   <para>
-///   Check digit calculated by the algorithm is a decimal digit (0-9).
+///      Check digit calculated by the algorithm is a decimal digit (0-9).
 ///   </para>
 ///   <para>
-///   Assumes that the check digit (if present) is the right-most digit in the
-///   input value.
+///      Assumes that the check digit (if present) is the right-most digit in 
+///      the input value.
 ///   </para>
 ///   <para>
-///   Will detect all single digit transcription errors, all or nearly all two 
-///   digit transposition errors, all or nearly all jump transposition errors,
-///   all or nearly all circular shift errors and a high proportion of double 
-///   digit transcription errors (two separate single digit transcription errors
-///   in the same value).
+///      Will detect all single digit transcription errors, all or nearly all 
+///      two digit transposition errors, all or nearly all jump transposition 
+///      errors, all or nearly all circular shift errors and a high proportion 
+///      of double transcription errors (two separate single digit transcription 
+///      errors in the same value).
 ///   </para>
 /// </remarks>
 public sealed class Iso7064Mod11_10Algorithm : ISingleCheckDigitAlgorithm, IMaskedCheckDigitAlgorithm
@@ -47,8 +47,8 @@ public sealed class Iso7064Mod11_10Algorithm : ISingleCheckDigitAlgorithm, IMask
       var product = _modulus;
       for (var index = 0; index < value.Length; index++)
       {
-         var num = value[index].ToIntegerDigit();
-         if (num < 0 || num > 9)
+         var num = value[index].ToDecimalDigit();
+         if (!num.IsValidDigit())
          {
             return false;
          }
@@ -82,8 +82,8 @@ public sealed class Iso7064Mod11_10Algorithm : ISingleCheckDigitAlgorithm, IMask
       Int32 num;
       for (var index = 0; index < value.Length - 1; index++)
       {
-         num = value[index].ToIntegerDigit();
-         if (num < 0 || num > 9)
+         num = value[index].ToDecimalDigit();
+         if (!num.IsValidDigit())
          {
             return false;
          }
@@ -99,8 +99,8 @@ public sealed class Iso7064Mod11_10Algorithm : ISingleCheckDigitAlgorithm, IMask
          }
       }
 
-      num = value[^1].ToIntegerDigit();
-      if (num < 0 || num > 9)
+      num = value[^1].ToDecimalDigit();
+      if (!num.IsValidDigit())
       {
          return false;
       }
