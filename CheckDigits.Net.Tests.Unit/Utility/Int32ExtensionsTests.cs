@@ -36,7 +36,7 @@ public class Int32ExtensionsTests
 
    #endregion
 
-   #region IsValidExtenedDecimalCheckDigit Tests
+   #region IsValidExtendedDecimalCheckDigit Tests
    // ==========================================================================
    // ==========================================================================
 

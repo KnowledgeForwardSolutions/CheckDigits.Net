@@ -2572,3 +2572,10 @@ Added masked validation support to the following algorithms:
 
 
 Classes/methods marked as Obsolete:
+
+CheckDigits.Net.Utility.ExtensionMethods
+	.IsInvalidDigit
+	.IsInvalidExtendedDecimalCheckDigit
+	.ToDigitChar
+	.ToExtendedDecimalCheckDigit
+	.ToIntegerDigit

@@ -56,8 +56,6 @@ internal static class Int32Extensions
       ///     for 10). This method should be applied only to check characters; 
       ///     non-check characters should use <see cref="IsValidDigit"/>.
       ///   </para>
-      ///   Validates the backing value as an extended decimal check digit; valid values are 0
-      /// through 10 inclusive.
       /// </remarks>
       /// <returns>
       ///   <see langword="true"/> if the check digit value is between 0 and 10, 
