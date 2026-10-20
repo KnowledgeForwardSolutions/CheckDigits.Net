@@ -330,6 +330,7 @@ following algorithms implement `IMaskedCheckDigitAlgorithm`:
 * [Alphanumeric MOD 97-10 Algorithm](#alphanumeric-mod-97-10-algorithm)
 * [Damm Algorithm](#damm-algorithm)
 * [Damm Custom Quasigroup Algorithm](#damm-custom-quasigroup-algorithm)
+* [ISO/IEC 7064 MOD 11,10 Algorithm](#isoiec-7064-mod-1110-algorithm)
 * [Luhn Algorithm](#luhn-algorithm)
 * [Modulus10_1 Algorithm](#modulus10_1-algorithm)
 * [Modulus10_13 Algorithm](#modulus10_13-algorithm)
