@@ -6,24 +6,24 @@
 /// </summary>
 /// <remarks>
 ///   <para>
-///   Valid characters are decimal digits (0-9).
+///      Valid characters are decimal digits (0-9).
 ///   </para>
 ///   <para>
-///   Check digit calculated by the algorithm is a decimal digit (0-9).
+///      Check digit calculated by the algorithm is a decimal digit (0-9).
 ///   </para>
 ///   <para>
-///   Assumes that the check digit (if present) is the right-most digit in the
-///   input value.
+///      Assumes that the check digit (if present) is the right-most digit in 
+///      the input value.
 ///   </para>
 ///   <para>
-///   Will detect all single digit transcription errors, all or nearly all two 
-///   digit transposition errors, all or nearly all jump transposition errors,
-///   all or nearly all circular shift errors and a high proportion of double 
-///   digit transcription errors (two separate single digit transcription errors
-///   in the same value).
+///      Will detect all single digit transcription errors, all or nearly all 
+///      two digit transposition errors, all or nearly all jump transposition 
+///      errors, all or nearly all circular shift errors and a high proportion 
+///      of double transcription errors (two separate single digit transcription 
+///      errors in the same value).
 ///   </para>
 /// </remarks>
-public sealed class Iso7064Mod11_10Algorithm : ISingleCheckDigitAlgorithm
+public sealed class Iso7064Mod11_10Algorithm : ISingleCheckDigitAlgorithm, IMaskedCheckDigitAlgorithm
 {
    private const Int32 _modulus = 10;
    private const Int32 _modulusPlus1 = 11;
@@ -47,8 +47,8 @@ public sealed class Iso7064Mod11_10Algorithm : ISingleCheckDigitAlgorithm
       var product = _modulus;
       for (var index = 0; index < value.Length; index++)
       {
-         var num = value[index].ToIntegerDigit();
-         if (num < 0 || num > 9)
+         var num = value[index].ToDecimalDigit();
+         if (!num.IsValidDigit())
          {
             return false;
          }
@@ -80,10 +80,11 @@ public sealed class Iso7064Mod11_10Algorithm : ISingleCheckDigitAlgorithm
 
       var product = _modulus;
       Int32 num;
-      for (var index = 0; index < value.Length - 1; index++)
+      var processLength = value.Length - 1;
+      for (var index = 0; index < processLength; index++)
       {
-         num = value[index].ToIntegerDigit();
-         if (num < 0 || num > 9)
+         num = value[index].ToDecimalDigit();
+         if (!num.IsValidDigit())
          {
             return false;
          }
@@ -99,8 +100,63 @@ public sealed class Iso7064Mod11_10Algorithm : ISingleCheckDigitAlgorithm
          }
       }
 
-      num = value[^1].ToIntegerDigit();
-      if (num < 0 || num > 9)
+      num = value[^1].ToDecimalDigit();
+      if (!num.IsValidDigit())
+      {
+         return false;
+      }
+
+      product += num;
+
+      return product % _modulus == 1;
+   }
+
+   /// <inheritdoc/>
+   public Boolean Validate(String value, ICheckDigitMask mask)
+   {
+      if (mask is null)
+      {
+         throw new ArgumentNullException(nameof(mask), Resources.NullMaskMessage);
+      }
+      if (String.IsNullOrEmpty(value))
+      {
+         return false;
+      }
+
+      var product = _modulus;
+      Int32 num;
+      var processedDigits = 0;
+      var processLength = value.Length - 1;
+      for (var index = 0; index < processLength; index++)
+      {
+         if (mask.ExcludeCharacter(index))
+         {
+            continue;
+         }
+         num = value[index].ToDecimalDigit();
+         if (!num.IsValidDigit())
+         {
+            return false;
+         }
+         product += num;
+         if (product > _modulus)
+         {
+            product -= _modulus;
+         }
+         product *= 2;
+         if (product >= _modulusPlus1)
+         {
+            product -= _modulusPlus1;
+         }
+         processedDigits++;
+      }
+      if (processedDigits == 0)
+      {
+         return false;
+      }
+
+      num = value[^1].ToDecimalDigit();
+      if (!num.IsValidDigit())
       {
          return false;
       }

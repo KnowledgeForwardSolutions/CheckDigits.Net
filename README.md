@@ -86,6 +86,7 @@ let us know. Or contribute to the CheckDigits.Net repository: https://github.com
     - [v2.3.1](#v2.3.1)
     - [v3.0.0](#v3.0.0)
     - [v3.1.0](#v3.1.0)
+    - [v4.0.0](#v4.0.0)
 
 ## Check Digit Overview
 
@@ -329,6 +330,7 @@ following algorithms implement `IMaskedCheckDigitAlgorithm`:
 * [Alphanumeric MOD 97-10 Algorithm](#alphanumeric-mod-97-10-algorithm)
 * [Damm Algorithm](#damm-algorithm)
 * [Damm Custom Quasigroup Algorithm](#damm-custom-quasigroup-algorithm)
+* [ISO/IEC 7064 MOD 11,10 Algorithm](#isoiec-7064-mod-1110-algorithm)
 * [Luhn Algorithm](#luhn-algorithm)
 * [Modulus10_1 Algorithm](#modulus10_1-algorithm)
 * [Modulus10_13 Algorithm](#modulus10_13-algorithm)
@@ -2556,3 +2558,24 @@ Instead, the separator used between lines in the MRZ is inferred from the length
 Algorithms marked as Obsolete:
 * Modulus11 Algorithm (ISBN-10/ISSN/etc.) - Replaced by the Modulus11Extended algorithm.
 * NHS (UK National Health Service) Algorithm - Replaced by the Modulus11_27Decimal algorithm.
+
+## v4.0.0
+
+Updated to .Net 11.0
+
+Removed .Net 8.0
+Removed Modulus 11 Algorithm previously marked as Obsolete
+
+Added masked validation support to the following algorithms:
+* Iso7064Mod11_10 Algorithm
+
+
+
+Classes/methods marked as Obsolete:
+
+CheckDigits.Net.Utility.ExtensionMethods
+	.IsInvalidDigit
+	.IsInvalidExtendedDecimalCheckDigit
+	.ToDigitChar
+	.ToExtendedDecimalCheckDigit
+	.ToIntegerDigit

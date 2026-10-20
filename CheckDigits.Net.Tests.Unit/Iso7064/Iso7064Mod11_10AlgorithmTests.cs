@@ -3,6 +3,9 @@
 public class Iso7064Mod11_10AlgorithmTests
 {
    private readonly Iso7064Mod11_10Algorithm _sut = new();
+   private readonly ICheckDigitMask _acceptAllMask = new AcceptAllMask();
+   private readonly ICheckDigitMask _groupsOfThreeMask = new GroupsOfThreeCheckDigitMask();
+   private readonly ICheckDigitMask _rejectAllMask = new RejectAllMask();
 
    #region AlgorithmDescription Property Tests
    // ==========================================================================
@@ -147,7 +150,7 @@ public class Iso7064Mod11_10AlgorithmTests
       => _sut.Validate(value).Should().BeFalse();
 
    [Fact]
-   public void Iso7064Mod11_10Algorithm_Validate_ShouldReturnTrue_WhenCheckDigitIsCalculatesAsZero()
+   public void Iso7064Mod11_10Algorithm_Validate_ShouldReturnTrue_WhenCheckDigitIsCalculatedAsZero()
       => _sut.Validate("60").Should().BeTrue();
 
    [Theory]
@@ -159,6 +162,107 @@ public class Iso7064Mod11_10AlgorithmTests
    [Fact]
    public void Iso7064Mod11_10Algorithm_Validate_ShouldReturnFalse_WhenValueContainsInvalidCheckDigitCharacter()
       => _sut.Validate("12345Q").Should().BeFalse();
+
+   [Theory]
+   [InlineData("1409")]
+   [InlineData("1406623")]
+   [InlineData("1406625381")]
+   [InlineData("1406625380426")]
+   [InlineData("1406625380425514")]
+   [InlineData("1406625380425510286")]
+   [InlineData("1406625380425510282657")]
+   public void Iso7064Mod11_10Algorithm_Validate_ShouldReturnTrue_ForBenchmarkValues(String value)
+      => _sut.Validate(value).Should().BeTrue();
+
+   #endregion
+
+   #region Validate (ICheckDigitMask Overload) Tests
+   // ==========================================================================
+   // ==========================================================================
+
+   [Fact]
+   public void Iso7064Mod11_10Algorithm_ValidateMasked_ShouldThrowArgumentNullException_WhenMaskIsNull()
+      => _sut
+         .Invoking(x => x.Validate("07945", null!))
+         .Should()
+         .ThrowExactly<ArgumentNullException>()
+         .WithParameterName("mask")
+         .WithMessage(Resources.NullMaskMessage + "*");
+
+   [Fact]
+   public void Iso7064Mod11_10Algorithm_ValidateMasked_ShouldReturnFalse_WhenInputIsNull()
+      => _sut.Validate(null!, _acceptAllMask).Should().BeFalse();
+
+   [Fact]
+   public void Iso7064Mod11_10Algorithm_ValidateMasked_ShouldReturnFalse_WhenInputIsEmpty()
+      => _sut.Validate(String.Empty, _acceptAllMask).Should().BeFalse();
+
+   [Theory]
+   [InlineData("0")]    
+   [InlineData("1")]    // "1" will fail if length check is not performed
+   public void Iso7064Mod11_10Algorithm_ValidateMasked_ShouldReturnFalse_WhenInsufficientUnmaskedCharactersToCalculateCheckDigit(String value)
+      => _sut.Validate(value, _acceptAllMask).Should().BeFalse();
+
+   [Fact]
+   public void Iso7064Mod11_10Algorithm_ValidateMasked_ShouldReturnFalse_WhenAllNonCheckDigitCharactersAreMaskedOut()
+      => _sut.Validate("112233446", _rejectAllMask).Should().BeFalse();
+
+   [Theory]
+   [InlineData("079 45")]               // Example from ISO 7064 specification
+   [InlineData("123 456 788")]
+   [InlineData("112 233 446")]
+   [InlineData("163 217 581 835 191 03")]
+   [InlineData("123 456 789 012 345 678 901 234 565")]
+   public void Iso7064Mod11_10Algorithm_ValidateMasked_ShouldReturnTrue_WhenValueContainsValidCheckDigit(String value)
+      => _sut.Validate(value, _groupsOfThreeMask).Should().BeTrue();
+
+   [Theory]
+   [InlineData("07945")]               // Example from ISO 7064 specification
+   [InlineData("123456788")]
+   [InlineData("112233446")]
+   [InlineData("16321758183519103")]
+   [InlineData("123456789012345678901234565")]
+   public void Iso7064Mod11_10Algorithm_ValidateMasked_ShouldReturnTrue_WhenValueContainsValidCheckDigitAndMaskAcceptsAllCharacters(String value)
+      => _sut.Validate(value, _acceptAllMask).Should().BeTrue();
+
+   [Theory]
+   [InlineData("123 556 788")]            // 123456788 with single digit transcription error 4 -> 5
+   [InlineData("163 417 581 835 191 03")] // 16321758183519103 with single digit transcription error 2 -> 4
+   [InlineData("123 465 788")]            // 123456788 with two digit transposition error 56 -> 65 
+   [InlineData("163 215 781 835 191 03")] // 16321758183519103 with two digit transposition error 75 -> 57
+   [InlineData("114 433 446")]            // 112233446 with two digit twin error 22 -> 44
+   [InlineData("992 233 446")]            // 112233446 two digit twin error 11 -> 99
+   [InlineData("163 217 581 538 191 03")] // 16321758183519103 with jump transposition error 835 -> 538
+   [InlineData("316 321 758 183 519 10")] // 16321758183519103 with circular shift error
+   [InlineData("632 175 818 351 910 31")] // 16321758183519103 with circular shift error
+   // [InlineData("16325718183519103")]   // 16321758183519103 with jump transposition error 175 -> 571 not detected
+   public void Iso7064Mod11_10Algorithm_ValidateMasked_ShouldReturnFalse_WhenInputContainsDetectableError(String value)
+      => _sut.Validate(value, _groupsOfThreeMask).Should().BeFalse();
+
+   [Fact]
+   public void Iso7064Mod11_10Algorithm_ValidateMasked_ShouldReturnTrue_WhenCheckDigitIsCalculatedAsZero()
+      => _sut.Validate("60", _acceptAllMask).Should().BeTrue();
+
+   [Theory]
+   [InlineData("079 H5")]
+   [InlineData("079 *5")]
+   public void Iso7064Mod11_10Algorithm_ValidateMasked_ShouldReturnFalse_WhenValueContainsInvalidCharacter(String value)
+      => _sut.Validate(value, _groupsOfThreeMask).Should().BeFalse();
+
+   [Fact]
+   public void Iso7064Mod11_10Algorithm_ValidateMasked_ShouldReturnFalse_WhenValueContainsInvalidCheckDigitCharacter()
+      => _sut.Validate("123 45Q", _groupsOfThreeMask).Should().BeFalse();
+
+   [Theory]
+   [InlineData("140 9")]
+   [InlineData("140 662 3")]
+   [InlineData("140 662 538 1")]
+   [InlineData("140 662 538 042 6")]
+   [InlineData("140 662 538 042 551 4")]
+   [InlineData("140 662 538 042 551 028 6")]
+   [InlineData("140 662 538 042 551 028 265 7")]
+   public void Iso7064Mod11_10Algorithm_ValidateMasked_ShouldReturnTrue_ForBenchmarkValues(String value)
+      => _sut.Validate(value, _groupsOfThreeMask).Should().BeTrue();
 
    #endregion
 }

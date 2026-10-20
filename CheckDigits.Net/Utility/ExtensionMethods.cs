@@ -20,6 +20,7 @@ public static class ExtensionMethods
    ///   <see langword="true"/> if the digit is less than 0 or greater than 9; 
    ///   otherwise, <see langword="false"/>.
    /// </returns>
+   [Obsolete("Method will be removed in future releases to eliminate public exposure of methods not part of the library API")]
    [MethodImpl(MethodImplOptions.AggressiveInlining)]
    public static Boolean IsInvalidDigit(this Int32 digit)
       => digit < 0 || digit > 9;
@@ -36,6 +37,7 @@ public static class ExtensionMethods
    ///   <see langword="true"/> if the value is less than 0 or greater than 10; 
    ///   otherwise, <see langword="false"/>.
    /// </returns>
+   [Obsolete("Method will be removed in future releases to eliminate public exposure of methods not part of the library API")]
    [MethodImpl(MethodImplOptions.AggressiveInlining)]
    public static Boolean IsInvalidExtendedDecimalCheckDigit(this Int32 value)
       => value < 0 || value > 10;
@@ -53,6 +55,7 @@ public static class ExtensionMethods
    ///   If <paramref name="num"/> is not between 0-9 then this method will
    ///   return an unexpected value
    /// </remarks>
+   [Obsolete("Method will be removed in future releases to eliminate public exposure of methods not part of the library API")]
    public static Char ToDigitChar(this Int32 num) => (Char)(Chars.DigitZero + num);
 
    /// <summary>
@@ -73,6 +76,7 @@ public static class ExtensionMethods
    ///   If <paramref name="ch"/> is not 'X' or '0'-'9' then this method will
    ///   return an unexpected value
    /// </remarks>
+   [Obsolete("Method will be removed in future releases to eliminate public exposure of methods not part of the library API")]
    [MethodImpl(MethodImplOptions.AggressiveInlining)]
    public static Int32 ToExtendedDecimalCheckDigit(this Char ch)
       => ch == Chars.UpperCaseX ? 10 : ch - Chars.DigitZero;
@@ -90,6 +94,7 @@ public static class ExtensionMethods
    ///   If <paramref name="ch"/> is not an ASCII digit char (0-9) then this 
    ///   method will return a value that is not between 0-9.
    /// </remarks>
+   [Obsolete("Method will be removed in future releases to eliminate public exposure of methods not part of the library API")]
    [MethodImpl(MethodImplOptions.AggressiveInlining)]
    public static Int32 ToIntegerDigit(this Char ch) => ch - Chars.DigitZero;
 }
