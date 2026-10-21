@@ -208,6 +208,20 @@ public class Iso7064Mod11_10AlgorithmTests
       => _sut.Validate("112233446", _rejectAllMask).Should().BeFalse();
 
    [Theory]
+   [InlineData("02")]
+   [InlineData("19")]
+   [InlineData("27")]
+   [InlineData("35")]
+   [InlineData("43")]
+   [InlineData("51")]
+   [InlineData("60")]
+   [InlineData("78")]
+   [InlineData("86")]
+   [InlineData("94")]
+   public void Iso7064Mod11_10Algorithm_ValidateMasked_ShouldCorrectlyMapCharacterValues(String value)
+      => _sut.Validate(value, _groupsOfThreeMask).Should().BeTrue();
+
+   [Theory]
    [InlineData("079 45")]               // Example from ISO 7064 specification
    [InlineData("123 456 788")]
    [InlineData("112 233 446")]
