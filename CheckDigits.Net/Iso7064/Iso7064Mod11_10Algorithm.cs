@@ -65,7 +65,7 @@ public sealed class Iso7064Mod11_10Algorithm : ISingleCheckDigitAlgorithm, IMask
       }
 
       var x = (_modulus - product + 1) % _modulus;
-      checkDigit = x == 10 ? Chars.DigitZero : x.ToDigitChar();
+      checkDigit = x == 10 ? Chars.DigitZero : x.ToAsciiDigit();
 
       return true;
    }
