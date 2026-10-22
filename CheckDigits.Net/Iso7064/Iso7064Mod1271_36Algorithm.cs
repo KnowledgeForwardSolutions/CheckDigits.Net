@@ -55,20 +55,11 @@ public sealed class Iso7064Mod1271_36Algorithm : IDoubleCheckDigitAlgorithm
          return false;
       }
 
-      Int32 num;
       var sum = 0;
       for (var index = 0; index < value.Length; index++)
       {
-         var ch = value[index];
-         if (ch >= Chars.DigitZero && ch <= Chars.DigitNine)
-         {
-            num = ch.ToIntegerDigit();
-         }
-         else if (ch >= Chars.UpperCaseA && ch <= Chars.UpperCaseZ)
-         {
-            num = ch - Chars.UpperCaseA + 10;
-         }
-         else
+         var num = value[index].MapAsciiUppercaseAlphanumeric();
+         if (num == -1)
          {
             return false;
          }
@@ -105,20 +96,13 @@ public sealed class Iso7064Mod1271_36Algorithm : IDoubleCheckDigitAlgorithm
       Char ch;
       Int32 num;
       var sum = 0;
-      for (var index = 0; index < value.Length - 1; index++)
+      var processLength = value.Length - 1;
+      for (var index = 0; index < processLength; index++)
       {
-         ch = value[index];
-         if (ch >= Chars.DigitZero && ch <= Chars.DigitNine)
+         num = value[index].MapAsciiUppercaseAlphanumeric();
+         if (num == -1)
          {
-            num = ch.ToIntegerDigit();
-         }
-         else if (ch >= Chars.UpperCaseA && ch <= Chars.UpperCaseZ)
-         {
-            num = ch - Chars.UpperCaseA + 10;
-         }
-         else
-         { 
-            return false; 
+            return false;
          }
          sum = (sum + num) * _radix;
          if (sum >= _reduceThreshold)
@@ -128,16 +112,8 @@ public sealed class Iso7064Mod1271_36Algorithm : IDoubleCheckDigitAlgorithm
       }
 
       // Add value for second check character.
-      ch = value[^1];
-      if (ch >= Chars.DigitZero && ch <= Chars.DigitNine)
-      {
-         num = ch.ToIntegerDigit();
-      }
-      else if (ch >= Chars.UpperCaseA && ch <= Chars.UpperCaseZ)
-      {
-         num = ch - Chars.UpperCaseA + 10;
-      }
-      else
+      num = value[^1].MapAsciiUppercaseAlphanumeric();
+      if (num == -1)
       {
          return false;
       }
