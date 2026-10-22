@@ -6,25 +6,25 @@
 /// </summary>
 /// <remarks>
 ///   <para>
-///   Valid characters are decimal digits (0-9).
+///      Valid characters are decimal digits (0-9).
 ///   </para>
 ///   <para>
-///   Check digit calculated by the algorithm is a decimal digit (0-9) or an 
-///   uppercase 'X'.
+///      Check digit calculated by the algorithm is a decimal digit (0-9) or an 
+///      uppercase 'X'.
 ///   </para>
 ///   <para>
-///   Assumes that the check digit (if present) is the right-most digit in the
-///   input value.
+///      Assumes that the check digit (if present) is the right-most digit in
+///      the input value.
 ///   </para>
 ///   <para>
-///   Will detect all single digit transcription errors, all or nearly all two 
-///   digit transposition errors, all or nearly all jump transposition errors,
-///   all or nearly all circular shift errors and a high proportion of double 
-///   digit transcription errors (two separate single digit transcription errors
-///   in the same value).
+///      Will detect all single digit transcription errors, all or nearly all 
+///      two digit transposition errors, all or nearly all jump transposition 
+///      errors, all or nearly all circular shift errors and a high proportion 
+///      of double transcription errors (two separate single digit transcription 
+///      errors in the same value).
 ///   </para>
 /// </remarks>
-public sealed class Iso7064Mod11_2Algorithm : ISingleCheckDigitAlgorithm
+public sealed class Iso7064Mod11_2Algorithm : ISingleCheckDigitAlgorithm, IMaskedCheckDigitAlgorithm
 {
    private const Int32 _modulus = 11;
    private const Int32 _radix = 2;
@@ -51,11 +51,10 @@ public sealed class Iso7064Mod11_2Algorithm : ISingleCheckDigitAlgorithm
       }
 
       var sum = 0;
-      Int32 num;
       for (var index = 0; index < value.Length; index++)
       {
-         num = value[index].ToIntegerDigit();
-         if (num < 0 || num > 9)
+         var num = value[index].ToDecimalDigit();
+         if (!num.IsValidDigit())
          {
             return false;
          }
@@ -68,7 +67,7 @@ public sealed class Iso7064Mod11_2Algorithm : ISingleCheckDigitAlgorithm
 
       var remainder = sum % _modulus;
       var x = (_modulus - remainder + 1) % _modulus;
-      checkDigit = x == 10 ? Chars.UpperCaseX : x.ToDigitChar();
+      checkDigit = x == 10 ? Chars.UpperCaseX : x.ToAsciiDigit();
 
       return true;
    }
@@ -83,10 +82,11 @@ public sealed class Iso7064Mod11_2Algorithm : ISingleCheckDigitAlgorithm
 
       var sum = 0;
       Int32 num;
-      for (var index = 0; index < value.Length - 1; index++)
+      var processLength = value.Length - 1;
+      for (var index = 0; index < processLength; index++)
       {
-         num = value[index].ToIntegerDigit();
-         if (num < 0 || num > 9)
+         num = value[index].ToDecimalDigit();
+         if (!num.IsValidDigit())
          {
             return false;
          }
@@ -97,12 +97,58 @@ public sealed class Iso7064Mod11_2Algorithm : ISingleCheckDigitAlgorithm
          }
       }
 
-      num = value[^1].ToIntegerDigit();
-      if (num == 40)
+      num = value[^1].ToExtendedDecimalDigit();       // Allow for 'X' check digit (value of 10)
+      if (!num.IsValidExtendedDecimalCheckDigit())
       {
-         num = 10;
+         return false;
       }
-      else if (num < 0 || num > 9)
+
+      sum += num;
+
+      return sum % _modulus == 1;
+   }
+
+   /// <inheritdoc/>
+   public Boolean Validate(String value, ICheckDigitMask mask)
+   {
+      if (mask is null)
+      {
+         throw new ArgumentNullException(nameof(mask), Resources.NullMaskMessage);
+      }
+      if (String.IsNullOrEmpty(value))
+      {
+         return false;
+      }
+
+      var sum = 0;
+      Int32 num;
+      var processedDigits = 0;
+      var processLength = value.Length - 1;
+      for (var index = 0; index < processLength; index++)
+      {
+         if (mask.ExcludeCharacter(index))
+         {
+            continue;
+         }
+         num = value[index].ToDecimalDigit();
+         if (!num.IsValidDigit())
+         {
+            return false;
+         }
+         sum = (sum + num) * _radix;
+         if (sum >= _reduceThreshold)
+         {
+            sum %= _modulus;
+         }
+         processedDigits++;
+      }
+      if (processedDigits == 0)
+      {
+         return false;
+      }
+
+      num = value[^1].ToExtendedDecimalDigit();       // Allow for 'X' check digit (value of 10)
+      if (!num.IsValidExtendedDecimalCheckDigit())
       {
          return false;
       }
