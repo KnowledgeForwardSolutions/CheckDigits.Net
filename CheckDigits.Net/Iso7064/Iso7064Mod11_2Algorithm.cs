@@ -18,7 +18,7 @@
 ///   </para>
 ///   <para>
 ///      Will detect all single digit transcription errors, all or nearly all 
-///      two  digit transposition errors, all or nearly all jump transposition 
+///      two digit transposition errors, all or nearly all jump transposition 
 ///      errors, all or nearly all circular shift errors and a high proportion 
 ///      of double transcription errors (two separate single digit transcription 
 ///      errors in the same value).
