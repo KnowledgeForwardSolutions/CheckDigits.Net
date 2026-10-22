@@ -331,6 +331,7 @@ following algorithms implement `IMaskedCheckDigitAlgorithm`:
 * [Damm Algorithm](#damm-algorithm)
 * [Damm Custom Quasigroup Algorithm](#damm-custom-quasigroup-algorithm)
 * [ISO/IEC 7064 MOD 11,10 Algorithm](#isoiec-7064-mod-1110-algorithm)
+* [ISO/IEC 7064 MOD 11-2 Algorithm](#isoiec-7064-mod-11-2-algorithm)
 * [Luhn Algorithm](#luhn-algorithm)
 * [Modulus10_1 Algorithm](#modulus10_1-algorithm)
 * [Modulus10_13 Algorithm](#modulus10_13-algorithm)
@@ -1158,6 +1159,10 @@ The ISO/IEC 7064 MOD 11,10 algorithm is a hybrid system algorithm (with M = 10
 and M+1 = 11) that is suitable for use with numeric strings. It generates a 
 single check character that is a decimal digit.
 
+`Iso7064Mod11_10Algorithm` implements [IMaskedCheckDigitAlgorithm](#imaskedcheckdigitalgorithm) and can be used 
+to validate values that are formatted with non-check digit characters (for example,
+a value formatted with spaces or dashes for human readability).
+
 #### Details
 
 * Valid characters - decimal digits ('0' - '9')
@@ -1172,6 +1177,10 @@ The ISO/IEC 7064 MOD 11-2 algorithm is a pure system algorithm (with modulus 11
 and radix 2) that is suitable for use with numeric strings. It generates a 
 single check character that is either a decimal digit or a supplementary 'X' 
 character.
+
+`Iso7064Mod11_2Algorithm` implements [IMaskedCheckDigitAlgorithm](#imaskedcheckdigitalgorithm) and can be used 
+to validate values that are formatted with non-check digit characters (for example,
+a value formatted with spaces or dashes for human readability).
 
 #### Details
 
@@ -2568,6 +2577,7 @@ Removed Modulus 11 Algorithm previously marked as Obsolete
 
 Added masked validation support to the following algorithms:
 * Iso7064Mod11_10 Algorithm
+* Iso7064Mod11_2 Algorithm
 
 
 
