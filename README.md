@@ -332,6 +332,7 @@ following algorithms implement `IMaskedCheckDigitAlgorithm`:
 * [Damm Custom Quasigroup Algorithm](#damm-custom-quasigroup-algorithm)
 * [ISO/IEC 7064 MOD 11,10 Algorithm](#isoiec-7064-mod-1110-algorithm)
 * [ISO/IEC 7064 MOD 11-2 Algorithm](#isoiec-7064-mod-11-2-algorithm)
+* [ISO/IEC 7064 MOD 1271-36 Algorithm](#isoiec-7064-mod-1271-36-algorithm)
 * [Luhn Algorithm](#luhn-algorithm)
 * [Modulus10_1 Algorithm](#modulus10_1-algorithm)
 * [Modulus10_13 Algorithm](#modulus10_13-algorithm)
@@ -341,6 +342,11 @@ following algorithms implement `IMaskedCheckDigitAlgorithm`:
 * [Modulus11Decimal Algorithm](#modulus11decimal-algorithm)
 * [Modulus11Extended Algorithm](#modulus11extended-algorithm)
 * [Verhoeff Algorithm](#verhoeff-algorithm)
+
+Note that the mask is not consulted when processing check character locations.
+This is generally the trailing character for algorithms with a single check
+character and the trailing two characters for algorithms with two check 
+characters.
 
 ### ICheckDigitMask
 
@@ -1199,6 +1205,10 @@ a value formatted with spaces or dashes for human readability).
 The ISO/IEC 7064 MOD 1271-36 algorithm is a pure system algorithm (with modulus 
 1271 and radix 36) that is suitable for use with alphanumeric strings. It 
 generates two check alphanumeric characters.
+
+`Iso7064Mod1271_36Algorithm` implements [IMaskedCheckDigitAlgorithm](#imaskedcheckdigitalgorithm) and can be used 
+to validate values that are formatted with non-check digit characters (for example,
+a value formatted with spaces or dashes for human readability).
 
 #### Details
 

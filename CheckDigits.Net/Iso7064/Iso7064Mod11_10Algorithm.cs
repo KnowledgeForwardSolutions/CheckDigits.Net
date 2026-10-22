@@ -16,11 +16,18 @@
 ///      the input value.
 ///   </para>
 ///   <para>
-///      Will detect all single digit transcription errors, all or nearly all 
-///      two digit transposition errors, all or nearly all jump transposition 
-///      errors, all or nearly all circular shift errors and a high proportion 
-///      of double transcription errors (two separate single digit transcription 
-///      errors in the same value).
+///      Will detect all single digit transcription errors, nearly all two digit 
+///      transposition errors, all or nearly all jump transposition errors,
+///      nearly all circular shift errors and a high proportion of double 
+///      transcription errors (two separate single digit transcription errors
+///      in the same value).
+///   </para>
+///   <para>
+///      This algorithm implements <see cref="IMaskedCheckDigitAlgorithm"/> 
+///      and can validate values that contain non-check digit characters (such 
+///      as spaces or dashes included for human readability) when used with an 
+///      <see cref="ICheckDigitMask"/>. Note that the trailing check digit 
+///      character is never masked.
 ///   </para>
 /// </remarks>
 public sealed class Iso7064Mod11_10Algorithm : ISingleCheckDigitAlgorithm, IMaskedCheckDigitAlgorithm
