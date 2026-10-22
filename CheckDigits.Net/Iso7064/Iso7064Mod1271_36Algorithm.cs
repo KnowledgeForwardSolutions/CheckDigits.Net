@@ -17,11 +17,12 @@
 ///      characters in the input value.
 ///   </para>
 ///   <para>
-///      Will detect all single character transcription errors, nearly all  two
-///      character transposition errors, nearly all jump transposition errors,
-///      nearly all circular shift errors and a high proportion of double 
-///      character transcription errors (two separate single character 
-///      transcription errors in the same value).
+///      Will detect all single character transcription errors, nearly 100% of
+///      character transposition errors, jump transposition errors, and circular
+///      shift errors and a high proportion of double character transcription 
+///      errors (two separate single character transcription errors in the same
+///      value). This algorithm offers the highest protection available for
+///      alphanumeric values.
 ///   </para>
 ///   <para>
 ///      This algorithm implements <see cref="IMaskedCheckDigitAlgorithm"/> 

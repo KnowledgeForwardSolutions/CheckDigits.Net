@@ -17,10 +17,10 @@
 ///      the input value.
 ///   </para>
 ///   <para>
-///      Will detect all single digit transcription errors, nearly all two digit
-///      transposition errors, nearly all jump transposition errors, nearly all
-///      circular shift errors and a high proportion of double transcription 
-///      errors (two separate single digit transcription  errors in the same 
+///      Will detect all single character transcription errors, nearly 100% of
+///      character transposition errors, jump transposition errors, and circular
+///      shift errors and a high proportion of double character transcription 
+///      errors (two separate single character transcription errors in the same
 ///      value).
 ///   </para>
 ///   <para>
