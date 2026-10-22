@@ -47,7 +47,7 @@ public sealed class Iso7064Mod11_10Algorithm : ISingleCheckDigitAlgorithm, IMask
       var product = _modulus;
       for (var index = 0; index < value.Length; index++)
       {
-         var num = value[index].ToDecimalDigit();
+         var num = value[index].MapDecimalDigit();
          if (!num.IsValidDigit())
          {
             return false;
@@ -83,7 +83,7 @@ public sealed class Iso7064Mod11_10Algorithm : ISingleCheckDigitAlgorithm, IMask
       var processLength = value.Length - 1;
       for (var index = 0; index < processLength; index++)
       {
-         num = value[index].ToDecimalDigit();
+         num = value[index].MapDecimalDigit();
          if (!num.IsValidDigit())
          {
             return false;
@@ -100,7 +100,7 @@ public sealed class Iso7064Mod11_10Algorithm : ISingleCheckDigitAlgorithm, IMask
          }
       }
 
-      num = value[^1].ToDecimalDigit();
+      num = value[^1].MapDecimalDigit();
       if (!num.IsValidDigit())
       {
          return false;
@@ -133,7 +133,7 @@ public sealed class Iso7064Mod11_10Algorithm : ISingleCheckDigitAlgorithm, IMask
          {
             continue;
          }
-         num = value[index].ToDecimalDigit();
+         num = value[index].MapDecimalDigit();
          if (!num.IsValidDigit())
          {
             return false;
@@ -155,7 +155,7 @@ public sealed class Iso7064Mod11_10Algorithm : ISingleCheckDigitAlgorithm, IMask
          return false;
       }
 
-      num = value[^1].ToDecimalDigit();
+      num = value[^1].MapDecimalDigit();
       if (!num.IsValidDigit())
       {
          return false;

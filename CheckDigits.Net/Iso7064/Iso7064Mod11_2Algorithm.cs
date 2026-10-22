@@ -53,7 +53,7 @@ public sealed class Iso7064Mod11_2Algorithm : ISingleCheckDigitAlgorithm, IMaske
       var sum = 0;
       for (var index = 0; index < value.Length; index++)
       {
-         var num = value[index].ToDecimalDigit();
+         var num = value[index].MapDecimalDigit();
          if (!num.IsValidDigit())
          {
             return false;
@@ -85,7 +85,7 @@ public sealed class Iso7064Mod11_2Algorithm : ISingleCheckDigitAlgorithm, IMaske
       var processLength = value.Length - 1;
       for (var index = 0; index < processLength; index++)
       {
-         num = value[index].ToDecimalDigit();
+         num = value[index].MapDecimalDigit();
          if (!num.IsValidDigit())
          {
             return false;
@@ -97,7 +97,7 @@ public sealed class Iso7064Mod11_2Algorithm : ISingleCheckDigitAlgorithm, IMaske
          }
       }
 
-      num = value[^1].ToExtendedDecimalDigit();       // Allow for 'X' check digit (value of 10)
+      num = value[^1].MapExtendedDecimalDigit();       // Allow for 'X' check digit (value of 10)
       if (!num.IsValidExtendedDecimalCheckDigit())
       {
          return false;
@@ -130,7 +130,7 @@ public sealed class Iso7064Mod11_2Algorithm : ISingleCheckDigitAlgorithm, IMaske
          {
             continue;
          }
-         num = value[index].ToDecimalDigit();
+         num = value[index].MapDecimalDigit();
          if (!num.IsValidDigit())
          {
             return false;
@@ -147,7 +147,7 @@ public sealed class Iso7064Mod11_2Algorithm : ISingleCheckDigitAlgorithm, IMaske
          return false;
       }
 
-      num = value[^1].ToExtendedDecimalDigit();       // Allow for 'X' check digit (value of 10)
+      num = value[^1].MapExtendedDecimalDigit();       // Allow for 'X' check digit (value of 10)
       if (!num.IsValidExtendedDecimalCheckDigit())
       {
          return false;

@@ -25,7 +25,7 @@ internal static class CharExtensions
       ///   The integer value of the digit character.
       /// </returns>
       [MethodImpl(MethodImplOptions.AggressiveInlining)]
-      public Int32 ToDecimalDigit() => ch - Chars.DigitZero;
+      public Int32 MapDecimalDigit() => ch - Chars.DigitZero;
 
       /// <summary>
       ///   Maps extended ASCII decimal digit characters ('0'-'9', 'X') to their
@@ -40,7 +40,7 @@ internal static class CharExtensions
       ///   10 when the character is 'X'; otherwise, the integer value of the 
       ///   digit character.
       /// </returns>
-      public Int32 ToExtendedDecimalDigit()
+      public Int32 MapExtendedDecimalDigit()
          => ch == Chars.UpperCaseX ? 10 : ch - Chars.DigitZero;
    }
 }
