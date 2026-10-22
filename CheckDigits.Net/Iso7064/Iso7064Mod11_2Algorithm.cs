@@ -29,7 +29,6 @@ public sealed class Iso7064Mod11_2Algorithm : ISingleCheckDigitAlgorithm, IMaske
    private const Int32 _modulus = 11;
    private const Int32 _radix = 2;
    private const Int32 _validateMinLength = 2;
-   private const Int32 _asciiXOffset = Chars.UpperCaseX - Chars.DigitZero;    // Offset of letter 'X' from digit '0'
 
    // Reduce threshold is calculated to ensure that (sum + digit) * radix will
    // not overflow a 32-bit integer.
@@ -98,13 +97,8 @@ public sealed class Iso7064Mod11_2Algorithm : ISingleCheckDigitAlgorithm, IMaske
          }
       }
 
-      num = value[^1].ToDecimalDigit();
-      if (num == _asciiXOffset)
-      {
-         // Check character was 'X', which is treated as 10.
-         num = 10;
-      }
-      else if (!num.IsValidDigit())
+      num = value[^1].ToExtendedDecimalDigit();       // Allow for 'X' check digit (value of 10)
+      if (!num.IsValidExtendedDecimalCheckDigit())
       {
          return false;
       }
@@ -153,13 +147,8 @@ public sealed class Iso7064Mod11_2Algorithm : ISingleCheckDigitAlgorithm, IMaske
          return false;
       }
 
-      num = value[^1].ToDecimalDigit();
-      if (num == _asciiXOffset)
-      {
-         // Check character was 'X', which is treated as 10.
-         num = 10;
-      }
-      else if (!num.IsValidDigit())
+      num = value[^1].ToExtendedDecimalDigit();       // Allow for 'X' check digit (value of 10)
+      if (!num.IsValidExtendedDecimalCheckDigit())
       {
          return false;
       }

@@ -82,7 +82,7 @@ public class Iso7064Mod11_2AlgorithmTests
    [InlineData("123456789123456789", '9')]
    [InlineData("9999999999999999999999999999", '9')]
    [InlineData("99999999999999999999999999999999999", '4')]
-   public void Iso7064Mod11_2AlgorithmAlgorithm_TryCalculateCheckDigit_ShouldCalculateExpectedCheckDigit(
+   public void Iso7064Mod11_2Algorithm_TryCalculateCheckDigit_ShouldCalculateExpectedCheckDigit(
       String value,
       Char expectedCheckDigit)
    {
@@ -93,6 +93,7 @@ public class Iso7064Mod11_2AlgorithmTests
 
    [Theory]
    [InlineData("123X5")]
+   [InlineData("123x5")]
    [InlineData("123D56")]
    [InlineData("123!56")]
    [InlineData("123^56")]
@@ -169,7 +170,7 @@ public class Iso7064Mod11_2AlgorithmTests
       => _sut.Validate(value).Should().BeFalse();
 
    [Fact]
-   public void Iso7064Mod11_2Algorithm_Validate_ShouldReturnTrue_WhenCheckDigitIsCalculatesAsX()
+   public void Iso7064Mod11_2Algorithm_Validate_ShouldReturnTrue_WhenCheckDigitCalculatesAsX()
       => _sut.Validate("079X").Should().BeTrue();
 
    [Fact]
@@ -178,14 +179,17 @@ public class Iso7064Mod11_2AlgorithmTests
 
    [Theory]
    [InlineData("123D56X")]
+   [InlineData("123x56X")]
    [InlineData("123!56X")]
    [InlineData("123^56X")]
    public void Iso7064Mod11_2Algorithm_Validate_ShouldReturnFalse_WhenValueContainsInvalidCharacter(String value)
       => _sut.Validate(value).Should().BeFalse();
 
-   [Fact]
-   public void Iso7064Mod11_2Algorithm_Validate_ShouldReturnFalse_WhenValueContainsInvalidCheckDigitCharacter()
-      => _sut.Validate("12345Q").Should().BeFalse();
+   [Theory]
+   [InlineData("12345Q")]
+   [InlineData("12345x")]
+   public void Iso7064Mod11_2Algorithm_Validate_ShouldReturnFalse_WhenValueContainsInvalidCheckDigitCharacter(String value)
+      => _sut.Validate(value).Should().BeFalse();
 
    [Theory]
    [InlineData("140X")]
@@ -295,7 +299,7 @@ public class Iso7064Mod11_2AlgorithmTests
       => _sut.Validate(value, _groupsOfThreeMask).Should().BeFalse();
 
    [Fact]
-   public void Iso7064Mod11_2Algorithm_ValidateMasked_ShouldReturnTrue_WhenCheckDigitIsCalculatesAsX()
+   public void Iso7064Mod11_2Algorithm_ValidateMasked_ShouldReturnTrue_WhenCheckDigitCalculatesAsX()
       => _sut.Validate("079 X", _groupsOfThreeMask).Should().BeTrue();
 
    [Fact]
@@ -304,14 +308,17 @@ public class Iso7064Mod11_2AlgorithmTests
 
    [Theory]
    [InlineData("123 D56 X")]
+   [InlineData("123 x56 X")]
    [InlineData("123 !56 X")]
    [InlineData("123 ^56 X")]
    public void Iso7064Mod11_2Algorithm_ValidateMasked_ShouldReturnFalse_WhenValueContainsInvalidCharacter(String value)
       => _sut.Validate(value, _groupsOfThreeMask).Should().BeFalse();
 
-   [Fact]
-   public void Iso7064Mod11_2Algorithm_ValidateMasked_ShouldReturnFalse_WhenValueContainsInvalidCheckDigitCharacter()
-      => _sut.Validate("123 45Q", _groupsOfThreeMask).Should().BeFalse();
+   [Theory]
+   [InlineData("123 45Q")]
+   [InlineData("123 45x")]
+   public void Iso7064Mod11_2Algorithm_ValidateMasked_ShouldReturnFalse_WhenValueContainsInvalidCheckDigitCharacter(String value)
+      => _sut.Validate(value, _groupsOfThreeMask).Should().BeFalse();
 
    [Theory]
    [InlineData("140 X")]
