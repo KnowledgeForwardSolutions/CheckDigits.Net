@@ -13,6 +13,19 @@ internal static class CharExtensions
    extension(Char ch)
    {
       /// <summary>
+      ///   Determines if the character is an ASCII extended decimal digit (i.e.
+      ///   a decimal digit, '0'-'9', or an uppercase 'X' which represents 10 in
+      ///   modulus 11 check digit algorithms).
+      /// </summary>
+      /// <returns>
+      ///   <see langword="true"/> if the character is in the range '0'-'9' or 
+      ///   is 'X'; otherwise, <see langword="false"/>.
+      /// </returns>
+      [MethodImpl(MethodImplOptions.AggressiveInlining)]
+      public Boolean IsAsciiExtendedDecimalDigit()
+         => ch.IsAsciiDigit() || ch == Chars.UpperCaseX;
+
+      /// <summary>
       ///   Determines whether the character is an ASCII digit.
       /// </summary>
       /// <returns>
@@ -82,7 +95,7 @@ internal static class CharExtensions
       public Int32 MapAsciiUppercaseAlphanumeric()
          => ch switch
          {
-            Char c when c.IsAsciiDigit() => c.MapDecimalDigit(),
+            Char c when c.IsAsciiDigit() => c.MapAsciiDigit(),
             Char c when c.IsAsciiLetterUpper() => 10 + (c - Chars.UpperCaseA),
             _ => -1
          };
@@ -100,7 +113,7 @@ internal static class CharExtensions
       ///   The integer value of the digit character.
       /// </returns>
       [MethodImpl(MethodImplOptions.AggressiveInlining)]
-      public Int32 MapDecimalDigit() => ch - Chars.DigitZero;
+      public Int32 MapAsciiDigit() => ch - Chars.DigitZero;
 
       /// <summary>
       ///   Maps extended ASCII decimal digit characters ('0'-'9', 'X') to their
@@ -116,7 +129,7 @@ internal static class CharExtensions
       ///   digit character.
       /// </returns>
       [MethodImpl(MethodImplOptions.AggressiveInlining)]
-      public Int32 MapExtendedDecimalDigit()
+      public Int32 MapAsciiExtendedDecimalDigit()
          => ch == Chars.UpperCaseX ? 10 : ch - Chars.DigitZero;
    }
 }

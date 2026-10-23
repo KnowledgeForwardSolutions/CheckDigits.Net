@@ -59,7 +59,7 @@ public sealed class Iso7064Mod11_10Algorithm : ISingleCheckDigitAlgorithm, IMask
          {
             return false;
          }
-         var num = ch.MapDecimalDigit();
+         var num = ch.MapAsciiDigit();
          product += num;
          if (product > _modulus)
          {
@@ -97,7 +97,7 @@ public sealed class Iso7064Mod11_10Algorithm : ISingleCheckDigitAlgorithm, IMask
          {
             return false;
          }
-         num = ch.MapDecimalDigit();
+         num = ch.MapAsciiDigit();
          product += num;
          if (product > _modulus)
          {
@@ -115,7 +115,7 @@ public sealed class Iso7064Mod11_10Algorithm : ISingleCheckDigitAlgorithm, IMask
       {
          return false;
       }
-      num = ch.MapDecimalDigit();
+      num = ch.MapAsciiDigit();
 
       product += num;
 
@@ -150,7 +150,7 @@ public sealed class Iso7064Mod11_10Algorithm : ISingleCheckDigitAlgorithm, IMask
          {
             return false;
          }
-         num = ch.MapDecimalDigit();
+         num = ch.MapAsciiDigit();
          product += num;
          if (product > _modulus)
          {
@@ -173,7 +173,7 @@ public sealed class Iso7064Mod11_10Algorithm : ISingleCheckDigitAlgorithm, IMask
       {
          return false;
       }
-      num = ch.MapDecimalDigit();
+      num = ch.MapAsciiDigit();
 
       product += num;
 
