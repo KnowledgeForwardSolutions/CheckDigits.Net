@@ -17,11 +17,18 @@
 ///      the input value.
 ///   </para>
 ///   <para>
-///      Will detect all single digit transcription errors, all or nearly all 
-///      two digit transposition errors, all or nearly all jump transposition 
-///      errors, all or nearly all circular shift errors and a high proportion 
-///      of double transcription errors (two separate single digit transcription 
-///      errors in the same value).
+///      Will detect all single character transcription errors, nearly 100% of
+///      character transposition errors, jump transposition errors, and circular
+///      shift errors and a high proportion of double character transcription 
+///      errors (two separate single character transcription errors in the same
+///      value).
+///   </para>
+///   <para>
+///      This algorithm implements <see cref="IMaskedCheckDigitAlgorithm"/> 
+///      and can validate values that contain non-check digit characters (such 
+///      as spaces or dashes included for human readability) when used with an 
+///      <see cref="ICheckDigitMask"/>. Note that the trailing check digit 
+///      character is never masked.
 ///   </para>
 /// </remarks>
 public sealed class Iso7064Mod11_2Algorithm : ISingleCheckDigitAlgorithm, IMaskedCheckDigitAlgorithm
@@ -53,7 +60,7 @@ public sealed class Iso7064Mod11_2Algorithm : ISingleCheckDigitAlgorithm, IMaske
       var sum = 0;
       for (var index = 0; index < value.Length; index++)
       {
-         var num = value[index].ToDecimalDigit();
+         var num = value[index].MapDecimalDigit();
          if (!num.IsValidDigit())
          {
             return false;
@@ -85,7 +92,7 @@ public sealed class Iso7064Mod11_2Algorithm : ISingleCheckDigitAlgorithm, IMaske
       var processLength = value.Length - 1;
       for (var index = 0; index < processLength; index++)
       {
-         num = value[index].ToDecimalDigit();
+         num = value[index].MapDecimalDigit();
          if (!num.IsValidDigit())
          {
             return false;
@@ -97,7 +104,7 @@ public sealed class Iso7064Mod11_2Algorithm : ISingleCheckDigitAlgorithm, IMaske
          }
       }
 
-      num = value[^1].ToExtendedDecimalDigit();       // Allow for 'X' check digit (value of 10)
+      num = value[^1].MapExtendedDecimalDigit();       // Allow for 'X' check digit (value of 10)
       if (!num.IsValidExtendedDecimalCheckDigit())
       {
          return false;
@@ -130,7 +137,7 @@ public sealed class Iso7064Mod11_2Algorithm : ISingleCheckDigitAlgorithm, IMaske
          {
             continue;
          }
-         num = value[index].ToDecimalDigit();
+         num = value[index].MapDecimalDigit();
          if (!num.IsValidDigit())
          {
             return false;
@@ -147,7 +154,7 @@ public sealed class Iso7064Mod11_2Algorithm : ISingleCheckDigitAlgorithm, IMaske
          return false;
       }
 
-      num = value[^1].ToExtendedDecimalDigit();       // Allow for 'X' check digit (value of 10)
+      num = value[^1].MapExtendedDecimalDigit();       // Allow for 'X' check digit (value of 10)
       if (!num.IsValidExtendedDecimalCheckDigit())
       {
          return false;

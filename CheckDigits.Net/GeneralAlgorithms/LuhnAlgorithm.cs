@@ -8,27 +8,27 @@ namespace CheckDigits.Net.GeneralAlgorithms;
 /// </summary>
 /// <remarks>
 ///   <para>
-///   Valid characters are decimal digits (0-9).
+///      Valid characters are decimal digits (0-9).
 ///   </para>
 ///   <para>
-///   Check digit calculated by the algorithm is a decimal digit (0-9).
+///      Check digit calculated by the algorithm is a decimal digit (0-9).
 ///   </para>
 ///   <para>
-///   Assumes that the check digit (if present) is the right-most digit in the
-///   input value.
+///      Assumes that the check digit (if present) is the right-most digit in 
+///      the input value.
 ///   </para>
 ///   <para>
-///   Will detect all single-digit transcription errors and most two digit 
-///   transpositions of adjacent digits (except 09 &lt;-&gt; 90). Will detect most
-///   twin errors (i.e. 11 &lt;-&gt; 44) except 22 &lt;-&gt; 55,  33 &lt;-&gt; 66 
-///   and 44 &lt;-&gt; 77.
+///      Will detect all single-digit transcription errors and most two digit 
+///      transpositions of adjacent digits (except 09 &lt;-&gt; 90). Will detect 
+///      most twin errors (i.e. 11 &lt;-&gt; 44) except 22 &lt;-&gt; 55,  
+///      33 &lt;-&gt; 66  and 44 &lt;-&gt; 77.
 ///   </para>
 ///   <para>
-///   This algorithm implements <see cref="IMaskedCheckDigitAlgorithm"/> 
-///   and can validate values that contain non-check digit characters (such as 
-///   spaces or dashes for human readability) when used with an 
-///   <see cref="ICheckDigitMask"/>. Note that the trailing check digit 
-///   character is never masked.
+///      This algorithm implements <see cref="IMaskedCheckDigitAlgorithm"/> 
+///      and can validate values that contain non-check digit characters (such 
+///      as spaces or dashes included for human readability) when used with an 
+///      <see cref="ICheckDigitMask"/>. Note that the trailing check digit 
+///      character is never masked.
 ///   </para>
 /// </remarks>
 public sealed class LuhnAlgorithm : ISingleCheckDigitAlgorithm, IMaskedCheckDigitAlgorithm

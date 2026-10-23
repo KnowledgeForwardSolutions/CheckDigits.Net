@@ -6,25 +6,33 @@
 /// </summary>
 /// <remarks>
 ///   <para>
-///   Valid characters are alphanumeric characters (0-9, A-Z).
+///      Valid characters are alphanumeric characters (0-9, A-Z).
 ///   </para>
 ///   <para>
-///   Check characters calculated by the algorithm are alphanumeric characters 
-///   (0-9, A-Z).
+///      Check characters calculated by the algorithm are alphanumeric 
+///      characters (0-9, A-Z).
 ///   </para>
 ///   <para>
-///   Assumes that the check characters (if present) are the two right-most 
-///   characters in the input value.
+///      Assumes that the check characters (if present) are the two right-most 
+///      characters in the input value.
 ///   </para>
 ///   <para>
-///   Will detect all single character transcription errors, all or nearly all 
-///   two character transposition errors, all or nearly all jump transposition 
-///   errors, all or nearly all circular shift errors and a high proportion of 
-///   double character transcription errors (two separate single character 
-///   transcription errors in the same value).
+///      Will detect all single character transcription errors, nearly 100% of
+///      character transposition errors, jump transposition errors, and circular
+///      shift errors and a high proportion of double character transcription 
+///      errors (two separate single character transcription errors in the same
+///      value). This algorithm offers the highest protection available for
+///      alphanumeric values.
+///   </para>
+///   <para>
+///      This algorithm implements <see cref="IMaskedCheckDigitAlgorithm"/> 
+///      and can validate values that contain non-check digit characters (such 
+///      as spaces or dashes included for human readability) when used with an 
+///      <see cref="ICheckDigitMask"/>. Note that the trailing two check digit 
+///      characters are never masked.
 ///   </para>
 /// </remarks>
-public sealed class Iso7064Mod1271_36Algorithm : IDoubleCheckDigitAlgorithm
+public sealed class Iso7064Mod1271_36Algorithm : IDoubleCheckDigitAlgorithm, IMaskedCheckDigitAlgorithm
 {
    private const Int32 _modulus = 1271;
    private const Int32 _radix = 36;
@@ -55,20 +63,11 @@ public sealed class Iso7064Mod1271_36Algorithm : IDoubleCheckDigitAlgorithm
          return false;
       }
 
-      Int32 num;
       var sum = 0;
       for (var index = 0; index < value.Length; index++)
       {
-         var ch = value[index];
-         if (ch >= Chars.DigitZero && ch <= Chars.DigitNine)
-         {
-            num = ch.ToIntegerDigit();
-         }
-         else if (ch >= Chars.UpperCaseA && ch <= Chars.UpperCaseZ)
-         {
-            num = ch - Chars.UpperCaseA + 10;
-         }
-         else
+         var num = value[index].MapAsciiUppercaseAlphanumeric();
+         if (num == -1)
          {
             return false;
          }
@@ -102,23 +101,15 @@ public sealed class Iso7064Mod1271_36Algorithm : IDoubleCheckDigitAlgorithm
       }
 
       // Sum non-check digit characters and first check character.
-      Char ch;
       Int32 num;
       var sum = 0;
-      for (var index = 0; index < value.Length - 1; index++)
+      var processLength = value.Length - 1;
+      for (var index = 0; index < processLength; index++)
       {
-         ch = value[index];
-         if (ch >= Chars.DigitZero && ch <= Chars.DigitNine)
+         num = value[index].MapAsciiUppercaseAlphanumeric();
+         if (num == -1)
          {
-            num = ch.ToIntegerDigit();
-         }
-         else if (ch >= Chars.UpperCaseA && ch <= Chars.UpperCaseZ)
-         {
-            num = ch - Chars.UpperCaseA + 10;
-         }
-         else
-         { 
-            return false; 
+            return false;
          }
          sum = (sum + num) * _radix;
          if (sum >= _reduceThreshold)
@@ -128,16 +119,71 @@ public sealed class Iso7064Mod1271_36Algorithm : IDoubleCheckDigitAlgorithm
       }
 
       // Add value for second check character.
-      ch = value[^1];
-      if (ch >= Chars.DigitZero && ch <= Chars.DigitNine)
+      num = value[^1].MapAsciiUppercaseAlphanumeric();
+      if (num == -1)
       {
-         num = ch.ToIntegerDigit();
+         return false;
       }
-      else if (ch >= Chars.UpperCaseA && ch <= Chars.UpperCaseZ)
+      sum += num;
+
+      return sum % _modulus == 1;
+   }
+
+   /// <inheritdoc/>
+   public Boolean Validate(String value, ICheckDigitMask mask)
+   {
+      if (mask is null)
       {
-         num = ch - Chars.UpperCaseA + 10;
+         throw new ArgumentNullException(nameof(mask), Resources.NullMaskMessage);
       }
-      else
+      if (String.IsNullOrEmpty(value))
+      {
+         return false;
+      }
+
+
+      // Sum non-check digit characters.
+      Int32 num;
+      var sum = 0;
+      var processedDigits = 0;
+      var processLength = value.Length - 2;
+      for (var index = 0; index < processLength; index++)
+      {
+         if (mask.ExcludeCharacter(index))
+         {
+            continue;
+         }
+         num = value[index].MapAsciiUppercaseAlphanumeric();
+         if (num == -1)
+         {
+            return false;
+         }
+         sum = (sum + num) * _radix;
+         if (sum >= _reduceThreshold)
+         {
+            sum %= _modulus;
+         }
+         processedDigits++;
+      }
+      if (processedDigits == 0)
+      {
+         return false;
+      }
+
+      // Process check characters outside of loop without considering mask.
+      num = value[^2].MapAsciiUppercaseAlphanumeric();
+      if (num == -1)
+      {
+         return false;
+      }
+      sum = (sum + num) * _radix;
+      if (sum >= _reduceThreshold)
+      {
+         sum %= _modulus;
+      }
+
+      num = value[^1].MapAsciiUppercaseAlphanumeric();
+      if (num == -1)
       {
          return false;
       }
