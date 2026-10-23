@@ -81,6 +81,63 @@ public class CharExtensionsTests
 
    #endregion
 
+   #region IsAsciiUppercaseAlphanumeric Tests
+   // ==========================================================================
+   // ==========================================================================
+
+   [Theory]
+   [InlineData('0')]
+   [InlineData('1')]
+   [InlineData('2')]
+   [InlineData('3')]
+   [InlineData('4')]
+   [InlineData('5')]
+   [InlineData('6')]
+   [InlineData('7')]
+   [InlineData('8')]
+   [InlineData('9')]
+   [InlineData('A')]
+   [InlineData('B')]
+   [InlineData('C')]
+   [InlineData('D')]
+   [InlineData('E')]
+   [InlineData('F')]
+   [InlineData('G')]
+   [InlineData('H')]
+   [InlineData('I')]
+   [InlineData('J')]
+   [InlineData('K')]
+   [InlineData('L')]
+   [InlineData('M')]
+   [InlineData('N')]
+   [InlineData('O')]
+   [InlineData('P')]
+   [InlineData('Q')]
+   [InlineData('R')]
+   [InlineData('S')]
+   [InlineData('T')]
+   [InlineData('U')]
+   [InlineData('V')]
+   [InlineData('W')]
+   [InlineData('X')]
+   [InlineData('Y')]
+   [InlineData('Z')]
+   public void CharExtensions_IsAsciiUppercaseAlphanumeric_ShouldReturnTrue_WhenValueIsUppercaseAlphanumeric(Char ch)
+      => ch.IsAsciiUppercaseAlphanumeric().Should().BeTrue();
+
+   [Theory]
+   [InlineData('/')]
+   [InlineData(':')]
+   [InlineData('a')]
+   [InlineData('z')]
+   [InlineData('\u2153')]  // Non-digit character Unicode fraction 1/3
+   [InlineData('\u0BE6')]  // Unicode Tamil digit 0
+   [InlineData('\u00D6')]  // Unicode O with umlaut
+   public void CharExtensions_IsAsciiUppercaseAlphanumeric_ShouldReturnFalse_WhenValueIsNotUppercaseAlphanumeric(Char ch)
+      => ch.IsAsciiUppercaseAlphanumeric().Should().BeFalse();
+
+   #endregion
+
    #region MapAsciiUppercaseAlpha Tests
    // ==========================================================================
    // ==========================================================================

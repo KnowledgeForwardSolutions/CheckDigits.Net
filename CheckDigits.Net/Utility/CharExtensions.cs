@@ -16,22 +16,22 @@ internal static class CharExtensions
       ///   Determines whether the character is an ASCII digit.
       /// </summary>
       /// <returns>
-      ///   <see langword="true"/> if the character is in the range '0' through 
-      ///   '9'; otherwise, <see langword="false"/>.
+      ///   <see langword="true"/> if the character is in the range '0'-'9'; 
+      ///   otherwise, <see langword="false"/>.
       /// </returns>
       [MethodImpl(MethodImplOptions.AggressiveInlining)]
       public Boolean IsAsciiDigit()
 #if NET7_0_OR_GREATER
          => Char.IsAsciiDigit(ch);
          #else
-         => ch is >= Chars.DigitZero && ch <= Chars.DigitNine;
-#endif
+         => ch is >= Chars.DigitZero and <= Chars.DigitNine;
+      #endif
 
       /// <summary>
       ///   Determines whether the character is an uppercase ASCII letter.
       /// </summary>
       /// <returns>
-      ///   <see langword="true"/> if the character is in the range 'A' - 'Z'; 
+      ///   <see langword="true"/> if the character is in the range 'A'-'Z'; 
       ///   otherwise, <see langword="false"/>.
       /// </returns>
       [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -39,8 +39,20 @@ internal static class CharExtensions
 #if NET7_0_OR_GREATER
          => Char.IsAsciiLetterUpper(ch);
 #else
-         => ch is >= Chars.UpperCaseA && ch <= Chars.UpperCaseZ;
+         => ch is >= Chars.UpperCaseA and <= Chars.UpperCaseZ;
 #endif
+
+      /// <summary>
+      ///   Determines whether the character is an ASCII digit or an uppercase
+      ///   ASCII letter.
+      /// </summary>
+      /// <returns>
+      ///   <see langword="true"/> if the character is in the range '0'-'9' or
+      ///   'A'-'Z'; otherwise, <see langword="false"/>.
+      /// </returns>
+      [MethodImpl(MethodImplOptions.AggressiveInlining)]
+      public Boolean IsAsciiUppercaseAlphanumeric()
+         => ch.IsAsciiDigit() || ch.IsAsciiLetterUpper();
 
       /// <summary>
       ///   Maps an uppercase Latin letter to its zero-based alphabetical index.
