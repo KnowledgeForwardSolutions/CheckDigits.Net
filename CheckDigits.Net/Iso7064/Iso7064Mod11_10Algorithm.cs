@@ -54,11 +54,12 @@ public sealed class Iso7064Mod11_10Algorithm : ISingleCheckDigitAlgorithm, IMask
       var product = _modulus;
       for (var index = 0; index < value.Length; index++)
       {
-         var num = value[index].MapDecimalDigit();
-         if (!num.IsValidDigit())
+         var ch = value[index];
+         if (!ch.IsAsciiDigit())
          {
             return false;
          }
+         var num = ch.MapDecimalDigit();
          product += num;
          if (product > _modulus)
          {
@@ -72,7 +73,7 @@ public sealed class Iso7064Mod11_10Algorithm : ISingleCheckDigitAlgorithm, IMask
       }
 
       var x = (_modulus - product + 1) % _modulus;
-      checkDigit = x == 10 ? Chars.DigitZero : x.ToAsciiDigit();
+      checkDigit = x.ToAsciiDigit();
 
       return true;
    }
@@ -86,15 +87,17 @@ public sealed class Iso7064Mod11_10Algorithm : ISingleCheckDigitAlgorithm, IMask
       }
 
       var product = _modulus;
+      Char ch;
       Int32 num;
       var processLength = value.Length - 1;
       for (var index = 0; index < processLength; index++)
       {
-         num = value[index].MapDecimalDigit();
-         if (!num.IsValidDigit())
+         ch = value[index];
+         if (!ch.IsAsciiDigit())
          {
             return false;
          }
+         num = ch.MapDecimalDigit();
          product += num;
          if (product > _modulus)
          {
@@ -107,11 +110,12 @@ public sealed class Iso7064Mod11_10Algorithm : ISingleCheckDigitAlgorithm, IMask
          }
       }
 
-      num = value[^1].MapDecimalDigit();
-      if (!num.IsValidDigit())
+      ch = value[^1];
+      if (!ch.IsAsciiDigit())
       {
          return false;
       }
+      num = ch.MapDecimalDigit();
 
       product += num;
 
@@ -131,6 +135,7 @@ public sealed class Iso7064Mod11_10Algorithm : ISingleCheckDigitAlgorithm, IMask
       }
 
       var product = _modulus;
+      Char ch;
       Int32 num;
       var processedDigits = 0;
       var processLength = value.Length - 1;
@@ -140,11 +145,12 @@ public sealed class Iso7064Mod11_10Algorithm : ISingleCheckDigitAlgorithm, IMask
          {
             continue;
          }
-         num = value[index].MapDecimalDigit();
-         if (!num.IsValidDigit())
+         ch = value[index];
+         if (!ch.IsAsciiDigit())
          {
             return false;
          }
+         num = ch.MapDecimalDigit();
          product += num;
          if (product > _modulus)
          {
@@ -162,11 +168,12 @@ public sealed class Iso7064Mod11_10Algorithm : ISingleCheckDigitAlgorithm, IMask
          return false;
       }
 
-      num = value[^1].MapDecimalDigit();
-      if (!num.IsValidDigit())
+      ch = value[^1];
+      if (!ch.IsAsciiDigit())
       {
          return false;
       }
+      num = ch.MapDecimalDigit();
 
       product += num;
 
