@@ -120,7 +120,7 @@ public class Iso7064Mod1271_36AlgorithmTests
    [InlineData("123!56")]
    [InlineData("123^56")]
    [InlineData("123=56X")]
-   public void Iso7064Mod37_2Algorithm_TryCalculateCheckDigits_ShouldReturnFalse_WhenInputContainsInvalidCharacter(String value)
+   public void Iso7064Mod1271_36Algorithm_TryCalculateCheckDigits_ShouldReturnFalse_WhenInputContainsInvalidCharacter(String value)
    {
       // Act/assert.
       _sut.TryCalculateCheckDigits(value, out var first, out var second).Should().BeFalse();
@@ -147,7 +147,7 @@ public class Iso7064Mod1271_36AlgorithmTests
    [InlineData("1")]
    [InlineData("00")]
    [InlineData("01")]      // 01 will pass validation if length is not checked
-   public void Iso7064Mod1271_36Algorithm_Validate_ShouldReturnFalse_WhenInputIsLessThanTwoCharactersInLength(String value)
+   public void Iso7064Mod1271_36Algorithm_Validate_ShouldReturnFalse_WhenInputIsLessThanThreeCharactersInLength(String value)
       => _sut.Validate(value).Should().BeFalse();
 
    [Theory]

@@ -101,7 +101,6 @@ public sealed class Iso7064Mod1271_36Algorithm : IDoubleCheckDigitAlgorithm, IMa
       }
 
       // Sum non-check digit characters and first check character.
-      Char ch;
       Int32 num;
       var sum = 0;
       var processLength = value.Length - 1;
@@ -144,7 +143,6 @@ public sealed class Iso7064Mod1271_36Algorithm : IDoubleCheckDigitAlgorithm, IMa
 
 
       // Sum non-check digit characters.
-      Char ch;
       Int32 num;
       var sum = 0;
       var processedDigits = 0;
