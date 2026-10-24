@@ -47,11 +47,12 @@ public sealed class Iso7064Mod27_26Algorithm : ISingleCheckDigitAlgorithm
       var product = _modulus;
       for (var index = 0; index < value.Length; index++)
       {
-         var num = value[index] - Chars.UpperCaseA;
-         if (num < 0 || num > 25)
+         var ch = value[index];
+         if (!ch.IsAsciiLetterUpper())
          {
             return false;
          }
+         var num = ch.MapAsciiUppercaseAlpha();
          product += num;
          if (product > _modulus)
          {
@@ -79,14 +80,16 @@ public sealed class Iso7064Mod27_26Algorithm : ISingleCheckDigitAlgorithm
       }
 
       var product = _modulus;
+      Char ch;
       Int32 num;
       for (var index = 0; index < value.Length - 1; index++)
       {
-         num = value[index] - Chars.UpperCaseA;
-         if (num < 0 || num > 25)
+         ch = value[index];
+         if (!ch.IsAsciiLetterUpper())
          {
             return false;
          }
+         num = ch.MapAsciiUppercaseAlpha();
          product += num;
          if (product > _modulus)
          {
@@ -99,11 +102,12 @@ public sealed class Iso7064Mod27_26Algorithm : ISingleCheckDigitAlgorithm
          }
       }
 
-      num = value[^1] - Chars.UpperCaseA;
-      if (num < 0 || num > 25)
+      ch = value[^1];
+      if (!ch.IsAsciiLetterUpper())
       {
          return false;
       }
+      num = ch.MapAsciiUppercaseAlpha();
 
       product += num;
 
