@@ -113,59 +113,6 @@ public class CharExtensionsTests
 
    #endregion
 
-   #region MapAsciiDigit Tests
-   // ==========================================================================
-   // ==========================================================================
-
-   [Theory]
-   [InlineData('0', 0)]
-   [InlineData('1', 1)]
-   [InlineData('2', 2)]
-   [InlineData('3', 3)]
-   [InlineData('4', 4)]
-   [InlineData('5', 5)]
-   [InlineData('6', 6)]
-   [InlineData('7', 7)]
-   [InlineData('8', 8)]
-   [InlineData('9', 9)]
-   public void CharExtensions_MapAsciiDigit_ShouldReturnExpectedInteger_WhenInputIsDigitCharacter(Char ch, Int32 expected)
-      => ch.MapAsciiDigit().Should().Be(expected);
-
-   [Theory]
-   [InlineData('+')]
-   [InlineData('A')]
-   public void CharExtensions_MapAsciiDigit_ShouldReturnValueNotBetweenZeroAndNine_WhenInputIsNotDigitCharacter(Char ch)
-      => ch.MapAsciiDigit().Should().NotBeInRange(0, 9);
-
-   #endregion
-
-   #region MapAsciiExtendedDecimalDigit Tests
-   // ==========================================================================
-   // ==========================================================================
-
-   [Theory]
-   [InlineData('0', 0)]
-   [InlineData('1', 1)]
-   [InlineData('2', 2)]
-   [InlineData('3', 3)]
-   [InlineData('4', 4)]
-   [InlineData('5', 5)]
-   [InlineData('6', 6)]
-   [InlineData('7', 7)]
-   [InlineData('8', 8)]
-   [InlineData('9', 9)]
-   [InlineData('X', 10)]
-   public void CharExtensions_MapAsciiExtendedDecimalDigit_ShouldReturnExpectedInteger_WhenInputIsDigitCharacter(Char ch, Int32 expected)
-      => ch.MapAsciiExtendedDecimalDigit().Should().Be(expected);
-
-   [Theory]
-   [InlineData('+')]
-   [InlineData('A')]
-   public void CharExtensions_MapAsciiExtendedDecimalDigit_ShouldReturnValueNotBetweenZeroAndNine_WhenInputIsNotDigitCharacter(Char ch)
-      => ch.MapAsciiExtendedDecimalDigit().Should().NotBeInRange(0, 10);
-
-   #endregion
-
    #region IsAsciiUppercaseAlphanumeric Tests
    // ==========================================================================
    // ==========================================================================
@@ -220,6 +167,66 @@ public class CharExtensionsTests
    [InlineData('\u00D6')]  // Unicode O with umlaut
    public void CharExtensions_IsAsciiUppercaseAlphanumeric_ShouldReturnFalse_WhenValueIsNotUppercaseAlphanumeric(Char ch)
       => ch.IsAsciiUppercaseAlphanumeric().Should().BeFalse();
+
+   #endregion
+
+   #region MapAsciiDigit Tests
+   // ==========================================================================
+   // ==========================================================================
+
+   [Theory]
+   [InlineData('0', 0)]
+   [InlineData('1', 1)]
+   [InlineData('2', 2)]
+   [InlineData('3', 3)]
+   [InlineData('4', 4)]
+   [InlineData('5', 5)]
+   [InlineData('6', 6)]
+   [InlineData('7', 7)]
+   [InlineData('8', 8)]
+   [InlineData('9', 9)]
+   public void CharExtensions_MapAsciiDigit_ShouldReturnExpectedInteger_WhenInputIsDigitCharacter(Char ch, Int32 expected)
+      => ch.MapAsciiDigit().Should().Be(expected);
+
+   [Theory]
+   [InlineData('+')]
+   [InlineData('A')]
+   [InlineData('z')]
+   [InlineData('\u2153')]  // Non-digit character Unicode fraction 1/3
+   [InlineData('\u0BE6')]  // Unicode Tamil digit 0
+   public void CharExtensions_MapAsciiDigit_ShouldReturnValueNotBetweenZeroAndNine_WhenInputIsNotDigitCharacter(Char ch)
+      => ch.MapAsciiDigit().Should().NotBeInRange(0, 9);
+
+   #endregion
+
+   #region MapAsciiExtendedDecimalDigit Tests
+   // ==========================================================================
+   // ==========================================================================
+
+   [Theory]
+   [InlineData('0', 0)]
+   [InlineData('1', 1)]
+   [InlineData('2', 2)]
+   [InlineData('3', 3)]
+   [InlineData('4', 4)]
+   [InlineData('5', 5)]
+   [InlineData('6', 6)]
+   [InlineData('7', 7)]
+   [InlineData('8', 8)]
+   [InlineData('9', 9)]
+   [InlineData('X', 10)]
+   public void CharExtensions_MapAsciiExtendedDecimalDigit_ShouldReturnExpectedInteger_WhenInputIsDigitCharacter(Char ch, Int32 expected)
+      => ch.MapAsciiExtendedDecimalDigit().Should().Be(expected);
+
+   [Theory]
+   [InlineData('+')]
+   [InlineData('A')]
+   [InlineData('x')]
+   [InlineData('z')]
+   [InlineData('\u2153')]  // Non-digit character Unicode fraction 1/3
+   [InlineData('\u0BE6')]  // Unicode Tamil digit 0
+   public void CharExtensions_MapAsciiExtendedDecimalDigit_ShouldReturnValueNotBetweenZeroAndTen_WhenInputIsNotDigitCharacter(Char ch)
+      => ch.MapAsciiExtendedDecimalDigit().Should().NotBeInRange(0, 10);
 
    #endregion
 
@@ -315,7 +322,7 @@ public class CharExtensionsTests
    [InlineData('X', 33)]
    [InlineData('Y', 34)]
    [InlineData('Z', 35)]
-   public void CharExtensions_MapAsciiUppercaseAlphanumeric_ShouldReturnExpectedInteger_WhenInputIsUppercaseAsciiAlphanunmeric(
+   public void CharExtensions_MapAsciiUppercaseAlphanumeric_ShouldReturnExpectedInteger_WhenInputIsUppercaseAsciiAlphanumeric(
       Char ch,
       Int32 expected)
       => ch.MapAsciiUppercaseAlphanumeric().Should().Be(expected);
@@ -328,7 +335,7 @@ public class CharExtensionsTests
    [InlineData('\u2153')]  // Non-digit character Unicode fraction 1/3
    [InlineData('\u0BE6')]  // Unicode Tamil digit 0
    [InlineData('\u00D6')]  // Unicode O with umlaut
-   public void CharExtensions_MapAsciiUppercaseAlphanumeric_ShouldMinusOne_WhenInputIsNotUppercaseAsciiAlphanunmeric(Char ch)
+   public void CharExtensions_MapAsciiUppercaseAlphanumeric_ShouldReturnMinusOne_WhenInputIsNotUppercaseAsciiAlphanumeric(Char ch)
       => ch.MapAsciiUppercaseAlphanumeric().Should().Be(-1);
 
    #endregion

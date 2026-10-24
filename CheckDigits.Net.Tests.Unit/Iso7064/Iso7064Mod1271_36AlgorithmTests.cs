@@ -128,6 +128,17 @@ public class Iso7064Mod1271_36AlgorithmTests
       second.Should().Be('\0');
    }
 
+   [Theory]
+   [InlineData("U7Y")]
+   [InlineData("U7Y8SX")]
+   [InlineData("U7Y8SXRC0")]
+   [InlineData("U7Y8SXRC0O3S")]
+   [InlineData("U7Y8SXRC0O3SC4I")]
+   [InlineData("U7Y8SXRC0O3SC4IHYQ")]
+   [InlineData("U7Y8SXRC0O3SC4IHYQF4M")]
+   public void Iso7064Mod1271_36Algorithm_TryCalculateCheckDigits_ShouldReturnTrue_ForBenchmarkValues(String value)
+      => _sut.TryCalculateCheckDigits(value, out _, out _).Should().BeTrue();
+
    #endregion
 
    #region Validate Tests

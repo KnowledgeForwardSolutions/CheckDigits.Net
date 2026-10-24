@@ -92,6 +92,7 @@ internal static class CharExtensions
       ///   A value from 0 to 35 for ASCII digits ('0'-'9') and  uppercase 
       ///   letters ('A'-'Z'); otherwise, -1.
       /// </returns>
+      [MethodImpl(MethodImplOptions.AggressiveInlining)]
       public Int32 MapAsciiUppercaseAlphanumeric()
          => ch switch
          {

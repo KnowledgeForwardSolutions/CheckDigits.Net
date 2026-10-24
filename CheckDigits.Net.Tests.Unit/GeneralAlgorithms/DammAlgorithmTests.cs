@@ -93,7 +93,7 @@ public class DammAlgorithmTests
    [InlineData("140662538042551")]
    [InlineData("140662538042551028")]
    [InlineData("140662538042551028265")]
-   public void DammAlgorithm_TryCalculateValue_ShouldReturnTrue_ForBenchmarkValues(String value)
+   public void DammAlgorithm_TryCalculateCheckDigit_ShouldReturnTrue_ForBenchmarkValues(String value)
       => _sut.TryCalculateCheckDigit(value, out _).Should().BeTrue();
 
    #endregion

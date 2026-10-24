@@ -148,7 +148,7 @@ public class LuhnAlgorithmTests
    [InlineData("140662538042551")]
    [InlineData("140662538042551028")]
    [InlineData("140662538042551028265")]
-   public void LuhnAlgorithm_TryCalculateValue_ShouldReturnTrue_ForBenchmarkValues(String value)
+   public void LuhnAlgorithm_TryCalculateCheckDigit_ShouldReturnTrue_ForBenchmarkValues(String value)
       => _sut.TryCalculateCheckDigit(value, out _).Should().BeTrue();
 
    #endregion
