@@ -75,7 +75,7 @@ public sealed class Iso7064Mod11_2Algorithm : ISingleCheckDigitAlgorithm, IMaske
 
       var remainder = sum % _modulus;
       var x = (_modulus - remainder + 1) % _modulus;
-      checkDigit = x == 10 ? Chars.UpperCaseX : x.ToAsciiDigit();
+      checkDigit = x.ToAsciiExtendedDecimalDigit();         // Allow for x = 10 which would use 'X' for the check digit
 
       return true;
    }
