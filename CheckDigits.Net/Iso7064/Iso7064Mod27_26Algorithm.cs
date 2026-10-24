@@ -66,7 +66,7 @@ public sealed class Iso7064Mod27_26Algorithm : ISingleCheckDigitAlgorithm
       }
 
       var x = (_modulus - product + 1) % _modulus;
-      checkDigit = x == 26 ? Chars.UpperCaseA : (Char)(Chars.UpperCaseA + x);
+      checkDigit = x.ToAsciiUppercaseAlpha();
 
       return true;
    }

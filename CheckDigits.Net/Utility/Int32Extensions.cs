@@ -21,8 +21,8 @@ internal static class Int32Extensions
       ///   return an unexpected value.
       /// </remarks>
       /// <returns>
-      ///   The ASCII digit character in the range '0' through '9' that 
-      ///   represents the current value.
+      ///   The ASCII digit character in the range '0'-'9' that represents the 
+      ///   integer value.
       /// </returns>
       [MethodImpl(MethodImplOptions.AggressiveInlining)]
       public Char ToAsciiDigit() => (Char)(Chars.DigitZero + num);
@@ -43,5 +43,21 @@ internal static class Int32Extensions
       [MethodImpl(MethodImplOptions.AggressiveInlining)]
       public Char ToAsciiExtendedDecimalDigit()
          => num == 10 ? Chars.UpperCaseX : num.ToAsciiDigit();
+
+      /// <summary>
+      /// Converts an integer value between 0 and 25 to its corresponding ASCII
+      /// uppercase letter ('A'-'Z').
+      /// </summary>
+      /// <remarks>
+      ///   If <paramref name="num"/> is not between 0-25 then this method will
+      ///   return an unexpected value.
+      /// </remarks>
+      /// <returns>
+      ///   The ASCII digit character in the range 'A'-'Z' that represents the 
+      ///   integer value.
+      /// </returns>
+      [MethodImpl(MethodImplOptions.AggressiveInlining)]
+      public Char ToAsciiUppercaseAlpha()
+         => (Char)(Chars.UpperCaseA + num);
    }
 }
