@@ -66,11 +66,12 @@ public sealed class Iso7064Mod1271_36Algorithm : IDoubleCheckDigitAlgorithm, IMa
       var sum = 0;
       for (var index = 0; index < value.Length; index++)
       {
-         var num = value[index].MapAsciiUppercaseAlphanumeric();
-         if (num == -1)
+         var ch = value[index];
+         if (!ch.IsAsciiUppercaseAlphanumeric())
          {
             return false;
          }
+         var num = ch.MapAsciiUppercaseAlphanumeric();
          sum = (sum + num) * _radix;
          if (sum >= _reduceThreshold)
          {
@@ -101,16 +102,18 @@ public sealed class Iso7064Mod1271_36Algorithm : IDoubleCheckDigitAlgorithm, IMa
       }
 
       // Sum non-check digit characters and first check character.
+      Char ch;
       Int32 num;
       var sum = 0;
       var processLength = value.Length - 1;
       for (var index = 0; index < processLength; index++)
       {
-         num = value[index].MapAsciiUppercaseAlphanumeric();
-         if (num == -1)
+         ch = value[index];
+         if (!ch.IsAsciiUppercaseAlphanumeric())
          {
             return false;
          }
+         num = ch.MapAsciiUppercaseAlphanumeric();
          sum = (sum + num) * _radix;
          if (sum >= _reduceThreshold)
          {
@@ -119,11 +122,12 @@ public sealed class Iso7064Mod1271_36Algorithm : IDoubleCheckDigitAlgorithm, IMa
       }
 
       // Add value for second check character.
-      num = value[^1].MapAsciiUppercaseAlphanumeric();
-      if (num == -1)
+      ch = value[^1];
+      if (!ch.IsAsciiUppercaseAlphanumeric())
       {
          return false;
       }
+      num = ch.MapAsciiUppercaseAlphanumeric();
       sum += num;
 
       return sum % _modulus == 1;
@@ -143,6 +147,7 @@ public sealed class Iso7064Mod1271_36Algorithm : IDoubleCheckDigitAlgorithm, IMa
 
 
       // Sum non-check digit characters.
+      Char ch;
       Int32 num;
       var sum = 0;
       var processedDigits = 0;
@@ -153,11 +158,12 @@ public sealed class Iso7064Mod1271_36Algorithm : IDoubleCheckDigitAlgorithm, IMa
          {
             continue;
          }
-         num = value[index].MapAsciiUppercaseAlphanumeric();
-         if (num == -1)
+         ch = value[index];
+         if (!ch.IsAsciiUppercaseAlphanumeric())
          {
             return false;
          }
+         num = ch.MapAsciiUppercaseAlphanumeric();
          sum = (sum + num) * _radix;
          if (sum >= _reduceThreshold)
          {
@@ -171,22 +177,24 @@ public sealed class Iso7064Mod1271_36Algorithm : IDoubleCheckDigitAlgorithm, IMa
       }
 
       // Process check characters outside of loop without considering mask.
-      num = value[^2].MapAsciiUppercaseAlphanumeric();
-      if (num == -1)
+      ch = value[^2];
+      if (!ch.IsAsciiUppercaseAlphanumeric())
       {
          return false;
       }
+      num = ch.MapAsciiUppercaseAlphanumeric();
       sum = (sum + num) * _radix;
       if (sum >= _reduceThreshold)
       {
          sum %= _modulus;
       }
 
-      num = value[^1].MapAsciiUppercaseAlphanumeric();
-      if (num == -1)
+      ch = value[^1];
+      if (!ch.IsAsciiUppercaseAlphanumeric())
       {
          return false;
       }
+      num = ch.MapAsciiUppercaseAlphanumeric();
       sum += num;
 
       return sum % _modulus == 1;
