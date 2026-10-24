@@ -74,6 +74,20 @@ public class MaskedAlgorithmsTests
 
    #endregion
 
+   #region Iso7064Mod27_26 Property Tests
+   // ==========================================================================
+   // ==========================================================================
+
+   [Fact]
+   public void MaskedAlgorithms_Iso7064Mod27_26_ShouldNotBeNull()
+      => MaskedAlgorithms.Iso7064Mod27_26.Should().NotBeNull();
+
+   [Fact]
+   public void MaskedAlgorithms_Iso7064Mod27_26_ShouldBeExpectedType()
+      => MaskedAlgorithms.Iso7064Mod27_26.Should().BeOfType<Iso7064Mod27_26Algorithm>();
+
+   #endregion
+
    #region Luhn Property Tests
    // ==========================================================================
    // ==========================================================================

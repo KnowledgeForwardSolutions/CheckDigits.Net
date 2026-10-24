@@ -13,25 +13,38 @@ internal static class CharExtensions
    extension(Char ch)
    {
       /// <summary>
+      ///   Determines if the character is an ASCII extended decimal digit (i.e.
+      ///   a decimal digit, '0'-'9', or an uppercase 'X' which represents 10 in
+      ///   modulus 11 check digit algorithms).
+      /// </summary>
+      /// <returns>
+      ///   <see langword="true"/> if the character is in the range '0'-'9' or 
+      ///   is 'X'; otherwise, <see langword="false"/>.
+      /// </returns>
+      [MethodImpl(MethodImplOptions.AggressiveInlining)]
+      public Boolean IsAsciiExtendedDecimalDigit()
+         => ch.IsAsciiDigit() || ch == Chars.UpperCaseX;
+
+      /// <summary>
       ///   Determines whether the character is an ASCII digit.
       /// </summary>
       /// <returns>
-      ///   <see langword="true"/> if the character is in the range '0' through 
-      ///   '9'; otherwise, <see langword="false"/>.
+      ///   <see langword="true"/> if the character is in the range '0'-'9'; 
+      ///   otherwise, <see langword="false"/>.
       /// </returns>
       [MethodImpl(MethodImplOptions.AggressiveInlining)]
       public Boolean IsAsciiDigit()
 #if NET7_0_OR_GREATER
          => Char.IsAsciiDigit(ch);
          #else
-         => ch is >= Chars.DigitZero && ch <= Chars.DigitNine;
-#endif
+         => ch is >= Chars.DigitZero and <= Chars.DigitNine;
+      #endif
 
       /// <summary>
       ///   Determines whether the character is an uppercase ASCII letter.
       /// </summary>
       /// <returns>
-      ///   <see langword="true"/> if the character is in the range 'A' - 'Z'; 
+      ///   <see langword="true"/> if the character is in the range 'A'-'Z'; 
       ///   otherwise, <see langword="false"/>.
       /// </returns>
       [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -39,8 +52,20 @@ internal static class CharExtensions
 #if NET7_0_OR_GREATER
          => Char.IsAsciiLetterUpper(ch);
 #else
-         => ch is >= Chars.UpperCaseA && ch <= Chars.UpperCaseZ;
+         => ch is >= Chars.UpperCaseA and <= Chars.UpperCaseZ;
 #endif
+
+      /// <summary>
+      ///   Determines whether the character is an ASCII digit or an uppercase
+      ///   ASCII letter.
+      /// </summary>
+      /// <returns>
+      ///   <see langword="true"/> if the character is in the range '0'-'9' or
+      ///   'A'-'Z'; otherwise, <see langword="false"/>.
+      /// </returns>
+      [MethodImpl(MethodImplOptions.AggressiveInlining)]
+      public Boolean IsAsciiUppercaseAlphanumeric()
+         => ch.IsAsciiDigit() || ch.IsAsciiLetterUpper();
 
       /// <summary>
       ///   Maps an uppercase Latin letter to its zero-based alphabetical index.
@@ -67,10 +92,11 @@ internal static class CharExtensions
       ///   A value from 0 to 35 for ASCII digits ('0'-'9') and  uppercase 
       ///   letters ('A'-'Z'); otherwise, -1.
       /// </returns>
+      [MethodImpl(MethodImplOptions.AggressiveInlining)]
       public Int32 MapAsciiUppercaseAlphanumeric()
          => ch switch
          {
-            Char c when c.IsAsciiDigit() => c.MapDecimalDigit(),
+            Char c when c.IsAsciiDigit() => c.MapAsciiDigit(),
             Char c when c.IsAsciiLetterUpper() => 10 + (c - Chars.UpperCaseA),
             _ => -1
          };
@@ -88,7 +114,7 @@ internal static class CharExtensions
       ///   The integer value of the digit character.
       /// </returns>
       [MethodImpl(MethodImplOptions.AggressiveInlining)]
-      public Int32 MapDecimalDigit() => ch - Chars.DigitZero;
+      public Int32 MapAsciiDigit() => ch - Chars.DigitZero;
 
       /// <summary>
       ///   Maps extended ASCII decimal digit characters ('0'-'9', 'X') to their
@@ -104,7 +130,7 @@ internal static class CharExtensions
       ///   digit character.
       /// </returns>
       [MethodImpl(MethodImplOptions.AggressiveInlining)]
-      public Int32 MapExtendedDecimalDigit()
+      public Int32 MapAsciiExtendedDecimalDigit()
          => ch == Chars.UpperCaseX ? 10 : ch - Chars.DigitZero;
    }
 }

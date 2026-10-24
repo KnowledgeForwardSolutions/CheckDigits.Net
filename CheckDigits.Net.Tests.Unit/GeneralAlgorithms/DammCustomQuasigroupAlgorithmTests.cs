@@ -180,7 +180,7 @@ public class DammCustomQuasigroupAlgorithmTests
    [InlineData(16, "2EDC15B3C1C34F4DA55F37")]
    [InlineData(16, "22446688AACCEE1155FF00")]
    [InlineData(16, "123456789ABCDEF012345B")]
-   public void DammCustomQuasigroupAlgorithm_TryCalculateValue_ShouldReturnTrue_ForBenchmarkValues(
+   public void DammCustomQuasigroupAlgorithm_TryCalculateCheckDigit_ShouldReturnTrue_ForBenchmarkValues(
       Int32 order, 
       String value)
    {

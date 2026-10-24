@@ -104,6 +104,17 @@ public class Iso7064Mod11_2AlgorithmTests
       checkDigit.Should().Be('\0');
    }
 
+   [Theory]
+   [InlineData("140")]
+   [InlineData("140662")]
+   [InlineData("140662538")]
+   [InlineData("140662538042")]
+   [InlineData("140662538042551")]
+   [InlineData("140662538042551028")]
+   [InlineData("140662538042551028265")]
+   public void Iso7064Mod11_2Algorithm_TryCalculateCheckDigit_ShouldReturnTrue_ForBenchmarkValues(String value)
+      => _sut.TryCalculateCheckDigit(value, out _).Should().BeTrue();
+
    #endregion
 
    #region Validate Tests

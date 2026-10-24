@@ -60,11 +60,12 @@ public sealed class Iso7064Mod11_2Algorithm : ISingleCheckDigitAlgorithm, IMaske
       var sum = 0;
       for (var index = 0; index < value.Length; index++)
       {
-         var num = value[index].MapDecimalDigit();
-         if (!num.IsValidDigit())
+         var ch = value[index];
+         if (!ch.IsAsciiDigit())
          {
             return false;
          }
+         var num = ch.MapAsciiDigit();
          sum = (sum + num) * _radix;
          if (sum >= _reduceThreshold)
          {
@@ -74,7 +75,7 @@ public sealed class Iso7064Mod11_2Algorithm : ISingleCheckDigitAlgorithm, IMaske
 
       var remainder = sum % _modulus;
       var x = (_modulus - remainder + 1) % _modulus;
-      checkDigit = x == 10 ? Chars.UpperCaseX : x.ToAsciiDigit();
+      checkDigit = x.ToAsciiExtendedDecimalDigit();         // Allow for x = 10 which would use 'X' for the check digit
 
       return true;
    }
@@ -88,15 +89,17 @@ public sealed class Iso7064Mod11_2Algorithm : ISingleCheckDigitAlgorithm, IMaske
       }
 
       var sum = 0;
+      Char ch;
       Int32 num;
       var processLength = value.Length - 1;
       for (var index = 0; index < processLength; index++)
       {
-         num = value[index].MapDecimalDigit();
-         if (!num.IsValidDigit())
+         ch = value[index];
+         if (!ch.IsAsciiDigit())
          {
             return false;
          }
+         num = ch.MapAsciiDigit();
          sum = (sum + num) * _radix;
          if (sum >= _reduceThreshold)
          {
@@ -104,11 +107,12 @@ public sealed class Iso7064Mod11_2Algorithm : ISingleCheckDigitAlgorithm, IMaske
          }
       }
 
-      num = value[^1].MapExtendedDecimalDigit();       // Allow for 'X' check digit (value of 10)
-      if (!num.IsValidExtendedDecimalCheckDigit())
+      ch = value[^1];
+      if (!ch.IsAsciiExtendedDecimalDigit())       // Allow for 'X' check digit (value of 10)
       {
          return false;
       }
+      num = ch.MapAsciiExtendedDecimalDigit();
 
       sum += num;
 
@@ -128,6 +132,7 @@ public sealed class Iso7064Mod11_2Algorithm : ISingleCheckDigitAlgorithm, IMaske
       }
 
       var sum = 0;
+      Char ch;
       Int32 num;
       var processedDigits = 0;
       var processLength = value.Length - 1;
@@ -137,11 +142,12 @@ public sealed class Iso7064Mod11_2Algorithm : ISingleCheckDigitAlgorithm, IMaske
          {
             continue;
          }
-         num = value[index].MapDecimalDigit();
-         if (!num.IsValidDigit())
+         ch = value[index];
+         if (!ch.IsAsciiDigit())
          {
             return false;
          }
+         num = ch.MapAsciiDigit();
          sum = (sum + num) * _radix;
          if (sum >= _reduceThreshold)
          {
@@ -154,11 +160,12 @@ public sealed class Iso7064Mod11_2Algorithm : ISingleCheckDigitAlgorithm, IMaske
          return false;
       }
 
-      num = value[^1].MapExtendedDecimalDigit();       // Allow for 'X' check digit (value of 10)
-      if (!num.IsValidExtendedDecimalCheckDigit())
+      ch = value[^1];
+      if (!ch.IsAsciiExtendedDecimalDigit())       // Allow for 'X' check digit (value of 10)
       {
          return false;
       }
+      num = ch.MapAsciiExtendedDecimalDigit();
 
       sum += num;
 
