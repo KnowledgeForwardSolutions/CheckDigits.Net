@@ -160,7 +160,8 @@ Algorithms marked as Obsolete:
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <InternalsVisibleTo Include="CheckDigits.Net.Tests.Unit" />
+	  <InternalsVisibleTo Include="CheckDigits.Net.Tests.Unit" />
+	  <InternalsVisibleTo Include="CheckDigits.Net.Tests.Benchmarks" />
   </ItemGroup>
 
   <ItemGroup>
