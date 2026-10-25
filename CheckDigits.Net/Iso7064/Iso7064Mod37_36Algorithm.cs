@@ -6,21 +6,22 @@
 /// </summary>
 /// <remarks>
 ///   <para>
-///   Valid characters are alphanumeric characters (0-9, A-Z).
+///      Valid characters are alphanumeric characters (0-9, A-Z).
 ///   </para>
 ///   <para>
-///   Check character calculated by the algorithm is an alphanumeric character (0-9, A-Z).
+///      Check character calculated by the algorithm is an alphanumeric 
+///      character (0-9, A-Z).
 ///   </para>
 ///   <para>
-///   Assumes that the check character (if present) is the right-most character 
-///   in the input value.
+///      Assumes that the check character (if present) is the right-most 
+///      character in the input value.
 ///   </para>
 ///   <para>
-///   Will detect all single character transcription errors, all or nearly all 
-///   two character transposition errors, all or nearly all jump transposition 
-///   errors, all or nearly all circular shift errors and a high proportion of 
-///   double character transcription errors (two separate single character 
-///   transcription errors in the same value).
+///      Will detect all single character transcription errors, nearly all two
+///      character transposition errors, jump transposition errors and circular 
+///      shift errors and a high proportion of double character transcription 
+///      errors (two separate single character transcription errors in the same 
+///      value).
 ///   </para>
 /// </remarks>
 public sealed class Iso7064Mod37_36Algorithm : ISingleCheckDigitAlgorithm
@@ -45,24 +46,15 @@ public sealed class Iso7064Mod37_36Algorithm : ISingleCheckDigitAlgorithm
          return false;
       }
 
-      Char ch;
-      Int32 num;
       var product = _modulus;
       for (var index = 0; index < value.Length; index++)
       {
-         ch = value[index];
-         if (ch >= Chars.DigitZero && ch <= Chars.DigitNine)
-         {
-            num = ch.ToIntegerDigit();
-         }
-         else if (ch >= Chars.UpperCaseA && ch <= Chars.UpperCaseZ)
-         {
-            num = ch - Chars.UpperCaseA + 10;
-         }
-         else
+         var ch = value[index];
+         if (!ch.IsAsciiUppercaseAlphanumeric())
          {
             return false;
          }
+         var num = ch.MapAsciiUppercaseAlphanumeric();
          product += num;
          if (product > _modulus)
          {
@@ -95,18 +87,11 @@ public sealed class Iso7064Mod37_36Algorithm : ISingleCheckDigitAlgorithm
       for (var index = 0; index < value.Length - 1; index++)
       {
          ch = value[index];
-         if (ch >= Chars.DigitZero && ch <= Chars.DigitNine)
-         {
-            num = ch.ToIntegerDigit();
-         }
-         else if (ch >= Chars.UpperCaseA && ch <= Chars.UpperCaseZ)
-         {
-            num = ch - Chars.UpperCaseA + 10;
-         }
-         else
+         if (!ch.IsAsciiUppercaseAlphanumeric())
          {
             return false;
          }
+         num = ch.MapAsciiUppercaseAlphanumeric();
          product += num;
          if (product > _modulus)
          {
@@ -120,18 +105,11 @@ public sealed class Iso7064Mod37_36Algorithm : ISingleCheckDigitAlgorithm
       }
 
       ch = value[^1];
-      if (ch >= Chars.DigitZero && ch <= Chars.DigitNine)
-      {
-         num = ch.ToIntegerDigit();
-      }
-      else if (ch >= Chars.UpperCaseA && ch <= Chars.UpperCaseZ)
-      {
-         num = ch - Chars.UpperCaseA + 10;
-      }
-      else
+      if (!ch.IsAsciiUppercaseAlphanumeric())
       {
          return false;
       }
+      num = ch.MapAsciiUppercaseAlphanumeric();
       product += num;
 
       return product % _modulus == 1;
