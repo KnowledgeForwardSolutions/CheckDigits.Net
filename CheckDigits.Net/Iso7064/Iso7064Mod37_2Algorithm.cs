@@ -17,14 +17,13 @@
 ///   in the input value.
 ///   </para>
 ///   <para>
-///   Will detect all single character transcription errors, all or nearly all 
-///   two character transposition errors, all or nearly all jump transposition 
-///   errors, all or nearly all circular shift errors and a high proportion of 
-///   double character transcription errors (two separate single character 
-///   transcription errors in the same value).
+///   Will detect all single character transcription errors, nearly all two 
+///   character transposition errors, jump transposition errors and circular 
+///   shift errors and a high proportion of double character transcription 
+///   errors (two separate single character transcription errors in the same value).
 ///   </para>
 /// </remarks>
-public sealed class Iso7064Mod37_2Algorithm : ISingleCheckDigitAlgorithm
+public sealed class Iso7064Mod37_2Algorithm : ISingleCheckDigitAlgorithm, IMaskedCheckDigitAlgorithm
 {
    private const Int32 _modulus = 37;
    private const Int32 _radix = 2;
@@ -51,24 +50,15 @@ public sealed class Iso7064Mod37_2Algorithm : ISingleCheckDigitAlgorithm
          return false;
       }
 
-      Char ch;
-      Int32 num;
       var sum = 0;
       for (var index = 0; index < value.Length; index++)
       {
-         ch = value[index];
-         if (ch >= Chars.DigitZero && ch <= Chars.DigitNine)
-         {
-            num = ch.ToIntegerDigit();
-         }
-         else if (ch >= Chars.UpperCaseA && ch <= Chars.UpperCaseZ)
-         {
-            num = ch - Chars.UpperCaseA + 10;
-         }
-         else
+         var ch = value[index];
+         if (!ch.IsAsciiUppercaseAlphanumeric())
          {
             return false;
          }
+         var num = ch.MapAsciiUppercaseAlphanumeric();
          sum = (sum + num) * _radix;
          if (sum >= _reduceThreshold)
          {
@@ -94,21 +84,15 @@ public sealed class Iso7064Mod37_2Algorithm : ISingleCheckDigitAlgorithm
       Char ch;
       Int32 num;
       var sum = 0;
-      for (var index = 0; index < value.Length - 1; index++)
+      var processLength = value.Length - 1;
+      for (var index = 0; index < processLength; index++)
       {
          ch = value[index];
-         if (ch >= Chars.DigitZero && ch <= Chars.DigitNine)
-         {
-            num = ch.ToIntegerDigit();
-         }
-         else if (ch >= Chars.UpperCaseA && ch <= Chars.UpperCaseZ)
-         {
-            num = ch - Chars.UpperCaseA + 10;
-         }
-         else
+         if (!ch.IsAsciiUppercaseAlphanumeric())
          {
             return false;
          }
+         num = ch.MapAsciiUppercaseAlphanumeric();
          sum = (sum + num) * _radix;
          if (sum >= _reduceThreshold)
          {
@@ -116,20 +100,8 @@ public sealed class Iso7064Mod37_2Algorithm : ISingleCheckDigitAlgorithm
          }
       }
 
-      ch = value[^1];
-      if (ch >= Chars.DigitZero && ch <= Chars.DigitNine)
-      {
-         num = ch.ToIntegerDigit();
-      }
-      else if (ch >= Chars.UpperCaseA && ch <= Chars.UpperCaseZ)
-      {
-         num = ch - Chars.UpperCaseA + 10;
-      }
-      else if (ch == Chars.Asterisk)
-      {
-         num = 36;
-      }
-      else
+      num = MapCheckDigitCharacter(value[^1]);
+      if (num == -1)
       {
          return false;
       }
@@ -137,4 +109,65 @@ public sealed class Iso7064Mod37_2Algorithm : ISingleCheckDigitAlgorithm
 
       return sum % _modulus == 1;
    }
+
+   /// <inheritdoc/>
+   public Boolean Validate(String value, ICheckDigitMask mask)
+   {
+      if (mask is null)
+      {
+         throw new ArgumentNullException(nameof(mask), Resources.NullMaskMessage);
+      }
+      if (String.IsNullOrEmpty(value))
+      {
+         return false;
+      }
+
+      Char ch;
+      Int32 num;
+      var sum = 0;
+      var processedDigits = 0;
+      var processLength = value.Length - 1;
+      for (var index = 0; index < processLength; index++)
+      {
+         if (mask.ExcludeCharacter(index))
+         {
+            continue;
+         }
+         ch = value[index];
+         if (!ch.IsAsciiUppercaseAlphanumeric())
+         {
+            return false;
+         }
+         num = ch.MapAsciiUppercaseAlphanumeric();
+         sum = (sum + num) * _radix;
+         if (sum >= _reduceThreshold)
+         {
+            sum %= _modulus;
+         }
+         processedDigits++;
+      }
+      if (processedDigits == 0)
+      {
+         return false;
+      }
+
+      num = MapCheckDigitCharacter(value[^1]);
+      if (num == -1)
+      {
+         return false;
+      }
+      sum += num;
+
+      return sum % _modulus == 1;
+   }
+
+   [MethodImpl(MethodImplOptions.AggressiveInlining)]
+   private static Int32 MapCheckDigitCharacter(Char ch)
+      => ch switch
+      {
+         _ when ch.IsAsciiDigit() => ch.MapAsciiDigit(),
+         _ when ch.IsAsciiLetterUpper() => 10 + (ch - Chars.UpperCaseA),
+         Chars.Asterisk => 36,
+         _ => -1                 // This will require validation after mapping
+      };
 }

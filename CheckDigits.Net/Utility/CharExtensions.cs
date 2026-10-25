@@ -96,8 +96,8 @@ internal static class CharExtensions
       public Int32 MapAsciiUppercaseAlphanumeric()
          => ch switch
          {
-            Char c when c.IsAsciiDigit() => c.MapAsciiDigit(),
-            Char c when c.IsAsciiLetterUpper() => 10 + (c - Chars.UpperCaseA),
+            _ when ch.IsAsciiDigit() => ch.MapAsciiDigit(),
+            _ when ch.IsAsciiLetterUpper() => 10 + (ch - Chars.UpperCaseA),
             _ => -1
          };
 

@@ -16,11 +16,11 @@
 ///   in the input value.
 ///   </para>
 ///   <para>
-///   Will detect all single character transcription errors, all or nearly all 
-///   two character transposition errors, all or nearly all jump transposition 
-///   errors, all or nearly all circular shift errors and a high proportion of 
-///   double character transcription errors (two separate single character 
-///   transcription errors in the same value).
+///   Will detect all single character transcription errors, nearly all two 
+///   character transposition errors, all or nearly all jump transposition 
+///   errors and circular shift errors and a high proportion of double character
+///   transcription errors (two separate single character transcription errors 
+///   in the same value).
 ///   </para>
 /// </remarks>
 public sealed class Iso7064Mod27_26Algorithm : ISingleCheckDigitAlgorithm, IMaskedCheckDigitAlgorithm

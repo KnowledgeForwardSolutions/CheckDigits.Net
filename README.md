@@ -333,6 +333,8 @@ following algorithms implement `IMaskedCheckDigitAlgorithm`:
 * [ISO/IEC 7064 MOD 11,10 Algorithm](#isoiec-7064-mod-1110-algorithm)
 * [ISO/IEC 7064 MOD 11-2 Algorithm](#isoiec-7064-mod-11-2-algorithm)
 * [ISO/IEC 7064 MOD 1271-36 Algorithm](#isoiec-7064-mod-1271-36-algorithm)
+* [ISO/IEC 7064 MOD 27,26 Algorithm](#isoiec-7064-mod-2726-algorithm)
+* [ISO/IEC 7064 MOD 37-2 Algorithm](#isoiec-7064-mod-37-2-algorithm)
 * [Luhn Algorithm](#luhn-algorithm)
 * [Modulus10_1 Algorithm](#modulus10_1-algorithm)
 * [Modulus10_13 Algorithm](#modulus10_13-algorithm)
@@ -1224,13 +1226,17 @@ The ISO/IEC 7064 MOD 27,26 algorithm is a hybrid system algorithm (with M = 26
 and M+1 = 27) that is suitable for use with alphabetic strings. It generates a 
 single check character that is an alphabetic character.
 
+`Iso7064Mod27_26Algorithm` implements [IMaskedCheckDigitAlgorithm](#imaskedcheckdigitalgorithm) and can be used 
+to validate values that are formatted with non-check digit characters (for example,
+a value formatted with spaces or dashes for human readability).
+
 #### Details
 
 * Valid characters - alphabetic characters ('A' - 'Z')
 * Check digit size - one character
 * Check digit value - alphabetic characters ('A' - 'Z')
 * Check digit location - assumed to be the trailing (right-most) character when validating
-* Class name - Iso7064Mod27_26Algorithm
+* Class name - `Iso7064Mod27_26Algorithm`
 
 ### ISO/IEC 7064 MOD 37-2 Algorithm
 
@@ -1238,6 +1244,10 @@ The ISO/IEC 7064 MOD 37-2 algorithm is a pure system algorithm (with modulus 37
 and radix 2) that is suitable for use with alphanumeric strings. It generates a 
 single check character that is either an alphanumeric character or a 
 supplementary '*' character.
+
+`Iso7064Mod37_2Algorithm` implements [IMaskedCheckDigitAlgorithm](#imaskedcheckdigitalgorithm) and can be used 
+to validate values that are formatted with non-check digit characters (for example,
+a value formatted with spaces or dashes for human readability).
 
 #### Details
 
