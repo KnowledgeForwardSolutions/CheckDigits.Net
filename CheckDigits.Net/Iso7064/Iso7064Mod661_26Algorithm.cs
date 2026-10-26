@@ -6,22 +6,22 @@
 /// </summary>
 /// <remarks>
 ///   <para>
-///   Valid characters are alphabetic characters (A-Z).
+///      Valid characters are alphabetic characters (A-Z).
 ///   </para>
 ///   <para>
-///   Check characters calculated by the algorithm are alphabetic characters 
-///   (A-Z).
+///      Check characters calculated by the algorithm are alphabetic characters 
+///      (A-Z).
 ///   </para>
 ///   <para>
-///   Assumes that the check characters (if present) are the two right-most 
-///   characters in the input value.
+///      Assumes that the check characters (if present) are the two right-most 
+///      characters in the input value.
 ///   </para>
 ///   <para>
-///   Will detect all single character transcription errors, all or nearly all 
-///   two character transposition errors, all or nearly all jump transposition 
-///   errors, all or nearly all circular shift errors and a high proportion of 
-///   double character transcription errors (two separate single character 
-///   transcription errors in the same value).
+///      Will detect all single character transcription errors, nearly all two
+///      character transposition errors, jump transposition errors and circular 
+///      shift errors and a high proportion of double character transcription 
+///      errors (two separate single character transcription errors in the same 
+///      value).
 ///   </para>
 /// </remarks>
 public sealed class Iso7064Mod661_26Algorithm : IDoubleCheckDigitAlgorithm
@@ -57,11 +57,12 @@ public sealed class Iso7064Mod661_26Algorithm : IDoubleCheckDigitAlgorithm
       var sum = 0;
       for (var index = 0; index < value.Length; index++)
       {
-         var num = value[index] - Chars.UpperCaseA;
-         if (num < 0 || num > 25)
+         var ch = value[index];
+         if (!ch.IsAsciiLetterUpper())
          {
             return false;
          }
+         var num = ch.MapAsciiUppercaseAlpha();
          sum = (sum + num) * _radix;
          if (sum >= _reduceThreshold)
          {
@@ -93,14 +94,17 @@ public sealed class Iso7064Mod661_26Algorithm : IDoubleCheckDigitAlgorithm
 
       // Sum non-check digit characters and first check character.
       var sum = 0;
+      Char ch;
       Int32 num;
-      for (var index = 0; index < value.Length - 1; index++)
+      var processLength = value.Length - 1;
+      for (var index = 0; index < processLength; index++)
       {
-         num = value[index] - Chars.UpperCaseA;
-         if (num < 0 || num > 25)
+         ch = value[index];
+         if (!ch.IsAsciiLetterUpper())
          {
             return false;
          }
+         num = ch.MapAsciiUppercaseAlpha();
          sum = (sum + num) * _radix;
          if (sum >= _reduceThreshold)
          {
@@ -109,11 +113,12 @@ public sealed class Iso7064Mod661_26Algorithm : IDoubleCheckDigitAlgorithm
       }
 
       // Add value for second check character.
-      num = value[^1] - Chars.UpperCaseA;
-      if (num < 0 || num > 25)
+      ch = value[^1];
+      if (!ch.IsAsciiLetterUpper())
       {
          return false;
       }
+      num = ch.MapAsciiUppercaseAlpha();
       sum += num;
 
       return sum % _modulus == 1;
