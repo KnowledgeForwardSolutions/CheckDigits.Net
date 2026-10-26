@@ -24,7 +24,7 @@
 ///      value).
 ///   </para>
 /// </remarks>
-public sealed class Iso7064Mod37_36Algorithm : ISingleCheckDigitAlgorithm
+public sealed class Iso7064Mod37_36Algorithm : ISingleCheckDigitAlgorithm, IMaskedCheckDigitAlgorithm
 {
    private const Int32 _modulus = 36;
    private const Int32 _modulusPlus1 = 37;
@@ -68,7 +68,7 @@ public sealed class Iso7064Mod37_36Algorithm : ISingleCheckDigitAlgorithm
       }
 
       var remainder = (_modulus - product + 1) % _modulus;
-      checkDigit = _validCharacters[remainder == _modulus ? 0 : remainder];
+      checkDigit = _validCharacters[remainder];
 
       return true;
    }
@@ -84,7 +84,8 @@ public sealed class Iso7064Mod37_36Algorithm : ISingleCheckDigitAlgorithm
       Char ch;
       Int32 num;
       var product = _modulus;
-      for (var index = 0; index < value.Length - 1; index++)
+      var processLength = value.Length - 1;
+      for (var index = 0; index < processLength; index++)
       {
          ch = value[index];
          if (!ch.IsAsciiUppercaseAlphanumeric())
@@ -102,6 +103,63 @@ public sealed class Iso7064Mod37_36Algorithm : ISingleCheckDigitAlgorithm
          {
             product -= _modulusPlus1;
          }
+      }
+
+      ch = value[^1];
+      if (!ch.IsAsciiUppercaseAlphanumeric())
+      {
+         return false;
+      }
+      num = ch.MapAsciiUppercaseAlphanumeric();
+      product += num;
+
+      return product % _modulus == 1;
+   }
+
+   /// <inheritdoc/>
+   public Boolean Validate(String value, ICheckDigitMask mask)
+   {
+      if (mask is null)
+      {
+         throw new ArgumentNullException(nameof(mask), Resources.NullMaskMessage);
+      }
+      if (String.IsNullOrEmpty(value))
+      {
+         return false;
+      }
+
+      Char ch;
+      Int32 num;
+      var product = _modulus;
+      var processLength = value.Length - 1;
+      var processedDigits = 0;
+      for (var index = 0; index < processLength; index++)
+      {
+         if (mask.ExcludeCharacter(index))
+         {
+            continue;
+         }
+         ch = value[index];
+         if (!ch.IsAsciiUppercaseAlphanumeric())
+         {
+            return false;
+         }
+         num = ch.MapAsciiUppercaseAlphanumeric();
+         product += num;
+         if (product > _modulus)
+         {
+            product -= _modulus;
+         }
+         product *= 2;
+         if (product >= _modulusPlus1)
+         {
+            product -= _modulusPlus1;
+         }
+         processedDigits++;
+      }
+      if (processedDigits == 0)
+      {
+         return false;
       }
 
       ch = value[^1];

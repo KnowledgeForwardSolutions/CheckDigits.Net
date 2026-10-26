@@ -3,6 +3,9 @@
 public class Iso7064Mod37_36AlgorithmTests
 {
    private readonly Iso7064Mod37_36Algorithm _sut = new();
+   private readonly ICheckDigitMask _acceptAllMask = new AcceptAllMask();
+   private readonly ICheckDigitMask _groupsOfThreeMask = new GroupsOfThreeCheckDigitMask();
+   private readonly ICheckDigitMask _rejectAllMask = new RejectAllMask();
 
    #region AlgorithmDescription Property Tests
    // ==========================================================================
@@ -96,7 +99,7 @@ public class Iso7064Mod37_36AlgorithmTests
    [InlineData("A1B2C3D4E5F6G7H8I9J0K", 'I')]
    [InlineData("THISISATESTTHISISONLYATEST", 'E')]
    [InlineData("1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ", 'T')]
-   public void Iso7064Mod37_36AlgorithmAlgorithm_TryCalculateCheckDigit_ShouldCalculateExpectedCheckDigit(
+   public void Iso7064Mod37_36Algorithm_TryCalculateCheckDigit_ShouldCalculateExpectedCheckDigit(
       String value,
       Char expectedCheckDigit)
    {
@@ -109,12 +112,24 @@ public class Iso7064Mod37_36AlgorithmTests
    [InlineData("ABC!EFX")]
    [InlineData("ABC^EFX")]
    [InlineData("ABC=EFX")]
+   [InlineData("ABCzEFX")]
    public void Iso7064Mod37_36Algorithm_TryCalculateCheckDigit_ShouldReturnFalse_WhenInputContainsInvalidCharacter(String value)
    {
       // Act/assert.
       _sut.TryCalculateCheckDigit(value, out var checkDigit).Should().BeFalse();
       checkDigit.Should().Be('\0');
    }
+
+   [Theory]
+   [InlineData("U7Y")]
+   [InlineData("U7Y8SX")]
+   [InlineData("U7Y8SXRC0")]
+   [InlineData("U7Y8SXRC0O3S")]
+   [InlineData("U7Y8SXRC0O3SC4I")]
+   [InlineData("U7Y8SXRC0O3SC4IHYQ")]
+   [InlineData("U7Y8SXRC0O3SC4IHYQF4M")]
+   public void Iso7064Mod37_36Algorithm_TryCalculateCheckDigit_ShouldReturnTrue_ForBenchmarkValues(String value)
+      => _sut.TryCalculateCheckDigit(value, out _).Should().BeTrue();
 
    #endregion
 
@@ -210,6 +225,7 @@ public class Iso7064Mod37_36AlgorithmTests
    [InlineData("ABC!EFX")]
    [InlineData("ABC^EFX")]
    [InlineData("ABC=EFX")]
+   [InlineData("ABCzEFX")]
    public void Iso7064Mod37_36Algorithm_Validate_ShouldReturnFalse_WhenValueContainsInvalidCharacter(String value)
       => _sut.Validate(value).Should().BeFalse();
 
@@ -217,8 +233,163 @@ public class Iso7064Mod37_36AlgorithmTests
    [InlineData("ABCDE!")]
    [InlineData("ABCDE^")]
    [InlineData("ABCDE=")]
+   [InlineData("ABCDEz")]
    public void Iso7064Mod37_36Algorithm_Validate_ShouldReturnFalse_WhenValueContainsInvalidCheckDigitCharacter(String value)
       => _sut.Validate(value).Should().BeFalse();
+
+   [Theory]
+   [InlineData("U7YW")]
+   [InlineData("U7Y8SX8")]
+   [InlineData("U7Y8SXRC0E")]
+   [InlineData("U7Y8SXRC0O3SR")]
+   [InlineData("U7Y8SXRC0O3SC4IT")]
+   [InlineData("U7Y8SXRC0O3SC4IHYQD")]
+   [InlineData("U7Y8SXRC0O3SC4IHYQF4MP")]
+   public void Iso7064Mod37_36Algorithm_Validate_ShouldReturnTrue_ForBenchmarkValues(String value)
+      => _sut.Validate(value).Should().BeTrue();
+
+   #endregion
+
+   #region Validate (ICheckDigitMask Overload) Tests
+   // ==========================================================================
+   // ==========================================================================
+
+   [Fact]
+   public void Iso7064Mod37_36Algorithm_ValidateMasked_ShouldThrowArgumentNullException_WhenMaskIsNull()
+      => _sut
+         .Invoking(x => x.Validate("A12425GABC1234002M", null!))
+         .Should()
+         .ThrowExactly<ArgumentNullException>()
+         .WithParameterName("mask")
+         .WithMessage(Resources.NullMaskMessage + "*");
+
+   [Fact]
+   public void Iso7064Mod37_36Algorithm_ValidateMasked_ShouldReturnFalse_WhenInputIsNull()
+      => _sut.Validate(null!, _acceptAllMask).Should().BeFalse();
+
+   [Fact]
+   public void Iso7064Mod37_36Algorithm_ValidateMasked_ShouldReturnFalse_WhenInputIsEmpty()
+      => _sut.Validate(String.Empty, _acceptAllMask).Should().BeFalse();
+
+   [Theory]
+   [InlineData("0")]
+   [InlineData("1")]
+   [InlineData("A")]
+   public void Iso7064Mod37_36Algorithm_ValidateMasked_ShouldReturnFalse_WhenInsufficientUnmaskedCharactersToCalculateCheckDigit(String value)
+      => _sut.Validate(value, _acceptAllMask).Should().BeFalse();
+
+   [Fact]
+   public void Iso7064Mod37_36Algorithm_ValidateMasked_ShouldReturnFalse_WhenAllNonCheckDigitCharactersAreMaskedOut()
+      => _sut.Validate("A12425GABC1234002M", _rejectAllMask).Should().BeFalse();
+
+   [Theory]
+   [InlineData("02")]
+   [InlineData("1Z")]
+   [InlineData("2X")]
+   [InlineData("3V")]
+   [InlineData("4T")]
+   [InlineData("5R")]
+   [InlineData("6P")]
+   [InlineData("7N")]
+   [InlineData("8L")]
+   [InlineData("9J")]
+   [InlineData("AH")]
+   [InlineData("BF")]
+   [InlineData("CD")]
+   [InlineData("DB")]
+   [InlineData("E9")]
+   [InlineData("F7")]
+   [InlineData("G5")]
+   [InlineData("H3")]
+   [InlineData("I1")]
+   [InlineData("J0")]
+   [InlineData("KY")]
+   [InlineData("LW")]
+   [InlineData("MU")]
+   [InlineData("NS")]
+   [InlineData("OQ")]
+   [InlineData("PO")]
+   [InlineData("QM")]
+   [InlineData("RK")]
+   [InlineData("SI")]
+   [InlineData("TG")]
+   [InlineData("UE")]
+   [InlineData("VC")]
+   [InlineData("WA")]
+   [InlineData("X8")]
+   [InlineData("Y6")]
+   [InlineData("Z4")]
+   public void Iso7064Mod37_36Algorithm_ValidateMasked_ShouldCorrectlyMapCharacterValues(String value)
+      => _sut.Validate(value, _groupsOfThreeMask).Should().BeTrue();
+
+   [Theory]
+   [InlineData("A12 425 GAB C12 340 02M")]               // Example Global Release Identifier https://en.wikipedia.org/wiki/Global_Release_Identifier
+   [InlineData("000 000 018 947 000 000 000 000 D")]
+   [InlineData("000 000 00C 36D 002 B00 000 000 E")]     // Full ISAN for Star Trek episode "Amok Time"
+   [InlineData("000 000 00C 36D 002 BK")]                // ISAN root for Star Trek episode "Amok Time"
+   [InlineData("AEI OUU")]
+   [InlineData("QWE RTY DVO RAK 1")]
+   [InlineData("A1B 2C3 D4E 5F6 G7H 8I9 J0K I")]
+   [InlineData("THI SIS ATE STT HIS ISO NLY ATE STE")]
+   [InlineData("123 456 789 0AB CDE FGH IJK LMN OPQ RST UVW XYZ T")]
+   public void Iso7064Mod37_36Algorithm_ValidateMasked_ShouldReturnTrue_WhenValueContainsValidCheckDigit(String value)
+      => _sut.Validate(value, _groupsOfThreeMask).Should().BeTrue();
+
+   [Theory]
+   [InlineData("A12425GABC1234002M")]           // Example Global Release Identifier https://en.wikipedia.org/wiki/Global_Release_Identifier
+   [InlineData("000000018947000000000000D")]
+   [InlineData("00000000C36D002B00000000E")]    // Full ISAN for Star Trek episode "Amok Time"
+   [InlineData("00000000C36D002BK")]            // ISAN root for Star Trek episode "Amok Time"
+   [InlineData("AEIOUU")]
+   [InlineData("QWERTYDVORAK1")]
+   [InlineData("A1B2C3D4E5F6G7H8I9J0KI")]
+   [InlineData("THISISATESTTHISISONLYATESTE")]
+   [InlineData("1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZT")]
+   public void Iso7064Mod37_36Algorithm_ValidateMasked_ShouldReturnTrue_WhenValueContainsValidCheckDigitAndMaskAcceptsAllCharacters(String value)
+      => _sut.Validate(value, _acceptAllMask).Should().BeTrue();
+
+   [Theory]
+   [InlineData("ACI OUU")]                               // AEIOUU with single char transcription error E -> C
+   [InlineData("QWE RTU DVO RAK 1")]                     // QWERTYDVORAK1 with single char transcription error Y -> U
+   [InlineData("A1B 2C3 D4E 5F6 7GH 8I9 J0K I")]         // A1B2C3D4E5F6G7H8I9J0KI with two char transposition error G7 -> 7G 
+   [InlineData("THI SIS ATE SUU HIS ISO NLY ATE STE")]   // THISISATESTTHISISONLYATESTE with two char twin error TT -> UU
+   [InlineData("A1B 2C3 E4D 5F6 G7H 8I9 J0K I")]         // A1B2C3D4E5F6G7H8I9J0KI with jump transposition error D4E -> E4D
+   [InlineData("QWE RDY TVO RAK 1")]                     // QWERTYDVORAK1 with jump transposition error TYD -> DYT
+   [InlineData("UAE IOU")]                               // AEIOUU with circular shift error
+   [InlineData("EIO UUA")]                               // AEIOUU with circular shift error
+   public void Iso7064Mod37_36Algorithm_ValidateMasked_ShouldReturnFalse_WhenInputContainsDetectableError(String value)
+      => _sut.Validate(value, _groupsOfThreeMask).Should().BeFalse();
+
+   [Fact]
+   public void Iso7064Mod37_36Algorithm_ValidateMasked_ShouldReturnTrue_WhenCheckDigitIsCalculatesAsZero()
+      => _sut.Validate("J0", _groupsOfThreeMask).Should().BeTrue();
+
+   [Theory]
+   [InlineData("ABC! EFX")]
+   [InlineData("ABC^ EFX")]
+   [InlineData("ABC= EFX")]
+   [InlineData("ABCz EFX")]
+   public void Iso7064Mod37_36Algorithm_ValidateMasked_ShouldReturnFalse_WhenValueContainsInvalidCharacter(String value)
+      => _sut.Validate(value, _groupsOfThreeMask).Should().BeFalse();
+
+   [Theory]
+   [InlineData("ABC DE!")]
+   [InlineData("ABC DE^")]
+   [InlineData("ABC DE=")]
+   [InlineData("ABC DEz")]
+   public void Iso7064Mod37_36Algorithm_ValidateMasked_ShouldReturnFalse_WhenValueContainsInvalidCheckDigitCharacter(String value)
+      => _sut.Validate(value, _groupsOfThreeMask).Should().BeFalse();
+
+   [Theory]
+   [InlineData("U7Y W")]
+   [InlineData("U7Y 8SX 8")]
+   [InlineData("U7Y 8SX RC0 E")]
+   [InlineData("U7Y 8SX RC0 O3S R")]
+   [InlineData("U7Y 8SX RC0 O3S C4I T")]
+   [InlineData("U7Y 8SX RC0 O3S C4I HYQ D")]
+   [InlineData("U7Y 8SX RC0 O3S C4I HYQ F4M P")]
+   public void Iso7064Mod37_36Algorithm_ValidateMasked_ShouldReturnTrue_ForBenchmarkValues(String value)
+      => _sut.Validate(value, _groupsOfThreeMask).Should().BeTrue();
 
    #endregion
 }
