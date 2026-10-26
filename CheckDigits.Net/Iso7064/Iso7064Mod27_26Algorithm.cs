@@ -6,21 +6,22 @@
 /// </summary>
 /// <remarks>
 ///   <para>
-///   Valid characters are alphabetic characters (A-Z).
+///      Valid characters are alphabetic characters (A-Z).
 ///   </para>
 ///   <para>
-///   Check character calculated by the algorithm is an alphabetic character (A-Z).
+///      Check character calculated by the algorithm is an alphabetic character 
+///      (A-Z).
 ///   </para>
 ///   <para>
-///   Assumes that the check character (if present) is the right-most character 
-///   in the input value.
+///      Assumes that the check character (if present) is the right-most 
+///      character in the input value.
 ///   </para>
 ///   <para>
-///   Will detect all single character transcription errors, nearly all two 
-///   character transposition errors, all or nearly all jump transposition 
-///   errors and circular shift errors and a high proportion of double character
-///   transcription errors (two separate single character transcription errors 
-///   in the same value).
+///      Will detect all single character transcription errors, nearly all two 
+///      character transposition errors, all or nearly all jump transposition 
+///      errors and circular shift errors and a high proportion of double 
+///      character transcription errors (two separate single character 
+///      transcription errors in the same value).
 ///   </para>
 /// </remarks>
 public sealed class Iso7064Mod27_26Algorithm : ISingleCheckDigitAlgorithm, IMaskedCheckDigitAlgorithm

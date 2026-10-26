@@ -199,6 +199,7 @@ public class Iso7064Mod11_2AlgorithmTests
    [Theory]
    [InlineData("12345Q")]
    [InlineData("12345x")]
+   [InlineData("12345!")]
    public void Iso7064Mod11_2Algorithm_Validate_ShouldReturnFalse_WhenValueContainsInvalidCheckDigitCharacter(String value)
       => _sut.Validate(value).Should().BeFalse();
 
@@ -328,6 +329,7 @@ public class Iso7064Mod11_2AlgorithmTests
    [Theory]
    [InlineData("123 45Q")]
    [InlineData("123 45x")]
+   [InlineData("123 45!")]
    public void Iso7064Mod11_2Algorithm_ValidateMasked_ShouldReturnFalse_WhenValueContainsInvalidCheckDigitCharacter(String value)
       => _sut.Validate(value, _groupsOfThreeMask).Should().BeFalse();
 

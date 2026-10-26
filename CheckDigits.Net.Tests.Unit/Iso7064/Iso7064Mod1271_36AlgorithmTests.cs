@@ -120,6 +120,7 @@ public class Iso7064Mod1271_36AlgorithmTests
    [InlineData("123!56")]
    [InlineData("123^56")]
    [InlineData("123=56X")]
+   [InlineData("123a56X")]
    public void Iso7064Mod1271_36Algorithm_TryCalculateCheckDigits_ShouldReturnFalse_WhenInputContainsInvalidCharacter(String value)
    {
       // Act/assert.

@@ -102,6 +102,7 @@ public class Iso7064Mod27_26AlgorithmTests
    [InlineData("ABC!EFX")]
    [InlineData("ABC^EFX")]
    [InlineData("ABC5EFX")]
+   [InlineData("ABCzEFX")]
    public void Iso7064Mod27_26Algorithm_TryCalculateCheckDigit_ShouldReturnFalse_WhenInputContainsInvalidCharacter(String value)
    {
       // Act/assert.
@@ -199,6 +200,7 @@ public class Iso7064Mod27_26AlgorithmTests
    [InlineData("ABC!EFX")]
    [InlineData("ABC^EFX")]
    [InlineData("ABC5EFX")]
+   [InlineData("ABCzEFX")]
    public void Iso7064Mod27_26Algorithm_Validate_ShouldReturnFalse_WhenValueContainsInvalidCharacter(String value)
       => _sut.Validate(value).Should().BeFalse();
 
@@ -206,6 +208,7 @@ public class Iso7064Mod27_26AlgorithmTests
    [InlineData("ABCDE!")]
    [InlineData("ABCDE^")]
    [InlineData("ABCDE5")]
+   [InlineData("ABCDEz")]
    public void Iso7064Mod27_26Algorithm_Validate_ShouldReturnFalse_WhenValueContainsInvalidCheckDigitCharacter(String value)
       => _sut.Validate(value).Should().BeFalse();
 
@@ -321,6 +324,7 @@ public class Iso7064Mod27_26AlgorithmTests
    [InlineData("ABC !EFX")]
    [InlineData("ABC ^EFX")]
    [InlineData("ABC 5EFX")]
+   [InlineData("ABC zEFX")]
    public void Iso7064Mod27_26Algorithm_ValidateMasked_ShouldReturnFalse_WhenValueContainsInvalidCharacter(String value)
       => _sut.Validate(value, _groupsOfThreeMask).Should().BeFalse();
 
@@ -328,6 +332,7 @@ public class Iso7064Mod27_26AlgorithmTests
    [InlineData("ABC DE!")]
    [InlineData("ABC DE^")]
    [InlineData("ABC DE5")]
+   [InlineData("ABC DEa")]
    public void Iso7064Mod27_26Algorithm_ValidateMasked_ShouldReturnFalse_WhenValueContainsInvalidCheckDigitCharacter(String value)
       => _sut.Validate(value, _groupsOfThreeMask).Should().BeFalse();
 

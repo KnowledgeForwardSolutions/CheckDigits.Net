@@ -29,6 +29,9 @@ public static class MaskedAlgorithms
    private static readonly Lazy<IMaskedCheckDigitAlgorithm> _iso7064Mod37_2 =
       new(() => new Iso7064Mod37_2Algorithm());
 
+   private static readonly Lazy<IMaskedCheckDigitAlgorithm> _iso7064Mod37_36 =
+      new(() => new Iso7064Mod37_36Algorithm());
+
    private static readonly Lazy<IMaskedCheckDigitAlgorithm> _luhn =
       new(() => new LuhnAlgorithm());
 
@@ -90,6 +93,11 @@ public static class MaskedAlgorithms
    ///   ISO/IEC 7064 MOD 37-2 algorithm.
    /// </summary>
    public static IMaskedCheckDigitAlgorithm Iso7064Mod37_2 => _iso7064Mod37_2.Value;
+
+   /// <summary>
+   ///   ISO/IEC 7064 MOD 37,36 algorithm.
+   /// </summary>
+   public static IMaskedCheckDigitAlgorithm Iso7064Mod37_36 => _iso7064Mod37_36.Value;
 
    /// <summary>
    ///   Luhn algorithm.

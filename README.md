@@ -335,6 +335,7 @@ following algorithms implement `IMaskedCheckDigitAlgorithm`:
 * [ISO/IEC 7064 MOD 1271-36 Algorithm](#isoiec-7064-mod-1271-36-algorithm)
 * [ISO/IEC 7064 MOD 27,26 Algorithm](#isoiec-7064-mod-2726-algorithm)
 * [ISO/IEC 7064 MOD 37-2 Algorithm](#isoiec-7064-mod-37-2-algorithm)
+* [ISO/IEC 7064 MOD 37-36 Algorithm](#isoiec-7064-mod-3736-algorithm)
 * [Luhn Algorithm](#luhn-algorithm)
 * [Modulus10_1 Algorithm](#modulus10_1-algorithm)
 * [Modulus10_13 Algorithm](#modulus10_13-algorithm)
@@ -1266,6 +1267,10 @@ a value formatted with spaces or dashes for human readability).
 The ISO/IEC 7064 MOD 37,36 algorithm is a hybrid system algorithm (with M = 36
 and M+1 = 37) that is suitable for use with alphanumeric strings. It generates a 
 single check character that is an alphanumeric character.
+
+`Iso7064Mod37_36Algorithm` implements [IMaskedCheckDigitAlgorithm](#imaskedcheckdigitalgorithm) and can be used 
+to validate values that are formatted with non-check digit characters (for example,
+a value formatted with spaces or dashes for human readability).
 
 #### Details
 
