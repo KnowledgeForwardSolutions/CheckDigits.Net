@@ -85,6 +85,7 @@ public class Iso7064Mod11_10AlgorithmTests
    [Theory]
    [InlineData("079H5")]
    [InlineData("079*5")]
+   [InlineData("079h5")]
    public void Iso7064Mod11_10Algorithm_TryCalculateCheckDigit_ShouldReturnFalse_WhenInputContainsInvalidCharacter(String value)
    {
       // Act/assert.
@@ -167,12 +168,16 @@ public class Iso7064Mod11_10AlgorithmTests
    [Theory]
    [InlineData("079H5")]
    [InlineData("079*5")]
+   [InlineData("079h5")]
    public void Iso7064Mod11_10Algorithm_Validate_ShouldReturnFalse_WhenValueContainsInvalidCharacter(String value)
       => _sut.Validate(value).Should().BeFalse();
 
-   [Fact]
-   public void Iso7064Mod11_10Algorithm_Validate_ShouldReturnFalse_WhenValueContainsInvalidCheckDigitCharacter()
-      => _sut.Validate("12345Q").Should().BeFalse();
+   [Theory]
+   [InlineData("12345Q")]
+   [InlineData("12345*")]
+   [InlineData("12345q")]
+   public void Iso7064Mod11_10Algorithm_Validate_ShouldReturnFalse_WhenValueContainsInvalidCheckDigitCharacter(String value)
+      => _sut.Validate(value).Should().BeFalse();
 
    [Theory]
    [InlineData("1409")]
@@ -271,12 +276,16 @@ public class Iso7064Mod11_10AlgorithmTests
    [Theory]
    [InlineData("079 H5")]
    [InlineData("079 *5")]
+   [InlineData("079 h5")]
    public void Iso7064Mod11_10Algorithm_ValidateMasked_ShouldReturnFalse_WhenValueContainsInvalidCharacter(String value)
       => _sut.Validate(value, _groupsOfThreeMask).Should().BeFalse();
 
-   [Fact]
-   public void Iso7064Mod11_10Algorithm_ValidateMasked_ShouldReturnFalse_WhenValueContainsInvalidCheckDigitCharacter()
-      => _sut.Validate("123 45Q", _groupsOfThreeMask).Should().BeFalse();
+   [Theory]
+   [InlineData("123 45Q")]
+   [InlineData("123 45*")]
+   [InlineData("123 45q")]
+   public void Iso7064Mod11_10Algorithm_ValidateMasked_ShouldReturnFalse_WhenValueContainsInvalidCheckDigitCharacter(String value)
+      => _sut.Validate(value, _groupsOfThreeMask).Should().BeFalse();
 
    [Theory]
    [InlineData("140 9")]
