@@ -78,8 +78,8 @@ public sealed class Iso7064Mod661_26Algorithm : IDoubleCheckDigitAlgorithm
       var quotient = checkSum / _radix;
       var remainder = checkSum % _radix;
 
-      first = (Char)(Chars.UpperCaseA + quotient);
-      second = (Char)(Chars.UpperCaseA + remainder);
+      first = quotient.ToAsciiUppercaseAlpha();
+      second = remainder.ToAsciiUppercaseAlpha();
 
       return true;
    }
