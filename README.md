@@ -337,6 +337,7 @@ following algorithms implement `IMaskedCheckDigitAlgorithm`:
 * [ISO/IEC 7064 MOD 37-2 Algorithm](#isoiec-7064-mod-37-2-algorithm)
 * [ISO/IEC 7064 MOD 37-36 Algorithm](#isoiec-7064-mod-3736-algorithm)
 * [ISO/IEC 7064 MOD 661-26 Algorithm](#isoiec-7064-mod-661-26-algorithm)
+* [ISO/IEC 7064 MOD 97-10 Algorithm](#isoiec-7064-mod-97-10-algorithm)
 * [Luhn Algorithm](#luhn-algorithm)
 * [Modulus10_1 Algorithm](#modulus10_1-algorithm)
 * [Modulus10_13 Algorithm](#modulus10_13-algorithm)
@@ -1308,6 +1309,10 @@ a value formatted with spaces or dashes for human readability).
 The ISO/IEC 7064 MOD 97-10 algorithm is a pure system algorithm (with modulus 97
 and radix 210) that is suitable for use with numeric strings. It generates two 
 numeric check digits.
+
+`Iso7064Mod97_10Algorithm` implements [IMaskedCheckDigitAlgorithm](#imaskedcheckdigitalgorithm) and can be used 
+to validate values that are formatted with non-check digit characters (for example,
+a value formatted with spaces or dashes for human readability).
 
 Note: the ISO/IEC 7064 MOD 97-10 algorithm is the basis of a number of check digit 
 algorithms that first map alphabetic characters to numbers between 10 and 35. 
