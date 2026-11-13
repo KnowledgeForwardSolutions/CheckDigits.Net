@@ -336,6 +336,7 @@ following algorithms implement `IMaskedCheckDigitAlgorithm`:
 * [ISO/IEC 7064 MOD 27,26 Algorithm](#isoiec-7064-mod-2726-algorithm)
 * [ISO/IEC 7064 MOD 37-2 Algorithm](#isoiec-7064-mod-37-2-algorithm)
 * [ISO/IEC 7064 MOD 37-36 Algorithm](#isoiec-7064-mod-3736-algorithm)
+* [ISO/IEC 7064 MOD 661-26 Algorithm](#isoiec-7064-mod-661-26-algorithm)
 * [Luhn Algorithm](#luhn-algorithm)
 * [Modulus10_1 Algorithm](#modulus10_1-algorithm)
 * [Modulus10_13 Algorithm](#modulus10_13-algorithm)
@@ -1289,6 +1290,10 @@ a value formatted with spaces or dashes for human readability).
 The ISO/IEC 7064 MOD 661-26 algorithm is a pure system algorithm (with modulus 
 661 and radix 26) that is suitable for use with alphabetic strings. It generates 
 two check alphabetic characters.
+
+`Iso7064Mod661_26Algorithm` implements [IMaskedCheckDigitAlgorithm](#imaskedcheckdigitalgorithm) and can be used 
+to validate values that are formatted with non-check digit characters (for example,
+a value formatted with spaces or dashes for human readability).
 
 #### Details
 
