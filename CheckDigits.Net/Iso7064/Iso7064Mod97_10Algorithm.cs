@@ -6,21 +6,21 @@
 /// </summary>
 /// <remarks>
 ///   <para>
-///   Valid characters are decimal digits (0-9).
+///      Valid characters are decimal digits (0-9).
 ///   </para>
 ///   <para>
-///   Check characters calculated by the algorithm are decimal digits (0-9).
+///      Check characters calculated by the algorithm are decimal digits (0-9).
 ///   </para>
 ///   <para>
-///   Assumes that the check characters (if present) are the two right-most 
-///   characters in the input value.
+///      Assumes that the check characters (if present) are the two right-most 
+///      characters in the input value.
 ///   </para>
 ///   <para>
-///   Will detect all single character transcription errors, all or nearly all 
-///   two character transposition errors, all or nearly all jump transposition 
-///   errors, all or nearly all circular shift errors and a high proportion of 
-///   double character transcription errors (two separate single character 
-///   transcription errors in the same value).
+///      Will detect all single character transcription errors, nearly all two
+///      character transposition errors, jump transposition errors, and circular
+///      shift errors and a high proportion of double character transcription 
+///      errors (two separate single character transcription errors in the same 
+///      value).
 ///   </para>
 /// </remarks>
 public sealed class Iso7064Mod97_10Algorithm : IDoubleCheckDigitAlgorithm
@@ -56,11 +56,12 @@ public sealed class Iso7064Mod97_10Algorithm : IDoubleCheckDigitAlgorithm
       var sum = 0;
       for (var index = 0; index < value.Length; index++)
       {
-         var num = value[index].ToIntegerDigit();
-         if (num < 0 || num > 9)
+         var ch = value[index];
+         if (!ch.IsAsciiDigit())
          {
             return false;
          }
+         var num = ch.MapAsciiDigit();
          sum = (sum + num) * _radix;
          if (sum >= _reduceThreshold)
          {
@@ -76,8 +77,8 @@ public sealed class Iso7064Mod97_10Algorithm : IDoubleCheckDigitAlgorithm
       var quotient = checkSum / _radix;
       var remainder = checkSum % _radix;
 
-      first = quotient.ToDigitChar();
-      second = remainder.ToDigitChar();
+      first = quotient.ToAsciiDigit();
+      second = remainder.ToAsciiDigit();
 
       return true;
    }
@@ -92,14 +93,16 @@ public sealed class Iso7064Mod97_10Algorithm : IDoubleCheckDigitAlgorithm
 
       // Sum non-check digit characters and first check character.
       var sum = 0;
+      Char ch;
       Int32 num;
       for (var index = 0; index < value.Length - 1; index++)
       {
-         num = value[index].ToIntegerDigit();
-         if (num < 0 || num > 9)
+         ch = value[index];
+         if (!ch.IsAsciiDigit())
          {
             return false;
          }
+         num = ch.MapAsciiDigit();
          sum = (sum + num) * _radix;
          if (sum >= _reduceThreshold)
          {
@@ -108,11 +111,12 @@ public sealed class Iso7064Mod97_10Algorithm : IDoubleCheckDigitAlgorithm
       }
 
       // Add value for second check character.
-      num = value[^1].ToIntegerDigit();
-      if (num < 0 || num > 9)
+      ch = value[^1];
+      if (!ch.IsAsciiDigit())
       {
          return false;
       }
+      num = ch.MapAsciiDigit();
       sum += num;
 
       return sum % _modulus == 1;
