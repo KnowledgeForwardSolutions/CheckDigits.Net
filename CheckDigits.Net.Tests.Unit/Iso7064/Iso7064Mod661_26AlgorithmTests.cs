@@ -219,6 +219,7 @@ public class Iso7064Mod661_26AlgorithmTests
    public void Iso7064Mod661_26Algorithm_Validate_ShouldReturnFalse_WhenValueContainsInvalidFirstCheckCharacter(String value)
       => _sut.Validate(value).Should().BeFalse();
 
+   [Theory]
    [InlineData("ABCDEF!")]
    [InlineData("ABCDEF^")]
    [InlineData("ABCDEF5")]
