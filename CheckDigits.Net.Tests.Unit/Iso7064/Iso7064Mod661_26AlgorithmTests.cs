@@ -126,7 +126,7 @@ public class Iso7064Mod661_26AlgorithmTests
    [InlineData("EGRNMLJOCECUJIK")]
    [InlineData("EGRNMLJOCECUJIKNWW")]
    [InlineData("EGRNMLJOCECUJIKNWWVVO")]
-   public void Iso7064Mod661_26Algorithm_TryCalculateCheckDigit_ShouldReturnTrue_ForBenchmarkValues(String value)
+   public void Iso7064Mod661_26Algorithm_TryCalculateCheckDigits_ShouldReturnTrue_ForBenchmarkValues(String value)
       => _sut.TryCalculateCheckDigits(value, out _, out _).Should().BeTrue();
 
    #endregion
