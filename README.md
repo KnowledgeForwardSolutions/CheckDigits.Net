@@ -428,7 +428,9 @@ class constructor. `Iso7064HybridSystemAlgorithm` implements the
 [ISingleCheckDigitAlgorithm](#isinglecheckdigitalgorithm) interface so you can 
 use the TryCalculateCheckDigit method to calculate the check digit for values 
 that use the custom alphabet and the Validate method to validate values that 
-contain a check digit.
+contain a check digit. `Iso7064HybridSystemAlgorithm` also implements 
+[IMaskedCheckDigitAlgorithm](#imaskedcheckdigitalgorithm) so that you can exclude
+non-value characters (such as characters added for human readability) from validation.
 
 ### IAlphabet
 
@@ -2611,10 +2613,15 @@ Removed .Net 8.0
 Removed Modulus 11 Algorithm previously marked as Obsolete
 
 Added masked validation support to the following algorithms:
-* Iso7064Mod11_10 Algorithm
-* Iso7064Mod11_2 Algorithm
-
-
+* Iso7064Mod11_10Algorithm
+* Iso7064Mod11_2Algorithm
+* Iso7064Mod1271_36Algorithm
+* Iso7064Mod27_26Algorithm
+* Iso7064Mod37_2Algorithm
+* Iso7064Mod37_36Algorithm
+* Iso7064Mod661_266Algorithm
+* Iso7064Mod97_10Algorithm
+* Iso7064HybridSystemAlgorithm
 
 Classes/methods marked as Obsolete:
 
@@ -2624,3 +2631,7 @@ CheckDigits.Net.Utility.ExtensionMethods
 	.ToDigitChar
 	.ToExtendedDecimalCheckDigit
 	.ToIntegerDigit
+
+CheckDigits.Net.Utility.ExtensionMethods contains internal utility methods that
+were originally exposed as public methods. In a future release they will be 
+changed to internal methods to reduce the public API surface.

@@ -89,7 +89,8 @@ public class Iso7064HybridSystemAlgorithm : ISingleCheckDigitAlgorithm
       }
 
       var product = _modulus;
-      for (var index = 0; index < value.Length; index++)
+      var processLength = value.Length;
+      for (var index = 0; index < processLength; index++)
       {
          var num = _alphabet.CharacterToInteger(value[index]);
          if (num == -1)
@@ -120,7 +121,8 @@ public class Iso7064HybridSystemAlgorithm : ISingleCheckDigitAlgorithm
 
       var product = _modulus;
       Int32 num;
-      for (var index = 0; index < value.Length - 1; index++)
+      var processLength = value.Length - 1;
+      for (var index = 0; index < processLength; index++)
       {
          num = _alphabet.CharacterToInteger(value[index]);
          if (num == -1)
