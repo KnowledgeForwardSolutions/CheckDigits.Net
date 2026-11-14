@@ -226,7 +226,7 @@ public class Iso7064HybridSystemAlgorithmTests
 
    [Theory]
    [MemberData(nameof(TryCalculateCheckDigitSuccessData))]
-   public void Iso7064Mod11_2AlgorithmAlgorithm_TryCalculateCheckDigit_ShouldCalculateExpectedCheckDigit(
+   public void Iso7064HybridSystemAlgorithm_TryCalculateCheckDigit_ShouldCalculateExpectedCheckDigit(
       Iso7064HybridSystemAlgorithm sut,
       String value,
       Char expectedCheckDigit)
@@ -306,9 +306,14 @@ public class Iso7064HybridSystemAlgorithmTests
 
    public static TheoryData<Iso7064HybridSystemAlgorithm, String> ValidateFailureData => new()
    {
-      { _numericAlgorithm, "123465788" },
-      { _alphabeticAlgorithm, "QWERTUDVORAKY" },
-      { _alphanumericAlgorithm, "A1B2C3D4E5F67GH8I9J0KI" }
+      { _numericAlgorithm, "123556788" },                      // 123456788 with single digit transcription error 4 -> 5
+      { _numericAlgorithm, "16341758183519103" },              // 16321758183519103 with single digit transcription error 2 -> 4
+      { _numericAlgorithm, "123465788" },                      // 123456788 with two digit transposition error 56 -> 65 
+      { _alphabeticAlgorithm, "THISISATESUUHISISONLYATESTT" }, // THISISATESTTHISISONLYATESTT with two char twin error TT -> UU
+      { _alphabeticAlgorithm, "ABCFEDGHIJKLMNOPQRO" },         // ABCDEFGHIJKLMNOPQRO with jump transposition error DEF -> FED
+      { _alphabeticAlgorithm, "QWERDYTVORAKY" },               // QWERTYDVORAKY with jump transposition error TYD -> DYT
+      { _alphanumericAlgorithm, "UAEIOU" },                    // AEIOUU with circular shift error
+      { _alphanumericAlgorithm, "EIOUUA" },                    // AEIOUU with circular shift error
    };
 
    [Theory]
@@ -433,9 +438,14 @@ public class Iso7064HybridSystemAlgorithmTests
 
    public static TheoryData<Iso7064HybridSystemAlgorithm, String> ValidateMaskedFailureData => new()
    {
-      { _numericAlgorithm, "123 465 788" },
-      { _alphabeticAlgorithm, "QWE RTU DVO RAK Y" },
-      { _alphanumericAlgorithm, "A1B 2C3 D4E 5F6 7GH 8I9 J0K I" }
+      { _numericAlgorithm, "123 556 788" },                             // 123456788 with single digit transcription error 4 -> 5
+      { _numericAlgorithm, "163 417 581 835 191 03" },                  // 16321758183519103 with single digit transcription error 2 -> 4
+      { _numericAlgorithm, "123 465 788" },                             // 123456788 with two digit transposition error 56 -> 65 
+      { _alphabeticAlgorithm, "THI SIS ATE SUU HIS ISO NLY ATE STT" },  // THISISATESTTHISISONLYATESTT with two char twin error TT -> UU
+      { _alphabeticAlgorithm, "ABC FED GHI JKL MN OPQ RO" },            // ABCDEFGHIJKLMNOPQRO with jump transposition error DEF -> FED
+      { _alphabeticAlgorithm, "QWE RDY TVO RAK Y" },                    // QWERTYDVORAKY with jump transposition error TYD -> DYT
+      { _alphanumericAlgorithm, "UAE IOU" },                            // AEIOUU with circular shift error
+      { _alphanumericAlgorithm, "EIO UUA" },                            // AEIOUU with circular shift error
    };
 
    [Theory]
