@@ -120,7 +120,7 @@ value was not transcribed correctly.
 
 The ISO/IEC 7064 standard defines a family of algorithms capable of detecting a
 broad range of errors including all single character transcription errors as well
-as all or nearly all two character transposition errors, two character jump 
+as nearly all two character transposition errors, two character jump 
 transposition errors, circular shift errors and double transcription errors (two
 separate single transcription errors in a single value). The algorithms are 
 suitable for numeric strings, alphabetic strings, alphanumeric strings and can
@@ -430,7 +430,8 @@ use the TryCalculateCheckDigit method to calculate the check digit for values
 that use the custom alphabet and the Validate method to validate values that 
 contain a check digit. `Iso7064HybridSystemAlgorithm` also implements 
 [IMaskedCheckDigitAlgorithm](#imaskedcheckdigitalgorithm) so that you can exclude
-non-value characters (such as characters added for human readability) from validation.
+non-value characters (such as spaces or dashes added for human readability) from 
+validation.
 
 ### IAlphabet
 
@@ -2619,7 +2620,7 @@ Added masked validation support to the following algorithms:
 * Iso7064Mod27_26Algorithm
 * Iso7064Mod37_2Algorithm
 * Iso7064Mod37_36Algorithm
-* Iso7064Mod661_266Algorithm
+* Iso7064Mod661_26Algorithm
 * Iso7064Mod97_10Algorithm
 * Iso7064HybridSystemAlgorithm
 
@@ -2632,6 +2633,6 @@ CheckDigits.Net.Utility.ExtensionMethods
 	.ToExtendedDecimalCheckDigit
 	.ToIntegerDigit
 
-CheckDigits.Net.Utility.ExtensionMethods contains internal utility methods that
-were originally exposed as public methods. In a future release they will be 
-changed to internal methods to reduce the public API surface.
+ CheckDigits.Net.Utility.ExtensionMethods contains utility methods that are currently
+ public but are not intended to be part of the library API. In a future release they will be
+ changed to internal methods to reduce the public API surface.
