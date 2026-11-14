@@ -16,6 +16,10 @@ public class Iso7064HybridSystemAlgorithmTests
    private static readonly Iso7064HybridSystemAlgorithm _numericAlgorithm =
       new("Numeric", "Numeric, modulus = 10", 10, new DigitsAlphabet());
 
+   private readonly ICheckDigitMask _acceptAllMask = new AcceptAllMask();
+   private readonly ICheckDigitMask _groupsOfThreeMask = new GroupsOfThreeCheckDigitMask();
+   private readonly ICheckDigitMask _rejectAllMask = new RejectAllMask();
+
    #region Constructor Tests
    // ==========================================================================
    // ==========================================================================
@@ -347,6 +351,133 @@ public class Iso7064HybridSystemAlgorithmTests
 
       // Act/assert.
       sut.Validate(value).Should().BeFalse();
+   }
+
+   #endregion
+
+   #region Validate (ICheckDigitMask Overload) Tests
+   // ==========================================================================
+   // ==========================================================================
+
+   [Fact]
+   public void Iso7064HybridSystemAlgorithm_ValidateMasked_ShouldThrowArgumentNullException_WhenMaskIsNull()
+   {
+      // Arrange.
+      var sut = _numericAlgorithm;
+
+      // Act/assert.
+      sut
+         .Invoking(x => x.Validate("07945", null!))
+         .Should()
+         .ThrowExactly<ArgumentNullException>()
+         .WithParameterName("mask")
+         .WithMessage(Resources.NullMaskMessage + "*");
+   }
+
+   [Fact]
+   public void Iso7064HybridSystemAlgorithm_ValidateMasked_ShouldReturnFalse_WhenInputIsNull()
+   {
+      // Arrange.
+      var sut = _alphanumericAlgorithm;
+
+      // Act/assert.
+      sut
+         .Validate(null!, _acceptAllMask).Should().BeFalse();
+   }
+
+   [Fact]
+   public void Iso7064HybridSystemAlgorithm_ValidateMasked_ShouldReturnFalse_WhenInputIsEmpty()
+   {
+      // Arrange.
+      var sut = _alphanumericAlgorithm;
+
+      // Act/assert.
+      sut.Validate(String.Empty, _acceptAllMask).Should().BeFalse();
+   }
+
+   [Theory]
+   [InlineData("0")]    
+   [InlineData("1")]
+   public void Iso7064HybridSystemAlgorithm_ValidateMasked_ShouldReturnFalse_WhenInsufficientUnmaskedCharactersToCalculateCheckDigit(String value)
+   {
+      // Arrange.
+      var sut = _numericAlgorithm;
+
+      // Act/assert.
+      sut.Validate(value, _acceptAllMask).Should().BeFalse();
+   }
+
+   [Fact]
+   public void Iso7064HybridSystemAlgorithm_ValidateMasked_ShouldReturnFalse_WhenAllNonCheckDigitCharactersAreMaskedOut()
+   {
+      // Arrange.
+      var sut = _alphanumericAlgorithm;
+
+      // Act/assert.
+      sut.Validate("A1B2C3D4E5F6G7H8I9J0KI", _rejectAllMask).Should().BeFalse();
+   }
+
+   public static TheoryData<Iso7064HybridSystemAlgorithm, String> ValidateMaskedSuccessData => new()
+   {
+      { _numericAlgorithm, "079 45" },
+      { _alphabeticAlgorithm, "QWE RTY DVO RAK Y" },
+      { _alphanumericAlgorithm, "A1B 2C3 D4E 5F6 G7H 8I9 J0K I" }
+   };
+
+   [Theory]
+   [MemberData(nameof(ValidateMaskedSuccessData))]
+   public void Iso7064HybridSystemAlgorithm_ValidateMasked_ShouldReturnTrue_WhenValueContainsValidCheckDigit(
+      Iso7064HybridSystemAlgorithm sut,
+      String value)
+      => sut.Validate(value, _groupsOfThreeMask).Should().BeTrue();
+
+   public static TheoryData<Iso7064HybridSystemAlgorithm, String> ValidateMaskedFailureData => new()
+   {
+      { _numericAlgorithm, "123 465 788" },
+      { _alphabeticAlgorithm, "QWE RTU DVO RAK Y" },
+      { _alphanumericAlgorithm, "A1B 2C3 D4E 5F6 7GH 8I9 J0K I" }
+   };
+
+   [Theory]
+   [MemberData(nameof(ValidateMaskedFailureData))]
+   public void Iso7064HybridSystemAlgorithm_ValidateMasked_ShouldReturnFalse_WhenInputContainsDetectableError(
+      Iso7064HybridSystemAlgorithm sut,
+      String value)
+      => sut.Validate(value, _groupsOfThreeMask).Should().BeFalse();
+
+   [Fact]
+   public void Iso7064HybridSystemAlgorithm_ValidateMasked_ShouldReturnFalse_WhenValueContainsSupplementalCharacterInOtherThanTrailingPosition()
+   {
+      // Arrange.
+      var sut = _numericAlgorithm;
+      var value = "079 X8";
+
+      // Act/assert.
+      sut.Validate(value, _groupsOfThreeMask).Should().BeFalse();
+   }
+
+   [Theory]
+   [InlineData("123 D56 X")]
+   [InlineData("123 !56 X")]
+   [InlineData("123 ^56 X")]
+   public void Iso7064HybridSystemAlgorithm_ValidateMasked_ShouldReturnFalse_WhenValueContainsInvalidCharacter(String value)
+   {
+      // Arrange.
+      var sut = _numericAlgorithm;
+
+      // Act/assert.
+      sut.Validate(value, _groupsOfThreeMask).Should().BeFalse();
+   }
+
+   [Fact]
+   public void Iso7064HybridSystemAlgorithm_ValidateMasked_ShouldReturnFalse_WhenValueContainsInvalidCheckDigitCharacter()
+   {
+      // Arrange.
+      var sut = _numericAlgorithm;
+      var value = "123 45Q";
+
+      // Act/assert.
+      sut.Validate(value, _groupsOfThreeMask).Should().BeFalse();
    }
 
    #endregion
