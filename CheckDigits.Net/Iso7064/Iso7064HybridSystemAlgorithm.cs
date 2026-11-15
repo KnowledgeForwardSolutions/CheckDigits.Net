@@ -71,7 +71,7 @@ public class Iso7064HybridSystemAlgorithm : ISingleCheckDigitAlgorithm, IMaskedC
       {
          throw new ArgumentOutOfRangeException(nameof(modulus), modulus, Resources.Iso7064ModulusOutOfRange);
       }
-      _ = alphabet ?? throw new ArgumentNullException(nameof(alphabet), Resources.Iso7046AlphabetIsNull);
+      _ = alphabet ?? throw new ArgumentNullException(nameof(alphabet), Resources.Iso7064AlphabetIsNull);
 
       AlgorithmName = algorithmName;
       AlgorithmDescription = algorithmDescription;

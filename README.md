@@ -412,7 +412,10 @@ custom alphabet instance to the class constructor. `Iso7064PureSystemDoubleChara
 implements the [IDoubleCheckDigitAlgorithm](#idoublecheckdigitalgorithm) interface 
 so you can use the TryCalculateCheckDigits method to calculate the check digits 
 for values that use the custom alphabet and the Validate method to validate values 
-that contain check digits.
+that contain check digits. `Iso7064PureSystemDoubleCharacterAlgorithm` also implements 
+[IMaskedCheckDigitAlgorithm](#imaskedcheckdigitalgorithm) so that you can exclude
+non-value characters (such as spaces or dashes added for human readability) from 
+validation.
 
 ### Iso7064HybridSystemAlgorithm
 
@@ -2623,6 +2626,7 @@ Added masked validation support to the following algorithms:
 * Iso7064Mod661_26Algorithm
 * Iso7064Mod97_10Algorithm
 * Iso7064HybridSystemAlgorithm
+* Iso7064PureSystemDoubleCharacterAlgorithm
 
 Classes/methods marked as Obsolete:
 

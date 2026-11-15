@@ -210,7 +210,7 @@
   <data name="Iso6346AlgorithmName" xml:space="preserve">
     <value>ISO 6346</value>
   </data>
-  <data name="Iso7046AlphabetIsNull" xml:space="preserve">
+  <data name="Iso7064AlphabetIsNull" xml:space="preserve">
     <value>Alphabet may not be null</value>
   </data>
   <data name="Iso7064Mod11_10AlgorithmDescription" xml:space="preserve">

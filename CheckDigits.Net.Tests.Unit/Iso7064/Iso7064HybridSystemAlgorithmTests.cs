@@ -140,7 +140,7 @@ public class Iso7064HybridSystemAlgorithmTests
          _algorithmDescription,
          _modulus,
          alphabet);
-      var expectedMessage = Resources.Iso7046AlphabetIsNull;
+      var expectedMessage = Resources.Iso7064AlphabetIsNull;
 
       // Act/assert.
       act.Should().ThrowExactly<ArgumentNullException>()
@@ -435,6 +435,13 @@ public class Iso7064HybridSystemAlgorithmTests
       Iso7064HybridSystemAlgorithm sut,
       String value)
       => sut.Validate(value, _groupsOfThreeMask).Should().BeTrue();
+
+   [Theory]
+   [MemberData(nameof(ValidateSuccessData))]    // Note unmasked test data
+   public void Iso7064HybridSystemAlgorithm_ValidateMasked_ShouldReturnTrue_WhenValueContainsValidCheckDigitAndMaskAcceptsAllCharacters(
+      Iso7064HybridSystemAlgorithm sut,
+      String value)
+      => sut.Validate(value, _acceptAllMask).Should().BeTrue();
 
    public static TheoryData<Iso7064HybridSystemAlgorithm, String> ValidateMaskedFailureData => new()
    {

@@ -26,8 +26,8 @@
 ///      This algorithm implements <see cref="IMaskedCheckDigitAlgorithm"/> 
 ///      and can validate values that contain non-check digit characters (such 
 ///      as spaces or dashes included for human readability) when used with an 
-///      <see cref="ICheckDigitMask"/>. Note that the trailing check digit 
-///      characters are never masked.
+///      <see cref="ICheckDigitMask"/>. Note that the trailing check characters 
+///      are never masked.
 ///   </para>
 /// </remarks>
 public sealed class Iso7064Mod97_10Algorithm : IDoubleCheckDigitAlgorithm, IMaskedCheckDigitAlgorithm
