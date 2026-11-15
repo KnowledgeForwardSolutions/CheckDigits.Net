@@ -4,6 +4,13 @@
 ///   Generic ISO/IEC 7064 pure system algorithm (i.e. an algorithm that uses a 
 ///   single modulus) that generates a single check character.
 /// </summary>
+/// <remarks>
+///   This algorithm implements <see cref="IMaskedCheckDigitAlgorithm"/> and can
+///   validate values that contain non-check digit characters (such as spaces or
+///   dashes included for human readability) when used with an 
+///   <see cref="ICheckDigitMask"/>. Note that the trailing check digit
+///   character is never masked.
+/// </remarks>
 public class Iso7064PureSystemSingleCharacterAlgorithm : ISingleCheckDigitAlgorithm
 {
    private readonly ISupplementalCharacterAlphabet _alphabet;
@@ -102,7 +109,8 @@ public class Iso7064PureSystemSingleCharacterAlgorithm : ISingleCheckDigitAlgori
       }
 
       var sum = 0;
-      for (var index = 0; index < value.Length; index++)
+      var processLength = value.Length;
+      for (var index = 0; index < processLength; index++)
       {
          var num = _alphabet.CharacterToInteger(value[index]);
          if (num == -1)
@@ -133,7 +141,8 @@ public class Iso7064PureSystemSingleCharacterAlgorithm : ISingleCheckDigitAlgori
 
       var sum = 0;
       Int32 num;
-      for (var index = 0; index < value.Length - 1; index++)
+      var processLength = value.Length - 1;
+      for (var index = 0; index < processLength; index++)
       {
          num = _alphabet.CharacterToInteger(value[index]);
          if (num == -1)
