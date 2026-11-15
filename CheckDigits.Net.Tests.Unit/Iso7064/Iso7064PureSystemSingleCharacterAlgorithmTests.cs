@@ -253,7 +253,7 @@ public class Iso7064PureSystemSingleCharacterAlgorithmTests
 
    [Theory]
    [MemberData(nameof(TryCalculateCheckDigitSuccessData))]
-   public void Iso7064Mod11_2AlgorithmAlgorithm_TryCalculateCheckDigit_ShouldCalculateExpectedCheckDigit(
+   public void Iso7064PureSystemSingleCharacterAlgorithm_TryCalculateCheckDigit_ShouldCalculateExpectedCheckDigit(
       Iso7064PureSystemSingleCharacterAlgorithm sut,
       String value,
       Char expectedCheckDigit)
@@ -502,7 +502,7 @@ public class Iso7064PureSystemSingleCharacterAlgorithmTests
    };
 
    [Theory]
-   [MemberData(nameof(ValidateFailureData))]
+   [MemberData(nameof(ValidateMaskedFailureData))]
    public void Iso7064PureSystemSingleCharacterAlgorithm_ValidateMasked_ShouldReturnFalse_WhenInputContainsDetectableError(
       Iso7064PureSystemSingleCharacterAlgorithm sut,
       String value)
