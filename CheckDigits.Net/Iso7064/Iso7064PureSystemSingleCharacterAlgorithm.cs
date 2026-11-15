@@ -11,7 +11,7 @@
 ///   <see cref="ICheckDigitMask"/>. Note that the trailing check digit
 ///   character is never masked.
 /// </remarks>
-public class Iso7064PureSystemSingleCharacterAlgorithm : ISingleCheckDigitAlgorithm
+public class Iso7064PureSystemSingleCharacterAlgorithm : ISingleCheckDigitAlgorithm, IMaskedCheckDigitAlgorithm
 {
    private readonly ISupplementalCharacterAlphabet _alphabet;
    private readonly Int32 _modulus;
@@ -154,6 +154,56 @@ public class Iso7064PureSystemSingleCharacterAlgorithm : ISingleCheckDigitAlgori
          {
             sum %= _modulus;
          }
+      }
+
+      num = _alphabet.CheckCharacterToInteger(value[^1]);
+      if (num == -1)
+      {
+         return false;
+      }
+
+      sum += num;
+
+      return sum % _modulus == 1;
+   }
+
+   /// <inheritdoc/>
+   public Boolean Validate(String value, ICheckDigitMask mask)
+   {
+      if (mask is null)
+      {
+         throw new ArgumentNullException(nameof(mask), Resources.NullMaskMessage);
+      }
+      if (String.IsNullOrEmpty(value))
+      {
+         return false;
+      }
+
+      var sum = 0;
+      Int32 num;
+      var processedDigits = 0;
+      var processLength = value.Length - 1;
+      for (var index = 0; index < processLength; index++)
+      {
+         if (mask.ExcludeCharacter(index))
+         {
+            continue;
+         }
+         num = _alphabet.CharacterToInteger(value[index]);
+         if (num == -1)
+         {
+            return false;
+         }
+         sum = (sum + num) * _radix;
+         if (sum >= _reduceThreshold)
+         {
+            sum %= _modulus;
+         }
+         processedDigits++;
+      }
+      if (processedDigits == 0)
+      {
+         return false;
       }
 
       num = _alphabet.CheckCharacterToInteger(value[^1]);

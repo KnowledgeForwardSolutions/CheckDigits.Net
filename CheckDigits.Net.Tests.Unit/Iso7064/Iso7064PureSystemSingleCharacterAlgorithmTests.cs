@@ -15,6 +15,10 @@ public class Iso7064PureSystemSingleCharacterAlgorithmTests
    private static readonly Iso7064PureSystemSingleCharacterAlgorithm _numericAlgorithm =
       new("Numeric", "Numeric, modulus = 11, radix = 2", 11, 2, new DigitsSupplementalAlphabet());
 
+   private readonly ICheckDigitMask _acceptAllMask = new AcceptAllMask();
+   private readonly ICheckDigitMask _groupsOfThreeMask = new GroupsOfThreeCheckDigitMask();
+   private readonly ICheckDigitMask _rejectAllMask = new RejectAllMask();
+
    #region Constructor Tests
    // ==========================================================================
    // ==========================================================================
@@ -329,9 +333,16 @@ public class Iso7064PureSystemSingleCharacterAlgorithmTests
 
    public static TheoryData<Iso7064PureSystemSingleCharacterAlgorithm, String> ValidateFailureData => new()
    {
-      { _numericAlgorithm, "000000012156438X" },
-      { _numericAlgorithm, "0000000444767411" },
-      { _alphanumericAlgorithm, "G123468954321H" }
+      { _numericAlgorithm, "000000012156438X" },      // 000000012146438X with single digit transcription error 4 -> 5
+      { _numericAlgorithm, "0000000073669134" },      // 0000000073669144 with single digit transcription error 4 -> 3
+      { _numericAlgorithm, "0000000073696144" },      // 0000000073669144 with two digit transposition error 69 -> 96 
+      { _numericAlgorithm, "0000000109320468" },      // 0000000109302468 with two digit transposition error 02 -> 20
+      { _numericAlgorithm, "0000000059970317" },      // 0000000058870317 with two digit twin error 88 -> 99
+      { _alphanumericAlgorithm, "C0003070014556" },   // C0003070014666 two digit twin error 66 -> 55
+      { _alphanumericAlgorithm, "G123468954321H" },   // G123498654321H with jump transposition error 986 -> 689
+      { _alphanumericAlgorithm, "6C000307001466" },   // C0003070014666 with circular shift error
+      { _alphanumericAlgorithm, "999914123456NA" },   // A999914123456N with circular shift error
+      { _alphanumericAlgorithm, "B999922123469H" },   // A999922123459H with two single transcription errors A -> B, 5 -> 6
    };
 
    [Theory]
@@ -364,9 +375,10 @@ public class Iso7064PureSystemSingleCharacterAlgorithmTests
    }
 
    [Theory]
-   [InlineData("123D56X")]
-   [InlineData("123!56X")]
-   [InlineData("123^56X")]
+   [InlineData("07D40")]
+   [InlineData("07!40")]
+   [InlineData("07^40")]
+   [InlineData("07d40")]
    public void Iso7064PureSystemSingleCharacterAlgorithm_Validate_ShouldReturnFalse_WhenValueContainsInvalidCharacter(String value)
    {
       // Arrange.
@@ -376,15 +388,174 @@ public class Iso7064PureSystemSingleCharacterAlgorithmTests
       sut.Validate(value).Should().BeFalse();
    }
 
-   [Fact]
-   public void Iso7064PureSystemSingleCharacterAlgorithm_Validate_ShouldReturnFalse_WhenValueContainsInvalidCheckDigitCharacter()
+   [Theory]
+   [InlineData("0794D")]
+   [InlineData("0794!")]
+   [InlineData("0794^")]
+   [InlineData("0794d")]
+   public void Iso7064PureSystemSingleCharacterAlgorithm_Validate_ShouldReturnFalse_WhenValueContainsInvalidCheckDigitCharacter(String value)
    {
       // Arrange.
       var sut = _numericAlgorithm;
-      var value = "12345Q";
 
       // Act/assert.
       sut.Validate(value).Should().BeFalse();
+   }
+
+   #endregion
+
+   #region Validate (ICheckDigitMask Overload) Tests
+   // ==========================================================================
+   // ==========================================================================
+
+   [Fact]
+   public void Iso7064PureSystemSingleCharacterAlgorithm_ValidateMasked_ShouldThrowArgumentNullException_WhenMaskIsNull()
+   {
+      // Arrange.
+      var sut = _numericAlgorithm;
+
+      // Act/assert.
+      sut
+         .Invoking(x => x.Validate("07945", null!))
+         .Should()
+         .ThrowExactly<ArgumentNullException>()
+         .WithParameterName("mask")
+         .WithMessage(Resources.NullMaskMessage + "*");
+   }
+
+   [Fact]
+   public void Iso7064PureSystemSingleCharacterAlgorithm_ValidateMasked_ShouldReturnFalse_WhenInputIsNull()
+   {
+      // Arrange.
+      var sut = _alphanumericAlgorithm;
+
+      // Act/assert.
+      sut
+         .Validate(null!, _acceptAllMask).Should().BeFalse();
+   }
+
+   [Fact]
+   public void Iso7064PureSystemSingleCharacterAlgorithm_ValidateMasked_ShouldReturnFalse_WhenInputIsEmpty()
+   {
+      // Arrange.
+      var sut = _alphanumericAlgorithm;
+
+      // Act/assert.
+      sut.Validate(String.Empty, _acceptAllMask).Should().BeFalse();
+   }
+
+   [Theory]
+   [InlineData("0")]    
+   [InlineData("1")]
+   public void Iso7064PureSystemSingleCharacterAlgorithm_ValidateMasked_ShouldReturnFalse_WhenInsufficientUnmaskedCharactersToCalculateCheckDigit(String value)
+   {
+      // Arrange.
+      var sut = _numericAlgorithm;
+
+      // Act/assert.
+      sut.Validate(value, _acceptAllMask).Should().BeFalse();
+   }
+
+   [Fact]
+   public void Iso7064PureSystemSingleCharacterAlgorithm_ValidateMasked_ShouldReturnFalse_WhenAllNonCheckDigitCharactersAreMaskedOut()
+   {
+      // Arrange.
+      var sut = _alphanumericAlgorithm;
+
+      // Act/assert.
+      sut.Validate("A999922123458J", _rejectAllMask).Should().BeFalse();
+   }
+
+   public static TheoryData<Iso7064PureSystemSingleCharacterAlgorithm, String> ValidateMaskedSuccessData => new()
+   {
+      { _numericAlgorithm, "079 40" },
+      { _numericAlgorithm, "999 999 999 999 999 999 999 999 999 999 999 994" },
+      { _alphanumericAlgorithm, "A99 992 212 345 8J" }
+   };
+
+   [Theory]
+   [MemberData(nameof(ValidateMaskedSuccessData))]
+   public void Iso7064PureSystemSingleCharacterAlgorithm_ValidateMasked_ShouldReturnTrue_WhenValueContainsValidCheckDigit(
+      Iso7064PureSystemSingleCharacterAlgorithm sut,
+      String value)
+      => sut.Validate(value, _groupsOfThreeMask).Should().BeTrue();
+
+   [Theory]
+   [MemberData(nameof(ValidateSuccessData))]    // Note unmasked test data
+   public void Iso7064PureSystemSingleCharacterAlgorithm_ValidateMasked_ShouldReturnTrue_WhenValueContainsValidCheckDigitAndMaskAcceptsAllCharacters(
+      Iso7064PureSystemSingleCharacterAlgorithm sut,
+      String value)
+      => sut.Validate(value, _acceptAllMask).Should().BeTrue();
+
+   public static TheoryData<Iso7064PureSystemSingleCharacterAlgorithm, String> ValidateMaskedFailureData => new()
+   {
+      { _numericAlgorithm, "000 000 012 156 438 X" },    // 000000012146438X with single digit transcription error 4 -> 5
+      { _numericAlgorithm, "000 000 007 366 913 4" },    // 0000000073669144 with single digit transcription error 4 -> 3
+      { _numericAlgorithm, "000 000 007 369 614 4" },    // 0000000073669144 with two digit transposition error 69 -> 96 
+      { _numericAlgorithm, "000 000 010 932 046 8" },    // 0000000109302468 with two digit transposition error 02 -> 20
+      { _numericAlgorithm, "000 000 005 997 031 7" },    // 0000000058870317 with two digit twin error 88 -> 99
+      { _alphanumericAlgorithm, "C00 030 700 145 56" },  // C0003070014666 two digit twin error 66 -> 55
+      { _alphanumericAlgorithm, "G12 346 895 432 1H" },  // G123498654321H with jump transposition error 986 -> 689
+      { _alphanumericAlgorithm, "6C0 003 070 014 66" },  // C0003070014666 with circular shift error
+      { _alphanumericAlgorithm, "999 914 123 456 NA" },  // A999914123456N with circular shift error
+      { _alphanumericAlgorithm, "B99 992 212 346 9H" },  // A999922123459H with two single transcription errors A -> B, 5 -> 6
+   };
+
+   [Theory]
+   [MemberData(nameof(ValidateFailureData))]
+   public void Iso7064PureSystemSingleCharacterAlgorithm_ValidateMasked_ShouldReturnFalse_WhenInputContainsDetectableError(
+      Iso7064PureSystemSingleCharacterAlgorithm sut,
+      String value)
+      => sut.Validate(value, _groupsOfThreeMask).Should().BeFalse();
+
+   [Fact]
+   public void Iso7064PureSystemSingleCharacterAlgorithm_ValidateMasked_ShouldReturnTrue_WhenCheckDigitIsCalculatesAsSupplementalCharacter()
+   {
+      // Arrange.
+      var sut = _numericAlgorithm;
+      var value = "079 X";
+
+      // Act/assert.
+      sut.Validate(value, _groupsOfThreeMask).Should().BeTrue();
+   }
+
+   [Fact]
+   public void Iso7064PureSystemSingleCharacterAlgorithm_ValidateMasked_ShouldReturnFalse_WhenValueContainsSupplementalCharacterInOtherThanTrailingPosition()
+   {
+      // Arrange.
+      var sut = _numericAlgorithm;
+      var value = "079 X8";
+
+      // Act/assert.
+      sut.Validate(value, _groupsOfThreeMask).Should().BeFalse();
+   }
+
+   [Theory]
+   [InlineData("07D 40")]
+   [InlineData("07! 40")]
+   [InlineData("07^ 40")]
+   [InlineData("07d 40")]
+   public void Iso7064PureSystemSingleCharacterAlgorithm_ValidateMasked_ShouldReturnFalse_WhenValueContainsInvalidCharacter(String value)
+   {
+      // Arrange.
+      var sut = _numericAlgorithm;
+
+      // Act/assert.
+      sut.Validate(value, _groupsOfThreeMask).Should().BeFalse();
+   }
+
+   [Theory]
+   [InlineData("079 4D")]
+   [InlineData("079 4!")]
+   [InlineData("079 4^")]
+   [InlineData("079 4d")]
+   public void Iso7064PureSystemSingleCharacterAlgorithm_ValidateMasked_ShouldReturnFalse_WhenValueContainsInvalidCheckDigitCharacter(String value)
+   {
+      // Arrange.
+      var sut = _numericAlgorithm;
+
+      // Act/assert.
+      sut.Validate(value, _groupsOfThreeMask).Should().BeFalse();
    }
 
    #endregion
