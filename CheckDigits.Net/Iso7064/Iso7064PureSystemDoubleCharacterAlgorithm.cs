@@ -82,7 +82,7 @@ public class Iso7064PureSystemDoubleCharacterAlgorithm : IDoubleCheckDigitAlgori
       {
          throw new ArgumentOutOfRangeException(nameof(radix), radix, Resources.Iso7064RadixOutOfRange);
       }
-      _ = alphabet ?? throw new ArgumentNullException(nameof(alphabet), Resources.Iso7046AlphabetIsNull);
+      _ = alphabet ?? throw new ArgumentNullException(nameof(alphabet), Resources.Iso7064AlphabetIsNull);
 
       AlgorithmName = algorithmName;
       AlgorithmDescription = algorithmDescription;

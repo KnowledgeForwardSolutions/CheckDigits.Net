@@ -170,7 +170,7 @@ public class Iso7064PureSystemDoubleCharacterAlgorithmTests
          _modulus,
          _radix,
          alphabet);
-      var expectedMessage = Resources.Iso7046AlphabetIsNull;
+      var expectedMessage = Resources.Iso7064AlphabetIsNull;
 
       // Act/assert.
       act.Should().ThrowExactly<ArgumentNullException>()

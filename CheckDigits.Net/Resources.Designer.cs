@@ -378,9 +378,9 @@ namespace CheckDigits.Net {
         /// <summary>
         ///   Looks up a localized string similar to Alphabet may not be null.
         /// </summary>
-        internal static string Iso7046AlphabetIsNull {
+        internal static string Iso7064AlphabetIsNull {
             get {
-                return ResourceManager.GetString("Iso7046AlphabetIsNull", resourceCulture);
+                return ResourceManager.GetString("Iso7064AlphabetIsNull", resourceCulture);
             }
         }
         

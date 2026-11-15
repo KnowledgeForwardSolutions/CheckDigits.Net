@@ -140,7 +140,7 @@ public class Iso7064HybridSystemAlgorithmTests
          _algorithmDescription,
          _modulus,
          alphabet);
-      var expectedMessage = Resources.Iso7046AlphabetIsNull;
+      var expectedMessage = Resources.Iso7064AlphabetIsNull;
 
       // Act/assert.
       act.Should().ThrowExactly<ArgumentNullException>()
