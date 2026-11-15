@@ -436,6 +436,13 @@ public class Iso7064HybridSystemAlgorithmTests
       String value)
       => sut.Validate(value, _groupsOfThreeMask).Should().BeTrue();
 
+   [Theory]
+   [MemberData(nameof(ValidateSuccessData))]    // Note unmasked test data
+   public void Iso7064HybridSystemAlgorithm_ValidateMasked_ShouldReturnTrue_WhenValueContainsValidCheckDigitAndMaskAcceptsAllCharacters(
+      Iso7064HybridSystemAlgorithm sut,
+      String value)
+      => sut.Validate(value, _acceptAllMask).Should().BeTrue();
+
    public static TheoryData<Iso7064HybridSystemAlgorithm, String> ValidateMaskedFailureData => new()
    {
       { _numericAlgorithm, "123 556 788" },                             // 123456788 with single digit transcription error 4 -> 5

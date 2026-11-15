@@ -11,7 +11,7 @@
 ///   <see cref="ICheckDigitMask"/>. Note that the trailing check digit
 ///   character is never masked.
 /// </remarks>
-public class Iso7064PureSystemDoubleCharacterAlgorithm : IDoubleCheckDigitAlgorithm
+public class Iso7064PureSystemDoubleCharacterAlgorithm : IDoubleCheckDigitAlgorithm, IMaskedCheckDigitAlgorithm
 {
    private readonly IAlphabet _alphabet;
    private readonly Int32 _modulus;
@@ -113,7 +113,8 @@ public class Iso7064PureSystemDoubleCharacterAlgorithm : IDoubleCheckDigitAlgori
       }
 
       var sum = 0;
-      for (var index = 0; index < value.Length; index++)
+      var processLength = value.Length;
+      for (var index = 0; index < processLength; index++)
       {
          var num = _alphabet.CharacterToInteger(value[index]);
          if (num == -1)
@@ -151,7 +152,8 @@ public class Iso7064PureSystemDoubleCharacterAlgorithm : IDoubleCheckDigitAlgori
 
       // Sum non-check digit characters and first check character.
       var sum = 0;
-      for (var index = 0; index < value.Length - 1; index++)
+      var processLength = value.Length - 1;
+      for (var index = 0; index < processLength; index++)
       {
          var num = _alphabet.CharacterToInteger(value[index]);
          if (num == -1)
@@ -172,6 +174,68 @@ public class Iso7064PureSystemDoubleCharacterAlgorithm : IDoubleCheckDigitAlgori
          return false;
       }
       sum += second;
+
+      return sum % _modulus == 1;
+   }
+
+   /// <inheritdoc/>
+   public Boolean Validate(String value, ICheckDigitMask mask)
+   {
+      if (mask is null)
+      {
+         throw new ArgumentNullException(nameof(mask), Resources.NullMaskMessage);
+      }
+      if (String.IsNullOrEmpty(value))
+      {
+         return false;
+      }
+
+      // Sum non-check digit characters.
+      var sum = 0;
+      Int32 num;
+      var processedDigits = 0;
+      var processLength = value.Length - 2;
+      for (var index = 0; index < processLength; index++)
+      {
+         if (mask.ExcludeCharacter(index))
+         {
+            continue;
+         }
+         num = _alphabet.CharacterToInteger(value[index]);
+         if (num == -1)
+         {
+            return false;
+         }
+         sum = (sum + num) * _radix;
+         if (sum >= _reduceThreshold)
+         {
+            sum %= _modulus;
+         }
+         processedDigits++;
+      }
+      if (processedDigits == 0)
+      {
+         return false;
+      }
+
+      // Process both check characters outside of loop to prevent masking.
+      num = _alphabet.CharacterToInteger(value[^2]);
+      if (num == -1)
+      {
+         return false;
+      }
+      sum = (sum + num) * _radix;
+      if (sum >= _reduceThreshold)
+      {
+         sum %= _modulus;
+      }
+
+      num = _alphabet.CharacterToInteger(value[^1]);
+      if (num == -1)
+      {
+         return false;
+      }
+      sum += num;
 
       return sum % _modulus == 1;
    }

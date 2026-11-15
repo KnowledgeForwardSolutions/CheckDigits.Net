@@ -20,6 +20,10 @@ public class Iso7064PureSystemDoubleCharacterAlgorithmTests
    private static readonly Iso7064PureSystemDoubleCharacterAlgorithm _danishAlgorithm =
       new("Danish", "Danish, modulus = 29, radix = 2", 29, 2, new DanishAlphabet());
 
+   private readonly ICheckDigitMask _acceptAllMask = new AcceptAllMask();
+   private readonly ICheckDigitMask _groupsOfThreeMask = new GroupsOfThreeCheckDigitMask();
+   private readonly ICheckDigitMask _rejectAllMask = new RejectAllMask();
+
    #region Constructor Tests
    // ==========================================================================
    // ==========================================================================
@@ -314,9 +318,11 @@ public class Iso7064PureSystemDoubleCharacterAlgorithmTests
    }
 
    [Theory]
-   [InlineData("0")]
-   [InlineData("1")]
-   public void Iso7064PureSystemDoubleCharacterAlgorithm_Validate_ShouldReturnFalse_WhenInputIsOneCharacterInLength(String value)
+   [InlineData("0")]    
+   [InlineData("1")]    
+   [InlineData("00")]    
+   [InlineData("01")]
+   public void Iso7064PureSystemDoubleCharacterAlgorithm_Validate_ShouldReturnFalse_WhenInputIsLessThanThreeCharactersInLength(String value)
    {
       // Arrange.
       var sut = _numericAlgorithm;
@@ -343,10 +349,14 @@ public class Iso7064PureSystemDoubleCharacterAlgorithmTests
 
    public static TheoryData<Iso7064PureSystemDoubleCharacterAlgorithm, String> ValidateFailureData => new()
    {
-      { _numericAlgorithm, "163217541835191038" },
-      { _numericAlgorithm, "163217581538191038" },
-      { _alphabeticAlgorithm, "SDFQWERTYLKJHLRA" },
-      { _alphanumericAlgorithm, "XS868966863229AU" }
+      { _numericAlgorithm, "163217541835191038" },          // 163217581835191038 with single char transcription error 8 -> 4
+      { _numericAlgorithm, "163217581835191138" },          // 163217581835191038 with single char transcription error 0 -> 1
+      { _numericAlgorithm, "12455676" },                    // 12345676 with two char transposition error 34 -> 45 
+      { _alphabeticAlgorithm, "AAAEEEIIIOPPUUUBCDEFJY" },   // AAAEEEIIIOOOUUUBCDEFJY with two char twin error OO -> PP
+      { _alphabeticAlgorithm, "ABCFEDGHIJKLMNJF" },         // ABCDEFGHIJKLMNJF with jump transposition error DEF -> FED
+      { _alphanumericAlgorithm, "123456789ADCBEH2" },       // 123456789ABCDEH2 with jump transposition error BCD -> DCB
+      { _alphanumericAlgorithm, "UXS868977863229A" },       // XS868977863229AU with circular shift error
+      { _danishAlgorithm, "AS\u00D8STERD" },                // S\u00D8STERDA with circular shift error
    };
 
    [Theory]
@@ -368,9 +378,10 @@ public class Iso7064PureSystemDoubleCharacterAlgorithmTests
    }
 
    [Theory]
-   [InlineData("123D56X")]
-   [InlineData("123!56X")]
-   [InlineData("123^56X")]
+   [InlineData("123!5676")]
+   [InlineData("123^5676")]
+   [InlineData("123=5676")]
+   [InlineData("123a5676")]
    public void Iso7064PureSystemDoubleCharacterAlgorithm_Validate_ShouldReturnFalse_WhenValueContainsInvalidCharacter(String value)
    {
       // Arrange.
@@ -380,15 +391,193 @@ public class Iso7064PureSystemDoubleCharacterAlgorithmTests
       sut.Validate(value).Should().BeFalse();
    }
 
-   [Fact]
-   public void Iso7064PureSystemDoubleCharacterAlgorithm_Validate_ShouldReturnFalse_WhenValueContainsInvalidCheckDigitCharacter()
+   [Theory]
+   [InlineData("123456!6")]
+   [InlineData("123456^6")]
+   [InlineData("123456=6")]
+   [InlineData("123456a6")]
+   public void Iso7064PureSystemDoubleCharacterAlgorithm_Validate_ShouldReturnFalse_WhenValueContainsInvalidFirstCheckCharacter(String value)
    {
       // Arrange.
       var sut = _numericAlgorithm;
-      var value = "12345Q";
 
       // Act/assert.
       sut.Validate(value).Should().BeFalse();
+   }
+
+   [Theory]
+   [InlineData("1234567!")]
+   [InlineData("1234567^")]
+   [InlineData("1234567=")]
+   [InlineData("1234567a")]
+   public void Iso7064PureSystemDoubleCharacterAlgorithm_Validate_ShouldReturnFalse_WhenValueContainsInvalidSecondCheckCharacter(String value)
+   {
+      // Arrange.
+      var sut = _numericAlgorithm;
+
+      // Act/assert.
+      sut.Validate(value).Should().BeFalse();
+   }
+
+   #endregion
+
+   #region Validate (ICheckDigitMask Overload) Tests
+   // ==========================================================================
+   // ==========================================================================
+
+   [Fact]
+   public void Iso7064PureSystemDoubleCharacterAlgorithm_ValidateMasked_ShouldThrowArgumentNullException_WhenMaskIsNull()
+   {
+      // Arrange.
+      var sut = _numericAlgorithm;
+
+      // Act/assert.
+      sut
+         .Invoking(x => x.Validate("07945", null!))
+         .Should()
+         .ThrowExactly<ArgumentNullException>()
+         .WithParameterName("mask")
+         .WithMessage(Resources.NullMaskMessage + "*");
+   }
+
+   [Fact]
+   public void Iso7064PureSystemDoubleCharacterAlgorithm_ValidateMasked_ShouldReturnFalse_WhenInputIsNull()
+   {
+      // Arrange.
+      var sut = _alphanumericAlgorithm;
+
+      // Act/assert.
+      sut
+         .Validate(null!, _acceptAllMask).Should().BeFalse();
+   }
+
+   [Fact]
+   public void Iso7064PureSystemDoubleCharacterAlgorithm_ValidateMasked_ShouldReturnFalse_WhenInputIsEmpty()
+   {
+      // Arrange.
+      var sut = _alphanumericAlgorithm;
+
+      // Act/assert.
+      sut.Validate(String.Empty, _acceptAllMask).Should().BeFalse();
+   }
+
+   [Theory]
+   [InlineData("0")]    
+   [InlineData("1")]    
+   [InlineData("00")]    
+   [InlineData("01")]
+   public void Iso7064PureSystemDoubleCharacterAlgorithm_ValidateMasked_ShouldReturnFalse_WhenInsufficientUnmaskedCharactersToCalculateCheckDigit(String value)
+   {
+      // Arrange.
+      var sut = _numericAlgorithm;
+
+      // Act/assert.
+      sut.Validate(value, _acceptAllMask).Should().BeFalse();
+   }
+
+   [Fact]
+   public void Iso7064PureSystemDoubleCharacterAlgorithm_ValidateMasked_ShouldReturnFalse_WhenAllNonCheckDigitCharactersAreMaskedOut()
+   {
+      // Arrange.
+      var sut = _alphanumericAlgorithm;
+
+      // Act/assert.
+      sut.Validate("XS868977863229AU", _rejectAllMask).Should().BeFalse();
+   }
+
+   public static TheoryData<Iso7064PureSystemDoubleCharacterAlgorithm, String> ValidateMaskedSuccessData => new()
+   {
+      { _numericAlgorithm, "123 456 76" },
+      { _numericAlgorithm, "101 133 939 125 543 292 610 114 422 999 143 3338" },
+      { _alphabeticAlgorithm, "ISO HJTC" },
+      { _alphanumericAlgorithm, "XS8 689 778 632 29AU" },
+      { _danishAlgorithm, "S\u00D8S TER DA" }
+   };
+
+   [Theory]
+   [MemberData(nameof(ValidateMaskedSuccessData))]
+   public void Iso7064PureSystemDoubleCharacterAlgorithm_ValidateMasked_ShouldReturnTrue_WhenValueContainsValidCheckDigit(
+      Iso7064PureSystemDoubleCharacterAlgorithm sut,
+      String value)
+      => sut.Validate(value, _groupsOfThreeMask).Should().BeTrue();
+
+   [Theory]
+   [MemberData(nameof(ValidateSuccessData))]    // Note unmasked test data
+   public void Iso7064PureSystemDoubleCharacterAlgorithm_ValidateMasked_ShouldReturnTrue_WhenValueContainsValidCheckDigitAndMaskAcceptsAllCharacters(
+      Iso7064PureSystemDoubleCharacterAlgorithm sut,
+      String value)
+      => sut.Validate(value, _acceptAllMask).Should().BeTrue();
+
+   public static TheoryData<Iso7064PureSystemDoubleCharacterAlgorithm, String> ValidateMaskedFailureData => new()
+   {
+      { _numericAlgorithm, "163 217 541 835 191 038" },           // 163217581835191038 with single char transcription error 8 -> 4
+      { _numericAlgorithm, "163 217 581 835 191 138" },           // 163217581835191038 with single char transcription error 0 -> 1
+      { _numericAlgorithm, "124 556 76" },                        // 12345676 with two char transposition error 34 -> 45 
+      { _alphabeticAlgorithm, "AAA EEE III OPP UUU BCD EFJY" },   // AAAEEEIIIOOOUUUBCDEFJY with two char twin error OO -> PP
+      { _alphabeticAlgorithm, "ABC FED GHI JKL MNJF" },           // ABCDEFGHIJKLMNJF with jump transposition error DEF -> FED
+      { _alphanumericAlgorithm, "123 456 789 ADC BEH2" },         // 123456789ABCDEH2 with jump transposition error BCD -> DCB
+      { _alphanumericAlgorithm, "UXS 868 977 863 229A" },         // XS868977863229AU with circular shift error
+      { _danishAlgorithm, "AS\u00D8 STE RD" },                    // S\u00D8STERDA with circular shift error
+   };
+
+   [Theory]
+   [MemberData(nameof(ValidateMaskedFailureData))]
+   public void Iso7064PureSystemDoubleCharacterAlgorithm_ValidateMasked_ShouldReturnFalse_WhenInputContainsDetectableError(
+      Iso7064PureSystemDoubleCharacterAlgorithm sut,
+      String value)
+      => sut.Validate(value, _groupsOfThreeMask).Should().BeFalse();
+
+   [Fact]
+   public void Iso7064PureSystemDoubleCharacterAlgorithm_ValidateMasked_ShouldReturnFalse_WhenValueContainsSupplementalCharacterInOtherThanTrailingPosition()
+   {
+      // Arrange.
+      var sut = _numericAlgorithm;
+      var value = "079 X8";
+
+      // Act/assert.
+      sut.Validate(value, _groupsOfThreeMask).Should().BeFalse();
+   }
+
+   [Theory]
+   [InlineData("123 !56 76")]
+   [InlineData("123 ^56 76")]
+   [InlineData("123 =56 76")]
+   [InlineData("123 a56 76")]
+   public void Iso7064PureSystemDoubleCharacterAlgorithm_ValidateMasked_ShouldReturnFalse_WhenValueContainsInvalidCharacter(String value)
+   {
+      // Arrange.
+      var sut = _numericAlgorithm;
+
+      // Act/assert.
+      sut.Validate(value, _groupsOfThreeMask).Should().BeFalse();
+   }
+
+   [Theory]
+   [InlineData("123 456 !6")]
+   [InlineData("123 456 ^6")]
+   [InlineData("123 456 =6")]
+   [InlineData("123 456 a6")]
+   public void Iso7064PureSystemDoubleCharacterAlgorithm_ValidateMasked_ShouldReturnFalse_WhenValueContainsInvalidFirstCheckCharacter(String value)
+   {
+      // Arrange.
+      var sut = _numericAlgorithm;
+
+      // Act/assert.
+      sut.Validate(value, _groupsOfThreeMask).Should().BeFalse();
+   }
+
+   [Theory]
+   [InlineData("123 456 7!")]
+   [InlineData("123 456 7^")]
+   [InlineData("123 456 7=")]
+   [InlineData("123 456 7a")]
+   public void Iso7064PureSystemDoubleCharacterAlgorithm_ValidateMasked_ShouldReturnFalse_WhenValueContainsInvalidSecondCheckCharacter(String value)
+   {
+      // Arrange.
+      var sut = _numericAlgorithm;
+
+      // Act/assert.
+      sut.Validate(value, _groupsOfThreeMask).Should().BeFalse();
    }
 
    #endregion
