@@ -8,8 +8,8 @@
 ///   This algorithm implements <see cref="IMaskedCheckDigitAlgorithm"/> and can
 ///   validate values that contain non-check digit characters (such as spaces or
 ///   dashes included for human readability) when used with an 
-///   <see cref="ICheckDigitMask"/>. Note that the trailing check digit
-///   character is never masked.
+///   <see cref="ICheckDigitMask"/>. Note that the trailing two check digit 
+///   characters are never masked.
 /// </remarks>
 public class Iso7064PureSystemDoubleCharacterAlgorithm : IDoubleCheckDigitAlgorithm, IMaskedCheckDigitAlgorithm
 {
