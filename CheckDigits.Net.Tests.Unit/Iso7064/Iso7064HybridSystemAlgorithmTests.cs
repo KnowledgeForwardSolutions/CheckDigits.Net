@@ -335,9 +335,10 @@ public class Iso7064HybridSystemAlgorithmTests
    }
 
    [Theory]
-   [InlineData("123D56X")]
-   [InlineData("123!56X")]
-   [InlineData("123^56X")]
+   [InlineData("07D45")]
+   [InlineData("07!45")]
+   [InlineData("07^45")]
+   [InlineData("07d45")]
    public void Iso7064HybridSystemAlgorithm_Validate_ShouldReturnFalse_WhenValueContainsInvalidCharacter(String value)
    {
       // Arrange.
@@ -347,12 +348,15 @@ public class Iso7064HybridSystemAlgorithmTests
       sut.Validate(value).Should().BeFalse();
    }
 
-   [Fact]
-   public void Iso7064HybridSystemAlgorithm_Validate_ShouldReturnFalse_WhenValueContainsInvalidCheckDigitCharacter()
+   [Theory]
+   [InlineData("0794D")]
+   [InlineData("0794!")]
+   [InlineData("0794^")]
+   [InlineData("0794d")]
+   public void Iso7064HybridSystemAlgorithm_Validate_ShouldReturnFalse_WhenValueContainsInvalidCheckDigitCharacter(String value)
    {
       // Arrange.
       var sut = _numericAlgorithm;
-      var value = "12345Q";
 
       // Act/assert.
       sut.Validate(value).Should().BeFalse();
@@ -386,8 +390,7 @@ public class Iso7064HybridSystemAlgorithmTests
       var sut = _alphanumericAlgorithm;
 
       // Act/assert.
-      sut
-         .Validate(null!, _acceptAllMask).Should().BeFalse();
+      sut.Validate(null!, _acceptAllMask).Should().BeFalse();
    }
 
    [Fact]
@@ -474,9 +477,10 @@ public class Iso7064HybridSystemAlgorithmTests
    }
 
    [Theory]
-   [InlineData("123 D56 X")]
-   [InlineData("123 !56 X")]
-   [InlineData("123 ^56 X")]
+   [InlineData("07D 45")]
+   [InlineData("07! 45")]
+   [InlineData("07^ 45")]
+   [InlineData("07d 45")]
    public void Iso7064HybridSystemAlgorithm_ValidateMasked_ShouldReturnFalse_WhenValueContainsInvalidCharacter(String value)
    {
       // Arrange.
@@ -486,12 +490,15 @@ public class Iso7064HybridSystemAlgorithmTests
       sut.Validate(value, _groupsOfThreeMask).Should().BeFalse();
    }
 
-   [Fact]
-   public void Iso7064HybridSystemAlgorithm_ValidateMasked_ShouldReturnFalse_WhenValueContainsInvalidCheckDigitCharacter()
+   [Theory]
+   [InlineData("079 4D")]
+   [InlineData("079 4!")]
+   [InlineData("079 4^")]
+   [InlineData("079 4d")]
+   public void Iso7064HybridSystemAlgorithm_ValidateMasked_ShouldReturnFalse_WhenValueContainsInvalidCheckDigitCharacter(String value)
    {
       // Arrange.
       var sut = _numericAlgorithm;
-      var value = "123 45Q";
 
       // Act/assert.
       sut.Validate(value, _groupsOfThreeMask).Should().BeFalse();

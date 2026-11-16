@@ -2627,6 +2627,7 @@ Added masked validation support to the following algorithms:
 * Iso7064Mod97_10Algorithm
 * Iso7064HybridSystemAlgorithm
 * Iso7064PureSystemDoubleCharacterAlgorithm
+* Iso7064PureSystemSingleCharacterAlgorithm
 
 Classes/methods marked as Obsolete:
 
