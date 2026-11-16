@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-	<TargetFrameworks>netstandard2.0;net8.0;net10.0</TargetFrameworks>
+	<TargetFrameworks>netstandard2.0;net10.0</TargetFrameworks>
 	<LangVersion>latestMajor</LangVersion>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
@@ -29,7 +29,7 @@ Initial release. Supports CheckDigit and MaskedCheckDigit validators for FluentV
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="CheckDigits.Net" Version="3.0.0" />
+    <PackageReference Include="CheckDigits.Net" Version="3.1.0" />
 	<PackageReference Include="FluentValidation" Version="11.12.0" Condition="'$(TargetFramework)' == 'netstandard2.0'" />
     <PackageReference Include="FluentValidation" Version="12.1.1" Condition="'$(TargetFramework)' != 'netstandard2.0'" />
   </ItemGroup>
