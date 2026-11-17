@@ -41,6 +41,22 @@ internal static class CharExtensions
       #endif
 
       /// <summary>
+      ///   Determines whether the character is an uppercase OR lowercase ASCII
+      ///   letter.
+      /// </summary>
+      /// <returns>
+      ///   <see langword="true"/> if the character is in the range 'A'-'Z' or
+      ///   'a-z'; otherwise, <see langword="false"/>.
+      /// </returns>
+      [MethodImpl(MethodImplOptions.AggressiveInlining)]
+      public Boolean IsAsciiLetter()
+#if NET7_0_OR_GREATER
+         => Char.IsAsciiLetter(ch);
+#else
+         => ch is (>= Chars.UpperCaseA and <= Chars.UpperCaseZ) or (>= Chars.LowerCaseA and <= Chars.LowerCaseZ);
+#endif
+
+      /// <summary>
       ///   Determines whether the character is an uppercase ASCII letter.
       /// </summary>
       /// <returns>

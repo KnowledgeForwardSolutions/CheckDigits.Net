@@ -3,7 +3,7 @@
 /// <summary>
 ///   Variation of the ISO/IEC 7064 MOD 97-10 algorithm where alphabetic 
 ///   characters (A-Z) are mapped to integers (10-35) before calculating the 
-///   check digit. The algorithm is case insensitive and lowercase letters are 
+///   check digit. The algorithm is case-insensitive and lowercase letters are 
 ///   mapped to their uppercase equivalent before conversion to integers.
 /// </summary>
 /// <remarks>
@@ -37,14 +37,17 @@ public class AlphanumericMod97_10Algorithm : IDoubleCheckDigitAlgorithm, IMasked
    private const Int32 _reduceThreshold = (Int32.MaxValue / _radix) - (_digitMaxValue + 1);
 
    // Precomputed first and second digits for letters 'A' to 'Z' to optimize processing.
-   private static readonly Int32[] _letterFirstDigits = Chars.Range(Chars.UpperCaseA, Chars.UpperCaseZ)
+   // Note that the first digit represents the 10's digit after mapping 'A'-'Z' to 10-35
+   // and the second digit represents the 1's digit after mapping.
+   // Character value: A B C D E F G H I J K L M N O P Q R S T U V W X Y Z
+   // First digit:     1 1 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2 2 2 3 3 3 3 3 3
+   // Second digit:    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5
+   private static readonly Int32[] _letterFirstDigits = [.. Chars.Range(Chars.UpperCaseA, Chars.UpperCaseZ)
       .Select(x => x - Chars.UpperCaseA + 10)
-      .Select(x => x / 10)       // Extract first digit (tens place)
-      .ToArray();
-   private static readonly Int32[] _letterSecondDigits = Chars.Range(Chars.UpperCaseA, Chars.UpperCaseZ)
+      .Select(x => x / 10)];     // Extract 10's place
+   private static readonly Int32[] _letterSecondDigits = [.. Chars.Range(Chars.UpperCaseA, Chars.UpperCaseZ)
       .Select(x => x - Chars.UpperCaseA + 10)
-      .Select(x => x % 10)       // Extract second digit (ones place)
-      .ToArray();
+      .Select(x => x % 10)];     // Extract 1's place
 
    /// <inheritdoc/>
    public String AlgorithmDescription => Resources.AlphanumericMod97_10AlgorithmDescription;
@@ -71,19 +74,13 @@ public class AlphanumericMod97_10Algorithm : IDoubleCheckDigitAlgorithm, IMasked
       for (var index = 0; index < processLength; index++)
       {
          var ch = value[index];
-         if (IsDigitCharacter(ch))
+         if (ch.IsAsciiDigit())
          {
-            sum = (sum + ch.ToIntegerDigit()) * _radix;
+            sum = (sum + ch.MapAsciiDigit()) * _radix;
          }
-         else if (IsLetterCharacter(ch))
+         else if (ch.IsAsciiLetter())
          {
-            var offset = ch - (ch < Chars.LowerCaseA ? Chars.UpperCaseA : Chars.LowerCaseA);
-            sum = (sum + _letterFirstDigits[offset]) * _radix;
-            if (sum >= _reduceThreshold)
-            {
-               sum %= _modulus;
-            }
-            sum = (sum + _letterSecondDigits[offset]) * _radix;
+            sum = SumLetter(sum, ch);
          }
          else
          {
@@ -103,8 +100,8 @@ public class AlphanumericMod97_10Algorithm : IDoubleCheckDigitAlgorithm, IMasked
       var quotient = checkSum / _radix;
       var remainder = checkSum % _radix;
 
-      first = quotient.ToDigitChar();
-      second = remainder.ToDigitChar();
+      first = quotient.ToAsciiDigit();
+      second = remainder.ToAsciiDigit();
 
       return true;
    }
@@ -118,31 +115,20 @@ public class AlphanumericMod97_10Algorithm : IDoubleCheckDigitAlgorithm, IMasked
       }
 
       var sum = 0;
+      Char ch;
 
       // Process all characters except the last one, which is the second check character.
       var processLength = value.Length - 1;
       for (var index = 0; index < processLength; index++)
       {
-         var ch = value[index];
-         if (IsDigitCharacter(ch))
+         ch = value[index];
+         if (ch.IsAsciiDigit())
          {
-            sum = (sum + ch.ToIntegerDigit()) * _radix;
+            sum = (sum + ch.MapAsciiDigit()) * _radix;
          }
-         else if (IsLetterCharacter(ch))
+         else if (ch.IsAsciiLetter())
          {
-            // Because the underlying algorithm, ISO/IEC MOD 97-10, is designed
-            // to process digits, we map each letter to two digits. For example,
-            // 'A' is mapped to 10, which is processed as '1' followed by '0'.
-            // The first and second digits for each letter are pre-calculated so
-            // that we can do a quick lookup during processing instead of doing 
-            // the calculation for each letter on the fly.
-            var offset = ch - (ch < Chars.LowerCaseA ? Chars.UpperCaseA : Chars.LowerCaseA);
-            sum = (sum + _letterFirstDigits[offset]) * _radix;
-            if (sum >= _reduceThreshold)
-            {
-               sum %= _modulus;
-            }
-            sum = (sum + _letterSecondDigits[offset]) * _radix;
+            sum = SumLetter(sum, ch);
          }
          else
          {
@@ -156,11 +142,12 @@ public class AlphanumericMod97_10Algorithm : IDoubleCheckDigitAlgorithm, IMasked
 
       // Add value for second check character. Check characters are always
       // digits.
-      var num = value[^1].ToIntegerDigit();
-      if (num.IsInvalidDigit())
+      ch = value[^1];
+      if (!ch.IsAsciiDigit())
       {
          return false;
       }
+      var num = ch.MapAsciiDigit();
       sum += num;
 
       return sum % _modulus == 1;
@@ -179,6 +166,7 @@ public class AlphanumericMod97_10Algorithm : IDoubleCheckDigitAlgorithm, IMasked
       }
 
       var sum = 0;
+      Char ch;
 
       // Process maskable characters (trailing two characters are check characters
       // and are not maskable).
@@ -190,12 +178,12 @@ public class AlphanumericMod97_10Algorithm : IDoubleCheckDigitAlgorithm, IMasked
          {
             continue;
          }
-         var ch = value[index];
-         if (IsDigitCharacter(ch))
+         ch = value[index];
+         if (ch.IsAsciiDigit())
          {
-            sum = (sum + ch.ToIntegerDigit()) * _radix;
+            sum = (sum + ch.MapAsciiDigit()) * _radix;
          }
-         else if (IsLetterCharacter(ch))
+         else if (ch.IsAsciiLetter())
          {
             var offset = ch - (ch < Chars.LowerCaseA ? Chars.UpperCaseA : Chars.LowerCaseA);
             sum = (sum + _letterFirstDigits[offset]) * _radix;
@@ -221,11 +209,12 @@ public class AlphanumericMod97_10Algorithm : IDoubleCheckDigitAlgorithm, IMasked
       }
 
       // First check character. Check characters are always digits.
-      var num = value[^2].ToIntegerDigit();
-      if (num.IsInvalidDigit())
+      ch = value[^2];
+      if (!ch.IsAsciiDigit())
       {
          return false;
       }
+      var num = ch.MapAsciiDigit();
       sum = (sum + num) * _radix;
       if (sum >= _reduceThreshold)
       {
@@ -233,21 +222,34 @@ public class AlphanumericMod97_10Algorithm : IDoubleCheckDigitAlgorithm, IMasked
       }
 
       // Add value for second check character.
-      num = value[^1].ToIntegerDigit();
-      if (num.IsInvalidDigit())
+      ch = value[^1];
+      if (!ch.IsAsciiDigit())
       {
          return false;
       }
+      num = ch.MapAsciiDigit();
       sum += num;
 
       return sum % _modulus == 1;
    }
 
    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-   private Boolean IsDigitCharacter(Char ch) => ch >= Chars.DigitZero && ch <= Chars.DigitNine;
+   private Int32 SumLetter(Int32 sum, Char ch)
+   {
+      // Because the underlying algorithm, ISO/IEC MOD 97-10, is designed
+      // to process digits, we map each letter to two digits. For example,
+      // 'A' is mapped to 10, which is processed as '1' followed by '0'.
+      // The first and second digits for each letter are pre-calculated so
+      // that we can do a quick lookup during processing instead of doing 
+      // the calculation for each letter on the fly.
+      var offset = ch - (ch < Chars.LowerCaseA ? Chars.UpperCaseA : Chars.LowerCaseA);
+      sum = (sum + _letterFirstDigits[offset]) * _radix;
+      if (sum >= _reduceThreshold)
+      {
+         sum %= _modulus;
+      }
+      sum = (sum + _letterSecondDigits[offset]) * _radix;
 
-   [MethodImpl(MethodImplOptions.AggressiveInlining)]
-   private Boolean IsLetterCharacter(Char ch) =>
-      (ch >= Chars.UpperCaseA && ch <= Chars.UpperCaseZ) 
-      || (ch >= Chars.LowerCaseA && ch <= Chars.LowerCaseZ);
+      return sum;
+   }
 }

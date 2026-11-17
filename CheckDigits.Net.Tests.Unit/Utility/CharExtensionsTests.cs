@@ -95,6 +95,79 @@ public class CharExtensionsTests
    [InlineData('X')]
    [InlineData('Y')]
    [InlineData('Z')]
+   [InlineData('a')]
+   [InlineData('b')]
+   [InlineData('c')]
+   [InlineData('d')]
+   [InlineData('e')]
+   [InlineData('f')]
+   [InlineData('g')]
+   [InlineData('h')]
+   [InlineData('i')]
+   [InlineData('j')]
+   [InlineData('k')]
+   [InlineData('l')]
+   [InlineData('m')]
+   [InlineData('n')]
+   [InlineData('o')]
+   [InlineData('p')]
+   [InlineData('q')]
+   [InlineData('r')]
+   [InlineData('s')]
+   [InlineData('t')]
+   [InlineData('u')]
+   [InlineData('v')]
+   [InlineData('w')]
+   [InlineData('x')]
+   [InlineData('y')]
+   [InlineData('z')]
+   public void CharExtensions_IsAsciiLetter_ShouldReturnTrue_WhenValueIsLetter(Char ch)
+      => ch.IsAsciiLetter().Should().BeTrue();
+
+   [Theory]
+   [InlineData('/')]
+   [InlineData('0')]
+   [InlineData('9')]
+   [InlineData(':')]
+   [InlineData('\u2153')]  // Non-digit character Unicode fraction 1/3
+   [InlineData('\u0BE6')]  // Unicode Tamil digit 0
+   [InlineData('\u00D6')]  // Unicode O with umlaut
+   public void CharExtensions_IsAsciiLetter_ShouldReturnFalse_WhenValueIsNotLetter(Char ch)
+      => ch.IsAsciiLetter().Should().BeFalse();
+
+   #endregion
+
+   #region IsAsciiLetterUpper Tests
+   // ==========================================================================
+   // ==========================================================================
+
+   [Theory]
+   [InlineData('A')]
+   [InlineData('B')]
+   [InlineData('C')]
+   [InlineData('D')]
+   [InlineData('E')]
+   [InlineData('F')]
+   [InlineData('G')]
+   [InlineData('H')]
+   [InlineData('I')]
+   [InlineData('J')]
+   [InlineData('K')]
+   [InlineData('L')]
+   [InlineData('M')]
+   [InlineData('N')]
+   [InlineData('O')]
+   [InlineData('P')]
+   [InlineData('Q')]
+   [InlineData('R')]
+   [InlineData('S')]
+   [InlineData('T')]
+   [InlineData('U')]
+   [InlineData('V')]
+   [InlineData('W')]
+   [InlineData('X')]
+   [InlineData('Y')]
+   [InlineData('Z')]
    public void CharExtensions_IsAsciiLetterUpper_ShouldReturnTrue_WhenValueIsUppercaseLetter(Char ch)
       => ch.IsAsciiLetterUpper().Should().BeTrue();
 

@@ -276,19 +276,37 @@ public class AlphanumericMod97_10AlgorithmTests
       => _sut.Validate(value).Should().BeFalse();
 
    [Theory]
-   [InlineData("AA13!56")]
-   [InlineData("AA13^56")]
-   [InlineData("AA13=56")]
+   [InlineData("U7y8SXrC!87")]
+   [InlineData("U7y8SXrC^87")]
+   [InlineData("U7y8SXrC=87")]
+   [InlineData("U7y8SXrC\u215387")]      // Unicode fraction 1/3
+   [InlineData("U7y8SXrC\u0BE687")]      // Unicode Tamil digit 0
+   [InlineData("U7y8SXrC\u00D687")]      // Unicode uppercase O with umlaut
+   [InlineData("U7y8SXrC\u00F687")]      // Unicode lowercase o with umlaut
    public void AlphanumericMod97_10Algorithm_Validate_ShouldReturnFalse_WhenValueContainsInvalidCharacter(String value)
       => _sut.Validate(value).Should().BeFalse();
 
-   [Fact]
-   public void AlphanumericMod97_10Algorithm_Validate_ShouldReturnFalse_WhenValueContainsInvalidFirstCheckCharacter()
-      => _sut.Validate("AA123#0").Should().BeFalse();
+   [Theory]
+   [InlineData("U7y8SXrC0B7")]
+   [InlineData("U7y8SXrC0j7")]
+   [InlineData("U7y8SXrC0.7")]
+   [InlineData("U7y8SXrC0\u21537")]       // Unicode fraction 1/3
+   [InlineData("U7y8SXrC0\u0BE67")]       // Unicode Tamil digit 0
+   [InlineData("U7y8SXrC0\u00D67")]       // Unicode uppercase O with umlaut
+   [InlineData("U7y8SXrC0\u00F67")]       // Unicode lowercase o with umlaut
+   public void AlphanumericMod97_10Algorithm_Validate_ShouldReturnFalse_WhenValueContainsInvalidFirstCheckCharacter(String value)
+      => _sut.Validate(value).Should().BeFalse();
 
-   [Fact]
-   public void AlphanumericMod97_10Algorithm_Validate_ShouldReturnFalse_WhenValueContainsInvalidSecondCheckCharacter()
-      => _sut.Validate("AA1230#").Should().BeFalse();
+   [Theory]
+   [InlineData("U7y8SXrC08A")]
+   [InlineData("U7y8SXrC08i")]
+   [InlineData("U7y8SXrC08-")]
+   [InlineData("U7y8SXrC08\u2153")]       // Unicode fraction 1/3
+   [InlineData("U7y8SXrC08\u0BE6")]       // Unicode Tamil digit 0
+   [InlineData("U7y8SXrC08\u00D6")]       // Unicode uppercase O with umlaut
+   [InlineData("U7y8SXrC08\u00F6")]       // Unicode lowercase o with umlaut
+   public void AlphanumericMod97_10Algorithm_Validate_ShouldReturnFalse_WhenValueContainsInvalidSecondCheckCharacter(String value)
+      => _sut.Validate(value).Should().BeFalse();
 
    [Theory]
    [InlineData("U7y46")]
@@ -332,7 +350,7 @@ public class AlphanumericMod97_10AlgorithmTests
    [InlineData("A")]
    [InlineData("AB")]
    [InlineData("98")]         // Would otherise be true if length requirement was not enforced
-   public void AlphanumericMod97Algorithm_ValidateMasked_ShouldReturnFalse_WhenInsufficientUnmaskedCharactersToCalculateCheckDigit(String value)
+   public void AlphanumericMod97_10Algorithm_ValidateMasked_ShouldReturnFalse_WhenInsufficientUnmaskedCharactersToCalculateCheckDigit(String value)
    {
       // Requires at least one unmasked character plus two check digit characters.
       // This should be rejected even if check digit would otherwise be valid.
@@ -444,20 +462,32 @@ public class AlphanumericMod97_10AlgorithmTests
    [InlineData("U7y 8SX rC! 87")]
    [InlineData("U7y 8SX rC^ 87")]
    [InlineData("U7y 8SX rC= 87")]
+   [InlineData("U7y 8SX rC\u2153 87")]    // Unicode fraction 1/3
+   [InlineData("U7y 8SX rC\u0BE6 87")]    // Unicode Tamil digit 0
+   [InlineData("U7y 8SX rC\u00D6 87")]    // Unicode uppercase O with umlaut
+   [InlineData("U7y 8SX rC\u00F6 87")]    // Unicode lowercase o with umlaut
    public void AlphanumericMod97_10Algorithm_ValidateMasked_ShouldReturnFalse_WhenValueContainsInvalidCharacter(String value)
       => _sut.Validate(value, _groupsOfThreeMask).Should().BeFalse();
 
    [Theory]
-   [InlineData("U7y 8SX rC0 B7")]         // B is 10 positions after 8 in ASCII table
-   [InlineData("U7y 8SX rC0 j7")]         // j is 50 positions after 8 in ASCII table
-   [InlineData("U7y 8SX rC0 .7")]         // . is 10 positions before 8 in ASCII table
+   [InlineData("U7y 8SX rC0 B7")]
+   [InlineData("U7y 8SX rC0 j7")]
+   [InlineData("U7y 8SX rC0 .7")]
+   [InlineData("U7y 8SX rC0 \u21537")]    // Unicode fraction 1/3
+   [InlineData("U7y 8SX rC0 \u0BE67")]    // Unicode Tamil digit 0
+   [InlineData("U7y 8SX rC0 \u00D67")]    // Unicode uppercase O with umlaut
+   [InlineData("U7y 8SX rC0 \u00F67")]    // Unicode lowercase o with umlaut
    public void AlphanumericMod97_10Algorithm_ValidateMasked_ShouldReturnFalse_WhenValueContainsInvalidFirstCheckCharacter(String value)
       => _sut.Validate(value, _groupsOfThreeMask).Should().BeFalse();
 
    [Theory]
-   [InlineData("U7y 8SX rC0 8A")]         // A is 10 positions after 7 in ASCII table
-   [InlineData("U7y 8SX rC0 8i")]         // i is 50 positions after 7 in ASCII table
-   [InlineData("U7y 8SX rC0 8-")]         // - is 10 positions before 7 in ASCII table
+   [InlineData("U7y 8SX rC0 8A")]
+   [InlineData("U7y 8SX rC0 8i")]
+   [InlineData("U7y 8SX rC0 8-")]
+   [InlineData("U7y 8SX rC0 8\u2153")]    // Unicode fraction 1/3
+   [InlineData("U7y 8SX rC0 8\u0BE6")]    // Unicode Tamil digit 0
+   [InlineData("U7y 8SX rC0 8\u00D6")]    // Unicode uppercase O with umlaut
+   [InlineData("U7y 8SX rC0 8\u00F6")]    // Unicode lowercase o with umlaut
    public void AlphanumericMod97_10Algorithm_ValidateMasked_ShouldReturnFalse_WhenValueContainsInvalidSecondCheckCharacter(String value)
       => _sut.Validate(value, _groupsOfThreeMask).Should().BeFalse();
 
