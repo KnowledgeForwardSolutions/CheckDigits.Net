@@ -144,6 +144,10 @@ public class AlphanumericMod97_10AlgorithmTests
    [InlineData("AA00123!56")]
    [InlineData("AA00123^56")]
    [InlineData("AA00123=56")]
+   [InlineData("AA00123\u215356")]        // Unicode fraction 1/3
+   [InlineData("AA00123\u0BE656")]        // Unicode Tamil digit 0
+   [InlineData("AA00123\u00D656")]        // Unicode uppercase O with umlaut
+   [InlineData("AA00123\u00F656")]        // Unicode lowercase o with umlaut
    public void AlphanumericMod97_10Algorithm_TryCalculateCheckDigits_ShouldReturnFalse_WhenInputContainsInvalidCharacter(String value)
    {
       // Act/assert.

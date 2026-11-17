@@ -54,15 +54,16 @@ public sealed class DammAlgorithm : ISingleCheckDigitAlgorithm, IMaskedCheckDigi
       var processLength = value.Length;
       for (var index = 0; index < processLength; index++)
       {
-         var current = value[index].ToIntegerDigit();
-         if (current.IsInvalidDigit())
+         var ch = value[index];
+         if (!ch.IsAsciiDigit())
          {
-               return false;
+            return false;
          }
+         var current = ch.MapAsciiDigit();
          interim = _quasigroupTable[interim, current];
       }
 
-      checkDigit = interim.ToDigitChar();
+      checkDigit = interim.ToAsciiDigit();
       return true;
    }
 
@@ -78,11 +79,12 @@ public sealed class DammAlgorithm : ISingleCheckDigitAlgorithm, IMaskedCheckDigi
       var processLength = value.Length;
       for (var index = 0; index < processLength; index++)
       {
-         var current = value[index].ToIntegerDigit();
-         if (current.IsInvalidDigit())
+         var ch = value[index];
+         if (!ch.IsAsciiDigit())
          {
             return false;
          }
+         var current = ch.MapAsciiDigit();
          interim = _quasigroupTable[interim, current];
       }
 
@@ -101,6 +103,7 @@ public sealed class DammAlgorithm : ISingleCheckDigitAlgorithm, IMaskedCheckDigi
          return false;
       }
 
+      Char ch;
       var interim = 0;
       var processedDigits = 0;
       var processLength = value.Length - 1;
@@ -110,11 +113,12 @@ public sealed class DammAlgorithm : ISingleCheckDigitAlgorithm, IMaskedCheckDigi
          {
             continue;
          }
-         var current = value[index].ToIntegerDigit();
-         if (current.IsInvalidDigit())
+         ch = value[index];
+         if (!ch.IsAsciiDigit())
          {
             return false;
          }
+         var current = ch.MapAsciiDigit();
          interim = _quasigroupTable[interim, current];
          processedDigits++;
       }
@@ -123,11 +127,12 @@ public sealed class DammAlgorithm : ISingleCheckDigitAlgorithm, IMaskedCheckDigi
          return false;
       }
 
-      var checkDigit = value[^1].ToIntegerDigit();
-      if (checkDigit.IsInvalidDigit())
+      ch = value[^1];
+      if (!ch.IsAsciiDigit())
       {
          return false;
       }
+      var checkDigit = ch.MapAsciiDigit();
       
       interim = _quasigroupTable[interim, checkDigit];
       return interim == 0;
