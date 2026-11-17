@@ -54,18 +54,19 @@ public sealed class LuhnAlgorithm : ISingleCheckDigitAlgorithm, IMaskedCheckDigi
       var oddPosition = true;
       for (var index = value.Length - 1; index >= 0; index--)
       {
-         var digit = value[index].ToIntegerDigit();
-         if (digit < 0 || digit > 9)
+         var ch = value[index];
+         if (!ch.IsAsciiDigit())
          {
             return false;
          }
+         var digit = ch.MapAsciiDigit();
          sum += oddPosition
             ? digit > 4 ? (digit * 2) - 9 : digit * 2
             : digit;
          oddPosition = !oddPosition;
       }
       var mod = 10 - (sum % 10);
-      checkDigit = mod == 10 ? Chars.DigitZero : mod.ToDigitChar();
+      checkDigit = mod == 10 ? Chars.DigitZero : mod.ToAsciiDigit();
 
       return true;
    }
@@ -82,11 +83,12 @@ public sealed class LuhnAlgorithm : ISingleCheckDigitAlgorithm, IMaskedCheckDigi
       var oddPosition = true;
       for (var index = value.Length - 2; index >= 0; index--)
       {
-         var digit = value[index].ToIntegerDigit();
-         if (digit < 0 || digit > 9)
+         var ch = value[index];
+         if (!ch.IsAsciiDigit())
          {
             return false;
          }
+         var digit = ch.MapAsciiDigit();
          sum += oddPosition 
             ? digit > 4 ? (digit * 2) - 9 : digit * 2
             : digit;
@@ -94,7 +96,7 @@ public sealed class LuhnAlgorithm : ISingleCheckDigitAlgorithm, IMaskedCheckDigi
       }
       var checkDigit = (10 - (sum % 10)) % 10;
 
-      return value[^1].ToIntegerDigit() == checkDigit;
+      return value[^1].MapAsciiDigit() == checkDigit;
    }
 
    /// <inheritdoc/>
@@ -118,11 +120,12 @@ public sealed class LuhnAlgorithm : ISingleCheckDigitAlgorithm, IMaskedCheckDigi
          {
             continue;
          }
-         var digit = value[index].ToIntegerDigit();
-         if (digit < 0 || digit > 9)
+         var ch = value[index];
+         if (!ch.IsAsciiDigit())
          {
             return false;
          }
+         var digit = ch.MapAsciiDigit();
          sum += oddPosition
             ? digit > 4 ? (digit * 2) - 9 : digit * 2
             : digit;
@@ -135,6 +138,6 @@ public sealed class LuhnAlgorithm : ISingleCheckDigitAlgorithm, IMaskedCheckDigi
       }
       var checkDigit = (10 - (sum % 10)) % 10;
 
-      return value[^1].ToIntegerDigit() == checkDigit;
+      return value[^1].MapAsciiDigit() == checkDigit;
    }
 }

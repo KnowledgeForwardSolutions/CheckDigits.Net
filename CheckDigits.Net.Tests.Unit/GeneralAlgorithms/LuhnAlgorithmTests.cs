@@ -134,6 +134,11 @@ public class LuhnAlgorithmTests
    [Theory]
    [InlineData("12G45")]      // Value 12345 would have check digit = 5. G is 20 positions later in ASCII table than 3 so test will fail unless code explicitly checks for non-digit
    [InlineData("12)45")]      // ) is 10 positions earlier in ASCII table than 3 so test will fail unless code explicitly checks for non-digit
+   [InlineData("12g45")]
+   [InlineData("12\u215345")] // Unicode fraction 1/3
+   [InlineData("12\u0BE645")] // Unicode Tamil digit 0
+   [InlineData("12\u00D645")] // Unicode uppercase O with umlaut
+   [InlineData("12\u00F645")] // Unicode lowercase o with umlaut
    public void LuhnAlgorithm_TryCalculateCheckDigit_ShouldReturnFalse_WhenInputContainsNonDigitCharacter(String value)
    {
       _sut.TryCalculateCheckDigit(value, out var checkDigit).Should().BeFalse();
@@ -246,12 +251,24 @@ public class LuhnAlgorithmTests
    [Theory]
    [InlineData("12G455")]     // Value 12345 would have check digit = 5. G is 20 positions later in ASCII table than 3 and would also calculate check digit 5 unless code explicitly checks for non-digit
    [InlineData("12)455")]     // ) is 10 positions earlier in ASCII table than 3 and would also calculate check digit 5 unless code explicitly checks for non-digit
+   [InlineData("12g455")]
+   [InlineData("12\u2153455")]   // Unicode fraction 1/3
+   [InlineData("12\u0BE6455")]   // Unicode Tamil digit 0
+   [InlineData("12\u00D6455")]   // Unicode uppercase O with umlaut
+   [InlineData("12\u00F6455")]   // Unicode lowercase o with umlaut
    public void LuhnAlgorithm_Validate_ShouldReturnFalse_WhenInputContainsNonDigitCharacter(String value)
       => _sut.Validate(value).Should().BeFalse();
 
-   [Fact]
-   public void LuhnAlgorithm_Validate_ShouldReturnFalse_WhenCheckDigitCharacterIsNonDigit()
-      => _sut.Validate("12345A").Should().BeFalse();
+   [Theory]
+   [InlineData("12345A")]
+   [InlineData("12345)")]
+   [InlineData("12345a")]
+   [InlineData("12345\u2153")]   // Unicode fraction 1/3
+   [InlineData("12345\u0BE6")]   // Unicode Tamil digit 0
+   [InlineData("12345\u00D6")]   // Unicode uppercase O with umlaut
+   [InlineData("12345\u00F6")]   // Unicode lowercase o with umlaut
+   public void LuhnAlgorithm_Validate_ShouldReturnFalse_WhenCheckDigitCharacterIsNonDigit(String value)
+      => _sut.Validate(value).Should().BeFalse();
 
    [Theory]
    [InlineData("1404")]
@@ -386,12 +403,24 @@ public class LuhnAlgorithmTests
    [Theory]
    [InlineData("12G4 55")]     // Value 12345 would have check digit = 5. G is 20 positions later in ASCII table than 3 and would also calculate check digit 5 unless code explicitly checks for non-digit
    [InlineData("12)4 55")]     // ) is 10 positions earlier in ASCII table than 3 and would also calculate check digit 5 unless code explicitly checks for non-digit
+   [InlineData("12g4 55")]
+   [InlineData("12\u21534 55")]  // Unicode fraction 1/3
+   [InlineData("12\u0BE64 55")]  // Unicode Tamil digit 0
+   [InlineData("12\u00D64 55")]  // Unicode uppercase O with umlaut
+   [InlineData("12\u00F64 55")]  // Unicode lowercase o with umlaut
    public void LuhnAlgorithm_ValidateMasked_ShouldReturnFalse_WhenInputContainsNonDigitCharacter(String value)
       => _sut.Validate(value, _creditCardMask).Should().BeFalse();
 
-   [Fact]
-   public void LuhnAlgorithm_ValidateMasked_ShouldReturnFalse_WhenCheckDigitCharacterIsNonDigit()
-      => _sut.Validate("1234 5A", _creditCardMask).Should().BeFalse();
+   [Theory]
+   [InlineData("1234 5A")]
+   [InlineData("1234 5)")]
+   [InlineData("1234 5a")]
+   [InlineData("1234 5\u2153")]  // Unicode fraction 1/3
+   [InlineData("1234 5\u0BE6")]  // Unicode Tamil digit 0
+   [InlineData("1234 5\u00D6")]  // Unicode uppercase O with umlaut
+   [InlineData("1234 5\u00F6")]  // Unicode lowercase o with umlaut
+   public void LuhnAlgorithm_ValidateMasked_ShouldReturnFalse_WhenCheckDigitCharacterIsNonDigit(String value)
+      => _sut.Validate(value, _creditCardMask).Should().BeFalse();
 
    [Theory]
    [InlineData("140 4")]
