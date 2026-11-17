@@ -68,12 +68,12 @@ public sealed class Modulus11_27DecimalAlgorithm : ISingleCheckDigitAlgorithm, I
       var weightIndex = new ModulusInt32(_weights.Length);
       for (var charIndex = value.Length - 1; charIndex >= 0; charIndex--)
       {
-         var currentDigit = value[charIndex].ToIntegerDigit();
-         if (currentDigit.IsInvalidDigit())
+         var ch = value[charIndex];
+         if (!ch.IsAsciiDigit())
          {
             return false;
          }
-
+         var currentDigit = ch.MapAsciiDigit();
          sum += currentDigit * _weights[weightIndex];
          weightIndex++;
       }
@@ -84,7 +84,7 @@ public sealed class Modulus11_27DecimalAlgorithm : ISingleCheckDigitAlgorithm, I
          return false;
       }
 
-      checkDigit = mod.ToDigitChar();
+      checkDigit = mod.ToAsciiDigit();
 
       return true;
    }
@@ -97,25 +97,27 @@ public sealed class Modulus11_27DecimalAlgorithm : ISingleCheckDigitAlgorithm, I
          return false;
       }
 
+      Char ch;
       var sum = 0;
       var weightIndex = new ModulusInt32(_weights.Length);
       for (var charIndex = value.Length - 2; charIndex >= 0; charIndex--)
       {
-         var currentDigit = value[charIndex].ToIntegerDigit();
-         if (currentDigit.IsInvalidDigit())
+         ch = value[charIndex];
+         if (!ch.IsAsciiDigit())
          {
             return false;
          }
-
+         var currentDigit = ch.MapAsciiDigit();
          sum += currentDigit * _weights[weightIndex];
          weightIndex++;
       }
 
-      var checkValue = value[^1].ToIntegerDigit();
-      if (checkValue.IsInvalidDigit())
+      ch = value[^1];
+      if (!ch.IsAsciiDigit())
       {
          return false;
       }
+      var checkValue = ch.MapAsciiDigit();
       sum += checkValue;
 
       return (sum % 11) == 0;
@@ -133,6 +135,7 @@ public sealed class Modulus11_27DecimalAlgorithm : ISingleCheckDigitAlgorithm, I
          return false;
       }
 
+      Char ch;
       var sum = 0;
       var weightIndex = new ModulusInt32(_weights.Length);
       var processedDigits = 0;
@@ -142,12 +145,12 @@ public sealed class Modulus11_27DecimalAlgorithm : ISingleCheckDigitAlgorithm, I
          {
             continue;
          }
-         var currentDigit = value[charIndex].ToIntegerDigit();
-         if (currentDigit.IsInvalidDigit())
+         ch = value[charIndex];
+         if (!ch.IsAsciiDigit())
          {
             return false;
          }
-
+         var currentDigit = ch.MapAsciiDigit();
          sum += currentDigit * _weights[weightIndex];
          weightIndex++;
          processedDigits++;
@@ -157,11 +160,12 @@ public sealed class Modulus11_27DecimalAlgorithm : ISingleCheckDigitAlgorithm, I
          return false;
       }
 
-      var checkValue = value[^1].ToIntegerDigit();
-      if (checkValue.IsInvalidDigit())
+      ch = value[^1];
+      if (!ch.IsAsciiDigit())
       {
          return false;
       }
+      var checkValue = ch.MapAsciiDigit();
       sum += checkValue;
 
       return (sum % 11) == 0;

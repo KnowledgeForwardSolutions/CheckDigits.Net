@@ -58,7 +58,7 @@ public class Modulus11_27DecimalAlgorithmTests
    [InlineData("7", '8')]        // Sum = 14, mod = (11-(14%11))%11=8
    [InlineData("8", '6')]        // Sum = 16, mod = (11-(16%11))%11=6
    [InlineData("9", '4')]        // Sum = 18, mod = (11-(18%11))%11=4
-   [InlineData("61", '2')]        // Sum = 20, mod = (11-(20%11))%11=2
+   [InlineData("61", '2')]       // Sum = 20, mod = (11-(20%11))%11=2
    public void Modulus11_27DecimalAlgorithm_TryCalculateCheckDigit_ShouldReturnAllPossibleValidCheckDigits(
       String value,
       Char expectedCheckDigit)
@@ -119,6 +119,11 @@ public class Modulus11_27DecimalAlgorithmTests
    [Theory]
    [InlineData("100G00001")]
    [InlineData("100+00001")]
+   [InlineData("100g00001")]
+   [InlineData("100\u215300001")]      // Unicode fraction 1/3
+   [InlineData("100\u0BE600001")]      // Unicode Tamil digit 0
+   [InlineData("100\u00D600001")]      // Unicode uppercase O with umlaut
+   [InlineData("100\u00F600001")]      // Unicode lowercase o with umlaut
    public void Modulus11_27DecimalAlgorithm_TryCalculateCheckDigit_ShouldReturnFalse_WhenInputContainsNonDigitCharacter(String value)
    {
       _sut.TryCalculateCheckDigit(value, out var checkDigit).Should().BeFalse();
@@ -212,12 +217,24 @@ public class Modulus11_27DecimalAlgorithmTests
    [Theory]
    [InlineData("0000G00005")]    // 'G' - '0' = 18
    [InlineData("0000+00005")]    // '+' - '0' = -10
+   [InlineData("0000g00005")]
+   [InlineData("0000\u215300005")]     // Unicode fraction 1/3
+   [InlineData("0000\u0BE600005")]     // Unicode Tamil digit 0
+   [InlineData("0000\u00D600005")]     // Unicode uppercase O with umlaut
+   [InlineData("0000\u00F600005")]     // Unicode lowercase o with umlaut
    public void Modulus11_27DecimalAlgorithm_Validate_ShouldReturnFalse_WhenInputContainsNonDigitCharacter(String value)
       => _sut.Validate(value).Should().BeFalse();
 
-   [Fact]
-   public void Modulus11_27DecimalAlgorithm_Validate_ShouldReturnFalse_WhenCheckDigitIsNonDigitCharacter()
-      => _sut.Validate("000010000?").Should().BeFalse();    // Actual check digit would be 5
+   [Theory]
+   [InlineData("000010000G")]    // Actual check digit would be 5
+   [InlineData("000010000?")]
+   [InlineData("000010000g")]
+   [InlineData("000010000\u2153")]     // Unicode fraction 1/3
+   [InlineData("000010000\u0BE6")]     // Unicode Tamil digit 0
+   [InlineData("000010000\u00D6")]     // Unicode uppercase O with umlaut
+   [InlineData("000010000\u00F6")]     // Unicode lowercase o with umlaut
+   public void Modulus11_27DecimalAlgorithm_Validate_ShouldReturnFalse_WhenCheckDigitIsNonDigitCharacter(String value)
+      => _sut.Validate(value).Should().BeFalse();
 
    [Theory]
    [InlineData("1406")]
@@ -320,12 +337,24 @@ public class Modulus11_27DecimalAlgorithmTests
    [Theory]
    [InlineData("000 0G0 000 5")]    // 'G' - '0' = 18
    [InlineData("000 0+0 000 5")]    // '+' - '0' = -10
+   [InlineData("000 0g0 000 5")]
+   [InlineData("000 0\u21530 000 5")]     // Unicode fraction 1/3
+   [InlineData("000 0\u0BE60 000 5")]     // Unicode Tamil digit 0
+   [InlineData("000 0\u00D60 000 5")]     // Unicode uppercase O with umlaut
+   [InlineData("000 0\u00F60 000 5")]     // Unicode lowercase o with umlaut
    public void Modulus11_27DecimalAlgorithm_ValidateMasked_ShouldReturnFalse_WhenInputContainsNonDigitCharacter(String value)
       => _sut.Validate(value, _groupsOfThreeMask).Should().BeFalse();
 
-   [Fact]
-   public void Modulus11_27DecimalAlgorithm_ValidateMasked_ShouldReturnFalse_WhenCheckDigitIsNonDigitCharacter()
-      => _sut.Validate("000 010 000 ?", _groupsOfThreeMask).Should().BeFalse();    // Actual check digit would be 5
+   [Theory]
+   [InlineData("000 010 000 G")]    // Actual check digit would be 5
+   [InlineData("000 010 000 ?")]
+   [InlineData("000 010 000 g")]
+   [InlineData("000 010 000 \u2153")]     // Unicode fraction 1/3
+   [InlineData("000 010 000 \u0BE6")]     // Unicode Tamil digit 0
+   [InlineData("000 010 000 \u00D6")]     // Unicode uppercase O with umlaut
+   [InlineData("000 010 000 \u00F6")]     // Unicode lowercase o with umlaut
+   public void Modulus11_27DecimalAlgorithm_ValidateMasked_ShouldReturnFalse_WhenCheckDigitIsNonDigitCharacter(String value)
+      => _sut.Validate(value, _groupsOfThreeMask).Should().BeFalse();
 
    [Theory]
    [InlineData("140 6")]
