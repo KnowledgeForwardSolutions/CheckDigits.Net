@@ -113,6 +113,11 @@ public class Modulus10_1AlgorithmTests
    [InlineData("58D8")]          // D is 20 positions later in ASCII table than 0
    [InlineData("58&8")]          // & is 10 positions earlier in ASCII table than 0
    [InlineData("58#8")]          // # is not a multiple of 10 positions away in ASCII table than 0, but is still a non-digit character that should be rejected
+   [InlineData("58d8")]
+   [InlineData("58\u21538")]     // Unicode fraction 1/3
+   [InlineData("58\u0BE68")]     // Unicode Tamil digit 0
+   [InlineData("58\u00D68")]     // Unicode uppercase O with umlaut
+   [InlineData("58\u00F68")]     // Unicode lowercase o with umlaut
    public void Modulus10_1Algorithm_TryCalculateCheckDigit_ShouldReturnFalse_WhenInputContainsNonDigitCharacter(String value)
    {
       _sut.TryCalculateCheckDigit(value, out var checkDigit).Should().BeFalse();
@@ -179,7 +184,7 @@ public class Modulus10_1AlgorithmTests
       => _sut.Validate("0000000000").Should().BeTrue();
 
    [Fact]
-   public void ModulusAlgorithm_Validate_ShouldReturnTrue_WhenCheckDigitIsCalculatesAsZero()
+   public void Modulus10_1Algorithm_Validate_ShouldReturnTrue_WhenCheckDigitIsCalculatesAsZero()
       => _sut.Validate("1000000010").Should().BeTrue();
 
    [Theory]                      // Modulus 10 means that non-digit characters that are a multiple of 10 positions away
@@ -188,12 +193,24 @@ public class Modulus10_1AlgorithmTests
    [InlineData("58D82")]         // D is 20 positions later in ASCII table than 0
    [InlineData("58&82")]         // & is 10 positions earlier in ASCII table than 0
    [InlineData("58#82")]         // # is not a multiple of 10 positions away in ASCII table than 0, but is still a non-digit character that should be rejected
+   [InlineData("58d82")]
+   [InlineData("58\u215382")]    // Unicode fraction 1/3
+   [InlineData("58\u0BE682")]    // Unicode Tamil digit 0
+   [InlineData("58\u00D682")]    // Unicode uppercase O with umlaut
+   [InlineData("58\u00F682")]    // Unicode lowercase o with umlaut
    public void Modulus10_1Algorithm_Validate_ShouldReturnFalse_WhenInputContainsNonDigitCharacter(String value)
       => _sut.Validate(value).Should().BeFalse();
 
-   [Fact]
-   public void Modulus10_1Algorithm_Validate_ShouldReturnFalse_WhenCheckDigitIsNonDigitCharacter()
-      => _sut.Validate("000000001X").Should().BeFalse();    // Actual check digit would be 1
+   [Theory]
+   [InlineData("000000001X")]    // Actual check digit would be 1
+   [InlineData("000000001!")]
+   [InlineData("000000001x")]
+   [InlineData("000000001\u2153")]     // Unicode fraction 1/3
+   [InlineData("000000001\u0BE6")]     // Unicode Tamil digit 0
+   [InlineData("000000001\u00D6")]     // Unicode uppercase O with umlaut
+   [InlineData("000000001\u00F6")]     // Unicode lowercase o with umlaut
+   public void Modulus10_1Algorithm_Validate_ShouldReturnFalse_WhenCheckDigitIsNonDigitCharacter(String value)
+      => _sut.Validate(value).Should().BeFalse();
 
    [Theory]
    [InlineData("1401")]
@@ -295,7 +312,7 @@ public class Modulus10_1AlgorithmTests
       => _sut.Validate("000 000 000 0", _groupsOfThreeMask).Should().BeTrue();
 
    [Fact]
-   public void ModulusAlgorithm_ValidateMasked_ShouldReturnTrue_WhenCheckDigitIsCalculatesAsZero()
+   public void Modulus10_1Algorithm_ValidateMasked_ShouldReturnTrue_WhenCheckDigitIsCalculatesAsZero()
       => _sut.Validate("100 000 001 0", _groupsOfThreeMask).Should().BeTrue();
 
    [Theory]                      // Modulus 10 means that non-digit characters that are a multiple of 10 positions away
@@ -304,12 +321,25 @@ public class Modulus10_1AlgorithmTests
    [InlineData("58D 82")]        // D is 20 positions later in ASCII table than 0
    [InlineData("58& 82")]        // & is 10 positions earlier in ASCII table than 0
    [InlineData("58# 82")]        // # is not a multiple of 10 positions away in ASCII table than 0, but is still a non-digit character that should be rejected
+   [InlineData("58d 82")]
+   [InlineData("58\u2153 82")]   // Unicode fraction 1/3
+   [InlineData("58\u0BE6 82")]   // Unicode Tamil digit 0
+   [InlineData("58\u00D6 82")]   // Unicode uppercase O with umlaut
+   [InlineData("58\u00F6 82")]   // Unicode lowercase o with umlaut
+   
    public void Modulus10_1Algorithm_ValidateMasked_ShouldReturnFalse_WhenInputContainsNonDigitCharacter(String value)
       => _sut.Validate(value, _groupsOfThreeMask).Should().BeFalse();
 
-   [Fact]
-   public void Modulus10_1Algorithm_ValidateMasked_ShouldReturnFalse_WhenCheckDigitIsNonDigitCharacter()
-      => _sut.Validate("000 000 001 X", _groupsOfThreeMask).Should().BeFalse();    // Actual check digit would be 1
+   [Theory]
+   [InlineData("000 000 001 X")]    // Actual check digit would be 1
+   [InlineData("000 000 001 !")]
+   [InlineData("000 000 001 x")]
+   [InlineData("000 000 001 \u2153")]     // Unicode fraction 1/3
+   [InlineData("000 000 001 \u0BE6")]     // Unicode Tamil digit 0
+   [InlineData("000 000 001 \u00D6")]     // Unicode uppercase O with umlaut
+   [InlineData("000 000 001 \u00F6")]     // Unicode lowercase o with umlaut
+   public void Modulus10_1Algorithm_ValidateMasked_ShouldReturnFalse_WhenCheckDigitIsNonDigitCharacter(String value)
+      => _sut.Validate(value, _groupsOfThreeMask).Should().BeFalse();
 
    [Theory]
    [InlineData("140 1")]

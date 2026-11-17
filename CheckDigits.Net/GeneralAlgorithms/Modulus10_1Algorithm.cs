@@ -51,19 +51,21 @@ public sealed class Modulus10_1Algorithm : ISingleCheckDigitAlgorithm, IMaskedCh
 
       var s = 0;
       var t = 0;
-      for (var index = 0; index < value.Length; index++)
+      var processLength = value.Length;
+      for (var index = 0; index < processLength; index++)
       {
-         var currentDigit = value![index].ToIntegerDigit();
-         if (currentDigit.IsInvalidDigit())
+         var ch = value[index];
+         if (!ch.IsAsciiDigit())
          {
             return false;
          }
+         var currentDigit = ch.MapAsciiDigit();
          t += currentDigit;
          s += t;
       }
 
       var mod = s % 10;
-      checkDigit = mod.ToDigitChar();
+      checkDigit = mod.ToAsciiDigit();
 
       return true;
    }
@@ -85,11 +87,12 @@ public sealed class Modulus10_1Algorithm : ISingleCheckDigitAlgorithm, IMaskedCh
       var processLength = value.Length - 1;
       for (var index = 0; index < processLength; index++)
       {
-         var currentDigit = value![index].ToIntegerDigit();
-         if (currentDigit.IsInvalidDigit())
+         var ch = value[index];
+         if (!ch.IsAsciiDigit())
          {
             return false;
          }
+         var currentDigit = ch.MapAsciiDigit();
          t += currentDigit;
          s += t;
       }
@@ -98,7 +101,7 @@ public sealed class Modulus10_1Algorithm : ISingleCheckDigitAlgorithm, IMaskedCh
 
       // No need to check for non-digit check digit character explicitly as it
       // would calculate as < 0 or > 9 and return false in that case.
-      return value[^1].ToIntegerDigit() == checkDigit;
+      return value[^1].MapAsciiDigit() == checkDigit;
    }
 
    /// <inheritdoc/>
@@ -123,16 +126,17 @@ public sealed class Modulus10_1Algorithm : ISingleCheckDigitAlgorithm, IMaskedCh
          {
             continue;
          }
-         var currentDigit = value![index].ToIntegerDigit();
-         if (currentDigit.IsInvalidDigit())
+         var ch = value[index];
+         if (!ch.IsAsciiDigit())
          {
             return false;
          }
+         var currentDigit = ch.MapAsciiDigit();
          t += currentDigit;
          s += t;
          processedDigits++;
       }
-      if (processedDigits == 0 || processedDigits > _validateMaskedMaxProcessed)
+      if (processedDigits is 0 or > _validateMaskedMaxProcessed)
       {
          return false;
       }
@@ -141,6 +145,6 @@ public sealed class Modulus10_1Algorithm : ISingleCheckDigitAlgorithm, IMaskedCh
 
       // No need to check for non-digit check digit character explicitly as it
       // would calculate as < 0 or > 9 and return false in that case.
-      return value[^1].ToIntegerDigit() == checkDigit;
+      return value[^1].MapAsciiDigit() == checkDigit;
    }
 }
