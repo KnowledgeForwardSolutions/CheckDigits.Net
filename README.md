@@ -2629,6 +2629,9 @@ Added masked validation support to the following algorithms:
 * Iso7064PureSystemDoubleCharacterAlgorithm
 * Iso7064PureSystemSingleCharacterAlgorithm
 
+Performance increases for:
+* Modulus11_27DecimalAlgorithm, ~50% improvement across all methods
+
 Classes/methods marked as Obsolete:
 
 CheckDigits.Net.Utility.ExtensionMethods

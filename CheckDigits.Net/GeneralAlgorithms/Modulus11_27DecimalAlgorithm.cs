@@ -47,7 +47,8 @@
 public sealed class Modulus11_27DecimalAlgorithm : ISingleCheckDigitAlgorithm, IMaskedCheckDigitAlgorithm
 {
    private const Int32 _validateMinLength = 2;
-   private static readonly Int32[] _weights = [2, 3, 4, 5, 6, 7];
+   private const Int32 _initialWeight = 2;
+   private const Int32 _maxWeight = 7;
 
    /// <inheritdoc/>
    public String AlgorithmDescription => Resources.Modulus11_27DecimalAlgorithmDescription;
@@ -65,7 +66,7 @@ public sealed class Modulus11_27DecimalAlgorithm : ISingleCheckDigitAlgorithm, I
       }
 
       var sum = 0;
-      var weightIndex = new ModulusInt32(_weights.Length);
+      var weight = _initialWeight;
       for (var charIndex = value.Length - 1; charIndex >= 0; charIndex--)
       {
          var ch = value[charIndex];
@@ -74,8 +75,12 @@ public sealed class Modulus11_27DecimalAlgorithm : ISingleCheckDigitAlgorithm, I
             return false;
          }
          var currentDigit = ch.MapAsciiDigit();
-         sum += currentDigit * _weights[weightIndex];
-         weightIndex++;
+         sum += currentDigit * weight;
+         weight++;
+         if (weight > _maxWeight)
+         {
+            weight = _initialWeight;
+         }
       }
 
       var mod = (11 - (sum % 11)) % 11;
@@ -99,7 +104,7 @@ public sealed class Modulus11_27DecimalAlgorithm : ISingleCheckDigitAlgorithm, I
 
       Char ch;
       var sum = 0;
-      var weightIndex = new ModulusInt32(_weights.Length);
+      var weight = _initialWeight;
       for (var charIndex = value.Length - 2; charIndex >= 0; charIndex--)
       {
          ch = value[charIndex];
@@ -108,8 +113,12 @@ public sealed class Modulus11_27DecimalAlgorithm : ISingleCheckDigitAlgorithm, I
             return false;
          }
          var currentDigit = ch.MapAsciiDigit();
-         sum += currentDigit * _weights[weightIndex];
-         weightIndex++;
+         sum += currentDigit * weight;
+         weight++;
+         if (weight > _maxWeight)
+         {
+            weight = _initialWeight;    // Restart weight sequence
+         }
       }
 
       ch = value[^1];
@@ -137,7 +146,7 @@ public sealed class Modulus11_27DecimalAlgorithm : ISingleCheckDigitAlgorithm, I
 
       Char ch;
       var sum = 0;
-      var weightIndex = new ModulusInt32(_weights.Length);
+      var weight = _initialWeight;
       var processedDigits = 0;
       for (var charIndex = value.Length - 2; charIndex >= 0; charIndex--)
       {
@@ -151,8 +160,12 @@ public sealed class Modulus11_27DecimalAlgorithm : ISingleCheckDigitAlgorithm, I
             return false;
          }
          var currentDigit = ch.MapAsciiDigit();
-         sum += currentDigit * _weights[weightIndex];
-         weightIndex++;
+         sum += currentDigit * weight;
+         weight++;
+         if (weight > _maxWeight)
+         {
+            weight = _initialWeight;    // Restart weight sequence
+         }
          processedDigits++;
       }
       if (processedDigits == 0)
