@@ -52,15 +52,16 @@ public sealed class Modulus10_13Algorithm : ISingleCheckDigitAlgorithm, IMaskedC
       var oddPosition = true;
       for (var index = value.Length - 1; index >= 0; index--)
       {
-         var digit = value[index].ToIntegerDigit();
-         if (digit.IsInvalidDigit())
+         var ch = value[index];
+         if (!ch.IsAsciiDigit())
          {
-               return false;
+            return false;
          }
+         var digit = ch.MapAsciiDigit();
          sum += oddPosition ? digit * 3 : digit;
          oddPosition = !oddPosition;
       }
-      checkDigit = ((10 - (sum % 10)) % 10).ToDigitChar();
+      checkDigit = ((10 - (sum % 10)) % 10).ToAsciiDigit();
 
       return true;
    }
@@ -77,17 +78,18 @@ public sealed class Modulus10_13Algorithm : ISingleCheckDigitAlgorithm, IMaskedC
       var oddPosition = true;
       for (var index = value.Length - 2; index >= 0; index--)
       {
-         var digit = value[index].ToIntegerDigit();
-         if (digit.IsInvalidDigit())
+         var ch = value[index];
+         if (!ch.IsAsciiDigit())
          {
             return false;
          }
+         var digit = ch.MapAsciiDigit();
          sum += oddPosition ? digit * 3 : digit;
          oddPosition = !oddPosition;
       }
       var checkDigit = (10 - (sum % 10)) % 10;
 
-      return value[^1].ToIntegerDigit() == checkDigit;
+      return value[^1].MapAsciiDigit() == checkDigit;
    }
 
    /// <inheritdoc/>
@@ -112,11 +114,12 @@ public sealed class Modulus10_13Algorithm : ISingleCheckDigitAlgorithm, IMaskedC
             continue;
          }
 
-         var digit = value[index].ToIntegerDigit();
-         if (digit.IsInvalidDigit())
+         var ch = value[index];
+         if (!ch.IsAsciiDigit())
          {
             return false;
          }
+         var digit = ch.MapAsciiDigit();
          sum += oddPosition ? digit * 3 : digit;
          oddPosition = !oddPosition;
          processedDigits++;
@@ -127,6 +130,6 @@ public sealed class Modulus10_13Algorithm : ISingleCheckDigitAlgorithm, IMaskedC
       }
       var checkDigit = (10 - (sum % 10)) % 10;
 
-      return value[^1].ToIntegerDigit() == checkDigit;
+      return value[^1].MapAsciiDigit() == checkDigit;
    }
 }

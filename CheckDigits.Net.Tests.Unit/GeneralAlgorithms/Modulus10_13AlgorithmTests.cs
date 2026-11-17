@@ -105,6 +105,11 @@ public class Modulus10_13AlgorithmTests
    [InlineData("42I26")]      // Value 42526 would have check digit = 1. I is 20 positions later in ASCII table than 5 so test will fail unless code explicitly checks for non-digit
    [InlineData("42+26")]      // + is 10 positions earlier in ASCII table than 5 so test will fail unless code explicitly checks for non-digit
    [InlineData("0 36000 29145")]
+   [InlineData("42i26")]
+   [InlineData("42\u215326")] // Unicode fraction 1/3
+   [InlineData("42\u0BE626")] // Unicode Tamil digit 0
+   [InlineData("42\u00D626")] // Unicode uppercase O with umlaut
+   [InlineData("42\u00F626")] // Unicode lowercase o with umlaut
    public void Modulus10_13Algorithm_TryCalculateCheckDigit_ShouldReturnFalse_WhenInputContainsNonDigitCharacter(String value)
    {
       _sut.TryCalculateCheckDigit(value, out var checkDigit).Should().BeFalse();
@@ -194,12 +199,24 @@ public class Modulus10_13AlgorithmTests
    [InlineData("42+261")]              // UPC-E example with 5 replaced with character 10 positions before in ASCII table
    [InlineData("42I261")]              // UPC-E example with 5 replaced with character 20 positions later in ASCII table
    [InlineData("0 36000 29145 2")]
+   [InlineData("42i261")]
+   [InlineData("42\u2153261")]         // Unicode fraction 1/3
+   [InlineData("42\u0BE6261")]         // Unicode Tamil digit 0
+   [InlineData("42\u00D6261")]         // Unicode uppercase O with umlaut
+   [InlineData("42\u00F6261")]         // Unicode lowercase o with umlaut
    public void Modulus10_13Algorithm_Validate_ShouldReturnFalse_WhenInputContainsNonDigitCharacter(String value)
       => _sut.Validate(value).Should().BeFalse();
 
-   [Fact]
-   public void Modulus10_13Algorithm_Validate_ShouldReturnFalse_WhenCheckDigitCharacterIsNonDigit()
-      => _sut.Validate("03600029145A").Should().BeFalse();
+   [Theory]
+   [InlineData("03600029145A")]
+   [InlineData("03600029145(")]
+   [InlineData("03600029145a")]
+   [InlineData("03600029145\u2153")]   // Unicode fraction 1/3
+   [InlineData("03600029145\u0BE6")]   // Unicode Tamil digit 0
+   [InlineData("03600029145\u00D6")]   // Unicode uppercase O with umlaut
+   [InlineData("03600029145\u00F6")]   // Unicode lowercase o with umlaut
+   public void Modulus10_13Algorithm_Validate_ShouldReturnFalse_WhenCheckDigitCharacterIsNonDigit(String value)
+      => _sut.Validate(value).Should().BeFalse();
 
    [Theory]
    [InlineData("1403")]           
@@ -304,15 +321,27 @@ public class Modulus10_13AlgorithmTests
       => _sut.Validate("000 000 090 100", _groupsOfThreeMask).Should().BeTrue();
 
    [Theory]
-   [InlineData("42+ 261")]              // UPC-E example with 5 replaced with character 10 positions before in ASCII table
-   [InlineData("42I 261")]              // UPC-E example with 5 replaced with character 20 positions later in ASCII table
-   [InlineData("0 3 600 0 2 914 5 2")]  // UPC-A example with extraneous spaces
+   [InlineData("42+ 261")]             // UPC-E example with 5 replaced with character 10 positions before in ASCII table
+   [InlineData("42I 261")]             // UPC-E example with 5 replaced with character 20 positions later in ASCII table
+   [InlineData("0 3 600 0 2 914 5 2")] // UPC-A example with extraneous spaces
+   [InlineData("42i 261")] 
+   [InlineData("42\u2153 261")]        // Unicode fraction 1/3 
+   [InlineData("42\u0BE6 261")]        // Unicode Tamil digit 0 
+   [InlineData("42\u00D6 261")]        // Unicode uppercase O with umlaut 
+   [InlineData("42\u00F6 261")]        // Unicode lowercase o with umlaut 
    public void Modulus10_13Algorithm_ValidateMasked_ShouldReturnFalse_WhenInputContainsNonDigitCharacter(String value)
       => _sut.Validate(value, _groupsOfThreeMask).Should().BeFalse();
 
-   [Fact]
-   public void Modulus10_13Algorithm_ValidateMasked_ShouldReturnFalse_WhenCheckDigitCharacterIsNonDigit()
-      => _sut.Validate("036 000 291 45A", _groupsOfThreeMask).Should().BeFalse();
+   [Theory]
+   [InlineData("036 000 291 45A")]
+   [InlineData("036 000 291 45(")]
+   [InlineData("036 000 291 45a")]
+   [InlineData("036 000 291 45\u2153")]   // Unicode fraction 1/3
+   [InlineData("036 000 291 45\u0BE6")]   // Unicode Tamil digit 0
+   [InlineData("036 000 291 45\u00D6")]   // Unicode uppercase O with umlaut
+   [InlineData("036 000 291 45\u00F6")]   // Unicode lowercase o with umlaut
+   public void Modulus10_13Algorithm_ValidateMasked_ShouldReturnFalse_WhenCheckDigitCharacterIsNonDigit(String value)
+      => _sut.Validate(value, _groupsOfThreeMask).Should().BeFalse();
 
    [Theory]
    [InlineData("140 3")]           
