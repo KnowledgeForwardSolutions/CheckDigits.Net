@@ -178,9 +178,13 @@ public class NcdAlgorithmTests
    [Theory]
    [InlineData("/", '0')]
    [InlineData(":", '0')]
-   [InlineData("A", '0')]      // Uppercase is not valid
+   [InlineData("B", '0')]      // Uppercase is not valid
    [InlineData(@"\", '0')]
    [InlineData("{", '0')]
+   [InlineData("\u2153", '0')]   // Unicode fraction 1/3
+   [InlineData("\u0BE6", '0')]   // Unicode Tamil digit 0
+   [InlineData("\u00D6", '0')]   // Unicode uppercase O with umlaut
+   [InlineData("\u00F6", '0')]   // Unicode lowercase o with umlaut
    public void NcdAlgorithm_TryCalculateCheckDigit_ShouldIgnoreNonCharacterValues(
       String value,
       Char expectedCheckDigit)
@@ -283,9 +287,13 @@ public class NcdAlgorithmTests
    [Theory]
    [InlineData("/0")]
    [InlineData(":0")]
-   [InlineData("A0")]      // Uppercase is not valid
+   [InlineData("B0")]      // Uppercase is not valid
    [InlineData(@"\0")]
    [InlineData("{0")]
+   [InlineData("\u21530")]    // Unicode fraction 1/3
+   [InlineData("\u0BE60")]    // Unicode Tamil digit 0
+   [InlineData("\u00D60")]    // Unicode uppercase O with umlaut
+   [InlineData("\u00F60")]    // Unicode lowercase o with umlaut
    public void NcdAlgorithm_Validate_ShouldIgnoreNonCharacterValues(String value)
       => _sut.Validate(value).Should().BeTrue();
 
@@ -321,6 +329,17 @@ public class NcdAlgorithmTests
    [InlineData("13030/ft5p30086k")]    // 13030/tf5p30086k with two char transposition error tf -> ft
    [InlineData("13030/tf53p0086k")]    // 13030/tf5p30086k with two char transposition error p3 -> 3p
    public void NcdAlgorithm_Validate_ShouldReturnFalse_WhenInputContainsDetectableError(String value)
+      => _sut.Validate(value).Should().BeFalse();
+
+   [Theory]
+   [InlineData("13030/xf93gt2/")]
+   [InlineData("13030/xf93gt2:")]
+   [InlineData("13030/xf93gt2B")]      // Uppercase is not valid
+   [InlineData("13030/xf93gt2\u2153")]    // Unicode fraction 1/3
+   [InlineData("13030/xf93gt2\u0BE6")]    // Unicode Tamil digit 0
+   [InlineData("13030/xf93gt2\u00D6")]    // Unicode uppercase O with umlaut
+   [InlineData("13030/xf93gt2\u00F6")]    // Unicode lowercase o with umlaut
+   public void NcdAlgorithm_Validate_ShouldReturnFalse_WhenCheckDigitIsAnInvalidCharacter(String value)
       => _sut.Validate(value).Should().BeFalse();
 
    #endregion

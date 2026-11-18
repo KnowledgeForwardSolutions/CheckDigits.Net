@@ -123,6 +123,8 @@ public class Modulus11_27ExtendedAlgorithmTests
    [InlineData("100G00001")]
    [InlineData("100+00001")]
    [InlineData("100g00001")]
+   [InlineData("100X00001")]
+   [InlineData("100x00001")]
    [InlineData("100\u215300001")]      // Unicode fraction 1/3
    [InlineData("100\u0BE600001")]      // Unicode Tamil digit 0
    [InlineData("100\u00D600001")]      // Unicode uppercase O with umlaut
@@ -225,6 +227,8 @@ public class Modulus11_27ExtendedAlgorithmTests
    [InlineData("0000G00005")]    // 'G' - '0' = 18
    [InlineData("0000+00005")]    // '+' - '0' = -10
    [InlineData("0000g00005")]
+   [InlineData("0000X00005")]
+   [InlineData("0000x00005")]
    [InlineData("0000\u215300005")]     // Unicode fraction 1/3
    [InlineData("0000\u0BE600005")]     // Unicode Tamil digit 0
    [InlineData("0000\u00D600005")]     // Unicode uppercase O with umlaut
@@ -352,6 +356,8 @@ public class Modulus11_27ExtendedAlgorithmTests
    [InlineData("000 0G0 000 5")]    // 'G' - '0' = 18
    [InlineData("000 0+0 000 5")]    // '+' - '0' = -10
    [InlineData("000 0g0 000 5")]
+   [InlineData("000 0X0 000 5")]
+   [InlineData("000 0x0 000 5")]
    [InlineData("000 0\u21530 000 5")]     // Unicode fraction 1/3
    [InlineData("000 0\u0BE60 000 5")]     // Unicode Tamil digit 0
    [InlineData("000 0\u00D60 000 5")]     // Unicode uppercase O with umlaut
