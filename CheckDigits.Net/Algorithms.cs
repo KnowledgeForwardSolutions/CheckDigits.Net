@@ -86,11 +86,6 @@ public static class Algorithms
    private static readonly Lazy<ISingleCheckDigitAlgorithm> _modulus10_13 =
      new(() => new Modulus10_13Algorithm());
 
-   private static readonly Lazy<ISingleCheckDigitAlgorithm> _modulus11 =
-#pragma warning disable CS0618 // Type or member is obsolete
-      new(() => new Modulus11Algorithm());
-#pragma warning restore CS0618 // Type or member is obsolete
-
    private static readonly Lazy<ISingleCheckDigitAlgorithm> _modulus11_27Decimal =
       new(() => new Modulus11_27DecimalAlgorithm());
 
@@ -258,12 +253,6 @@ public static class Algorithms
    ///   Modulus10_13 algorithm.
    /// </summary>
    public static ISingleCheckDigitAlgorithm Modulus10_13 => _modulus10_13.Value;
-
-   /// <summary>
-   ///   Modulus11 algorithm.
-   /// </summary>
-   [Obsolete("Modulus11 algorithm is deprecated in favor of Modulus11Extended algorithm.")]
-   public static ISingleCheckDigitAlgorithm Modulus11 => _modulus11.Value;
 
    /// <summary>
    ///   Modulus11_27Decimal algorithm.

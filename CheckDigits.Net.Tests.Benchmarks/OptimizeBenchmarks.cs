@@ -19,15 +19,15 @@ public class OptimizeBenchmarks
    [Arguments("1406625380425510282650")]
    public void Original(String value) => _ = _algorithm.Validate(value);
 
-   [Benchmark()]
-   [Arguments("1406")]
-   [Arguments("1406620")]
-   [Arguments("1406625385")]
-   [Arguments("1406625380421")]
-   [Arguments("1406625380425510")]
-   [Arguments("1406625380425510288")]
-   [Arguments("1406625380425510282650")]
-   public void Rollover(String value) => _ = _algorithm.Validate2(value);
+   //[Benchmark()]
+   //[Arguments("1406")]
+   //[Arguments("1406620")]
+   //[Arguments("1406625385")]
+   //[Arguments("1406625380421")]
+   //[Arguments("1406625380425510")]
+   //[Arguments("1406625380425510288")]
+   //[Arguments("1406625380425510282650")]
+   //public void Rollover(String value) => _ = _algorithm.Validate2(value);
 
    //[Benchmark(Baseline = true)]
    //[Arguments("140")]

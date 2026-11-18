@@ -368,22 +368,6 @@ public class AlgorithmsTests
 
    #endregion
 
-   #region Modulus11 Property Tests
-   // ==========================================================================
-   // ==========================================================================
-
-#pragma warning disable CS0618 // Type or member is obsolete
-   [Fact]
-   public void Algorithms_Modulus11_ShouldNotBeNull()
-      => Algorithms.Modulus11.Should().NotBeNull();
-
-   [Fact]
-   public void Algorithms_Modulus11_ShouldBeExpectedType()
-      => Algorithms.Modulus11.Should().BeOfType<Modulus11Algorithm>();
-#pragma warning restore CS0618 // Type or member is obsolete
-
-   #endregion
-
    #region Modulus11_27Decimal Property Tests
    // ==========================================================================
    // ==========================================================================

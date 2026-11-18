@@ -103,9 +103,6 @@ public class BenchmarkData
          Algorithms.Modulus10_1,
          Algorithms.Modulus10_2,
          Algorithms.Modulus10_13,
-#pragma warning disable CS0618 // Type or member is obsolete
-         Algorithms.Modulus11,
-#pragma warning restore CS0618 // Type or member is obsolete
          Algorithms.Verhoeff
       };
 

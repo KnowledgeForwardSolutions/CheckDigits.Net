@@ -63,7 +63,6 @@ let us know. Or contribute to the CheckDigits.Net repository: https://github.com
     * [Modulus10_1 Algorithm](#modulus10_1-algorithm)
     * [Modulus10_2 Algorithm](#modulus10_2-algorithm)
     * [Modulus10_13 Algorithm (UPC/EAN/ISBN-13/etc.)](#modulus10_13-algorithm)
-    * [Modulus11 Algorithm (ISBN-10/ISSN/etc.)](#modulus11-algorithm)
     * [Modulus11_27Decimal Algorithm](#modulus11_27decimal-algorithm)
     * [Modulus11_27Extended Algorithm](#modulus11_27extended-algorithm)
     * [Modulus11Decimal Algorithm (NHS Number/etc.)](#modulus11decimal-algorithm)
@@ -174,7 +173,6 @@ The ISO/IEC 7064:2003 standard is available at https://www.iso.org/standard/3153
 * [Modulus10_1 Algorithm](#modulus10_1-algorithm)
 * [Modulus10_2 Algorithm](#modulus10_2-algorithm)
 * [Modulus10_13 Algorithm (UPC/EAN/ISBN-13/etc.)](#modulus10_13-algorithm)
-* [Modulus11 Algorithm (ISBN-10/ISSN/etc.)](#modulus11-algorithm)
 * [Modulus11_27Decimal Algorithm](#modulus11_27decimal-algorithm)
 * [Modulus11_27Extended Algorithm](#modulus11_27extended-algorithm)
 * [Modulus11Decimal Algorithm (NHS Number/etc.)](#modulus11decimal-algorithm)
@@ -212,13 +210,13 @@ The ISO/IEC 7064:2003 standard is available at https://www.iso.org/standard/3153
 | IMEI				                                     | [Luhn Algorithm](#luhn-algorithm) |
 | IMO Number                                             | [Modulus10_2 Algorithm](#modulus10_2-algorithm) |
 | ISAN                                                   | [ISAN Algorithm](#isan-algorithm) |
-| ISBN-10				                                 | [Modulus11Extended Algorithm](#modulus11extended-algorithm) or [Modulus11 Algorithm](#modulus11-algorithm) |
+| ISBN-10				                                 | [Modulus11Extended Algorithm](#modulus11extended-algorithm) |
 | ISBN-13				                                 | [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
 | ISBT Donation Identification Number                    | [ISO/IEC 7064 MOD 37-2 Algorithm](#isoiec-7064-mod-37-2-algorithm) |
 | ISIN                                                   | [ISIN Algorithm](#isin-algorithm) |
 | ISMN					                                 | [Modulus10_13 Algorithm](#modulus10_13-algorithm) |
 | ISNI                                                   | [ISO/IEC 7064 MOD 11-2 Algorithm](#isoiec-7064-mod-11-2-algorithm) |
-| ISSN   				                                 | [Modulus11Extended Algorithm](#modulus11Extended-algorithm) or [Modulus11 Algorithm](#modulus11-algorithm) |
+| ISSN   				                                 | [Modulus11Extended Algorithm](#modulus11Extended-algorithm) |
 | Legal Entity Identifier                                | [Alphanumeric MOD 97-10 Algorithm](#alphanumeric-mod-97-10-algorithm) |
 | NHS Number                                             | [Modulus11Decimal Algorithm](#modulus11decimal-algorithm) or [NHS (UK National Health Service) Algorithm](#nhs-algorithm) |
 | SEDOL					                                 | [SEDOL Algorithm](#sedol-algorithm) |
@@ -1455,42 +1453,6 @@ Wikipedia:
   https://en.wikipedia.org/wiki/Universal_Product_Code#Check_digit_calculation
   https://en.wikipedia.org/wiki/International_Article_Number#Calculation_of_checksum_digit
 
-### Modulus11 Algorithm
-
-#### Description
-
-NOTE: This algorithm has been deprecated in favor of using the Modulus11Extended 
-algorithm.
-
-The Modulus11 algorithm uses modulus 11 and each digit is weighted by its position
-in the value, starting from the right-most digit. Prior to the existence of the
-Verhoeff algorithm and the Damm algorithm it was popular because it was able to
-detect two digit transposition errors while using only a single character. However,
-because it used modulus 11, the check digit could not be a single decimal digit.
-Commonly an 'X' character was used when the modulus operation resulted in a value
-of 10. This meant that identifiers that used the Modulus11 algorithm could not be
-stored as numbers and instead must be strings.
-
-#### Details
-
-* Valid characters - decimal digits ('0' - '9')
-* Check digit size - one character
-* Check digit value - either decimal digit ('0' - '9') or an uppercase 'X'
-* Check digit location - assumed to be the trailing (right-most) character when validating
-* Max length - 9 characters when generating a check digit; 10 characters when validating
-* Class name - `Modulus11Algorithm`
-
-#### Common Applications
-
-* International Standard Book Number, prior to January 1, 2007 (ISBN-10)
-* International Standard Serial Number (ISSN)
-
-#### Links
-
-Wikipedia: 
-  https://en.wikipedia.org/wiki/ISBN#ISBN-10_check_digits
-  https://en.wikipedia.org/wiki/ISSN
-
 ### Modulus11_27Decimal Algorithm
 
 The Modulus11_27Decimal algorithm uses modulus 11 and the IBM modulus 11 weighting
@@ -1643,7 +1605,7 @@ and `Validate` allow values that include 'X' as an extended check character.
 to validate values that are formatted with non-check digit characters (for example,
 a value formatted with spaces or dashes for human readability).
 
-Modulus11Extended replaces the deprecated Modulus11 algorithm.
+Modulus11Extended replaces the deprecated Modulus11 algorithm (no longer included in CheckDigits.Net as of V4.0.0).
 
 #### Details
 
@@ -1872,7 +1834,7 @@ AMD RYZEN AI MAX+ 395 w/ Radeon 8060S 3.00GHz, 1 CPU, 32 logical and 16 physical
 
 #### General Numeric Algorithms
 
-Note that the Modulus10_1, Modulus10_2 and Modulus11 algorithms have a maximum 
+Note that the Modulus10_1 and Modulus10_2 algorithms have a maximum 
 length of 10 (including the check digit) for values being validated so their
 benchmarks do not cover lengths greater than 10.
 
@@ -1933,10 +1895,6 @@ benchmarks do not cover lengths greater than 10.
 | Modulus10_2           | 140                   | 1.854 ns  | 0.0206 ns | 0.0183 ns | -         |
 | Modulus10_2           | 140662                | 2.656 ns  | 0.0145 ns | 0.0136 ns | -         |
 | Modulus10_2           | 140662538             | 4.024 ns  | 0.0173 ns | 0.0162 ns | -         |
-|                       |                       |           |           |           |           |
-| Modulus11             | 140                   | 2.364 ns  | 0.0171 ns | 0.0152 ns | -         |
-| Modulus11             | 140662                | 3.323 ns  | 0.0300 ns | 0.0280 ns | -         |
-| Modulus11             | 140662538             | 4.341 ns  | 0.0301 ns | 0.0281 ns | -         |
 |                       |                       |           |           |           |           |
 | Modulus11_27Decimal   | 140                   | 3.292 ns  | 0.0590 ns | 0.0523 ns | -         |
 | Modulus11_27Decimal   | 140662                | 4.785 ns  | 0.0273 ns | 0.0255 ns | -         |
@@ -2094,7 +2052,7 @@ is the one used as an example for [DammCustomQuasigroup](#dammcustomquasigroup).
 All algorithms use a single check digit except ISO/IEC 7064 MOD 97-10 which uses
 two check digits.
 
-Note that the Modulus10_1, Modulus10_2 and Modulus11 algorithms have a maximum 
+Note that the Modulus10_1 and Modulus10_2 algorithms have a maximum 
 length of 10 (including the check digit) for values being validated so their
 benchmarks do not cover lengths greater than 10.
 
@@ -2155,10 +2113,6 @@ benchmarks do not cover lengths greater than 10.
 | Modulus10_2           | 1406                          | 1.847 ns  | 0.0170 ns | 0.0151 ns | -         |
 | Modulus10_2           | 1406627                       | 2.898 ns  | 0.0227 ns | 0.0212 ns | -         |
 | Modulus10_2           | 1406625389                    | 4.048 ns  | 0.0270 ns | 0.0253 ns | -         |
-|                       |                               |           |           |           |           |
-| Modulus11             | 1406                          | 2.948 ns  | 0.0241 ns | 0.0214 ns | -         |
-| Modulus11             | 1406620                       | 4.062 ns  | 0.0213 ns | 0.0200 ns | -         |
-| Modulus11             | 1406625388                    | 4.506 ns  | 0.0278 ns | 0.0247 ns | -         |
 |                       |                               |           |           |           |           |
 | Modulus11_27Decimal   | 1406                          | 2.978 ns  | 0.0309 ns | 0.0274 ns | -         |
 | Modulus11_27Decimal   | 1406620                       | 4.800 ns  | 0.0882 ns | 0.0825 ns | -         |
@@ -2614,7 +2568,7 @@ Algorithms marked as Obsolete:
 Updated to .Net 11.0
 
 Removed .Net 8.0
-Removed Modulus 11 Algorithm previously marked as Obsolete
+Removed Modulus11 Algorithm previously marked as Obsolete
 
 Added masked validation support to the following algorithms:
 * Iso7064Mod11_10Algorithm

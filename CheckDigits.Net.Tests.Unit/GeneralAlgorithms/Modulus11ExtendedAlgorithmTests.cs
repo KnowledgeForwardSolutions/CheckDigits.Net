@@ -155,34 +155,6 @@ public class Modulus11ExtendedAlgorithmTests
    public void Modulus11ExtendedAlgorithm_TryCalculateCheckDigit_ShouldReturnTrue_ForBenchmarkValues(String value)
       => _sut.TryCalculateCheckDigit(value, out _).Should().BeTrue();
 
-   [Theory]
-   [InlineData("156865652")]    // ISBN-10 Island in the Stream of Time, S. M. Sterling
-   [InlineData("044100560")]    // ISBN-10 The Warlock in Spite of Himself, Christopher Stasheff
-   [InlineData("071410544")]    // ISBN-10 The Sutton Hoo Ship Burial, Angela Care Evans
-   [InlineData("050027293")]    // ISBN-10 Roman London, Peter Marsden
-   //
-   [InlineData("030640615")]    // Worked example of ISBN-10 from Wikipedia https://en.wikipedia.org/wiki/ISBN#ISBN-10_check_digits
-   [InlineData("0378595")]      // Worked example of ISSN from Wikipedia https://en.wikipedia.org/wiki/ISSN
-   [InlineData("2434561")]      // Example ISSN from Wikipedia
-   [InlineData("0317847")]      // Example ISSN from https://www.issn.org/understanding-the-issn/what-is-an-issn/
-   [InlineData("1050124")]      // "
-   public void Modulus11ExtendedAlgorithm_TryCalculateCheckDigit_ShouldProduceSameResultAsDepreciatedModulus11Algorithm(String value)
-   {
-      // Arrange.
-#pragma warning disable CS0618 // Type or member is obsolete
-      var deprecatedAlgorithm = new Modulus11Algorithm();
-#pragma warning restore CS0618 // Type or member is obsolete
-      var extendedAlgorithm = new Modulus11ExtendedAlgorithm();
-
-      // Act.
-      var deprecatedResult = deprecatedAlgorithm.TryCalculateCheckDigit(value, out var depreciatedCheckDigit);
-      var extendedResult = extendedAlgorithm.TryCalculateCheckDigit(value, out var extendedCheckDigit);
-
-      // Assert.
-      extendedResult.Should().Be(deprecatedResult);
-      extendedCheckDigit.Should().Be(depreciatedCheckDigit);
-   }
-
    #endregion
 
    #region Validate Tests
@@ -277,42 +249,6 @@ public class Modulus11ExtendedAlgorithmTests
    [InlineData("1406625388")]
    public void Modulus11ExtendedAlgorithm_Validate_ShouldReturnTrue_ForBenchmarkValues(String value)
       => _sut.Validate(value).Should().BeTrue();
-
-   [Theory]
-   [InlineData("1568656521")]    // ISBN-10 Island in the Stream of Time, S. M. Sterling
-   [InlineData("0441005608")]    // ISBN-10 The Warlock in Spite of Himself, Christopher Stasheff
-   [InlineData("0714105449")]    // ISBN-10 The Sutton Hoo Ship Burial, Angela Care Evans
-   [InlineData("050027293X")]    // ISBN-10 Roman London, Peter Marsden
-   //
-   [InlineData("0306406152")]    // Worked example of ISBN-10 from Wikipedia https://en.wikipedia.org/wiki/ISBN#ISBN-10_check_digits
-   [InlineData("03785955")]      // Worked example of ISSN from Wikipedia https://en.wikipedia.org/wiki/ISSN
-   [InlineData("2434561X")]      // Example ISSN from Wikipedia
-   [InlineData("03178471")]      // Example ISSN from https://www.issn.org/understanding-the-issn/what-is-an-issn/
-   [InlineData("1050124X")]      // "
-   //
-   [InlineData("9434765919")]    // Worked example from Wikipedia https://en.wikipedia.org/wiki/NHS_number#Format,_number_ranges,_and_check_characters
-   [InlineData("4505577104")]    // Example from https://www.clatterbridgecc.nhs.uk/patients/general-information/nhs-number#:~:text=Your%20NHS%20Number%20is%20printed,is%20an%20example%20number%20only).
-   [InlineData("5301194917")]    // Random NHS number from http://danielbayley.uk/nhs-number/
-   //
-   [InlineData("1568646521")]    // ISBN-10 with single digit transcription error 5 -> 4
-   [InlineData("0441050608")]    // ISBN-10 with two digit transposition error 05 -> 50
-   [InlineData("050029273X")]    // ISBN-10 with jump transposition 729 -> 927
-   [InlineData("0551005608")]    // ISBN-10 with twin error 44 -> 55
-   public void Modulus11ExtendedAlgorithm_Validate_ShouldProduceSameResultAsDepreciatedModulus11Algorithm(String value)
-   {
-      // Arrange.
-#pragma warning disable CS0618 // Type or member is obsolete
-      var deprecatedAlgorithm = new Modulus11Algorithm();
-#pragma warning restore CS0618 // Type or member is obsolete
-      var extendedAlgorithm = new Modulus11ExtendedAlgorithm();
-
-      // Act.
-      var deprecatedResult = deprecatedAlgorithm.Validate(value);
-      var extendedResult = extendedAlgorithm.Validate(value);
-
-      // Assert.
-      extendedResult.Should().Be(deprecatedResult);
-   }
 
    #endregion
 
