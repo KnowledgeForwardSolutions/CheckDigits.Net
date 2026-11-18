@@ -88,7 +88,23 @@ public class AbaRtnAlgorithmTests
     [Theory]
     [InlineData("32I272021")]     // I is 20 positions later in ASCII table than 5 and would return true unless code explicitly checks for non-digit
     [InlineData("32+272021")]     // + is 10 positions earlier in ASCII table than 5 and would return true unless code explicitly checks for non-digit
+    [InlineData("32i272021")]
+    [InlineData("32\u2153272021")]     // Unicode fraction 1/3
+    [InlineData("32\u0BE6272021")]     // Unicode Tamil digit 0
+    [InlineData("32\u00D6272021")]     // Unicode uppercase O with umlaut
+    [InlineData("32\u00F6272021")]     // Unicode lowercase o with umlaut
     public void AbaRtnAlgorithm_Validate_ShouldReturnFalse_WhenInputContainsNonDigitCharacter(String value)
+       => _sut.Validate(value).Should().BeFalse();
+
+    [Theory]
+    [InlineData("11100002I")]
+    [InlineData("11100002+")]
+    [InlineData("11100002i")]
+    [InlineData("11100002\u2153")]     // Unicode fraction 1/3
+    [InlineData("11100002\u0BE6")]     // Unicode Tamil digit 0
+    [InlineData("11100002\u00D6")]     // Unicode uppercase O with umlaut
+    [InlineData("11100002\u00F6")]     // Unicode lowercase o with umlaut
+    public void AbaRtnAlgorithm_Validate_ShouldReturnFalse_WhenInputContainsInvalidCheckCharacter(String value)
        => _sut.Validate(value).Should().BeFalse();
 
     #endregion

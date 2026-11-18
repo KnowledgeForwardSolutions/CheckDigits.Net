@@ -29,7 +29,9 @@ namespace CheckDigits.Net.ValueSpecificAlgorithms;
 public sealed class AbaRtnAlgorithm : ICheckDigitAlgorithm
 {
    private const Int32 _expectedLength = 9;
-   private static readonly Int32[] _weights = [3, 7, 1, 3, 7, 1, 3, 7, 1];
+   private const Int32 _minWeight = 1;
+   private const Int32 _initialWeight = 3;
+   private const Int32 _maxWeight = 7;
 
    /// <inheritdoc/>
    public String AlgorithmDescription => Resources.AbaRtnAlgorithmDescription;
@@ -46,15 +48,24 @@ public sealed class AbaRtnAlgorithm : ICheckDigitAlgorithm
       }
 
       var sum = 0;
-      for (var index = 0; index < value.Length; index++)
+      var weight = _initialWeight;
+      var processLength = value.Length;
+      for (var index = 0; index < processLength; index++)
       {
-         var currentDigit = value[index].ToIntegerDigit();
-         if (currentDigit < 0 || currentDigit > 9)
+         var ch = value[index];
+         if (!ch.IsAsciiDigit())
          {
-               return false;
+            return false;
          }
+         var currentDigit = ch.MapAsciiDigit();
 
-         sum += currentDigit * _weights[index];
+         sum += currentDigit * weight;
+
+         weight = weight * 2 + 1;      // 1 -> 3, 3 -> 7
+         if (weight > _maxWeight)
+         {
+            weight = _minWeight;                // 7 -> 1
+         }
       }
 
       return sum % 10 == 0;
