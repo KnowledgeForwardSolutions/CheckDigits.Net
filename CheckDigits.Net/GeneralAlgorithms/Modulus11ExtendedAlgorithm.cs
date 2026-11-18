@@ -11,38 +11,36 @@
 /// </summary>
 /// <remarks>
 ///   <para>
-///   This algorithm replaces the depreciated <see cref="Modulus11Algorithm"/>.
+///      See <see cref="Modulus11DecimalAlgorithm"/> for a related modulus 11
+///      algorithm that restricts check characters to '0'-'9', but at the cost 
+///      of rejecting one out of every 11 values, or approximately 9.09%.
 ///   </para>
 ///   <para>
-///   See <see cref="Modulus11DecimalAlgorithm"/> for a related modulus 11
-///   algorithm that restricts check characters to '0'-'9', but at the cost of 
-///   rejecting one out of every 11 values, or approximately 9.09%.
+///      Valid characters are decimal digits (0-9).
 ///   </para>
 ///   <para>
-///   Valid characters are decimal digits (0-9).
+///      Check digit calculated by the algorithm is a decimal digit (0-9) or an 
+///      uppercase 'X'.
 ///   </para>
 ///   <para>
-///   Check digit calculated by the algorithm is a decimal digit (0-9) or an 
-///   uppercase 'X'.
+///      Assumes that the check digit (if present) is the right-most digit in 
+///      the input value.
 ///   </para>
 ///   <para>
-///   Assumes that the check digit (if present) is the right-most digit in the
-///   input value.
+///      Will detect all single-digit transcription errors and all two digit 
+///      transposition errors.
 ///   </para>
 ///   <para>
-///   Will detect all single-digit transcription errors and all two digit 
-///   transposition errors.
+///      Maximum length allowed is 9 characters for calculating a new check 
+///      digit and 10 characters for validating a value that contains a check 
+///      digit.
 ///   </para>
 ///   <para>
-///   Maximum length allowed is 9 characters for calculating a new check digit 
-///   and 10 characters for validating a value that contains a check digit.
-///   </para>
-///   <para>
-///   This algorithm implements <see cref="IMaskedCheckDigitAlgorithm"/> 
-///   and can validate values that contain non-check digit characters (such as 
-///   spaces or dashes for human readability) when used with an 
-///   <see cref="ICheckDigitMask"/>. Note that the trailing check digit 
-///   character is never masked.
+///      This algorithm implements <see cref="IMaskedCheckDigitAlgorithm"/> 
+///      and can validate values that contain non-check digit characters (such 
+///      as spaces or dashes for human readability) when used with an 
+///      <see cref="ICheckDigitMask"/>. Note that the trailing check digit 
+///      character is never masked.
 ///   </para>
 /// </remarks>
 public sealed class Modulus11ExtendedAlgorithm : ISingleCheckDigitAlgorithm, IMaskedCheckDigitAlgorithm
@@ -73,18 +71,19 @@ public sealed class Modulus11ExtendedAlgorithm : ISingleCheckDigitAlgorithm, IMa
       var processLength = value.Length;
       for (var index = 0; index < processLength; index++)
       {
-         var currentDigit = value![index].ToIntegerDigit();
-         if (currentDigit.IsInvalidDigit())
+         var ch = value[index];
+         if (!ch.IsAsciiDigit())
          {
             return false;
          }
+         var currentDigit = ch.MapAsciiDigit();
          t += currentDigit;
          s += t;
       }
       s += t;
 
       var mod = (11 - (s % 11)) % 11;
-      checkDigit = mod < 10 ? mod.ToDigitChar() : Chars.UpperCaseX;
+      checkDigit = mod.ToAsciiExtendedDecimalDigit();
 
       return true;
    }
@@ -99,26 +98,29 @@ public sealed class Modulus11ExtendedAlgorithm : ISingleCheckDigitAlgorithm, IMa
          return false;
       }
 
+      Char ch;
       var s = 0;
       var t = 0;
       var processLength = value.Length - 1;
       for (var index = 0; index < processLength; index++)
       {
-         var currentDigit = value![index].ToIntegerDigit();
-         if (currentDigit.IsInvalidDigit())
+         ch = value[index];
+         if (!ch.IsAsciiDigit())
          {
             return false;
          }
+         var currentDigit = ch.MapAsciiDigit();
          t += currentDigit;
          s += t;
       }
       s += t;
 
-      var checkDigit = value[^1].ToExtendedDecimalCheckDigit();
-      if (checkDigit.IsInvalidExtendedDecimalCheckDigit())
+      ch = value[^1];
+      if (!ch.IsAsciiExtendedDecimalDigit())
       {
          return false;
       }
+      var checkDigit = ch.MapAsciiExtendedDecimalDigit();
 
       s += checkDigit;
 
@@ -137,6 +139,7 @@ public sealed class Modulus11ExtendedAlgorithm : ISingleCheckDigitAlgorithm, IMa
          return false;
       }
 
+      Char ch;
       var s = 0;
       var t = 0;
       var processedDigits = 0;
@@ -147,26 +150,28 @@ public sealed class Modulus11ExtendedAlgorithm : ISingleCheckDigitAlgorithm, IMa
          {
             continue;
          }
-         var currentDigit = value![index].ToIntegerDigit();
-         if (currentDigit.IsInvalidDigit())
+         ch = value[index];
+         if (!ch.IsAsciiDigit())
          {
             return false;
          }
+         var currentDigit = ch.MapAsciiDigit();
          t += currentDigit;
          s += t;
          processedDigits++;
       }
-      if (processedDigits == 0 || processedDigits >= _validateMaxLength)
+      if (processedDigits is 0 or >= _validateMaxLength)
       {
          return false;
       }
       s += t;
 
-      var checkDigit = value[^1].ToExtendedDecimalCheckDigit();
-      if (checkDigit.IsInvalidExtendedDecimalCheckDigit())
+      ch = value[^1];
+      if (!ch.IsAsciiExtendedDecimalDigit())
       {
          return false;
       }
+      var checkDigit = ch.MapAsciiExtendedDecimalDigit();
 
       s += checkDigit;
 

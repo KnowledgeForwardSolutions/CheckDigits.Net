@@ -130,6 +130,13 @@ public class Modulus11ExtendedAlgorithmTests
    [Theory]
    [InlineData("100G00001")]
    [InlineData("100+00001")]
+   [InlineData("100g00001")]
+   [InlineData("100X00001")]
+   [InlineData("100x00001")]
+   [InlineData("100\u215300001")]      // Unicode fraction 1/3
+   [InlineData("100\u0BE600001")]      // Unicode Tamil digit 0
+   [InlineData("100\u00D600001")]      // Unicode uppercase O with umlaut
+   [InlineData("100\u00F600001")]      // Unicode lowercase o with umlaut
    public void Modulus11ExtendedAlgorithm_TryCalculateCheckDigit_ShouldReturnFalse_WhenInputContainsNonDigitCharacter(String value)
    {
       _sut.TryCalculateCheckDigit(value, out var checkDigit).Should().BeFalse();
@@ -232,16 +239,30 @@ public class Modulus11ExtendedAlgorithmTests
    [Theory]
    [InlineData("1000G00005")]    // Value 1000300005 would have check digit = 5. G is 20 positions later in ASCII table than 3 and would also calculate check digit 5 unless code explicitly checks for non-digit
    [InlineData("1000)00005")]    // ) is 10 positions earlier in ASCII table than 3 and would also calculate check digit 5 unless code explicitly checks for non-digit
+   [InlineData("1000g00005")]
+   [InlineData("1000X00005")]
+   [InlineData("1000x00005")]
+   [InlineData("1000\u215300005")]     // Unicode fraction 1/3
+   [InlineData("1000\u0BE600005")]     // Unicode Tamil digit 0
+   [InlineData("1000\u00D600005")]     // Unicode uppercase O with umlaut
+   [InlineData("1000\u00F600005")]     // Unicode lowercase o with umlaut
    public void Modulus11ExtendedAlgorithm_Validate_ShouldReturnFalse_WhenInputContainsNonDigitCharacter(String value)
       => _sut.Validate(value).Should().BeFalse();
 
-   [Fact]
-   public void Modulus11ExtendedAlgorithm_Validate_ShouldReturnFalse_WhenCheckDigitIsNonDigitCharacter()
-      => _sut.Validate("100030000?").Should().BeFalse();    // Actual check digit would be 5
+   [Theory]
+   [InlineData("100030000?")]          // Actual check digit would be 5
+   [InlineData("100030000G")]
+   [InlineData("100030000g")]
+   [InlineData("100030000\u2153")]     // Unicode fraction 1/3
+   [InlineData("100030000\u0BE6")]     // Unicode Tamil digit 0
+   [InlineData("100030000\u00D6")]     // Unicode uppercase O with umlaut
+   [InlineData("100030000\u00F6")]     // Unicode lowercase o with umlaut
+   public void Modulus11ExtendedAlgorithm_Validate_ShouldReturnFalse_WhenCheckDigitIsNonDigitCharacter(String value)
+      => _sut.Validate(value).Should().BeFalse();
 
    [Fact]
    public void Modulus11ExtendedAlgorithm_Validate_ShouldReturnFalse_WhenCheckDigitIsLowerCaseXInsteadOfUpperCase()
-      => _sut.Validate("050027293x").Should().BeFalse();    // SBN-10 Roman London, Peter Marsden
+      => _sut.Validate("050027293x").Should().BeFalse();    // ISBN-10 Roman London, Peter Marsden
 
    [Theory]
    [InlineData("1406")]
@@ -355,16 +376,31 @@ public class Modulus11ExtendedAlgorithmTests
    [Theory]
    [InlineData("100 0G0 000 5")] // Value 1000300005 would have check digit = 5. G is 20 positions later in ASCII table than 3 and would also calculate check digit 5 unless code explicitly checks for non-digit
    [InlineData("100 0)0 000 5")] // ) is 10 positions earlier in ASCII table than 3 and would also calculate check digit 5 unless code explicitly checks for non-digit
+   [InlineData("100 0g0 000 5")]
+   [InlineData("100 0X0 000 5")]
+   [InlineData("100 0x0 000 5")]
+   [InlineData("100 0\u21530 000 5")]     // Unicode fraction 1/3
+   [InlineData("100 0\u0BE60 000 5")]     // Unicode Tamil digit 0
+   [InlineData("100 0\u00D60 000 5")]     // Unicode uppercase O with umlaut
+   [InlineData("100 0\u00F60 000 5")]     // Unicode lowercase o with umlaut
+
    public void Modulus11ExtendedAlgorithm_ValidateMasked_ShouldReturnFalse_WhenInputContainsNonDigitCharacter(String value)
       => _sut.Validate(value, _groupsOfThreeMask).Should().BeFalse();
 
-   [Fact]
-   public void Modulus11ExtendedAlgorithm_ValidateMasked_ShouldReturnFalse_WhenCheckDigitIsNonDigitCharacter()
-      => _sut.Validate("100 030 000 ?", _groupsOfThreeMask).Should().BeFalse();    // Actual check digit would be 5
+   [Theory]
+   [InlineData("100 030 000 ?")]          // Actual check digit would be 5
+   [InlineData("100 030 000 G")]
+   [InlineData("100 030 000 g")]
+   [InlineData("100 030 000 \u2153")]     // Unicode fraction 1/3
+   [InlineData("100 030 000 \u0BE6")]     // Unicode Tamil digit 0
+   [InlineData("100 030 000 \u00D6")]     // Unicode uppercase O with umlaut
+   [InlineData("100 030 000 \u00F6")]     // Unicode lowercase o with umlaut
+   public void Modulus11ExtendedAlgorithm_ValidateMasked_ShouldReturnFalse_WhenCheckDigitIsNonDigitCharacter(String value)
+      => _sut.Validate(value, _groupsOfThreeMask).Should().BeFalse();
 
    [Fact]
    public void Modulus11ExtendedAlgorithm_ValidateMasked_ShouldReturnFalse_WhenCheckDigitIsLowerCaseXInsteadOfUpperCase()
-      => _sut.Validate("050 027 293 x", _groupsOfThreeMask).Should().BeFalse();    // SBN-10 Roman London, Peter Marsden
+      => _sut.Validate("050 027 293 x", _groupsOfThreeMask).Should().BeFalse();    // ISBN-10 Roman London, Peter Marsden
 
    [Theory]
    [InlineData("140 6")]
