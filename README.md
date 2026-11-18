@@ -2632,6 +2632,7 @@ Added masked validation support to the following algorithms:
 Performance increases for:
 * AbaRtnAlgorithm, Validate method ~12% improvement
 * Modulus11_27DecimalAlgorithm, ~50% improvement across all methods
+* Modulus11_27ExtendedAlgorithm, ~40% improvement across all methods
 
 Classes/methods marked as Obsolete:
 

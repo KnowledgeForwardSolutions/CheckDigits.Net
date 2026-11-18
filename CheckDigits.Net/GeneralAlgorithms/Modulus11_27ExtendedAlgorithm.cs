@@ -46,7 +46,8 @@
 public sealed class Modulus11_27ExtendedAlgorithm : ISingleCheckDigitAlgorithm, IMaskedCheckDigitAlgorithm
 {
    private const Int32 _validateMinLength = 2;
-   private static readonly Int32[] _weights = [2, 3, 4, 5, 6, 7];
+   private const Int32 _initialWeight = 2;
+   private const Int32 _maxWeight = 7;
 
    /// <inheritdoc/>
    public String AlgorithmDescription => Resources.Modulus11_27ExtendedAlgorithmDescription;
@@ -64,21 +65,25 @@ public sealed class Modulus11_27ExtendedAlgorithm : ISingleCheckDigitAlgorithm, 
       }
 
       var sum = 0;
-      var weightIndex = new ModulusInt32(_weights.Length);
+      var weight = _initialWeight;
       for (var charIndex = value.Length - 1; charIndex >= 0; charIndex--)
       {
-         var currentDigit = value[charIndex].ToIntegerDigit();
-         if (currentDigit.IsInvalidDigit())
+         var ch = value[charIndex];
+         if (!ch.IsAsciiDigit())
          {
             return false;
          }
-
-         sum += currentDigit * _weights[weightIndex];
-         weightIndex++;
+         var currentDigit = ch.MapAsciiDigit();
+         sum += currentDigit * weight;
+         weight++;
+         if (weight > _maxWeight)
+         {
+            weight = _initialWeight;    // Restart weight sequence
+         }
       }
 
       var mod = (11 - (sum % 11)) % 11;
-      checkDigit = mod < 10 ? mod.ToDigitChar() : Chars.UpperCaseX;
+      checkDigit = mod < 10 ? mod.ToAsciiDigit() : Chars.UpperCaseX;
 
       return true;
    }
@@ -91,25 +96,31 @@ public sealed class Modulus11_27ExtendedAlgorithm : ISingleCheckDigitAlgorithm, 
          return false;
       }
 
+      Char ch;
       var sum = 0;
-      var weightIndex = new ModulusInt32(_weights.Length);
+      var weight = _initialWeight;
       for (var charIndex = value.Length - 2; charIndex >= 0; charIndex--)
       {
-         var currentDigit = value[charIndex].ToIntegerDigit();
-         if (currentDigit.IsInvalidDigit())
+         ch = value[charIndex];
+         if (!ch.IsAsciiDigit())
          {
             return false;
          }
-
-         sum += currentDigit * _weights[weightIndex];
-         weightIndex++;
+         var currentDigit = ch.MapAsciiDigit();
+         sum += currentDigit * weight;
+         weight++;
+         if (weight > _maxWeight)
+         {
+            weight = _initialWeight;    // Restart weight sequence
+         }
       }
 
-      var checkDigit = value[^1].ToExtendedDecimalCheckDigit();
-      if (checkDigit.IsInvalidExtendedDecimalCheckDigit())
+      ch = value[^1];
+      if (!ch.IsAsciiExtendedDecimalDigit())
       {
          return false;
       }
+      var checkDigit = ch.MapAsciiExtendedDecimalDigit();
       sum += checkDigit;
 
       return (sum % 11) == 0;
@@ -127,8 +138,9 @@ public sealed class Modulus11_27ExtendedAlgorithm : ISingleCheckDigitAlgorithm, 
          return false;
       }
 
+      Char ch;
       var sum = 0;
-      var weightIndex = new ModulusInt32(_weights.Length);
+      var weight = _initialWeight;
       var processedDigits = 0;
       for (var charIndex = value.Length - 2; charIndex >= 0; charIndex--)
       {
@@ -136,14 +148,18 @@ public sealed class Modulus11_27ExtendedAlgorithm : ISingleCheckDigitAlgorithm, 
          {
             continue;
          }
-         var currentDigit = value[charIndex].ToIntegerDigit();
-         if (currentDigit.IsInvalidDigit())
+         ch = value[charIndex];
+         if (!ch.IsAsciiDigit())
          {
             return false;
          }
-
-         sum += currentDigit * _weights[weightIndex];
-         weightIndex++;
+         var currentDigit = ch.MapAsciiDigit();
+         sum += currentDigit * weight;
+         weight++;
+         if (weight > _maxWeight)
+         {
+            weight = _initialWeight;    // Restart weight sequence
+         }
          processedDigits++;
       }
       if (processedDigits == 0)
@@ -151,11 +167,12 @@ public sealed class Modulus11_27ExtendedAlgorithm : ISingleCheckDigitAlgorithm, 
          return false;
       }
 
-      var checkDigit = value[^1].ToExtendedDecimalCheckDigit();
-      if (checkDigit.IsInvalidExtendedDecimalCheckDigit())
+      ch = value[^1];
+      if (!ch.IsAsciiExtendedDecimalDigit())
       {
          return false;
       }
+      var checkDigit = ch.MapAsciiExtendedDecimalDigit();
       sum += checkDigit;
 
       return (sum % 11) == 0;
