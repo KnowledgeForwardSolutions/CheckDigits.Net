@@ -81,6 +81,11 @@ public class VerhoeffAlgorithmTests
    [Theory]
    [InlineData("12G45")]
    [InlineData("12)45")]
+   [InlineData("12g45")]
+   [InlineData("12\u215345")]    // Unicode fraction 1/3
+   [InlineData("12\u0BE645")]    // Unicode Tamil digit 0
+   [InlineData("12\u00D645")]    // Unicode uppercase O with umlaut
+   [InlineData("12\u00F645")]    // Unicode lowercase o with umlaut
    public void VerhoeffAlgorithm_TryCalculateCheckDigit_ShouldReturnFalse_WhenInputContainsNonDigitCharacter(String value)
    {
       _sut.TryCalculateCheckDigit(value, out var checkDigit).Should().BeFalse();
@@ -163,7 +168,23 @@ public class VerhoeffAlgorithmTests
    [Theory]
    [InlineData("12G455")]
    [InlineData("12)455")]
+   [InlineData("12g455")]
+   [InlineData("12\u2153455")]   // Unicode fraction 1/3
+   [InlineData("12\u0BE6455")]   // Unicode Tamil digit 0
+   [InlineData("12\u00D6455")]   // Unicode uppercase O with umlaut
+   [InlineData("12\u00F6455")]   // Unicode lowercase o with umlaut
    public void VerhoeffAlgorithm_Validate_ShouldReturnFalse_WhenInputContainsNonDigitCharacter(String value)
+      => _sut.Validate(value).Should().BeFalse();
+
+   [Theory]
+   [InlineData("236G")]
+   [InlineData("236)")]
+   [InlineData("236g")]
+   [InlineData("236\u2153")]     // Unicode fraction 1/3
+   [InlineData("236\u0BE6")]     // Unicode Tamil digit 0
+   [InlineData("236\u00D6")]     // Unicode uppercase O with umlaut
+   [InlineData("236\u00F6")]     // Unicode lowercase o with umlaut
+   public void VerhoeffAlgorithm_Validate_ShouldReturnFalse_WhenCheckDigitCharacterIsNonDigit(String value)
       => _sut.Validate(value).Should().BeFalse();
 
    [Theory]
@@ -264,12 +285,24 @@ public class VerhoeffAlgorithmTests
    [Theory]
    [InlineData("12G 455")]
    [InlineData("12) 455")]
+   [InlineData("12g 455")]
+   [InlineData("12\u2153 455")]   // Unicode fraction 1/3
+   [InlineData("12\u0BE6 455")]   // Unicode Tamil digit 0
+   [InlineData("12\u00D6 455")]   // Unicode uppercase O with umlaut
+   [InlineData("12\u00F6 455")]   // Unicode lowercase o with umlaut
    public void VerhoeffAlgorithm_ValidateMasked_ShouldReturnFalse_WhenInputContainsNonDigitCharacter(String value)
       => _sut.Validate(value, _groupsOfThreeMask).Should().BeFalse();
 
-   [Fact]
-   public void VerhoeffAlgorithm_ValidateMasked_ShouldReturnFalse_WhenCheckDigitCharacterIsNonDigit()
-      => _sut.Validate("123 45A", _groupsOfThreeMask).Should().BeFalse();
+   [Theory]
+   [InlineData("236 G")]
+   [InlineData("236 )")]
+   [InlineData("236 g")]
+   [InlineData("236 \u2153")]     // Unicode fraction 1/3
+   [InlineData("236 \u0BE6")]     // Unicode Tamil digit 0
+   [InlineData("236 \u00D6")]     // Unicode uppercase O with umlaut
+   [InlineData("236 \u00F6")]     // Unicode lowercase o with umlaut
+   public void VerhoeffAlgorithm_ValidateMasked_ShouldReturnFalse_WhenCheckDigitCharacterIsNonDigit(String value)
+      => _sut.Validate(value, _groupsOfThreeMask).Should().BeFalse();
 
    [Theory]
    [InlineData("140 1")]

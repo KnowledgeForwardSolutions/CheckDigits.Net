@@ -8,25 +8,25 @@ namespace CheckDigits.Net.GeneralAlgorithms;
 /// </summary>
 /// <remarks>
 ///   <para>
-///   Valid characters are decimal digits (0-9).
+///      Valid characters are decimal digits (0-9).
 ///   </para>
 ///   <para>
-///   Check digit calculated by the algorithm is a decimal digit (0-9).
+///      Check digit calculated by the algorithm is a decimal digit (0-9).
 ///   </para>
 ///   <para>
-///   Assumes that the check digit (if present) is the right-most digit in the
-///   input value.
+///      Assumes that the check digit (if present) is the right-most digit in 
+///      the input value.
 ///   </para>
 ///   <para>
-///   Will detect all single-digit transcription errors and all two digit 
-///   transpositions of adjacent digits.
+///      Will detect all single-digit transcription errors and all two digit 
+///      transpositions of adjacent digits.
 ///   </para>
 ///   <para>
-///   This algorithm implements <see cref="IMaskedCheckDigitAlgorithm"/> 
-///   and can validate values that contain non-check digit characters (such as 
-///   spaces or dashes for human readability) when used with an 
-///   <see cref="ICheckDigitMask"/>. Note that the trailing check digit 
-///   character is never masked.
+///      This algorithm implements <see cref="IMaskedCheckDigitAlgorithm"/> 
+///      and can validate values that contain non-check digit characters (such 
+///      as spaces or dashes for human readability) when used with an 
+///      <see cref="ICheckDigitMask"/>. Note that the trailing check digit 
+///      character is never masked.
 ///   </para>
 /// </remarks>
 public sealed class VerhoeffAlgorithm : ISingleCheckDigitAlgorithm, IMaskedCheckDigitAlgorithm
@@ -58,18 +58,19 @@ public sealed class VerhoeffAlgorithm : ISingleCheckDigitAlgorithm, IMaskedCheck
       var i = 1;
       for (var index = value.Length - 1; index >= 0; index--)
       {
-         var n = value![index].ToIntegerDigit();
-         if (n.IsInvalidDigit())
+         var ch = value[index];
+         if (!ch.IsAsciiDigit())
          {
             return false;
          }
+         var n = ch.MapAsciiDigit();
 
          var p = _permutationTable[i % 8, n];
          c = _multiplicationTable[c, p];
 
          i++;
       }
-      checkDigit = _inverseTable[c].ToDigitChar();
+      checkDigit = _inverseTable[c].ToAsciiDigit();
 
       return true;
    }
@@ -86,11 +87,12 @@ public sealed class VerhoeffAlgorithm : ISingleCheckDigitAlgorithm, IMaskedCheck
       var i = 0;
       for (var index = value.Length - 1; index >= 0; index--)
       {
-         var n = value![index].ToIntegerDigit();
-         if (n.IsInvalidDigit())
+         var ch = value[index];
+         if (!ch.IsAsciiDigit())
          {
             return false;
          }
+         var n = ch.MapAsciiDigit();
 
          var p = _permutationTable[i % 8, n];
          c = _multiplicationTable[c, p];
@@ -117,11 +119,12 @@ public sealed class VerhoeffAlgorithm : ISingleCheckDigitAlgorithm, IMaskedCheck
       var i = 0;
 
       // Handle check digit outside of loop to prevent the mask from excluding it.
-      var n = value[^1].ToIntegerDigit();
-      if (n.IsInvalidDigit())
+      var ch = value[^1];
+      if (!ch.IsAsciiDigit())
       {
          return false;
       }
+      var n = ch.MapAsciiDigit();
       var p = _permutationTable[i % 8, n];
       c = _multiplicationTable[c, p];
       i++;
@@ -133,11 +136,12 @@ public sealed class VerhoeffAlgorithm : ISingleCheckDigitAlgorithm, IMaskedCheck
          {
             continue;
          }
-         n = value[index].ToIntegerDigit();
-         if (n.IsInvalidDigit())
+         ch = value[index];
+         if (!ch.IsAsciiDigit())
          {
             return false;
          }
+         n = ch.MapAsciiDigit();
 
          p = _permutationTable[i % 8, n];
          c = _multiplicationTable[c, p];
