@@ -2,6 +2,38 @@
 
 public class Int32ExtensionsTests
 {
+   #region OnesDigit Tests
+   // ==========================================================================
+   // ==========================================================================
+
+   [Theory]
+   [InlineData(0, 0)]
+   [InlineData(1, 1)]
+   [InlineData(2, 2)]
+   [InlineData(3, 3)]
+   [InlineData(4, 4)]
+   [InlineData(5, 5)]
+   [InlineData(6, 6)]
+   [InlineData(7, 7)]
+   [InlineData(8, 8)]
+   [InlineData(9, 9)]
+   [InlineData(91, 1)]
+   [InlineData(82, 2)]
+   [InlineData(73, 3)]
+   [InlineData(64, 4)]
+   [InlineData(55, 5)]
+   [InlineData(46, 6)]
+   [InlineData(37, 7)]
+   [InlineData(28, 8)]
+   [InlineData(19, 9)]
+   [InlineData(10, 0)]
+   public void Int32Extensions_OnesDigit_ShouldReturnExpectedValue(
+      Int32 num,
+      Int32 expected)
+      => num.OnesDigit().Should().Be(expected);
+
+   #endregion
+
    #region SumIndividualDigits Tests
    // ==========================================================================
    // ==========================================================================
@@ -19,6 +51,28 @@ public class Int32ExtensionsTests
       Int32 num,
       Int32 expected)
       => num.SumIndividualDigits().Should().Be(expected);
+
+   #endregion
+
+   #region TensDigit Tests
+   // ==========================================================================
+   // ==========================================================================
+
+   [Theory]
+   [InlineData(0, 0)]
+   [InlineData(10, 1)]
+   [InlineData(28, 2)]
+   [InlineData(37, 3)]
+   [InlineData(46, 4)]
+   [InlineData(55, 5)]
+   [InlineData(64, 6)]
+   [InlineData(73, 7)]
+   [InlineData(82, 8)]
+   [InlineData(91, 9)]
+   public void Int32Extensions_TensDigit_ShouldReturnExpectedValue(
+      Int32 num,
+      Int32 expected)
+      => num.TensDigit().Should().Be(expected);
 
    #endregion
 

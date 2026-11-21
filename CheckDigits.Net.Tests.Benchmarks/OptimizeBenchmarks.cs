@@ -7,27 +7,19 @@ namespace CheckDigits.Net.Tests.Benchmarks;
 [MemoryDiagnoser]
 public class OptimizeBenchmarks
 {
-   private static readonly Modulus11_27ExtendedAlgorithm _algorithm = new();
+   private static readonly IbanAlgorithm _algorithm = new();
 
    [Benchmark(Baseline = true)]
-   [Arguments("1406")]
-   [Arguments("1406620")]
-   [Arguments("1406625385")]
-   [Arguments("1406625380421")]
-   [Arguments("1406625380425510")]
-   [Arguments("1406625380425510288")]
-   [Arguments("1406625380425510282650")]
+   [Arguments("BE71096123456769")]
+   [Arguments("GB82WEST12345698765432")]
+   [Arguments("SC74MCBL01031234567890123456USD")]
    public void Original(String value) => _ = _algorithm.Validate(value);
 
-   //[Benchmark()]
-   //[Arguments("1406")]
-   //[Arguments("1406620")]
-   //[Arguments("1406625385")]
-   //[Arguments("1406625380421")]
-   //[Arguments("1406625380425510")]
-   //[Arguments("1406625380425510288")]
-   //[Arguments("1406625380425510282650")]
-   //public void Rollover(String value) => _ = _algorithm.Validate2(value);
+   [Benchmark()]
+   [Arguments("BE71096123456769")]
+   [Arguments("GB82WEST12345698765432")]
+   [Arguments("SC74MCBL01031234567890123456USD")]
+   public void Rollover(String value) => _ = _algorithm.Validate2(value);
 
    //[Benchmark(Baseline = true)]
    //[Arguments("140")]

@@ -213,7 +213,7 @@ public class IbanAlgorithmTests
    [InlineData("MU43BOMM0101123456789101000MUR")]        // " (Mauritius)
    [InlineData("SC74MCBL01031234567890123456USD")]       // " (Seychelles)
    public void IbanAlgorithm_Validate_ShouldReturnTrue_WhenValueContainsValidCheckDigit(String value)
-      => _sut.Validate(value).Should().BeTrue();
+      => _sut.Validate2(value).Should().BeTrue();
 
    [Theory]
    [InlineData("GB82WEST12345608765432")]                // GB82WEST12345698765432 with single digit transcription error 9 -> 0
@@ -228,7 +228,7 @@ public class IbanAlgorithmTests
    [InlineData("U120010001234567891L")]                  // LU120010001234567891 with circular shift error
    [InlineData("1LU12001000123456789")]                  // LU120010001234567891 with circular shift error
    public void IbanAlgorithm_Validate_ShouldReturnFalse_WhenInputContainsDetectableError(String value)
-      => _sut.Validate(value).Should().BeFalse();
+      => _sut.Validate2(value).Should().BeFalse();
 
    [Theory]
    [InlineData("AA13!56")]
