@@ -2,6 +2,26 @@
 
 public class Int32ExtensionsTests
 {
+   #region SumIndividualDigits Tests
+   // ==========================================================================
+   // ==========================================================================
+
+   [Theory]
+   [InlineData(0, 0)]
+   [InlineData(9, 9)]
+   [InlineData(10, 1)]
+   [InlineData(15, 6)]
+   [InlineData(20, 2)]
+   [InlineData(29, 11)]
+   [InlineData(95, 14)]
+   [InlineData(99, 18)]
+   public void Int32Extensions_SumIndividualDigits_ShouldReturnExpectedValue_WhenValueIsBetween0And99(
+      Int32 num,
+      Int32 expected)
+      => num.SumIndividualDigits().Should().Be(expected);
+
+   #endregion
+
    #region ToAsciiDigit Tests
    // ==========================================================================
    // ==========================================================================

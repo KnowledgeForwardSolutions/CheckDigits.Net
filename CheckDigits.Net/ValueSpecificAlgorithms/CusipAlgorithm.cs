@@ -95,6 +95,6 @@ public sealed class CusipAlgorithm : ICheckDigitAlgorithm
          return false;
       }
 
-      return value[^1].MapAsciiDigit() == checkDigit;
+      return ch.MapAsciiDigit() == checkDigit;
    }
 }

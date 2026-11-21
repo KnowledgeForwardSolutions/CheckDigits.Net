@@ -2,6 +2,59 @@
 
 public class CharExtensionsTests
 {
+   #region IsAsciiConsonantUpper Tests
+   // ==========================================================================
+   // ==========================================================================
+
+   [Theory]
+   [InlineData('B')]
+   [InlineData('C')]
+   [InlineData('D')]
+   [InlineData('F')]
+   [InlineData('G')]
+   [InlineData('H')]
+   [InlineData('J')]
+   [InlineData('K')]
+   [InlineData('L')]
+   [InlineData('M')]
+   [InlineData('N')]
+   [InlineData('P')]
+   [InlineData('Q')]
+   [InlineData('R')]
+   [InlineData('S')]
+   [InlineData('T')]
+   [InlineData('V')]
+   [InlineData('W')]
+   [InlineData('X')]
+   [InlineData('Y')]
+   [InlineData('Z')]
+   public void CharExtensions_IsAsciiConsonantUpper_ShouldReturnTrue_WhenValueIsUppercaseLetter(Char ch)
+      => ch.IsAsciiConsonantUpper().Should().BeTrue();
+
+   [Theory]
+   [InlineData('A')]
+   [InlineData('E')]
+   [InlineData('I')]
+   [InlineData('O')]
+   [InlineData('U')]
+   [InlineData('/')]
+   [InlineData('0')]
+   [InlineData('9')]
+   [InlineData(':')]
+   [InlineData('a')]
+   [InlineData('e')]
+   [InlineData('i')]
+   [InlineData('o')]
+   [InlineData('u')]
+   [InlineData('z')]
+   [InlineData('\u2153')]  // Non-digit character Unicode fraction 1/3
+   [InlineData('\u0BE6')]  // Unicode Tamil digit 0
+   [InlineData('\u00D6')]  // Unicode O with umlaut
+   public void CharExtensions_IsAsciiConsonantUpperShouldReturnFalse_WhenValueIsNotUppercaseLetter(Char ch)
+      => ch.IsAsciiConsonantUpper().Should().BeFalse();
+
+   #endregion
+
    #region IsAsciiDigit Tests
    // ==========================================================================
    // ==========================================================================

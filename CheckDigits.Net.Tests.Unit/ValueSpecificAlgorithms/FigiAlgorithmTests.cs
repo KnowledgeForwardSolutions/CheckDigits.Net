@@ -181,6 +181,21 @@ public class FigiAlgorithmTests
    [InlineData("BBG0/0B9Y5X2")]
    [InlineData("BBG0:0B9Y5X2")]
    [InlineData("BBG0[0B9Y5X2")]
+   [InlineData("BBG0A0B9Y5X2")]
+   [InlineData("BBG0E0B9Y5X2")]
+   [InlineData("BBG0I0B9Y5X2")]
+   [InlineData("BBG0O0B9Y5X2")]
+   [InlineData("BBG0U0B9Y5X2")]
+   [InlineData("BBG0a0B9Y5X2")]
+   [InlineData("BBG0e0B9Y5X2")]
+   [InlineData("BBG0i0B9Y5X2")]
+   [InlineData("BBG0o0B9Y5X2")]
+   [InlineData("BBG0u0B9Y5X2")]
+   [InlineData("BBG0z0B9Y5X2")]
+   [InlineData("BBG0\u21530B9Y5X2")]      // Unicode fraction 1/3
+   [InlineData("BBG0\u0BE60B9Y5X2")]      // Unicode Tamil digit 0
+   [InlineData("BBG0\u00D60B9Y5X2")]      // Unicode uppercase O with umlaut
+   [InlineData("BBG0\u00F60B9Y5X2")]      // Unicode lowercase o with umlaut
    public void FigiAlgorithm_Validate_ShouldReturnFalse_WhenInputContainsInvalidCharacter(String value)
       => _sut.Validate(value).Should().BeFalse();
 
@@ -188,7 +203,12 @@ public class FigiAlgorithmTests
    [InlineData("BBG000B9Y5X/")]
    [InlineData("BBG000B9Y5X:")]
    [InlineData("BBG000B9Y5XA")]
+   [InlineData("BBG000B9Y5Xz")]
    [InlineData("BBG000B9Y5X[")]
+   [InlineData("BBG000B9Y5X\u2153")]      // Unicode fraction 1/3
+   [InlineData("BBG000B9Y5X\u0BE6")]      // Unicode Tamil digit 0
+   [InlineData("BBG000B9Y5X\u00D6")]      // Unicode uppercase O with umlaut
+   [InlineData("BBG000B9Y5X\u00F6")]      // Unicode lowercase o with umlaut
    public void FigiAlgorithm_Validate_ShouldReturnFalse_WhenCheckDigitIsNonDigCharacter(String value)
       => _sut.Validate(value).Should().BeFalse();
 

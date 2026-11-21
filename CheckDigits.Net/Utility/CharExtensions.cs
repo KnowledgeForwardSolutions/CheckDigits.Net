@@ -13,6 +13,22 @@ internal static class CharExtensions
    extension(Char ch)
    {
       /// <summary>
+      ///   Determines if the character is an ASCII uppercase consonant letter
+      ///   (i.e. not A, E, I, O or U).
+      /// </summary>
+      /// <returns>
+      ///   <see langword="true"/> if the character is an ASCII uppercase 
+      ///   consonant letter;  otherwise, <see langword="false"/>.
+      /// </returns>
+      public Boolean IsAsciiConsonantUpper()
+         => ch.IsAsciiLetterUpper() 
+            && ch != Chars.UpperCaseA
+            && ch != Chars.UpperCaseE
+            && ch != Chars.UpperCaseI
+            && ch != Chars.UpperCaseO
+            && ch != Chars.UpperCaseU;
+
+      /// <summary>
       ///   Determines if the character is an ASCII extended decimal digit (i.e.
       ///   a decimal digit, '0'-'9', or an uppercase 'X' which represents 10 in
       ///   modulus 11 check digit algorithms).

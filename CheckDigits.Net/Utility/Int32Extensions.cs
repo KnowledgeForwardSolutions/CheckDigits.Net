@@ -13,6 +13,20 @@ internal static class Int32Extensions
    extension(Int32 num)
    {
       /// <summary>
+      ///   Given a number between 0 and 99, sum the individual digits (i.e. the
+      ///   10's digit and the 1's digit).
+      /// </summary>
+      /// <returns>
+      ///   The sum of a number's 10's digit and its 1's digit.
+      /// </returns>
+      /// <remarks>
+      ///   Undefined for values &lt; 0 or &gt; 99.
+      /// </remarks>
+      [MethodImpl(MethodImplOptions.AggressiveInlining)]
+      public Int32 SumIndividualDigits()
+         => (num / 10) + (num % 10);
+
+      /// <summary>
       ///   Converts an integer value between 0 and 9 to its corresponding ASCII 
       ///   digit character.
       /// </summary>
