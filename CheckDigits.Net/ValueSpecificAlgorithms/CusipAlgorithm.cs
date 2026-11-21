@@ -8,27 +8,25 @@ namespace CheckDigits.Net.ValueSpecificAlgorithms;
 /// </summary>
 /// <remarks>
 ///   <para>
-///   Valid characters are alphanumeric characters (0-9, A-Z) and *, @, #
+///      Valid characters are alphanumeric characters (0-9, A-Z) and *, @, #
 ///   </para>
 ///   <para>
-///   Check digit calculated by the algorithm is a decimal digit (0-9).
+///      Check digit calculated by the algorithm is a decimal digit (0-9).
 ///   </para>
 ///   <para>
-///   Assumes that the check digit (if present) is the right-most digit in the
-///   input value.
+///      Assumes that the check digit (if present) is the right-most digit in 
+///      the input value.
 ///   </para>
 /// </remarks>
-public class CusipAlgorithm : ICheckDigitAlgorithm
+public sealed class CusipAlgorithm : ICheckDigitAlgorithm
 {
-   private const Int32 _validateMinLength = 9;
-   private static readonly Int32[] _evenValues = Chars.Range(Chars.HashMark, Chars.UpperCaseZ)
-      .Select(x => MapCharacter(x))
-      .Select(x => (x * 2 / 10) + (x * 2 % 10))
-      .ToArray();
-   private static readonly Int32[] _oddValues = Chars.Range(Chars.HashMark, Chars.UpperCaseZ)
-      .Select(x => MapCharacter(x))
-      .Select(x => (x / 10) + (x % 10))
-      .ToArray();
+   private const Int32 _cusipLength = 9;
+   private static readonly Int32[] _evenValues = [.. Chars.Range(Chars.HashMark, Chars.UpperCaseZ)
+      .Select(MapCharacter)
+      .Select(x => x == -1 ? x : (x * 2 / 10) + (x * 2 % 10))];
+   private static readonly Int32[] _oddValues = [.. Chars.Range(Chars.HashMark, Chars.UpperCaseZ)
+      .Select(MapCharacter)
+      .Select(x => x == -1 ? x : (x / 10) + (x % 10))];
 
    /// <inheritdoc/>
    public String AlgorithmDescription => Resources.CusipAlgorithmDescription;
@@ -49,36 +47,33 @@ public class CusipAlgorithm : ICheckDigitAlgorithm
    /// </returns>
    public static Int32 MapCharacter(Char ch) => ch switch
    {
-      var d when ch >= Chars.DigitZero && ch <= Chars.DigitNine => d.ToIntegerDigit(),
-      var c when ch >= Chars.UpperCaseA && ch <= Chars.UpperCaseZ => c - Chars.UpperCaseA + 10,
+      var d when ch is >= Chars.DigitZero and <= Chars.DigitNine => d.MapAsciiDigit(),
+      var c when ch is >= Chars.UpperCaseA and <= Chars.UpperCaseZ => c - Chars.UpperCaseA + 10,
       Chars.Asterisk => 36,
       Chars.AtSign => 37,
       Chars.HashMark => 38,
-      _ => -1
+      _ => -1                 // Invalid characters between '#' and 'Z' map to -1
    };
 
    /// <inheritdoc/>
    public Boolean Validate(String value)
    {
-      if (String.IsNullOrEmpty(value) || value.Length != _validateMinLength)
+      if (String.IsNullOrEmpty(value) || value.Length != _cusipLength)
       {
          return false;
       }
 
       var sum = 0;
       var oddPosition = false;
-      Int32 num;
+      Char ch;
       for (var index = value.Length - 2; index >= 0; index--)
       {
-         var ch = value[index];
-         if (ch >= Chars.HashMark && ch <= Chars.UpperCaseZ)
+         var num = -1;
+         ch = value[index];
+         if (ch is >= Chars.HashMark and <= Chars.UpperCaseZ)
          {
             var offset = ch - Chars.HashMark;
             num = oddPosition ? _oddValues[offset] : _evenValues[offset];
-         }
-         else
-         {
-            return false;
          }
 
          if (num > -1)
@@ -94,6 +89,12 @@ public class CusipAlgorithm : ICheckDigitAlgorithm
       }
       var checkDigit = (10 - (sum % 10)) % 10;
 
-      return value[^1].ToIntegerDigit() == checkDigit;
+      ch = value[^1];
+      if (!ch.IsAsciiDigit())       // Check digit will always be an ASCII digit
+      {
+         return false;
+      }
+
+      return value[^1].MapAsciiDigit() == checkDigit;
    }
 }

@@ -32,6 +32,8 @@ public class CusipAlgorithmTests
 
    [Theory]
    [InlineData('\0', -1)]
+   [InlineData('!', -1)]
+   [InlineData('"', -1)]
    [InlineData('#', 38)]
    [InlineData('$', -1)]
    [InlineData('%', -1)]
@@ -88,6 +90,12 @@ public class CusipAlgorithmTests
    [InlineData('Y', 34)]
    [InlineData('Z', 35)]
    [InlineData('[', -1)]
+   [InlineData('a', -1)]
+   [InlineData('z', -1)]
+   [InlineData('\u2153', -1)]    // Unicode fraction 1/3
+   [InlineData('\u0BE6', -1)]    // Unicode Tamil digit 0
+   [InlineData('\u00D6', -1)]    // Unicode uppercase O with umlaut
+   [InlineData('\u00F6', -1)]    // Unicode lowercase o with umlaut
    public void CusipAlgorithm_MapCharacter_ShouldReturnExpectedValue(
       Char ch,
       Int32 expected)
@@ -253,7 +261,30 @@ public class CusipAlgorithmTests
    [InlineData("0378.7100")]
    [InlineData("0378:7100")]
    [InlineData("0378^7100")]
+   [InlineData("0378a7100")]
+   [InlineData("0378z7100")]
+   [InlineData("0378\u21537100")]      // Unicode fraction 1/3
+   [InlineData("0378\u0BE67100")]      // Unicode Tamil digit 0
+   [InlineData("0378\u00D67100")]      // Unicode uppercase O with umlaut
+   [InlineData("0378\u00F67100")]      // Unicode lowercase o with umlaut
    public void CusipAlgorithm_Validate_ShouldReturnFalse_WhenInputContainsInvalidCharacter(String value)
+      => _sut.Validate(value).Should().BeFalse();
+
+   [Theory]
+   [InlineData("03783310!")]
+   [InlineData("03783310.")]
+   [InlineData("03783310:")]
+   [InlineData("03783310^")]
+   [InlineData("03783310#")]           // Valid in non-check digit position
+   [InlineData("03783310*")]           // "
+   [InlineData("03783310@")]           // "
+   [InlineData("03783310A")]           // "
+   [InlineData("03783310z")]           // Lowercase is always invalid
+   [InlineData("03783310\u2153")]      // Unicode fraction 1/3
+   [InlineData("03783310\u0BE6")]      // Unicode Tamil digit 0
+   [InlineData("03783310\u00D6")]      // Unicode uppercase O with umlaut
+   [InlineData("03783310\u00F6")]      // Unicode lowercase o with umlaut
+   public void CusipAlgorithm_Validate_ShouldReturnFalse_WhenCheckDigitIsInvalidCharacter(String value)
       => _sut.Validate(value).Should().BeFalse();
 
    #endregion
