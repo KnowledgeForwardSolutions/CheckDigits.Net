@@ -15,11 +15,11 @@ public class OptimizeBenchmarks
    [Arguments("SC74MCBL01031234567890123456USD")]
    public void Original(String value) => _ = _algorithm.Validate(value);
 
-   [Benchmark()]
-   [Arguments("BE71096123456769")]
-   [Arguments("GB82WEST12345698765432")]
-   [Arguments("SC74MCBL01031234567890123456USD")]
-   public void Rollover(String value) => _ = _algorithm.Validate2(value);
+   //[Benchmark()]
+   //[Arguments("BE71096123456769")]
+   //[Arguments("GB82WEST12345698765432")]
+   //[Arguments("SC74MCBL01031234567890123456USD")]
+   //public void Rollover(String value) => _ = _algorithm.Validate2(value);
 
    //[Benchmark(Baseline = true)]
    //[Arguments("140")]

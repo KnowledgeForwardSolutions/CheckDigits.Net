@@ -164,7 +164,7 @@ public class AlphanumericMod97_10AlgorithmTests
    [InlineData("U7y8SXrC0O3Sc4I")]
    [InlineData("U7y8SXrC0O3Sc4IHYQ")]
    [InlineData("U7y8SXrC0O3Sc4IHYQF4M")]
-   public void AlphanumericMod97_10Algorithm_TryCalculateCheckDigit_ShouldReturnTrue_ForBenchmarkValues(String value)
+   public void AlphanumericMod97_10Algorithm_TryCalculateCheckDigits_ShouldReturnTrue_ForBenchmarkValues(String value)
       => _sut.TryCalculateCheckDigits(value, out _, out _).Should().BeTrue();
 
    #endregion
