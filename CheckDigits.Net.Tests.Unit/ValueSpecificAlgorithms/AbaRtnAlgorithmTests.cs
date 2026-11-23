@@ -107,5 +107,12 @@ public class AbaRtnAlgorithmTests
    public void AbaRtnAlgorithm_Validate_ShouldReturnFalse_WhenInputContainsInvalidCheckCharacter(String value)
       => _sut.Validate(value).Should().BeFalse();
 
+   [Theory]
+   [InlineData("111000025")]
+   [InlineData("122235821")]
+   [InlineData("325081403")]
+   public void AbaRtnAlgorithm_Validate_ShouldReturnTrue_ForBenchmarkValues(String value)
+      => _sut.Validate(value).Should().BeTrue();
+
    #endregion
 }

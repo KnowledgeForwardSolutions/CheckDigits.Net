@@ -212,5 +212,12 @@ public class FigiAlgorithmTests
    public void FigiAlgorithm_Validate_ShouldReturnFalse_WhenCheckDigitIsNonDigCharacter(String value)
       => _sut.Validate(value).Should().BeFalse();
 
+   [Theory]
+   [InlineData("BBG000B9Y5X2")]
+   [InlineData("BBG111111160")]
+   [InlineData("BBGZYXWVTSR7")]
+   public void FigiAlgorithm_Validate_ShouldReturnTrue_ForBenchmarkValues(String value)
+      => _sut.Validate(value).Should().BeTrue();
+
    #endregion
 }

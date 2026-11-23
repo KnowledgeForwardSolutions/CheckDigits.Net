@@ -287,5 +287,12 @@ public class CusipAlgorithmTests
    public void CusipAlgorithm_Validate_ShouldReturnFalse_WhenCheckDigitIsInvalidCharacter(String value)
       => _sut.Validate(value).Should().BeFalse();
 
+   [Theory]
+   [InlineData("037833100")]
+   [InlineData("38143VAA7")]
+   [InlineData("91282CJL6")]
+   public void CusipAlgorithm_Validate_ShouldReturnTrue_ForBenchmarkValues(String value)
+      => _sut.Validate(value).Should().BeTrue();
+
    #endregion
 }
