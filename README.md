@@ -2585,18 +2585,15 @@ Added masked validation support to the following algorithms:
 
 Performance increases for:
 * AbaRtnAlgorithm, Validate method ~12% improvement
+* ICAO 9303 Algorithm, ~30% improvement across all methods
 * Modulus11_27DecimalAlgorithm, ~50% improvement across all methods
 * Modulus11_27ExtendedAlgorithm, ~40% improvement across all methods
 
 Classes/methods marked as Obsolete:
 
-CheckDigits.Net.Utility.ExtensionMethods
-	.IsInvalidDigit
-	.IsInvalidExtendedDecimalCheckDigit
-	.ToDigitChar
-	.ToExtendedDecimalCheckDigit
-	.ToIntegerDigit
+CheckDigits.Net.Utility.ExtensionMethods (entire class)
+CheckDigits.Net.ValueSpecificAlgorithms.Icao9303Helpers (entire class)
 
- CheckDigits.Net.Utility.ExtensionMethods contains utility methods that are currently
- public but are not intended to be part of the library API. In a future release they will be
- changed to internal methods to reduce the public API surface.
+The above classes contain utility methods that are currently public but are not 
+intended to be part of the library API. In a future release they will be
+changed to internal methods to reduce the public API surface.

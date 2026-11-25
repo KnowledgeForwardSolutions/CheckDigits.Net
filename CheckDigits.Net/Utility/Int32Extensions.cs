@@ -13,6 +13,29 @@ internal static class Int32Extensions
    extension(Int32 num)
    {
       /// <summary>
+      ///   Determine the next weight to apply when calculating an ICAO 9303
+      ///   check digit.
+      /// </summary>
+      /// <remarks>
+      ///   <para>
+      ///      The weights used by the ICAO 9303 algorithm are 7, 3, 1 with the 
+      ///      next weight after 1 rolling back over to 7.
+      ///   </para>
+      ///   <para>
+      ///      <paramref name="num"/> is not checked to confirm that it is a 
+      ///      valid ICAO 9303 weight. If it is not a valid weight then the
+      ///      result is undefined.
+      ///   </para>
+      /// </remarks>
+      /// <returns>
+      ///   The ICAO 9303 weight that follows the supplied 
+      ///   <paramref name="num"/>.
+      /// </returns>
+      [MethodImpl(MethodImplOptions.AggressiveInlining)]
+      public Int32 Icao9303NextWeight()
+         => num == 1 ? 7 : num / 2;     // Integer division, 7 -> 3, 3 -> 1; 1 -> 7
+
+      /// <summary>
       ///   Extract the 1's digit of a number that is &gt;= 0.
       /// </summary>
       /// <returns>

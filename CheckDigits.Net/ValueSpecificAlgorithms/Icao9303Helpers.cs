@@ -5,6 +5,7 @@ namespace CheckDigits.Net.ValueSpecificAlgorithms;
 /// <summary>
 ///   Shared helper methods and data for ICAO 9303 check digit algorithms.
 /// </summary>
+[Obsolete("Class will be removed in future releases to eliminate public exposure of classes/methods not part of the library API")]
 public static class Icao9303Helpers
 {
    /// <summary>
@@ -32,8 +33,8 @@ public static class Icao9303Helpers
    /// </returns>
    public static Int32 MapCharacter(Char ch) => ch switch
    {
-      var d when ch >= Chars.DigitZero && ch <= Chars.DigitNine => d.ToIntegerDigit(),
-      var c when ch >= Chars.UpperCaseA && ch <= Chars.UpperCaseZ => c - Chars.UpperCaseA + 10,
+      _ when ch.IsAsciiDigit() => ch.MapAsciiDigit(),
+      _ when ch.IsAsciiLetterUpper() => ch.MapAsciiUppercaseAlphanumeric(),
       Chars.LeftAngleBracket => 0,
       _ => -1
    };
@@ -42,7 +43,7 @@ public static class Icao9303Helpers
    ///   Pre-computed character-to-integer mapping for ICAO 9303 character set.
    /// </summary>
    internal static readonly Int32[] CharMap = 
-      [.. Chars.Range(Chars.DigitZero, Chars.UpperCaseZ).Select(MapCharacter)];
+      CharacterMap.CreateCharacterMap(Chars.DigitZero, Chars.UpperCaseZ, MapCharacter);
 
    /// <summary>
    ///   Converts an ICAO 9303 character to its integer equivalent.
@@ -56,7 +57,7 @@ public static class Icao9303Helpers
    /// </returns>
    [MethodImpl(MethodImplOptions.AggressiveInlining)]
    internal static Int32 ToIcao9303IntegerValue(Char ch)
-      => (ch >= Chars.DigitZero && ch <= Chars.UpperCaseZ)
+      => (ch is >= Chars.DigitZero and <= Chars.UpperCaseZ)
          ? CharMap[ch - Chars.DigitZero]
          : -1;
 

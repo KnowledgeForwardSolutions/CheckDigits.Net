@@ -61,11 +61,7 @@ public sealed class AbaRtnAlgorithm : ICheckDigitAlgorithm
 
          sum += currentDigit * weight;
 
-         weight = weight * 2 + 1;      // 1 -> 3, 3 -> 7
-         if (weight > _maxWeight)
-         {
-            weight = _minWeight;                // 7 -> 1
-         }
+         weight = weight == _maxWeight ? _minWeight : weight * 2 + 1;      // 1 -> 3, 3 -> 7, 7 -> 1
       }
 
       return sum % 10 == 0;

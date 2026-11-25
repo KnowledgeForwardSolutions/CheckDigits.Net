@@ -2,6 +2,21 @@
 
 public class Int32ExtensionsTests
 {
+   #region Icao9303NextWeight Tests
+   // ==========================================================================
+   // ==========================================================================
+
+   [Theory]
+   [InlineData(7, 3)]
+   [InlineData(3, 1)]
+   [InlineData(1, 7)]
+   public void IntExtensions_Icao9303NextWeight_ShouldREturnExpecedValue_WhenValueIsValid(
+      Int32 current,
+      Int32 expected)
+      => current.Icao9303NextWeight().Should().Be(expected);
+
+   #endregion
+
    #region OnesDigit Tests
    // ==========================================================================
    // ==========================================================================

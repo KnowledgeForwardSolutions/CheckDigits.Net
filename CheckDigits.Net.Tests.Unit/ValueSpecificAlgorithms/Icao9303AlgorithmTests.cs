@@ -150,15 +150,31 @@ public class Icao9303AlgorithmTests
    }
 
    [Theory]
-   [InlineData("74)812")]              // 7408122 with 0 replaced with character 10 positions before in ASCII table
-   [InlineData("74:812")]              // 7408122 with 0 replaced with character 10 positions later in ASCII table
-   [InlineData("`898902C3")]           // L898902C36 with L replaced with character 20 positions later in ASCII table
+   [InlineData("74)812")]              // 740812 with 0 replaced with character 10 positions before in ASCII table
+   [InlineData("74:812")]              // 740812 with 0 replaced with character 10 positions later in ASCII table
+   [InlineData("`898902C3")]           // L898902C3 with L replaced with character 20 positions later in ASCII table
+   [InlineData("74a812")]
+   [InlineData("74\u2153812")]         // Unicode fraction 1/3
+   [InlineData("74\u0BE6812")]         // Unicode Tamil digit 0
+   [InlineData("74\u00D6812")]         // Unicode uppercase O with umlaut
+   [InlineData("74\u00F6812")]         // Unicode lowercase o with umlaut
    public void Icao9303Algorithm_TryCalculateCheckDigit_ShouldReturnFalse_WhenInputContainsInvalidCharacter(String value)
    {
       // Act/assert.
       _sut.TryCalculateCheckDigit(value, out var checkDigit).Should().BeFalse();
       checkDigit.Should().Be(Chars.NUL);
    }
+
+   [Theory]
+   [InlineData("U7Y")]
+   [InlineData("U7Y8SX")]
+   [InlineData("U7Y8SXRC0")]
+   [InlineData("U7Y8SXRC0O3S")]
+   [InlineData("U7Y8SXRC0O3SC4I")]
+   [InlineData("U7Y8SXRC0O3SC4IHYQ")]
+   [InlineData("U7Y8SXRC0O3SC4IHYQF4M")]
+   public void Icao9303Algorithm_TryCalculateCheckDigits_ShouldReturnTrue_ForBenchmarkValues(String value)
+      => _sut.TryCalculateCheckDigit(value, out _).Should().BeTrue();
 
    #endregion
 
@@ -272,8 +288,38 @@ public class Icao9303AlgorithmTests
    [InlineData("74)8122")]             // 7408122 with 0 replaced with character 10 positions before in ASCII table
    [InlineData("74:8122")]             // 7408122 with 0 replaced with character 10 positions later in ASCII table
    [InlineData("`898902C36")]          // L898902C36 with L replaced with character 20 positions later in ASCII table
+   [InlineData("74a8122")]
+   [InlineData("74\u21538122")]        // Unicode fraction 1/3
+   [InlineData("74\u0BE68122")]        // Unicode Tamil digit 0
+   [InlineData("74\u00D68122")]        // Unicode uppercase O with umlaut
+   [InlineData("74\u00F68122")]        // Unicode lowercase o with umlaut
    public void Icao9303Algorithm_Validate_ShouldReturnFalse_WhenInputContainsInvalidCharacter(String value)
       => _sut.Validate(value).Should().BeFalse();
+
+   [Theory]
+   [InlineData("740812)")]   
+   [InlineData("740812:")]   
+   [InlineData("740812'")]   
+   [InlineData("740812A")]   
+   [InlineData("740812a")]   
+   [InlineData("740812'")]   
+   [InlineData("740812\u21537")]       // Unicode fraction 1/3   
+   [InlineData("740812\u0BE67")]       // Unicode Tamil digit 0   
+   [InlineData("740812\u00D67")]       // Unicode uppercase O with umlaut   
+   [InlineData("740812\u00F67")]       // Unicode lowercase o with umlaut   
+   public void Icao9303Algorithm_Validate_ShouldReturnFalse_WhenCheckDigitContainsInvalidCharacter(String value)
+      => _sut.Validate(value).Should().BeFalse();
+
+   [Theory]
+   [InlineData("U7Y5")]
+   [InlineData("U7Y8SX8")]
+   [InlineData("U7Y8SXRC03")]
+   [InlineData("U7Y8SXRC0O3S8")]
+   [InlineData("U7Y8SXRC0O3SC4I2")]
+   [InlineData("U7Y8SXRC0O3SC4IHYQ9")]
+   [InlineData("U7Y8SXRC0O3SC4IHYQF4M8")]
+   public void Icao9303Algorithm_Validate_ShouldReturnTrue_ForBenchmarkValues(String value)
+      => _sut.Validate(value).Should().BeTrue();
 
    #endregion
 }

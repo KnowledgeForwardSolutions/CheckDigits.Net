@@ -164,5 +164,25 @@ internal static class CharExtensions
       [MethodImpl(MethodImplOptions.AggressiveInlining)]
       public Int32 MapAsciiExtendedDecimalDigit()
          => ch == Chars.UpperCaseX ? 10 : ch - Chars.DigitZero;
+
+      /// <summary>
+      ///   Maps characters from the ICAO 9303 characterset 
+      ///   ('0'-'9', 'A'-Z', '&lt;') to their integer equivalents 
+      ///   (0-9, 10-35, 0). Invalid characters are mapped to -1.
+      /// </summary>
+      /// <returns>
+      ///   The ICAO 9303 integer equivalent of the supplied 
+      ///   <paramref name="ch"/> ('0'-'9' -> 0-9, 'A'-Z' -> 10-35, '&lt;' -> 0)
+      ///   or -1 for invalid characters.
+      /// </returns>
+      [MethodImpl(MethodImplOptions.AggressiveInlining)]
+      public Int32 MapIcao0303Character()
+         => ch switch
+         {
+            _ when ch.IsAsciiDigit() => ch.MapAsciiDigit(),
+            _ when ch.IsAsciiLetterUpper() => 10 + (ch - Chars.UpperCaseA),
+            Chars.LeftAngleBracket => 0,
+            _ => -1
+         };
    }
 }
