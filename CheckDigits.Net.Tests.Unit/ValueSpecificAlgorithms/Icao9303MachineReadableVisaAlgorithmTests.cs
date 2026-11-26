@@ -232,68 +232,6 @@ public class Icao9303MachineReadableVisaAlgorithmTests
    }
 
    [Theory]
-   // Check digits are accurate, if equivalent uppercase character
-   [InlineData(MrzFormat.A, "00a0000000")]
-   [InlineData(MrzFormat.A, "00b0000001")]
-   [InlineData(MrzFormat.A, "00c0000002")]
-   [InlineData(MrzFormat.A, "00d0000003")]
-   [InlineData(MrzFormat.A, "00e0000004")]
-   [InlineData(MrzFormat.A, "00f0000005")]
-   [InlineData(MrzFormat.A, "00g0000006")]
-   [InlineData(MrzFormat.A, "00h0000007")]
-   [InlineData(MrzFormat.A, "00i0000008")]
-   [InlineData(MrzFormat.B, "00j0000009")]
-   [InlineData(MrzFormat.B, "00k0000000")]
-   [InlineData(MrzFormat.B, "00l0000001")]
-   [InlineData(MrzFormat.B, "00m0000002")]
-   [InlineData(MrzFormat.B, "00n0000003")]
-   [InlineData(MrzFormat.B, "00o0000004")]
-   [InlineData(MrzFormat.B, "00p0000005")]
-   [InlineData(MrzFormat.B, "00q0000006")]
-   [InlineData(MrzFormat.B, "00r0000007")]
-   [InlineData(MrzFormat.B, "00s0000008")]
-   [InlineData(MrzFormat.B, "00t0000009")]
-   [InlineData(MrzFormat.B, "00u0000000")]
-   [InlineData(MrzFormat.B, "00v0000001")]
-   [InlineData(MrzFormat.B, "00w0000002")]
-   [InlineData(MrzFormat.B, "00x0000003")]
-   [InlineData(MrzFormat.B, "00y0000004")]
-   [InlineData(MrzFormat.B, "00z0000005")]
-   public void Icao9303MachineReadableVisaAlgorithm_Validate_ShouldReturnFalse_WhenLowerCaseAlphabeticCharacterEncountered(
-      MrzFormat format,
-      String documentNumber)
-   {
-      // Arrange.
-      var value = GetTestValue(
-         format: format,
-         lineSeparator: _lineSeparatorCrlf,
-         documentNumber: documentNumber);
-
-      // Act/assert.
-      _sut.Validate(value).Should().BeFalse();
-   }
-
-   [Theory]
-   // Check digits would be correct if alpha characters allowed
-   [InlineData("00A0000", "0000000")]
-   [InlineData("00a0000", "0000000")]
-   [InlineData("0000000", "00A0000")]
-   [InlineData("0000000", "00a0000")]
-   public void Icao9303MachineReadableVisaAlgorithm_Validate_ShouldReturnFalse_NumericFieldContainsAlphabeticCharacter(
-      String dateOfBirth,
-      String dateOfExpiry)
-   {
-      // Arrange.
-      var value = GetTestValue(
-         format: MrzFormat.A,
-         dateOfBirth: dateOfBirth,
-         dateOfExpiry: dateOfExpiry);
-
-      // Act/assert.
-      _sut.Validate(value).Should().BeFalse();
-   }
-
-   [Theory]
    // Document number field
    [InlineData(MrzFormat.A, _lineSeparatorNone, "1000000007", "0000000", "0000000")]
    [InlineData(MrzFormat.A, _lineSeparatorNone, "0100000003", "0000000", "0000000")]
@@ -480,24 +418,98 @@ public class Icao9303MachineReadableVisaAlgorithmTests
    }
 
    [Theory]
-   [InlineData(MrzFormat.A, _lineSeparatorNone, "b231458907", "7408122", "1204159")]   // Document number D231458907 with D replaced with character 30 positions later in ASCII table
-   [InlineData(MrzFormat.A, _lineSeparatorCrlf, "D2314589&7", "7408122", "1204159")]   // Document number D231458907 with 0 replaced with character 10 positions before in ASCII table
-   [InlineData(MrzFormat.B, _lineSeparatorLf,   "D2314589:7", "7408122", "1204159")]   // Document number D231458907 with 0 replaced with character 10 positions later in ASCII table
-   [InlineData(MrzFormat.B, _lineSeparatorNone, "D231458907", "7>08122", "1204159")]   // Date of birth 7408122 with 4 replaced with character 10 positions later in ASCII table
-   [InlineData(MrzFormat.B, _lineSeparatorNone, "D231458907", "7408122", "120>159")]   // Date of expiry 1204159 with 4 replaced with character 10 positions later in ASCII table
-   public void Icao9303MachineReadableVisaAlgorithm_Validate_ShouldReturnFalse_WhenFieldContainsInvalidCharacter(
+   [InlineData(MrzFormat.A, "!000000000")]
+   [InlineData(MrzFormat.A, "0=00000000")]
+   [InlineData(MrzFormat.A, "00a0000000")]      // Check digit is accurate if equivalent uppercase character
+   [InlineData(MrzFormat.A, "000]000000")]
+   [InlineData(MrzFormat.A, "0000~00000")]
+   [InlineData(MrzFormat.A, "00000\u21530000")] // Unicode fraction 1/3
+   [InlineData(MrzFormat.A, "000000\u0BE6000")] // Unicode Tamil digit 0
+   [InlineData(MrzFormat.A, "0000000\u00D600")] // Unicode uppercase O with umlaut
+   [InlineData(MrzFormat.A, "00000000\u00F60")] // Unicode lowercase o with umlaut
+   [InlineData(MrzFormat.B, "!000000000")]
+   [InlineData(MrzFormat.B, "0=00000000")]
+   [InlineData(MrzFormat.B, "00a0000000")]      // Check digit is accurate if equivalent uppercase character
+   [InlineData(MrzFormat.B, "000]000000")]
+   [InlineData(MrzFormat.B, "0000~00000")]
+   [InlineData(MrzFormat.B, "00000\u21530000")] // Unicode fraction 1/3
+   [InlineData(MrzFormat.B, "000000\u0BE6000")] // Unicode Tamil digit 0
+   [InlineData(MrzFormat.B, "0000000\u00D600")] // Unicode uppercase O with umlaut
+   [InlineData(MrzFormat.B, "00000000\u00F60")] // Unicode lowercase o with umlaut
+   public void Icao9303MachineReadableVisaAlgorithm_Validate_ShouldReturnFalse_WhenDocumentNumberContainsInvalidCharacter(
       MrzFormat format,
-      String lineSeparator,
-      String documentNumber,
-      String dateOfBirth,
+      String documentNumber)
+   {
+      // Arrange.
+      var value = GetTestValue(
+         format: format,
+         lineSeparator: _lineSeparatorCrlf,
+         documentNumber: documentNumber);
+
+      // Act/assert.
+      _sut.Validate(value).Should().BeFalse();
+   }
+
+   [Theory]
+   [InlineData(MrzFormat.A, "!000000")]
+   [InlineData(MrzFormat.A, "0=00000")]
+   [InlineData(MrzFormat.A, "00A0000")]      // Check digit would be correct if alpha characters allowed
+   [InlineData(MrzFormat.A, "000]000")]
+   [InlineData(MrzFormat.A, "0000~00")]
+   [InlineData(MrzFormat.A, "00000\u21530")] // Unicode fraction 1/3
+   [InlineData(MrzFormat.A, "00000\u0BE60")] // Unicode Tamil digit 0
+   [InlineData(MrzFormat.A, "00000\u00D60")] // Unicode uppercase O with umlaut
+   [InlineData(MrzFormat.A, "00000\u00F60")] // Unicode lowercase o with umlaut
+   [InlineData(MrzFormat.B, "!000000")]
+   [InlineData(MrzFormat.B, "0=00000")]
+   [InlineData(MrzFormat.B, "00A0000")]      // Check digit would be correct if alpha characters allowed
+   [InlineData(MrzFormat.B, "000]000")]
+   [InlineData(MrzFormat.B, "0000~00")]
+   [InlineData(MrzFormat.B, "00000\u21530")] // Unicode fraction 1/3
+   [InlineData(MrzFormat.B, "00000\u0BE60")] // Unicode Tamil digit 0
+   [InlineData(MrzFormat.B, "00000\u00D60")] // Unicode uppercase O with umlaut
+   [InlineData(MrzFormat.B, "00000\u00F60")] // Unicode lowercase o with umlaut
+   public void Icao9303MachineReadableVisaAlgorithm_Validate_ShouldReturnFalse_WhenDateOfBirthContainsInvalidCharacter(
+      MrzFormat format,
+      String dateOfBirth)
+   {
+      // Arrange.
+      var value = GetTestValue(
+         format: format,
+         lineSeparator: _lineSeparatorCrlf,
+         dateOfBirth: dateOfBirth);
+
+      // Act/assert.
+      _sut.Validate(value).Should().BeFalse();
+   }
+
+   [Theory]
+   [InlineData(MrzFormat.A, "!000000")]
+   [InlineData(MrzFormat.A, "0=00000")]
+   [InlineData(MrzFormat.A, "00A0000")]      // Check digit would be correct if alpha characters allowed
+   [InlineData(MrzFormat.A, "000]000")]
+   [InlineData(MrzFormat.A, "0000~00")]
+   [InlineData(MrzFormat.A, "00000\u21530")] // Unicode fraction 1/3
+   [InlineData(MrzFormat.A, "00000\u0BE60")] // Unicode Tamil digit 0
+   [InlineData(MrzFormat.A, "00000\u00D60")] // Unicode uppercase O with umlaut
+   [InlineData(MrzFormat.A, "00000\u00F60")] // Unicode lowercase o with umlaut
+   [InlineData(MrzFormat.B, "!000000")]
+   [InlineData(MrzFormat.B, "0=00000")]
+   [InlineData(MrzFormat.B, "00A0000")]      // Check digit would be correct if alpha characters allowed
+   [InlineData(MrzFormat.B, "000]000")]
+   [InlineData(MrzFormat.B, "0000~00")]
+   [InlineData(MrzFormat.B, "00000\u21530")] // Unicode fraction 1/3
+   [InlineData(MrzFormat.B, "00000\u0BE60")] // Unicode Tamil digit 0
+   [InlineData(MrzFormat.B, "00000\u00D60")] // Unicode uppercase O with umlaut
+   [InlineData(MrzFormat.B, "00000\u00F60")] // Unicode lowercase o with umlaut
+   public void Icao9303MachineReadableVisaAlgorithm_Validate_ShouldReturnFalse_WhenDateOfExpiryContainsInvalidCharacter(
+      MrzFormat format,
       String dateOfExpiry)
    {
       // Arrange.
       var value = GetTestValue(
-         format: format, 
-         lineSeparator: lineSeparator,
-         documentNumber: documentNumber,
-         dateOfBirth: dateOfBirth,
+         format: format,
+         lineSeparator: _lineSeparatorCrlf,
          dateOfExpiry: dateOfExpiry);
 
       // Act/assert.
@@ -505,30 +517,104 @@ public class Icao9303MachineReadableVisaAlgorithmTests
    }
 
    [Theory]
-   [InlineData(MrzFormat.A, _lineSeparatorNone, "D23145890A", "7408122", "1204159")]   // Document number check digit is invalid character
-   [InlineData(MrzFormat.A, _lineSeparatorCrlf, "D23145890&", "7408122", "1204159")]   // Document number check digit is invalid character
-   [InlineData(MrzFormat.A, _lineSeparatorLf,   "D23145890:", "7408122", "1204159")]   // Document number check digit is invalid character
-   [InlineData(MrzFormat.A, _lineSeparatorNone, "D231458907", "740812A", "1204159")]   // Date of birth check digit is invalid character
-   [InlineData(MrzFormat.A, _lineSeparatorCrlf, "D231458907", "740812&", "1204159")]   // Date of birth check digit is invalid character
-   [InlineData(MrzFormat.A, _lineSeparatorLf,   "D231458907", "740812<", "1204159")]   // Date of birth check digit is invalid character
-   [InlineData(MrzFormat.A, _lineSeparatorNone, "D231458907", "740812[", "1204159")]   // Date of birth check digit is invalid character
-   [InlineData(MrzFormat.B, _lineSeparatorCrlf, "D231458907", "7408122", "120415A")]   // Date of expiry check digit is invalid character
-   [InlineData(MrzFormat.B, _lineSeparatorLf,   "D231458907", "7408122", "120415&")]   // Date of expiry check digit is invalid character
-   [InlineData(MrzFormat.B, _lineSeparatorNone, "D231458907", "7408122", "120415<")]   // Date of expiry check digit is invalid character
-   [InlineData(MrzFormat.B, _lineSeparatorCrlf, "D231458907", "7408122", "120415[")]   // Date of expiry check digit is invalid character
-   public void Icao9303MachineReadableVisaAlgorithm_Validate_ShouldReturnFalse_WhenRequiredFieldCheckDigitContainsNonDigitCharacter(
+   [InlineData(MrzFormat.A, "000000000!")]
+   [InlineData(MrzFormat.A, "000000000=")]
+   [InlineData(MrzFormat.A, "000000000A")]
+   [InlineData(MrzFormat.A, "000000000]")]
+   [InlineData(MrzFormat.A, "000000000z")]
+   [InlineData(MrzFormat.A, "000000000~")]
+   [InlineData(MrzFormat.A, "000000000\u2153")] // Unicode fraction 1/3
+   [InlineData(MrzFormat.A, "000000000\u0BE6")] // Unicode Tamil digit 0
+   [InlineData(MrzFormat.A, "000000000\u00D6")] // Unicode uppercase O with umlaut
+   [InlineData(MrzFormat.A, "000000000\u00F6")] // Unicode lowercase o with umlaut
+   [InlineData(MrzFormat.B, "000000000!")]
+   [InlineData(MrzFormat.B, "000000000=")]
+   [InlineData(MrzFormat.B, "000000000A")]
+   [InlineData(MrzFormat.B, "000000000]")]
+   [InlineData(MrzFormat.B, "000000000z")]
+   [InlineData(MrzFormat.B, "000000000~")]
+   [InlineData(MrzFormat.B, "000000000\u2153")] // Unicode fraction 1/3
+   [InlineData(MrzFormat.B, "000000000\u0BE6")] // Unicode Tamil digit 0
+   [InlineData(MrzFormat.B, "000000000\u00D6")] // Unicode uppercase O with umlaut
+   [InlineData(MrzFormat.B, "000000000\u00F6")] // Unicode lowercase o with umlaut
+   public void Icao9303MachineReadableVisaAlgorithm_Validate_ShouldReturnFalse_WhenDocumentNumberContainsInvalidCheckDigitCharacter(
       MrzFormat format,
-      String lineSeparator,
-      String documentNumber,
-      String dateOfBirth,
+      String documentNumber)
+   {
+      // Arrange.
+      var value = GetTestValue(
+         format: format,
+         lineSeparator: _lineSeparatorCrlf,
+         documentNumber: documentNumber);
+
+      // Act/assert.
+      _sut.Validate(value).Should().BeFalse();
+   }
+
+   [Theory]
+   [InlineData(MrzFormat.A, "000000!")]
+   [InlineData(MrzFormat.A, "000000=")]
+   [InlineData(MrzFormat.A, "000000A")]
+   [InlineData(MrzFormat.A, "000000]")]
+   [InlineData(MrzFormat.A, "000000z")]
+   [InlineData(MrzFormat.A, "000000~")]
+   [InlineData(MrzFormat.A, "000000\u2153")]    // Unicode fraction 1/3
+   [InlineData(MrzFormat.A, "000000\u0BE6")]    // Unicode Tamil digit 0
+   [InlineData(MrzFormat.A, "000000\u00D6")]    // Unicode uppercase O with umlaut
+   [InlineData(MrzFormat.A, "000000\u00F6")]    // Unicode lowercase o with umlaut
+   [InlineData(MrzFormat.B, "000000!")]
+   [InlineData(MrzFormat.B, "000000=")]
+   [InlineData(MrzFormat.B, "000000A")]
+   [InlineData(MrzFormat.B, "000000]")]
+   [InlineData(MrzFormat.B, "000000z")]
+   [InlineData(MrzFormat.B, "000000~")]
+   [InlineData(MrzFormat.B, "000000\u2153")]    // Unicode fraction 1/3
+   [InlineData(MrzFormat.B, "000000\u0BE6")]    // Unicode Tamil digit 0
+   [InlineData(MrzFormat.B, "000000\u00D6")]    // Unicode uppercase O with umlaut
+   [InlineData(MrzFormat.B, "000000\u00F6")]    // Unicode lowercase o with umlaut
+   public void Icao9303MachineReadableVisaAlgorithm_Validate_ShouldReturnFalse_WhenDateOfBirthContainsInvalidCheckDigitCharacter(
+      MrzFormat format,
+      String dateOfBirth)
+   {
+      // Arrange.
+      var value = GetTestValue(
+         format: format,
+         lineSeparator: _lineSeparatorCrlf,
+         dateOfBirth: dateOfBirth);
+
+      // Act/assert.
+      _sut.Validate(value).Should().BeFalse();
+   }
+
+   [Theory]
+   [InlineData(MrzFormat.A, "000000!")]
+   [InlineData(MrzFormat.A, "000000=")]
+   [InlineData(MrzFormat.A, "000000A")]
+   [InlineData(MrzFormat.A, "000000]")]
+   [InlineData(MrzFormat.A, "000000z")]
+   [InlineData(MrzFormat.A, "000000~")]
+   [InlineData(MrzFormat.A, "000000\u2153")]    // Unicode fraction 1/3
+   [InlineData(MrzFormat.A, "000000\u0BE6")]    // Unicode Tamil digit 0
+   [InlineData(MrzFormat.A, "000000\u00D6")]    // Unicode uppercase O with umlaut
+   [InlineData(MrzFormat.A, "000000\u00F6")]    // Unicode lowercase o with umlaut
+   [InlineData(MrzFormat.B, "000000!")]
+   [InlineData(MrzFormat.B, "000000=")]
+   [InlineData(MrzFormat.B, "000000A")]
+   [InlineData(MrzFormat.B, "000000]")]
+   [InlineData(MrzFormat.B, "000000z")]
+   [InlineData(MrzFormat.B, "000000~")]
+   [InlineData(MrzFormat.B, "000000\u2153")]    // Unicode fraction 1/3
+   [InlineData(MrzFormat.B, "000000\u0BE6")]    // Unicode Tamil digit 0
+   [InlineData(MrzFormat.B, "000000\u00D6")]    // Unicode uppercase O with umlaut
+   [InlineData(MrzFormat.B, "000000\u00F6")]    // Unicode lowercase o with umlaut
+   public void Icao9303MachineReadableVisaAlgorithm_Validate_ShouldReturnFalse_WhenDateOfExpiryContainsInvalidCheckDigitCharacter(
+      MrzFormat format,
       String dateOfExpiry)
    {
       // Arrange.
       var value = GetTestValue(
-         format: format, 
-         lineSeparator: lineSeparator,
-         documentNumber: documentNumber,
-         dateOfBirth: dateOfBirth,
+         format: format,
+         lineSeparator: _lineSeparatorCrlf,
          dateOfExpiry: dateOfExpiry);
 
       // Act/assert.

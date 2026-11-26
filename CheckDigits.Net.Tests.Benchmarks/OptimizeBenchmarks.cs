@@ -7,26 +7,18 @@ namespace CheckDigits.Net.Tests.Benchmarks;
 [MemoryDiagnoser]
 public class OptimizeBenchmarks
 {
-   private static readonly Icao9303Algorithm _algorithm = new();
+   private static readonly Icao9303MachineReadableVisaAlgorithm _algorithm = new();
 
    [Benchmark(Baseline = true)]
-   [Arguments("U7Y5")]
-   [Arguments("U7Y8SX8")]
-   [Arguments("U7Y8SXRC03")]
-   [Arguments("U7Y8SXRC0O3S8")]
-   [Arguments("U7Y8SXRC0O3SC4I2")]
-   [Arguments("U7Y8SXRC0O3SC4IHYQ9")]
-   [Arguments("U7Y8SXRC0O3SC4IHYQF4M8")]
+   [Arguments("I<UTOERIKSSON<<ANNA<MARIA<<<<<<<<<<<D231458907UTO7408122F1204159<<<<<<A<")]
+   [Arguments("V<UTOERIKSSON<<ANNA<MARIA<<<<<<<<<<<<<<<<<<<\r\nL898902C<3UTO6908061F9406236ZE184226B<<<<<<<")]
+   [Arguments("I<UTOSKYWALKER<<LUKE<<<<<<<<<<<<<<<<\nSTARWARS45UTO7705256M2405252<<<<<<B<")]
    public void Original(String value) => _ = _algorithm.Validate(value);
 
    //[Benchmark()]
-   //[Arguments("U7Y5")]
-   //[Arguments("U7Y8SX8")]
-   //[Arguments("U7Y8SXRC03")]
-   //[Arguments("U7Y8SXRC0O3S8")]
-   //[Arguments("U7Y8SXRC0O3SC4I2")]
-   //[Arguments("U7Y8SXRC0O3SC4IHYQ9")]
-   //[Arguments("U7Y8SXRC0O3SC4IHYQF4M8")]
+   //[Arguments("I<UTOERIKSSON<<ANNA<MARIA<<<<<<<<<<<D231458907UTO7408122F1204159<<<<<<A<")]
+   //[Arguments("V<UTOERIKSSON<<ANNA<MARIA<<<<<<<<<<<<<<<<<<<\r\nL898902C<3UTO6908061F9406236ZE184226B<<<<<<<")]
+   //[Arguments("I<UTOSKYWALKER<<LUKE<<<<<<<<<<<<<<<<\nSTARWARS45UTO7705256M2405252<<<<<<B<")]
    //public void Rollover(String value) => _ = _algorithm.Validate2(value);
 
    //[Benchmark(Baseline = true)]

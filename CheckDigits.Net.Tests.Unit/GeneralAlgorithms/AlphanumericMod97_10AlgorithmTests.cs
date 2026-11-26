@@ -355,11 +355,9 @@ public class AlphanumericMod97_10AlgorithmTests
    [InlineData("AB")]
    [InlineData("98")]         // Would otherise be true if length requirement was not enforced
    public void AlphanumericMod97_10Algorithm_ValidateMasked_ShouldReturnFalse_WhenInsufficientUnmaskedCharactersToCalculateCheckDigit(String value)
-   {
       // Requires at least one unmasked character plus two check digit characters.
       // This should be rejected even if check digit would otherwise be valid.
-      _sut.Validate(value, _acceptAllMask).Should().BeFalse();
-   }
+      => _sut.Validate(value, _acceptAllMask).Should().BeFalse();
 
    [Theory]
    [InlineData("098")]

@@ -2585,7 +2585,8 @@ Added masked validation support to the following algorithms:
 
 Performance increases for:
 * AbaRtnAlgorithm, Validate method ~12% improvement
-* ICAO 9303 Algorithm, ~30% improvement across all methods
+* Icao9303Algorithm, ~30% improvement across all methods
+* Icao9303MachineReadableVisaAlgorithm, Validate method ~10% improvement
 * Modulus11_27DecimalAlgorithm, ~50% improvement across all methods
 * Modulus11_27ExtendedAlgorithm, ~40% improvement across all methods
 

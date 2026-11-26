@@ -9,79 +9,56 @@ namespace CheckDigits.Net.ValueSpecificAlgorithms;
 /// </summary>
 /// <remarks>
 ///   <para>
-///   Validates the following fields in the MRZ:
-///   <list type="bullet">
-///      <item>Document number, line 2, characters 1-9, check digit in character 10</item>
-///      <item>Date of birth, line 2, characters 14-19, check digit in character 20</item>
-///      <item>Date of expiry, line 2, characters 22-27, check digit in character 28</item>
-///      <item>Line separator characters in expected location, if length of the value indicates that a line separator was used</item>
-///   </list>
+///      Validates the following fields in the MRZ:
+///      <list type="bullet">
+///         <item>Document number, line 2, characters 1-9, check digit in character 10</item>
+///         <item>Date of birth, line 2, characters 14-19, check digit in character 20</item>
+///         <item>Date of expiry, line 2, characters 22-27, check digit in character 28</item>
+///         <item>Line separator characters in expected location, if length of the value indicates that a line separator was used</item>
+///      </list>
 ///   </para>
 ///   <para>
-///   Valid characters are decimal digits (0-9), uppercase alphabetic characters 
-///   (A-Z) and a filler character ('<'). Note that characters in positions
-///   other than the document number, date of birth and date of expiry fields 
-///   (and line separator characters) are not validated.
+///      Valid characters are decimal digits (0-9), uppercase alphabetic 
+///      characters (A-Z) and a filler character ('&lt;'). Note that characters 
+///      in positions other than the document number, date of birth and date of 
+///      expiry fields (and line separator characters) are not validated.
 ///   </para>
 ///   <para>
-///   Check digit calculated by the algorithm is a decimal digit (0-9).
+///      Check digit calculated by the algorithm is a decimal digit (0-9).
 ///   </para>
 ///   <para>
-///   Uses the same Modulus 10 algorithm as the <see cref="Icao9303Algorithm"/>
-///   and has the same weaknesses as that algorithm.
+///      Uses the same Modulus 10 algorithm as the 
+///      <see cref="Icao9303Algorithm"/> and has the same weaknesses as that 
+///      algorithm.
 ///   </para>
 /// </remarks>
 public sealed class Icao9303MachineReadableVisaAlgorithm : ICheckDigitAlgorithm
 {
-   private static readonly Int32[] _weights = [7, 3, 1];
+   private const Int32 _initialWeight = 7;
    private static readonly FieldDetails[] _fields = [       // starting position, field length, valid num upper bound
-      new (0, 9, Icao9303Helpers.AlphanumericUpperBound),   // Document number field
-      new (13, 6, Icao9303Helpers.NumericUpperBound),       // Date of birth field
-      new (21, 6, Icao9303Helpers.NumericUpperBound)];      // Date of expiry field
+      new (0, 9, 35),         // Document number field, allows alphanumeric characters plus placeholder char
+      new (13, 6, 9),         // Date of birth field, allows digit characters plus placeholder char
+      new (21, 6, 9)];        // Date of expiry field, allows digit characters plus placeholder char
 
    private const Int32 _numFields = 3;
    private const Int32 _formatALineLength = 44;
    private const Int32 _formatBLineLength = 36;
 
+   // Format A valid lengths for the three supported line separator options.
    private const Int32 _formatANullLength = _formatALineLength * 2;
    private const Int32 _formatACrlfLength = _formatANullLength + 2;
    private const Int32 _formatALfLength = _formatANullLength + 1;
 
+   // Format B valid lengths for the three supported line separator options.
    private const Int32 _formatBNullLength = _formatBLineLength * 2;
    private const Int32 _formatBCrlfLength = _formatBNullLength + 2;
    private const Int32 _formatBLfLength = _formatBNullLength + 1;
-
-   // Only retained for obsolete LineSeparator property.
-   private LineSeparator _lineSeparator = LineSeparator.None;
 
    /// <inheritdoc/>
    public String AlgorithmDescription => Resources.Icao9303MachineReadableVisaAlgorithmDescription;
 
    /// <inheritdoc/>
    public String AlgorithmName => Resources.Icao9303MachineReadableVisaAlgorithmName;
-
-   /// <summary>
-   ///   Specifies the character(s) used to separate lines in the value being
-   ///   validated.
-   /// </summary>
-   /// <exception cref="ArgumentOutOfRangeException">
-   ///   The value used to set the <see cref="LineSeparator"/> property is not
-   ///   a defined member of the <see cref="LineSeparator"/> enumeration.
-   /// </exception>
-   [Obsolete("The LineSeparator property is deprecated and will be removed in a future version. " +
-      "The algorithm will automatically detect the line separator used in the value being validated.")]
-   public LineSeparator LineSeparator
-   {
-      get => _lineSeparator;
-      set
-      {
-         if (!value.IsDefined())
-         {
-            throw new ArgumentOutOfRangeException(nameof(value), value, Resources.LineSeparatorInvalidValueMessage);
-         }
-         _lineSeparator = value;
-      }
-   }
 
    /// <inheritdoc/>
    public Boolean Validate(String value)
@@ -99,24 +76,30 @@ public sealed class Icao9303MachineReadableVisaAlgorithm : ICheckDigitAlgorithm
       {
          Int32 num;
          var fieldSum = 0;
-         var fieldWeightIndex = new ModulusInt32(3);
+         var fieldWeight = _initialWeight;
          var (start, end) = _fields[fieldIndex].GetFieldBounds(lineLength, lineSeparatorLength);
          var numUpperBound = _fields[fieldIndex].NumUpperBound;
          for (var charIndex = start; charIndex < end; charIndex++)
          {
-            num = Icao9303Helpers.ToIcao9303IntegerValue(value[charIndex]);
-            if (Icao9303Helpers.IsInvalidValueForField(num, numUpperBound))
+            num = value[charIndex].MapIcao0303Character();
+            if (num < 0 || num > numUpperBound)
             {
                return false;
             }
 
-            fieldSum += num * _weights[fieldWeightIndex];
-            fieldWeightIndex++;
+            fieldSum += num * fieldWeight;
+            fieldWeight = fieldWeight.Icao9303NextWeight();
          }
 
          // Field check digit.
-         num = value[end].ToIntegerDigit();
-         if (num.IsInvalidDigit() || num != fieldSum % 10)
+         var ch = value[end];
+         if (!ch.IsAsciiDigit())
+         {
+            return false;
+         }
+
+         num = ch.MapAsciiDigit();
+         if (num != fieldSum % 10)
          {
             return false;
          }
@@ -137,7 +120,6 @@ public sealed class Icao9303MachineReadableVisaAlgorithm : ICheckDigitAlgorithm
       out Int32 lineLength,
       out Int32 lineSeparatorLength)
    {
-      // First switch: Determine format (A or B) and separator length based on total length
       (lineLength, lineSeparatorLength) = value.Length switch
       {
          _formatANullLength => (_formatALineLength, 0),
@@ -149,17 +131,24 @@ public sealed class Icao9303MachineReadableVisaAlgorithm : ICheckDigitAlgorithm
          _ => (-1, 0)
       };
 
-      // Second switch: Validate separator characters at expected positions
-      return (lineLength, lineSeparatorLength) switch
+      return lineLength != -1 && ValidateSeparator(value, lineLength, lineSeparatorLength);
+   }
+
+   /// <summary>
+   ///   Validates that the separator character(s) (if any) are correct for the
+   ///   specified line length.
+   /// </summary>
+   private static Boolean ValidateSeparator(
+      String value,
+      Int32 lineLength,
+      Int32 lineSeparatorLength)
+   {
+      return lineSeparatorLength switch
       {
-         (_formatALineLength, 0) => true,
-         (_formatALineLength, 2) => value[_formatALineLength] == Chars.CarriageReturn
-                                    && value[_formatALineLength + 1] == Chars.LineFeed,
-         (_formatALineLength, 1) => value[_formatALineLength] == Chars.LineFeed,
-         (_formatBLineLength, 0) => true,
-         (_formatBLineLength, 2) => value[_formatBLineLength] == Chars.CarriageReturn
-                                    && value[_formatBLineLength + 1] == Chars.LineFeed,
-         (_formatBLineLength, 1) => value[_formatBLineLength] == Chars.LineFeed,
+         0 => true,
+         1 => value[lineLength] == Chars.LineFeed,
+         2 => value[lineLength] == Chars.CarriageReturn
+              && value[lineLength + 1] == Chars.LineFeed,
          _ => false
       };
    }
@@ -178,7 +167,11 @@ public sealed class Icao9303MachineReadableVisaAlgorithm : ICheckDigitAlgorithm
    /// <param name="NumUpperBound">
    ///   The upper bound of a field character when converted to an integer.
    /// </param>
-   private record struct FieldDetails(Int32 CharPosition, Int32 Length, Int32 NumUpperBound)
+   private 
+#if NET7_0_OR_GREATER
+      readonly
+#endif
+      record struct FieldDetails(Int32 CharPosition, Int32 Length, Int32 NumUpperBound)
    {
       [Pure]
       public readonly (Int32 start, Int32 end) GetFieldBounds(
