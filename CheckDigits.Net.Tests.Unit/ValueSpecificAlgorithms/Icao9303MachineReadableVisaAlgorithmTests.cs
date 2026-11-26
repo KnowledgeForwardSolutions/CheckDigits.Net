@@ -622,6 +622,23 @@ public class Icao9303MachineReadableVisaAlgorithmTests
    }
 
    [Theory]
+   [InlineData(MrzFormat.A)]
+   [InlineData(MrzFormat.B)]
+   public void Icao9303MachineReadableVisaAlgorithm_Validate_ShouldIgnoreInvalidCharactersInNonCheckDigitFields(MrzFormat format)
+   {
+      // Arrange.
+      var value = GetTestValue(
+         format: format,
+         documentType: "!<",
+         issuingState: "UT=",
+         nationality: "UT\u2153",
+         sex: "~");
+
+      // Act/assert.
+      _sut.Validate(value).Should().BeTrue();
+   }
+
+   [Theory]
    [InlineData("I<UTOERIKSSON<<ANNA<MARIA<<<<<<<<<<<D231458907UTO7408122F1204159<<<<<<A<")]
    [InlineData("V<UTOERIKSSON<<ANNA<MARIA<<<<<<<<<<<<<<<<<<<\r\nL898902C<3UTO6908061F9406236ZE184226B<<<<<<<")]
    [InlineData("I<UTOSKYWALKER<<LUKE<<<<<<<<<<<<<<<<\nSTARWARS45UTO7705256M2405252<<<<<<B<")]
