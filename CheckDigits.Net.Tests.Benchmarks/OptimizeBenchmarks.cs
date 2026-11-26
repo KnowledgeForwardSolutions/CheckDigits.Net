@@ -7,19 +7,19 @@ namespace CheckDigits.Net.Tests.Benchmarks;
 [MemoryDiagnoser]
 public class OptimizeBenchmarks
 {
-   private static readonly Icao9303MachineReadableVisaAlgorithm _algorithm = new();
+   private static readonly Icao9303SizeTD1Algorithm _algorithm = new();
 
    [Benchmark(Baseline = true)]
-   [Arguments("I<UTOERIKSSON<<ANNA<MARIA<<<<<<<<<<<D231458907UTO7408122F1204159<<<<<<A<")]
-   [Arguments("V<UTOERIKSSON<<ANNA<MARIA<<<<<<<<<<<<<<<<<<<\r\nL898902C<3UTO6908061F9406236ZE184226B<<<<<<<")]
-   [Arguments("I<UTOSKYWALKER<<LUKE<<<<<<<<<<<<<<<<\nSTARWARS45UTO7705256M2405252<<<<<<B<")]
+   [Arguments("I<UTOD231458907<<<<<<<<<<<<<<<7408122F1204159UTO<<<<<<<<<<<6ERIKSSON<<ANNA<MARIA<<<<<<<<A<")]
+   [Arguments("I<UTOD23145890<AB112234566<<<<\r\n7408122F1204159UTO<<<<<<<<<<<4\r\nERIKSSON<<ANNA<MARIA<<<<<<<<B<")]
+   [Arguments("I<UTOSTARWARS45<<<<<<<<<<<<<<<\n7705256M2405252UTO<<<<<<<<<<<4\nSKYWALKER<<LUKE<<<<<<<<<<<<<C<")]
    public void Original(String value) => _ = _algorithm.Validate(value);
 
-   //[Benchmark()]
-   //[Arguments("I<UTOERIKSSON<<ANNA<MARIA<<<<<<<<<<<D231458907UTO7408122F1204159<<<<<<A<")]
-   //[Arguments("V<UTOERIKSSON<<ANNA<MARIA<<<<<<<<<<<<<<<<<<<\r\nL898902C<3UTO6908061F9406236ZE184226B<<<<<<<")]
-   //[Arguments("I<UTOSKYWALKER<<LUKE<<<<<<<<<<<<<<<<\nSTARWARS45UTO7705256M2405252<<<<<<B<")]
-   //public void Rollover(String value) => _ = _algorithm.Validate2(value);
+   [Benchmark()]
+   [Arguments("I<UTOD231458907<<<<<<<<<<<<<<<7408122F1204159UTO<<<<<<<<<<<6ERIKSSON<<ANNA<MARIA<<<<<<<<A<")]
+   [Arguments("I<UTOD23145890<AB112234566<<<<\r\n7408122F1204159UTO<<<<<<<<<<<4\r\nERIKSSON<<ANNA<MARIA<<<<<<<<B<")]
+   [Arguments("I<UTOSTARWARS45<<<<<<<<<<<<<<<\n7705256M2405252UTO<<<<<<<<<<<4\nSKYWALKER<<LUKE<<<<<<<<<<<<<C<")]
+   public void Rollover(String value) => _ = _algorithm.Validate2(value);
 
    //[Benchmark(Baseline = true)]
    //[Arguments("140")]

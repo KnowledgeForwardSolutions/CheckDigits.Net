@@ -53,7 +53,7 @@ public sealed class Icao9303Algorithm : ISingleCheckDigitAlgorithm
       var processLength = value.Length;
       for (var index = 0; index < processLength; index++)
       {
-         var num = value[index].MapIcao0303Character();
+         var num = value[index].MapIcao9303Character();
          if (num == -1)
          {
             return false;
@@ -81,7 +81,7 @@ public sealed class Icao9303Algorithm : ISingleCheckDigitAlgorithm
       var processLength = value.Length - 1;
       for (var index = 0; index < processLength; index++)
       {
-         var num = value[index].MapIcao0303Character();
+         var num = value[index].MapIcao9303Character();
          if (num == -1)
          {
             return false;

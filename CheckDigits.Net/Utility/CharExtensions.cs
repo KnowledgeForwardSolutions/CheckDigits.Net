@@ -176,7 +176,7 @@ internal static class CharExtensions
       ///   or -1 for invalid characters.
       /// </returns>
       [MethodImpl(MethodImplOptions.AggressiveInlining)]
-      public Int32 MapIcao0303Character()
+      public Int32 MapIcao9303Character()
          => ch switch
          {
             _ when ch.IsAsciiDigit() => ch.MapAsciiDigit(),

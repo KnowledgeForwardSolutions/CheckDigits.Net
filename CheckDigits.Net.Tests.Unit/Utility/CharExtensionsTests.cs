@@ -526,7 +526,7 @@ public class CharExtensionsTests
    public void CharExtensions_MapIcao0303Character_ShouldReturnExpectedValue(
       Char ch,
       Int32 expected)
-      => ch.MapIcao0303Character().Should().Be(expected);
+      => ch.MapIcao9303Character().Should().Be(expected);
 
    #endregion
 }

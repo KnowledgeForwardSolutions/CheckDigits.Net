@@ -81,7 +81,7 @@ public sealed class Icao9303MachineReadableVisaAlgorithm : ICheckDigitAlgorithm
          var numUpperBound = _fields[fieldIndex].NumUpperBound;
          for (var charIndex = start; charIndex < end; charIndex++)
          {
-            num = value[charIndex].MapIcao0303Character();
+            num = value[charIndex].MapIcao9303Character();
             if (num < 0 || num > numUpperBound)
             {
                return false;
@@ -167,11 +167,11 @@ public sealed class Icao9303MachineReadableVisaAlgorithm : ICheckDigitAlgorithm
    /// <param name="NumUpperBound">
    ///   The upper bound of a field character when converted to an integer.
    /// </param>
-   private 
-#if NET7_0_OR_GREATER
-      readonly
-#endif
-      record struct FieldDetails(Int32 CharPosition, Int32 Length, Int32 NumUpperBound)
+   #if NET7_0_OR_GREATER
+   private readonly record struct FieldDetails(Int32 CharPosition, Int32 Length, Int32 NumUpperBound)
+   #else
+   private record struct FieldDetails(Int32 CharPosition, Int32 Length, Int32 NumUpperBound)
+   #endif
    {
       [Pure]
       public readonly (Int32 start, Int32 end) GetFieldBounds(
