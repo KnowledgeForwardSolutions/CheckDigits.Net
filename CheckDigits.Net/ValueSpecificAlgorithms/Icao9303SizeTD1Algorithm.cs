@@ -69,7 +69,8 @@ public sealed class Icao9303SizeTD1Algorithm : ICheckDigitAlgorithm
    /// <inheritdoc/>
    public Boolean Validate(String value)
    {
-      if (String.IsNullOrEmpty(value) || !TryValidateSeparators(value, out var lineSeparatorLength))
+      if (String.IsNullOrEmpty(value) 
+         || !TryValidateLengthAndSeparators(value, out var lineSeparatorLength))
       {
          return false;
       }
@@ -111,19 +112,20 @@ public sealed class Icao9303SizeTD1Algorithm : ICheckDigitAlgorithm
          {
             // The extended document number has variable length. The extended 
             // document number field has a maximum length of 15 characters, with
-            // up to 14 extended document number characters and one check digit 
-            // character. The check digit character follows the last extended
-            // document number character and any remaining positions in the
-            // field are filled with filler characters.
+            // up to 13 extended document number characters and one check digit 
+            // character and at least one filler character. The check digit
+            // character follows the last extended document number character and
+            // any remaining positions in the field are filled with filler
+            // characters.
             (start, end) = _extendedDocumentNumber.GetFieldBounds(lineSeparatorLength);
             numUpperBound = _extendedDocumentNumber.NumUpperBound;
             for (var charIndex = start; charIndex < end; charIndex++)
             {
-               // Exit the loop if the charIndex + 1 is a filler character. If
-               // it is a filler character, it means that the current character
-               // is the check digit character. (The definition of
-               // _extendedDocumentNumber ensures that the one character look
-               // ahead will always be in bounds.)
+               // Exit the loop if the character at charIndex + 1 is a filler
+               // character. If it is a filler character, it means that the
+               // current character is the check digit character. (The
+               // definition of _extendedDocumentNumber ensures that the one
+               // character look ahead will always be in bounds.)
                if (value[charIndex + 1] == Chars.LeftAngleBracket)
                {
                   end = charIndex;     // Set end to the current charIndex so that we can process the field check digit in the main loop.
@@ -170,7 +172,9 @@ public sealed class Icao9303SizeTD1Algorithm : ICheckDigitAlgorithm
       return ch.MapAsciiDigit() == compositeCheckDigit;
    }
 
-   private static Boolean TryValidateSeparators(String value, out Int32 lineSeparatorLength)
+   private static Boolean TryValidateLengthAndSeparators(
+      String value, 
+      out Int32 lineSeparatorLength)
    {
       lineSeparatorLength = value.Length switch
       {

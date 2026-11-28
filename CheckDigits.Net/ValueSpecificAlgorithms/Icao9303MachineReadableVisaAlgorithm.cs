@@ -67,7 +67,7 @@ public sealed class Icao9303MachineReadableVisaAlgorithm : ICheckDigitAlgorithm
       {
          return false;
       }
-      if (!TryValidateLength(value, out var lineLength, out var lineSeparatorLength))
+      if (!TryValidateLengthAndSeparators(value, out var lineLength, out var lineSeparatorLength))
       {
          return false;
       }
@@ -115,7 +115,7 @@ public sealed class Icao9303MachineReadableVisaAlgorithm : ICheckDigitAlgorithm
    ///   string is used, then the line separator characters are validated to be
    ///   correct for the value length.
    /// </summary>
-   private static Boolean TryValidateLength(
+   private static Boolean TryValidateLengthAndSeparators(
       String value,
       out Int32 lineLength,
       out Int32 lineSeparatorLength)

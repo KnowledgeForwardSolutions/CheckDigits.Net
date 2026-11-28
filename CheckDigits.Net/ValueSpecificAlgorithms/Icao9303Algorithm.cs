@@ -25,7 +25,7 @@ namespace CheckDigits.Net.ValueSpecificAlgorithms;
 ///      difference between the correct and incorrect characters is 10, i.e. 
 ///      0 -> A, B -> L. Nor can the algorithm detect two character 
 ///      transposition errors where the difference between the transposed 
-///      characters is 10, i.e. BL -> LB.
+///      characters is a multiple of 5, i.e. 27 -> 72, D8 -> 8D, BL -> LB.
 ///   </para>
 /// </remarks>
 public sealed class Icao9303Algorithm : ISingleCheckDigitAlgorithm
