@@ -42,10 +42,10 @@ public sealed class Icao9303SizeTD1Algorithm : ICheckDigitAlgorithm
 {
    private const Int32 _initialWeight = 7;
    private static readonly FieldDetails[] _fields = [          // line #, starting position, field length, valid num upper bound
-      new (0, 5, 9, 35),      // Document number field, allows alphanumeric characters plus placeholder char
-      new (1, 0, 6, 9),       // Date of birth field, allows digit characters plus placeholder char
-      new (1, 8, 6, 9)];      // Date of expiry field, allows digit characters plus placeholder char
-   private static readonly FieldDetails _extendedDocumentNumber = new (0, 15, 13, 35);
+      new (0, 5, 9, 35),      // Document number field, allows alphanumeric characters plus filler char
+      new (1, 0, 6, 9),       // Date of birth field, allows digit characters plus filler char
+      new (1, 8, 6, 9)];      // Date of expiry field, allows digit characters plus filler char
+   private static readonly FieldDetails _extendedDocumentNumber = new (0, 15, 13, 35);    // Extended document number field is 15 chars in length with up to 13 extended document number chars, one check digit char and at least one trailing filler character
    private const Int32 _numFields = 3;
    private const Int32 _lineLength = 30;
    private const Int32 _compositeCheckDigitPosition = 59;

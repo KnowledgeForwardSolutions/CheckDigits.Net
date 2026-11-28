@@ -2588,6 +2588,7 @@ Performance increases for:
 * Icao9303Algorithm, ~30% improvement across all methods
 * Icao9303MachineReadableVisaAlgorithm, Validate method ~10% improvement
 * Icao9303SizeTD1Algorithm, Validate method ~17% improvement
+* Icao9303SizeTD2Algorithm, Validate method ~18% improvement
 * Modulus11_27DecimalAlgorithm, ~50% improvement across all methods
 * Modulus11_27ExtendedAlgorithm, ~40% improvement across all methods
 
